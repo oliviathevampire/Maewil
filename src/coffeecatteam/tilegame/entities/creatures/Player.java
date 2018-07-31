@@ -2,16 +2,20 @@ package coffeecatteam.tilegame.entities.creatures;
 
 import coffeecatteam.tilegame.Game;
 import coffeecatteam.tilegame.gfx.Assets;
+import coffeecatteam.tilegame.gfx.ImageLoader;
+import coffeecatteam.tilegame.gfx.SpriteSheet;
 
 import java.awt.Graphics;
 
 public class Player extends Creature {
 
     private Game game;
+    private SpriteSheet sheet;
 
     public Player(Game game, float x, float y) {
         super(x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
         this.game = game;
+        sheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/character_sheet.png"));
     }
 
     @Override
@@ -36,6 +40,6 @@ public class Player extends Creature {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.GRASS, (int) x, (int) y, width, height, null);
+        g.drawImage(sheet.crop(0, 0, 16, 16), (int) x, (int) y, width, height, null);
     }
 }
