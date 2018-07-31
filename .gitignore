@@ -20,9 +20,8 @@
 hs_err_pid*
 
 # idea
-out
+out/
 *.ipr
 *.iws
 *.iml
-.idea
-.idea/workspace.xml
+.idea/
