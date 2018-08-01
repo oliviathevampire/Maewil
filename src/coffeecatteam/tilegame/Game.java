@@ -2,6 +2,7 @@ package coffeecatteam.tilegame;
 
 import coffeecatteam.tilegame.display.Display;
 import coffeecatteam.tilegame.gfx.Assets;
+import coffeecatteam.tilegame.gfx.Camera;
 import coffeecatteam.tilegame.input.KeyManager;
 import coffeecatteam.tilegame.state.State;
 import coffeecatteam.tilegame.state.StateGame;
@@ -15,9 +16,8 @@ import java.util.Random;
 public class Game implements Runnable {
 
     private Display display;
-
+    private int width, height;
     public String title;
-    public int width, height;
 
     private boolean running = false;
     private Thread thread;
@@ -29,8 +29,9 @@ public class Game implements Runnable {
     private State gameState;
     private State menuState;
 
-    // Input
     private KeyManager keyManager;
+
+    private Camera camera;
 
     public Game(String title, int width, int height) {
         this.title = title;
@@ -43,6 +44,8 @@ public class Game implements Runnable {
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
         Assets.init();
+
+        camera = new Camera(this, 0, 0);
 
         gameState = new StateGame(this);
         menuState = new StateMenu(this);
@@ -111,6 +114,18 @@ public class Game implements Runnable {
 
     public KeyManager getKeyManager() {
         return keyManager;
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public synchronized void start() {
