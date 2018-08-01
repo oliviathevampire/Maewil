@@ -1,5 +1,6 @@
 package coffeecatteam.tilegame.worlds;
 
+import coffeecatteam.tilegame.Game;
 import coffeecatteam.tilegame.tiles.Tile;
 import coffeecatteam.tilegame.utils.Utils;
 
@@ -7,11 +8,13 @@ import java.awt.Graphics;
 
 public class World {
 
+    private Game game;
     private int width, height;
     private int spawnX, spawnY;
     private int[][] tiles;
 
-    public World(String path) {
+    public World(Game game, String path) {
+        this.game = game;
         loadWorld(path);
     }
 
@@ -20,9 +23,14 @@ public class World {
     }
 
     public void render(Graphics g) {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                getTile(x, y).render(g, x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
+        int xStart = (int) Math.max(0, game.getCamera().getxOffset() / Tile.TILE_WIDTH);
+        int xEnd = (int) Math.min(width, (game.getCamera().getxOffset() + game.getWidth()) / Tile.TILE_WIDTH + 1);
+        int yStart = (int) Math.max(0, game.getCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (game.getCamera().getyOffset() + game.getHeight()) / Tile.TILE_HEIGHT + 1);
+
+        for (int y = yStart; y < yEnd; y++) {
+            for (int x = xStart; x < xEnd; x++) {
+                getTile(x, y).render(g, (int) (x * Tile.TILE_WIDTH - game.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - game.getCamera().getyOffset()));
             }
         }
     }
