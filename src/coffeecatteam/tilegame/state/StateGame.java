@@ -2,6 +2,7 @@ package coffeecatteam.tilegame.state;
 
 import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.creatures.Player;
+import coffeecatteam.tilegame.tiles.Tile;
 import coffeecatteam.tilegame.worlds.World;
 
 import java.awt.Graphics;
@@ -15,7 +16,7 @@ public class StateGame extends State {
         super(handler);
         world = new World(handler, "res/assets/worlds/world2.wd");
         handler.setWorld(world);
-        player = new Player(handler, 100, 100);
+        player = new Player(handler, world.getSpawnX() * Tile.TILE_WIDTH, world.getSpawnY() * Tile.TILE_HEIGHT);
     }
 
     @Override
