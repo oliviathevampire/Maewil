@@ -14,7 +14,7 @@ public class StateGame extends State {
     public StateGame(Game game) {
         super(game);
         player = new Player(game, 100, 100);
-        world = new World("res/assets/worlds/world1.wd");
+        world = new World(game, "res/assets/worlds/world2.wd");
     }
 
     @Override
