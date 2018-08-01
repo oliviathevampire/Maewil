@@ -1,14 +1,26 @@
 package coffeecatteam.tilegame.tiles;
 
+import coffeecatteam.tilegame.gfx.Assets;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 public class Tile {
 
     public static Tile[] tiles = new Tile[256];
-    public static Tile GRASS = new TileGrass(0);
-    public static Tile DIRT = new TileDirt(1);
-    public static Tile ROCK = new TileRock(2);
+    public static Tile GRASS = new TileBase(Assets.GRASS, 0, false);
+    public static Tile DIRT = new TileBase(Assets.DIRT, 1, false);
+    public static Tile STONE = new TileBase(Assets.STONE, 2, true);
+    public static Tile SAND = new TileBase(Assets.SAND, 3, false);
+    public static Tile ANDESITE = new TileBase(Assets.ANDESITE, 4, true);
+    public static Tile DIORITE = new TileBase(Assets.DIORITE, 5, true);
+    public static Tile COAL_ORE = new TileBase(Assets.COAL_ORE, 6, true);
+    public static Tile IRON_COAL = new TileBase(Assets.IRON_COAL, 7, true);
+    public static Tile GOLD_ORE = new TileBase(Assets.GOLD_ORE, 8, true);
+    public static Tile DIAMOND_ORE = new TileBase(Assets.DIAMOND_ORE, 9, true);
+    public static Tile OBSIDIAN = new TileBase(Assets.OBSIDIAN, 10, true);
+    public static Tile WATER = new TileBase(Assets.WATER, 11, false);
+    public static Tile LAVA = new TileBase(Assets.LAVA, 12, false);
 
     public static final int TILE_WIDTH = 64, TILE_HEIGHT = 64;
 
