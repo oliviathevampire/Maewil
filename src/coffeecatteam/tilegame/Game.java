@@ -33,6 +33,8 @@ public class Game implements Runnable {
 
     private Camera camera;
 
+    private Handler handler;
+
     public Game(String title, int width, int height) {
         this.title = title;
         this.width = width;
@@ -46,9 +48,10 @@ public class Game implements Runnable {
         Assets.init();
 
         camera = new Camera(this, 0, 0);
+        handler = new Handler(this);
 
-        gameState = new StateGame(this);
-        menuState = new StateMenu(this);
+        gameState = new StateGame(handler);
+        menuState = new StateMenu(handler);
         State.setState(gameState);
     }
 

@@ -1,6 +1,6 @@
 package coffeecatteam.tilegame.worlds;
 
-import coffeecatteam.tilegame.Game;
+import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.tiles.Tile;
 import coffeecatteam.tilegame.utils.Utils;
 
@@ -8,13 +8,13 @@ import java.awt.Graphics;
 
 public class World {
 
-    private Game game;
+    private Handler handler;
     private int width, height;
     private int spawnX, spawnY;
     private int[][] tiles;
 
-    public World(Game game, String path) {
-        this.game = game;
+    public World(Handler handler, String path) {
+        this.handler = handler;
         loadWorld(path);
     }
 
@@ -23,19 +23,22 @@ public class World {
     }
 
     public void render(Graphics g) {
-        int xStart = (int) Math.max(0, game.getCamera().getxOffset() / Tile.TILE_WIDTH);
-        int xEnd = (int) Math.min(width, (game.getCamera().getxOffset() + game.getWidth()) / Tile.TILE_WIDTH + 1);
-        int yStart = (int) Math.max(0, game.getCamera().getyOffset() / Tile.TILE_HEIGHT);
-        int yEnd = (int) Math.min(height, (game.getCamera().getyOffset() + game.getHeight()) / Tile.TILE_HEIGHT + 1);
+        int xStart = (int) Math.max(0, handler.getCamera().getxOffset() / Tile.TILE_WIDTH);
+        int xEnd = (int) Math.min(width, (handler.getCamera().getxOffset() + handler.getWidth()) / Tile.TILE_WIDTH + 1);
+        int yStart = (int) Math.max(0, handler.getCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (handler.getCamera().getyOffset() + handler.getHeight()) / Tile.TILE_HEIGHT + 1);
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
-                getTile(x, y).render(g, (int) (x * Tile.TILE_WIDTH - game.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - game.getCamera().getyOffset()));
+                getTile(x, y).render(g, (int) (x * Tile.TILE_WIDTH - handler.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - handler.getCamera().getyOffset()));
             }
         }
     }
 
     public Tile getTile(int x, int y) {
+        if (x < 0 || y < 0 || x >= width || y >= height)
+            return Tile.DIRT;
+
         Tile t = Tile.tiles[tiles[x][y]];
         if (t == null)
             return Tile.DIRT;

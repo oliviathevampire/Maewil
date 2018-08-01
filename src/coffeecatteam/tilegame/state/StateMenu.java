@@ -1,13 +1,13 @@
 package coffeecatteam.tilegame.state;
 
-import coffeecatteam.tilegame.Game;
+import coffeecatteam.tilegame.Handler;
 
 import java.awt.Graphics;
 
 public class StateMenu extends State {
 
-    public StateMenu(Game game) {
-        super(game);
+    public StateMenu(Handler handler) {
+        super(handler);
     }
 
     @Override

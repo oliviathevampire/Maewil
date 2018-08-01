@@ -1,6 +1,6 @@
 package coffeecatteam.tilegame.state;
 
-import coffeecatteam.tilegame.Game;
+import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.creatures.Player;
 import coffeecatteam.tilegame.worlds.World;
 
@@ -11,10 +11,11 @@ public class StateGame extends State {
     private Player player;
     private World world;
 
-    public StateGame(Game game) {
-        super(game);
-        player = new Player(game, 100, 100);
-        world = new World(game, "res/assets/worlds/world2.wd");
+    public StateGame(Handler handler) {
+        super(handler);
+        world = new World(handler, "res/assets/worlds/world2.wd");
+        handler.setWorld(world);
+        player = new Player(handler, 100, 100);
     }
 
     @Override

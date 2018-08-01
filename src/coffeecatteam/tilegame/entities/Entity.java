@@ -1,21 +1,25 @@
 package coffeecatteam.tilegame.entities;
 
-import coffeecatteam.tilegame.Game;
+import coffeecatteam.tilegame.Handler;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public abstract class Entity {
 
-    protected Game game;
+    protected Handler handler;
     protected float x, y;
     protected int width, height;
+    protected Rectangle bounds;
 
-    public Entity(Game game, float x, float y, int width, int height) {
-        this.game = game;
+    public Entity(Handler handler, float x, float y, int width, int height) {
+        this.handler = handler;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+
+        bounds = new Rectangle(0, 0, width, height);
     }
 
     public abstract void tick();

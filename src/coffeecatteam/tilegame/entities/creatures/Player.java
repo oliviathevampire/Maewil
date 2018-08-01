@@ -1,11 +1,10 @@
 package coffeecatteam.tilegame.entities.creatures;
 
-import coffeecatteam.tilegame.Game;
-import coffeecatteam.tilegame.gfx.Assets;
+import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.gfx.ImageLoader;
 import coffeecatteam.tilegame.gfx.SpriteSheet;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 public class Player extends Creature {
 
@@ -15,37 +14,41 @@ public class Player extends Creature {
     private int animStage = 0;
     private float timer = 0;
 
-    public Player(Game game, float x, float y) {
-        super(game, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+    public Player(Handler handler, float x, float y) {
+        super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
         sheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/character_sheet.png"));
-
         animState = AnimState.IDLE;
+
+        bounds.x = 13;
+        bounds.y = 2;
+        bounds.width = 34;
+        bounds.height = 61;
     }
 
     @Override
     public void tick() {
         getInput();
         move();
-        game.getCamera().centerOnEntity(this);
+        handler.getCamera().centerOnEntity(this);
     }
 
     private void getInput() {
         xMove = 0;
         yMove = 0;
 
-        if (game.getKeyManager().up) {
+        if (handler.getKeyManager().up) {
             yMove = -speed;
             animState = AnimState.FORWARD;
         }
-        if (game.getKeyManager().down) {
+        if (handler.getKeyManager().down) {
             yMove = speed;
             animState = AnimState.BACKWARD;
         }
-        if (game.getKeyManager().left) {
+        if (handler.getKeyManager().left) {
             xMove = -speed;
             animState = AnimState.LEFT;
         }
-        if (game.getKeyManager().right) {
+        if (handler.getKeyManager().right) {
             xMove = speed;
             animState = AnimState.RIGHT;
         }
@@ -71,7 +74,10 @@ public class Player extends Creature {
             width = this.width - this.width * 2;
             x = this.x - width;
         }
-        g.drawImage(sheet.crop(animStage * 16, anim * 16, 16, 16), (int) (x - game.getCamera().getxOffset()), (int) (y - game.getCamera().getyOffset()), width, height, null);
+        g.drawImage(sheet.crop(animStage * 16, anim * 16, 16, 16), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
+
+//        g.setColor(Color.red);
+//        g.fillRect((int) (x + bounds.x - handler.getCamera().getxOffset()), (int) (y + bounds.y - handler.getCamera().getyOffset()), bounds.width, bounds.height);
     }
 
     enum AnimState {
