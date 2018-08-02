@@ -9,7 +9,9 @@ public class Assets {
     /* Terrain Tiles */
     public static BufferedImage GRASS, DIRT, SAND;
     public static BufferedImage STONE, ANDESITE, DIORITE, COAL_ORE, IRON_COAL, GOLD_ORE, DIAMOND_ORE, OBSIDIAN;
-    public static BufferedImage WATER, LAVA;
+
+    public static BufferedImage[] WATER, LAVA;
+    public static BufferedImage[] WATER_SPLASH;
 
     /* Player Frames */
     public static BufferedImage[] PLAYER_IDLE;
@@ -34,8 +36,9 @@ public class Assets {
         GOLD_ORE = getSprite(terrainSheet, 0, 1, width, height);
         DIAMOND_ORE = getSprite(terrainSheet, 1, 1, width, height);
         OBSIDIAN = getSprite(terrainSheet, 2, 1, width, height);
-        WATER = getSprite(terrainSheet, 3, 1, width, height);
-        LAVA = getSprite(terrainSheet, 4, 1, width, height);
+
+        WATER = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/water.png")), 0, 15);
+        LAVA = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/lava.png")), 0, 15);
 
         /* Player Frames */
         PLAYER_IDLE = getFrames(characrerSheet, 0, 0, 7);
@@ -43,6 +46,10 @@ public class Assets {
         PLAYER_DOWN = getFrames(characrerSheet, 1, 3, 5);
         PLAYER_LEFT = getFrames(characrerSheet, 3, 0, 3);
         PLAYER_RIGHT = getFrames(characrerSheet, 2, 0, 7);
+    }
+
+    private static BufferedImage[] getFrames(SpriteSheet sheet, int xStart, int xEnd) {
+        return getFrames(sheet, 0, xStart, xEnd);
     }
 
     private static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd) {

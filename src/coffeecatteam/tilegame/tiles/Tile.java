@@ -1,5 +1,6 @@
 package coffeecatteam.tilegame.tiles;
 
+import coffeecatteam.tilegame.gfx.Animation;
 import coffeecatteam.tilegame.gfx.Assets;
 
 import java.awt.Graphics;
@@ -19,8 +20,9 @@ public class Tile {
     public static Tile GOLD_ORE = new TileBase(Assets.GOLD_ORE, 8, true);
     public static Tile DIAMOND_ORE = new TileBase(Assets.DIAMOND_ORE, 9, true);
     public static Tile OBSIDIAN = new TileBase(Assets.OBSIDIAN, 10, true);
-    public static Tile WATER = new TileBase(Assets.WATER, 11, false);
-    public static Tile LAVA = new TileBase(Assets.LAVA, 12, false);
+
+    public static Tile WATER = new TileAnimated(new Animation(50, Assets.WATER), 11);
+    public static Tile LAVA = new TileAnimated(new Animation(50, Assets.LAVA), 12); // P.26
 
     public static final int TILE_WIDTH = 64, TILE_HEIGHT = 64;
 

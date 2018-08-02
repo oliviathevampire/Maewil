@@ -5,6 +5,7 @@ import coffeecatteam.tilegame.gfx.Animation;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.gfx.ImageLoader;
 import coffeecatteam.tilegame.gfx.SpriteSheet;
+import coffeecatteam.tilegame.tiles.Tile;
 
 import java.awt.*;
 
@@ -75,7 +76,9 @@ public class Player extends Creature {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(currentAnim.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
+        int xPos = (int) (this.x - handler.getCamera().getxOffset());
+        int yPos = (int) (this.y - handler.getCamera().getyOffset());
+        g.drawImage(currentAnim.getCurrentFrame(), xPos, yPos, width, height, null);
 
 //        g.setColor(Color.red);
 //        g.fillRect((int) (x + bounds.x - handler.getCamera().getxOffset()), (int) (y + bounds.y - handler.getCamera().getyOffset()), bounds.width, bounds.height);
