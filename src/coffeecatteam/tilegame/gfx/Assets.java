@@ -11,8 +11,16 @@ public class Assets {
     public static BufferedImage STONE, ANDESITE, DIORITE, COAL_ORE, IRON_COAL, GOLD_ORE, DIAMOND_ORE, OBSIDIAN;
     public static BufferedImage WATER, LAVA;
 
+    /* Player Frames */
+    public static BufferedImage[] PLAYER_IDLE;
+    public static BufferedImage[] PLAYER_UP;
+    public static BufferedImage[] PLAYER_DOWN;
+    public static BufferedImage[] PLAYER_LEFT;
+    public static BufferedImage[] PLAYER_RIGHT;
+
     public static void init() {
         SpriteSheet terrainSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/terrain_tiles.png"));
+        SpriteSheet characrerSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/character_sheet.png"));
 
         /* Terrain Tiles */
         GRASS = getSprite(terrainSheet, 0, 0, width, height);
@@ -28,6 +36,23 @@ public class Assets {
         OBSIDIAN = getSprite(terrainSheet, 2, 1, width, height);
         WATER = getSprite(terrainSheet, 3, 1, width, height);
         LAVA = getSprite(terrainSheet, 4, 1, width, height);
+
+        /* Player Frames */
+        PLAYER_IDLE = getFrames(characrerSheet, 0, 0, 7);
+        PLAYER_UP = getFrames(characrerSheet, 1, 0, 2);
+        PLAYER_DOWN = getFrames(characrerSheet, 1, 3, 5);
+        PLAYER_LEFT = getFrames(characrerSheet, 3, 0, 3);
+        PLAYER_RIGHT = getFrames(characrerSheet, 2, 0, 7);
+    }
+
+    private static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd) {
+        BufferedImage[] frames = new BufferedImage[(xEnd - xStart) + 1];
+        int index = 0;
+        for (int x = xStart; x < xEnd + 1; x++) {
+            frames[index] = sheet.crop(x * width, y * height, width, height);
+            index++;
+        }
+        return frames;
     }
 
     private static BufferedImage getSprite(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
