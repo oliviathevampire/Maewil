@@ -142,6 +142,10 @@ public class Game implements Runnable {
         return height;
     }
 
+    public Display getDisplay() {
+        return display;
+    }
+
     public synchronized void start() {
         if (running)
             return;
