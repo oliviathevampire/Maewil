@@ -23,8 +23,8 @@ public class World {
         entityManager = new EntityManager(handler, new EntityPlayer(handler, 0, 0));
 
         entityManager.addEntity(new EntityTree(handler, 2 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.SMALL));
-        entityManager.addEntity(new EntityTree(handler, 4 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.MEDIUM));
-        entityManager.addEntity(new EntityTree(handler, 6 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.LARGE));
+        entityManager.addEntity(new EntityTree(handler, 3 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.MEDIUM));
+        entityManager.addEntity(new EntityTree(handler, 5 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.LARGE));
 
         loadWorld(path);
         entityManager.getPlayer().setX(spawnX * Tile.TILE_WIDTH);
@@ -85,8 +85,11 @@ public class World {
             for (int x = 0; x < width; x++) {
                 tiles[x][y] = Utils.parseInt(tokens[(x + y * width) + 4]);
             }
+            float loaded = ((y + 1) * 100.0f) / height;
+            if (y % 2 == 0)
+                System.out.println(loaded + "% Loaded!");
         }
-        System.out.println("World Loaded");
+        System.out.println("World Loaded!\n");
     }
 
     public int getWidth() {
