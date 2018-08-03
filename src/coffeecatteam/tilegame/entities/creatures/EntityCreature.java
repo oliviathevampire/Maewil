@@ -4,7 +4,7 @@ import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.tiles.Tile;
 
-public abstract class Creature extends Entity {
+public abstract class EntityCreature extends Entity {
 
     public static final int DEFAULT_HEALTH = 10;
     public static final float DEFAULT_SPEED = 3.0f;
@@ -15,7 +15,7 @@ public abstract class Creature extends Entity {
     protected float speed;
     protected float xMove, yMove;
 
-    public Creature(Handler handler, float x, float y, int width, int height) {
+    public EntityCreature(Handler handler, float x, float y, int width, int height) {
         super(handler, x, y, width, height);
         health = DEFAULT_HEALTH;
         speed = DEFAULT_SPEED;
@@ -24,8 +24,10 @@ public abstract class Creature extends Entity {
     }
 
     public void move() {
-        moveX();
-        moveY();
+        if (!checkEntityCollisions(xMove, 0.0f))
+            moveX();
+        if (!checkEntityCollisions(0.0f, yMove))
+            moveY();
     }
 
     public void moveX() {

@@ -20,9 +20,14 @@ public class Assets {
     public static BufferedImage[] PLAYER_LEFT;
     public static BufferedImage[] PLAYER_RIGHT;
 
+    /* Nature */
+    public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
+    public static BufferedImage ROCK;
+
     public static void init() {
-        SpriteSheet terrainSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/terrain_tiles.png"));
-        SpriteSheet characrerSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/character_sheet.png"));
+        SpriteSheet terrainSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/terrain.png"));
+        SpriteSheet characrerSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/player.png"));
+        SpriteSheet natureSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
 
         /* Terrain Tiles */
         GRASS = getSprite(terrainSheet, 0, 0, width, height);
@@ -37,8 +42,8 @@ public class Assets {
         DIAMOND_ORE = getSprite(terrainSheet, 1, 1, width, height);
         OBSIDIAN = getSprite(terrainSheet, 2, 1, width, height);
 
-        WATER = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/water.png")), 0, 15);
-        LAVA = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/lava.png")), 0, 15);
+        WATER = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/water.png")), 0, 15);
+        LAVA = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/lava.png")), 0, 15);
 
         /* Player Frames */
         PLAYER_IDLE = getFrames(characrerSheet, 0, 0, 7);
@@ -46,6 +51,12 @@ public class Assets {
         PLAYER_DOWN = getFrames(characrerSheet, 1, 3, 5);
         PLAYER_LEFT = getFrames(characrerSheet, 3, 0, 3);
         PLAYER_RIGHT = getFrames(characrerSheet, 2, 0, 7);
+
+        /* Nature */
+        TREE_SMALL = getSprite(natureSheet, 0, 0, width, height * 2);
+        TREE_MEDIUM = getSprite(natureSheet, 0, 1, width * 2, height * 2);
+        TREE_LARGE = getSprite(natureSheet, 0, 2, width * 2, height * 2);
+        ROCK = getSprite(natureSheet, 1, 0, width, height);
     }
 
     private static BufferedImage[] getFrames(SpriteSheet sheet, int xStart, int xEnd) {

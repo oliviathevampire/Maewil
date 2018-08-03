@@ -3,13 +3,10 @@ package coffeecatteam.tilegame.entities.creatures;
 import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.gfx.Animation;
 import coffeecatteam.tilegame.gfx.Assets;
-import coffeecatteam.tilegame.gfx.ImageLoader;
-import coffeecatteam.tilegame.gfx.SpriteSheet;
-import coffeecatteam.tilegame.tiles.Tile;
 
 import java.awt.*;
 
-public class Player extends Creature {
+public class EntityPlayer extends EntityCreature {
 
     private Animation animIdle;
     private Animation animUp;
@@ -19,13 +16,13 @@ public class Player extends Creature {
 
     private Animation currentAnim;
 
-    public Player(Handler handler, float x, float y) {
-        super(handler, x, y, Creature.DEFAULT_CREATURE_WIDTH, Creature.DEFAULT_CREATURE_HEIGHT);
+    public EntityPlayer(Handler handler, float x, float y) {
+        super(handler, x, y, EntityCreature.DEFAULT_CREATURE_WIDTH, EntityCreature.DEFAULT_CREATURE_HEIGHT);
 
         bounds.x = 13;
-        bounds.y = 22;
+        bounds.y = 28;
         bounds.width = 34;
-        bounds.height = 41;
+        bounds.height = 35;
 
         // Animations - 500 = 1 second
         int speed = 135;
@@ -76,9 +73,7 @@ public class Player extends Creature {
 
     @Override
     public void render(Graphics g) {
-        int xPos = (int) (this.x - handler.getCamera().getxOffset());
-        int yPos = (int) (this.y - handler.getCamera().getyOffset());
-        g.drawImage(currentAnim.getCurrentFrame(), xPos, yPos, width, height, null);
+        g.drawImage(currentAnim.getCurrentFrame(), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()), width, height, null);
 
 //        g.setColor(Color.red);
 //        g.fillRect((int) (x + bounds.x - handler.getCamera().getxOffset()), (int) (y + bounds.y - handler.getCamera().getyOffset()), bounds.width, bounds.height);

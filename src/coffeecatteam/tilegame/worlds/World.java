@@ -1,10 +1,13 @@
 package coffeecatteam.tilegame.worlds;
 
 import coffeecatteam.tilegame.Handler;
+import coffeecatteam.tilegame.entities.EntityManager;
+import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
+import coffeecatteam.tilegame.entities.statics.EntityTree;
 import coffeecatteam.tilegame.tiles.Tile;
 import coffeecatteam.tilegame.utils.Utils;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 public class World {
 
@@ -13,9 +16,19 @@ public class World {
     private int spawnX, spawnY;
     private int[][] tiles;
 
+    private EntityManager entityManager;
+
     public World(Handler handler, String path) {
         this.handler = handler;
+        entityManager = new EntityManager(handler, new EntityPlayer(handler, 0, 0));
+
+        entityManager.addEntity(new EntityTree(handler, 2 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.SMALL));
+        entityManager.addEntity(new EntityTree(handler, 4 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.MEDIUM));
+        entityManager.addEntity(new EntityTree(handler, 6 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.LARGE));
+
         loadWorld(path);
+        entityManager.getPlayer().setX(spawnX * Tile.TILE_WIDTH);
+        entityManager.getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
     }
 
     public void tick() {
@@ -29,6 +42,8 @@ public class World {
                 getTile(x, y).tick();
             }
         }
+
+        entityManager.tick();
     }
 
     public void render(Graphics g) {
@@ -42,6 +57,8 @@ public class World {
                 getTile(x, y).render(g, (int) (x * Tile.TILE_WIDTH - handler.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - handler.getCamera().getyOffset()));
             }
         }
+
+        entityManager.render(g);
     }
 
     public Tile getTile(int x, int y) {
@@ -84,5 +101,9 @@ public class World {
 
     public int getSpawnY() {
         return spawnY;
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 }

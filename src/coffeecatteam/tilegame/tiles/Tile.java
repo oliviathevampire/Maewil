@@ -22,7 +22,7 @@ public class Tile {
     public static Tile OBSIDIAN = new TileBase(Assets.OBSIDIAN, 10, true);
 
     public static Tile WATER = new TileAnimated(new Animation(50, Assets.WATER), 11);
-    public static Tile LAVA = new TileAnimated(new Animation(50, Assets.LAVA), 12); // P.26
+    public static Tile LAVA = new TileAnimated(new Animation(50, Assets.LAVA), 12);
 
     public static final int TILE_WIDTH = 64, TILE_HEIGHT = 64;
 
