@@ -2,6 +2,7 @@ package coffeecatteam.tilegame;
 
 import coffeecatteam.tilegame.gfx.Camera;
 import coffeecatteam.tilegame.input.KeyManager;
+import coffeecatteam.tilegame.input.MouseManager;
 import coffeecatteam.tilegame.worlds.World;
 
 public class Handler {
@@ -19,6 +20,10 @@ public class Handler {
 
     public KeyManager getKeyManager() {
         return game.getKeyManager();
+    }
+
+    public MouseManager getMouseManager() {
+        return game.getMouseManager();
     }
 
     public int getWidth() {

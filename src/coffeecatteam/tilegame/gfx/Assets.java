@@ -24,10 +24,15 @@ public class Assets {
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
     public static BufferedImage ROCK;
 
+    /* GUI */
+    public static BufferedImage[] BUTTON_START = new BufferedImage[2];
+    public static BufferedImage[] BUTTON_QUIT = new BufferedImage[2];
+
     public static void init() {
         SpriteSheet terrainSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/terrain.png"));
         SpriteSheet characrerSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/player.png"));
         SpriteSheet natureSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
+        SpriteSheet menuSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/menu.png"));
 
         /* Terrain Tiles */
         GRASS = getSprite(terrainSheet, 0, 0, width, height);
@@ -57,6 +62,12 @@ public class Assets {
         TREE_MEDIUM = getSprite(natureSheet, 0, 1, width * 2, height * 2);
         TREE_LARGE = getSprite(natureSheet, 0, 2, width * 2, height * 2);
         ROCK = getSprite(natureSheet, 1, 0, width, height);
+
+        /* GUI */
+        BUTTON_START[0] = getSprite(menuSheet, 0, 0, width * 3, height);
+        BUTTON_START[1] = getSprite(menuSheet, 0, 1, width * 3, height);
+        BUTTON_QUIT[0] = getSprite(menuSheet, 0, 2, width * 3, height);
+        BUTTON_QUIT[1] = getSprite(menuSheet, 0, 3, width * 3, height);
     }
 
     private static BufferedImage[] getFrames(SpriteSheet sheet, int xStart, int xEnd) {

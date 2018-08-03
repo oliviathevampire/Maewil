@@ -1,8 +1,7 @@
 package coffeecatteam.tilegame.display;
 
-import javax.swing.JFrame;
-import java.awt.Canvas;
-import java.awt.Dimension;
+import javax.swing.*;
+import java.awt.*;
 
 public class Display {
 

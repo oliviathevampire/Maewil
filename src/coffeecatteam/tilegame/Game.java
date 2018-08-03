@@ -4,6 +4,7 @@ import coffeecatteam.tilegame.display.Display;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.gfx.Camera;
 import coffeecatteam.tilegame.input.KeyManager;
+import coffeecatteam.tilegame.input.MouseManager;
 import coffeecatteam.tilegame.state.State;
 import coffeecatteam.tilegame.state.StateGame;
 import coffeecatteam.tilegame.state.StateMenu;
@@ -30,6 +31,7 @@ public class Game implements Runnable {
     public State menuState;
 
     private KeyManager keyManager;
+    private MouseManager mouseManager;
 
     private Camera camera;
 
@@ -40,11 +42,16 @@ public class Game implements Runnable {
         this.width = width;
         this.height = height;
         keyManager = new KeyManager();
+        mouseManager = new MouseManager();
     }
 
     private void init() {
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
+        display.getFrame().addMouseListener(mouseManager);
+        display.getFrame().addMouseMotionListener(mouseManager);
+        display.getCanvas().addMouseListener(mouseManager);
+        display.getCanvas().addMouseMotionListener(mouseManager);
         Assets.init();
 
         handler = new Handler(this);
@@ -52,7 +59,7 @@ public class Game implements Runnable {
 
         gameState = new StateGame(handler);
         menuState = new StateMenu(handler);
-        State.setState(gameState);
+        State.setState(menuState);
     }
 
     private void tick() {
@@ -117,6 +124,10 @@ public class Game implements Runnable {
 
     public KeyManager getKeyManager() {
         return keyManager;
+    }
+
+    public MouseManager getMouseManager() {
+        return mouseManager;
     }
 
     public Camera getCamera() {
