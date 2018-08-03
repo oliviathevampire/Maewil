@@ -13,12 +13,26 @@ public class Assets {
     public static BufferedImage[] WATER, LAVA;
     public static BufferedImage[] WATER_SPLASH;
 
+    /* Health */
+    public static BufferedImage[] HEARTS;
+    public static BufferedImage[] ARMOR;
+    public static BufferedImage[] SPRINT;
+
     /* Player Frames */
     public static BufferedImage[] PLAYER_IDLE;
     public static BufferedImage[] PLAYER_UP;
     public static BufferedImage[] PLAYER_DOWN;
     public static BufferedImage[] PLAYER_LEFT;
     public static BufferedImage[] PLAYER_RIGHT;
+
+    /* Entities */
+    public static BufferedImage[] EXTRA_LIFE;
+
+    public static BufferedImage[] ZOMBIE_IDLE;
+    public static BufferedImage[] ZOMBIE_UP;
+    public static BufferedImage[] ZOMBIE_DOWN;
+    public static BufferedImage[] ZOMBIE_LEFT;
+    public static BufferedImage[] ZOMBIE_RIGHT;
 
     /* Nature */
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
@@ -30,8 +44,12 @@ public class Assets {
 
     public static void init() {
         SpriteSheet terrainSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/terrain.png"));
+
+        SpriteSheet healthSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/health.png"));
         SpriteSheet characrerSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/player.png"));
+        SpriteSheet zombieSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/zombie.png"));
         SpriteSheet natureSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
+
         SpriteSheet menuSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/menu.png"));
 
         /* Terrain Tiles */
@@ -49,6 +67,12 @@ public class Assets {
 
         WATER = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/water.png")), 0, 15);
         LAVA = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/lava.png")), 0, 15);
+        WATER_SPLASH = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/water_splash.png")), 0, 15);
+
+        /* Health */
+        HEARTS = getFrames(healthSheet, 0, 0, 4);
+        ARMOR = getFrames(healthSheet, 1, 0, 3);
+        SPRINT = getFrames(healthSheet, 2, 0, 4);
 
         /* Player Frames */
         PLAYER_IDLE = getFrames(characrerSheet, 0, 0, 7);
@@ -56,6 +80,15 @@ public class Assets {
         PLAYER_DOWN = getFrames(characrerSheet, 1, 3, 5);
         PLAYER_LEFT = getFrames(characrerSheet, 3, 0, 3);
         PLAYER_RIGHT = getFrames(characrerSheet, 2, 0, 7);
+
+        /* Entities */
+        EXTRA_LIFE = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/extra_life.png")), 0, 7);
+
+        ZOMBIE_IDLE = getFrames(zombieSheet, 0, 0, 3);
+        ZOMBIE_UP = getFrames(zombieSheet, 1, 0, 2);
+        ZOMBIE_DOWN = getFrames(zombieSheet, 1, 3, 5);
+        ZOMBIE_LEFT = getFrames(zombieSheet, 2, 4, 7);
+        ZOMBIE_RIGHT = getFrames(zombieSheet, 2, 0, 3);
 
         /* Nature */
         TREE_SMALL = getSprite(natureSheet, 0, 0, width, height * 2);
