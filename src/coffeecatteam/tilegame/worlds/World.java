@@ -72,6 +72,7 @@ public class World {
     }
 
     private void loadWorld(String path) {
+    	System.out.println("Loading World: " + path);
         String file = Utils.loadFileAsString(path);
         String[] tokens = file.split("\\s+");
         width = Utils.parseInt(tokens[0]);
@@ -85,6 +86,7 @@ public class World {
                 tiles[x][y] = Utils.parseInt(tokens[(x + y * width) + 4]);
             }
         }
+        System.out.println("World Loaded");
     }
 
     public int getWidth() {
