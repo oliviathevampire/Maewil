@@ -13,6 +13,9 @@ public class Assets {
     public static BufferedImage[] WATER, LAVA;
     public static BufferedImage[] WATER_SPLASH;
 
+    /* Items */
+    public static BufferedImage ITEM_STICK, ITEM_ROCK;
+
     /* Health */
     public static BufferedImage[] HEARTS;
     public static BufferedImage[] ARMOR;
@@ -44,11 +47,13 @@ public class Assets {
 
     public static void init() {
         SpriteSheet terrainSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/terrain.png"));
+        SpriteSheet natureSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
 
         SpriteSheet healthSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/health.png"));
+        SpriteSheet itemsSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/items.png"));
+
         SpriteSheet characrerSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/player.png"));
         SpriteSheet zombieSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/zombie.png"));
-        SpriteSheet natureSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
 
         SpriteSheet menuSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/menu.png"));
 
@@ -68,6 +73,10 @@ public class Assets {
         WATER = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/water.png")), 0, 15);
         LAVA = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/lava.png")), 0, 15);
         WATER_SPLASH = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/water_splash.png")), 0, 15);
+
+        /* Items */
+        ITEM_STICK = getSprite(itemsSheet, 0, 0, width, height);
+        ITEM_ROCK = getSprite(itemsSheet, 1, 0, width, height);
 
         /* Health */
         HEARTS = getFrames(healthSheet, 0, 0, 4);

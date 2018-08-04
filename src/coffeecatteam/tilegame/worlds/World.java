@@ -4,7 +4,9 @@ import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.EntityManager;
 import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
 import coffeecatteam.tilegame.entities.creatures.EntityZombie;
+import coffeecatteam.tilegame.entities.statics.EntityRock;
 import coffeecatteam.tilegame.entities.statics.EntityTree;
+import coffeecatteam.tilegame.items.ItemManager;
 import coffeecatteam.tilegame.tiles.Tile;
 import coffeecatteam.tilegame.utils.Utils;
 
@@ -18,14 +20,17 @@ public class World {
     private int[][] tiles;
 
     private EntityManager entityManager;
+    private ItemManager itemManager;
 
     public World(Handler handler, String path) {
         this.handler = handler;
         entityManager = new EntityManager(handler, new EntityPlayer(handler, 0, 0));
+        itemManager = new ItemManager(handler);
 
         entityManager.addEntity(new EntityTree(handler, 2 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.SMALL));
         entityManager.addEntity(new EntityTree(handler, 3 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.MEDIUM));
         entityManager.addEntity(new EntityTree(handler, 5 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.LARGE));
+        entityManager.addEntity(new EntityRock(handler, 4.5f * Tile.TILE_WIDTH, 11.5f * Tile.TILE_HEIGHT));
 
         entityManager.addEntity(new EntityZombie(handler, 2 * Tile.TILE_WIDTH, 15 * Tile.TILE_HEIGHT));
 
@@ -46,6 +51,7 @@ public class World {
             }
         }
 
+        itemManager.tick();;
         entityManager.tick();
     }
 
@@ -62,6 +68,7 @@ public class World {
         }
 
         entityManager.render(g);
+        itemManager.render(g);
     }
 
     public Tile getTile(int x, int y) {
@@ -95,6 +102,10 @@ public class World {
         System.out.println("World Loaded!\n");
     }
 
+    public Handler getHandler() {
+        return handler;
+    }
+
     public int getWidth() {
         return width;
     }
@@ -113,5 +124,9 @@ public class World {
 
     public EntityManager getEntityManager() {
         return entityManager;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
     }
 }

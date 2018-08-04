@@ -79,4 +79,9 @@ public class EntityZombie extends EntityCreature {
     public void render(Graphics g) {
         g.drawImage(currentAnim.getCurrentFrame(), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()), width, height, null);
     }
+
+    @Override
+    public void die() {
+
+    }
 }

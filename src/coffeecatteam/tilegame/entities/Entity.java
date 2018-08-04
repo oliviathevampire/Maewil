@@ -2,15 +2,20 @@ package coffeecatteam.tilegame.entities;
 
 import coffeecatteam.tilegame.Handler;
 
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 
 public abstract class Entity {
+
+    public static final int DEFAULT_HEALTH = 10;
 
     protected Handler handler;
     protected float x, y;
     protected int width, height;
+    protected int health;
+    protected boolean active = true;
     protected Rectangle bounds;
+
+    protected boolean showHitbox = false;
 
     public Entity(Handler handler, float x, float y, int width, int height) {
         this.handler = handler;
@@ -18,6 +23,7 @@ public abstract class Entity {
         this.y = y;
         this.width = width;
         this.height = height;
+        health = DEFAULT_HEALTH;
 
         bounds = new Rectangle(0, 0, width, height);
     }
@@ -25,6 +31,25 @@ public abstract class Entity {
     public abstract void tick();
 
     public abstract void render(Graphics g);
+
+    public void renderA(Graphics g) {
+        render(g);
+
+        if (showHitbox) {
+            g.setColor(Color.red);
+            g.fillRect((int) (x + bounds.x - handler.getCamera().getxOffset()), (int) (y + bounds.y - handler.getCamera().getyOffset()), bounds.width, bounds.height);
+        }
+    }
+
+    public abstract void die();
+
+    public void hurt(int damage) {
+        health -= damage;
+        if (health <= 0) {
+            active = false;
+            die();
+        }
+    }
 
     public boolean checkEntityCollisions(float xOffset, float yOffset) {
         for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
@@ -70,5 +95,21 @@ public abstract class Entity {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

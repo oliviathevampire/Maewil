@@ -2,10 +2,12 @@ package coffeecatteam.tilegame.entities.statics;
 
 import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.gfx.Assets;
+import coffeecatteam.tilegame.items.Item;
 import coffeecatteam.tilegame.tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class EntityTree extends EntityStatic {
 
@@ -29,9 +31,13 @@ public class EntityTree extends EntityStatic {
     @Override
     public void render(Graphics g) {
         g.drawImage(type.getTexture(), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()), width, height, null);
+    }
 
-//        g.setColor(Color.red);
-//        g.fillRect((int) (x + bounds.x - handler.getCamera().getxOffset()), (int) (y + bounds.y - handler.getCamera().getyOffset()), bounds.width, bounds.height);
+    @Override
+    public void die() {
+        int amt = new Random().nextInt(5) + 1;
+        for (int i = 0; i < amt; i++)
+            handler.getWorld().getItemManager().addItem(Item.STICK.createNew((int) (x + new Random().nextInt(5) * Item.WIDTH), (int) (y + new Random().nextInt(5) * Item.HEIGHT)));
     }
 
     public enum TreeType {
