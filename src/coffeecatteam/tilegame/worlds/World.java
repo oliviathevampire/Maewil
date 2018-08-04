@@ -33,6 +33,8 @@ public class World {
         entityManager.addEntity(new EntityRock(handler, 4.5f * Tile.TILE_WIDTH, 11.5f * Tile.TILE_HEIGHT));
 
         entityManager.addEntity(new EntityZombie(handler, 2 * Tile.TILE_WIDTH, 15 * Tile.TILE_HEIGHT));
+        entityManager.addEntity(new EntityZombie(handler, 2 * Tile.TILE_WIDTH, 16 * Tile.TILE_HEIGHT));
+        entityManager.addEntity(new EntityZombie(handler, 2 * Tile.TILE_WIDTH, 17 * Tile.TILE_HEIGHT));
 
         loadWorld(path);
         entityManager.getPlayer().setX(spawnX * Tile.TILE_WIDTH);
