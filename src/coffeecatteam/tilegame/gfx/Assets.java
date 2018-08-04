@@ -6,15 +6,18 @@ public class Assets {
 
     private static final int width = 16, height = 16;
 
-    /* Terrain Tiles */
+    /* Tiles */
     public static BufferedImage GRASS, DIRT, SAND;
     public static BufferedImage STONE, ANDESITE, DIORITE, COAL_ORE, IRON_COAL, GOLD_ORE, DIAMOND_ORE, OBSIDIAN;
 
     public static BufferedImage[] WATER, LAVA;
     public static BufferedImage[] WATER_SPLASH;
 
+    public static BufferedImage[] ULTIMATE_TILE;
+
     /* Items */
     public static BufferedImage ITEM_STICK, ITEM_ROCK;
+    public static BufferedImage ITEM_ROTTEN_FLESH;
 
     /* Health */
     public static BufferedImage[] HEARTS;
@@ -22,20 +25,12 @@ public class Assets {
     public static BufferedImage[] SPRINT;
 
     /* Player Frames */
-    public static BufferedImage[] PLAYER_IDLE;
-    public static BufferedImage[] PLAYER_UP;
-    public static BufferedImage[] PLAYER_DOWN;
-    public static BufferedImage[] PLAYER_LEFT;
-    public static BufferedImage[] PLAYER_RIGHT;
+    public static BufferedImage[] PLAYER_IDLE, PLAYER_UP, PLAYER_DOWN, PLAYER_LEFT, PLAYER_RIGHT, PLAYER_DEAD;
 
     /* Entities */
     public static BufferedImage[] EXTRA_LIFE;
 
-    public static BufferedImage[] ZOMBIE_IDLE;
-    public static BufferedImage[] ZOMBIE_UP;
-    public static BufferedImage[] ZOMBIE_DOWN;
-    public static BufferedImage[] ZOMBIE_LEFT;
-    public static BufferedImage[] ZOMBIE_RIGHT;
+    public static BufferedImage[] ZOMBIE_IDLE, ZOMBIE_UP, ZOMBIE_DOWN, ZOMBIE_LEFT, ZOMBIE_RIGHT;
 
     /* Nature */
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
@@ -49,7 +44,7 @@ public class Assets {
         SpriteSheet terrainSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/terrain.png"));
         SpriteSheet natureSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
 
-        SpriteSheet healthSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/health.png"));
+        SpriteSheet healthSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health.png"));
         SpriteSheet itemsSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/items.png"));
 
         SpriteSheet characrerSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/player.png"));
@@ -57,7 +52,7 @@ public class Assets {
 
         SpriteSheet menuSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/menu.png"));
 
-        /* Terrain Tiles */
+        /* Tiles */
         GRASS = getSprite(terrainSheet, 0, 0, width, height);
         DIRT = getSprite(terrainSheet, 1, 0, width, height);
         STONE = getSprite(terrainSheet, 2, 0, width, height);
@@ -74,9 +69,12 @@ public class Assets {
         LAVA = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/lava.png")), 0, 15);
         WATER_SPLASH = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/water_splash.png")), 0, 15);
 
+        ULTIMATE_TILE = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/ultimate.png")), 0, 0, 6, width * 2, height * 2);
+
         /* Items */
         ITEM_STICK = getSprite(itemsSheet, 0, 0, width, height);
         ITEM_ROCK = getSprite(itemsSheet, 1, 0, width, height);
+        ITEM_ROTTEN_FLESH = getSprite(itemsSheet, 2, 0, width, height);
 
         /* Health */
         HEARTS = getFrames(healthSheet, 0, 0, 4);
@@ -85,10 +83,11 @@ public class Assets {
 
         /* Player Frames */
         PLAYER_IDLE = getFrames(characrerSheet, 0, 0, 7);
-        PLAYER_UP = getFrames(characrerSheet, 1, 0, 2);
-        PLAYER_DOWN = getFrames(characrerSheet, 1, 3, 5);
+        PLAYER_UP = getFrames(characrerSheet, 1, 0, 3);
+        PLAYER_DOWN = getFrames(characrerSheet, 1, 4, 7);
         PLAYER_LEFT = getFrames(characrerSheet, 3, 0, 3);
         PLAYER_RIGHT = getFrames(characrerSheet, 2, 0, 7);
+        PLAYER_DEAD = getFrames(characrerSheet, 4, 0, 7);
 
         /* Entities */
         EXTRA_LIFE = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/extra_life.png")), 0, 7);
@@ -117,6 +116,10 @@ public class Assets {
     }
 
     private static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd) {
+        return getFrames(sheet, y, xStart, xEnd, width, height);
+    }
+
+    private static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd, int width, int height) {
         BufferedImage[] frames = new BufferedImage[(xEnd - xStart) + 1];
         int index = 0;
         for (int x = xStart; x < xEnd + 1; x++) {

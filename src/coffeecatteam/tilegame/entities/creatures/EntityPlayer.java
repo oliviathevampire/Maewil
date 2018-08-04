@@ -4,12 +4,15 @@ import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.gfx.Animation;
 import coffeecatteam.tilegame.gfx.Assets;
+import coffeecatteam.tilegame.gfx.overlays.Overlay;
+import coffeecatteam.tilegame.gfx.overlays.OverlayPlayerHealth;
 
 import java.awt.*;
+import java.util.Iterator;
 
 public class EntityPlayer extends EntityCreature {
 
-    private Animation animIdle, animUp, animDown, animLeft, animRight;
+    private Animation animIdle, animUp, animDown, animLeft, animRight, animDead;
     private Animation currentAnim;
 
     //private Animation testAnim;
@@ -32,6 +35,7 @@ public class EntityPlayer extends EntityCreature {
         animDown = new Animation(upDownSpeed, Assets.PLAYER_DOWN);
         animLeft = new Animation(speed, Assets.PLAYER_LEFT);
         animRight = new Animation(speed, Assets.PLAYER_RIGHT);
+        animDead = new Animation(speed, Assets.PLAYER_DEAD);
 
         currentAnim = animIdle;
 
@@ -40,17 +44,19 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void tick() {
-        // Movement
-        getInput();
-        move();
-        handler.getCamera().centerOnEntity(this);
+        if (isActive()) {
+            // Movement
+            getInput();
+            move();
+            handler.getCamera().centerOnEntity(this);
+
+            // Attack
+            checkAttacks();
+        }
 
         // Animation
         currentAnim.tick();
         //testAnim.tick();
-
-        // Attack
-        checkAttacks();
     }
 
     private void checkAttacks() {
@@ -94,8 +100,8 @@ public class EntityPlayer extends EntityCreature {
     }
 
     @Override
-    public void die() {
-
+    public void die(Iterator<Entity> it) {
+        currentAnim = animDead;
     }
 
     private void getInput() {
@@ -124,12 +130,6 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void render(Graphics g) {
-        for (int i = 0; i < 3; i++) {
-            int x = (int) (this.x - handler.getCamera().getxOffset()) - 10 * i * 2 + 45;
-            int y = (int) (this.y - handler.getCamera().getyOffset()) - 40;
-            g.drawImage(Assets.HEARTS[0], x, y, width / 4, height / 4, null);
-            g.drawImage(Assets.SPRINT[0], x, y + 20, width / 4, height / 4, null);
-        }
 
         g.drawImage(currentAnim.getCurrentFrame(), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()), width, height, null);
         //g.drawImage(testAnim.getCurrentFrame(), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()) - 100, width, height, null);

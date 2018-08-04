@@ -1,10 +1,13 @@
 package coffeecatteam.tilegame.entities.statics;
 
 import coffeecatteam.tilegame.Handler;
+import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.items.Item;
+import com.sun.org.apache.xml.internal.security.utils.I18n;
 
 import java.awt.*;
+import java.util.Iterator;
 import java.util.Random;
 
 public class EntityRock extends EntityStatic {
@@ -29,9 +32,10 @@ public class EntityRock extends EntityStatic {
     }
 
     @Override
-    public void die() {
+    public void die(Iterator<Entity> it) {
+        super.die(it);
         int amt = new Random().nextInt(5) + 1;
         for (int i = 0; i < amt; i++)
-            handler.getWorld().getItemManager().addItem(Item.ROCK.createNew((int) (x + new Random().nextInt(5) * Item.WIDTH), (int) (y + new Random().nextInt(5) * Item.HEIGHT)));
+            handler.getWorld().getItemManager().addItem(Item.ROCK.createNew((int) (x + new Random().nextInt(5) * Item.WIDTH), (int) (y + new Random().nextInt(5) * Item.HEIGHT))); // P.32
     }
 }

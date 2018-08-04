@@ -2,6 +2,8 @@ package coffeecatteam.tilegame.entities;
 
 import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
+import coffeecatteam.tilegame.gfx.overlays.Overlay;
+import coffeecatteam.tilegame.gfx.overlays.OverlayPlayerHealth;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,11 +21,17 @@ public class EntityManager {
         return 1;
     };
 
+    /* Overlays */
+    private Overlay healthOverlay;
+
     public EntityManager(Handler handler, EntityPlayer player) {
         this.handler = handler;
         this.player = player;
         entities = new ArrayList<>();
         addEntity(this.player);
+
+        /* Overlays */
+        healthOverlay = new OverlayPlayerHealth(handler, player);
     }
 
     public void tick() {
@@ -32,7 +40,7 @@ public class EntityManager {
             Entity e = it.next();
             e.tick();
             if (!e.isActive())
-                it.remove();
+                e.die(it);
         }
         entities.sort(renderSorter);
     }
@@ -40,6 +48,9 @@ public class EntityManager {
     public void render(Graphics g) {
         for (Entity e : entities)
             e.renderA(g);
+
+        /* Overlays */
+        healthOverlay.render(g);
     }
 
     public void addEntity(Entity e) {
