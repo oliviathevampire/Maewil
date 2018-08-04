@@ -3,10 +3,11 @@ package coffeecatteam.tilegame.entities;
 import coffeecatteam.tilegame.Handler;
 
 import java.awt.*;
+import java.util.Iterator;
 
 public abstract class Entity {
 
-    public static final int DEFAULT_HEALTH = 10;
+    public static final int DEFAULT_HEALTH = 100;
 
     protected Handler handler;
     protected float x, y;
@@ -41,13 +42,15 @@ public abstract class Entity {
         }
     }
 
-    public abstract void die();
+    public void die(Iterator<Entity> it) {
+        it.remove();
+    }
 
     public void hurt(int damage) {
         health -= damage;
         if (health <= 0) {
             active = false;
-            die();
+            health = 0;
         }
     }
 
