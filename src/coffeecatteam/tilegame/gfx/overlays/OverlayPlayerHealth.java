@@ -4,6 +4,7 @@ import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
 import coffeecatteam.tilegame.gfx.Assets;
+import coffeecatteam.tilegame.utils.Utils;
 
 import java.awt.*;
 
@@ -36,6 +37,10 @@ public class OverlayPlayerHealth extends Overlay {
             hStage = 3;
         if (player.getHealth() == 0)
             hStage = 4;
+
+        g.setColor(Color.red);
+        g.setFont(Utils.getSlkscrFont(10, handler.getHeight() - hHeight, 20f));
+        g.drawString("HP: " + player.getHealth(), 0, 0);
 
         g.drawImage(Assets.HEARTS[hStage], 0, handler.getHeight() - hHeight, hWidth, hHeight, null);
     }

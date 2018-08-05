@@ -9,6 +9,7 @@ import coffeecatteam.tilegame.gfx.overlays.OverlayPlayerHealth;
 
 import java.awt.*;
 import java.util.Iterator;
+import java.util.Random;
 
 public class EntityPlayer extends EntityCreature {
 
@@ -93,7 +94,7 @@ public class EntityPlayer extends EntityCreature {
             if (e.equals(this))
                 continue;
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
-                e.hurt(1);
+                e.hurt(new Random().nextInt(5) + 1);
                 return;
             }
         }

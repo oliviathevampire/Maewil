@@ -154,7 +154,7 @@ public class EntityZombie extends EntityCreature {
             g.drawImage(sheet.crop(0, 9, 16, 2), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()) - 8, width, 4, null);
 
             float ht = (health * 100.0f) / 15;
-            g.drawImage(sheet.crop(0, 5, 16, 2), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()) - 8, (int) ht, 4, null);
+            g.drawImage(sheet.crop(0, 5, 16, 2), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()) - 8, (int) (ht / 10), 4, null);
         }
     }
 
