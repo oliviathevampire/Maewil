@@ -144,18 +144,16 @@ public class EntityZombie extends EntityCreature {
             currentAnim = animIdle;
     }
 
-    SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health_bar.png"));
+    private SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health_bar.png"));
 
     @Override
     public void render(Graphics g) {
         g.drawImage(currentAnim.getCurrentFrame(), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()), width, height, null);
 
-        if (health != DEFAULT_HEALTH) {
-            g.drawImage(sheet.crop(0, 9, 16, 2), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()) - 8, width, 4, null);
+        g.drawImage(sheet.crop(0, 9, 16, 2), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()) - 8, width, 4, null);
 
-            float ht = (health * 100.0f) / 15;
-            g.drawImage(sheet.crop(0, 5, 16, 2), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()) - 8, (int) (ht / 10), 4, null);
-        }
+        float ht = (health * 100.0f) / 15;
+        g.drawImage(sheet.crop(0, 5, 16, 2), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()) - 8, (int) (ht / 10), 4, null);
     }
 
     @Override

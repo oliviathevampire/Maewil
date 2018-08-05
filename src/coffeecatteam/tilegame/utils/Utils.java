@@ -20,6 +20,10 @@ public class Utils {
         }
     }
 
+    public static Font getSlkscrFont(double x, double y) {
+        return getSlkscrFont(x, y, 20f);
+    }
+
     public static Font getSlkscrFont(double x, double y, float size) {
         AffineTransform at = AffineTransform.getTranslateInstance(x, y);
         return SLKSCR_FONT.deriveFont(size).deriveFont(at);

@@ -39,7 +39,7 @@ public class OverlayPlayerHealth extends Overlay {
             hStage = 4;
 
         g.setColor(Color.red);
-        g.setFont(Utils.getSlkscrFont(10, handler.getHeight() - hHeight, 20f));
+        g.setFont(Utils.getSlkscrFont(10, handler.getHeight() - hHeight));
         g.drawString("HP: " + player.getHealth(), 0, 0);
 
         g.drawImage(Assets.HEARTS[hStage], 0, handler.getHeight() - hHeight, hWidth, hHeight, null);
