@@ -8,6 +8,7 @@ import coffeecatteam.tilegame.gfx.ImageLoader;
 import coffeecatteam.tilegame.gfx.SpriteSheet;
 import coffeecatteam.tilegame.items.Item;
 import coffeecatteam.tilegame.tiles.Tile;
+import coffeecatteam.tilegame.utils.Utils;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -59,9 +60,7 @@ public class EntityZombie extends EntityCreature {
             if (distance < 350) {
                 xMove = x * multiplier;
                 yMove = y * multiplier;
-            } // else {
-//                wander();
-//            }
+            }
         }
         updateAnim();
         move();
@@ -71,40 +70,6 @@ public class EntityZombie extends EntityCreature {
 
         // Attack arSizeRectangle
         checkAttacks();
-    }
-
-    private long lastWanderTimer, wanderCooldown = 10000, wanderTimer = wanderCooldown;
-    private float xWander, yWander;
-
-    private void wander() {
-        wanderTimer += System.currentTimeMillis() - lastWanderTimer;
-        lastWanderTimer = System.currentTimeMillis();
-        if (wanderTimer > wanderCooldown) {
-            List<String> poss = new ArrayList<>();
-            for (int y = 0; y < handler.getWorld().getHeight(); y++) {
-                for (int x = 0; x < handler.getWorld().getWidth(); x++) {
-                    Tile t = handler.getWorld().getTile(x, y);
-                    boolean isSolid = t.isSolid();
-                    if (!isSolid)
-                        poss.add(x + "," + y);
-                }
-            }
-            String t = poss.get(new Random().nextInt(poss.size()));
-            xWander = Float.parseFloat(t.split(",")[0]);
-            yWander = Float.parseFloat(t.split(",")[1]);
-
-            wanderTimer = 0;
-            return;
-        }
-
-        float x = xWander - this.x;
-        float y = yWander - this.y;
-
-        float distance = (float) Math.sqrt(x * x + y * y);
-        float multiplier = 2.0f / distance;
-
-        xMove = x * multiplier;
-        yMove = y * multiplier;
     }
 
     private void checkAttacks() {
@@ -126,7 +91,7 @@ public class EntityZombie extends EntityCreature {
         for (Entity e : handler.getWorld().getEntityManager().getEntities())
             if (e.equals(handler.getWorld().getEntityManager().getPlayer()))
                 if (e.getCollisionBounds(0, 0).intersects(ar))
-                    e.hurt(new Random().nextInt(3) + 1);
+                    e.hurt(Utils.getRandomInt(1, 3));
     }
 
     private void updateAnim() {
@@ -161,6 +126,6 @@ public class EntityZombie extends EntityCreature {
         super.die(it);
         int amt = new Random().nextInt(3) + 1;
         for (int i = 0; i < amt; i++)
-            handler.getWorld().getItemManager().addItem(Item.ROTTEN_FLESH.createNew((int) (x + new Random().nextInt(2) * Item.WIDTH), (int) (y + new Random().nextInt(2) * Item.HEIGHT)));
+            handler.getWorld().getItemManager().addItem(Item.ROTTEN_FLESH.createNew((int) (x + Utils.getRandomInt(0, 2) * Item.WIDTH), (int) (y + Utils.getRandomInt(0, 2) * Item.HEIGHT)));
     }
 }
