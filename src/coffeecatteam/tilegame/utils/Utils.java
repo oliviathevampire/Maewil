@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 
 public class Utils {
 
@@ -27,6 +28,15 @@ public class Utils {
     public static Font getSlkscrFont(double x, double y, float size) {
         AffineTransform at = AffineTransform.getTranslateInstance(x, y);
         return SLKSCR_FONT.deriveFont(size).deriveFont(at);
+    }
+
+    public static int getRandomInt(int min, int max) {
+
+        if (min >= max)
+            throw new IllegalArgumentException("max must be greater than min");
+
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
     }
 
     public static String loadFileAsString(String path) {

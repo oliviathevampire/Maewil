@@ -5,6 +5,7 @@ import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.items.Item;
 import coffeecatteam.tilegame.tiles.Tile;
+import coffeecatteam.tilegame.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -38,9 +39,9 @@ public class EntityTree extends EntityStatic {
     @Override
     public void die(Iterator<Entity> it) {
         super.die(it);
-        int amt = new Random().nextInt(5) + 1;
+        int amt = new Random().nextInt(2) + 1;
         for (int i = 0; i < amt; i++)
-            handler.getWorld().getItemManager().addItem(Item.STICK.createNew((int) (x + new Random().nextInt(5) * Item.WIDTH), (int) (y + new Random().nextInt(5) * Item.HEIGHT)));
+            handler.getWorld().getItemManager().addItem(Item.STICK.createNew((int) (x + Utils.getRandomInt(0, 2) * Item.WIDTH), (int) (y + Utils.getRandomInt(0, 2) * Item.HEIGHT)));
     }
 
     public enum TreeType {
