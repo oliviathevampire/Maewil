@@ -54,7 +54,6 @@ public class Assets {
         SpriteSheet zombieSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/zombie.png"));
 
         SpriteSheet menuSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/menu.png"));
-        SpriteSheet titleSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/title.png"));
 
         /* Tiles */
         GRASS = getSprite(terrainSheet, 0, 0, width, height);
