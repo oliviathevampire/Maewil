@@ -8,7 +8,7 @@ public class Assets {
 
     /* Tiles */
     public static BufferedImage GRASS, DIRT, SAND;
-    public static BufferedImage STONE, ANDESITE, DIORITE, COAL_ORE, IRON_COAL, GOLD_ORE, DIAMOND_ORE, OBSIDIAN;
+    public static BufferedImage STONE, ANDESITE, DIORITE, COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE, OBSIDIAN;
 
     public static BufferedImage[] WATER, LAVA;
     public static BufferedImage[] WATER_SPLASH;
@@ -63,7 +63,7 @@ public class Assets {
         ANDESITE = getSprite(terrainSheet, 4, 0, width, height);
         DIORITE = getSprite(terrainSheet, 5, 0, width, height);
         COAL_ORE = getSprite(terrainSheet, 6, 0, width, height);
-        IRON_COAL = getSprite(terrainSheet, 7, 0, width, height);
+        IRON_ORE = getSprite(terrainSheet, 7, 0, width, height);
         GOLD_ORE = getSprite(terrainSheet, 0, 1, width, height);
         DIAMOND_ORE = getSprite(terrainSheet, 1, 1, width, height);
         OBSIDIAN = getSprite(terrainSheet, 2, 1, width, height);

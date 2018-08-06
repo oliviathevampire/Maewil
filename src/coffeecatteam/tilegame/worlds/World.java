@@ -8,6 +8,7 @@ import coffeecatteam.tilegame.entities.statics.EntityRock;
 import coffeecatteam.tilegame.entities.statics.EntityTree;
 import coffeecatteam.tilegame.items.ItemManager;
 import coffeecatteam.tilegame.tiles.Tile;
+import coffeecatteam.tilegame.tiles.Tiles;
 import coffeecatteam.tilegame.utils.Utils;
 
 import java.awt.*;
@@ -75,11 +76,11 @@ public class World {
 
     public Tile getTile(int x, int y) {
         if (x < 0 || y < 0 || x >= width || y >= height)
-            return Tile.DIRT;
+            return Tiles.DIRT;
 
         Tile t = Tile.tiles[tiles[x][y]];
         if (t == null)
-            return Tile.DIRT;
+            return Tiles.DIRT;
         return t;
     }
 
