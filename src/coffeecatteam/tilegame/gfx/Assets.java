@@ -69,7 +69,7 @@ public class Assets {
         LAVA = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/lava.png")), 0, 15);
         WATER_SPLASH = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/water_splash.png")), 0, 15);
 
-        ULTIMATE_TILE = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/ultimate.png")), 0, 0, 6, width * 2, height * 2);
+        //ULTIMATE_TILE = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/ultimate.png")), 0, 0, 6, width * 2, height * 2);
 
         /* Items */
         ITEM_STICK = getSprite(itemsSheet, 0, 0, width, height);
