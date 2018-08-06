@@ -6,6 +6,8 @@ import coffeecatteam.tilegame.gfx.Animation;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.gfx.overlays.Overlay;
 import coffeecatteam.tilegame.gfx.overlays.OverlayPlayerHealth;
+import coffeecatteam.tilegame.inventory.Inventory;
+import coffeecatteam.tilegame.utils.Utils;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -19,6 +21,8 @@ public class EntityPlayer extends EntityCreature {
     //private Animation testAnim;
 
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
+
+    private Inventory inventory;
 
     public EntityPlayer(Handler handler, float x, float y) {
         super(handler, x, y, EntityCreature.DEFAULT_CREATURE_WIDTH, EntityCreature.DEFAULT_CREATURE_HEIGHT);
@@ -41,18 +45,23 @@ public class EntityPlayer extends EntityCreature {
         currentAnim = animIdle;
 
         //testAnim = new Animation(100, Assets.EXTRA_LIFE);
+
+        inventory = new Inventory(handler);
     }
 
     @Override
     public void tick() {
         if (isActive()) {
             // Movement
-            getInput();
-            move();
+            if (!inventory.isActive()) {
+                getInput();
+                move();
+            }
             handler.getCamera().centerOnEntity(this);
 
             // Attack
             checkAttacks();
+            inventory.tick();
         }
 
         // Animation
@@ -94,7 +103,7 @@ public class EntityPlayer extends EntityCreature {
             if (e.equals(this))
                 continue;
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
-                e.hurt(new Random().nextInt(5) + 1);
+                e.hurt(Utils.getRandomInt(5, 10));
                 return;
             }
         }
@@ -131,8 +140,17 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void render(Graphics g) {
+        inventory.render(g);
 
         g.drawImage(currentAnim.getCurrentFrame(), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()), width, height, null);
         //g.drawImage(testAnim.getCurrentFrame(), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()) - 100, width, height, null);
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 }
