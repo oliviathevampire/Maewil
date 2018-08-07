@@ -79,15 +79,15 @@ public class Assets {
         DIORITE = getSprite(terrainSheet, 5, 0, width, height);
         COAL_ORE = getSprite(terrainSheet, 6, 0, width, height);
         IRON_ORE = getSprite(terrainSheet, 7, 0, width, height);
-        GOLD_ORE = getSprite(terrainSheet, 0, 1, width, height);
-        DIAMOND_ORE = getSprite(terrainSheet, 1, 1, width, height);
-        OBSIDIAN = getSprite(terrainSheet, 2, 1, width, height);
+        GOLD_ORE = getSprite(terrainSheet, 8, 0, width, height);
+        DIAMOND_ORE = getSprite(terrainSheet, 9, 0, width, height);
+        OBSIDIAN = getSprite(terrainSheet, 10, 0, width, height);
 
-        PLANKS = getSprite(terrainSheet, 3, 1, width, height);
-        BROKEN_STONE = getSprite(terrainSheet, 4, 1, width, height);
+        PLANKS = getSprite(terrainSheet, 11, 0, width, height);
+        BROKEN_STONE = getSprite(terrainSheet, 12, 0, width, height);
 
-        WATER = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/water.png")), 0, 15);
-        LAVA = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/lava.png")), 0, 15);
+        WATER = getFrames(terrainSheet, 6, 0, 15);
+        LAVA = getFrames(terrainSheet, 7, 0, 15);
 
         /* Special Tiles */
         WATER_SPLASH = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/water_splash.png")), 0, 15);
