@@ -28,12 +28,15 @@ public class Inventory {
         addItem(Items.ROCK.createNew(maxStackSize));
         addItem(Items.ROCK.createNew(5));
         addItem(Items.ROTTEN_FLESH.createNew(3));
+        addItem(Items.LEAF.createNew(maxStackSize));
         addItem(Items.COAL.createNew(5));
         addItem(Items.IRON_INGOT.createNew(3));
         addItem(Items.GOLD_INGOT.createNew(3));
         addItem(Items.DIAMOND.createNew(3));
         addItem(Items.WOODEN_SWORD.createNew(1));
         addItem(Items.STONE_SWORD.createNew(1));
+        addItem(Items.WOODEN_PICK.createNew(1));
+        addItem(Items.STONE_PICK.createNew(1));
     }
 
     public void tick() {

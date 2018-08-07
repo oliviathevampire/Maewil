@@ -19,12 +19,10 @@ public class Utils {
     }
 
     public static int getRandomInt(int min, int max) {
-
         if (min >= max)
             throw new IllegalArgumentException("max must be greater than min");
 
-        Random r = new Random();
-        return r.nextInt((max - min) + 1) + min;
+        return new Random().nextInt((max - min) + 1) + min;
     }
 
     public static String loadFileAsString(String path) {

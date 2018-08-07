@@ -25,8 +25,7 @@ public class Assets {
     public static BufferedImage[] ULTIMATE_TILE;
 
     /* Items */
-    public static BufferedImage ITEM_STICK, ITEM_ROCK;
-    public static BufferedImage ITEM_ROTTEN_FLESH;
+    public static BufferedImage ITEM_STICK, ITEM_ROCK, ITEM_ROTTEN_FLESH, ITEM_LEAF;
     public static BufferedImage ITEM_WOODEN_SWORD, ITEM_STONE_SWORD, ITEM_WOODEN_PICK, ITEM_STONE_PICK;
     public static BufferedImage ITEM_COAL, ITEM_IRON_INGOT, ITEM_GOLD_INGOT, ITEM_DIAMOND;
 
@@ -98,16 +97,17 @@ public class Assets {
         ITEM_STICK = getSprite(itemsSheet, 0, 0, width, height);
         ITEM_ROCK = getSprite(itemsSheet, 1, 0, width, height);
         ITEM_ROTTEN_FLESH = getSprite(itemsSheet, 2, 0, width, height);
+        ITEM_LEAF = getSprite(itemsSheet, 3, 0, width, height);
 
-        ITEM_WOODEN_SWORD = getSprite(itemsSheet, 0, 2, width, height);
-        ITEM_STONE_SWORD = getSprite(itemsSheet, 1, 2, width, height);
-        ITEM_WOODEN_PICK = getSprite(itemsSheet, 0, 3, width, height);
-        ITEM_STONE_PICK = getSprite(itemsSheet, 1, 3, width, height);
+        ITEM_WOODEN_SWORD = getSprite(itemsSheet, 0, 1, width, height);
+        ITEM_STONE_SWORD = getSprite(itemsSheet, 1, 1, width, height);
+        ITEM_WOODEN_PICK = getSprite(itemsSheet, 2, 1, width, height);
+        ITEM_STONE_PICK = getSprite(itemsSheet, 3, 1, width, height);
 
-        ITEM_COAL = getSprite(itemsSheet, 3, 2, width, height);
-        ITEM_IRON_INGOT = getSprite(itemsSheet, 2, 3, width, height);
-        ITEM_GOLD_INGOT = getSprite(itemsSheet, 3, 3, width, height);
-        ITEM_DIAMOND = getSprite(itemsSheet, 2, 2, width, height);
+        ITEM_COAL = getSprite(itemsSheet, 0, 2, width, height);
+        ITEM_IRON_INGOT = getSprite(itemsSheet, 1, 2, width, height);
+        ITEM_GOLD_INGOT = getSprite(itemsSheet, 2, 2, width, height);
+        ITEM_DIAMOND = getSprite(itemsSheet, 3, 2, width, height);
 
         /* Health */
         HEARTS = getFrames(healthSheet, 0, 0, 4);
