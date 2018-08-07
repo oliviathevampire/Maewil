@@ -4,6 +4,7 @@ import coffeecatteam.tilegame.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.RasterFormatException;
 
 public class Assets {
 
@@ -160,13 +161,24 @@ public class Assets {
         BufferedImage[] frames = new BufferedImage[(xEnd - xStart) + 1];
         int index = 0;
         for (int x = xStart; x < xEnd + 1; x++) {
-            frames[index] = sheet.crop(x * width, y * height, width, height);
+            try {
+                frames[index] = sheet.crop(x * width, y * height, width, height);
+            } catch (RasterFormatException e) {
+                e.printStackTrace();
+                frames[index] = ImageLoader.loadImage("/assets/textures/missing.png");
+            }
             index++;
         }
         return frames;
     }
 
     private static BufferedImage getSprite(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
-        return sheet.crop(Assets.width * indexX, Assets.height * indexY, width, height);
+        BufferedImage image = ImageLoader.loadImage("/assets/textures/missing.png");
+        try {
+            image = sheet.crop(Assets.width * indexX, Assets.height * indexY, width, height);
+        } catch (RasterFormatException e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 }
