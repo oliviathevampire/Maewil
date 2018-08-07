@@ -7,13 +7,11 @@ import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.gfx.ImageLoader;
 import coffeecatteam.tilegame.gfx.SpriteSheet;
 import coffeecatteam.tilegame.items.Item;
-import coffeecatteam.tilegame.tiles.Tile;
+import coffeecatteam.tilegame.items.Items;
 import coffeecatteam.tilegame.utils.Utils;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
 public class EntityZombie extends EntityCreature {
@@ -126,6 +124,6 @@ public class EntityZombie extends EntityCreature {
         super.die(it);
         int amt = new Random().nextInt(3) + 1;
         for (int i = 0; i < amt; i++)
-            handler.getWorld().getItemManager().addItem(Item.ROTTEN_FLESH.createNew((int) (x + Utils.getRandomInt(0, 2) * Item.WIDTH), (int) (y + Utils.getRandomInt(0, 2) * Item.HEIGHT)));
+            handler.getWorld().getItemManager().addItem(Items.ROTTEN_FLESH.createNew((int) (x + Utils.getRandomInt(0, 2) * Item.WIDTH), (int) (y + Utils.getRandomInt(0, 2) * Item.HEIGHT)));
     }
 }

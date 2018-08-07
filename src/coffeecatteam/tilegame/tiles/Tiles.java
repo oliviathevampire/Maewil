@@ -19,4 +19,7 @@ public class Tiles {
 
     public static Tile WATER = new TileAnimated(new Animation(50, Assets.WATER), 11);
     public static Tile LAVA = new TileAnimated(new Animation(50, Assets.LAVA), 12);
+
+    public static Tile PLANKS = new TileBase(Assets.PLANKS, 13, true);
+    public static Tile BROKEN_STONE = new TileBase(Assets.BROKEN_STONE, 14, true);
 }

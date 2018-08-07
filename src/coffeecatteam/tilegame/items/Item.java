@@ -9,9 +9,6 @@ import java.awt.image.BufferedImage;
 public class Item {
 
     public static Item[] items = new Item[256];
-    public static Item STICK = new Item(Assets.ITEM_STICK, "stick", 0);
-    public static Item ROCK = new Item(Assets.ITEM_ROCK, "rock", 1);
-    public static Item ROTTEN_FLESH = new Item(Assets.ITEM_ROTTEN_FLESH, "rotten_flesh", 2);
 
     public static final int WIDTH = 32, HEIGHT = 32;
 

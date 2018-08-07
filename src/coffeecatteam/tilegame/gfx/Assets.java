@@ -13,9 +13,12 @@ public class Assets {
 
     /* Tiles */
     public static BufferedImage GRASS, DIRT, SAND;
-    public static BufferedImage STONE, ANDESITE, DIORITE, COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE, OBSIDIAN;
+    public static BufferedImage STONE, ANDESITE, DIORITE, COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE, OBSIDIAN, BROKEN_STONE;
+    public static BufferedImage PLANKS;
 
     public static BufferedImage[] WATER, LAVA;
+
+    /* Special Tiles */
     public static BufferedImage[] WATER_SPLASH;
 
     public static BufferedImage[] ULTIMATE_TILE;
@@ -23,6 +26,8 @@ public class Assets {
     /* Items */
     public static BufferedImage ITEM_STICK, ITEM_ROCK;
     public static BufferedImage ITEM_ROTTEN_FLESH;
+    public static BufferedImage ITEM_WOODEN_SWORD, ITEM_STONE_SWORD, ITEM_WOODEN_PICK, ITEM_STONE_PICK;
+    public static BufferedImage ITEM_COAL, ITEM_IRON_INGOT, ITEM_GOLD_INGOT, ITEM_DIAMOND;
 
     /* Health */
     public static BufferedImage[] HEARTS;
@@ -77,8 +82,13 @@ public class Assets {
         DIAMOND_ORE = getSprite(terrainSheet, 1, 1, width, height);
         OBSIDIAN = getSprite(terrainSheet, 2, 1, width, height);
 
+        PLANKS = getSprite(terrainSheet, 3, 1, width, height);
+        BROKEN_STONE = getSprite(terrainSheet, 4, 1, width, height);
+
         WATER = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/water.png")), 0, 15);
         LAVA = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/lava.png")), 0, 15);
+
+        /* Special Tiles */
         WATER_SPLASH = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/water_splash.png")), 0, 15);
 
         ULTIMATE_TILE = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/ultimate.png")), 0, 0, 6, width * 2, height * 2);
@@ -87,6 +97,16 @@ public class Assets {
         ITEM_STICK = getSprite(itemsSheet, 0, 0, width, height);
         ITEM_ROCK = getSprite(itemsSheet, 1, 0, width, height);
         ITEM_ROTTEN_FLESH = getSprite(itemsSheet, 2, 0, width, height);
+
+        ITEM_WOODEN_SWORD = getSprite(itemsSheet, 0, 2, width, height);
+        ITEM_STONE_SWORD = getSprite(itemsSheet, 1, 2, width, height);
+        ITEM_WOODEN_PICK = getSprite(itemsSheet, 0, 3, width, height);
+        ITEM_STONE_PICK = getSprite(itemsSheet, 1, 3, width, height);
+
+        ITEM_COAL = getSprite(itemsSheet, 3, 2, width, height);
+        ITEM_IRON_INGOT = getSprite(itemsSheet, 2, 3, width, height);
+        ITEM_GOLD_INGOT = getSprite(itemsSheet, 3, 3, width, height);
+        ITEM_DIAMOND = getSprite(itemsSheet, 2, 2, width, height);
 
         /* Health */
         HEARTS = getFrames(healthSheet, 0, 0, 4);
