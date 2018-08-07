@@ -71,7 +71,7 @@ public class Inventory {
                 Item item = inventory.get(i);
                 int xPos = x + 12 + 54 * i;
                 int yPos = y + height - 115;
-                if (i > inventory.size() / 2 + 1) {
+                if (i > maxInvSize / 2 - 1) {
                     xPos -= 48 * 7 - 12;
                     yPos += 55;
                 }
