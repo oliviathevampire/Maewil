@@ -1,7 +1,6 @@
 package coffeecatteam.tilegame.items;
 
 import coffeecatteam.tilegame.Handler;
-import coffeecatteam.tilegame.gfx.Assets;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -35,8 +34,17 @@ public class Item {
 
     public void tick() {
         if (handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(bounds)) {
-            pickedUp = true;
-            handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(this);
+            if (!handler.getWorld().getEntityManager().getPlayer().getInventory().isFull()) {
+                pickedUp = true;
+                handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(this);
+            } else {
+                for (Item i : handler.getWorld().getEntityManager().getPlayer().getInventory().getItems()) {
+                    if (i.getId() == this.getId()) {
+                        pickedUp = true;
+                        handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(this);
+                    }
+                }
+            }
         }
     }
 

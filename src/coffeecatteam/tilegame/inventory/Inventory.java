@@ -102,6 +102,14 @@ public class Inventory {
         inventory.add(item);
     }
 
+    public boolean isFull() {
+        return inventory.size() == maxInvSize;
+    }
+
+    public ArrayList<Item> getItems() {
+        return inventory;
+    }
+
     public Handler getHandler() {
         return handler;
     }
