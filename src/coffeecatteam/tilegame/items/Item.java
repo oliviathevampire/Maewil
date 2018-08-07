@@ -25,7 +25,7 @@ public class Item {
     protected int x, y, count;
     protected boolean pickedUp = false;
 
-    public Item(BufferedImage texture, String name, int id){
+    public Item(BufferedImage texture, String name, int id) {
         this.texture = texture;
         this.name = name;
         this.id = id;
