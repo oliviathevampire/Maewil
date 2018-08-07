@@ -140,10 +140,12 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void render(Graphics g) {
-        inventory.render(g);
-
         g.drawImage(currentAnim.getCurrentFrame(), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()), width, height, null);
         //g.drawImage(testAnim.getCurrentFrame(), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()) - 100, width, height, null);
+    }
+
+    public void postRender(Graphics g) {
+        inventory.render(g);
     }
 
     public Inventory getInventory() {

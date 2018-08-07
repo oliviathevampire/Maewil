@@ -51,6 +51,9 @@ public class EntityManager {
 
         /* Overlays */
         healthOverlay.render(g);
+
+        /* Post Render */
+        player.postRender(g);
     }
 
     public void addEntity(Entity e) {
