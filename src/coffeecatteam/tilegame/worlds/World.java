@@ -54,7 +54,7 @@ public class World {
             }
         }
 
-        itemManager.tick();;
+        itemManager.tick();
         entityManager.tick();
     }
 
@@ -70,8 +70,8 @@ public class World {
             }
         }
 
-        entityManager.render(g);
         itemManager.render(g);
+        entityManager.render(g);
     }
 
     public Tile getTile(int x, int y) {
