@@ -1,33 +1,21 @@
 package coffeecatteam.tilegame.utils;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Random;
 
 public class Utils {
 
-    private static Font SLKSCR_FONT;
-
-    static {
+    public static Font loadFont(String path, float size){
         try {
-            InputStream in = Utils.class.getResourceAsStream("/assets/fonts/slkscr.ttf");
-            SLKSCR_FONT = Font.createFont(Font.TRUETYPE_FONT, in);
-        } catch (IOException | FontFormatException e) {
+            return Font.createFont(Font.TRUETYPE_FONT, Utils.class.getResourceAsStream(path)).deriveFont(Font.PLAIN, size);
+        } catch (FontFormatException | IOException e) {
             e.printStackTrace();
+            System.exit(1);
         }
-    }
-
-    public static Font getSlkscrFont(double x, double y) {
-        return getSlkscrFont(x, y, 20f);
-    }
-
-    public static Font getSlkscrFont(double x, double y, float size) {
-        AffineTransform at = AffineTransform.getTranslateInstance(x, y);
-        return SLKSCR_FONT.deriveFont(size).deriveFont(at);
+        return null;
     }
 
     public static int getRandomInt(int min, int max) {

@@ -1,10 +1,15 @@
 package coffeecatteam.tilegame.gfx;
 
+import coffeecatteam.tilegame.utils.Utils;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Assets {
 
     private static final int width = 16, height = 16;
+
+    public static Font FONT;
 
     /* Tiles */
     public static BufferedImage GRASS, DIRT, SAND;
@@ -43,7 +48,11 @@ public class Assets {
     public static BufferedImage[] BUTTON_START = new BufferedImage[2];
     public static BufferedImage[] BUTTON_QUIT = new BufferedImage[2];
 
+    public static SpriteSheet INVENTORY;
+
     public static void init() {
+        FONT = Utils.loadFont("/assets/fonts/slkscr.ttf", 20);
+
         SpriteSheet terrainSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/terrain.png"));
         SpriteSheet natureSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
 
@@ -115,6 +124,8 @@ public class Assets {
         BUTTON_START[1] = getSprite(menuSheet, 0, 1, width * 3, height);
         BUTTON_QUIT[0] = getSprite(menuSheet, 0, 2, width * 3, height);
         BUTTON_QUIT[1] = getSprite(menuSheet, 0, 3, width * 3, height);
+
+        INVENTORY = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/inventory.png"));
     }
 
     private static BufferedImage[] getFrames(SpriteSheet sheet, int xStart, int xEnd) {
