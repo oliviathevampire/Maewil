@@ -6,6 +6,7 @@ import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
 import coffeecatteam.tilegame.entities.creatures.EntityZombie;
 import coffeecatteam.tilegame.entities.statics.EntityRock;
 import coffeecatteam.tilegame.entities.statics.EntityTree;
+import coffeecatteam.tilegame.entities.statics.EntityUltimateTile;
 import coffeecatteam.tilegame.items.ItemManager;
 import coffeecatteam.tilegame.tiles.Tile;
 import coffeecatteam.tilegame.tiles.Tiles;
@@ -36,6 +37,8 @@ public class World {
         entityManager.addEntity(new EntityZombie(handler, 1 * Tile.TILE_WIDTH, 15 * Tile.TILE_HEIGHT));
         entityManager.addEntity(new EntityZombie(handler, 1 * Tile.TILE_WIDTH, 16 * Tile.TILE_HEIGHT));
         entityManager.addEntity(new EntityZombie(handler, 1 * Tile.TILE_WIDTH, 17 * Tile.TILE_HEIGHT));
+
+        entityManager.addEntity(new EntityUltimateTile(handler, 2 * Tile.TILE_WIDTH, 1 * Tile.TILE_HEIGHT));
 
         loadWorld(path);
         entityManager.getPlayer().setX(spawnX * Tile.TILE_WIDTH);
