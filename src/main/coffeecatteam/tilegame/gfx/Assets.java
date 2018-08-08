@@ -20,8 +20,7 @@ public class Assets {
     public static BufferedImage[] WATER, LAVA;
 
     /* Special Tiles */
-    public static BufferedImage[] WATER_SPLASH;
-
+    public static BufferedImage[] SPLASH_EFFECT, SPRINT_EFFECT;
     public static BufferedImage[] ULTIMATE_TILE;
 
     /* Items */
@@ -60,6 +59,7 @@ public class Assets {
 
         SpriteSheet terrainSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/terrain.png"));
         SpriteSheet natureSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
+        SpriteSheet effectSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/effect.png"));
 
         SpriteSheet healthSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health.png"));
         SpriteSheet itemsSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/items.png"));
@@ -89,7 +89,8 @@ public class Assets {
         LAVA = getFrames(terrainSheet, 7, 0, 15);
 
         /* Special Tiles */
-        WATER_SPLASH = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/water_splash.png")), 0, 15);
+        SPLASH_EFFECT = getFrames(effectSheet, 0, 0, 15);
+        SPRINT_EFFECT = getFrames(effectSheet, 1, 0, 15);
 
         ULTIMATE_TILE = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/ultimate.png")), 0, 0, 6, width * 2, height * 2);
 
