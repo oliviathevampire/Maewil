@@ -1,7 +1,5 @@
 package coffeecatteam.tilegame.tiles;
 
-import coffeecatteam.tilegame.gfx.Assets;
-
 import java.awt.image.BufferedImage;
 
 public class TileBase extends Tile {

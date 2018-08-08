@@ -1,7 +1,5 @@
 package coffeecatteam.tilegame.gfx;
 
-import coffeecatteam.tilegame.utils.Utils;
-
 import java.awt.*;
 
 public class Text {

@@ -1,6 +1,5 @@
 package coffeecatteam.tilegame.gfx;
 
-import coffeecatteam.tilegame.Game;
 import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.tiles.Tile;

@@ -5,7 +5,6 @@ import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.gfx.Text;
-import coffeecatteam.tilegame.utils.Utils;
 
 import java.awt.*;
 

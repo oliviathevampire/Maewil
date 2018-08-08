@@ -1,7 +1,6 @@
 package coffeecatteam.tilegame.items;
 
 import coffeecatteam.tilegame.Handler;
-import coffeecatteam.tilegame.entities.Entity;
 
 import java.awt.*;
 import java.util.ArrayList;

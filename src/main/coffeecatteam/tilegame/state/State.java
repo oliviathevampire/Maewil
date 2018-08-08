@@ -2,7 +2,7 @@ package coffeecatteam.tilegame.state;
 
 import coffeecatteam.tilegame.Handler;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 public abstract class State {
 

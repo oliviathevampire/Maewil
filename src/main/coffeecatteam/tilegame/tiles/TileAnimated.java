@@ -4,7 +4,6 @@ import coffeecatteam.tilegame.gfx.Animation;
 import coffeecatteam.tilegame.gfx.Assets;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class TileAnimated extends Tile {
 
