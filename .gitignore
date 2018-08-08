@@ -25,3 +25,5 @@ out/
 /bin/
 .DS_Store
 *.pdn
+.classpath
+.project
