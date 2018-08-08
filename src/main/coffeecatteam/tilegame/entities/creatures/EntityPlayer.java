@@ -5,6 +5,8 @@ import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.gfx.Animation;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.inventory.Inventory;
+import coffeecatteam.tilegame.tiles.Tile;
+import coffeecatteam.tilegame.tiles.Tiles;
 import coffeecatteam.tilegame.utils.Utils;
 
 import java.awt.*;
@@ -15,7 +17,8 @@ public class EntityPlayer extends EntityCreature {
     private Animation animIdle, animUp, animDown, animLeft, animRight, animDead;
     private Animation currentAnim;
 
-    //private Animation testAnim;
+    private Animation sprintEffect;
+    private Animation splashEffect;
 
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
 
@@ -41,7 +44,9 @@ public class EntityPlayer extends EntityCreature {
 
         currentAnim = animIdle;
 
-        //testAnim = new Animation(100, Assets.EXTRA_LIFE);
+        int effectSpeed = 50;
+        sprintEffect = new Animation(effectSpeed, Assets.SPRINT_EFFECT);
+        splashEffect = new Animation(effectSpeed, Assets.SPLASH_EFFECT);
 
         inventory = new Inventory(handler);
     }
@@ -63,7 +68,8 @@ public class EntityPlayer extends EntityCreature {
 
         // Animation
         currentAnim.tick();
-        //testAnim.tick();
+        sprintEffect.tick();
+        splashEffect.tick();
     }
 
     private void checkAttacks() {
@@ -86,10 +92,10 @@ public class EntityPlayer extends EntityCreature {
             ar.y = cb.y + cb.height;
         } else if (handler.getKeyManager().left && handler.getKeyManager().interact) {
             ar.x = cb.x - arSize;
-            ar.y = cb.y + cb.height / 2 -  arSize / 2;
+            ar.y = cb.y + cb.height / 2 - arSize / 2;
         } else if (handler.getKeyManager().right && handler.getKeyManager().interact) {
             ar.x = cb.x + cb.width;
-            ar.y = cb.y + cb.height / 2 -  arSize / 2;
+            ar.y = cb.y + cb.height / 2 - arSize / 2;
         } else {
             return;
         }
@@ -115,6 +121,13 @@ public class EntityPlayer extends EntityCreature {
         xMove = 0;
         yMove = 0;
 
+        if (handler.getKeyManager().sprint && !inWater())
+            speed = EntityCreature.DEFAULT_SPEED * 1.7f;
+        if (!handler.getKeyManager().sprint)
+            speed = EntityCreature.DEFAULT_SPEED;
+        if (inWater())
+            speed = EntityCreature.DEFAULT_SPEED * 0.65f;
+
         if (handler.getKeyManager().up) {
             yMove = -speed;
             currentAnim = animUp;
@@ -135,10 +148,30 @@ public class EntityPlayer extends EntityCreature {
             currentAnim = animIdle;
     }
 
+    private boolean inWater() {
+        for (int y = 0; y < handler.getWorld().getWidth(); y++) {
+            for (int x = 0; x < handler.getWorld().getHeight(); x++) {
+                int tx = (int) (this.x / Tile.TILE_WIDTH);
+                int ty = (int) (this.y / Tile.TILE_HEIGHT);
+                Tile tile = handler.getWorld().getTile(tx, ty);
+                if (tile.getId() == Tiles.WATER.getId()) {
+                    if (tile.getBounds().intersects(bounds))
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public void render(Graphics g) {
-        g.drawImage(currentAnim.getCurrentFrame(), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()), width, height, null);
-        //g.drawImage(testAnim.getCurrentFrame(), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()) - 100, width, height, null);
+        g.drawImage(currentAnim.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
+        if (handler.getKeyManager().sprint && !inWater() && currentAnim != animIdle)
+            g.drawImage(sprintEffect.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
+
+        if (inWater()) {
+            g.drawImage(splashEffect.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
+        }
     }
 
     public void postRender(Graphics g) {

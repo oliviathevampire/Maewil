@@ -12,11 +12,15 @@ public class Tile {
     protected BufferedImage texture;
     protected final int id;
 
+    protected Rectangle bounds;
+
     public Tile(BufferedImage texture, int id) {
         this.texture = texture;
         this.id = id;
 
         tiles[id] = this;
+
+        bounds = new Rectangle(0, 0, TILE_WIDTH, TILE_HEIGHT);
     }
 
     public void tick() {
@@ -33,5 +37,9 @@ public class Tile {
 
     public int getId() {
         return id;
+    }
+
+    public Rectangle getBounds() {
+        return bounds;
     }
 }
