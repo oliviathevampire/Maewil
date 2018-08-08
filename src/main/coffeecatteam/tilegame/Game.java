@@ -11,8 +11,6 @@ import coffeecatteam.tilegame.state.StateMenu;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.util.Random;
 
 public class Game implements Runnable {
 
@@ -46,13 +44,13 @@ public class Game implements Runnable {
     }
 
     private void init() {
+        Assets.init();
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
         display.getFrame().addMouseListener(mouseManager);
         display.getFrame().addMouseMotionListener(mouseManager);
         display.getCanvas().addMouseListener(mouseManager);
         display.getCanvas().addMouseMotionListener(mouseManager);
-        Assets.init();
 
         handler = new Handler(this);
         camera = new Camera(handler, 0, 0);

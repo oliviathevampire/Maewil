@@ -1,5 +1,7 @@
 package coffeecatteam.tilegame.display;
 
+import coffeecatteam.tilegame.gfx.Assets;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -28,6 +30,8 @@ public class Display {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
+        frame.setIconImage(Assets.ULTIMATE_TILE[0]);
 
         canvas = new Canvas();
         canvas.setPreferredSize(size);
