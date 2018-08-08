@@ -8,6 +8,8 @@ import java.util.Iterator;
 public abstract class Entity {
 
     public static final int DEFAULT_HEALTH = 100;
+    public static final int DEFAULT_WIDTH = 64;
+    public static final int DEFAULT_HEIGHT = 64;
 
     protected Handler handler;
     protected float x, y;
@@ -16,7 +18,7 @@ public abstract class Entity {
     protected boolean active = true;
     protected Rectangle bounds;
 
-    protected boolean showHitbox = false;
+    protected boolean showHitbox = false, isCollidable = true;
 
     public Entity(Handler handler, float x, float y, int width, int height) {
         this.handler = handler;
@@ -58,8 +60,9 @@ public abstract class Entity {
         for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
-            if (e.getCollisionBounds(0.0f, 0.0f).intersects(getCollisionBounds(xOffset, yOffset)))
-                return true;
+            if (e.isCollidable)
+                if (e.getCollisionBounds(0.0f, 0.0f).intersects(getCollisionBounds(xOffset, yOffset)))
+                    return true;
         }
         return false;
     }

@@ -7,8 +7,6 @@ import coffeecatteam.tilegame.tiles.Tile;
 public abstract class EntityCreature extends Entity {
 
     public static final float DEFAULT_SPEED = 3.0f;
-    public static final int DEFAULT_CREATURE_WIDTH = 64;
-    public static final int DEFAULT_CREATURE_HEIGHT = 64;
 
     protected float speed;
     protected float xMove, yMove;

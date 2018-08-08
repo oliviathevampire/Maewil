@@ -14,7 +14,7 @@ import java.util.Random;
 public class EntityRock extends EntityStatic {
 
     public EntityRock(Handler handler, float x, float y) {
-        super(handler, x, y, 64, 64);
+        super(handler, x, y, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
 
         bounds.x = 0;
         bounds.y = height / 2;

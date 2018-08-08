@@ -4,14 +4,11 @@ import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.gfx.Animation;
 import coffeecatteam.tilegame.gfx.Assets;
-import coffeecatteam.tilegame.gfx.overlays.Overlay;
-import coffeecatteam.tilegame.gfx.overlays.OverlayPlayerHealth;
 import coffeecatteam.tilegame.inventory.Inventory;
 import coffeecatteam.tilegame.utils.Utils;
 
 import java.awt.*;
 import java.util.Iterator;
-import java.util.Random;
 
 public class EntityPlayer extends EntityCreature {
 
@@ -25,7 +22,7 @@ public class EntityPlayer extends EntityCreature {
     private Inventory inventory;
 
     public EntityPlayer(Handler handler, float x, float y) {
-        super(handler, x, y, EntityCreature.DEFAULT_CREATURE_WIDTH, EntityCreature.DEFAULT_CREATURE_HEIGHT);
+        super(handler, x, y, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
 
         bounds.x = 13;
         bounds.y = 28;
