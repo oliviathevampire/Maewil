@@ -1,11 +1,9 @@
 package coffeecatteam.tilegame.state;
 
 import coffeecatteam.tilegame.Handler;
-import coffeecatteam.tilegame.gfx.Animation;
 import coffeecatteam.tilegame.gfx.Assets;
-import coffeecatteam.tilegame.ui.ClickListener;
-import coffeecatteam.tilegame.ui.UIImageButton;
-import coffeecatteam.tilegame.ui.UIManager;
+import coffeecatteam.tilegame.gfx.ui.UIImageButton;
+import coffeecatteam.tilegame.gfx.ui.UIManager;
 
 import java.awt.*;
 

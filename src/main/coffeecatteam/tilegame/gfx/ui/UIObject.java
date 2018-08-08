@@ -1,4 +1,4 @@
-package coffeecatteam.tilegame.ui;
+package coffeecatteam.tilegame.gfx.ui;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

@@ -1,6 +1,6 @@
 package coffeecatteam.tilegame.input;
 
-import coffeecatteam.tilegame.ui.UIManager;
+import coffeecatteam.tilegame.gfx.ui.UIManager;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
