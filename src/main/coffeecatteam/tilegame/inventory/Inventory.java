@@ -18,6 +18,7 @@ public class Inventory {
     private ArrayList<Item> inventory;
 
     private int maxInvSize = 12, maxStackSize = 16;
+    private int selectedIndex = 0;
 
     public Inventory(Handler handler) {
         this.handler = handler;
@@ -44,6 +45,26 @@ public class Inventory {
             active = !active;
         if (!active)
             return;
+
+        boolean up = handler.getKeyManager().keyJustPressed(KeyEvent.VK_W);
+        boolean down = handler.getKeyManager().keyJustPressed(KeyEvent.VK_S);
+        boolean left = handler.getKeyManager().keyJustPressed(KeyEvent.VK_A);
+        boolean right = handler.getKeyManager().keyJustPressed(KeyEvent.VK_D);
+
+        if (up || down) {
+            selectedIndex += 6;
+            if (selectedIndex > maxInvSize - 1)
+                selectedIndex -= maxInvSize;
+        }
+        if (left)
+            selectedIndex -= 1;
+        if (right)
+            selectedIndex += 1;
+
+        if (selectedIndex < 0)
+            selectedIndex = maxInvSize - 1;
+        if (selectedIndex > maxInvSize - 1)
+            selectedIndex = 0;
     }
 
     public void render(Graphics g) {
@@ -66,19 +87,33 @@ public class Inventory {
 //            }
 //        }
 
+        int itemWidth = 48;
+        int itemHeight = 48;
         if (inventory.size() > 0) {
             for (int i = 0; i < inventory.size(); i++) {
                 Item item = inventory.get(i);
                 int xPos = x + 12 + 54 * i;
                 int yPos = y + height - 115;
                 if (i > maxInvSize / 2 - 1) {
-                    xPos -= 48 * 7 - 12;
+                    xPos -= itemWidth * 7 - 12;
                     yPos += 55;
                 }
-                g.drawImage(item.getTexture(), xPos, yPos, 48, 48, null);
+                g.drawImage(item.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
                 Text.drawString(g, String.valueOf(item.getCount()), xPos, yPos + 15, Color.white, Assets.FONT);
             }
         }
+
+        // RENDER SELECT SQUARE
+        int c = 156;
+        Color hover = new Color(c, c, c, 127);
+        g.setColor(hover);
+        int xPos = x + 12 + 54 * selectedIndex;
+        int yPos = y + height - 115;
+        if (selectedIndex > maxInvSize / 2 - 1) {
+            xPos -= itemWidth * 7 - 12;
+            yPos += 55;
+        }
+        g.fillRect(xPos, yPos, itemWidth, itemHeight);
     }
 
     public void addItem(Item item) {
