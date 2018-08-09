@@ -22,4 +22,8 @@ public class ItemFood extends Item {
         }
         return false;
     }
+
+    public int getHealAmt() {
+        return healAmt;
+    }
 }

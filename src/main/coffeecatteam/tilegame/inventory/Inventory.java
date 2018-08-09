@@ -35,9 +35,9 @@ public class Inventory {
         addItem(Items.GOLD_INGOT.createNew(3));
         addItem(Items.DIAMOND.createNew(3));
         addItem(Items.WOODEN_SWORD.createNew(1));
-        addItem(Items.STONE_SWORD.createNew(1));
         addItem(Items.WOODEN_PICK.createNew(1));
-        addItem(Items.CARROT.createNew(1));
+        addItem(Items.CARROT.createNew(10));
+        addItem(Items.APPLE.createNew(10));
     }
 
     public void tick() {

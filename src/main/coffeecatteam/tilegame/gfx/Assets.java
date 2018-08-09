@@ -27,7 +27,7 @@ public class Assets {
     public static BufferedImage ITEM_STICK, ITEM_ROCK, ITEM_ROTTEN_FLESH, ITEM_LEAF;
     public static BufferedImage ITEM_WOODEN_SWORD, ITEM_STONE_SWORD, ITEM_WOODEN_PICK, ITEM_STONE_PICK;
     public static BufferedImage ITEM_COAL, ITEM_IRON_INGOT, ITEM_GOLD_INGOT, ITEM_DIAMOND;
-    public static BufferedImage ITEM_CARROT;
+    public static BufferedImage ITEM_CARROT, ITEM_APPLE;
 
     /* Health */
     public static BufferedImage[] HEARTS;
@@ -112,6 +112,7 @@ public class Assets {
         ITEM_DIAMOND = getSprite(itemsSheet, 3, 2, width, height);
 
         ITEM_CARROT = getSprite(itemsSheet, 0, 3, width, height);
+        ITEM_APPLE = getSprite(itemsSheet, 1, 3, width, height);
 
         /* Health */
         HEARTS = getFrames(healthSheet, 0, 0, 4);
