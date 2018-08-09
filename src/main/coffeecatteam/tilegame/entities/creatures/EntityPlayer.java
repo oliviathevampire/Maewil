@@ -54,15 +54,16 @@ public class EntityPlayer extends EntityCreature {
     @Override
     public void tick() {
         if (isActive()) {
-            // Movement
             if (!inventory.isActive()) {
+                // Movement
                 getInput();
                 move();
-            }
-            handler.getCamera().centerOnEntity(this);
 
-            // Attack
-            checkAttacks();
+                // Attack
+                checkAttacks();
+            }
+
+            handler.getCamera().centerOnEntity(this);
             inventory.tick();
         }
 
@@ -180,9 +181,5 @@ public class EntityPlayer extends EntityCreature {
 
     public Inventory getInventory() {
         return inventory;
-    }
-
-    public void setInventory(Inventory inventory) {
-        this.inventory = inventory;
     }
 }

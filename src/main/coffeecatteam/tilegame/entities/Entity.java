@@ -111,6 +111,10 @@ public abstract class Entity {
         this.health = health;
     }
 
+    public void heal(int amt) {
+        health += amt;
+    }
+
     public boolean isActive() {
         return active;
     }

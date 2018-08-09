@@ -1,6 +1,7 @@
 package coffeecatteam.tilegame.items;
 
 import coffeecatteam.tilegame.Handler;
+import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -32,6 +33,10 @@ public class Item {
         items[id] = this;
     }
 
+    public boolean onInteracted(EntityPlayer player) {
+        return false;
+    }
+
     public void tick() {
         if (handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(bounds)) {
             if (!handler.getWorld().getEntityManager().getPlayer().getInventory().isFull()) {
@@ -59,10 +64,10 @@ public class Item {
     }
 
     public Item createNew(int count) {
-        Item i = new Item(texture, name, id);
-        i.setPickedUp(true);
-        i.setCount(count);
-        return i;
+        //Item i = new Item(texture, name, id);
+        this.setPickedUp(true);
+        this.setCount(count);
+        return this;
     }
 
     public Item createNew(int x, int y) {

@@ -19,4 +19,6 @@ public class Items {
     public static Item IRON_INGOT = new Item(Assets.ITEM_IRON_INGOT, "iron_ingot", 9);
     public static Item GOLD_INGOT = new Item(Assets.ITEM_GOLD_INGOT, "gold_ingot", 10);
     public static Item DIAMOND = new Item(Assets.ITEM_DIAMOND, "diamond", 11);
+
+    public static Item CARROT = new ItemFood(Assets.ITEM_CARROT, "carrot", 12, 5);
 }

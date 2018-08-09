@@ -37,15 +37,18 @@ public class Inventory {
         addItem(Items.WOODEN_SWORD.createNew(1));
         addItem(Items.STONE_SWORD.createNew(1));
         addItem(Items.WOODEN_PICK.createNew(1));
-        addItem(Items.STONE_PICK.createNew(1));
+        addItem(Items.CARROT.createNew(1));
     }
 
     public void tick() {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_E))
             active = !active;
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE) && active)
+            active = !active;
         if (!active)
             return;
 
+        // Change select item
         boolean up = handler.getKeyManager().keyJustPressed(KeyEvent.VK_W);
         boolean down = handler.getKeyManager().keyJustPressed(KeyEvent.VK_S);
         boolean left = handler.getKeyManager().keyJustPressed(KeyEvent.VK_A);
@@ -65,6 +68,19 @@ public class Inventory {
             selectedIndex = maxInvSize - 1;
         if (selectedIndex > maxInvSize - 1)
             selectedIndex = 0;
+
+        if (selectedIndex < inventory.size()) {
+            Item i = inventory.get(selectedIndex);
+            // Check if item was interacted with
+            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
+                if (i.onInteracted(handler.getWorld().getEntityManager().getPlayer()))
+                    i.setCount(i.getCount() - 1);
+            }
+
+            // Check if item count is 0
+            if (i.getCount() <= 0)
+                inventory.remove(selectedIndex);
+        }
     }
 
     public void render(Graphics g) {
@@ -80,12 +96,6 @@ public class Inventory {
 
         g.drawImage(Assets.INVENTORY.crop(0, 0, width / multiplier, height / multiplier), x, y, width, height, null);
         g.drawImage(Assets.PLAYER_IDLE[0], x + player.getWidth() / 2, y + player.getHeight() / 2, player.getWidth(), player.getHeight(), null);
-
-//        for (int j = 0; j < 2; j++) {
-//            for (int i = 0; i < 6; i++) {
-//                g.fillRect(x + 12 + 54 * i, y + height - 115 + j * 55, 48, 48);
-//            }
-//        }
 
         int itemWidth = 48;
         int itemHeight = 48;
@@ -113,7 +123,8 @@ public class Inventory {
             xPos -= itemWidth * 7 - 12;
             yPos += 55;
         }
-        g.fillRect(xPos, yPos, itemWidth, itemHeight);
+        int off = 12;
+        g.drawImage(Assets.INVENTORY.crop(48, 48, 16, 16), xPos - off / 2, yPos - off / 2, itemWidth + off, itemHeight + off, null);
     }
 
     public void addItem(Item item) {
