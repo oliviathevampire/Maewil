@@ -4,6 +4,7 @@ import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.items.Item;
+import coffeecatteam.tilegame.items.ItemStack;
 import coffeecatteam.tilegame.items.Items;
 import coffeecatteam.tilegame.tiles.Tile;
 import coffeecatteam.tilegame.utils.Utils;
@@ -15,7 +16,7 @@ import java.util.Random;
 
 public class EntityTree extends EntityStatic {
 
-    private  TreeType type;
+    private TreeType type;
 
     public EntityTree(Handler handler, float x, float y, TreeType type) {
         super(handler, x, y, type.getWidth(), type.getHeight());
@@ -29,7 +30,8 @@ public class EntityTree extends EntityStatic {
 
     @Override
     public void tick() {
-
+        if (Utils.getRandomInt(0, 10000) < 10)
+            handler.getWorld().getItemManager().addItem(Items.LEAF.createNew((int) (x + Utils.getRandomInt(-1, 1) * Item.WIDTH), (int) (y + Utils.getRandomInt(-1, 1)) * Item.HEIGHT));
     }
 
     @Override
@@ -42,9 +44,11 @@ public class EntityTree extends EntityStatic {
         super.die(it);
         int amt = new Random().nextInt(2) + 1;
         for (int i = 0; i < amt; i++) {
-            handler.getWorld().getItemManager().addItem(Items.STICK.createNew((int) (x + Utils.getRandomInt(0, 2) * Item.WIDTH), (int) (y + Utils.getRandomInt(0, 2) * Item.HEIGHT)));
-            handler.getWorld().getItemManager().addItem(Items.LEAF.createNew((int) (x + Utils.getRandomInt(0, 2) * Item.WIDTH), (int) (y + Utils.getRandomInt(0, 2) * Item.HEIGHT)));
+            handler.getWorld().getItemManager().addItem(Items.STICK.createNew((int) (x + Utils.getRandomInt(0, 2) * Item.WIDTH), (int) (y + Utils.getRandomInt(0, 2)) * Item.HEIGHT));
+            handler.getWorld().getItemManager().addItem(Items.LEAF.createNew((int) (x + Utils.getRandomInt(0, 2) * Item.WIDTH), (int) (y + Utils.getRandomInt(0, 2)) * Item.HEIGHT));
         }
+        //if (Utils.getRandomInt(0, 1000) < 900)
+        handler.getWorld().getItemManager().addItem(Item.createNew(Items.APPLE, (int) (x + Utils.getRandomInt(0, 2) * Item.WIDTH), (int) (y + Utils.getRandomInt(0, 2) * Item.HEIGHT)));
     }
 
     public enum TreeType {

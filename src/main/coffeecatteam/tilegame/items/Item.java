@@ -64,7 +64,6 @@ public class Item {
     }
 
     public Item createNew(int count) {
-        //Item i = new Item(texture, name, id);
         this.setPickedUp(true);
         this.setCount(count);
         return this;
@@ -72,6 +71,11 @@ public class Item {
 
     public Item createNew(int x, int y) {
         Item i = new Item(texture, name, id);
+        i.setPosition(x, y);
+        return i;
+    }
+
+    public static Item createNew(Item i, int x, int y) {
         i.setPosition(x, y);
         return i;
     }

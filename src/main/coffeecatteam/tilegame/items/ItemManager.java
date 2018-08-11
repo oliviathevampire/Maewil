@@ -36,6 +36,11 @@ public class ItemManager {
         items.add(i);
     }
 
+    public void addItem(ItemStack stack) {
+        stack.getItem().setHandler(handler);
+        items.add(stack.getItem());
+    }
+
     public Handler getHandler() {
         return handler;
     }

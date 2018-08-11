@@ -29,10 +29,10 @@ public class World {
         entityManager = new EntityManager(handler, new EntityPlayer(handler, 0, 0));
         itemManager = new ItemManager(handler);
 
-        entityManager.addEntity(new EntityTree(handler, 2 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.SMALL));
-        entityManager.addEntity(new EntityTree(handler, 3 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.MEDIUM));
-        entityManager.addEntity(new EntityTree(handler, 5 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.LARGE));
-        entityManager.addEntity(new EntityRock(handler, 4.5f * Tile.TILE_WIDTH, 11.5f * Tile.TILE_HEIGHT));
+        entityManager.addEntity(new EntityTree(handler, 10 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.SMALL));
+        entityManager.addEntity(new EntityTree(handler, 11 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.MEDIUM));
+        entityManager.addEntity(new EntityRock(handler, 12.5f * Tile.TILE_WIDTH, 11.5f * Tile.TILE_HEIGHT));
+        entityManager.addEntity(new EntityTree(handler, 13 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.LARGE));
 
         entityManager.addEntity(new EntityZombie(handler, 1 * Tile.TILE_WIDTH, 15 * Tile.TILE_HEIGHT));
         entityManager.addEntity(new EntityZombie(handler, 1 * Tile.TILE_WIDTH, 16 * Tile.TILE_HEIGHT));
