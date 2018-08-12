@@ -14,10 +14,24 @@ public class Text {
         int x = xPos;
         int y = yPos;
         if (centered) {
-            FontMetrics fm = g.getFontMetrics(font);
-            x = xPos - fm.stringWidth(text) / 2;
-            y = (yPos - fm.getHeight() / 2) + fm.getAscent();
+            x = xPos - getWidth(g, text, font) / 2;
+            y = (yPos - getHeight(g, font) / 2) + getAscent(g, font);
         }
         g.drawString(text, x, y);
+    }
+
+    public static int getWidth(Graphics g, String text, Font font) {
+        FontMetrics fm = g.getFontMetrics(font);
+        return fm.stringWidth(text);
+    }
+
+    public static int getHeight(Graphics g, Font font) {
+        FontMetrics fm = g.getFontMetrics(font);
+        return fm.getHeight();
+    }
+
+    public static int getAscent(Graphics g, Font font) {
+        FontMetrics fm = g.getFontMetrics(font);
+        return fm.getAscent();
     }
 }

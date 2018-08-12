@@ -4,9 +4,7 @@ import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.gfx.Text;
-import coffeecatteam.tilegame.items.Item;
 import coffeecatteam.tilegame.items.ItemStack;
-import coffeecatteam.tilegame.items.Items;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -109,7 +107,7 @@ public class Inventory {
                     yPos += 55;
                 }
                 g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
-                Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, Color.white, Assets.FONT);
+                Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, Color.white, Assets.FONT_20);
             }
         }
 

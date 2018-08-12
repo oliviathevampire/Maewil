@@ -10,7 +10,9 @@ public class Assets {
 
     private static final int width = 16, height = 16;
 
-    public static Font FONT, FONT_BOLD, FONT_EXPANDED;
+    /* Fonts */
+    public static Font FONT_20, FONT_20_BOLD, FONT_20_EXPANDED;
+    public static Font FONT_40, FONT_40_BOLD, FONT_40_EXPANDED;
 
     /* Tiles */
     public static BufferedImage GRASS, DIRT, SAND;
@@ -50,16 +52,23 @@ public class Assets {
     public static BufferedImage BACKGROUND;
     public static BufferedImage TITLE;
 
-    public static BufferedImage[] BUTTON_START = new BufferedImage[2];
-    public static BufferedImage[] BUTTON_QUIT = new BufferedImage[2];
+    public static BufferedImage[] BUTTON_ENABLED = new BufferedImage[3];
+    public static BufferedImage[] BUTTON_HOVER = new BufferedImage[3];
+    public static BufferedImage[] BUTTON_DISABLED = new BufferedImage[3];
 
     public static SpriteSheet INVENTORY;
 
     public static void init() {
-        FONT = Utils.loadFont("/assets/fonts/slkscr.ttf", 20);
-        FONT_BOLD = Utils.loadFont("/assets/fonts/slkscrb.ttf", 20);
-        FONT_EXPANDED = Utils.loadFont("/assets/fonts/slkscre.ttf", 20);
+        /* Fonts */
+        FONT_20 = Utils.loadFont("/assets/fonts/slkscr.ttf", 20);
+        FONT_20_BOLD = Utils.loadFont("/assets/fonts/slkscrb.ttf", 20);
+        FONT_20_EXPANDED = Utils.loadFont("/assets/fonts/slkscre.ttf", 20);
 
+        FONT_40 = Utils.loadFont("/assets/fonts/slkscr.ttf", 40);
+        FONT_40_BOLD = Utils.loadFont("/assets/fonts/slkscrb.ttf", 40);
+        FONT_40_EXPANDED = Utils.loadFont("/assets/fonts/slkscre.ttf", 40);
+
+        /* Sprite Sheets */
         SpriteSheet terrainSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/terrain.png"));
         SpriteSheet natureSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
         SpriteSheet effectSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/effect.png"));
@@ -148,10 +157,9 @@ public class Assets {
         BACKGROUND = getSprite(new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/bg.png")), 0, 0, 320, 320);
         TITLE = getSprite(menuSheet, 3, 0, 80, 48);
 
-        BUTTON_START[0] = getSprite(menuSheet, 0, 0, width * 3, height);
-        BUTTON_START[1] = getSprite(menuSheet, 0, 1, width * 3, height);
-        BUTTON_QUIT[0] = getSprite(menuSheet, 0, 2, width * 3, height);
-        BUTTON_QUIT[1] = getSprite(menuSheet, 0, 3, width * 3, height);
+        BUTTON_ENABLED = getFrames(menuSheet, 0, 0, 2, width, height);
+        BUTTON_HOVER = getFrames(menuSheet, 1, 0, 2, width, height);
+        BUTTON_DISABLED = getFrames(menuSheet, 2, 0, 2, width, height);
 
         INVENTORY = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/inventory.png"));
     }

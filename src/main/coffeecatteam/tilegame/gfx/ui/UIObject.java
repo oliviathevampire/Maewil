@@ -8,7 +8,6 @@ public abstract class UIObject {
     protected float x, y;
     protected int width, height;
     protected Rectangle bounds;
-    protected boolean hovering = false;
 
     public UIObject(float x, float y, int width, int height) {
         this.x = x;
@@ -24,14 +23,9 @@ public abstract class UIObject {
 
     public abstract void onClick();
 
-    public void onMouseMoved(MouseEvent e) {
-        hovering = bounds.contains(e.getX(), e.getY());
-    }
+    public abstract void onMouseMoved(MouseEvent e);
 
-    public void onMouseRelease(MouseEvent e) {
-        if (hovering && e.getButton() == MouseEvent.BUTTON1)
-            onClick();
-    }
+    public abstract void onMouseRelease(MouseEvent e);
 
     public float getX() {
         return x;
@@ -63,13 +57,5 @@ public abstract class UIObject {
 
     public void setHeight(int height) {
         this.height = height;
-    }
-
-    public boolean isHovering() {
-        return hovering;
-    }
-
-    public void setHovering(boolean hovering) {
-        this.hovering = hovering;
     }
 }
