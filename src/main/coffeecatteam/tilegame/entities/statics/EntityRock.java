@@ -3,10 +3,8 @@ package coffeecatteam.tilegame.entities.statics;
 import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.gfx.Assets;
-import coffeecatteam.tilegame.items.Item;
 import coffeecatteam.tilegame.items.ItemStack;
 import coffeecatteam.tilegame.items.Items;
-import coffeecatteam.tilegame.utils.Utils;
 
 import java.awt.*;
 import java.util.Iterator;
@@ -14,8 +12,8 @@ import java.util.Random;
 
 public class EntityRock extends EntityStatic {
 
-    public EntityRock(Handler handler, float x, float y) {
-        super(handler, x, y, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityRock(Handler handler, String id) {
+        super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
 
         bounds.x = 0;
         bounds.y = height / 2;

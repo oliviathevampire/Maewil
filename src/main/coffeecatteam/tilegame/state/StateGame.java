@@ -11,7 +11,7 @@ public class StateGame extends State {
 
     public StateGame(Handler handler) {
         super(handler);
-        world = new World(handler, "/assets/worlds/world2.wd");
+        world = new World(handler, "/assets/worlds/test_world2");
         handler.setWorld(world);
     }
 

@@ -4,6 +4,7 @@ import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
 import coffeecatteam.tilegame.gfx.overlays.Overlay;
 import coffeecatteam.tilegame.gfx.overlays.OverlayPlayerHealth;
+import coffeecatteam.tilegame.tiles.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Iterator;
 
 public class EntityManager {
 
+    // EntityManager
     private Handler handler;
     private EntityPlayer player;
     private ArrayList<Entity> entities;
@@ -57,6 +59,12 @@ public class EntityManager {
     }
 
     public void addEntity(Entity e) {
+        entities.add(e);
+    }
+
+    public void addEntity(Entity e, float x, float y) {
+        e.setX(x * Tile.TILE_WIDTH);
+        e.setY(y * Tile.TILE_HEIGHT);
         entities.add(e);
     }
 

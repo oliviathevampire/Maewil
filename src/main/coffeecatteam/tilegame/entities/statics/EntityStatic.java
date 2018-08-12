@@ -5,8 +5,8 @@ import coffeecatteam.tilegame.entities.Entity;
 
 public abstract class EntityStatic extends Entity {
 
-    public EntityStatic(Handler handler, float x, float y, int width, int height) {
-        super(handler, x, y, width, height);
+    public EntityStatic(Handler handler, String id, int width, int height) {
+        super(handler, id, width, height);
         health = 10;
     }
 }

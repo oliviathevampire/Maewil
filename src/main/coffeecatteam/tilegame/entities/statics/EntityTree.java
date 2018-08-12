@@ -3,7 +3,6 @@ package coffeecatteam.tilegame.entities.statics;
 import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.gfx.Assets;
-import coffeecatteam.tilegame.items.Item;
 import coffeecatteam.tilegame.items.ItemStack;
 import coffeecatteam.tilegame.items.Items;
 import coffeecatteam.tilegame.tiles.Tile;
@@ -18,8 +17,8 @@ public class EntityTree extends EntityStatic {
 
     private TreeType type;
 
-    public EntityTree(Handler handler, float x, float y, TreeType type) {
-        super(handler, x, y, type.getWidth(), type.getHeight());
+    public EntityTree(Handler handler, String id, TreeType type) {
+        super(handler, id, type.getWidth(), type.getHeight());
         this.type = type;
 
         bounds.x = 20 + type.getBoundsOffset();

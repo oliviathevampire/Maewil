@@ -24,8 +24,8 @@ public class EntityPlayer extends EntityCreature {
 
     private Inventory inventory;
 
-    public EntityPlayer(Handler handler, float x, float y) {
-        super(handler, x, y, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityPlayer(Handler handler, String id) {
+        super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
 
         bounds.x = 13;
         bounds.y = 28;

@@ -6,7 +6,6 @@ import coffeecatteam.tilegame.gfx.Animation;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.gfx.ImageLoader;
 import coffeecatteam.tilegame.gfx.SpriteSheet;
-import coffeecatteam.tilegame.items.Item;
 import coffeecatteam.tilegame.items.ItemStack;
 import coffeecatteam.tilegame.items.Items;
 import coffeecatteam.tilegame.utils.Utils;
@@ -23,8 +22,8 @@ public class EntityZombie extends EntityCreature {
 
     private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
 
-    public EntityZombie(Handler handler, float x, float y) {
-        super(handler, x, y, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityZombie(Handler handler, String id) {
+        super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
 
         bounds.x = 13;
         bounds.y = 28;

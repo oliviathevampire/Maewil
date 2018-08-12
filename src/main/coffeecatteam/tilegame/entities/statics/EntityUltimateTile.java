@@ -11,8 +11,8 @@ public class EntityUltimateTile extends EntityStatic {
 
     private Animation animation;
 
-    public EntityUltimateTile(Handler handler, float x, float y) {
-        super(handler, x, y, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityUltimateTile(Handler handler, String id) {
+        super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
 
         bounds.x = 0;
         bounds.y = height / 2;

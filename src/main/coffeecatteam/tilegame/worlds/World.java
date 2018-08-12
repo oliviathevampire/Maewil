@@ -1,12 +1,10 @@
 package coffeecatteam.tilegame.worlds;
 
 import coffeecatteam.tilegame.Handler;
+import coffeecatteam.tilegame.entities.Entity;
+import coffeecatteam.tilegame.entities.EntityLoader;
 import coffeecatteam.tilegame.entities.EntityManager;
 import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
-import coffeecatteam.tilegame.entities.creatures.EntityZombie;
-import coffeecatteam.tilegame.entities.statics.EntityRock;
-import coffeecatteam.tilegame.entities.statics.EntityTree;
-import coffeecatteam.tilegame.entities.statics.EntityUltimateTile;
 import coffeecatteam.tilegame.items.ItemManager;
 import coffeecatteam.tilegame.tiles.Tile;
 import coffeecatteam.tilegame.tiles.Tiles;
@@ -19,6 +17,8 @@ public class World {
     private Handler handler;
     private int width, height;
     private int spawnX, spawnY;
+
+    private int[][] bg_tiles;
     private int[][] tiles;
 
     private EntityManager entityManager;
@@ -26,19 +26,8 @@ public class World {
 
     public World(Handler handler, String path) {
         this.handler = handler;
-        entityManager = new EntityManager(handler, new EntityPlayer(handler, 0, 0));
+        entityManager = new EntityManager(handler, new EntityPlayer(handler, "player"));
         itemManager = new ItemManager(handler);
-
-        entityManager.addEntity(new EntityTree(handler, 10 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.SMALL));
-        entityManager.addEntity(new EntityTree(handler, 11 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.MEDIUM));
-        entityManager.addEntity(new EntityRock(handler, 12.5f * Tile.TILE_WIDTH, 11.5f * Tile.TILE_HEIGHT));
-        entityManager.addEntity(new EntityTree(handler, 13 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.LARGE));
-
-        entityManager.addEntity(new EntityZombie(handler, 1 * Tile.TILE_WIDTH, 16 * Tile.TILE_HEIGHT));
-        entityManager.addEntity(new EntityZombie(handler, 1 * Tile.TILE_WIDTH, 17 * Tile.TILE_HEIGHT));
-        entityManager.addEntity(new EntityZombie(handler, 1 * Tile.TILE_WIDTH, 18 * Tile.TILE_HEIGHT));
-
-        entityManager.addEntity(new EntityUltimateTile(handler, 2 * Tile.TILE_WIDTH, 1 * Tile.TILE_HEIGHT));
 
         loadWorld(path);
         entityManager.getPlayer().setX(spawnX * Tile.TILE_WIDTH);
@@ -53,7 +42,8 @@ public class World {
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
-                getTile(x, y).tick();
+                // getTile(bg_tiles, x, y).tick(); <-- Not 100% sure if this should be here -CoffeeCat
+                getTile(tiles, x, y).tick();
             }
         }
 
@@ -69,7 +59,8 @@ public class World {
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
-                getTile(x, y).render(g, (int) (x * Tile.TILE_WIDTH - handler.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - handler.getCamera().getyOffset()));
+                getTile(bg_tiles, x, y).render(g, (int) (x * Tile.TILE_WIDTH - handler.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - handler.getCamera().getyOffset()));
+                getTile(tiles, x, y).render(g, (int) (x * Tile.TILE_WIDTH - handler.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - handler.getCamera().getyOffset()));
             }
         }
 
@@ -78,34 +69,93 @@ public class World {
     }
 
     public Tile getTile(int x, int y) {
+        return getTile(tiles, x, y);
+    }
+
+    public Tile getTile(int[][] grid, int x, int y) {
         if (x < 0 || y < 0 || x >= width || y >= height)
             return Tiles.DIRT;
 
-        Tile t = Tile.tiles[tiles[x][y]];
+        Tile t = Tile.tiles[grid[x][y]];
         if (t == null)
             return Tiles.DIRT;
         return t;
     }
 
     private void loadWorld(String path) {
-    	System.out.println("Loading World: " + path);
-        String file = Utils.loadFileAsString(path);
-        String[] tokens = file.split("\\s+");
-        width = Utils.parseInt(tokens[0]);
-        height = Utils.parseInt(tokens[1]);
-        spawnX = Utils.parseInt(tokens[2]);
-        spawnY = Utils.parseInt(tokens[3]);
+        String prop = Utils.loadFileAsString(path + "/world.prop");
+        String bg = Utils.loadFileAsString(path + "/id_bg.wd");
+        String tile = Utils.loadFileAsString(path + "/id_tile.wd");
+        String entity = Utils.loadFileAsString(path + "/id_entity.wd");
 
-        tiles = new int[width][height];
+        String spacer = "\\s+";
+        String[] propTokens = prop.split(spacer);
+        String[] bgTokens = bg.split(spacer);
+        String[] tileTokens = tile.split(spacer);
+        String[] entityTokens = entity.split(spacer);
+
+        String worldName = propTokens[0].replace("_", " ");
+        System.out.println("Loading World: " + worldName);
+
+        width = Utils.parseInt(propTokens[1]);
+        height = Utils.parseInt(propTokens[2]);
+        spawnX = Utils.parseInt(propTokens[3]);
+        spawnY = Utils.parseInt(propTokens[4]);
+
+        loadBG(bgTokens, worldName);
+        loadTiles(tileTokens, worldName);
+        if (!entity.equals(""))
+            loadEntities(entityTokens, worldName);
+        System.out.println("World Loaded!\n");
+    }
+
+    private void loadBG(String[] bgTokens, String worldName) {
+        worldName = "World: " + worldName + "\\id_bg.wd";
+        System.out.println(worldName);
+
+        bg_tiles = new int[width][height];
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                tiles[x][y] = Utils.parseInt(tokens[(x + y * width) + 4]);
+                bg_tiles[x][y] = Utils.parseInt(bgTokens[(x + y * width)]);
             }
             float loaded = ((y + 1) * 100.0f) / height;
             if (y % 2 == 0)
                 System.out.println(loaded + "% Loaded!");
         }
-        System.out.println("World Loaded!\n");
+    }
+
+    private void loadTiles(String[] tileTokens, String worldName) {
+        worldName = "World: " + worldName + "\\id_tile.wd";
+        System.out.println(worldName);
+
+        tiles = new int[width][height];
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                tiles[x][y] = Utils.parseInt(tileTokens[(x + y * width)]);
+            }
+            float loaded = ((y + 1) * 100.0f) / height;
+            if (y % 2 == 0)
+                System.out.println(loaded + "% Loaded!");
+        }
+    }
+
+    private void loadEntities(String[] entityTokens, String worldName) {
+        worldName = "World: " + worldName + "\\id_entity.wd";
+        System.out.println(worldName);
+        int height = entityTokens.length;
+        String spliter = ",";
+
+        for (int i = 0; i < height; i++) {
+            String entityId = entityTokens[i].split(spliter)[0];
+            float x = Utils.parseFloat(entityTokens[i].split(spliter)[1]);
+            float y = Utils.parseFloat(entityTokens[i].split(spliter)[2]);
+
+            entityManager.addEntity(EntityLoader.loadEntity(handler, entityId), x, y);
+
+            float loaded = ((i + 1) * 100.0f) / height;
+            if (i % 2 == 0)
+                System.out.println(loaded + "% Loaded!");
+        }
     }
 
     public Handler getHandler() {

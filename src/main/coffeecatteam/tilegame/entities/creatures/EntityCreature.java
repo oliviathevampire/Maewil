@@ -11,8 +11,8 @@ public abstract class EntityCreature extends Entity {
     protected float speed;
     protected float xMove, yMove;
 
-    public EntityCreature(Handler handler, float x, float y, int width, int height) {
-        super(handler, x, y, width, height);
+    public EntityCreature(Handler handler, String id, int width, int height) {
+        super(handler, id, width, height);
         speed = DEFAULT_SPEED;
         xMove = 0;
         yMove = 0;

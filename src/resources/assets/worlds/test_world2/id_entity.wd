@@ -1,0 +1,9 @@
+tree_small,10f,10f
+tree_medium,11f,10f
+tree_large,13f,10f
+rock,12.5f,11.5f
+rock,12.5f,13.5f
+zombie,1f,16f
+zombie,1f,17f
+zombie,1f,18f
+ultimate,2f,1f

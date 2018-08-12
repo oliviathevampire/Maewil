@@ -3,16 +3,22 @@ package coffeecatteam.tilegame.entities;
 import coffeecatteam.tilegame.Handler;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public abstract class Entity {
+
+    public static Map<String, Entity> entities = new HashMap<>();
 
     public static final int DEFAULT_HEALTH = 100;
     public static final int DEFAULT_WIDTH = 64;
     public static final int DEFAULT_HEIGHT = 64;
 
+    private String id;
     protected Handler handler;
     protected float x, y;
+
     protected int width, height;
     protected int health;
     protected boolean active = true;
@@ -20,15 +26,18 @@ public abstract class Entity {
 
     protected boolean showHitbox = false, isCollidable = true;
 
-    public Entity(Handler handler, float x, float y, int width, int height) {
+    public Entity(Handler handler, String id, int width, int height) {
         this.handler = handler;
-        this.x = x;
-        this.y = y;
+        this.id = id;
+
         this.width = width;
         this.height = height;
         health = DEFAULT_HEALTH;
 
         bounds = new Rectangle(0, 0, width, height);
+
+        entities.put(id, this);
+        entities.get(id).setHandler(handler);
     }
 
     public abstract void tick();
@@ -69,6 +78,18 @@ public abstract class Entity {
 
     public Rectangle getCollisionBounds(float xOffset, float yOffset) {
         return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
+    }
+
+    public Handler getHandler() {
+        return handler;
+    }
+
+    public void setHandler(Handler handler) {
+        this.handler = handler;
+    }
+
+    public String getId() {
+        return this.id;
     }
 
     public float getX() {
