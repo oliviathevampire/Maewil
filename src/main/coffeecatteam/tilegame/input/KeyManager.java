@@ -38,8 +38,8 @@ public class KeyManager implements KeyListener {
         pause = keys[KeyEvent.VK_ESCAPE];
     }
 
-    public boolean keyJustPressed(int keyCode){
-        if(keyCode < 0 || keyCode >= keys.length)
+    public boolean keyJustPressed(int keyCode) {
+        if (keyCode < 0 || keyCode >= keys.length)
             return false;
         return justPressed[keyCode];
     }

@@ -1,7 +1,6 @@
 package coffeecatteam.tilegame.worlds;
 
 import coffeecatteam.tilegame.Handler;
-import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.entities.EntityLoader;
 import coffeecatteam.tilegame.entities.EntityManager;
 import coffeecatteam.tilegame.entities.creatures.EntityPlayer;

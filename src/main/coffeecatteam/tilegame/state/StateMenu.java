@@ -21,8 +21,8 @@ public class StateMenu extends State {
         int xOffset = 150;
         int yOffset = 150;
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2 - xOffset, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 50 + yOffset, btnWidth, btnHeight, "Start", () -> {
-                handler.getMouseManager().setUiManager(null);
-                State.setState(handler.getGame().gameState);
+            handler.getMouseManager().setUiManager(null);
+            State.setState(handler.getGame().gameState);
         }));
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2 + xOffset, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 50 + yOffset, btnWidth, btnHeight, "Quit", () -> {
             System.out.println("Exiting...");

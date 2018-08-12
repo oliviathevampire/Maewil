@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Utils {
 
-    public static Font loadFont(String path, float size){
+    public static Font loadFont(String path, float size) {
         try {
             return Font.createFont(Font.TRUETYPE_FONT, Utils.class.getResourceAsStream(path)).deriveFont(Font.PLAIN, size);
         } catch (FontFormatException | IOException e) {

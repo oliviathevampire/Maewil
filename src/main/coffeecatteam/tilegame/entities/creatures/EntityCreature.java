@@ -54,7 +54,7 @@ public abstract class EntityCreature extends Entity {
         } else if (yMove > 0) {
             int ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILE_HEIGHT;
 
-            if (!collisionWidthTile((int) (x + bounds.x) / Tile.TILE_WIDTH, ty) && !collisionWidthTile((int) (x + bounds.x+ bounds.width) / Tile.TILE_WIDTH, ty))
+            if (!collisionWidthTile((int) (x + bounds.x) / Tile.TILE_WIDTH, ty) && !collisionWidthTile((int) (x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty))
                 y += yMove;
             else
                 y = ty * Tile.TILE_HEIGHT - bounds.y - bounds.height - 1;

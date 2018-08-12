@@ -69,17 +69,17 @@ public class Assets {
         FONT_40_EXPANDED = Utils.loadFont("/assets/fonts/slkscre.ttf", 40);
 
         /* Sprite Sheets */
-        SpriteSheet terrainSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/terrain.png"));
-        SpriteSheet natureSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
-        SpriteSheet effectSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/effect.png"));
+        SpriteSheet terrainSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/terrain.png"));
+        SpriteSheet natureSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
+        SpriteSheet effectSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/effect.png"));
 
-        SpriteSheet healthSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health.png"));
-        SpriteSheet itemsSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/items.png"));
+        SpriteSheet healthSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health.png"));
+        SpriteSheet itemsSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/items.png"));
 
-        SpriteSheet characrerSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/player.png"));
-        SpriteSheet zombieSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/zombie.png"));
+        SpriteSheet characrerSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/player.png"));
+        SpriteSheet zombieSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/zombie.png"));
 
-        SpriteSheet menuSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/menu.png"));
+        SpriteSheet menuSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/menu.png"));
 
         /* Tiles */
         GRASS = getSprite(terrainSheet, 0, 0, width, height);
