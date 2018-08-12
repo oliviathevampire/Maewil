@@ -10,7 +10,7 @@ public class Assets {
 
     private static final int width = 16, height = 16;
 
-    public static Font FONT;
+    public static Font FONT, FONT_BOLD, FONT_EXPANDED;
 
     /* Tiles */
     public static BufferedImage GRASS, DIRT, SAND;
@@ -57,6 +57,8 @@ public class Assets {
 
     public static void init() {
         FONT = Utils.loadFont("/assets/fonts/slkscr.ttf", 20);
+        FONT_BOLD = Utils.loadFont("/assets/fonts/slkscrb.ttf", 20);
+        FONT_EXPANDED = Utils.loadFont("/assets/fonts/slkscre.ttf", 20);
 
         SpriteSheet terrainSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/terrain.png"));
         SpriteSheet natureSheet =  new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
