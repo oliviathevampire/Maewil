@@ -14,7 +14,7 @@ public class StateMenu extends State {
     public StateMenu(Handler handler) {
         super(handler);
         uiManager = new UIManager(handler);
-        handler.getMouseManager().setUiManager(uiManager);
+        init();
 
         int btnWidth = 192;
         int btnHeight = 64;
@@ -22,12 +22,18 @@ public class StateMenu extends State {
         int yOffset = 150;
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2 - xOffset, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 50 + yOffset, btnWidth, btnHeight, "Start", () -> {
             handler.getMouseManager().setUiManager(null);
-            State.setState(handler.getGame().gameState);
+            State.setState(handler.getGame().gameState.init());
         }));
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2 + xOffset, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 50 + yOffset, btnWidth, btnHeight, "Quit", () -> {
             System.out.println("Exiting...");
             System.exit(0);
         }));
+    }
+
+    @Override
+    public State init() {
+        handler.getMouseManager().setUiManager(uiManager);
+        return this;
     }
 
     @Override

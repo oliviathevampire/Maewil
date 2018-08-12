@@ -22,6 +22,8 @@ public abstract class State {
         this.handler = handler;
     }
 
+    public abstract State init();
+
     public abstract void tick();
 
     public abstract void render(Graphics g);
