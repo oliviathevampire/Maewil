@@ -125,6 +125,6 @@ public class EntityZombie extends EntityCreature {
         super.die(it);
         int amt = new Random().nextInt(3) + 1;
         for (int i = 0; i < amt; i++)
-            handler.getWorld().getItemManager().addItem(new ItemStack(Items.ROTTEN_FLESH), (int) (x + new Random().nextInt(3)), (int) (y + new Random().nextInt(3)));
+            handler.getWorld().getItemManager().addItem(new ItemStack(Items.ROTTEN_FLESH), (int) x, (int) y);
     }
 }

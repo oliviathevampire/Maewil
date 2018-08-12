@@ -34,9 +34,9 @@ public class World {
         entityManager.addEntity(new EntityRock(handler, 12.5f * Tile.TILE_WIDTH, 11.5f * Tile.TILE_HEIGHT));
         entityManager.addEntity(new EntityTree(handler, 13 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT, EntityTree.TreeType.LARGE));
 
-        entityManager.addEntity(new EntityZombie(handler, 1 * Tile.TILE_WIDTH, 15 * Tile.TILE_HEIGHT));
         entityManager.addEntity(new EntityZombie(handler, 1 * Tile.TILE_WIDTH, 16 * Tile.TILE_HEIGHT));
         entityManager.addEntity(new EntityZombie(handler, 1 * Tile.TILE_WIDTH, 17 * Tile.TILE_HEIGHT));
+        entityManager.addEntity(new EntityZombie(handler, 1 * Tile.TILE_WIDTH, 18 * Tile.TILE_HEIGHT));
 
         entityManager.addEntity(new EntityUltimateTile(handler, 2 * Tile.TILE_WIDTH, 1 * Tile.TILE_HEIGHT));
 

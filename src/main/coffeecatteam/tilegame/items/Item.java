@@ -99,6 +99,10 @@ public class Item implements Cloneable {
         return this.id;
     }
 
+    public Rectangle getBounds() {
+        return bounds;
+    }
+
     public int getX() {
         return this.x;
     }
