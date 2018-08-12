@@ -1,6 +1,7 @@
 package coffeecatteam.tilegame.state;
 
 import coffeecatteam.tilegame.Handler;
+import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.gfx.ui.UIButton;
 import coffeecatteam.tilegame.gfx.ui.UIManager;
 import coffeecatteam.tilegame.worlds.World;
@@ -26,12 +27,17 @@ public class StateGame extends State {
         int btnWidth = 192;
         int btnHeight = 64;
         int yOffset = 150;
-        uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 50, btnWidth, btnHeight, "Resume", () ->
+        uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 25, btnWidth, btnHeight, "Resume", () ->
             paused = false
         ));
-        uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 50 + yOffset, btnWidth, btnHeight, "Exit", () -> {
+        int w = btnWidth + 128;
+        uiManager.addObject(new UIButton(handler.getWidth() / 2 - w / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
             handler.getMouseManager().setUiManager(null);
             State.setState(handler.getGame().menuState.init());
+        }));
+        uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
+            System.out.println("Exiting...");
+            System.exit(0);
         }));
     }
 
@@ -60,6 +66,11 @@ public class StateGame extends State {
             Color tint = new Color(96, 96, 96, 127);
             g.setColor(tint);
             g.fillRect(0, 0, handler.getWidth(), handler.getHeight());
+
+            int w = 80 * 6;
+            int h = 48 * 6;
+            g.drawImage(Assets.TITLE, w / 6, 30, w, h, null);
+
             uiManager.render(g);
         }
     }
