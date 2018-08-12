@@ -4,6 +4,7 @@ import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.items.Item;
+import coffeecatteam.tilegame.items.ItemStack;
 import coffeecatteam.tilegame.items.Items;
 import coffeecatteam.tilegame.utils.Utils;
 
@@ -37,6 +38,6 @@ public class EntityRock extends EntityStatic {
         super.die(it);
         int amt = new Random().nextInt(2) + 1;
         for (int i = 0; i < amt; i++)
-            handler.getWorld().getItemManager().addItem(Items.ROCK.createNew((int) (x + Utils.getRandomInt(0, 2) * Item.WIDTH), (int) (y + Utils.getRandomInt(0, 2) * Item.HEIGHT)));
+            handler.getWorld().getItemManager().addItem(new ItemStack(Items.ROCK), (int) (x + new Random().nextInt(3)), (int) (y + new Random().nextInt(3)));
     }
 }

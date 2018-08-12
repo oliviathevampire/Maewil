@@ -5,17 +5,19 @@ import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.gfx.Text;
 import coffeecatteam.tilegame.items.Item;
+import coffeecatteam.tilegame.items.ItemStack;
 import coffeecatteam.tilegame.items.Items;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Inventory {
 
     private Handler handler;
     private boolean active = false;
-    private ArrayList<Item> inventory;
+    private List<ItemStack> inventory;
 
     private int maxInvSize = 12, maxStackSize = 16;
     private int selectedIndex = 0;
@@ -24,20 +26,18 @@ public class Inventory {
         this.handler = handler;
         inventory = new ArrayList<>();
 
-        addItem(Items.STICK.createNew(5));
-        addItem(Items.ROCK.createNew(maxStackSize));
-        addItem(Items.ROCK.createNew(maxStackSize));
-        addItem(Items.ROCK.createNew(5));
-        addItem(Items.ROTTEN_FLESH.createNew(3));
-        addItem(Items.LEAF.createNew(maxStackSize));
-        addItem(Items.COAL.createNew(5));
-        addItem(Items.IRON_INGOT.createNew(3));
-        addItem(Items.GOLD_INGOT.createNew(3));
-        addItem(Items.DIAMOND.createNew(3));
-        addItem(Items.WOODEN_SWORD.createNew(1));
-        addItem(Items.WOODEN_PICK.createNew(1));
-        addItem(Items.CARROT.createNew(10));
-        //addItem(Items.APPLE.createNew(10));
+//        addItem(new ItemStack(Items.STICK, 5));
+//        addItem(new ItemStack(Items.ROCK, maxStackSize));
+//        addItem(new ItemStack(Items.ROTTEN_FLESH,3));
+//        addItem(new ItemStack(Items.LEAF, maxStackSize));
+//        addItem(new ItemStack(Items.COAL,5));
+//        addItem(new ItemStack(Items.IRON_INGOT,3));
+//        addItem(new ItemStack(Items.GOLD_INGOT,3));
+//        addItem(new ItemStack(Items.DIAMOND,3));
+//        addItem(new ItemStack(Items.WOODEN_SWORD,1));
+//        addItem(new ItemStack(Items.WOODEN_PICK,1));
+//        addItem(new ItemStack(Items.CARROT,10));
+//        addItem(new ItemStack(Items.APPLE, 1));
     }
 
     public void tick() {
@@ -70,15 +70,15 @@ public class Inventory {
             selectedIndex = 0;
 
         if (selectedIndex < inventory.size()) {
-            Item i = inventory.get(selectedIndex);
+            ItemStack stack = inventory.get(selectedIndex);
             // Check if item was interacted with
             if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
-                if (i.onInteracted(handler.getWorld().getEntityManager().getPlayer()))
-                    i.setCount(i.getCount() - 1);
+                if (stack.getItem().onInteracted(handler.getWorld().getEntityManager().getPlayer()))
+                    stack.setCount(stack.getCount() - 1);
             }
 
             // Check if item count is 0
-            if (i.getCount() <= 0)
+            if (stack.getCount() <= 0)
                 inventory.remove(selectedIndex);
         }
     }
@@ -101,15 +101,15 @@ public class Inventory {
         int itemHeight = 48;
         if (inventory.size() > 0) {
             for (int i = 0; i < inventory.size(); i++) {
-                Item item = inventory.get(i);
+                ItemStack stack = inventory.get(i);
                 int xPos = x + 12 + 54 * i;
                 int yPos = y + height - 115;
                 if (i > maxInvSize / 2 - 1) {
                     xPos -= itemWidth * 7 - 12;
                     yPos += 55;
                 }
-                g.drawImage(item.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
-                Text.drawString(g, String.valueOf(item.getCount()), xPos, yPos + 15, Color.white, Assets.FONT);
+                g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
+                Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, Color.white, Assets.FONT);
             }
         }
 
@@ -127,35 +127,22 @@ public class Inventory {
         g.drawImage(Assets.INVENTORY.crop(48, 48, 16, 16), xPos - off / 2, yPos - off / 2, itemWidth + off, itemHeight + off, null);
     }
 
-    public void addItem(Item item) {
-        for (Item i : inventory) {
-            if (i.getId() == item.getId()) {
-                int size = i.getCount() + item.getCount();
-//                if (size > maxStackSize) {
-//                    int stacks = size / maxStackSize;
-//                    int extra = size - maxStackSize * stacks;
-//                    for (int s = 0; s < stacks; s++) {
-//                        Item newItem = i;
-//                        newItem.setCount(maxStackSize);
-//                        inventory.add(newItem);
-//                    }
-//                    Item extraItems = i;
-//                    extraItems.setCount(extra);
-//                    inventory.add(extraItems);
-//                    return;
-//                }
-                i.setCount(size);
+    public void addItem(ItemStack stack) {
+        for (ItemStack s : inventory) {
+            if (s.getId() == stack.getId()) {
+                int size = s.getCount() + stack.getCount();
+                s.setCount(size);
                 return;
             }
         }
-        inventory.add(item);
+        inventory.add(stack);
     }
 
     public boolean isFull() {
         return inventory.size() == maxInvSize;
     }
 
-    public ArrayList<Item> getItems() {
+    public List<ItemStack> getItems() {
         return inventory;
     }
 

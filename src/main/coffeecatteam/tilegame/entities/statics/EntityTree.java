@@ -30,8 +30,7 @@ public class EntityTree extends EntityStatic {
 
     @Override
     public void tick() {
-        if (Utils.getRandomInt(0, 10000) < 10)
-            handler.getWorld().getItemManager().addItem(Items.LEAF.createNew((int) (x + Utils.getRandomInt(-1, 1) * Item.WIDTH), (int) (y + Utils.getRandomInt(-1, 1)) * Item.HEIGHT));
+
     }
 
     @Override
@@ -42,13 +41,12 @@ public class EntityTree extends EntityStatic {
     @Override
     public void die(Iterator<Entity> it) {
         super.die(it);
-        int amt = new Random().nextInt(2) + 1;
-        for (int i = 0; i < amt; i++) {
-            handler.getWorld().getItemManager().addItem(Items.STICK.createNew((int) (x + Utils.getRandomInt(0, 2) * Item.WIDTH), (int) (y + Utils.getRandomInt(0, 2)) * Item.HEIGHT));
-            handler.getWorld().getItemManager().addItem(Items.LEAF.createNew((int) (x + Utils.getRandomInt(0, 2) * Item.WIDTH), (int) (y + Utils.getRandomInt(0, 2)) * Item.HEIGHT));
+        for (int i = 0; i < Utils.getRandomInt(1, 3); i++) {
+            handler.getWorld().getItemManager().addItem(new ItemStack(Items.STICK), (int) (this.x + new Random().nextInt(3)), (int) (this.y + new Random().nextInt(3)));
+            handler.getWorld().getItemManager().addItem(new ItemStack(Items.LEAF), (int) (this.x + new Random().nextInt(3)), (int) (this.y + new Random().nextInt(3)));
         }
         //if (Utils.getRandomInt(0, 1000) < 900)
-        handler.getWorld().getItemManager().addItem(Item.createNew(Items.APPLE, (int) (x + Utils.getRandomInt(0, 2) * Item.WIDTH), (int) (y + Utils.getRandomInt(0, 2) * Item.HEIGHT)));
+        handler.getWorld().getItemManager().addItem(new ItemStack(Items.APPLE), (int) (this.x + new Random().nextInt(3)), (int) (this.y + new Random().nextInt(3)));
     }
 
     public enum TreeType {

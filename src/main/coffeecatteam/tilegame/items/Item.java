@@ -6,7 +6,7 @@ import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Item {
+public class Item implements Cloneable {
 
     public static Item[] items = new Item[256];
 
@@ -19,18 +19,17 @@ public class Item {
 
     protected Rectangle bounds;
 
-    protected int x, y, count;
+    protected int x, y;
     protected boolean pickedUp = false;
 
     public Item(BufferedImage texture, String name, int id) {
         this.texture = texture;
         this.name = name;
         this.id = id;
-        count = 1;
 
-        bounds = new Rectangle(x, y, WIDTH, HEIGHT);
+        this.bounds = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
 
-        items[id] = this;
+        this.items[id] = this;
     }
 
     public boolean onInteracted(EntityPlayer player) {
@@ -38,57 +37,42 @@ public class Item {
     }
 
     public void tick() {
-        if (handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(bounds)) {
-            if (!handler.getWorld().getEntityManager().getPlayer().getInventory().isFull()) {
-                pickedUp = true;
-                handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(this);
+        if (this.handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
+            if (!this.handler.getWorld().getEntityManager().getPlayer().getInventory().isFull()) {
+                this.pickedUp = true;
+                this.handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this));
             } else {
-                for (Item i : handler.getWorld().getEntityManager().getPlayer().getInventory().getItems()) {
-                    if (i.getId() == this.getId()) {
-                        pickedUp = true;
-                        handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(this);
+                for (ItemStack stack : this.handler.getWorld().getEntityManager().getPlayer().getInventory().getItems()) {
+                    if (stack.getId() == this.getId()) {
+                        this.pickedUp = true;
+                        this.handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this));
                     }
                 }
             }
         }
+
+        this.bounds = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
     }
 
     public void render(Graphics g) {
-        if (handler == null)
+        if (this.handler == null)
             return;
-        render(g, (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()));
+        render(g, (int) (this.x - this.handler.getCamera().getxOffset()), (int) (this.y - this.handler.getCamera().getyOffset()));
     }
 
     public void render(Graphics g, int x, int y) {
-        g.drawImage(texture, x, y, WIDTH, HEIGHT, null);
-    }
-
-    public Item createNew(int count) {
-        this.setPickedUp(true);
-        this.setCount(count);
-        return this;
-    }
-
-    public Item createNew(int x, int y) {
-        Item i = new Item(texture, name, id);
-        i.setPosition(x, y);
-        return i;
-    }
-
-    public static Item createNew(Item i, int x, int y) {
-        i.setPosition(x, y);
-        return i;
+        g.drawImage(this.texture, x, y, WIDTH, HEIGHT, null);
     }
 
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
-        bounds.x = x;
-        bounds.y = y;
+        this.bounds.x = x;
+        this.bounds.y = y;
     }
 
     public Handler getHandler() {
-        return handler;
+        return this.handler;
     }
 
     public void setHandler(Handler handler) {
@@ -96,7 +80,7 @@ public class Item {
     }
 
     public BufferedImage getTexture() {
-        return texture;
+        return this.texture;
     }
 
     public void setTexture(BufferedImage texture) {
@@ -104,7 +88,7 @@ public class Item {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -112,11 +96,11 @@ public class Item {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public int getX() {
-        return x;
+        return this.x;
     }
 
     public void setX(int x) {
@@ -124,26 +108,22 @@ public class Item {
     }
 
     public int getY() {
-        return y;
+        return this.y;
     }
 
     public void setY(int y) {
         this.y = y;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
     public boolean isPickedUp() {
-        return pickedUp;
+        return this.pickedUp;
     }
 
     public void setPickedUp(boolean pickedUp) {
         this.pickedUp = pickedUp;
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

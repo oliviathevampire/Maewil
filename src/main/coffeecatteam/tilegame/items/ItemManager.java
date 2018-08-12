@@ -1,6 +1,7 @@
 package coffeecatteam.tilegame.items;
 
 import coffeecatteam.tilegame.Handler;
+import coffeecatteam.tilegame.tiles.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -31,13 +32,13 @@ public class ItemManager {
             i.render(g);
     }
 
-    public void addItem(Item i) {
-        i.setHandler(handler);
-        items.add(i);
+    public void addItem(ItemStack stack, int x, int y) {
+        stack.setPosition(x + Tile.TILE_WIDTH, y + Tile.TILE_HEIGHT);
+        addItem(stack);
     }
 
     public void addItem(ItemStack stack) {
-        stack.getItem().setHandler(handler);
+        stack.setHandler(handler);
         items.add(stack.getItem());
     }
 

@@ -1,5 +1,9 @@
 package coffeecatteam.tilegame.items;
 
+import coffeecatteam.tilegame.Handler;
+
+import java.awt.image.BufferedImage;
+
 public class ItemStack {
 
     private Item item;
@@ -10,9 +14,13 @@ public class ItemStack {
     }
 
     public ItemStack(Item item, int count) {
-        this.item = item;
+        try {
+            this.item = (Item) item.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            this.item = Items.STICK;
+        }
         this.count = count;
-        this.item.setCount(this.count);
     }
 
     public ItemStack setPosition(int x, int y) {
@@ -33,12 +41,27 @@ public class ItemStack {
         this.item = item;
     }
 
+    public BufferedImage getTexture() {
+        return this.item.getTexture();
+    }
+
+    public void setTexture(BufferedImage texture) {
+        this.item.setTexture(texture);
+    }
+
+    public int getId() {
+        return this.item.getId();
+    }
+
     public int getCount() {
         return this.count;
     }
 
     public void setCount(int count) {
         this.count = count;
-        this.item.setCount(this.count);
+    }
+
+    public void setHandler(Handler handler) {
+        this.item.setHandler(handler);
     }
 }
