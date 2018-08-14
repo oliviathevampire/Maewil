@@ -10,11 +10,8 @@ import java.awt.*;
 
 public class OverlayPlayerHealth extends Overlay {
 
-    private EntityPlayer player;
-
     public OverlayPlayerHealth(Handler handler, EntityPlayer player) {
-        super(handler);
-        this.player = player;
+        super(handler, player);
     }
 
     @Override

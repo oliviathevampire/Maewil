@@ -4,6 +4,7 @@ import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.EntityLoader;
 import coffeecatteam.tilegame.entities.EntityManager;
 import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
+import coffeecatteam.tilegame.gfx.overlays.OverlayManager;
 import coffeecatteam.tilegame.items.ItemManager;
 import coffeecatteam.tilegame.tiles.Tile;
 import coffeecatteam.tilegame.tiles.Tiles;
@@ -20,13 +21,16 @@ public class World {
     private int[][] bg_tiles;
     private int[][] tiles;
 
+    // Managers
     private EntityManager entityManager;
     private ItemManager itemManager;
+    private OverlayManager overlayManager;
 
     public World(Handler handler, String path) {
         this.handler = handler;
         entityManager = new EntityManager(handler, new EntityPlayer(handler, "player"));
         itemManager = new ItemManager(handler);
+        overlayManager = new OverlayManager(handler, entityManager.getPlayer());
 
         loadWorld(path);
         entityManager.getPlayer().setX(spawnX * Tile.TILE_WIDTH);
@@ -48,6 +52,7 @@ public class World {
 
         itemManager.tick();
         entityManager.tick();
+        overlayManager.tick();
     }
 
     public void render(Graphics g) {
@@ -58,13 +63,27 @@ public class World {
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
-                getTile(bg_tiles, x, y).render(g, (int) (x * Tile.TILE_WIDTH - handler.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - handler.getCamera().getyOffset()));
+                getTile(bg_tiles, x, y).render(g, (int) (x * Tile.TILE_WIDTH - handler.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - handler.getCamera().getyOffset()), new Color(63, 63, 63, 127));
                 getTile(tiles, x, y).render(g, (int) (x * Tile.TILE_WIDTH - handler.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - handler.getCamera().getyOffset()));
             }
         }
 
         itemManager.render(g);
         entityManager.render(g);
+        overlayManager.render(g);
+    }
+
+    public void setTile(int x, int y, Tile tile) {
+        if (x < 0)
+            x = 0;
+        if (y < 0)
+            y = 0;
+        if (x >= width)
+            x = width;
+        if ( y >= height)
+            y = height;
+
+        tiles[x][y] = tile.getId();
     }
 
     public Tile getTile(int x, int y) {
@@ -78,6 +97,7 @@ public class World {
         Tile t = Tile.tiles[grid[x][y]];
         if (t == null)
             return Tiles.DIRT;
+        t.setPos(x, y);
         return t;
     }
 
