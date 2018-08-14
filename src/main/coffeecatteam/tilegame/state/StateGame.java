@@ -4,7 +4,6 @@ import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.gfx.ui.UIButton;
 import coffeecatteam.tilegame.gfx.ui.UIManager;
-import coffeecatteam.tilegame.tiles.Tile;
 import coffeecatteam.tilegame.worlds.World;
 
 import java.awt.*;
@@ -20,7 +19,7 @@ public class StateGame extends State {
 
     public StateGame(Handler handler) {
         super(handler);
-        world = new World(handler, "/assets/worlds/test_world2");
+        world = new World(handler, "/assets/worlds/starter/world1");
         handler.setWorld(world);
         uiManager = new UIManager(handler);
         init();
