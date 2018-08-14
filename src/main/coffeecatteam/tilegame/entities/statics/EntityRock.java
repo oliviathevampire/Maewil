@@ -17,13 +17,12 @@ public class EntityRock extends EntityStatic {
 
     public EntityRock(Handler handler, String id, BufferedImage texture) {
         super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
-
         this.texture = texture;
 
         bounds.x = 0;
-        bounds.y = height / 2;
+        bounds.y = height / 2 + height / 3;
         bounds.width = width;
-        bounds.height = height / 2;
+        bounds.height = height / 3;
     }
 
     @Override

@@ -32,9 +32,9 @@ public class EntityPlayer extends EntityCreature {
         super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
 
         bounds.x = 13;
-        bounds.y = 28;
+        bounds.y = 34;
         bounds.width = 34;
-        bounds.height = 35;
+        bounds.height = 28;
 
         // Animations - 500 = 0.5 second
         int speed = 135;

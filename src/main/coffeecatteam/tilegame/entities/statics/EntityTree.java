@@ -22,9 +22,9 @@ public class EntityTree extends EntityStatic {
         this.type = type;
 
         bounds.x = 20 + type.getBoundsOffset();
-        bounds.y = 64;
+        bounds.y = 96;
         bounds.width = 28;
-        bounds.height = 64;
+        bounds.height = 32;
     }
 
     @Override
