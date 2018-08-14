@@ -8,7 +8,6 @@ import coffeecatteam.tilegame.inventory.Inventory;
 import coffeecatteam.tilegame.items.ItemStack;
 import coffeecatteam.tilegame.items.ItemTool;
 import coffeecatteam.tilegame.tiles.Tile;
-import coffeecatteam.tilegame.tiles.TileAnimated;
 import coffeecatteam.tilegame.tiles.Tiles;
 import coffeecatteam.tilegame.utils.Utils;
 
@@ -26,7 +25,7 @@ public class EntityPlayer extends EntityCreature {
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
 
     private Inventory inventory;
-    private ItemStack equipedItem;
+    private ItemStack equippedItem;
 
     public EntityPlayer(Handler handler, String id) {
         super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
@@ -115,9 +114,9 @@ public class EntityPlayer extends EntityCreature {
                 continue;
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
                 int extraDmg = 0;
-                if (equipedItem != null)
-                    if (equipedItem.getItem() instanceof ItemTool)
-                        extraDmg = ((ItemTool) equipedItem.getItem()).getDamage();
+                if (equippedItem != null)
+                    if (equippedItem.getItem() instanceof ItemTool)
+                        extraDmg = ((ItemTool) equippedItem.getItem()).getDamage();
                 e.hurt(Utils.getRandomInt(5, 10) + extraDmg);
                 return;
             }
@@ -133,12 +132,15 @@ public class EntityPlayer extends EntityCreature {
         xMove = 0;
         yMove = 0;
 
-        if (handler.getKeyManager().sprint && !inWater())
-            speed = EntityCreature.DEFAULT_SPEED * 1.7f;
-        if (!handler.getKeyManager().sprint)
-            speed = EntityCreature.DEFAULT_SPEED;
+
         if (inWater())
             speed = EntityCreature.DEFAULT_SPEED * 0.65f;
+        else {
+            if (handler.getKeyManager().sprint)
+                speed = EntityCreature.DEFAULT_SPEED * 2f;
+            else
+                speed = EntityCreature.DEFAULT_SPEED;
+        }
 
         if (handler.getKeyManager().up) {
             yMove = -speed;
@@ -201,11 +203,11 @@ public class EntityPlayer extends EntityCreature {
         return inventory;
     }
 
-    public ItemStack getEquipedItem() {
-        return equipedItem;
+    public ItemStack getEquippedItem() {
+        return equippedItem;
     }
 
-    public void setEquipedItem(ItemStack equipedItem) {
-        this.equipedItem = equipedItem;
+    public void setEquippedItem(ItemStack equippedItem) {
+        this.equippedItem = equippedItem;
     }
 }
