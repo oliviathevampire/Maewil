@@ -4,6 +4,7 @@ import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.gfx.ui.UIButton;
 import coffeecatteam.tilegame.gfx.ui.UIManager;
+import coffeecatteam.tilegame.tiles.Tile;
 import coffeecatteam.tilegame.worlds.World;
 
 import java.awt.*;
@@ -51,7 +52,7 @@ public class StateGame extends State {
     @Override
     public void tick() {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE))
-            paused = !paused;
+            paused = !paused && !handler.getWorld().getEntityManager().getPlayer().getInventory().isActive();
 
         if (!paused)
             world.tick();
