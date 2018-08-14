@@ -53,6 +53,11 @@ public class StateGame extends State {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE))
             paused = !paused && !handler.getWorld().getEntityManager().getPlayer().getInventory().isActive();
 
+        if (paused)
+            handler.getMouseManager().setUiManager(uiManager);
+        else
+            handler.getMouseManager().setUiManager(null);
+
         if (!paused)
             world.tick();
         else
