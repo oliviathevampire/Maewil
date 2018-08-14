@@ -7,13 +7,18 @@ import coffeecatteam.tilegame.items.ItemStack;
 import coffeecatteam.tilegame.items.Items;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.Random;
 
 public class EntityRock extends EntityStatic {
 
-    public EntityRock(Handler handler, String id) {
+    private BufferedImage texture;
+
+    public EntityRock(Handler handler, String id, BufferedImage texture) {
         super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+
+        this.texture = texture;
 
         bounds.x = 0;
         bounds.y = height / 2;
@@ -28,7 +33,7 @@ public class EntityRock extends EntityStatic {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.ROCK, (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()), width, height, null);
+        g.drawImage(texture, (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()), width, height, null);
     }
 
     @Override

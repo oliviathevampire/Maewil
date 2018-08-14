@@ -21,6 +21,8 @@ public class Assets {
 
     public static BufferedImage[] WATER, LAVA;
 
+    public static BufferedImage AIR;
+
     /* Special Tiles */
     public static BufferedImage[] SPLASH_EFFECT, SPRINT_EFFECT;
     public static BufferedImage[] ULTIMATE_TILE;
@@ -46,7 +48,7 @@ public class Assets {
 
     /* Nature */
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
-    public static BufferedImage ROCK;
+    public static BufferedImage ROCK_V1, ROCK_V2;
 
     /* GUI */
     public static BufferedImage BACKGROUND;
@@ -100,6 +102,8 @@ public class Assets {
         WATER = getFrames(terrainSheet, 6, 0, 15);
         LAVA = getFrames(terrainSheet, 7, 0, 15);
 
+        AIR = getSprite(terrainSheet, 13, 0, width, height);
+
         /* Special Tiles */
         SPLASH_EFFECT = getFrames(effectSheet, 0, 0, 15);
         SPRINT_EFFECT = getFrames(effectSheet, 1, 0, 15);
@@ -151,7 +155,8 @@ public class Assets {
         TREE_SMALL = getSprite(natureSheet, 0, 0, width, height * 2);
         TREE_MEDIUM = getSprite(natureSheet, 0, 2, width * 2, height * 2);
         TREE_LARGE = getSprite(natureSheet, 0, 4, width * 2, height * 2);
-        ROCK = getSprite(natureSheet, 1, 0, width, height);
+        ROCK_V1 = getSprite(natureSheet, 1, 0, width, height);
+        ROCK_V2 = getSprite(natureSheet, 1, 1, width, height);
 
         /* GUI */
         BACKGROUND = getSprite(new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/bg.png")), 0, 0, 320, 320);
