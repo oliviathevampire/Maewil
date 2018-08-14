@@ -5,7 +5,10 @@ import coffeecatteam.tilegame.entities.Entity;
 import coffeecatteam.tilegame.gfx.Animation;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.inventory.Inventory;
+import coffeecatteam.tilegame.items.ItemStack;
+import coffeecatteam.tilegame.items.ItemTool;
 import coffeecatteam.tilegame.tiles.Tile;
+import coffeecatteam.tilegame.tiles.TileAnimated;
 import coffeecatteam.tilegame.tiles.Tiles;
 import coffeecatteam.tilegame.utils.Utils;
 
@@ -23,6 +26,7 @@ public class EntityPlayer extends EntityCreature {
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
 
     private Inventory inventory;
+    private ItemStack equipedItem;
 
     public EntityPlayer(Handler handler, String id) {
         super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
@@ -61,6 +65,9 @@ public class EntityPlayer extends EntityCreature {
 
                 // Attack
                 checkAttacks();
+
+                // Interact with tiles
+                tileInteract();
             }
 
             handler.getCamera().centerOnEntity(this);
@@ -107,7 +114,11 @@ public class EntityPlayer extends EntityCreature {
             if (e.equals(this))
                 continue;
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
-                e.hurt(Utils.getRandomInt(5, 10));
+                int extraDmg = 0;
+                if (equipedItem != null)
+                    if (equipedItem.getItem() instanceof ItemTool)
+                        extraDmg = ((ItemTool) equipedItem.getItem()).getDamage();
+                e.hurt(Utils.getRandomInt(5, 10) + extraDmg);
                 return;
             }
         }
@@ -150,18 +161,26 @@ public class EntityPlayer extends EntityCreature {
     }
 
     private boolean inWater() {
-        for (int y = 0; y < handler.getWorld().getWidth(); y++) {
-            for (int x = 0; x < handler.getWorld().getHeight(); x++) {
-                int tx = (int) (this.x / Tile.TILE_WIDTH);
-                int ty = (int) (this.y / Tile.TILE_HEIGHT);
-                Tile tile = handler.getWorld().getTile(tx, ty);
-                if (tile.getId() == Tiles.WATER.getId()) {
-                    if (tile.getBounds().intersects(bounds))
-                        return true;
-                }
-            }
+        int x = (int) this.x / Tile.TILE_WIDTH;
+        int y = (int) this.y / Tile.TILE_HEIGHT;
+        Tile t = handler.getWorld().getTile(x, y);
+        if (t.getId() == Tiles.WATER.getId()) {
+            float nx = x + Tile.TILE_WIDTH / 2;
+            float ny = y + Tile.TILE_HEIGHT / 2;
+            if (t.getBounds().contains(nx, ny))
+                return true;
         }
+
         return false;
+    }
+
+    private void tileInteract() {
+        int x = (int) this.x / Tile.TILE_WIDTH;
+        int y = (int) this.y / Tile.TILE_HEIGHT;
+        Tile t = handler.getWorld().getTile(x, y);
+//        if (t.getId() == Tiles.DIRT.getId()) {
+//            handler.getWorld().setTile(x, y, Tiles.AIR);
+//        }
     }
 
     @Override
@@ -170,9 +189,8 @@ public class EntityPlayer extends EntityCreature {
         if (handler.getKeyManager().sprint && !inWater() && currentAnim != animIdle)
             g.drawImage(sprintEffect.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
 
-        if (inWater()) {
+        if (inWater())
             g.drawImage(splashEffect.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
-        }
     }
 
     public void postRender(Graphics g) {
@@ -181,5 +199,13 @@ public class EntityPlayer extends EntityCreature {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public ItemStack getEquipedItem() {
+        return equipedItem;
+    }
+
+    public void setEquipedItem(ItemStack equipedItem) {
+        this.equipedItem = equipedItem;
     }
 }

@@ -21,6 +21,7 @@ public class Item implements Cloneable {
 
     protected int x, y;
     protected boolean pickedUp = false;
+    protected boolean isStackable = true;
 
     public Item(BufferedImage texture, String name, int id) {
         this.texture = texture;
@@ -44,8 +45,10 @@ public class Item implements Cloneable {
             } else {
                 for (ItemStack stack : this.handler.getWorld().getEntityManager().getPlayer().getInventory().getItems()) {
                     if (stack.getId() == this.getId()) {
-                        this.pickedUp = true;
-                        this.handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this));
+                        if (stack.getItem().isStackable()) {
+                            this.pickedUp = true;
+                            this.handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this));
+                        }
                     }
                 }
             }
@@ -125,6 +128,14 @@ public class Item implements Cloneable {
 
     public void setPickedUp(boolean pickedUp) {
         this.pickedUp = pickedUp;
+    }
+
+    public boolean isStackable() {
+        return isStackable;
+    }
+
+    public void setStackable(boolean stackable) {
+        isStackable = stackable;
     }
 
     public Object clone() throws CloneNotSupportedException {

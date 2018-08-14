@@ -5,6 +5,7 @@ import coffeecatteam.tilegame.entities.creatures.EntityPlayer;
 import coffeecatteam.tilegame.gfx.Assets;
 import coffeecatteam.tilegame.gfx.Text;
 import coffeecatteam.tilegame.items.ItemStack;
+import coffeecatteam.tilegame.items.Items;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -16,13 +17,15 @@ public class Inventory {
     private Handler handler;
     private boolean active = false;
     private List<ItemStack> inventory;
+    private List<ItemStack> hotbar;
 
-    private int maxInvSize = 12, maxStackSize = 16;
+    private int maxInvSize = 12, maxHotbarSize = 3;
     private int selectedIndex = 0;
 
     public Inventory(Handler handler) {
         this.handler = handler;
         inventory = new ArrayList<>();
+        hotbar = new ArrayList<>();
 
 //        addItem(new ItemStack(Items.STICK, 5));
 //        addItem(new ItemStack(Items.ROCK, maxStackSize));
@@ -69,10 +72,19 @@ public class Inventory {
 
         if (selectedIndex < inventory.size()) {
             ItemStack stack = inventory.get(selectedIndex);
+
             // Check if item was interacted with
             if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
                 if (stack.getItem().onInteracted(handler.getWorld().getEntityManager().getPlayer()))
                     stack.setCount(stack.getCount() - 1);
+            }
+
+            // Check if item was put into hotbar
+            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Q)) {
+                if (hotbar.size() <= maxHotbarSize - 1) {
+                    hotbar.add(stack);
+                    inventory.remove(stack);
+                }
             }
 
             // Check if item count is 0
@@ -128,9 +140,11 @@ public class Inventory {
     public void addItem(ItemStack stack) {
         for (ItemStack s : inventory) {
             if (s.getId() == stack.getId()) {
-                int size = s.getCount() + stack.getCount();
-                s.setCount(size);
-                return;
+                if (s.getItem().isStackable()) {
+                    int size = s.getCount() + stack.getCount();
+                    s.setCount(size);
+                    return;
+                }
             }
         }
         inventory.add(stack);
@@ -142,6 +156,10 @@ public class Inventory {
 
     public List<ItemStack> getItems() {
         return inventory;
+    }
+
+    public List<ItemStack> getHotbar() {
+        return hotbar;
     }
 
     public Handler getHandler() {

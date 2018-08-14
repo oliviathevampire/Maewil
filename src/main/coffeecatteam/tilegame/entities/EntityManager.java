@@ -23,17 +23,11 @@ public class EntityManager {
         return 1;
     };
 
-    /* Overlays */
-    private Overlay healthOverlay;
-
     public EntityManager(Handler handler, EntityPlayer player) {
         this.handler = handler;
         this.player = player;
         entities = new ArrayList<>();
         addEntity(this.player);
-
-        /* Overlays */
-        healthOverlay = new OverlayPlayerHealth(handler, player);
     }
 
     public void tick() {
@@ -50,9 +44,6 @@ public class EntityManager {
     public void render(Graphics g) {
         for (Entity e : entities)
             e.renderA(g);
-
-        /* Overlays */
-        healthOverlay.render(g);
 
         /* Post Render */
         player.postRender(g);
