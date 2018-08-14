@@ -49,6 +49,7 @@ public class Assets {
     /* Nature */
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
     public static BufferedImage ROCK_V1, ROCK_V2;
+    public static BufferedImage BUSH_SMALL, BUSH_LARGE;
 
     /* GUI */
     public static BufferedImage BACKGROUND;
@@ -157,6 +158,8 @@ public class Assets {
         TREE_LARGE = getSprite(natureSheet, 0, 4, width * 2, height * 2);
         ROCK_V1 = getSprite(natureSheet, 1, 0, width, height);
         ROCK_V2 = getSprite(natureSheet, 1, 1, width, height);
+        BUSH_SMALL = getSprite(natureSheet, 2, 0, width, height);
+        BUSH_LARGE = getSprite(natureSheet, 2, 1, width * 2, height);
 
         /* GUI */
         BACKGROUND = getSprite(new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/bg.png")), 0, 0, 320, 320);

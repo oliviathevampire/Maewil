@@ -2,6 +2,7 @@ package coffeecatteam.tilegame.entities;
 
 import coffeecatteam.tilegame.Handler;
 import coffeecatteam.tilegame.entities.creatures.EntityZombie;
+import coffeecatteam.tilegame.entities.statics.EntityBush;
 import coffeecatteam.tilegame.entities.statics.EntityRock;
 import coffeecatteam.tilegame.entities.statics.EntityTree;
 import coffeecatteam.tilegame.entities.statics.EntityUltimateTile;
@@ -25,6 +26,10 @@ public class EntityLoader {
                 return new EntityZombie(handler, id);
             case "ultimate":
                 return new EntityUltimateTile(handler, id);
+            case "bush_small":
+                return new EntityBush(handler, id, Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH);
+            case "bush_large":
+                return new EntityBush(handler, id, Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2);
         }
         return new EntityRock(handler, "rock", Assets.ROCK_V1);
     }
