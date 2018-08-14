@@ -11,10 +11,12 @@ public class Tiles {
     public static Tile SAND = new TileBase(Assets.SAND, 3, false);
     public static Tile ANDESITE = new TileBase(Assets.ANDESITE, 4, true);
     public static Tile DIORITE = new TileBase(Assets.DIORITE, 5, true);
+
     public static Tile COAL_ORE = new TileBase(Assets.COAL_ORE, 6, true);
     public static Tile IRON_ORE = new TileBase(Assets.IRON_ORE, 7, true);
     public static Tile GOLD_ORE = new TileBase(Assets.GOLD_ORE, 8, true);
     public static Tile DIAMOND_ORE = new TileBase(Assets.DIAMOND_ORE, 9, true);
+
     public static Tile OBSIDIAN = new TileBase(Assets.OBSIDIAN, 10, true);
 
     public static Tile WATER = new TileAnimated(new Animation(50, Assets.WATER), 11);
