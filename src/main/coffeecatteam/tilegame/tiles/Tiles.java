@@ -22,4 +22,6 @@ public class Tiles {
 
     public static Tile PLANKS = new TileBase(Assets.PLANKS, 13, true);
     public static Tile BROKEN_STONE = new TileBase(Assets.BROKEN_STONE, 14, true);
+
+    public static Tile AIR = new TileBase(Assets.AIR, 15, false); // USES EMPPTY SPACE IN TILES SHEET
 }
