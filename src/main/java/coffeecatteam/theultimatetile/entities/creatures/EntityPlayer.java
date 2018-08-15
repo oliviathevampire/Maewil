@@ -27,8 +27,6 @@ public class EntityPlayer extends EntityCreature {
     private Inventory inventory;
     private ItemStack equippedItem;
 
-    private int maxSprint = 100, sprint = maxSprint;
-
     public EntityPlayer(Handler handler, String id) {
         super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
 
@@ -130,31 +128,30 @@ public class EntityPlayer extends EntityCreature {
         currentAnim = animDead;
     }
 
-    private float maxTimer = 10f, sprintTimer = maxTimer, sprintStartOver = maxTimer * maxTimer;
+    private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
+
     private void getInput() {
         xMove = 0;
         yMove = 0;
 
-
         if (inWater())
             speed = EntityCreature.DEFAULT_SPEED * 0.65f;
         else {
-            if (sprintTimer <= 0) {
-                sprint--;
-                sprintTimer = maxTimer;
-            }
+            if (sprintTimer <= 0)
+                sprintStartOver -= 0.25f;
             if (sprintStartOver <= 0) {
-                sprint = maxSprint;
-                sprintStartOver = maxTimer * maxTimer;
+                sprintTimer = maxSprintTimer;
+                sprintStartOver = maxSprintTimer;
             }
             if (canSprint()) {
-                if (handler.getKeyManager().sprint) {
-                    speed = EntityCreature.DEFAULT_SPEED * 2f;
-                    sprintTimer -= 0.9f;
-                } else
-                    speed = EntityCreature.DEFAULT_SPEED;
-            } else
-                sprintStartOver -= 0.5f;
+                speed = EntityCreature.DEFAULT_SPEED * 2f;
+                sprintTimer -= 0.25f;
+                System.out.println(sprintTimer);
+            } else {
+                speed = EntityCreature.DEFAULT_SPEED;
+            }
+            if (!handler.getKeyManager().sprint)
+                sprintTimer = maxSprintTimer;
         }
 
         if (handler.getKeyManager().up) {
@@ -203,7 +200,7 @@ public class EntityPlayer extends EntityCreature {
     @Override
     public void render(Graphics g) {
         g.drawImage(currentAnim.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
-        if (handler.getKeyManager().sprint && !inWater() && currentAnim != animIdle && canSprint())
+        if (canSprint())
             g.drawImage(sprintEffect.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
 
         if (inWater())
@@ -226,15 +223,11 @@ public class EntityPlayer extends EntityCreature {
         this.equippedItem = equippedItem;
     }
 
-    public int getSprint() {
-        return sprint;
-    }
-
-    public void setSprint(int sprint) {
-        this.sprint = sprint;
+    public float getSprintTimer() {
+        return sprintTimer;
     }
 
     public boolean canSprint() {
-        return sprint > 0;
+        return handler.getKeyManager().sprint && !inWater() && currentAnim != animIdle && sprintTimer > 0;
     }
 }
