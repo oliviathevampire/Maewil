@@ -27,6 +27,8 @@ public class EntityPlayer extends EntityCreature {
     private Inventory inventory;
     private ItemStack equippedItem;
 
+    private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
+
     public EntityPlayer(Handler handler, String id) {
         super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
 
@@ -127,8 +129,6 @@ public class EntityPlayer extends EntityCreature {
     public void die(Iterator<Entity> it) {
         currentAnim = animDead;
     }
-
-    private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
 
     private void getInput() {
         xMove = 0;
