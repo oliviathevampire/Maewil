@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.items.ItemStack;
+import coffeecatteam.theultimatetile.items.Items;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -27,9 +28,9 @@ public class Inventory {
         hotbar = new ArrayList<>();
 
 //        addItem(new ItemStack(Items.STICK, 5));
-//        addItem(new ItemStack(Items.ROCK, maxStackSize));
+//        addItem(new ItemStack(Items.ROCK));
 //        addItem(new ItemStack(Items.ROTTEN_FLESH,3));
-//        addItem(new ItemStack(Items.LEAF, maxStackSize));
+//        addItem(new ItemStack(Items.LEAF));
 //        addItem(new ItemStack(Items.COAL,5));
 //        addItem(new ItemStack(Items.IRON_INGOT,3));
 //        addItem(new ItemStack(Items.GOLD_INGOT,3));
@@ -78,11 +79,15 @@ public class Inventory {
                     stack.setCount(stack.getCount() - 1);
             }
 
-            // Check if item was put into hotbar
+            // Put item in hotbar if the Q button is pressed
             if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Q)) {
-                if (hotbar.size() <= maxHotbarSize - 1) {
-                    hotbar.add(stack);
-                    inventory.remove(stack);
+                if (!isHotbarHull()) {
+                    addStackToHotbar(stack);
+                } else {
+                    for (ItemStack s : hotbar)
+                        if (s.getId() == stack.getId())
+                            if (s.getItem().isStackable())
+                                addStackToHotbar(stack);
                 }
             }
 
@@ -149,8 +154,27 @@ public class Inventory {
         inventory.add(stack);
     }
 
+    public void addStackToHotbar(ItemStack stack) {
+        for (ItemStack s : hotbar) {
+            if (s.getId() == stack.getId()) {
+                if (s.getItem().isStackable()) {
+                    int size = s.getCount() + stack.getCount();
+                    s.setCount(size);
+                    stack.setCount(stack.getCount() - size);
+                    return;
+                }
+            }
+        }
+        hotbar.add(stack);
+        inventory.remove(stack);
+    }
+
     public boolean isFull() {
         return inventory.size() == maxInvSize;
+    }
+
+    public boolean isHotbarHull() {
+        return hotbar.size() == maxHotbarSize;
     }
 
     public List<ItemStack> getItems() {
