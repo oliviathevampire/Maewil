@@ -17,14 +17,20 @@
 hs_err_pid*
 
 # idea
-out/
+out
 *.ipr
 *.iws
 *.iml
-.idea/
+.idea
+
+# gradle
+build
+.gradle
+
+# other
 /bin/
 .DS_Store
 *.pdn
 .classpath
 .project
-*.wd_old
+build.bat
