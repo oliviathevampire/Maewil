@@ -27,6 +27,8 @@ public class EntityPlayer extends EntityCreature {
     private Inventory inventory;
     private ItemStack equippedItem;
 
+    private int maxSprint = 100, sprint = maxSprint;
+
     public EntityPlayer(Handler handler, String id) {
         super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
 
@@ -128,6 +130,7 @@ public class EntityPlayer extends EntityCreature {
         currentAnim = animDead;
     }
 
+    private float maxTimer = 10f, sprintTimer = maxTimer, sprintStartOver = maxTimer * maxTimer;
     private void getInput() {
         xMove = 0;
         yMove = 0;
@@ -136,10 +139,22 @@ public class EntityPlayer extends EntityCreature {
         if (inWater())
             speed = EntityCreature.DEFAULT_SPEED * 0.65f;
         else {
-            if (handler.getKeyManager().sprint)
-                speed = EntityCreature.DEFAULT_SPEED * 2f;
-            else
-                speed = EntityCreature.DEFAULT_SPEED;
+            if (sprintTimer <= 0) {
+                sprint--;
+                sprintTimer = maxTimer;
+            }
+            if (sprintStartOver <= 0) {
+                sprint = maxSprint;
+                sprintStartOver = maxTimer * maxTimer;
+            }
+            if (canSprint()) {
+                if (handler.getKeyManager().sprint) {
+                    speed = EntityCreature.DEFAULT_SPEED * 2f;
+                    sprintTimer -= 0.9f;
+                } else
+                    speed = EntityCreature.DEFAULT_SPEED;
+            } else
+                sprintStartOver -= 0.5f;
         }
 
         if (handler.getKeyManager().up) {
@@ -188,7 +203,7 @@ public class EntityPlayer extends EntityCreature {
     @Override
     public void render(Graphics g) {
         g.drawImage(currentAnim.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
-        if (handler.getKeyManager().sprint && !inWater() && currentAnim != animIdle)
+        if (handler.getKeyManager().sprint && !inWater() && currentAnim != animIdle && canSprint())
             g.drawImage(sprintEffect.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
 
         if (inWater())
@@ -209,5 +224,17 @@ public class EntityPlayer extends EntityCreature {
 
     public void setEquippedItem(ItemStack equippedItem) {
         this.equippedItem = equippedItem;
+    }
+
+    public int getSprint() {
+        return sprint;
+    }
+
+    public void setSprint(int sprint) {
+        this.sprint = sprint;
+    }
+
+    public boolean canSprint() {
+        return sprint > 0;
     }
 }

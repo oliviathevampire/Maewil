@@ -133,7 +133,7 @@ public class Assets {
         /* Health */
         HEARTS = getFrames(healthSheet, 0, 0, 4);
         ARMOR = getFrames(healthSheet, 1, 0, 3);
-        SPRINT = getFrames(healthSheet, 2, 0, 4);
+        SPRINT = getFrames(healthSheet, 3, 0, 1, width * 2, height);
 
         /* Player Frames */
         PLAYER_IDLE = getFrames(characrerSheet, 0, 0, 7);

@@ -14,8 +14,9 @@ public class OverlayManager {
     public OverlayManager(Handler handler, EntityPlayer player) {
         overlays = new ArrayList<>();
 
-        overlays.add(new OverlayPlayerHealth(handler, player));
-        overlays.add(new OverlayPlayerHotbar(handler, player));
+        addOverlay(new OverlayPlayerHealth(handler, player));
+        addOverlay(new OverlayPlayerHotbar(handler, player));
+        addOverlay(new OverlayPlayerSprint(handler, player));
     }
 
     public void tick() {
@@ -24,5 +25,9 @@ public class OverlayManager {
 
     public void render(Graphics g) {
         overlays.forEach(overlay -> overlay.render(g));
+    }
+
+    public void addOverlay(Overlay overlay) {
+        overlays.add(overlay);
     }
 }
