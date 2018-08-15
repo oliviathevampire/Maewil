@@ -2,11 +2,9 @@ package coffeecatteam.theultimatetile.entities;
 
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.creatures.EntityZombie;
-import coffeecatteam.theultimatetile.entities.statics.EntityBush;
-import coffeecatteam.theultimatetile.entities.statics.EntityRock;
-import coffeecatteam.theultimatetile.entities.statics.EntityTree;
-import coffeecatteam.theultimatetile.entities.statics.EntityUltimateTile;
+import coffeecatteam.theultimatetile.entities.statics.*;
 import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.items.Items;
 
 public class EntityLoader {
 
@@ -30,6 +28,8 @@ public class EntityLoader {
                 return new EntityBush(handler, id, Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH);
             case "bush_large":
                 return new EntityBush(handler, id, Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2);
+            case "carrot_crop":
+                return new EntityCrop(handler, id, Assets.CARROT_CROP, Items.CARROT);
         }
         return new EntityRock(handler, "rock", Assets.ROCK_V1);
     }

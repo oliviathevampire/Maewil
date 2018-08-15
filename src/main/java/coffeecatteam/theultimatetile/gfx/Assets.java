@@ -17,7 +17,7 @@ public class Assets {
     /* Tiles */
     public static BufferedImage GRASS, DIRT, SAND;
     public static BufferedImage STONE, ANDESITE, DIORITE, COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE, OBSIDIAN, BROKEN_STONE;
-    public static BufferedImage PLANKS;
+    public static BufferedImage PLANKS, BOOKSHELF, CHEST;
 
     public static BufferedImage[] WATER, LAVA;
 
@@ -50,6 +50,7 @@ public class Assets {
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
     public static BufferedImage ROCK_V1, ROCK_V2;
     public static BufferedImage BUSH_SMALL, BUSH_LARGE;
+    public static BufferedImage CARROT_CROP;
 
     /* GUI */
     public static BufferedImage BACKGROUND;
@@ -104,6 +105,9 @@ public class Assets {
         LAVA = getFrames(terrainSheet, 7, 0, 15);
 
         AIR = getSprite(terrainSheet, 13, 0, width, height);
+
+        BOOKSHELF = getSprite(terrainSheet, 14, 0, width, height);
+        CHEST = getSprite(terrainSheet, 15, 0, width, height);
 
         /* Special Tiles */
         SPLASH_EFFECT = getFrames(effectSheet, 0, 0, 15);
@@ -160,6 +164,7 @@ public class Assets {
         ROCK_V2 = getSprite(natureSheet, 1, 1, width, height);
         BUSH_SMALL = getSprite(natureSheet, 2, 0, width, height);
         BUSH_LARGE = getSprite(natureSheet, 2, 1, width * 2, height);
+        CARROT_CROP = getSprite(natureSheet, 3, 0, width, height);
 
         /* GUI */
         BACKGROUND = getSprite(new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/bg.png")), 0, 0, 320, 320);
