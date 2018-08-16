@@ -74,7 +74,7 @@ public class Inventory {
             ItemStack stack = inventory.get(selectedIndex);
 
             // Check if item was interacted with
-            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_SPACE)) {
+            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
                 if (stack.getItem().onInteracted(handler.getWorld().getEntityManager().getPlayer()))
                     stack.setCount(stack.getCount() - 1);
             }
