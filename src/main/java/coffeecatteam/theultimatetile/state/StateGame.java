@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
+import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.worlds.World;
 
 import java.awt.*;
@@ -35,7 +36,7 @@ public class StateGame extends State {
             State.setState(handler.getGame().menuState.init());
         }));
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
-            System.out.println("Exiting...");
+            Logger.print("Exiting...");
             System.exit(0);
         }));
     }
@@ -44,15 +45,15 @@ public class StateGame extends State {
     public State init() {
         paused = false;
         handler.getMouseManager().setUiManager(uiManager);
-        handler.getWorld().getEntityManager().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
-        handler.getWorld().getEntityManager().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
+        handler.getGame().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
+        handler.getGame().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
         return this;
     }
 
     @Override
     public void tick() {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE))
-            paused = !paused && !handler.getWorld().getEntityManager().getPlayer().getInventory().isActive();
+            paused = !paused && !handler.getGame().getPlayer().getInventory().isActive();
 
         if (paused)
             handler.getMouseManager().setUiManager(uiManager);

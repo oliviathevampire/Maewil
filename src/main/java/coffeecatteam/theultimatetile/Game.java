@@ -1,14 +1,24 @@
 package coffeecatteam.theultimatetile;
 
 import coffeecatteam.theultimatetile.display.Display;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayerMP;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.input.KeyManager;
 import coffeecatteam.theultimatetile.input.MouseManager;
+import coffeecatteam.theultimatetile.net.Client;
+import coffeecatteam.theultimatetile.net.Server;
+import coffeecatteam.theultimatetile.net.packet.Packet;
+import coffeecatteam.theultimatetile.net.packet.Packet00Login;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateGame;
 import coffeecatteam.theultimatetile.state.StateMenu;
+import coffeecatteam.theultimatetile.tiles.Tile;
+import coffeecatteam.theultimatetile.utils.Logger;
+import sun.rmi.runtime.Log;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
@@ -35,15 +45,22 @@ public class Game implements Runnable {
 
     private Handler handler;
 
+    // Client & Server
+    private Client client;
+    private Server server;
+    private EntityPlayer player;
+
     public Game(String title, int width, int height) {
         this.title = title;
         this.width = width;
         this.height = height;
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
+
+        init();
     }
 
-    private void init() {
+    public void init() {
         Assets.init();
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
@@ -54,10 +71,6 @@ public class Game implements Runnable {
 
         handler = new Handler(this);
         camera = new Camera(handler, 0, 0);
-
-        gameState = new StateGame(handler);
-        menuState = new StateMenu(handler);
-        State.setState(menuState.init());
     }
 
     private void tick() {
@@ -87,8 +100,6 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
-        init();
-
         int fps = 60;
         double timePerTick = 1000000000 / fps;
         double delta = 0;
@@ -96,6 +107,18 @@ public class Game implements Runnable {
         long lastTime = System.nanoTime();
         long timer = 0;
         int ticks = 0;
+
+        //client.sendData("ping".getBytes());
+        int maxChars = 16;
+        String username = JOptionPane.showInputDialog("Please enter a username\nMust be max " + maxChars + " characters", "Player");
+        if (username.length() > maxChars)
+            username = username.substring(0, maxChars);
+        Packet00Login loginPacket = new Packet00Login(username);
+        loginPacket.writeData(client);
+
+        gameState = new StateGame(handler);
+        menuState = new StateMenu(handler);
+        State.setState(gameState.init());
 
         while (running) {
             now = System.nanoTime();
@@ -111,7 +134,7 @@ public class Game implements Runnable {
             }
 
             if (timer >= 1000000000) {
-                System.out.println("Ticks and Frames: " + ticks);
+                display.getFrame().setTitle(title + " - FPS: " + ticks);
                 ticks = 0;
                 timer = 0;
             }
@@ -148,7 +171,19 @@ public class Game implements Runnable {
         if (running)
             return;
         running = true;
+
+        if (JOptionPane.showConfirmDialog(display.getCanvas(), "Do you want to run the server") == 0) {
+            server = new Server(handler, this);
+            server.setName("Server-Thread");
+            server.start();
+        }
+
+        client = new Client(handler, this, "101.187.7.242");
+        client.setName("Client-Thread");
+        client.start();
+
         thread = new Thread(this);
+        thread.setName("Main-Thread");
         thread.start();
     }
 
@@ -161,5 +196,13 @@ public class Game implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public EntityPlayer getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(EntityPlayer player) {
+        this.player = player;
     }
 }
