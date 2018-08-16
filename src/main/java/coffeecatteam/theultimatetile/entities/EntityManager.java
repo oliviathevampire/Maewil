@@ -13,7 +13,6 @@ public class EntityManager {
 
     // EntityManager
     private Handler handler;
-    private EntityPlayer player;
     private ArrayList<Entity> entities;
     private Comparator<Entity> renderSorter = (Entity a, Entity b) -> {
         if (a.getY() + a.getHeight() < b.getY() + b.getHeight())
@@ -21,11 +20,9 @@ public class EntityManager {
         return 1;
     };
 
-    public EntityManager(Handler handler, EntityPlayer player) {
+    public EntityManager(Handler handler) {
         this.handler = handler;
-        this.player = player;
         entities = new ArrayList<>();
-        addEntity(this.player);
     }
 
     public void tick() {
@@ -44,7 +41,7 @@ public class EntityManager {
             e.renderA(g);
 
         /* Post Render */
-        player.postRender(g);
+        handler.getGame().getPlayer().postRender(g);
     }
 
     public void addEntity(Entity e) {
@@ -63,14 +60,6 @@ public class EntityManager {
 
     public void setHandler(Handler handler) {
         this.handler = handler;
-    }
-
-    public EntityPlayer getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(EntityPlayer player) {
-        this.player = player;
     }
 
     public ArrayList<Entity> getEntities() {

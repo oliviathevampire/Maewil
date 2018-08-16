@@ -199,9 +199,9 @@ public class Inventory {
 
         int itemWidth = 32;
         int itemHeight = 32;
-        if (handler.getWorld().getEntityManager().getPlayer().getInventory().getHotbar().size() > 0) {
-            for (int i = 0; i < handler.getWorld().getEntityManager().getPlayer().getInventory().getHotbar().size(); i++) {
-                ItemStack stack = handler.getWorld().getEntityManager().getPlayer().getInventory().getHotbar().get(i);
+        if (handler.getGame().getPlayer().getInventory().getHotbar().size() > 0) {
+            for (int i = 0; i < handler.getGame().getPlayer().getInventory().getHotbar().size(); i++) {
+                ItemStack stack = handler.getGame().getPlayer().getInventory().getHotbar().get(i);
                 int xPos = x + 14 + 54 * i;
                 int yPos = handler.getHeight() - itemHeight - itemHeight / 2;
                 g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);

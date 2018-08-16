@@ -4,6 +4,7 @@ import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIManager;
+import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 
@@ -25,7 +26,7 @@ public class StateMenu extends State {
             State.setState(handler.getGame().gameState.init());
         }));
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2 + xOffset, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 50 + yOffset, btnWidth, btnHeight, "Quit", () -> {
-            System.out.println("Exiting...");
+            Logger.print("Exiting...");
             System.exit(0);
         }));
     }
