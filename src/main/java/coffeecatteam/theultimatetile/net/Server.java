@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayerMP;
 import coffeecatteam.theultimatetile.net.packet.Packet;
 import coffeecatteam.theultimatetile.net.packet.Packet00Login;
+import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.io.IOException;
@@ -58,13 +59,14 @@ public class Server extends Thread {
                 Logger.print("[" + address.getHostAddress() + ":" + port + "] " + packet.getUsername() + " has connected!");
                 EntityPlayerMP player;
                 if (address.getHostAddress().equalsIgnoreCase("127.0.0.1"))
-                    player = new EntityPlayerMP(handler, "player", packet.getUsername(), address, port, true);
-                else
                     player = new EntityPlayerMP(handler, "player", packet.getUsername(), address, port, false);
-//                player.setX(handler.getWorld().getSpawnX() + 1);
-//                player.setY(handler.getWorld().getSpawnY());
+                else
+                    player = new EntityPlayerMP(handler, "player", packet.getUsername(), address, port, true);
+                player.setX((handler.getWorld().getSpawnX() + 1) * Tile.TILE_WIDTH);
+                player.setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
                 this.connectedPlayers.add(player);
                 game.setPlayer(player);
+                game.player = player;
                 break;
             case DISCONECT:
                 break;

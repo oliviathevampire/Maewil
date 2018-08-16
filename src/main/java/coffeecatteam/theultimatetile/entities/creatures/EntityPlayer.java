@@ -82,10 +82,10 @@ public class EntityPlayer extends EntityCreature {
                     inventory.resetAll();
                 }
             }
-
-            handler.getCamera().centerOnEntity(this);
             inventory.tick();
         }
+
+        handler.getCamera().centerOnEntity(this);
 
         // Animation
         currentAnim.tick();
@@ -270,5 +270,9 @@ public class EntityPlayer extends EntityCreature {
         setX(x);
         setY(y);
         return this;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

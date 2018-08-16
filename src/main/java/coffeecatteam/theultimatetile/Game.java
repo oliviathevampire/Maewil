@@ -48,7 +48,7 @@ public class Game implements Runnable {
     // Client & Server
     private Client client;
     private Server server;
-    private EntityPlayer player;
+    public EntityPlayer player;
 
     public Game(String title, int width, int height) {
         this.title = title;
@@ -90,8 +90,10 @@ public class Game implements Runnable {
         g.clearRect(0, 0, width, height);
         // Start drawing
 
-        if (State.getState() != null)
+        if (State.getState() != null) {
             State.getState().render(g);
+            player.render(g);
+        }
 
         // End drawing
         bs.show();
@@ -120,6 +122,15 @@ public class Game implements Runnable {
         menuState = new StateMenu(handler);
         State.setState(gameState.init());
 
+        try {
+            Logger.print(player.getUsername() + " " + player.getX() + " " + player.getY());
+        } catch (NullPointerException e) {
+            player = new EntityPlayer(handler, "player", "NULL").setPos(9 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT);
+        }
+//        for (int i = 0; i < 1000000; i++) {
+//            tick();
+//            render();
+//        }
         while (running) {
             now = System.nanoTime();
             delta += (now - lastTime) / timePerTick;
@@ -128,6 +139,7 @@ public class Game implements Runnable {
 
             if (delta >= 1) {
                 tick();
+                player.tick();
                 render();
                 ticks++;
                 delta--;

@@ -45,8 +45,8 @@ public class StateGame extends State {
     public State init() {
         paused = false;
         handler.getMouseManager().setUiManager(uiManager);
-        handler.getGame().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
-        handler.getGame().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
+//        handler.getGame().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
+//        handler.getGame().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
         return this;
     }
 
