@@ -108,16 +108,16 @@ public class Inventory {
                     if (!isFull()) {
                         addItem(hStack);
                         hotbar.remove(hStack);
-                    } // else {
-//                            for (ItemStack s : inventory) {
-//                                if (s.getId() == hStack.getId()) {
-//                                    if (s.getItem().isStackable()) {
-//                                        addItem(hStack);
-//                                        hotbar.remove(hStack);
-//                                    }
-//                                }
-//                            }
-//                        }
+                    } else {
+                            for (ItemStack s : inventory) {
+                                if (s.getId() == hStack.getId()) {
+                                    if (s.getItem().isStackable()) {
+                                        addItem(hStack);
+                                        hotbar.remove(hStack);
+                                    }
+                                }
+                            }
+                        }
                 }
             }
         }
