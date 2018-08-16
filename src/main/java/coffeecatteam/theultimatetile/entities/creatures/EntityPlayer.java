@@ -73,6 +73,11 @@ public class EntityPlayer extends EntityCreature {
                 // Interact
                 tileInteract();
                 tickEquippedItem();
+
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {
+                    handler.getGame().gameState.setWorld("/assets/worlds/starter/final");
+                    inventory.resetAll();
+                }
             }
 
             handler.getCamera().centerOnEntity(this);

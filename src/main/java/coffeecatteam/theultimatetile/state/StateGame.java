@@ -4,6 +4,7 @@ import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIManager;
+import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.worlds.World;
 
 import java.awt.*;
@@ -19,10 +20,8 @@ public class StateGame extends State {
 
     public StateGame(Handler handler) {
         super(handler);
-        world = new World(handler, "/assets/worlds/starter/world1");
-        handler.setWorld(world);
         uiManager = new UIManager(handler);
-        init();
+        setWorld("/assets/worlds/starter/world1");
 
         int btnWidth = 192;
         int btnHeight = 64;
@@ -45,6 +44,8 @@ public class StateGame extends State {
     public State init() {
         paused = false;
         handler.getMouseManager().setUiManager(uiManager);
+        handler.getWorld().getEntityManager().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
+        handler.getWorld().getEntityManager().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
         return this;
     }
 
@@ -78,5 +79,11 @@ public class StateGame extends State {
 
             uiManager.render(g);
         }
+    }
+
+    public void setWorld(String path) {
+        this.world = new World(handler, path);
+        handler.setWorld(world);
+        init();
     }
 }

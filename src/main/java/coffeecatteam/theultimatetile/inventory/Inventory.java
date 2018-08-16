@@ -109,15 +109,15 @@ public class Inventory {
                         addItem(hStack);
                         hotbar.remove(hStack);
                     } else {
-                            for (ItemStack s : inventory) {
-                                if (s.getId() == hStack.getId()) {
-                                    if (s.getItem().isStackable()) {
-                                        addItem(hStack);
-                                        hotbar.remove(hStack);
-                                    }
+                        for (ItemStack s : inventory) {
+                            if (s.getId() == hStack.getId()) {
+                                if (s.getItem().isStackable()) {
+                                    addItem(hStack);
+                                    hotbar.remove(hStack);
                                 }
                             }
                         }
+                    }
                 }
             }
         }
@@ -266,10 +266,6 @@ public class Inventory {
         return active;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
     public ItemStack getSelectedHotbarItemStack() {
         if (hotbarIsntEmpty())
             return hotbar.get(hotbarSelectedIndex);
@@ -278,5 +274,18 @@ public class Inventory {
 
     public boolean hotbarIsntEmpty() {
         return hotbarSelectedIndex <= hotbar.size() - 1;
+    }
+
+    public void resetInventory() {
+        inventory.clear();
+    }
+
+    public void resetHotbar() {
+        hotbar.clear();
+    }
+
+    public void resetAll() {
+        resetInventory();
+        resetHotbar();
     }
 }
