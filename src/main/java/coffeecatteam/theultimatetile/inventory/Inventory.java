@@ -84,9 +84,9 @@ public class Inventory {
                             stack.setCount(stack.getCount() - 1);
                 }
 
-                // Put item in hotbar if the Q button is pressed
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Q)) {
-                    if (!isHotbarHull()) {
+                // Put item in inventory back into hotbar
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
+                    if (!isHotbarFull()) {
                         addStackToHotbar(stack);
                     } else {
                         for (ItemStack s : hotbar)
@@ -100,19 +100,38 @@ public class Inventory {
                 if (stack.getCount() <= 0)
                     inventory.remove(inventorySelectedIndex);
             }
-        } else {
-            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_1))
-                hotbarSelectedIndex = 0;
-            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_2))
-                hotbarSelectedIndex = 1;
-            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_3))
-                hotbarSelectedIndex = 2;
-            if (hotbarSelectedIndex < player.getInventory().getHotbar().size()) {
-                player.setEquippedItem(player.getInventory().getHotbar().get(hotbarSelectedIndex));
 
-                if (player.getEquippedItem().getCount() <= 0)
-                    hotbar.remove(player.getEquippedItem());
+            // Put item in hotbar into inventory
+            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_X)) {
+                if (hotbarIsntEmpty()) {
+                    ItemStack hStack = hotbar.get(hotbarSelectedIndex);
+                    if (!isFull()) {
+                        addItem(hStack);
+                        hotbar.remove(hStack);
+                    } // else {
+//                            for (ItemStack s : inventory) {
+//                                if (s.getId() == hStack.getId()) {
+//                                    if (s.getItem().isStackable()) {
+//                                        addItem(hStack);
+//                                        hotbar.remove(hStack);
+//                                    }
+//                                }
+//                            }
+//                        }
+                }
             }
+        }
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_1))
+            hotbarSelectedIndex = 0;
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_2))
+            hotbarSelectedIndex = 1;
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_3))
+            hotbarSelectedIndex = 2;
+        if (hotbarSelectedIndex < player.getInventory().getHotbar().size()) {
+            player.setEquippedItem(player.getInventory().getHotbar().get(hotbarSelectedIndex));
+
+            if (player.getEquippedItem().getCount() <= 0)
+                hotbar.remove(player.getEquippedItem());
         }
     }
 
@@ -223,7 +242,7 @@ public class Inventory {
         return inventory.size() == maxInvSize;
     }
 
-    public boolean isHotbarHull() {
+    public boolean isHotbarFull() {
         return hotbar.size() == maxHotbarSize;
     }
 
@@ -252,8 +271,12 @@ public class Inventory {
     }
 
     public ItemStack getSelectedHotbarItemStack() {
-        if (hotbarSelectedIndex <= hotbar.size() - 1)
+        if (hotbarIsntEmpty())
             return hotbar.get(hotbarSelectedIndex);
         return null;
+    }
+
+    public boolean hotbarIsntEmpty() {
+        return hotbarSelectedIndex <= hotbar.size() - 1;
     }
 }
