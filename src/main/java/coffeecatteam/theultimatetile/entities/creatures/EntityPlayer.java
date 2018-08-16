@@ -4,7 +4,6 @@ import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.inventory.Inventory;
 import coffeecatteam.theultimatetile.items.IInteractable;
 import coffeecatteam.theultimatetile.items.ItemStack;
@@ -26,17 +25,15 @@ public class EntityPlayer extends EntityCreature {
     private Animation splashEffect;
 
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
-    private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
 
     private Inventory inventory;
     private ItemStack equippedItem;
     private int extraDmg = 0;
-    private String username;
-    protected boolean isLocal = true;
 
-    public EntityPlayer(Handler handler, String id, String username) {
+    private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
+
+    public EntityPlayer(Handler handler, String id) {
         super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
-        this.username = username;
 
         bounds.x = 13;
         bounds.y = 34;
@@ -64,7 +61,7 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void tick() {
-        if (isActive() && isLocal) {
+        if (isActive()) {
             if (!inventory.isActive()) {
                 // Movement
                 getInput();
@@ -219,26 +216,12 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void render(Graphics g) {
-        int x = (int) (this.x - handler.getCamera().getxOffset());
-        int y = (int) (this.y - handler.getCamera().getyOffset());
-        g.drawImage(currentAnim.getCurrentFrame(), x, y, width, height, null);
+        g.drawImage(currentAnim.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
         if (canSprint())
-            g.drawImage(sprintEffect.getCurrentFrame(), x, y, width, height, null);
+            g.drawImage(sprintEffect.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
 
         if (inWater())
-            g.drawImage(splashEffect.getCurrentFrame(), x, y, width, height, null);
-
-        Font font = Assets.FONT_20;
-        int nameWidth = Text.getWidth(g, username, font);
-        int nameHeight = Text.getHeight(g, font);
-        Color tint = new Color(96, 96, 96, 127);
-        g.setColor(tint);
-
-        int xOff = nameWidth / 2 - width / 2;
-        int yOff =  height / 2;
-
-        g.fillRect(x - xOff, y - yOff, nameWidth, nameHeight);
-        Text.drawString(g, username, x - xOff, y - yOff + nameHeight - 5, Color.white, font);
+            g.drawImage(splashEffect.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
     }
 
     public void postRender(Graphics g) {
@@ -265,6 +248,7 @@ public class EntityPlayer extends EntityCreature {
     public boolean canSprint() {
         return handler.getKeyManager().sprint && !inWater() && currentAnim != animIdle && sprintTimer > 0;
     }
+<<<<<<< HEAD
 
     public EntityPlayer setPos(int x, int y) {
         setX(x);
@@ -275,4 +259,6 @@ public class EntityPlayer extends EntityCreature {
     public String getUsername() {
         return username;
     }
+=======
+>>>>>>> parent of fcc0183... Started work on multiplayer (crashes when start button is clicked)
 }

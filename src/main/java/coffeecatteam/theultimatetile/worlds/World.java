@@ -8,10 +8,8 @@ import coffeecatteam.theultimatetile.gfx.overlays.OverlayManager;
 import coffeecatteam.theultimatetile.items.ItemManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
-import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class World {
@@ -30,12 +28,13 @@ public class World {
 
     public World(Handler handler, String path) {
         this.handler = handler;
-
-        entityManager = new EntityManager(handler); //, new EntityPlayer(handler, "player", "NULL").setPos(-1 * Tile.TILE_WIDTH, -1 * Tile.TILE_HEIGHT)
+        entityManager = new EntityManager(handler, new EntityPlayer(handler, "player"));
         itemManager = new ItemManager(handler);
-        overlayManager = new OverlayManager(handler, handler.getGame().getPlayer());
+        overlayManager = new OverlayManager(handler, entityManager.getPlayer());
 
         loadWorld(path);
+        entityManager.getPlayer().setX(spawnX * Tile.TILE_WIDTH);
+        entityManager.getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
     }
 
     public void tick() {
@@ -115,7 +114,7 @@ public class World {
         String[] entityTokens = entity.split(spacer);
 
         String worldName = propTokens[0].replace("_", " ");
-        Logger.print("Loading World: " + worldName);
+        System.out.println("Loading World: " + worldName);
 
         width = Utils.parseInt(propTokens[1]);
         height = Utils.parseInt(propTokens[2]);
@@ -126,12 +125,12 @@ public class World {
         loadTiles(tileTokens, worldName);
         if (!entity.equals(""))
             loadEntities(entityTokens, worldName);
-        Logger.print("World Loaded!\n");
+        System.out.println("World Loaded!\n");
     }
 
     private void loadBG(String[] bgTokens, String worldName) {
         worldName = "World: " + worldName + "\\id_bg.wd";
-        Logger.print(worldName);
+        System.out.println(worldName);
 
         bg_tiles = new int[width][height];
         for (int y = 0; y < height; y++) {
@@ -140,13 +139,13 @@ public class World {
             }
             float loaded = ((y + 1) * 100.0f) / height;
             if (y % 2 == 0)
-                Logger.print(loaded + "% Loaded!");
+                System.out.println(loaded + "% Loaded!");
         }
     }
 
     private void loadTiles(String[] tileTokens, String worldName) {
         worldName = "World: " + worldName + "\\id_tile.wd";
-        Logger.print(worldName);
+        System.out.println(worldName);
 
         tiles = new int[width][height];
         for (int y = 0; y < height; y++) {
@@ -155,13 +154,13 @@ public class World {
             }
             float loaded = ((y + 1) * 100.0f) / height;
             if (y % 2 == 0)
-                Logger.print(loaded + "% Loaded!");
+                System.out.println(loaded + "% Loaded!");
         }
     }
 
     private void loadEntities(String[] entityTokens, String worldName) {
         worldName = "World: " + worldName + "\\id_entity.wd";
-        Logger.print(worldName);
+        System.out.println(worldName);
         int height = entityTokens.length;
         String spliter = ",";
 
@@ -174,7 +173,7 @@ public class World {
 
             float loaded = ((i + 1) * 100.0f) / height;
             if (i % 2 == 0)
-                Logger.print(loaded + "% Loaded!");
+                System.out.println(loaded + "% Loaded!");
         }
     }
 

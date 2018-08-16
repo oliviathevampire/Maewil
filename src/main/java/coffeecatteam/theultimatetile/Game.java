@@ -1,11 +1,15 @@
 package coffeecatteam.theultimatetile;
 
 import coffeecatteam.theultimatetile.display.Display;
+<<<<<<< HEAD
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
+=======
+>>>>>>> parent of fcc0183... Started work on multiplayer (crashes when start button is clicked)
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.input.KeyManager;
 import coffeecatteam.theultimatetile.input.MouseManager;
+<<<<<<< HEAD
 import coffeecatteam.theultimatetile.net.Client;
 import coffeecatteam.theultimatetile.net.Server;
 import coffeecatteam.theultimatetile.net.packet.Packet00Login;
@@ -14,8 +18,12 @@ import coffeecatteam.theultimatetile.state.StateGame;
 import coffeecatteam.theultimatetile.state.StateMenu;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
+=======
+import coffeecatteam.theultimatetile.state.State;
+import coffeecatteam.theultimatetile.state.StateGame;
+import coffeecatteam.theultimatetile.state.StateMenu;
+>>>>>>> parent of fcc0183... Started work on multiplayer (crashes when start button is clicked)
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
@@ -42,22 +50,23 @@ public class Game implements Runnable {
 
     private Handler handler;
 
+<<<<<<< HEAD
     // Client & Server
     private Client client;
     private Server server;
     public EntityPlayer player;
 
+=======
+>>>>>>> parent of fcc0183... Started work on multiplayer (crashes when start button is clicked)
     public Game(String title, int width, int height) {
         this.title = title;
         this.width = width;
         this.height = height;
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
-
-        init();
     }
 
-    public void init() {
+    private void init() {
         Assets.init();
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
@@ -68,6 +77,10 @@ public class Game implements Runnable {
 
         handler = new Handler(this);
         camera = new Camera(handler, 0, 0);
+
+        gameState = new StateGame(handler);
+        menuState = new StateMenu(handler);
+        State.setState(menuState.init());
     }
 
     private void tick() {
@@ -99,6 +112,8 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
+        init();
+
         int fps = 60;
         double timePerTick = 1000000000 / fps;
         double delta = 0;
@@ -107,6 +122,7 @@ public class Game implements Runnable {
         long timer = 0;
         int ticks = 0;
 
+<<<<<<< HEAD
         //client.sendData("ping".getBytes());
         int maxChars = 16;
         String username = JOptionPane.showInputDialog("Please enter a username\nMust be max " + maxChars + " characters", "Player");
@@ -135,6 +151,8 @@ public class Game implements Runnable {
 //            render();
 //        }
 
+=======
+>>>>>>> parent of fcc0183... Started work on multiplayer (crashes when start button is clicked)
         while (running) {
             now = System.nanoTime();
             delta += (now - lastTime) / timePerTick;
@@ -150,7 +168,7 @@ public class Game implements Runnable {
             }
 
             if (timer >= 1000000000) {
-                display.getFrame().setTitle(title + " - FPS: " + ticks);
+                System.out.println("Ticks and Frames: " + ticks);
                 ticks = 0;
                 timer = 0;
             }
@@ -187,19 +205,7 @@ public class Game implements Runnable {
         if (running)
             return;
         running = true;
-
-        if (JOptionPane.showConfirmDialog(display.getCanvas(), "Do you want to run the server") == 0) {
-            server = new Server(handler, this);
-            server.setName("Server-Thread");
-            server.start();
-        }
-
-        client = new Client(handler, this, "101.187.7.242");
-        client.setName("Client-Thread");
-        client.start();
-
         thread = new Thread(this);
-        thread.setName("Main-Thread");
         thread.start();
     }
 
@@ -212,13 +218,5 @@ public class Game implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
-
-    public EntityPlayer getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(EntityPlayer player) {
-        this.player = player;
     }
 }
