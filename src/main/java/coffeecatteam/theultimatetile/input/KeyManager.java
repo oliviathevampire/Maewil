@@ -7,7 +7,7 @@ public class KeyManager implements KeyListener {
 
     private boolean[] keys, justPressed, cantPress;
     public boolean up, down, left, right, sprint;
-    public boolean interact, inventory, pause;
+    public boolean attack, inventory, pause;
 
     public KeyManager() {
         keys = new boolean[256];
@@ -33,7 +33,7 @@ public class KeyManager implements KeyListener {
         right = keys[KeyEvent.VK_D];
         sprint = keys[KeyEvent.VK_CONTROL];
 
-        interact = keys[KeyEvent.VK_SPACE];
+        attack = keys[KeyEvent.VK_SPACE];
         inventory = keys[KeyEvent.VK_E];
         pause = keys[KeyEvent.VK_ESCAPE];
     }

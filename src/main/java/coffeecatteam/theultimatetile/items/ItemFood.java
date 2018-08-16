@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 
 import java.awt.image.BufferedImage;
 
-public class ItemFood extends Item {
+public class ItemFood extends Item implements IInteractable {
 
     private int healAmt;
 

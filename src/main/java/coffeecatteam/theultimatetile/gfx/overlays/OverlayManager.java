@@ -15,7 +15,6 @@ public class OverlayManager {
         overlays = new ArrayList<>();
 
         addOverlay(new OverlayPlayerHealth(handler, player));
-        addOverlay(new OverlayPlayerHotbar(handler, player));
         addOverlay(new OverlayPlayerSprint(handler, player));
     }
 

@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.Inventory;
-import coffeecatteam.theultimatetile.items.ItemFood;
+import coffeecatteam.theultimatetile.items.IInteractable;
 import coffeecatteam.theultimatetile.items.ItemStack;
 import coffeecatteam.theultimatetile.items.ItemTool;
 import coffeecatteam.theultimatetile.tiles.Tile;
@@ -56,7 +56,7 @@ public class EntityPlayer extends EntityCreature {
         sprintEffect = new Animation(effectSpeed, Assets.SPRINT_EFFECT);
         splashEffect = new Animation(effectSpeed, Assets.SPLASH_EFFECT);
 
-        inventory = new Inventory(handler);
+        inventory = new Inventory(handler, this);
     }
 
     @Override
@@ -97,16 +97,16 @@ public class EntityPlayer extends EntityCreature {
         ar.width = arSize;
         ar.height = arSize;
 
-        if (handler.getKeyManager().up && handler.getKeyManager().interact) {
+        if (handler.getKeyManager().up && handler.getKeyManager().attack) {
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y - arSize;
-        } else if (handler.getKeyManager().down && handler.getKeyManager().interact) {
+        } else if (handler.getKeyManager().down && handler.getKeyManager().attack) {
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y + cb.height;
-        } else if (handler.getKeyManager().left && handler.getKeyManager().interact) {
+        } else if (handler.getKeyManager().left && handler.getKeyManager().attack) {
             ar.x = cb.x - arSize;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
-        } else if (handler.getKeyManager().right && handler.getKeyManager().interact) {
+        } else if (handler.getKeyManager().right && handler.getKeyManager().attack) {
             ar.x = cb.x + cb.width;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
         } else {
@@ -127,12 +127,14 @@ public class EntityPlayer extends EntityCreature {
 
     private void tickEquippedItem() {
         if (equippedItem != null) {
-            if (equippedItem.getItem() instanceof ItemTool)
-                extraDmg = ((ItemTool) equippedItem.getItem()).getDamage();
-            if (equippedItem.getItem() instanceof ItemFood)
+            if (inventory.getSelectedHotbarItemStack() == equippedItem) {
+                if (equippedItem.getItem() instanceof ItemTool)
+                    extraDmg = ((ItemTool) equippedItem.getItem()).getDamage();
                 if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_R))
-                    if (equippedItem.getItem().onInteracted(this))
-                        equippedItem.setCount(equippedItem.getCount() - 1);
+                    if (equippedItem.getItem() instanceof IInteractable)
+                        if (((IInteractable) equippedItem.getItem()).onInteracted(this))
+                            equippedItem.setCount(equippedItem.getCount() - 1);
+            }
         }
     }
 
@@ -157,7 +159,6 @@ public class EntityPlayer extends EntityCreature {
             if (canSprint()) {
                 speed = EntityCreature.DEFAULT_SPEED * 2f;
                 sprintTimer -= 0.25f;
-                System.out.println(sprintTimer);
             } else {
                 speed = EntityCreature.DEFAULT_SPEED;
             }
@@ -220,6 +221,7 @@ public class EntityPlayer extends EntityCreature {
 
     public void postRender(Graphics g) {
         inventory.render(g);
+        inventory.renderHotbar(g);
     }
 
     public Inventory getInventory() {

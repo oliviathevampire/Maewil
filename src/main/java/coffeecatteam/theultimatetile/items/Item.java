@@ -33,10 +33,6 @@ public class Item implements Cloneable {
         this.items[id] = this;
     }
 
-    public boolean onInteracted(EntityPlayer player) {
-        return false;
-    }
-
     public void tick() {
         if (this.handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
             if (!this.handler.getWorld().getEntityManager().getPlayer().getInventory().isFull()) {
