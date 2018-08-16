@@ -25,8 +25,12 @@ public class OverlayPlayerHotbar extends Overlay {
             selectedIndex = 1;
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_3))
             selectedIndex = 2;
-        if (selectedIndex < handler.getWorld().getEntityManager().getPlayer().getInventory().getHotbar().size())
+        if (selectedIndex < handler.getWorld().getEntityManager().getPlayer().getInventory().getHotbar().size()) {
             player.setEquippedItem(handler.getWorld().getEntityManager().getPlayer().getInventory().getHotbar().get(selectedIndex));
+
+            if (player.getEquippedItem().getCount() <= 0)
+                player.getInventory().getHotbar().remove(player.getEquippedItem());
+        }
     }
 
     @Override

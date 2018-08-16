@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.Inventory;
+import coffeecatteam.theultimatetile.items.ItemFood;
 import coffeecatteam.theultimatetile.items.ItemStack;
 import coffeecatteam.theultimatetile.items.ItemTool;
 import coffeecatteam.theultimatetile.tiles.Tile;
@@ -12,6 +13,7 @@ import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.Iterator;
 
 public class EntityPlayer extends EntityCreature {
@@ -26,6 +28,7 @@ public class EntityPlayer extends EntityCreature {
 
     private Inventory inventory;
     private ItemStack equippedItem;
+    private int extraDmg = 0;
 
     private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
 
@@ -67,8 +70,9 @@ public class EntityPlayer extends EntityCreature {
                 // Attack
                 checkAttacks();
 
-                // Interact with tiles
+                // Interact
                 tileInteract();
+                tickEquippedItem();
             }
 
             handler.getCamera().centerOnEntity(this);
@@ -115,13 +119,20 @@ public class EntityPlayer extends EntityCreature {
             if (e.equals(this))
                 continue;
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
-                int extraDmg = 0;
-                if (equippedItem != null)
-                    if (equippedItem.getItem() instanceof ItemTool)
-                        extraDmg = ((ItemTool) equippedItem.getItem()).getDamage();
                 e.hurt(Utils.getRandomInt(5, 10) + extraDmg);
                 return;
             }
+        }
+    }
+
+    private void tickEquippedItem() {
+        if (equippedItem != null) {
+            if (equippedItem.getItem() instanceof ItemTool)
+                extraDmg = ((ItemTool) equippedItem.getItem()).getDamage();
+            if (equippedItem.getItem() instanceof ItemFood)
+                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_R))
+                    if (equippedItem.getItem().onInteracted(this))
+                        equippedItem.setCount(equippedItem.getCount() - 1);
         }
     }
 
