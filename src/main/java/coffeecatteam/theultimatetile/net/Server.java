@@ -59,9 +59,9 @@ public class Server extends Thread {
                 Logger.print("[" + address.getHostAddress() + ":" + port + "] " + packet.getUsername() + " has connected!");
                 EntityPlayerMP player;
                 if (address.getHostAddress().equalsIgnoreCase("127.0.0.1"))
-                    player = new EntityPlayerMP(handler, "player", packet.getUsername(), address, port, false);
-                else
                     player = new EntityPlayerMP(handler, "player", packet.getUsername(), address, port, true);
+                else
+                    player = new EntityPlayerMP(handler, "player", packet.getUsername(), address, port, false);
                 player.setX((handler.getWorld().getSpawnX() + 1) * Tile.TILE_WIDTH);
                 player.setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
                 this.connectedPlayers.add(player);
