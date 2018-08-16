@@ -62,8 +62,8 @@ public class Server extends Thread {
                     player = new EntityPlayerMP(handler, "player", packet.getUsername(), address, port, true);
                 else
                     player = new EntityPlayerMP(handler, "player", packet.getUsername(), address, port, false);
-                player.setX((handler.getWorld().getSpawnX() + 1) * Tile.TILE_WIDTH);
-                player.setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
+//                player.setX((handler.getWorld().getSpawnX() + 1) * Tile.TILE_WIDTH);
+//                player.setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
                 this.connectedPlayers.add(player);
                 game.setPlayer(player);
                 game.player = player;

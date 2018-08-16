@@ -2,21 +2,18 @@ package coffeecatteam.theultimatetile;
 
 import coffeecatteam.theultimatetile.display.Display;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayerMP;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.input.KeyManager;
 import coffeecatteam.theultimatetile.input.MouseManager;
 import coffeecatteam.theultimatetile.net.Client;
 import coffeecatteam.theultimatetile.net.Server;
-import coffeecatteam.theultimatetile.net.packet.Packet;
 import coffeecatteam.theultimatetile.net.packet.Packet00Login;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateGame;
 import coffeecatteam.theultimatetile.state.StateMenu;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
-import sun.rmi.runtime.Log;
 
 import javax.swing.*;
 import java.awt.*;
@@ -118,19 +115,26 @@ public class Game implements Runnable {
         Packet00Login loginPacket = new Packet00Login(username);
         loginPacket.writeData(client);
 
-        gameState = new StateGame(handler);
-        menuState = new StateMenu(handler);
-        State.setState(gameState.init());
-
         try {
             Logger.print(player.getUsername() + " " + player.getX() + " " + player.getY());
         } catch (NullPointerException e) {
             player = new EntityPlayer(handler, "player", "NULL").setPos(9 * Tile.TILE_WIDTH, 10 * Tile.TILE_HEIGHT);
+            loginPacket = new Packet00Login(username);
+            loginPacket.writeData(client);
         }
+
+        gameState = new StateGame(handler);
+        menuState = new StateMenu(handler);
+        State.setState(gameState.init());
+
+        player.setX((handler.getWorld().getSpawnX() + 1) * Tile.TILE_WIDTH);
+        player.setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
+
 //        for (int i = 0; i < 1000000; i++) {
 //            tick();
 //            render();
 //        }
+
         while (running) {
             now = System.nanoTime();
             delta += (now - lastTime) / timePerTick;
