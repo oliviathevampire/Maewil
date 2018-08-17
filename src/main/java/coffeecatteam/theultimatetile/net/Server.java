@@ -5,11 +5,13 @@ import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayerMP;
 import coffeecatteam.theultimatetile.net.packet.Packet;
 import coffeecatteam.theultimatetile.net.packet.Packet00Login;
-import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,10 +64,9 @@ public class Server extends Thread {
                     player = new EntityPlayerMP(handler, "player", packet.getUsername(), address, port, true);
                 else
                     player = new EntityPlayerMP(handler, "player", packet.getUsername(), address, port, true);
-                if (game.player != null) {
-//                player.setX((handler.getWorld().getSpawnX() + 1) * Tile.TILE_WIDTH);
-//                player.setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
-                    this.connectedPlayers.add(player);
+                
+                this.connectedPlayers.add(player);
+                while (game.player == null || game.getPlayer() == null) {
                     game.setPlayer(player);
                     game.player = player;
                 }

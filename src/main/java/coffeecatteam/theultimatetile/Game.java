@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile;
 
 import coffeecatteam.theultimatetile.display.Display;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayerMP;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.input.KeyManager;
@@ -99,14 +100,6 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
-        int fps = 60;
-        double timePerTick = 1000000000 / fps;
-        double delta = 0;
-        long now;
-        long lastTime = System.nanoTime();
-        long timer = 0;
-        int ticks = 0;
-
         //client.sendData("ping".getBytes());
         int maxChars = 16;
         String username = JOptionPane.showInputDialog("Please enter a username\nMust be max " + maxChars + " characters", "Player");
@@ -115,22 +108,27 @@ public class Game implements Runnable {
         Packet00Login loginPacket = new Packet00Login(username);
         loginPacket.writeData(client);
 
+        while (player == null) {
+            loginPacket.writeData(client);
+            Logger.print(player == null);
+        }
+
+        Logger.print(player.getUsername() + " " + player.getX() + " " + player.getY());
+
+        int fps = 60;
+        double timePerTick = 1000000000 / fps;
+        double delta = 0;
+        long now;
+        long lastTime = System.nanoTime();
+        long timer = 0;
+        int ticks = 0;
+
         gameState = new StateGame(handler);
         menuState = new StateMenu(handler);
         State.setState(gameState.init());
 
-        loginPacket = new Packet00Login(username);
-        loginPacket.writeData(client);
-
-        Logger.print(player.getUsername() + " " + player.getX() + " " + player.getY());
-
         player.setX((handler.getWorld().getSpawnX() + 1) * Tile.TILE_WIDTH);
         player.setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
-
-//        for (int i = 0; i < 1000000; i++) {
-//            tick();
-//            render();
-//        }
 
         while (running) {
             now = System.nanoTime();
@@ -191,7 +189,7 @@ public class Game implements Runnable {
             server.start();
         }
 
-        client = new Client(handler, this, "101.187.7.242");
+        client = new Client(handler, this, "127.0.0.1"); // 101.187.7.242
         client.setName("Client-Thread");
         client.start();
 
