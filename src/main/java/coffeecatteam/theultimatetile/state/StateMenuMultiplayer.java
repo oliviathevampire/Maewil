@@ -5,6 +5,8 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIManager;
+import coffeecatteam.theultimatetile.net.Client;
+import coffeecatteam.theultimatetile.net.Server;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
@@ -34,6 +36,9 @@ public class StateMenuMultiplayer extends State {
     private int backBtnWidth = 64 * 3;
     private int backBtnHeight = 64;
 
+    private Client client;
+    private Server server;
+
     public StateMenuMultiplayer(Handler handler) {
         super(handler);
         uiManager = new UIManager(handler);
@@ -51,15 +56,29 @@ public class StateMenuMultiplayer extends State {
 
         uiManager.addObject(new UIButton(x, handler.getHeight() - joinBtnHeight - 50, joinBtnWidth, joinBtnHeight, "Join Server", () -> {
             handler.getMouseManager().setUiManager(null);
-            if (!username.equalsIgnoreCase(""))
-                if (!ip.equalsIgnoreCase(""))
+            if (!username.equalsIgnoreCase("")) {
+                if (!ip.equalsIgnoreCase("")) {
                     Logger.print("Joining Server [" + ip + "] as [" + username + "]");
+                    start();
+                    client.sendData("ping".getBytes());
+                }
+            }
         }));
 
         uiManager.addObject(new UIButton(handler.getWidth() - backBtnWidth - x, handler.getHeight() - backBtnHeight - 50, backBtnWidth, backBtnHeight, "Back", () -> {
             handler.getMouseManager().setUiManager(null);
             State.setState(handler.getGame().stateMenu.init());
         }));
+    }
+
+    public synchronized void start() {
+        if (JOptionPane.showConfirmDialog(handler.getGame(), "Do you want to host?") == 0) {
+            server = new Server(handler.getGame());
+            server.start();
+        }
+
+        client = new Client(handler.getGame(), ip);
+        client.start();
     }
 
     @Override
