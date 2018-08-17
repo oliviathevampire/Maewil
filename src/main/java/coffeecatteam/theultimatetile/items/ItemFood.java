@@ -19,8 +19,10 @@ public class ItemFood extends Item implements IInteractable {
         if (player.getHealth() < Entity.DEFAULT_HEALTH && player.getHealth() <= Entity.DEFAULT_HEALTH - healAmt) {
             player.heal(healAmt);
             return true;
+        } else {
+            player.setHealth(Entity.DEFAULT_HEALTH);
+            return true;
         }
-        return false;
     }
 
     public int getHealAmt() {
