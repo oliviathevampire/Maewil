@@ -32,7 +32,7 @@ public class EntityPlayer extends EntityCreature {
     private ItemStack equippedItem;
     private int extraDmg = 0;
     private String username;
-    protected boolean isLocal = true;
+    public boolean isLocal = true;
 
     public EntityPlayer(Handler handler, String username) {
         super(handler, "player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
@@ -43,6 +43,12 @@ public class EntityPlayer extends EntityCreature {
         bounds.width = 34;
         bounds.height = 28;
 
+        initAnims();
+
+        inventory = new Inventory(handler, this);
+    }
+
+    private void initAnims() {
         // Animations - 500 = 0.5 second
         int speed = 135;
         int upDownSpeed = speed + 115;
@@ -58,8 +64,6 @@ public class EntityPlayer extends EntityCreature {
         int effectSpeed = 50;
         sprintEffect = new Animation(effectSpeed, Assets.SPRINT_EFFECT);
         splashEffect = new Animation(effectSpeed, Assets.SPLASH_EFFECT);
-
-        inventory = new Inventory(handler, this);
     }
 
     @Override
@@ -84,8 +88,8 @@ public class EntityPlayer extends EntityCreature {
             }
 
             inventory.tick();
+            handler.getCamera().centerOnEntity(this);
         }
-        handler.getCamera().centerOnEntity(this);
 
         // Animation
         currentAnim.tick();

@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.entities;
 
 import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -68,6 +69,8 @@ public abstract class Entity {
     public boolean checkEntityCollisions(float xOffset, float yOffset) {
         for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
             if (e.equals(this))
+                continue;
+            if (e instanceof EntityPlayer)
                 continue;
             if (e.isCollidable)
                 if (e.getCollisionBounds(0.0f, 0.0f).intersects(getCollisionBounds(xOffset, yOffset)))
