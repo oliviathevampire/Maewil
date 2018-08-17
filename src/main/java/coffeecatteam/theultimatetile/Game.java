@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile;
 
-import coffeecatteam.theultimatetile.display.Display;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.input.KeyManager;
@@ -9,12 +8,13 @@ import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateGame;
 import coffeecatteam.theultimatetile.state.StateMenu;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class Game implements Runnable {
+public class Game extends Canvas implements Runnable {
 
-    private Display display;
+    private JFrame frame;
     private int width, height;
     public String title;
 
@@ -41,16 +41,38 @@ public class Game implements Runnable {
         this.height = height;
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
+
+        Assets.init();
+        createDisplay();
+    }
+
+    private void createDisplay() {
+        Dimension size = new Dimension(width, height);
+
+        frame = new JFrame(title);
+        frame.setSize(size);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+        frame.setIconImage(Assets.ULTIMATE_TILE[0]);
+
+        this.setPreferredSize(size);
+        this.setMaximumSize(size);
+        this.setMinimumSize(size);
+        this.setFocusable(false);
+
+        frame.add(this);
+        frame.pack();
     }
 
     private void init() {
-        Assets.init();
-        display = new Display(title, width, height);
-        display.getFrame().addKeyListener(keyManager);
-        display.getFrame().addMouseListener(mouseManager);
-        display.getFrame().addMouseMotionListener(mouseManager);
-        display.getCanvas().addMouseListener(mouseManager);
-        display.getCanvas().addMouseMotionListener(mouseManager);
+        frame.addKeyListener(keyManager);
+        frame.addMouseListener(mouseManager);
+        frame.addMouseMotionListener(mouseManager);
+        this.addMouseListener(mouseManager);
+        this.addMouseMotionListener(mouseManager);
 
         handler = new Handler(this);
         camera = new Camera(handler, 0, 0);
@@ -68,9 +90,9 @@ public class Game implements Runnable {
     }
 
     private void render() {
-        bs = display.getCanvas().getBufferStrategy();
+        bs = this.getBufferStrategy();
         if (bs == null) {
-            display.getCanvas().createBufferStrategy(3);
+            this.createBufferStrategy(3);
             return;
         }
         g = bs.getDrawGraphics();
@@ -111,7 +133,7 @@ public class Game implements Runnable {
             }
 
             if (timer >= 1000000000) {
-                display.getFrame().setTitle(title + " - FPS: " + ticks);
+                frame.setTitle(title + " - FPS: " + ticks);
                 ticks = 0;
                 timer = 0;
             }
@@ -140,8 +162,8 @@ public class Game implements Runnable {
         return height;
     }
 
-    public Display getDisplay() {
-        return display;
+    public JFrame getFrame() {
+        return frame;
     }
 
     public synchronized void start() {
