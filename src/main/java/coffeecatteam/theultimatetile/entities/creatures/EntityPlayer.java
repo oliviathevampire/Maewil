@@ -31,6 +31,7 @@ public class EntityPlayer extends EntityCreature {
     private Inventory inventory;
     private ItemStack equippedItem;
     private int extraDmg = 0;
+    private int glubel = 0, maxGludel = 100, lvl = 1;
     private String username;
     public boolean isLocal = true;
 
@@ -272,5 +273,25 @@ public class EntityPlayer extends EntityCreature {
 
     public String getUsername() {
         return username;
+    }
+
+    public int getGlubel() {
+        return glubel;
+    }
+
+    public void setGlubel(int glubel) {
+        this.glubel = glubel;
+        if (this.glubel >= maxGludel) {
+            this.glubel = 0;
+            lvl++;
+        }
+    }
+
+    public int getMaxGludel() {
+        return maxGludel;
+    }
+
+    public int getLvl() {
+        return lvl;
     }
 }

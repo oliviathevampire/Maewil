@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.entities;
 
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -56,6 +57,7 @@ public abstract class Entity {
 
     public void die(Iterator<Entity> it) {
         it.remove();
+        handler.getWorld().getEntityManager().getPlayer().setGlubel(handler.getWorld().getEntityManager().getPlayer().getGlubel() + Utils.getRandomInt(1, 5));
     }
 
     public void hurt(int damage) {

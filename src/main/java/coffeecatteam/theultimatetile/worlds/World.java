@@ -171,7 +171,7 @@ public class World {
             float x = Utils.parseFloat(entityTokens[i].split(spliter)[1]);
             float y = Utils.parseFloat(entityTokens[i].split(spliter)[2]);
 
-            entityManager.addEntity(EntityLoader.loadEntity(handler, entityId), x, y);
+            entityManager.addEntity(EntityLoader.loadEntity(handler, entityId), x, y, true);
 
             float loaded = ((i + 1) * 100.0f) / height;
             if (i % 2 == 0)

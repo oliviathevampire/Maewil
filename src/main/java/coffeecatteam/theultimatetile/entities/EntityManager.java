@@ -51,9 +51,13 @@ public class EntityManager {
         entities.add(e);
     }
 
-    public void addEntity(Entity e, float x, float y) {
+    public void addEntity(Entity e, float x, float y, boolean atTile) {
         e.setX(x * Tile.TILE_WIDTH);
         e.setY(y * Tile.TILE_HEIGHT);
+        if (!atTile) {
+            e.setX(e.getX() / Tile.TILE_WIDTH);
+            e.setY(e.getY() / Tile.TILE_HEIGHT);
+        }
         entities.add(e);
     }
 
