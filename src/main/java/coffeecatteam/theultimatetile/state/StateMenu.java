@@ -17,15 +17,25 @@ public class StateMenu extends State {
         uiManager = new UIManager(handler);
         init();
 
-        int btnWidth = 192;
-        int btnHeight = 64;
-        int xOffset = 150;
-        int yOffset = 150;
-        uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2 - xOffset, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 50 + yOffset, btnWidth, btnHeight, "Start", () -> {
+        int yOff = 20;
+
+        int spBtnWidth = 7 * 64;
+        int spBtnHeight = 64;
+        uiManager.addObject(new UIButton(handler.getWidth() / 2 - spBtnWidth / 2, handler.getHeight() / 2 - spBtnHeight / 2 + spBtnHeight - 50 + yOff, spBtnWidth, spBtnHeight, "Single Player", () -> {
             handler.getMouseManager().setUiManager(null);
             State.setState(handler.getGame().gameState.init());
         }));
-        uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2 + xOffset, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 50 + yOffset, btnWidth, btnHeight, "Quit", () -> {
+
+        int mpBtnWidth = 6 * 64;
+        int mpBtnHeight = 64;
+        uiManager.addObject(new UIButton(handler.getWidth() / 2 - mpBtnWidth / 2, handler.getHeight() / 2 - mpBtnHeight / 2 + mpBtnHeight + 35 + yOff, mpBtnWidth, mpBtnHeight, "Multiplayer", () -> {
+            handler.getMouseManager().setUiManager(null);
+            State.setState(handler.getGame().gameState.init());
+        }));
+
+        int quitBtnWidth = 192;
+        int quitBtnHeight = 64;
+        uiManager.addObject(new UIButton(handler.getWidth() / 2 - quitBtnWidth / 2, handler.getHeight() / 2 - quitBtnHeight / 2 + quitBtnHeight + 120 + yOff, quitBtnWidth, quitBtnHeight, "Quit", () -> {
             Logger.print("Exiting...");
             System.exit(0);
         }));
@@ -49,6 +59,6 @@ public class StateMenu extends State {
 
         int w = 80 * 6;
         int h = 48 * 6;
-        g.drawImage(Assets.TITLE, w / 6, 30, w, h, null);
+        g.drawImage(Assets.TITLE, w / 6, 20, w, h, null);
     }
 }

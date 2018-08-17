@@ -33,10 +33,13 @@ public class Assets {
     public static BufferedImage ITEM_COAL, ITEM_IRON_INGOT, ITEM_GOLD_INGOT, ITEM_DIAMOND;
     public static BufferedImage ITEM_CARROT, ITEM_APPLE;
 
-    /* Health */
+    /* Player */
     public static BufferedImage[] HEARTS;
     public static BufferedImage[] ARMOR;
     public static BufferedImage[] SPRINT;
+
+    public static BufferedImage[] GLUB_ORB;
+    public static BufferedImage[] GLUB_METER;
 
     /* Player Frames */
     public static BufferedImage[] PLAYER_IDLE, PLAYER_UP, PLAYER_DOWN, PLAYER_LEFT, PLAYER_RIGHT, PLAYER_DEAD;
@@ -77,7 +80,8 @@ public class Assets {
         SpriteSheet natureSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
         SpriteSheet effectSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/effect.png"));
 
-        SpriteSheet healthSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health.png"));
+        SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health.png"));
+        SpriteSheet glubSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/glub.png"));
         SpriteSheet itemsSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/items.png"));
 
         SpriteSheet characrerSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/player.png"));
@@ -134,10 +138,13 @@ public class Assets {
         ITEM_CARROT = getSprite(itemsSheet, 0, 3, width, height);
         ITEM_APPLE = getSprite(itemsSheet, 1, 3, width, height);
 
-        /* Health */
-        HEARTS = getFrames(healthSheet, 0, 0, 4);
-        ARMOR = getFrames(healthSheet, 1, 0, 3);
-        SPRINT = getFrames(healthSheet, 3, 0, 1, width * 2, height);
+        /* Player */
+        HEARTS = getFrames(playerSheet, 0, 0, 4);
+        ARMOR = getFrames(playerSheet, 1, 0, 3);
+        SPRINT = getFrames(playerSheet, 3, 0, 1, width * 2, height);
+
+        GLUB_ORB = getFrames(glubSheet, 0, 0, 5, width, height);
+        GLUB_METER = getFrames(glubSheet, 1, 0, 1, width * 4, height);
 
         /* Player Frames */
         PLAYER_IDLE = getFrames(characrerSheet, 0, 0, 7);

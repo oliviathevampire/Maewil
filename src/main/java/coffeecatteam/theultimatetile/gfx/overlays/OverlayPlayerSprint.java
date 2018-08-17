@@ -4,6 +4,7 @@ import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 
@@ -31,21 +32,7 @@ public class OverlayPlayerSprint extends Overlay {
         Text.drawString(g, text, handler.getWidth() - Text.getWidth(g, text, font) - 10, handler.getHeight() - height, Color.white, font);
         g.drawImage(Assets.SPRINT[1], handler.getWidth() - width, handler.getHeight() - height, width, height, null);
 
-        int sprint = (int) map(player.getSprintTimer() - 1, 0, 100, 0, 32);
+        int sprint = (int) Utils.map(player.getSprintTimer() - 1, 0, 100, 0, sWidth);
         g.drawImage(Assets.SPRINT[0].getSubimage(0, 0, sWidth - sprint, sHeight), handler.getWidth() - width, handler.getHeight() - height, width - sprint * multiplier, height, null);
-    }
-
-    public static float map(float from, float fromMin, float fromMax, float toMin,  float toMax) {
-        float fromAbs  =  from - fromMin;
-        float fromMaxAbs = fromMax - fromMin;
-
-        float normal = fromAbs / fromMaxAbs;
-
-        float toMaxAbs = toMax - toMin;
-        float toAbs = toMaxAbs * normal;
-
-        float to = toAbs + toMin;
-
-        return to;
     }
 }

@@ -16,6 +16,7 @@ public class OverlayManager {
 
         addOverlay(new OverlayPlayerHealth(handler, player));
         addOverlay(new OverlayPlayerSprint(handler, player));
+        addOverlay(new OverlayGlub(handler, player));
     }
 
     public void tick() {
