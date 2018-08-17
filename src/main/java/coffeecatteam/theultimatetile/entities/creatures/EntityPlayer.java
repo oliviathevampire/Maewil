@@ -33,7 +33,12 @@ public class EntityPlayer extends EntityCreature {
     private int extraDmg = 0;
     private int glubel = 0, maxGludel = 100, lvl = 1;
     private String username;
-    public boolean isLocal = true;
+    public boolean isLocal = true, renderName = true;
+
+    public EntityPlayer(Handler handler) {
+        this(handler, "");
+        renderName = false;
+    }
 
     public EntityPlayer(Handler handler, String username) {
         super(handler, "player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
@@ -242,8 +247,10 @@ public class EntityPlayer extends EntityCreature {
         int xOff = nameWidth / 2 - width / 2;
         int yOff =  height / 2;
 
-        g.fillRect(x - xOff, y - yOff, nameWidth, nameHeight);
-        Text.drawString(g, username, x - xOff, y - yOff + nameHeight - 5, Color.white, font);
+        if (renderName) {
+            g.fillRect(x - xOff, y - yOff, nameWidth, nameHeight);
+            Text.drawString(g, username, x - xOff, y - yOff + nameHeight - 5, Color.white, font);
+        }
     }
 
     public void postRender(Graphics g) {

@@ -12,6 +12,7 @@ public class Assets {
 
     /* Fonts */
     public static Font FONT_20, FONT_20_BOLD, FONT_20_EXPANDED;
+    public static Font FONT_30, FONT_30_BOLD, FONT_30_EXPANDED;
     public static Font FONT_40, FONT_40_BOLD, FONT_40_EXPANDED;
 
     /* Tiles */
@@ -70,6 +71,10 @@ public class Assets {
         FONT_20 = Utils.loadFont("/assets/fonts/slkscr.ttf", 20);
         FONT_20_BOLD = Utils.loadFont("/assets/fonts/slkscrb.ttf", 20);
         FONT_20_EXPANDED = Utils.loadFont("/assets/fonts/slkscre.ttf", 20);
+
+        FONT_30 = Utils.loadFont("/assets/fonts/slkscr.ttf", 30);
+        FONT_30_BOLD = Utils.loadFont("/assets/fonts/slkscrb.ttf", 30);
+        FONT_30_EXPANDED = Utils.loadFont("/assets/fonts/slkscre.ttf", 30);
 
         FONT_40 = Utils.loadFont("/assets/fonts/slkscr.ttf", 40);
         FONT_40_BOLD = Utils.loadFont("/assets/fonts/slkscrb.ttf", 40);

@@ -10,10 +10,14 @@ import java.util.Random;
 public class Utils {
 
     public static String getUsername() {
+        return getUsername("Player");
+    }
+
+    public static String getUsername(String defaultName) {
         String username;
         int nameLength = 16;
         try {
-            username = JOptionPane.showInputDialog("Please enter a username\nMust be max " + nameLength + " characters", "Player");
+            username = JOptionPane.showInputDialog("Please enter a username\nMust be max " + nameLength + " characters", defaultName);
             if (username.length() > nameLength)
                 username = getUsername();
                 //username = username.substring(0, nameLength);

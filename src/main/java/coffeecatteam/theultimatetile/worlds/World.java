@@ -30,7 +30,7 @@ public class World {
 
     public World(Handler handler, String path) {
         this.handler = handler;
-        entityManager = new EntityManager(handler, new EntityPlayer(handler, Utils.getUsername()));
+        entityManager = new EntityManager(handler, new EntityPlayer(handler));
         itemManager = new ItemManager(handler);
         overlayManager = new OverlayManager(handler, entityManager.getPlayer());
 

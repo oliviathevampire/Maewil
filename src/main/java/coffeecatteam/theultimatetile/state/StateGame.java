@@ -33,7 +33,7 @@ public class StateGame extends State {
         int w = btnWidth + 128;
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - w / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
             handler.getMouseManager().setUiManager(null);
-            State.setState(handler.getGame().menuState.init());
+            State.setState(handler.getGame().stateMenu.init());
         }));
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
             Logger.print("Exiting...");

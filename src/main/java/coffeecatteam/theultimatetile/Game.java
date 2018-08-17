@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.input.MouseManager;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateGame;
 import coffeecatteam.theultimatetile.state.StateMenu;
+import coffeecatteam.theultimatetile.state.StateMenuMultiplayer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,8 +26,9 @@ public class Game extends Canvas implements Runnable {
     private Graphics g;
 
     // States
-    public StateGame gameState;
-    public StateMenu menuState;
+    public StateGame stateGame;
+    public StateMenu stateMenu;
+    public StateMenuMultiplayer stateMenuMultiplayer;
 
     private KeyManager keyManager;
     private MouseManager mouseManager;
@@ -77,9 +79,10 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler(this);
         camera = new Camera(handler, 0, 0);
 
-        gameState = new StateGame(handler);
-        menuState = new StateMenu(handler);
-        State.setState(menuState.init());
+        stateGame = new StateGame(handler);
+        stateMenu = new StateMenu(handler);
+        stateMenuMultiplayer = new StateMenuMultiplayer(handler);
+        State.setState(stateMenu.init());
     }
 
     private void tick() {
