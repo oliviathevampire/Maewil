@@ -143,4 +143,10 @@ public abstract class Entity {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public Entity setPos(int x, int y) {
+        setX(x);
+        setY(y);
+        return this;
+    }
 }

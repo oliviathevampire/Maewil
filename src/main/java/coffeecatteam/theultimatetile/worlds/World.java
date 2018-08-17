@@ -30,12 +30,22 @@ public class World {
 
     public World(Handler handler, String path) {
         this.handler = handler;
-
-        entityManager = new EntityManager(handler); //, new EntityPlayer(handler, "player", "NULL").setPos(-1 * Tile.TILE_WIDTH, -1 * Tile.TILE_HEIGHT)
+        int maxChars = 16;
+        String username;
+        try {
+            username = JOptionPane.showInputDialog("Please enter a username\nMust be max " + maxChars + " characters", "Player");
+            if (username.length() > maxChars)
+                username = username.substring(0, maxChars);
+        } catch (NullPointerException e) {
+            username = "you_clicked_cancel";
+        }
+        entityManager = new EntityManager(handler, new EntityPlayer(handler, username.replace(" ", "_")));
         itemManager = new ItemManager(handler);
-        overlayManager = new OverlayManager(handler, handler.getGame().getPlayer());
+        overlayManager = new OverlayManager(handler, entityManager.getPlayer());
 
         loadWorld(path);
+        entityManager.getPlayer().setX(spawnX * Tile.TILE_WIDTH);
+        entityManager.getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
     }
 
     public void tick() {

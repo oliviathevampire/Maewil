@@ -34,8 +34,8 @@ public class EntityPlayer extends EntityCreature {
     private String username;
     protected boolean isLocal = true;
 
-    public EntityPlayer(Handler handler, String id, String username) {
-        super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityPlayer(Handler handler, String username) {
+        super(handler, "player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         this.username = username;
 
         bounds.x = 13;
@@ -82,9 +82,9 @@ public class EntityPlayer extends EntityCreature {
                     inventory.resetAll();
                 }
             }
+
             inventory.tick();
         }
-
         handler.getCamera().centerOnEntity(this);
 
         // Animation
@@ -264,12 +264,6 @@ public class EntityPlayer extends EntityCreature {
 
     public boolean canSprint() {
         return handler.getKeyManager().sprint && !inWater() && currentAnim != animIdle && sprintTimer > 0;
-    }
-
-    public EntityPlayer setPos(int x, int y) {
-        setX(x);
-        setY(y);
-        return this;
     }
 
     public String getUsername() {
