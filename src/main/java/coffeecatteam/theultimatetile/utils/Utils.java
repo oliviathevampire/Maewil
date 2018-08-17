@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.utils;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,6 +8,20 @@ import java.io.InputStreamReader;
 import java.util.Random;
 
 public class Utils {
+
+    public static String getUsername() {
+        String username;
+        int nameLength = 16;
+        try {
+            username = JOptionPane.showInputDialog("Please enter a username\nMust be max " + nameLength + " characters", "Player");
+            if (username.length() > nameLength)
+                username = getUsername();
+                //username = username.substring(0, nameLength);
+        } catch (NullPointerException e) {
+            username = "you_clicked_cancel";
+        }
+        return username;
+    }
 
     public static Font loadFont(String path, float size) {
         try {

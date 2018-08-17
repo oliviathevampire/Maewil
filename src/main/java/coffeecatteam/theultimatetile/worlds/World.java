@@ -30,16 +30,7 @@ public class World {
 
     public World(Handler handler, String path) {
         this.handler = handler;
-        int maxChars = 16;
-        String username;
-        try {
-            username = JOptionPane.showInputDialog("Please enter a username\nMust be max " + maxChars + " characters", "Player");
-            if (username.length() > maxChars)
-                username = username.substring(0, maxChars);
-        } catch (NullPointerException e) {
-            username = "you_clicked_cancel";
-        }
-        entityManager = new EntityManager(handler, new EntityPlayer(handler, username.replace(" ", "_")));
+        entityManager = new EntityManager(handler, new EntityPlayer(handler, Utils.getUsername()));
         itemManager = new ItemManager(handler);
         overlayManager = new OverlayManager(handler, entityManager.getPlayer());
 
