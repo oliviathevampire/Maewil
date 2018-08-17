@@ -70,7 +70,7 @@ public abstract class Entity {
         for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
-            if (e instanceof EntityPlayer)
+            if (e instanceof EntityPlayer && this instanceof EntityPlayer)
                 continue;
             if (e.isCollidable)
                 if (e.getCollisionBounds(0.0f, 0.0f).intersects(getCollisionBounds(xOffset, yOffset)))
