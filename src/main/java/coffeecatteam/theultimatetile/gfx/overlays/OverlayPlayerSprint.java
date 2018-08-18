@@ -27,12 +27,16 @@ public class OverlayPlayerSprint extends Overlay {
         int width = sWidth * multiplier;
         int height = sHeight * multiplier;
 
-        String text = "Sprint left: " + (int) player.getSprintTimer();
+        int sprint = (int) player.getSprintTimer();
+        String text = "Sprint left: " + sprint;
         Font font = Assets.FONT_20;
-        Text.drawString(g, text, handler.getWidth() - Text.getWidth(g, text, font) - 10, handler.getHeight() - height, Color.white, font);
-        g.drawImage(Assets.SPRINT[1], handler.getWidth() - width, handler.getHeight() - height, width, height, null);
+        int x = handler.getWidth() - width;
+        int y = handler.getHeight() - height;
 
-        int sprint = (int) Utils.map(player.getSprintTimer() - 1, 0, 100, 0, sWidth);
-        g.drawImage(Assets.SPRINT[0].getSubimage(0, 0, sWidth - sprint, sHeight), handler.getWidth() - width, handler.getHeight() - height, width - sprint * multiplier, height, null);
+        Text.drawString(g, text, handler.getWidth() - Text.getWidth(g, text, font) - 10, handler.getHeight() - height, Color.white, font);
+        g.drawImage(Assets.SPRINT[0], x, y, width, height, null);
+
+        int sprintWidth = (int) Utils.map(sprint - 1, 0, player.getMaxSprintTimer(), 0, sWidth);
+        g.drawImage(Assets.SPRINT[1].getSubimage(0, 0, sWidth - sprintWidth, sHeight), x, y, width - sprintWidth * multiplier, height, null);
     }
 }

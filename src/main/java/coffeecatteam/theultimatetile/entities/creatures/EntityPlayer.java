@@ -274,6 +274,10 @@ public class EntityPlayer extends EntityCreature {
         return sprintTimer;
     }
 
+    public float getMaxSprintTimer() {
+        return maxSprintTimer;
+    }
+
     public boolean canSprint() {
         return handler.getKeyManager().sprint && !inWater() && currentAnim != animIdle && sprintTimer > 0;
     }
