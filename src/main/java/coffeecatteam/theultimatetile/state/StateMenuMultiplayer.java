@@ -18,7 +18,7 @@ public class StateMenuMultiplayer extends State {
     private UIManager uiManager;
 
     private String username = "Random_Player";
-    private String ip = "localhost";
+    private String ip = "localhost"; // 101.187.7.242
 
     private int x = 25;
 
