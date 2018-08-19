@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.entities;
 
 import coffeecatteam.theultimatetile.Handler;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
@@ -75,6 +75,7 @@ public class EntityManager {
 
     public void setPlayer(EntityPlayer player) {
         this.player = player;
+        entities.set(0, player);
     }
 
     public ArrayList<Entity> getEntities() {
