@@ -34,4 +34,4 @@ build
 .classpath
 .project
 build.bat
-log.txt
+logs/
