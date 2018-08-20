@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.net;
 
-import coffeecatteam.theultimatetile.Game;
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.utils.Logger;
 

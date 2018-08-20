@@ -36,7 +36,7 @@ public class EntityPlayer extends EntityCreature {
     private String username;
     public boolean isLocal = true;
 
-   public EntityPlayer(Handler handler, String username) {
+    public EntityPlayer(Handler handler, String username) {
         super(handler, "player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         this.username = username;
 
@@ -242,7 +242,7 @@ public class EntityPlayer extends EntityCreature {
         g.setColor(tint);
 
         int xOff = nameWidth / 2 - width / 2;
-        int yOff =  height / 2;
+        int yOff = height / 2;
 
         g.fillRect(x - xOff, y - yOff, nameWidth, nameHeight);
         Text.drawString(g, username, x - xOff, y - yOff + nameHeight - 5, Color.white, font);

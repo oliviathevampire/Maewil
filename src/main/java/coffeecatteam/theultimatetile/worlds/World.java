@@ -81,7 +81,7 @@ public class World {
             y = 0;
         if (x >= width)
             x = width;
-        if ( y >= height)
+        if (y >= height)
             y = height;
 
         tiles[x][y] = tile.getId();

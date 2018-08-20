@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.net;
 
-import coffeecatteam.theultimatetile.Game;
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.net.packet.Packet;
@@ -9,7 +8,10 @@ import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 

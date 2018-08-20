@@ -16,7 +16,7 @@ public class EntityCrop extends EntityStatic {
     private Item drop;
 
     public EntityCrop(Handler handler, String id, BufferedImage texture, Item drop) {
-        super(handler, id,  Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+        super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         isCollidable = false;
 
         this.texture = texture;

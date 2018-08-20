@@ -20,7 +20,7 @@ public class Utils {
             username = JOptionPane.showInputDialog("Please enter a username\nMust be max " + nameLength + " characters", defaultName);
             if (username.length() > nameLength || username.equalsIgnoreCase(""))
                 username = getUsername(username);
-                //username = username.substring(0, nameLength);
+            //username = username.substring(0, nameLength);
         } catch (NullPointerException e) {
             username = "you_clicked_cancel";
         }
@@ -79,8 +79,8 @@ public class Utils {
         }
     }
 
-    public static float map(float from, float fromMin, float fromMax, float toMin,  float toMax) {
-        float fromAbs  =  from - fromMin;
+    public static float map(float from, float fromMin, float fromMax, float toMin, float toMax) {
+        float fromAbs = from - fromMin;
         float fromMaxAbs = fromMax - fromMin;
 
         float normal = fromAbs / fromMaxAbs;
