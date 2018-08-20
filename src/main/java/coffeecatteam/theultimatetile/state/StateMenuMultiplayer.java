@@ -48,7 +48,7 @@ public class StateMenuMultiplayer extends State {
 
         uiManager.addObject(new UIButton(x, handler.getHeight() - joinBtnHeight - 50, joinBtnWidth, joinBtnHeight, "Join Server", () -> {
             if (!ip.equalsIgnoreCase("")) {
-                this.handler.getMouseManager().setUiManager(null);
+
 //                    handler.getGame().getClient().sendData("ping");
                 Packet00Login packetLogin = new Packet00Login(this.username);
                 packetLogin.writeData(this.handler.getGame().getClient());
@@ -59,7 +59,6 @@ public class StateMenuMultiplayer extends State {
         }));
 
         uiManager.addObject(new UIButton(handler.getWidth() - backBtnWidth - x, handler.getHeight() - backBtnHeight - 50, backBtnWidth, backBtnHeight, "Back", () -> {
-            this.handler.getMouseManager().setUiManager(null);
             State.setState(this.handler.getGame().stateMenu);
         }));
     }

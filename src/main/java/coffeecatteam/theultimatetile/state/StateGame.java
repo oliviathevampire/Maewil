@@ -28,11 +28,11 @@ public class StateGame extends State {
         int btnHeight = 64;
         int yOffset = 150;
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 25, btnWidth, btnHeight, "Resume", () ->
-            paused = false
+                paused = false
         ));
         int w = btnWidth + 128;
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - w / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
-            handler.getMouseManager().setUiManager(null);
+
             State.setState(handler.getGame().stateMenu);
         }));
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
@@ -56,10 +56,7 @@ public class StateGame extends State {
 
         if (paused)
             handler.getMouseManager().setUiManager(uiManager);
-        else
-            handler.getMouseManager().setUiManager(null);
-
-        if (!paused)
+        else if (!paused)
             world.tick();
         else
             uiManager.tick();

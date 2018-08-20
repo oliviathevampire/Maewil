@@ -22,14 +22,14 @@ public class StateMenu extends State {
         int spBtnWidth = 7 * 64;
         int spBtnHeight = 64;
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - spBtnWidth / 2, handler.getHeight() / 2 - spBtnHeight / 2 + spBtnHeight - 50 + yOff, spBtnWidth, spBtnHeight, "Single Player", () -> {
-            handler.getMouseManager().setUiManager(null);
+
             State.setState(handler.getGame().stateGame);
         }));
 
         int mpBtnWidth = 6 * 64;
         int mpBtnHeight = 64;
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - mpBtnWidth / 2, handler.getHeight() / 2 - mpBtnHeight / 2 + mpBtnHeight + 35 + yOff, mpBtnWidth, mpBtnHeight, "Multiplayer", () -> {
-            handler.getMouseManager().setUiManager(null);
+
             State.setState(handler.getGame().stateMenuMultiplayer);
         }));
 
