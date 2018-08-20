@@ -29,10 +29,17 @@ public class Assets {
     public static BufferedImage[] ULTIMATE_TILE;
 
     /* Items */
-    public static BufferedImage ITEM_STICK, ITEM_ROCK, ITEM_ROTTEN_FLESH, ITEM_LEAF;
-    public static BufferedImage ITEM_WOODEN_SWORD, ITEM_STONE_SWORD, ITEM_WOODEN_PICK, ITEM_STONE_PICK;
+    public static BufferedImage ITEM_STICK, ITEM_LEAF, ITEM_ROCK;
+    public static BufferedImage ITEM_ROTTEN_FLESH, ITEM_BONE;
+
+    public static BufferedImage ITEM_WOODEN_SWORD, ITEM_WOODEN_PICK, ITEM_WOODEN_HOE;
+    public static BufferedImage ITEM_STONE_SWORD, ITEM_STONE_PICK, ITEM_STONE_HOE;
+
     public static BufferedImage ITEM_COAL, ITEM_IRON_INGOT, ITEM_GOLD_INGOT, ITEM_DIAMOND;
+
     public static BufferedImage ITEM_CARROT, ITEM_APPLE;
+
+    public static BufferedImage ITEM_COIN_IRON, ITEM_COIN_GOLD;
 
     /* Player */
     public static BufferedImage[] HEARTS;
@@ -126,22 +133,30 @@ public class Assets {
 
         /* Items */
         ITEM_STICK = getSprite(itemsSheet, 0, 0, width, height);
-        ITEM_ROCK = getSprite(itemsSheet, 1, 0, width, height);
-        ITEM_ROTTEN_FLESH = getSprite(itemsSheet, 2, 0, width, height);
-        ITEM_LEAF = getSprite(itemsSheet, 3, 0, width, height);
+        ITEM_LEAF = getSprite(itemsSheet, 0, 1, width, height);
+        ITEM_ROCK = getSprite(itemsSheet, 0, 2, width, height);
 
-        ITEM_WOODEN_SWORD = getSprite(itemsSheet, 0, 1, width, height);
-        ITEM_STONE_SWORD = getSprite(itemsSheet, 1, 1, width, height);
-        ITEM_WOODEN_PICK = getSprite(itemsSheet, 2, 1, width, height);
-        ITEM_STONE_PICK = getSprite(itemsSheet, 3, 1, width, height);
+        ITEM_ROTTEN_FLESH = getSprite(itemsSheet, 1, 0, width, height);
+        ITEM_BONE = getSprite(itemsSheet, 1, 1, width, height);
 
-        ITEM_COAL = getSprite(itemsSheet, 0, 2, width, height);
-        ITEM_IRON_INGOT = getSprite(itemsSheet, 1, 2, width, height);
+        ITEM_WOODEN_SWORD = getSprite(itemsSheet, 6, 0, width, height);
+        ITEM_WOODEN_PICK = getSprite(itemsSheet, 6, 1, width, height);
+        ITEM_WOODEN_HOE = getSprite(itemsSheet, 6, 2, width, height);
+
+        ITEM_STONE_SWORD = getSprite(itemsSheet, 7, 0, width, height);
+        ITEM_STONE_PICK = getSprite(itemsSheet, 7, 1, width, height);
+        ITEM_STONE_HOE = getSprite(itemsSheet, 7, 2, width, height);
+
+        ITEM_COAL = getSprite(itemsSheet, 2, 0, width, height);
+        ITEM_IRON_INGOT = getSprite(itemsSheet, 2, 1, width, height);
         ITEM_GOLD_INGOT = getSprite(itemsSheet, 2, 2, width, height);
-        ITEM_DIAMOND = getSprite(itemsSheet, 3, 2, width, height);
+        ITEM_DIAMOND = getSprite(itemsSheet, 2, 3, width, height);
 
-        ITEM_CARROT = getSprite(itemsSheet, 0, 3, width, height);
-        ITEM_APPLE = getSprite(itemsSheet, 1, 3, width, height);
+        ITEM_CARROT = getSprite(itemsSheet, 3, 0, width, height);
+        ITEM_APPLE = getSprite(itemsSheet, 3, 1, width, height);
+
+        ITEM_COIN_IRON = getSprite(itemsSheet, 4, 0, width, height);
+        ITEM_COIN_GOLD = getSprite(itemsSheet, 4, 1, width, height);
 
         /* Player */
         HEARTS = getFrames(playerSheet, 0, 0, 4);
