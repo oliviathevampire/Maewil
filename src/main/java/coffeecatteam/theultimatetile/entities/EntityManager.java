@@ -2,6 +2,8 @@ package coffeecatteam.theultimatetile.entities;
 
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
+import coffeecatteam.theultimatetile.net.packet.Packet00Login;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
@@ -24,6 +26,14 @@ public class EntityManager {
     public EntityManager(Handler handler, EntityPlayer player) {
         this.handler = handler;
         this.player = player;
+
+        if (handler.getGame().getServer() != null) {
+            player = new EntityPlayerMP(handler, player.getUsername(), null, -1 ,true);
+            Packet00Login packetLogin = new Packet00Login(player.getUsername());
+            handler.getGame().getServer().addConnection((EntityPlayerMP) player, packetLogin);
+            packetLogin.writeData(handler.getGame().getClient());
+        }
+
         entities = new ArrayList<>();
         addEntity(this.player);
     }

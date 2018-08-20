@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.net;
 
-import coffeecatteam.theultimatetile.Game;
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.net.packet.Packet;
@@ -9,7 +8,10 @@ import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +39,7 @@ public class Server extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            this.parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
 
 //            String message = new String(packet.getData());
 //            Logger.print("CLIENT [" + packet.getAddress().getHostAddress() + ":" + packet.getPort() + "]> "
@@ -52,27 +53,51 @@ public class Server extends Thread {
     private void parsePacket(byte[] data, InetAddress address, int port) {
         String message = new String(data).trim();
         Packet.PacketTypes type = Packet.lookupPacket(message.substring(0, 2));
+        Packet packet = null;
+
         switch (type) {
             default:
             case INVALID:
                 break;
             case LOGIN:
-                Packet00Login packet = new Packet00Login(data);
-                Logger.print("[" + address.getHostAddress() + ":" + port + "] " + packet.getUsername() + " has connected!");
-                EntityPlayerMP player;
-                if (address.getHostAddress().equalsIgnoreCase("127.0.0.1") || address.getHostAddress().equalsIgnoreCase("localhost"))
-                    player = new EntityPlayerMP(handler, packet.getUsername(), address, port, true);
-                else
-                    player = new EntityPlayerMP(handler, packet.getUsername(), address, port, false);
-                connectedPlayers.add(player);
-                handler.getWorld().getEntityManager().addEntity(player);
-                handler.getWorld().getEntityManager().setPlayer(player);
+                packet = new Packet00Login(data);
+                Logger.print("[" + address.getHostAddress() + ":" + port + "] " + ((Packet00Login) packet).getUsername() + " has connected!");
+                EntityPlayerMP player = new EntityPlayerMP(handler, ((Packet00Login) packet).getUsername(), address, port, false);
+                this.addConnection(player, ((Packet00Login) packet));
 
-                handler.getWorld().getEntityManager().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
-                handler.getWorld().getEntityManager().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
+//                connectedPlayers.add(player);
+//                handler.getWorld().getEntityManager().addEntity(player);
+//                handler.getWorld().getEntityManager().setPlayer(player);
+//
+//                handler.getWorld().getEntityManager().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
+//                handler.getWorld().getEntityManager().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
                 break;
             case DISCONNECT:
                 break;
+        }
+    }
+
+    public void addConnection(EntityPlayerMP player, Packet00Login packet) {
+        boolean alreadyConnected = false;
+        for (EntityPlayerMP p : connectedPlayers) {
+            if (player.getUsername().equalsIgnoreCase(p.getUsername())) {
+                if (p.getIpAddress() == null) {
+                    p.setIpAddress(player.getIpAddress());
+                }
+                if (p.getPort() == -1) {
+                    p.setPort(player.getPort());
+                }
+                alreadyConnected = true;
+            } else {
+                sendData(packet.getData(), p.getIpAddress(), p.getPort());
+
+                packet = new Packet00Login(p.getUsername());
+                sendData(packet.getData(), player.getIpAddress(), player.getPort());
+            }
+        }
+
+        if (!alreadyConnected) {
+            this.connectedPlayers.add(player);
         }
     }
 

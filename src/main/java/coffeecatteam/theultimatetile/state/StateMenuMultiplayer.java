@@ -6,6 +6,7 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIManager;
 import coffeecatteam.theultimatetile.net.packet.Packet00Login;
+import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
@@ -58,6 +59,9 @@ public class StateMenuMultiplayer extends State {
 //                    handler.getGame().getClient().sendData("ping");
                     Packet00Login packetLogin = new Packet00Login(username);
                     packetLogin.writeData(handler.getGame().getClient());
+
+                    handler.getWorld().getEntityManager().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
+                    handler.getWorld().getEntityManager().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
 
                     Logger.print("Joining Server [" + ip + "] as [" + username + "]");
                     State.setState(handler.getGame().stateGame.init());

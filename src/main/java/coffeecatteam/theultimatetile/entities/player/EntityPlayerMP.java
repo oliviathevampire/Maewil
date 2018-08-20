@@ -26,7 +26,15 @@ public class EntityPlayerMP extends EntityPlayer {
         return ipAddress;
     }
 
+    public void setIpAddress(InetAddress ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
     public int getPort() {
         return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 }
