@@ -34,32 +34,31 @@ public class StateMenuMultiplayer extends State {
     private int backBtnWidth = 64 * 3;
     private int backBtnHeight = 64;
 
-    public StateMenuMultiplayer(Handler handler, String username) {
-        super(handler);
+    public StateMenuMultiplayer(Handler handlerIn, String username) {
+        super(handlerIn);
         uiManager = new UIManager(handler);
         init();
         this.username = username;
 
         uiManager.addObject(new UIButton(x, ipBtnY, ipBtnWidth, ipBtnHeight, "Server IP", () -> {
             ip = JOptionPane.showInputDialog("Enter server ip:", ip);
-            this.handler.getGame().getClient().setIpAddress(ip);
+            handler.getGame().getClient().setIpAddress(ip);
             Logger.print("IP set to [" + ip + "]");
         }));
 
         uiManager.addObject(new UIButton(x, handler.getHeight() - joinBtnHeight - 50, joinBtnWidth, joinBtnHeight, "Join Server", () -> {
             if (!ip.equalsIgnoreCase("")) {
-
 //                    handler.getGame().getClient().sendData("ping");
                 Packet00Login packetLogin = new Packet00Login(this.username);
-                packetLogin.writeData(this.handler.getGame().getClient());
+                packetLogin.writeData(handler.getGame().getClient());
 
                 Logger.print("Joining Server [" + ip + "] as [" + this.username + "]");
-                State.setState(this.handler.getGame().stateGame);
+                State.setState(handler.getGame().stateGame);
             }
         }));
 
         uiManager.addObject(new UIButton(handler.getWidth() - backBtnWidth - x, handler.getHeight() - backBtnHeight - 50, backBtnWidth, backBtnHeight, "Back", () -> {
-            State.setState(this.handler.getGame().stateMenu);
+            State.setState(handler.getGame().stateMenu);
         }));
     }
 

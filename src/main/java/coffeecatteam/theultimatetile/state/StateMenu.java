@@ -12,8 +12,8 @@ public class StateMenu extends State {
 
     private UIManager uiManager;
 
-    public StateMenu(Handler handler) {
-        super(handler);
+    public StateMenu(Handler handlerIn) {
+        super(handlerIn);
         uiManager = new UIManager(handler);
         init();
 

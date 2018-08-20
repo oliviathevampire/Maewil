@@ -19,8 +19,8 @@ public class StateGame extends State {
 
     private UIManager uiManager;
 
-    public StateGame(Handler handler) {
-        super(handler);
+    public StateGame(Handler handlerIn) {
+        super(handlerIn);
         uiManager = new UIManager(handler);
         setWorld("/assets/worlds/starter/world1");
 
