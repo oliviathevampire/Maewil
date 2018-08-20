@@ -56,7 +56,10 @@ public class StateGame extends State {
 
         if (paused)
             handler.getMouseManager().setUiManager(uiManager);
-        else if (!paused)
+        else
+            handler.getMouseManager().setUiManager(null);
+
+        if (!paused)
             world.tick();
         else
             uiManager.tick();
