@@ -146,7 +146,7 @@ public class Game extends Canvas implements Runnable {
             }
 
             if (timer >= 1000000000) {
-                frame.setTitle(title + " - FPS: " + ticks);
+                frame.setTitle(title + " - " + username + " - FPS: " + ticks);
                 ticks = 0;
                 timer = 0;
             }
