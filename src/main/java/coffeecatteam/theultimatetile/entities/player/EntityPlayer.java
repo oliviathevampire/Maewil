@@ -1,7 +1,8 @@
-package coffeecatteam.theultimatetile.entities.creatures;
+package coffeecatteam.theultimatetile.entities.player;
 
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
@@ -33,14 +34,9 @@ public class EntityPlayer extends EntityCreature {
     private int extraDmg = 0;
     private int glubel = 0, maxGludel = 100, lvl = 1;
     private String username;
-    public boolean isLocal = true, renderName = true;
+    public boolean isLocal = true;
 
-    public EntityPlayer(Handler handler) {
-        this(handler, "");
-        renderName = false;
-    }
-
-    public EntityPlayer(Handler handler, String username) {
+   public EntityPlayer(Handler handler, String username) {
         super(handler, "player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         this.username = username;
 
@@ -93,9 +89,10 @@ public class EntityPlayer extends EntityCreature {
 //                }
             }
 
-            inventory.tick();
             handler.getCamera().centerOnEntity(this);
         }
+
+        inventory.tick();
 
         // Animation
         currentAnim.tick();
@@ -247,10 +244,8 @@ public class EntityPlayer extends EntityCreature {
         int xOff = nameWidth / 2 - width / 2;
         int yOff =  height / 2;
 
-        if (renderName) {
-            g.fillRect(x - xOff, y - yOff, nameWidth, nameHeight);
-            Text.drawString(g, username, x - xOff, y - yOff + nameHeight - 5, Color.white, font);
-        }
+        g.fillRect(x - xOff, y - yOff, nameWidth, nameHeight);
+        Text.drawString(g, username, x - xOff, y - yOff + nameHeight - 5, Color.white, font);
     }
 
     public void postRender(Graphics g) {

@@ -11,7 +11,6 @@ public class EntityPlayerMP extends EntityPlayer {
 
     public EntityPlayerMP(Handler handler, String username, InetAddress ipAddress, int port, boolean isLocal) {
         super(handler, username);
-        renderName = true;
         this.ipAddress = ipAddress;
         this.port = port;
         this.isLocal = isLocal;
@@ -26,15 +25,7 @@ public class EntityPlayerMP extends EntityPlayer {
         return ipAddress;
     }
 
-    public void setIpAddress(InetAddress ipAddress) {
-        this.ipAddress = ipAddress;
-    }
-
     public int getPort() {
         return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
     }
 }

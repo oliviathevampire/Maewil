@@ -5,13 +5,7 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIManager;
-<<<<<<< HEAD
 import coffeecatteam.theultimatetile.net.packet.Packet00Login;
-import coffeecatteam.theultimatetile.tiles.Tile;
-=======
-import coffeecatteam.theultimatetile.net.Client;
-import coffeecatteam.theultimatetile.net.Server;
->>>>>>> parent of 8ca733f... Got players load on same server localy
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
@@ -41,60 +35,36 @@ public class StateMenuMultiplayer extends State {
     private int backBtnWidth = 64 * 3;
     private int backBtnHeight = 64;
 
-    private Client client;
-    private Server server;
-
-    public StateMenuMultiplayer(Handler handler) {
+    public StateMenuMultiplayer(Handler handler, String username) {
         super(handler);
         uiManager = new UIManager(handler);
         init();
-
-        uiManager.addObject(new UIButton(x, nameBtnY, nameBtnWidth, nameBtnHeight, "Username", () -> {
-            username = Utils.getUsername(username);
-            Logger.print("Username set to [" + username + "]");
-        }));
+        this.username = username;
 
         uiManager.addObject(new UIButton(x, ipBtnY, ipBtnWidth, ipBtnHeight, "Server IP", () -> {
             ip = JOptionPane.showInputDialog("Enter server ip:", ip);
+            this.handler.getGame().getClient().setIpAddress(ip);
             Logger.print("IP set to [" + ip + "]");
         }));
 
         uiManager.addObject(new UIButton(x, handler.getHeight() - joinBtnHeight - 50, joinBtnWidth, joinBtnHeight, "Join Server", () -> {
-            handler.getMouseManager().setUiManager(null);
-            if (!username.equalsIgnoreCase("")) {
+            if (!this.username.equalsIgnoreCase("")) {
                 if (!ip.equalsIgnoreCase("")) {
-<<<<<<< HEAD
-                    handler.getMouseManager().setUiManager(null);
+                    this.handler.getMouseManager().setUiManager(null);
 //                    handler.getGame().getClient().sendData("ping");
-                    Packet00Login packetLogin = new Packet00Login(username);
-                    packetLogin.writeData(handler.getGame().getClient());
+                    Packet00Login packetLogin = new Packet00Login(this.username);
+                    packetLogin.writeData(this.handler.getGame().getClient());
 
-                    handler.getWorld().getEntityManager().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
-                    handler.getWorld().getEntityManager().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
-
-=======
->>>>>>> parent of 8ca733f... Got players load on same server localy
-                    Logger.print("Joining Server [" + ip + "] as [" + username + "]");
-                    start();
-                    client.sendData("ping".getBytes());
+                    Logger.print("Joining Server [" + ip + "] as [" + this.username + "]");
+                    State.setState(this.handler.getGame().stateGame.init());
                 }
             }
         }));
 
         uiManager.addObject(new UIButton(handler.getWidth() - backBtnWidth - x, handler.getHeight() - backBtnHeight - 50, backBtnWidth, backBtnHeight, "Back", () -> {
-            handler.getMouseManager().setUiManager(null);
-            State.setState(handler.getGame().stateMenu.init());
+            this.handler.getMouseManager().setUiManager(null);
+            State.setState(this.handler.getGame().stateMenu.init());
         }));
-    }
-
-    public synchronized void start() {
-        if (JOptionPane.showConfirmDialog(handler.getGame(), "Do you want to host?") == 0) {
-            server = new Server(handler.getGame());
-            server.start();
-        }
-
-        client = new Client(handler.getGame(), ip);
-        client.start();
     }
 
     @Override

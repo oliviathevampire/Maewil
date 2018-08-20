@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.entities;
 
 import coffeecatteam.theultimatetile.Handler;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;

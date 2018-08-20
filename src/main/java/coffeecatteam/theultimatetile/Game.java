@@ -4,10 +4,14 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.input.KeyManager;
 import coffeecatteam.theultimatetile.input.MouseManager;
+import coffeecatteam.theultimatetile.net.Client;
+import coffeecatteam.theultimatetile.net.Server;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateGame;
 import coffeecatteam.theultimatetile.state.StateMenu;
 import coffeecatteam.theultimatetile.state.StateMenuMultiplayer;
+import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.theultimatetile.utils.Utils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,6 +41,10 @@ public class Game extends Canvas implements Runnable {
 
     private Handler handler;
 
+    private Client client;
+    private Server server;
+    private String username;
+
     public Game(String title, int width, int height) {
         this.title = title;
         this.width = width;
@@ -46,6 +54,8 @@ public class Game extends Canvas implements Runnable {
 
         Assets.init();
         createDisplay();
+
+        handler = new Handler(this);
     }
 
     private void createDisplay() {
@@ -76,12 +86,12 @@ public class Game extends Canvas implements Runnable {
         this.addMouseListener(mouseManager);
         this.addMouseMotionListener(mouseManager);
 
-        handler = new Handler(this);
         camera = new Camera(handler, 0, 0);
 
+        username = Utils.getUsername();
         stateGame = new StateGame(handler);
         stateMenu = new StateMenu(handler);
-        stateMenuMultiplayer = new StateMenuMultiplayer(handler);
+        stateMenuMultiplayer = new StateMenuMultiplayer(handler, username);
         State.setState(stateMenu.init());
     }
 
@@ -169,10 +179,33 @@ public class Game extends Canvas implements Runnable {
         return frame;
     }
 
-    public synchronized void start() {
+    public Client getClient() {
+        return client;
+    }
+
+    public Server getServer() {
+        return server;
+    }
+
+    public synchronized void start(String[] args) {
         if (running)
             return;
         running = true;
+
+        if (args.length > 0) { // JOptionPane.showConfirmDialog(handler.getGame(), "Do you want to host?") == 0
+            if (args[0].equalsIgnoreCase("-runServer")) {
+                Logger.print("Running game while hosting server!\n");
+                server = new Server(handler);
+                server.setName("Thread-Server");
+                server.start();
+            }
+        }
+
+        client = new Client(handler);
+        client.setIpAddress("localhost");
+        client.setName("Thread-Client");
+        client.start();
+
         thread = new Thread(this);
         thread.setName("Thread-Main");
         thread.start();
@@ -187,5 +220,9 @@ public class Game extends Canvas implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getUsername() {
+        return username;
     }
 }
