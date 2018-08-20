@@ -9,6 +9,6 @@ public class Launcher {
         int height = 640;
         Logger.init();
         Game game = new Game("The Ultimate Tile", width, height);
-        game.start(args);
+        game.start();
     }
 }

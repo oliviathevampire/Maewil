@@ -1,8 +1,7 @@
-package coffeecatteam.theultimatetile.entities.player;
+package coffeecatteam.theultimatetile.entities.creatures;
 
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.Entity;
-import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
@@ -94,10 +93,9 @@ public class EntityPlayer extends EntityCreature {
 //                }
             }
 
+            inventory.tick();
             handler.getCamera().centerOnEntity(this);
         }
-
-        inventory.tick();
 
         // Animation
         currentAnim.tick();

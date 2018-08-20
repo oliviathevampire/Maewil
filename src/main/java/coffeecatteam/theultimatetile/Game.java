@@ -4,13 +4,10 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.input.KeyManager;
 import coffeecatteam.theultimatetile.input.MouseManager;
-import coffeecatteam.theultimatetile.net.Client;
-import coffeecatteam.theultimatetile.net.Server;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateGame;
 import coffeecatteam.theultimatetile.state.StateMenu;
 import coffeecatteam.theultimatetile.state.StateMenuMultiplayer;
-import coffeecatteam.theultimatetile.utils.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,9 +37,6 @@ public class Game extends Canvas implements Runnable {
 
     private Handler handler;
 
-    private Client client;
-    private Server server;
-
     public Game(String title, int width, int height) {
         this.title = title;
         this.width = width;
@@ -52,8 +46,6 @@ public class Game extends Canvas implements Runnable {
 
         Assets.init();
         createDisplay();
-
-        handler = new Handler(this);
     }
 
     private void createDisplay() {
@@ -84,6 +76,7 @@ public class Game extends Canvas implements Runnable {
         this.addMouseListener(mouseManager);
         this.addMouseMotionListener(mouseManager);
 
+        handler = new Handler(this);
         camera = new Camera(handler, 0, 0);
 
         stateGame = new StateGame(handler);
@@ -176,33 +169,10 @@ public class Game extends Canvas implements Runnable {
         return frame;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public Server getServer() {
-        return server;
-    }
-
-    public synchronized void start(String[] args) {
+    public synchronized void start() {
         if (running)
             return;
         running = true;
-
-        if (args.length > 0) { // JOptionPane.showConfirmDialog(handler.getGame(), "Do you want to host?") == 0
-            if (args[0].equalsIgnoreCase("-runServer")) {
-                Logger.print("Running game while hosting server!\n");
-                server = new Server(handler);
-                server.setName("Thread-Server");
-                server.start();
-            }
-        }
-
-        client = new Client(handler);
-        client.setIpAddress("localhost");
-        client.setName("Thread-Client");
-        client.start();
-
         thread = new Thread(this);
         thread.setName("Thread-Main");
         thread.start();

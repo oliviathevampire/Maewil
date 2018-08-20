@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.gfx.overlays;
 
 import coffeecatteam.theultimatetile.Handler;
-import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 
 import java.awt.*;
 import java.util.ArrayList;

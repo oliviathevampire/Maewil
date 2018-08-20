@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.worlds;
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.EntityLoader;
 import coffeecatteam.theultimatetile.entities.EntityManager;
-import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.overlays.OverlayManager;
 import coffeecatteam.theultimatetile.items.ItemManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
@@ -11,6 +11,7 @@ import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class World {

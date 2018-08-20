@@ -1,9 +1,13 @@
 package coffeecatteam.theultimatetile.entities;
 
 import coffeecatteam.theultimatetile.Handler;
+<<<<<<< HEAD
 import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.net.packet.Packet00Login;
+=======
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
+>>>>>>> parent of 8ca733f... Got players load on same server localy
 import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
@@ -85,7 +89,6 @@ public class EntityManager {
 
     public void setPlayer(EntityPlayer player) {
         this.player = player;
-        entities.set(0, player);
     }
 
     public ArrayList<Entity> getEntities() {

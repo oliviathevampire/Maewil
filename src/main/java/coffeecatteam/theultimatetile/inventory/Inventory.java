@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.Handler;
-import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.items.IInteractable;

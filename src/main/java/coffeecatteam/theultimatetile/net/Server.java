@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.net;
 
+<<<<<<< HEAD
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.net.packet.Packet;
@@ -14,15 +15,20 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
+=======
+import coffeecatteam.theultimatetile.Game;
+
+import java.io.IOException;
+import java.net.*;
+>>>>>>> parent of 8ca733f... Got players load on same server localy
 
 public class Server extends Thread {
 
     private DatagramSocket socket;
-    private Handler handler;
-    private List<EntityPlayerMP> connectedPlayers = new ArrayList<>();
+    private Game game;
 
-    public Server(Handler handler) {
-        this.handler = handler;
+    public Server(Game game) {
+        this.game = game;
         try {
             this.socket = new DatagramSocket(25565);
         } catch (SocketException e) {
@@ -39,6 +45,7 @@ public class Server extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+<<<<<<< HEAD
             this.parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
 
 //            String message = new String(packet.getData());
@@ -105,18 +112,23 @@ public class Server extends Thread {
         sendData(data.getBytes(), ipAddress, port);
     }
 
+=======
+            String message = new String(packet.getData());
+            System.out.println("CLIENT [" + packet.getAddress().getHostAddress() + ":" + packet.getPort() + "]> "
+                    + message);
+            if (message.trim().equalsIgnoreCase("ping")) {
+                sendData("pong".getBytes(), packet.getAddress(), packet.getPort());
+            }
+        }
+    }
+
+>>>>>>> parent of 8ca733f... Got players load on same server localy
     public void sendData(byte[] data, InetAddress ipAddress, int port) {
         DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, port);
         try {
             this.socket.send(packet);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void sendDataToAllClients(byte[] data) {
-        for (EntityPlayerMP p : connectedPlayers) {
-            sendData(data, p.getIpAddress(), p.getPort());
         }
     }
 }
