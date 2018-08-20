@@ -92,7 +92,7 @@ public class Game extends Canvas implements Runnable {
         stateGame = new StateGame(handler);
         stateMenu = new StateMenu(handler);
         stateMenuMultiplayer = new StateMenuMultiplayer(handler, username);
-        State.setState(stateMenu.init());
+        State.setState(stateMenu);
     }
 
     private void tick() {

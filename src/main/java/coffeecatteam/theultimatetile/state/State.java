@@ -10,6 +10,7 @@ public abstract class State {
 
     public static void setState(State state) {
         currentState = state;
+        currentState.init();
     }
 
     public static State getState() {
@@ -22,7 +23,7 @@ public abstract class State {
         this.handler = handler;
     }
 
-    public abstract State init();
+    public abstract void init();
 
     public abstract void tick();
 

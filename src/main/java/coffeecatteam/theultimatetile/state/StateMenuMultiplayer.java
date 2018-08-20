@@ -56,21 +56,20 @@ public class StateMenuMultiplayer extends State {
                     packetLogin.writeData(this.handler.getGame().getClient());
 
                     Logger.print("Joining Server [" + ip + "] as [" + this.username + "]");
-                    State.setState(this.handler.getGame().stateGame.init());
+                    State.setState(this.handler.getGame().stateGame);
                 }
             }
         }));
 
         uiManager.addObject(new UIButton(handler.getWidth() - backBtnWidth - x, handler.getHeight() - backBtnHeight - 50, backBtnWidth, backBtnHeight, "Back", () -> {
             this.handler.getMouseManager().setUiManager(null);
-            State.setState(this.handler.getGame().stateMenu.init());
+            State.setState(this.handler.getGame().stateMenu);
         }));
     }
 
     @Override
-    public State init() {
+    public void init() {
         handler.getMouseManager().setUiManager(uiManager);
-        return this;
     }
 
     @Override

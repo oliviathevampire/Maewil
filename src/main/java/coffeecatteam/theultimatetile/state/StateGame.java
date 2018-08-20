@@ -33,7 +33,7 @@ public class StateGame extends State {
         int w = btnWidth + 128;
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - w / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
             handler.getMouseManager().setUiManager(null);
-            State.setState(handler.getGame().stateMenu.init());
+            State.setState(handler.getGame().stateMenu);
         }));
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
             Logger.print("Exiting...");
@@ -42,12 +42,11 @@ public class StateGame extends State {
     }
 
     @Override
-    public State init() {
+    public void init() {
         paused = false;
         handler.getMouseManager().setUiManager(uiManager);
         handler.getWorld().getEntityManager().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
         handler.getWorld().getEntityManager().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
-        return this;
     }
 
     @Override
