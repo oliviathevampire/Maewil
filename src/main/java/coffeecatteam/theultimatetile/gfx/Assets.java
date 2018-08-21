@@ -56,6 +56,7 @@ public class Assets {
     public static BufferedImage[] EXTRA_LIFE;
 
     public static BufferedImage[] ZOMBIE_IDLE, ZOMBIE_UP, ZOMBIE_DOWN, ZOMBIE_LEFT, ZOMBIE_RIGHT;
+    public static BufferedImage[] SKELETON_IDLE, SKELETON_UP, SKELETON_DOWN, SKELETON_LEFT, SKELETON_RIGHT;
 
     /* Nature */
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
@@ -92,12 +93,12 @@ public class Assets {
         SpriteSheet natureSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
         SpriteSheet effectSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/effect.png"));
 
-        SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health.png"));
+        SpriteSheet healthSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health.png"));
         SpriteSheet glubSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/glub.png"));
         SpriteSheet itemsSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/items.png"));
 
-        SpriteSheet characrerSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/player.png"));
-        SpriteSheet zombieSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/zombie.png"));
+        SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/player.png"));
+        SpriteSheet undeadSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/undead.png"));
 
         SpriteSheet menuSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/menu.png"));
 
@@ -159,29 +160,35 @@ public class Assets {
         ITEM_COIN_GOLD = getSprite(itemsSheet, 4, 1, width, height);
 
         /* Player */
-        HEARTS = getFrames(playerSheet, 0, 0, 4);
-        ARMOR = getFrames(playerSheet, 1, 0, 3);
-        SPRINT = getFrames(playerSheet, 3, 0, 1, width * 2, height);
+        HEARTS = getFrames(healthSheet, 0, 0, 4);
+        ARMOR = getFrames(healthSheet, 1, 0, 3);
+        SPRINT = getFrames(healthSheet, 3, 0, 1, width * 2, height);
 
         GLUB_ORB = getFrames(glubSheet, 0, 0, 5, width, height);
         GLUB_METER = getFrames(glubSheet, 1, 0, 1, width * 4, height);
 
         /* Player Frames */
-        PLAYER_IDLE = getFrames(characrerSheet, 0, 0, 7);
-        PLAYER_UP = getFrames(characrerSheet, 1, 0, 3);
-        PLAYER_DOWN = getFrames(characrerSheet, 1, 4, 7);
-        PLAYER_LEFT = getFrames(characrerSheet, 3, 0, 3);
-        PLAYER_RIGHT = getFrames(characrerSheet, 2, 0, 7);
-        PLAYER_DEAD = getFrames(characrerSheet, 4, 0, 7);
+        PLAYER_IDLE = getFrames(playerSheet, 0, 0, 7);
+        PLAYER_UP = getFrames(playerSheet, 1, 0, 3);
+        PLAYER_DOWN = getFrames(playerSheet, 1, 4, 7);
+        PLAYER_LEFT = getFrames(playerSheet, 3, 0, 3);
+        PLAYER_RIGHT = getFrames(playerSheet, 2, 0, 7);
+        PLAYER_DEAD = getFrames(playerSheet, 4, 0, 7);
 
         /* Entities */
         EXTRA_LIFE = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/extra_life.png")), 0, 7);
 
-        ZOMBIE_IDLE = getFrames(zombieSheet, 0, 0, 3);
-        ZOMBIE_UP = getFrames(zombieSheet, 1, 0, 2);
-        ZOMBIE_DOWN = getFrames(zombieSheet, 1, 3, 5);
-        ZOMBIE_LEFT = getFrames(zombieSheet, 2, 4, 7);
-        ZOMBIE_RIGHT = getFrames(zombieSheet, 2, 0, 3);
+        ZOMBIE_IDLE = getFrames(undeadSheet, 0, 0, 3);
+        ZOMBIE_UP = getFrames(undeadSheet, 1, 0, 2);
+        ZOMBIE_DOWN = getFrames(undeadSheet, 1, 3, 5);
+        ZOMBIE_LEFT = getFrames(undeadSheet, 2, 4, 7);
+        ZOMBIE_RIGHT = getFrames(undeadSheet, 2, 0, 3);
+
+        SKELETON_IDLE = getFrames(undeadSheet, 4, 0, 3);
+        SKELETON_UP = getFrames(undeadSheet, 5, 0, 2);
+        SKELETON_DOWN = getFrames(undeadSheet, 5, 3, 5);
+        SKELETON_LEFT = getFrames(undeadSheet, 6, 4, 7);
+        SKELETON_RIGHT = getFrames(undeadSheet, 6, 0, 3);
 
         /* Nature */
         TREE_SMALL = getSprite(natureSheet, 0, 0, width, height * 2);

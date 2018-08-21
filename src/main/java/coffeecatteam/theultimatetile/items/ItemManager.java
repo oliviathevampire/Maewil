@@ -32,8 +32,12 @@ public class ItemManager {
             i.render(g);
     }
 
+    public void addItem(ItemStack stack, float x, float y) {
+        addItem(stack, (int) x, (int) y);
+    }
+
     public void addItem(ItemStack stack, int x, int y) {
-        stack.setPosition(x + Tile.TILE_WIDTH, y + Tile.TILE_HEIGHT);
+        stack.setPosition(x, y);
         addItem(stack);
     }
 

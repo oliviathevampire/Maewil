@@ -22,7 +22,7 @@ public abstract class Entity {
     protected float x, y;
 
     protected int width, height;
-    protected int health;
+    protected int currentHealth, maxHealth = DEFAULT_HEALTH;
     protected boolean active = true;
     protected Rectangle bounds;
 
@@ -34,7 +34,7 @@ public abstract class Entity {
 
         this.width = width;
         this.height = height;
-        health = DEFAULT_HEALTH;
+        currentHealth = maxHealth;
 
         bounds = new Rectangle(0, 0, width, height);
 
@@ -61,10 +61,10 @@ public abstract class Entity {
     }
 
     public void hurt(int damage) {
-        health -= damage;
-        if (health <= 0) {
+        currentHealth -= damage;
+        if (currentHealth <= 0) {
             active = false;
-            health = 0;
+            currentHealth = 0;
         }
     }
 
@@ -129,16 +129,16 @@ public abstract class Entity {
         this.height = height;
     }
 
-    public int getHealth() {
-        return health;
+    public int getCurrentHealth() {
+        return currentHealth;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public void setCurrentHealth(int currentHealth) {
+        this.currentHealth = currentHealth;
     }
 
     public void heal(int amt) {
-        health += amt;
+        currentHealth += amt;
     }
 
     public boolean isActive() {
@@ -153,5 +153,10 @@ public abstract class Entity {
         setX(x);
         setY(y);
         return this;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+        this.currentHealth = this.maxHealth;
     }
 }
