@@ -4,6 +4,7 @@ import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.items.ItemStack;
 import coffeecatteam.theultimatetile.items.Items;
+import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -39,6 +40,6 @@ public class EntityRock extends EntityStatic {
         super.die(it);
         int amt = new Random().nextInt(2) + 1;
         for (int i = 0; i < amt; i++)
-            handler.getWorld().getItemManager().addItem(new ItemStack(Items.ROCK), (int) (x + new Random().nextInt(3)), (int) (y + new Random().nextInt(3)));
+            handler.getWorld().getItemManager().addItem(new ItemStack(Items.ROCK), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
     }
 }
