@@ -1,6 +1,8 @@
 package coffeecatteam.theultimatetile.gfx;
 
 import java.awt.*;
+import java.awt.font.TextAttribute;
+import java.text.AttributedString;
 
 public class Text {
 
@@ -18,6 +20,24 @@ public class Text {
             y = (yPos - getHeight(g, font) / 2) + getAscent(g, font);
         }
         g.drawString(text, x, y);
+    }
+
+    public static void drawStringUnderlined(Graphics g, String text, int xPos, int yPos, Color c, Font font) {
+        drawStringUnderlined(g, text, xPos, yPos, false, c, font);
+    }
+
+    public static void drawStringUnderlined(Graphics g, String text, int xPos, int yPos, boolean centered, Color c, Font font) {
+        g.setColor(c);
+        AttributedString as = new AttributedString(text);
+        as.addAttribute(TextAttribute.FONT, font);
+        as.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        int x = xPos;
+        int y = yPos;
+        if (centered) {
+            x = xPos - getWidth(g, text, font) / 2;
+            y = (yPos - getHeight(g, font) / 2) + getAscent(g, font);
+        }
+        g.drawString(as.getIterator(), x, y);
     }
 
     public static int getWidth(Graphics g, String text, Font font) {

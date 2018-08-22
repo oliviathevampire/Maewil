@@ -8,6 +8,8 @@ import coffeecatteam.theultimatetile.gfx.ui.UIManager;
 import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
+import java.awt.font.TextAttribute;
+import java.text.AttributedString;
 
 public class StateMenu extends State {
 
@@ -62,7 +64,7 @@ public class StateMenu extends State {
         Font font = Assets.FONT_20;
         int x = 5;
         int y = handler.getHeight() - 10;
-        Text.drawString(g, "Copyright (C) CoffeeCatTeam 2018", x, y - Text.getHeight(g, font), Color.white, font);
-        Text.drawString(g, "Protected by the DBAD Public License", x, y, Color.white, font);
+        Text.drawStringUnderlined(g, "Copyright (C) CoffeeCatTeam 2018", x, y, Color.white, font); //  - Text.getHeight(g, font)
+        //Text.drawString(g, "Protected by the DBAD Public License", x, y, Color.white, font);
     }
 }
