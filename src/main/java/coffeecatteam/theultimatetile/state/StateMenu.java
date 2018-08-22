@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIManager;
 import coffeecatteam.theultimatetile.utils.Logger;
@@ -22,14 +23,12 @@ public class StateMenu extends State {
         int spBtnWidth = 7 * 64;
         int spBtnHeight = 64;
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - spBtnWidth / 2, handler.getHeight() / 2 - spBtnHeight / 2 + spBtnHeight - 50 + yOff, spBtnWidth, spBtnHeight, "Single Player", () -> {
-
-            State.setState(handler.getGame().stateGame);
+            State.setState(new StateGame(handler));
         }));
 
         int mpBtnWidth = 6 * 64;
         int mpBtnHeight = 64;
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - mpBtnWidth / 2, handler.getHeight() / 2 - mpBtnHeight / 2 + mpBtnHeight + 35 + yOff, mpBtnWidth, mpBtnHeight, "Multiplayer", () -> {
-
             State.setState(handler.getGame().stateMenuMultiplayer);
         }));
 
@@ -59,5 +58,11 @@ public class StateMenu extends State {
         int w = 80 * 6;
         int h = 48 * 6;
         g.drawImage(Assets.TITLE, w / 6, 20, w, h, null);
+
+        Font font = Assets.FONT_20;
+        int x = 5;
+        int y = handler.getHeight() - 10;
+        Text.drawString(g, "Copyright (C) CoffeeCatTeam 2018", x, y - Text.getHeight(g, font), Color.white, font);
+        Text.drawString(g, "Protected by the DBAD Public License", x, y, Color.white, font);
     }
 }

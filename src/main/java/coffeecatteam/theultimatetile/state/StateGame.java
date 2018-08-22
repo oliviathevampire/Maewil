@@ -20,9 +20,13 @@ public class StateGame extends State {
     private UIManager uiManager;
 
     public StateGame(Handler handlerIn) {
+        this(handlerIn, "/assets/worlds/starter/world1");
+    }
+
+    public StateGame(Handler handlerIn, String world) {
         super(handlerIn);
         uiManager = new UIManager(handler);
-        setWorld("/assets/worlds/starter/world1");
+        reset(world);
 
         int btnWidth = 192;
         int btnHeight = 64;
@@ -32,7 +36,6 @@ public class StateGame extends State {
         ));
         int w = btnWidth + 128;
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - w / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
-
             State.setState(handler.getGame().stateMenu);
         }));
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
@@ -45,14 +48,14 @@ public class StateGame extends State {
     public void init() {
         paused = false;
         handler.getMouseManager().setUiManager(uiManager);
-        handler.getWorld().getEntityManager().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
-        handler.getWorld().getEntityManager().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
+        handler.getEntityManager().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
+        handler.getEntityManager().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
     }
 
     @Override
     public void tick() {
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE))
-            paused = !paused && !handler.getWorld().getEntityManager().getPlayer().getInventory().isActive();
+            paused = !paused && !handler.getEntityManager().getPlayer().getInventory().isActive();
 
         if (paused)
             handler.getMouseManager().setUiManager(uiManager);
@@ -85,5 +88,11 @@ public class StateGame extends State {
         this.world = new World(handler, path);
         handler.setWorld(world);
         init();
+    }
+
+    public void reset(String world) {
+        handler.getEntityManager().reset();
+        handler.getEntityManager().getPlayer().reset();
+        setWorld(world);
     }
 }

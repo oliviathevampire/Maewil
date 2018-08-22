@@ -39,9 +39,9 @@ public abstract class EntityUndead extends EntityCreature {
         yMove = 0;
 
         // Movement
-        if (handler.getWorld().getEntityManager().getPlayer().isActive()) {
-            float x = handler.getWorld().getEntityManager().getPlayer().getX() - this.x;
-            float y = handler.getWorld().getEntityManager().getPlayer().getY() - this.y;
+        if (handler.getEntityManager().getPlayer().isActive()) {
+            float x = handler.getEntityManager().getPlayer().getX() - this.x;
+            float y = handler.getEntityManager().getPlayer().getY() - this.y;
 
             float distance = (float) Math.sqrt(x * x + y * y);
             float multiplier = 2.0f / distance;
@@ -77,8 +77,8 @@ public abstract class EntityUndead extends EntityCreature {
 
         attackTimer = 0;
 
-        for (Entity e : handler.getWorld().getEntityManager().getEntities())
-            if (e.equals(handler.getWorld().getEntityManager().getPlayer()))
+        for (Entity e : handler.getEntityManager().getEntities())
+            if (e.equals(handler.getEntityManager().getPlayer()))
                 if (e.getCollisionBounds(0, 0).intersects(ar))
                     e.hurt(Utils.getRandomInt(1, 3));
     }

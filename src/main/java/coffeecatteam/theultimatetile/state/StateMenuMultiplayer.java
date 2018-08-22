@@ -53,7 +53,7 @@ public class StateMenuMultiplayer extends State {
                 packetLogin.writeData(handler.getGame().getClient());
 
                 Logger.print("Joining Server [" + ip + "] as [" + this.username + "]");
-                State.setState(handler.getGame().stateGame);
+                State.setState(new StateGame(handler));
             }
         }));
 

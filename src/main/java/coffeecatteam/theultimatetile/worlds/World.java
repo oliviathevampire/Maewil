@@ -12,6 +12,7 @@ import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
+import java.text.DecimalFormat;
 
 public class World {
 
@@ -23,19 +24,17 @@ public class World {
     private int[][] tiles;
 
     // Managers
-    private EntityManager entityManager;
     private ItemManager itemManager;
     private OverlayManager overlayManager;
 
     public World(Handler handler, String path) {
         this.handler = handler;
-        entityManager = new EntityManager(handler, new EntityPlayer(handler, handler.getGame().getUsername()));
         itemManager = new ItemManager(handler);
-        overlayManager = new OverlayManager(handler, entityManager.getPlayer());
+        overlayManager = new OverlayManager(handler, handler.getEntityManager().getPlayer());
 
         loadWorld(path);
-        entityManager.getPlayer().setX(spawnX * Tile.TILE_WIDTH);
-        entityManager.getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
+        handler.getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
+        handler.getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
     }
 
     public void tick() {
@@ -52,7 +51,7 @@ public class World {
         }
 
         itemManager.tick();
-        entityManager.tick();
+        handler.getEntityManager().tick();
         overlayManager.tick();
     }
 
@@ -70,7 +69,7 @@ public class World {
         }
 
         itemManager.render(g);
-        entityManager.render(g);
+        handler.getEntityManager().render(g);
         overlayManager.render(g);
     }
 
@@ -129,6 +128,20 @@ public class World {
         Logger.print("World Loaded!\n");
     }
 
+    private float getLoaded(int in) {
+        DecimalFormat format = new DecimalFormat("#.##");
+        float loadedF = ((in + 1) * 100.0f) / height;
+        String loadedS = format.format(loadedF);
+        float loaded;
+        try {
+            loaded = Float.parseFloat(loadedS);
+        } catch (NumberFormatException e) {
+            loaded = -1f;
+            e.printStackTrace();
+        }
+        return loaded;
+    }
+
     private void loadBG(String[] bgTokens, String worldName) {
         worldName = "World: " + worldName + "\\id_bg.wd";
         Logger.print(worldName);
@@ -138,9 +151,8 @@ public class World {
             for (int x = 0; x < width; x++) {
                 bg_tiles[x][y] = Utils.parseInt(bgTokens[(x + y * width)]);
             }
-            float loaded = ((y + 1) * 100.0f) / height;
             if (y % 2 == 0)
-                Logger.print(loaded + "% Loaded!");
+                Logger.print(getLoaded(y) + "% Loaded!");
         }
     }
 
@@ -153,9 +165,8 @@ public class World {
             for (int x = 0; x < width; x++) {
                 tiles[x][y] = Utils.parseInt(tileTokens[(x + y * width)]);
             }
-            float loaded = ((y + 1) * 100.0f) / height;
             if (y % 2 == 0)
-                Logger.print(loaded + "% Loaded!");
+                Logger.print(getLoaded(y) + "% Loaded!");
         }
     }
 
@@ -170,11 +181,10 @@ public class World {
             float x = Utils.parseFloat(entityTokens[i].split(spliter)[1]);
             float y = Utils.parseFloat(entityTokens[i].split(spliter)[2]);
 
-            entityManager.addEntity(EntityLoader.loadEntity(handler, entityId), x, y, true);
+            handler.getEntityManager().addEntity(EntityLoader.loadEntity(handler, entityId), x, y, true);
 
-            float loaded = ((i + 1) * 100.0f) / height;
-            if (i % 2 == 0)
-                Logger.print(loaded + "% Loaded!");
+            if (y % 2 == 0)
+                Logger.print(getLoaded(i) + "% Loaded!");
         }
     }
 
@@ -196,10 +206,6 @@ public class World {
 
     public int getSpawnY() {
         return spawnY;
-    }
-
-    public EntityManager getEntityManager() {
-        return entityManager;
     }
 
     public ItemManager getItemManager() {

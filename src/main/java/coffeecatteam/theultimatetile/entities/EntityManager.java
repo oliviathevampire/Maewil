@@ -2,12 +2,14 @@ package coffeecatteam.theultimatetile.entities;
 
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 public class EntityManager {
 
@@ -84,5 +86,9 @@ public class EntityManager {
 
     public void setEntities(ArrayList<Entity> entities) {
         this.entities = entities;
+    }
+
+    public void reset() {
+        entities.removeIf(entity -> !entity.getId().equals(player.getId()));
     }
 }

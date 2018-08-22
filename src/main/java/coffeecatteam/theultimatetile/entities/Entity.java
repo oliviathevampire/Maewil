@@ -57,7 +57,7 @@ public abstract class Entity {
 
     public void die(Iterator<Entity> it) {
         it.remove();
-        handler.getWorld().getEntityManager().getPlayer().setGlubel(handler.getWorld().getEntityManager().getPlayer().getGlubel() + Utils.getRandomInt(1, 5));
+        handler.getEntityManager().getPlayer().setGlubel(handler.getEntityManager().getPlayer().getGlubel() + Utils.getRandomInt(1, 5));
     }
 
     public void hurt(int damage) {
@@ -69,7 +69,7 @@ public abstract class Entity {
     }
 
     public boolean checkEntityCollisions(float xOffset, float yOffset) {
-        for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
+        for (Entity e : handler.getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
             if (e instanceof EntityPlayer && this instanceof EntityPlayer)

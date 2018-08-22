@@ -67,11 +67,11 @@ public class Server extends Thread {
                 else
                     player = new EntityPlayerMP(handler, packet.getUsername(), address, port, false);
                 connectedPlayers.add(player);
-                //handler.getWorld().getEntityManager().addEntity(player);
-                handler.getWorld().getEntityManager().setPlayer(player);
+                //handler.getEntityManager().addEntity(player);
+                handler.getEntityManager().setPlayer(player);
 
-                handler.getWorld().getEntityManager().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
-                handler.getWorld().getEntityManager().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
+                handler.getEntityManager().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
+                handler.getEntityManager().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
                 break;
             case DISCONNECT:
                 break;

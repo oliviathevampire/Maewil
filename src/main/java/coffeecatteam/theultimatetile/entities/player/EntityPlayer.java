@@ -130,7 +130,7 @@ public class EntityPlayer extends EntityCreature {
 
         attackTimer = 0;
 
-        for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
+        for (Entity e : handler.getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
@@ -299,5 +299,13 @@ public class EntityPlayer extends EntityCreature {
 
     public int getLvl() {
         return lvl;
+    }
+
+    public void reset() {
+        inventory.resetAll();
+        glubel = 0;
+        lvl = 0;
+        equippedItem = null;
+        extraDmg = 0;
     }
 }
