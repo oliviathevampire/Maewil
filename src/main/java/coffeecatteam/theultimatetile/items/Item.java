@@ -32,17 +32,17 @@ public class Item implements Cloneable {
         this.items.put(id, this);
     }
 
-    public void tick() {
+    public void tick(int count) {
         if (this.handler.getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
             if (!this.handler.getEntityManager().getPlayer().getInventory().isFull()) {
                 this.pickedUp = true;
-                this.handler.getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this));
+                this.handler.getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this, count));
             } else {
                 for (ItemStack stack : this.handler.getEntityManager().getPlayer().getInventory().getItems()) {
-                    if (stack.getId() == this.getId()) {
+                    if (stack.getId().equals(this.getId())) {
                         if (stack.getItem().isStackable()) {
                             this.pickedUp = true;
-                            this.handler.getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this));
+                            this.handler.getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this, count));
                         }
                     }
                 }

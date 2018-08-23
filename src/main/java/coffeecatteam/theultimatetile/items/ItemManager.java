@@ -1,6 +1,8 @@
 package coffeecatteam.theultimatetile.items;
 
 import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
@@ -10,7 +12,7 @@ import java.util.Iterator;
 public class ItemManager {
 
     private Handler handler;
-    private ArrayList<Item> items;
+    private ArrayList<ItemStack> items;
 
     public ItemManager(Handler handler) {
         this.handler = handler;
@@ -18,18 +20,20 @@ public class ItemManager {
     }
 
     public void tick() {
-        Iterator<Item> it = items.iterator();
+        Iterator<ItemStack> it = items.iterator();
         while (it.hasNext()) {
-            Item i = it.next();
-            i.tick();
-            if (i.isPickedUp())
+            ItemStack stack = it.next();
+            stack.getItem().tick(stack.getCount());
+            if (stack.getItem().isPickedUp())
                 it.remove();
         }
     }
 
     public void render(Graphics g) {
-        for (Item i : items)
-            i.render(g);
+        for (ItemStack stack : items) {
+            stack.getItem().render(g);
+            Text.drawString(g, String.valueOf(stack.getCount()), (int) (stack.getItem().getX() - this.handler.getCamera().getxOffset()), (int) (stack.getItem().getY() + 15 - this.handler.getCamera().getyOffset()), false, false, Color.white, Assets.FONT_20);
+        }
     }
 
     public void addItem(ItemStack stack, float x, float y) {
@@ -43,7 +47,7 @@ public class ItemManager {
 
     public void addItem(ItemStack stack) {
         stack.setHandler(handler);
-        items.add(stack.getItem());
+        items.add(stack);
     }
 
     public Handler getHandler() {
@@ -54,11 +58,11 @@ public class ItemManager {
         this.handler = handler;
     }
 
-    public ArrayList<Item> getItems() {
+    public ArrayList<ItemStack> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<Item> items) {
+    public void setItems(ArrayList<ItemStack> items) {
         this.items = items;
     }
 }

@@ -197,8 +197,12 @@ public class World {
             String itemId = itemTokens[i].split(spliter)[0];
             float x = Utils.parseFloat(itemTokens[i].split(spliter)[1]);
             float y = Utils.parseFloat(itemTokens[i].split(spliter)[2]);
+            int count = Utils.parseInt(itemTokens[i].split(spliter)[3]);
+            Item item = Item.items.get(itemId);
+            if (!item.isStackable())
+                count = 1;
 
-            handler.getGame().getItemManager().addItem(new ItemStack(Item.items.get(itemId)), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
+            handler.getGame().getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
 
             if (y % 2 == 0)
                 Logger.print(getLoaded(i) + "% Loaded!");
