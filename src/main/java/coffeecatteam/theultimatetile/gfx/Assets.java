@@ -28,7 +28,7 @@ public class Assets {
 
     /* Items */
     public static BufferedImage ITEM_STICK, ITEM_LEAF, ITEM_ROCK;
-    public static BufferedImage ITEM_ROTTEN_FLESH, ITEM_BONE;
+    public static BufferedImage ITEM_ROTTEN_FLESH, ITEM_BONE, ITEM_BOUNCY_BALL;
 
     public static BufferedImage ITEM_WOODEN_SWORD, ITEM_WOODEN_PICK, ITEM_WOODEN_HOE;
     public static BufferedImage ITEM_STONE_SWORD, ITEM_STONE_PICK, ITEM_STONE_HOE;
@@ -55,6 +55,7 @@ public class Assets {
 
     public static BufferedImage[] ZOMBIE_IDLE, ZOMBIE_UP, ZOMBIE_DOWN, ZOMBIE_LEFT, ZOMBIE_RIGHT;
     public static BufferedImage[] SKELETON_IDLE, SKELETON_UP, SKELETON_DOWN, SKELETON_LEFT, SKELETON_RIGHT;
+    public static BufferedImage[] BOUNCER_IDLE, BOUNCER_UP, BOUNCER_DOWN, BOUNCER_LEFT, BOUNCER_RIGHT;
 
     /* Nature */
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
@@ -129,6 +130,7 @@ public class Assets {
 
         ITEM_ROTTEN_FLESH = getSprite(itemsSheet, 1, 0, width, height);
         ITEM_BONE = getSprite(itemsSheet, 1, 1, width, height);
+        ITEM_BOUNCY_BALL = getSprite(itemsSheet, 1, 2, width, height);
 
         ITEM_WOODEN_SWORD = getSprite(itemsSheet, 6, 0, width, height);
         ITEM_WOODEN_PICK = getSprite(itemsSheet, 6, 1, width, height);
@@ -179,6 +181,12 @@ public class Assets {
         SKELETON_DOWN = getFrames(undeadSheet, 5, 3, 5);
         SKELETON_LEFT = getFrames(undeadSheet, 6, 4, 7);
         SKELETON_RIGHT = getFrames(undeadSheet, 6, 0, 3);
+
+        BOUNCER_IDLE = getFrames(undeadSheet, 0, 8, 15);
+        BOUNCER_UP = getFrames(undeadSheet, 1, 8, 15);
+        BOUNCER_DOWN = getFrames(undeadSheet, 2, 8, 15);
+        BOUNCER_LEFT = getFrames(undeadSheet, 4, 8, 15);
+        BOUNCER_RIGHT = getFrames(undeadSheet, 3, 8, 15);
 
         /* Nature */
         TREE_SMALL = getSprite(natureSheet, 0, 0, width, height * 2);

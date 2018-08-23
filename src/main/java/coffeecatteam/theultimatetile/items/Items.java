@@ -10,6 +10,7 @@ public class Items {
 
     public static Item ROTTEN_FLESH = new Item(Assets.ITEM_ROTTEN_FLESH, "rotten_flesh");
     public static Item BONE = new Item(Assets.ITEM_BONE, "bone");
+    public static Item BOUNCY_BALL = new Item(Assets.ITEM_BOUNCY_BALL, "bouncy_ball");
 
     public static Item WOODEN_SWORD = new ItemTool(Assets.ITEM_WOODEN_SWORD, "wooden_sword", 5);
     public static Item WOODEN_PICK = new ItemTool(Assets.ITEM_WOODEN_PICK, "wooden_pick", 7);

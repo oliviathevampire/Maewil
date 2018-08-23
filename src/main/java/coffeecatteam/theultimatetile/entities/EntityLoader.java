@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.entities;
 
 import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.entities.creatures.EntityBouncer;
 import coffeecatteam.theultimatetile.entities.creatures.EntitySkeleton;
 import coffeecatteam.theultimatetile.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.entities.creatures.EntityZombie;
@@ -26,6 +27,8 @@ public class EntityLoader {
                 return new EntityZombie(handler, id);
             case "skeleton":
                 return new EntitySkeleton(handler, id);
+            case "bouncer":
+                return new EntityBouncer(handler, id);
             case "ultimate":
                 return new EntityUltimateTile(handler, id);
             case "bush_small":
