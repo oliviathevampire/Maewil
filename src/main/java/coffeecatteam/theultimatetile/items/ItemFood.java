@@ -9,8 +9,8 @@ public class ItemFood extends Item implements IInteractable {
 
     private int healAmt;
 
-    public ItemFood(BufferedImage texture, String name, int id, int healAmt) {
-        super(texture, name, id);
+    public ItemFood(BufferedImage texture, String id, int healAmt) {
+        super(texture, id);
         this.healAmt = healAmt;
     }
 

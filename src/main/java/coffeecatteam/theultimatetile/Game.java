@@ -6,6 +6,7 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.input.KeyManager;
 import coffeecatteam.theultimatetile.input.MouseManager;
+import coffeecatteam.theultimatetile.items.ItemManager;
 import coffeecatteam.theultimatetile.net.Client;
 import coffeecatteam.theultimatetile.net.Server;
 import coffeecatteam.theultimatetile.state.State;
@@ -39,6 +40,7 @@ public class Game extends Canvas implements Runnable {
     private KeyManager keyManager;
     private MouseManager mouseManager;
     private EntityManager entityManager;
+    private ItemManager itemManager;
 
     private Camera camera;
 
@@ -99,6 +101,7 @@ public class Game extends Canvas implements Runnable {
         State.setState(stateMenu);
 
         entityManager = new EntityManager(handler, new EntityPlayer(handler, username));
+        itemManager = new ItemManager(handler);
     }
 
     private void tick() {
@@ -234,5 +237,9 @@ public class Game extends Canvas implements Runnable {
 
     public EntityManager getEntityManager() {
         return entityManager;
+    }
+
+    public ItemManager getItemManager() {
+        return itemManager;
     }
 }

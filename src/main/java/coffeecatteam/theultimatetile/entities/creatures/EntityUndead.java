@@ -123,6 +123,6 @@ public abstract class EntityUndead extends EntityCreature {
         super.die(it);
         int amt = new Random().nextInt(3) + 1;
         for (int i = 0; i < amt; i++)
-            handler.getWorld().getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+            handler.getGame().getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
     }
 }

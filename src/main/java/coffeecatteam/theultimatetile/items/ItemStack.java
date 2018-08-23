@@ -49,7 +49,7 @@ public class ItemStack {
         this.item.setTexture(texture);
     }
 
-    public int getId() {
+    public String getId() {
         return this.item.getId();
     }
 

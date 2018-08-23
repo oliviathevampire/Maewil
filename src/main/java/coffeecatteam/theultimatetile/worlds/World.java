@@ -5,7 +5,9 @@ import coffeecatteam.theultimatetile.entities.EntityLoader;
 import coffeecatteam.theultimatetile.entities.EntityManager;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.overlays.OverlayManager;
+import coffeecatteam.theultimatetile.items.Item;
 import coffeecatteam.theultimatetile.items.ItemManager;
+import coffeecatteam.theultimatetile.items.ItemStack;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Logger;
@@ -23,13 +25,10 @@ public class World {
     private int[][] bg_tiles;
     private int[][] tiles;
 
-    // Managers
-    private ItemManager itemManager;
     private OverlayManager overlayManager;
 
     public World(Handler handler, String path) {
         this.handler = handler;
-        itemManager = new ItemManager(handler);
         overlayManager = new OverlayManager(handler, handler.getEntityManager().getPlayer());
 
         loadWorld(path);
@@ -50,7 +49,7 @@ public class World {
             }
         }
 
-        itemManager.tick();
+        handler.getGame().getItemManager().tick();
         handler.getEntityManager().tick();
         overlayManager.tick();
     }
@@ -68,7 +67,7 @@ public class World {
             }
         }
 
-        itemManager.render(g);
+        handler.getGame().getItemManager().render(g);
         handler.getEntityManager().render(g);
         overlayManager.render(g);
     }
@@ -106,12 +105,14 @@ public class World {
         String bg = Utils.loadFileAsString(path + "/id_bg.wd");
         String tile = Utils.loadFileAsString(path + "/id_tile.wd");
         String entity = Utils.loadFileAsString(path + "/id_entity.wd");
+        String item = Utils.loadFileAsString(path + "/id_item.wd");
 
         String spacer = "\\s+";
         String[] propTokens = prop.split(spacer);
         String[] bgTokens = bg.split(spacer);
         String[] tileTokens = tile.split(spacer);
         String[] entityTokens = entity.split(spacer);
+        String[] itemTokens = item.split(spacer);
 
         String worldName = propTokens[0].replace("_", " ");
         Logger.print("Loading World: " + worldName);
@@ -121,10 +122,12 @@ public class World {
         spawnX = Utils.parseInt(propTokens[3]);
         spawnY = Utils.parseInt(propTokens[4]);
 
-        loadBG(bgTokens, worldName);
-        loadTiles(tileTokens, worldName);
+        loadBG(bgTokens);
+        loadTiles(tileTokens);
         if (!entity.equals(""))
-            loadEntities(entityTokens, worldName);
+            loadEntities(entityTokens);
+        if (!item.equals(""))
+            loadItems(itemTokens);
         Logger.print("World Loaded!\n");
     }
 
@@ -142,9 +145,8 @@ public class World {
         return loaded;
     }
 
-    private void loadBG(String[] bgTokens, String worldName) {
-        worldName = "World: " + worldName + "\\id_bg.wd";
-        Logger.print(worldName);
+    private void loadBG(String[] bgTokens) {
+        Logger.print("Loading Background Tiles");
 
         bg_tiles = new int[width][height];
         for (int y = 0; y < height; y++) {
@@ -156,9 +158,8 @@ public class World {
         }
     }
 
-    private void loadTiles(String[] tileTokens, String worldName) {
-        worldName = "World: " + worldName + "\\id_tile.wd";
-        Logger.print(worldName);
+    private void loadTiles(String[] tileTokens) {
+        Logger.print("Loading Tiles");
 
         tiles = new int[width][height];
         for (int y = 0; y < height; y++) {
@@ -170,9 +171,8 @@ public class World {
         }
     }
 
-    private void loadEntities(String[] entityTokens, String worldName) {
-        worldName = "World: " + worldName + "\\id_entity.wd";
-        Logger.print(worldName);
+    private void loadEntities(String[] entityTokens) {
+        Logger.print("Loading Entities");
         int height = entityTokens.length;
         String spliter = ",";
 
@@ -182,6 +182,23 @@ public class World {
             float y = Utils.parseFloat(entityTokens[i].split(spliter)[2]);
 
             handler.getEntityManager().addEntity(EntityLoader.loadEntity(handler, entityId), x, y, true);
+
+            if (y % 2 == 0)
+                Logger.print(getLoaded(i) + "% Loaded!");
+        }
+    }
+
+    private void loadItems(String[] itemTokens) {
+        Logger.print("Loading Items");
+        int height = itemTokens.length;
+        String spliter = ",";
+
+        for (int i = 0; i < height; i++) {
+            String itemId = itemTokens[i].split(spliter)[0];
+            float x = Utils.parseFloat(itemTokens[i].split(spliter)[1]);
+            float y = Utils.parseFloat(itemTokens[i].split(spliter)[2]);
+
+            handler.getGame().getItemManager().addItem(new ItemStack(Item.items.get(itemId)), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
 
             if (y % 2 == 0)
                 Logger.print(getLoaded(i) + "% Loaded!");
@@ -206,9 +223,5 @@ public class World {
 
     public int getSpawnY() {
         return spawnY;
-    }
-
-    public ItemManager getItemManager() {
-        return itemManager;
     }
 }

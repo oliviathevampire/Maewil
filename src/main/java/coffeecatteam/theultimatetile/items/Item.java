@@ -4,17 +4,18 @@ import coffeecatteam.theultimatetile.Handler;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Item implements Cloneable {
 
-    public static Item[] items = new Item[256];
+    public static Map<String, Item> items = new HashMap<>();
 
     public static final int WIDTH = 32, HEIGHT = 32;
 
     protected Handler handler;
     protected BufferedImage texture;
-    protected String name;
-    protected final int id;
+    protected final String id;
 
     protected Rectangle bounds;
 
@@ -22,14 +23,13 @@ public class Item implements Cloneable {
     protected boolean pickedUp = false;
     protected boolean isStackable = true;
 
-    public Item(BufferedImage texture, String name, int id) {
+    public Item(BufferedImage texture, String id) {
         this.texture = texture;
-        this.name = name;
         this.id = id;
 
         this.bounds = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
 
-        this.items[id] = this;
+        this.items.put(id, this);
     }
 
     public void tick() {
@@ -85,15 +85,7 @@ public class Item implements Cloneable {
         this.texture = texture;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
+    public String getId() {
         return this.id;
     }
 

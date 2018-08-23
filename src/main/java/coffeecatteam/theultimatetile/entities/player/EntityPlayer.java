@@ -238,14 +238,15 @@ public class EntityPlayer extends EntityCreature {
         Font font = Assets.FONT_20;
         int nameWidth = Text.getWidth(g, username, font);
         int nameHeight = Text.getHeight(g, font);
+        int add = 6;
         Color tint = new Color(96, 96, 96, 127);
         g.setColor(tint);
 
         int xOff = nameWidth / 2 - width / 2;
         int yOff = height / 2;
 
-        g.fillRect(x - xOff, y - yOff, nameWidth, nameHeight);
-        Text.drawString(g, username, x - xOff, y - yOff + nameHeight - 5, false, false, Color.white, font);
+        g.fillRect(x - xOff - add / 2, y - yOff - add / 2, nameWidth + add, nameHeight + add);
+        Text.drawString(g, username, x - xOff, y - yOff + nameHeight - add / 2, false, false, Color.white, font);
     }
 
     public void postRender(Graphics g) {
