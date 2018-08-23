@@ -160,7 +160,7 @@ public class Inventory {
                     yPos += 55;
                 }
                 g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
-                Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, Color.white, Assets.FONT_20);
+                Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, false, false, Color.white, Assets.FONT_20);
             }
         }
 
@@ -205,7 +205,7 @@ public class Inventory {
                 int xPos = x + 14 + 54 * i;
                 int yPos = handler.getHeight() - itemHeight - itemHeight / 2;
                 g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
-                Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, Color.white, Assets.FONT_20);
+                Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, false, false, Color.white, Assets.FONT_20);
             }
         }
     }

@@ -30,10 +30,10 @@ public class OverlayGlub extends Overlay {
         int glub = player.getGlubel();
         int lvl = player.getLvl();
         String text = "Level: " + lvl;
-        Font font = Assets.FONT_20_BOLD;
+        Font font = Assets.FONT_20;
         int x = handler.getWidth() / 2 - width / 2;
 
-        Text.drawString(g, text, handler.getWidth() / 2, height + Text.getHeight(g, font) / 2, true, new Color(4, 79, 163), font);
+        Text.drawString(g, text, handler.getWidth() / 2, height + Text.getHeight(g, font) / 2, true, false, new Color(4, 79, 163), font);
         g.drawImage(Assets.GLUB_METER[0], x, 0, width, height, null);
 
         int glubWidth = (int) Utils.map(glub - 1, 0, player.getMaxGludel(), 0, sWidth);

@@ -15,19 +15,21 @@ public class UIButton extends UIObject {
     private boolean hovering = false;
 
     private String text;
+    private boolean underlined;
     private Font font;
 
     private BufferedImage[] currentTexture;
 
     public UIButton(float x, float y, int width, int height, String text, ClickListener listener) {
-        this(x, y, width, height, text, Assets.FONT_40_BOLD, listener);
+        this(x, y, width, height, text, false, Assets.FONT_40, listener);
     }
 
-    public UIButton(float x, float y, int width, int height, String text, Font font, ClickListener listener) {
+    public UIButton(float x, float y, int width, int height, String text, boolean underlined, Font font, ClickListener listener) {
         super(x, y, width, height);
         this.listener = listener;
 
         this.text = text;
+        this.underlined = underlined;
         this.font = font;
         this.currentTexture = Assets.BUTTON_ENABLED;
     }
@@ -54,7 +56,7 @@ public class UIButton extends UIObject {
         }
         g.drawImage(this.currentTexture[2], (int) this.x + i * pWidth, (int) this.y, pWidth, pHeight, null);
 
-        Text.drawString(g, this.text, (int) this.x + this.width / 2, (int) this.y + this.height / 2, true, Color.gray, font);
+        Text.drawString(g, this.text, (int) this.x + this.width / 2, (int) this.y + this.height / 2, true, underlined, Color.gray, font);
     }
 
     @Override

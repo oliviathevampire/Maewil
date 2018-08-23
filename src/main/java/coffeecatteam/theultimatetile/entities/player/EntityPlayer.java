@@ -245,7 +245,7 @@ public class EntityPlayer extends EntityCreature {
         int yOff = height / 2;
 
         g.fillRect(x - xOff, y - yOff, nameWidth, nameHeight);
-        Text.drawString(g, username, x - xOff, y - yOff + nameHeight - 5, Color.white, font);
+        Text.drawString(g, username, x - xOff, y - yOff + nameHeight - 5, false, false, Color.white, font);
     }
 
     public void postRender(Graphics g) {

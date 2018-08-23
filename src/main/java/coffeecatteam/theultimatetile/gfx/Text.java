@@ -6,31 +6,12 @@ import java.text.AttributedString;
 
 public class Text {
 
-    public static void drawString(Graphics g, String text, int xPos, int yPos, Color c, Font font) {
-        drawString(g, text, xPos, yPos, false, c, font);
-    }
-
-    public static void drawString(Graphics g, String text, int xPos, int yPos, boolean centered, Color c, Font font) {
-        g.setColor(c);
-        g.setFont(font);
-        int x = xPos;
-        int y = yPos;
-        if (centered) {
-            x = xPos - getWidth(g, text, font) / 2;
-            y = (yPos - getHeight(g, font) / 2) + getAscent(g, font);
-        }
-        g.drawString(text, x, y);
-    }
-
-    public static void drawStringUnderlined(Graphics g, String text, int xPos, int yPos, Color c, Font font) {
-        drawStringUnderlined(g, text, xPos, yPos, false, c, font);
-    }
-
-    public static void drawStringUnderlined(Graphics g, String text, int xPos, int yPos, boolean centered, Color c, Font font) {
+    public static void drawString(Graphics g, String text, int xPos, int yPos, boolean centered, boolean underlined, Color c, Font font) {
         g.setColor(c);
         AttributedString as = new AttributedString(text);
         as.addAttribute(TextAttribute.FONT, font);
-        as.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        if (underlined)
+            as.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         int x = xPos;
         int y = yPos;
         if (centered) {

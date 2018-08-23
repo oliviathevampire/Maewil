@@ -115,7 +115,7 @@ public abstract class EntityUndead extends EntityCreature {
         Font font = Assets.FONT_20;
         String textHealth = "HP: " + currentHealth;
         int xOff = Text.getWidth(g, textHealth, font) / 2 - width / 2;
-        Text.drawString(g, textHealth, x - xOff, y - Text.getHeight(g, font) / 2, new Color(0, 255, 0), font);
+        Text.drawString(g, textHealth, x - xOff, y - Text.getHeight(g, font) / 2, false, false, new Color(0, 255, 0), font);
     }
 
     @Override

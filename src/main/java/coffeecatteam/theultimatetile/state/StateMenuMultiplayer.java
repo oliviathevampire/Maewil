@@ -78,7 +78,7 @@ public class StateMenuMultiplayer extends State {
         uiManager.render(g);
 
         Font font = Assets.FONT_30;
-        Text.drawString(g, "Username: " + username, x, nameBtnY + nameBtnHeight + Text.getHeight(g, font), Color.white, font);
-        Text.drawString(g, "IP: " + ip, x, ipBtnY + ipBtnHeight + Text.getHeight(g, font), Color.white, font);
+        Text.drawString(g, "Username: " + username, x, nameBtnY + nameBtnHeight + Text.getHeight(g, font), false, false, Color.white, font);
+        Text.drawString(g, "IP: " + ip, x, ipBtnY + ipBtnHeight + Text.getHeight(g, font), false, false, Color.white, font);
     }
 }

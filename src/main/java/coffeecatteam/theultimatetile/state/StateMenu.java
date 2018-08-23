@@ -4,11 +4,13 @@ import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
+import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
 import coffeecatteam.theultimatetile.gfx.ui.UIManager;
 import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 import java.awt.font.TextAttribute;
+import java.net.URI;
 import java.text.AttributedString;
 
 public class StateMenu extends State {
@@ -40,6 +42,22 @@ public class StateMenu extends State {
             Logger.print("Exiting...");
             System.exit(0);
         }));
+
+        Font font = Assets.FONT_20;
+        String crText = "Copyright (C) CoffeeCatTeam 2018";
+        int crWidth = Text.getWidth(handler.getGame().getGraphics(), crText, font);
+        int crHeight = Text.getHeight(handler.getGame().getGraphics(), font);
+        int crx = 5;
+        int cry = handler.getHeight() - 10;
+        uiManager.addObject(new UIHyperlink(crx, cry, crWidth, crHeight, crText, true, font, () -> {
+            try {
+                Desktop desktop = Desktop.getDesktop();
+                URI oURL = new URI("https://github.com/CoffeeCatRailway/TheUltimateTile/blob/master/LICENSE.md");
+                desktop.browse(oURL);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }));
     }
 
     @Override
@@ -61,10 +79,9 @@ public class StateMenu extends State {
         int h = 48 * 6;
         g.drawImage(Assets.TITLE, w / 6, 20, w, h, null);
 
-        Font font = Assets.FONT_20;
-        int x = 5;
-        int y = handler.getHeight() - 10;
-        Text.drawStringUnderlined(g, "Copyright (C) CoffeeCatTeam 2018", x, y, Color.white, font); //  - Text.getHeight(g, font)
-        //Text.drawString(g, "Protected by the DBAD Public License", x, y, Color.white, font);
+//        Font font = Assets.FONT_20;
+//        int x = 5;
+//        int y = handler.getHeight() - 10;
+//        Text.drawString(g, "Copyright (C) CoffeeCatTeam 2018", x, y, false, true, Color.white, font);
     }
 }

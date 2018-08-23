@@ -33,7 +33,7 @@ public class OverlayPlayerSprint extends Overlay {
         int x = handler.getWidth() - width;
         int y = handler.getHeight() - height;
 
-        Text.drawString(g, text, handler.getWidth() - Text.getWidth(g, text, font) - 10, handler.getHeight() - height, Color.white, font);
+        Text.drawString(g, text, handler.getWidth() - Text.getWidth(g, text, font) - 10, handler.getHeight() - height, false, false, Color.white, font);
         g.drawImage(Assets.SPRINT[0], x, y, width, height, null);
 
         int sprintWidth = (int) Utils.map(sprint - 1, 0, player.getMaxSprintTimer(), 0, sWidth);
