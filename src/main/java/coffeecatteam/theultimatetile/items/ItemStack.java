@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 
 public class ItemStack {
 
+    public static final int MAX_STACK_COUNT = 128;
+
     private Item item;
     private int count;
 
@@ -20,7 +22,7 @@ public class ItemStack {
             e.printStackTrace();
             this.item = Items.STICK;
         }
-        this.count = count;
+        setCount(count);
     }
 
     public ItemStack setPosition(int x, int y) {
@@ -59,6 +61,8 @@ public class ItemStack {
 
     public void setCount(int count) {
         this.count = count;
+        if (this.count > MAX_STACK_COUNT)
+            this.count = MAX_STACK_COUNT;
     }
 
     public void setHandler(Handler handler) {
