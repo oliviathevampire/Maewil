@@ -210,22 +210,34 @@ public class Inventory {
         }
     }
 
-    public void addItem(ItemStack stack) {
-        for (ItemStack s : inventory) {
-            if (s.getId() == stack.getId()) {
-                if (s.getItem().isStackable()) {
-                    int size = s.getCount() + stack.getCount();
-                    s.setCount(size);
-                    return;
+    public void addItem(ItemStack stackIn) {
+        if (!isFull()) {
+            for (ItemStack stack : inventory) {
+                if (stack.getId().equals(stackIn.getId())) {
+                    if (stack.getItem().isStackable()) {
+                        if (stack.getCount() != ItemStack.MAX_STACK_COUNT) {
+                            int size = stack.getCount() + stackIn.getCount();
+                            if (size > ItemStack.MAX_STACK_COUNT) {
+                                int extra = size - ItemStack.MAX_STACK_COUNT;
+                                ItemStack extraStack = new ItemStack(stack.getItem(), extra);
+                                if (!isFull()) {
+                                    inventory.add(extraStack);
+                                    stack.setCount(size);
+                                }
+                            } else
+                                stack.setCount(size);
+                            return;
+                        }
+                    }
                 }
             }
+            inventory.add(stackIn);
         }
-        inventory.add(stack);
     }
 
     public void addStackToHotbar(ItemStack stack) {
         for (ItemStack s : hotbar) {
-            if (s.getId() == stack.getId()) {
+            if (s.getId().equals(stack.getId())) {
                 if (s.getItem().isStackable()) {
                     int size = s.getCount() + stack.getCount();
                     s.setCount(size);
