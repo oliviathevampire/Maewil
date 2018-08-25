@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile;
 
+import coffeecatteam.theultimatetile.entities.EntityManager;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.input.KeyManager;
 import coffeecatteam.theultimatetile.input.MouseManager;
@@ -25,6 +26,8 @@ public class Handler {
     public MouseManager getMouseManager() {
         return game.getMouseManager();
     }
+
+    public EntityManager getEntityManager() { return game.getEntityManager(); }
 
     public int getWidth() {
         return game.getWidth();

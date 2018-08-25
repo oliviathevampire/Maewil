@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.Handler;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.items.IInteractable;
@@ -160,7 +160,7 @@ public class Inventory {
                     yPos += 55;
                 }
                 g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
-                Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, Color.white, Assets.FONT_20);
+                Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, false, false, Color.white, Assets.FONT_20);
             }
         }
 
@@ -199,33 +199,45 @@ public class Inventory {
 
         int itemWidth = 32;
         int itemHeight = 32;
-        if (handler.getWorld().getEntityManager().getPlayer().getInventory().getHotbar().size() > 0) {
-            for (int i = 0; i < handler.getWorld().getEntityManager().getPlayer().getInventory().getHotbar().size(); i++) {
-                ItemStack stack = handler.getWorld().getEntityManager().getPlayer().getInventory().getHotbar().get(i);
+        if (handler.getEntityManager().getPlayer().getInventory().getHotbar().size() > 0) {
+            for (int i = 0; i < handler.getEntityManager().getPlayer().getInventory().getHotbar().size(); i++) {
+                ItemStack stack = handler.getEntityManager().getPlayer().getInventory().getHotbar().get(i);
                 int xPos = x + 14 + 54 * i;
                 int yPos = handler.getHeight() - itemHeight - itemHeight / 2;
                 g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
-                Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, Color.white, Assets.FONT_20);
+                Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, false, false, Color.white, Assets.FONT_20);
             }
         }
     }
 
-    public void addItem(ItemStack stack) {
-        for (ItemStack s : inventory) {
-            if (s.getId() == stack.getId()) {
-                if (s.getItem().isStackable()) {
-                    int size = s.getCount() + stack.getCount();
-                    s.setCount(size);
-                    return;
+    public void addItem(ItemStack stackIn) {
+        if (!isFull()) {
+            for (ItemStack stack : inventory) {
+                if (stack.getId().equals(stackIn.getId())) {
+                    if (stack.getItem().isStackable()) {
+                        if (stack.getCount() != ItemStack.MAX_STACK_COUNT) {
+                            int size = stack.getCount() + stackIn.getCount();
+                            if (size > ItemStack.MAX_STACK_COUNT) {
+                                int extra = size - ItemStack.MAX_STACK_COUNT;
+                                ItemStack extraStack = new ItemStack(stack.getItem(), extra);
+                                if (!isFull()) {
+                                    inventory.add(extraStack);
+                                    stack.setCount(size);
+                                }
+                            } else
+                                stack.setCount(size);
+                            return;
+                        }
+                    }
                 }
             }
+            inventory.add(stackIn);
         }
-        inventory.add(stack);
     }
 
     public void addStackToHotbar(ItemStack stack) {
         for (ItemStack s : hotbar) {
-            if (s.getId() == stack.getId()) {
+            if (s.getId().equals(stack.getId())) {
                 if (s.getItem().isStackable()) {
                     int size = s.getCount() + stack.getCount();
                     s.setCount(size);

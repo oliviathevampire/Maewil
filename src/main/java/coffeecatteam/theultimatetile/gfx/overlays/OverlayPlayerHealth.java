@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.gfx.overlays;
 
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.Entity;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 
@@ -24,18 +24,18 @@ public class OverlayPlayerHealth extends Overlay {
         int hHeight = 96;
         int hStage = 0;
 
-        if (player.getHealth() < Entity.DEFAULT_HEALTH && player.getHealth() > Entity.DEFAULT_HEALTH / 2 + Entity.DEFAULT_HEALTH / 4)
+        if (player.getCurrentHealth() < Entity.DEFAULT_HEALTH && player.getCurrentHealth() > Entity.DEFAULT_HEALTH / 2 + Entity.DEFAULT_HEALTH / 4)
             hStage = 0;
-        if (player.getHealth() < Entity.DEFAULT_HEALTH / 2 + Entity.DEFAULT_HEALTH / 4 && player.getHealth() > Entity.DEFAULT_HEALTH / 2)
+        if (player.getCurrentHealth() < Entity.DEFAULT_HEALTH / 2 + Entity.DEFAULT_HEALTH / 4 && player.getCurrentHealth() > Entity.DEFAULT_HEALTH / 2)
             hStage = 1;
-        if (player.getHealth() < Entity.DEFAULT_HEALTH / 2 && player.getHealth() > Entity.DEFAULT_HEALTH / 4)
+        if (player.getCurrentHealth() < Entity.DEFAULT_HEALTH / 2 && player.getCurrentHealth() > Entity.DEFAULT_HEALTH / 4)
             hStage = 2;
-        if (player.getHealth() < Entity.DEFAULT_HEALTH / 4 && player.getHealth() > 0)
+        if (player.getCurrentHealth() < Entity.DEFAULT_HEALTH / 4 && player.getCurrentHealth() > 0)
             hStage = 3;
-        if (player.getHealth() == 0)
+        if (player.getCurrentHealth() == 0)
             hStage = 4;
 
-        Text.drawString(g, "HP: " + player.getHealth(), 10, handler.getHeight() - hHeight, Color.red, Assets.FONT_20);
+        Text.drawString(g, "HP: " + player.getCurrentHealth(), 10, handler.getHeight() - hHeight, false, false, Color.red, Assets.FONT_20);
 
         g.drawImage(Assets.HEARTS[hStage], 0, handler.getHeight() - hHeight, hWidth, hHeight, null);
     }

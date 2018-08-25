@@ -1,23 +1,24 @@
 package coffeecatteam.theultimatetile.gfx;
 
 import java.awt.*;
+import java.awt.font.TextAttribute;
+import java.text.AttributedString;
 
 public class Text {
 
-    public static void drawString(Graphics g, String text, int xPos, int yPos, Color c, Font font) {
-        drawString(g, text, xPos, yPos, false, c, font);
-    }
-
-    public static void drawString(Graphics g, String text, int xPos, int yPos, boolean centered, Color c, Font font) {
+    public static void drawString(Graphics g, String text, int xPos, int yPos, boolean centered, boolean underlined, Color c, Font font) {
         g.setColor(c);
-        g.setFont(font);
+        AttributedString as = new AttributedString(text);
+        as.addAttribute(TextAttribute.FONT, font);
+        if (underlined)
+            as.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         int x = xPos;
         int y = yPos;
         if (centered) {
             x = xPos - getWidth(g, text, font) / 2;
             y = (yPos - getHeight(g, font) / 2) + getAscent(g, font);
         }
-        g.drawString(text, x, y);
+        g.drawString(as.getIterator(), x, y);
     }
 
     public static int getWidth(Graphics g, String text, Font font) {

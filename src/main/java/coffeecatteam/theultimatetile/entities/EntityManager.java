@@ -1,13 +1,15 @@
 package coffeecatteam.theultimatetile.entities;
 
 import coffeecatteam.theultimatetile.Handler;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 public class EntityManager {
 
@@ -51,9 +53,13 @@ public class EntityManager {
         entities.add(e);
     }
 
-    public void addEntity(Entity e, float x, float y) {
+    public void addEntity(Entity e, float x, float y, boolean atTile) {
         e.setX(x * Tile.TILE_WIDTH);
         e.setY(y * Tile.TILE_HEIGHT);
+        if (!atTile) {
+            e.setX(e.getX() / Tile.TILE_WIDTH);
+            e.setY(e.getY() / Tile.TILE_HEIGHT);
+        }
         entities.add(e);
     }
 
@@ -71,6 +77,7 @@ public class EntityManager {
 
     public void setPlayer(EntityPlayer player) {
         this.player = player;
+        entities.set(0, player);
     }
 
     public ArrayList<Entity> getEntities() {
@@ -79,5 +86,9 @@ public class EntityManager {
 
     public void setEntities(ArrayList<Entity> entities) {
         this.entities = entities;
+    }
+
+    public void reset() {
+        entities.removeIf(entity -> !entity.getId().equals(player.getId()));
     }
 }

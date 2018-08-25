@@ -1,21 +1,21 @@
 package coffeecatteam.theultimatetile.items;
 
 import coffeecatteam.theultimatetile.Handler;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Item implements Cloneable {
 
-    public static Item[] items = new Item[256];
+    public static Map<String, Item> items = new HashMap<>();
 
     public static final int WIDTH = 32, HEIGHT = 32;
 
     protected Handler handler;
     protected BufferedImage texture;
-    protected String name;
-    protected final int id;
+    protected final String id;
 
     protected Rectangle bounds;
 
@@ -23,32 +23,31 @@ public class Item implements Cloneable {
     protected boolean pickedUp = false;
     protected boolean isStackable = true;
 
-    public Item(BufferedImage texture, String name, int id) {
+    public Item(BufferedImage texture, String id) {
         this.texture = texture;
-        this.name = name;
         this.id = id;
 
         this.bounds = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
 
-        this.items[id] = this;
+        items.put(id, this);
     }
 
-    public void tick() {
-        if (this.handler.getWorld().getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
-            if (!this.handler.getWorld().getEntityManager().getPlayer().getInventory().isFull()) {
+    public void tick(int count) {
+        if (this.handler.getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
+            if (!this.handler.getEntityManager().getPlayer().getInventory().isFull()) {
                 this.pickedUp = true;
-                this.handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this));
             } else {
-                for (ItemStack stack : this.handler.getWorld().getEntityManager().getPlayer().getInventory().getItems()) {
-                    if (stack.getId() == this.getId()) {
+                for (ItemStack stack : this.handler.getEntityManager().getPlayer().getInventory().getItems()) {
+                    if (stack.getId().equals(this.id)) {
                         if (stack.getItem().isStackable()) {
                             this.pickedUp = true;
-                            this.handler.getWorld().getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this));
                         }
                     }
                 }
             }
         }
+        if (this.pickedUp)
+            this.handler.getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this, count));
 
         this.bounds = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
     }
@@ -86,15 +85,7 @@ public class Item implements Cloneable {
         this.texture = texture;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
+    public String getId() {
         return this.id;
     }
 

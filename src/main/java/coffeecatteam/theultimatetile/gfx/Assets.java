@@ -11,8 +11,7 @@ public class Assets {
     private static final int width = 16, height = 16;
 
     /* Fonts */
-    public static Font FONT_20, FONT_20_BOLD, FONT_20_EXPANDED;
-    public static Font FONT_40, FONT_40_BOLD, FONT_40_EXPANDED;
+    public static Font FONT_20, FONT_30, FONT_40;
 
     /* Tiles */
     public static BufferedImage GRASS, DIRT, SAND;
@@ -28,15 +27,25 @@ public class Assets {
     public static BufferedImage[] ULTIMATE_TILE;
 
     /* Items */
-    public static BufferedImage ITEM_STICK, ITEM_ROCK, ITEM_ROTTEN_FLESH, ITEM_LEAF;
-    public static BufferedImage ITEM_WOODEN_SWORD, ITEM_STONE_SWORD, ITEM_WOODEN_PICK, ITEM_STONE_PICK;
+    public static BufferedImage ITEM_STICK, ITEM_LEAF, ITEM_ROCK;
+    public static BufferedImage ITEM_ROTTEN_FLESH, ITEM_BONE, ITEM_BOUNCY_BALL;
+
+    public static BufferedImage ITEM_WOODEN_SWORD, ITEM_WOODEN_PICK, ITEM_WOODEN_HOE;
+    public static BufferedImage ITEM_STONE_SWORD, ITEM_STONE_PICK, ITEM_STONE_HOE;
+
     public static BufferedImage ITEM_COAL, ITEM_IRON_INGOT, ITEM_GOLD_INGOT, ITEM_DIAMOND;
+
     public static BufferedImage ITEM_CARROT, ITEM_APPLE;
 
-    /* Health */
+    public static BufferedImage ITEM_COIN_IRON, ITEM_COIN_GOLD;
+
+    /* Player */
     public static BufferedImage[] HEARTS;
     public static BufferedImage[] ARMOR;
     public static BufferedImage[] SPRINT;
+
+    public static BufferedImage[] GLUB_ORB;
+    public static BufferedImage[] GLUB_METER;
 
     /* Player Frames */
     public static BufferedImage[] PLAYER_IDLE, PLAYER_UP, PLAYER_DOWN, PLAYER_LEFT, PLAYER_RIGHT, PLAYER_DEAD;
@@ -45,6 +54,9 @@ public class Assets {
     public static BufferedImage[] EXTRA_LIFE;
 
     public static BufferedImage[] ZOMBIE_IDLE, ZOMBIE_UP, ZOMBIE_DOWN, ZOMBIE_LEFT, ZOMBIE_RIGHT;
+    public static BufferedImage[] SKELETON_IDLE, SKELETON_UP, SKELETON_DOWN, SKELETON_LEFT, SKELETON_RIGHT;
+    public static BufferedImage[] BOUNCER_IDLE, BOUNCER_UP, BOUNCER_DOWN, BOUNCER_LEFT, BOUNCER_RIGHT;
+    public static BufferedImage[] THING_IDLE, THING_UP, THING_DOWN, THING_LEFT, THING_RIGHT;
 
     /* Nature */
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
@@ -64,13 +76,9 @@ public class Assets {
 
     public static void init() {
         /* Fonts */
-        FONT_20 = Utils.loadFont("/assets/fonts/slkscr.ttf", 20);
-        FONT_20_BOLD = Utils.loadFont("/assets/fonts/slkscrb.ttf", 20);
-        FONT_20_EXPANDED = Utils.loadFont("/assets/fonts/slkscre.ttf", 20);
-
-        FONT_40 = Utils.loadFont("/assets/fonts/slkscr.ttf", 40);
-        FONT_40_BOLD = Utils.loadFont("/assets/fonts/slkscrb.ttf", 40);
-        FONT_40_EXPANDED = Utils.loadFont("/assets/fonts/slkscre.ttf", 40);
+        FONT_20 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 20);
+        FONT_30 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 30);
+        FONT_40 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 40);
 
         /* Sprite Sheets */
         SpriteSheet terrainSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/terrain.png"));
@@ -78,10 +86,11 @@ public class Assets {
         SpriteSheet effectSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/effect.png"));
 
         SpriteSheet healthSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health.png"));
+        SpriteSheet glubSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/glub.png"));
         SpriteSheet itemsSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/items.png"));
 
-        SpriteSheet characrerSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/player.png"));
-        SpriteSheet zombieSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/zombie.png"));
+        SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/player.png"));
+        SpriteSheet undeadSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/undead.png"));
 
         SpriteSheet menuSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/menu.png"));
 
@@ -117,44 +126,74 @@ public class Assets {
 
         /* Items */
         ITEM_STICK = getSprite(itemsSheet, 0, 0, width, height);
-        ITEM_ROCK = getSprite(itemsSheet, 1, 0, width, height);
-        ITEM_ROTTEN_FLESH = getSprite(itemsSheet, 2, 0, width, height);
-        ITEM_LEAF = getSprite(itemsSheet, 3, 0, width, height);
+        ITEM_LEAF = getSprite(itemsSheet, 0, 1, width, height);
+        ITEM_ROCK = getSprite(itemsSheet, 0, 2, width, height);
 
-        ITEM_WOODEN_SWORD = getSprite(itemsSheet, 0, 1, width, height);
-        ITEM_STONE_SWORD = getSprite(itemsSheet, 1, 1, width, height);
-        ITEM_WOODEN_PICK = getSprite(itemsSheet, 2, 1, width, height);
-        ITEM_STONE_PICK = getSprite(itemsSheet, 3, 1, width, height);
+        ITEM_ROTTEN_FLESH = getSprite(itemsSheet, 1, 0, width, height);
+        ITEM_BONE = getSprite(itemsSheet, 1, 1, width, height);
+        ITEM_BOUNCY_BALL = getSprite(itemsSheet, 1, 2, width, height);
 
-        ITEM_COAL = getSprite(itemsSheet, 0, 2, width, height);
-        ITEM_IRON_INGOT = getSprite(itemsSheet, 1, 2, width, height);
+        ITEM_WOODEN_SWORD = getSprite(itemsSheet, 6, 0, width, height);
+        ITEM_WOODEN_PICK = getSprite(itemsSheet, 6, 1, width, height);
+        ITEM_WOODEN_HOE = getSprite(itemsSheet, 6, 2, width, height);
+
+        ITEM_STONE_SWORD = getSprite(itemsSheet, 7, 0, width, height);
+        ITEM_STONE_PICK = getSprite(itemsSheet, 7, 1, width, height);
+        ITEM_STONE_HOE = getSprite(itemsSheet, 7, 2, width, height);
+
+        ITEM_COAL = getSprite(itemsSheet, 2, 0, width, height);
+        ITEM_IRON_INGOT = getSprite(itemsSheet, 2, 1, width, height);
         ITEM_GOLD_INGOT = getSprite(itemsSheet, 2, 2, width, height);
-        ITEM_DIAMOND = getSprite(itemsSheet, 3, 2, width, height);
+        ITEM_DIAMOND = getSprite(itemsSheet, 2, 3, width, height);
 
-        ITEM_CARROT = getSprite(itemsSheet, 0, 3, width, height);
-        ITEM_APPLE = getSprite(itemsSheet, 1, 3, width, height);
+        ITEM_CARROT = getSprite(itemsSheet, 3, 0, width, height);
+        ITEM_APPLE = getSprite(itemsSheet, 3, 1, width, height);
 
-        /* Health */
+        ITEM_COIN_IRON = getSprite(itemsSheet, 4, 0, width, height);
+        ITEM_COIN_GOLD = getSprite(itemsSheet, 4, 1, width, height);
+
+        /* Player */
         HEARTS = getFrames(healthSheet, 0, 0, 4);
         ARMOR = getFrames(healthSheet, 1, 0, 3);
         SPRINT = getFrames(healthSheet, 3, 0, 1, width * 2, height);
 
+        GLUB_ORB = getFrames(glubSheet, 0, 0, 5, width, height);
+        GLUB_METER = getFrames(glubSheet, 1, 0, 1, width * 4, height);
+
         /* Player Frames */
-        PLAYER_IDLE = getFrames(characrerSheet, 0, 0, 7);
-        PLAYER_UP = getFrames(characrerSheet, 1, 0, 3);
-        PLAYER_DOWN = getFrames(characrerSheet, 1, 4, 7);
-        PLAYER_LEFT = getFrames(characrerSheet, 3, 0, 3);
-        PLAYER_RIGHT = getFrames(characrerSheet, 2, 0, 7);
-        PLAYER_DEAD = getFrames(characrerSheet, 4, 0, 7);
+        PLAYER_IDLE = getFrames(playerSheet, 0, 0, 7);
+        PLAYER_UP = getFrames(playerSheet, 1, 0, 3);
+        PLAYER_DOWN = getFrames(playerSheet, 1, 4, 7);
+        PLAYER_LEFT = getFrames(playerSheet, 3, 0, 3);
+        PLAYER_RIGHT = getFrames(playerSheet, 2, 0, 7);
+        PLAYER_DEAD = getFrames(playerSheet, 4, 0, 7);
 
         /* Entities */
         EXTRA_LIFE = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/extra_life.png")), 0, 7);
 
-        ZOMBIE_IDLE = getFrames(zombieSheet, 0, 0, 3);
-        ZOMBIE_UP = getFrames(zombieSheet, 1, 0, 2);
-        ZOMBIE_DOWN = getFrames(zombieSheet, 1, 3, 5);
-        ZOMBIE_LEFT = getFrames(zombieSheet, 2, 4, 7);
-        ZOMBIE_RIGHT = getFrames(zombieSheet, 2, 0, 3);
+        ZOMBIE_IDLE = getFrames(undeadSheet, 0, 0, 3);
+        ZOMBIE_UP = getFrames(undeadSheet, 1, 0, 2);
+        ZOMBIE_DOWN = getFrames(undeadSheet, 1, 3, 5);
+        ZOMBIE_LEFT = getFrames(undeadSheet, 2, 4, 7);
+        ZOMBIE_RIGHT = getFrames(undeadSheet, 2, 0, 3);
+
+        SKELETON_IDLE = getFrames(undeadSheet, 4, 0, 3);
+        SKELETON_UP = getFrames(undeadSheet, 5, 0, 2);
+        SKELETON_DOWN = getFrames(undeadSheet, 5, 3, 5);
+        SKELETON_LEFT = getFrames(undeadSheet, 6, 4, 7);
+        SKELETON_RIGHT = getFrames(undeadSheet, 6, 0, 3);
+
+        BOUNCER_IDLE = getFrames(undeadSheet, 0, 8, 15);
+        BOUNCER_UP = getFrames(undeadSheet, 1, 8, 15);
+        BOUNCER_DOWN = getFrames(undeadSheet, 2, 8, 15);
+        BOUNCER_LEFT = getFrames(undeadSheet, 4, 8, 15);
+        BOUNCER_RIGHT = getFrames(undeadSheet, 3, 8, 15);
+
+        THING_IDLE = getFrames(undeadSheet, 8, 0, 9);
+        THING_UP = getFrames(undeadSheet, 9, 0, 9);
+        THING_DOWN = getFrames(undeadSheet, 10, 0, 9);
+        THING_LEFT = getFrames(undeadSheet, 11, 0, 9);
+        THING_RIGHT = getFrames(undeadSheet, 12, 0, 9);
 
         /* Nature */
         TREE_SMALL = getSprite(natureSheet, 0, 0, width, height * 2);

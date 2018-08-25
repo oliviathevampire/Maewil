@@ -1,9 +1,11 @@
-package coffeecatteam.theultimatetile.entities.creatures;
+package coffeecatteam.theultimatetile.entities.player;
 
 import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.inventory.Inventory;
 import coffeecatteam.theultimatetile.items.IInteractable;
 import coffeecatteam.theultimatetile.items.ItemStack;
@@ -25,21 +27,30 @@ public class EntityPlayer extends EntityCreature {
     private Animation splashEffect;
 
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
+    private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
 
     private Inventory inventory;
     private ItemStack equippedItem;
     private int extraDmg = 0;
+    private int glubel = 0, maxGludel = 100, lvl = 1;
+    private String username;
+    public boolean isLocal = true;
 
-    private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
-
-    public EntityPlayer(Handler handler, String id) {
-        super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityPlayer(Handler handler, String username) {
+        super(handler, "player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+        this.username = username;
 
         bounds.x = 13;
         bounds.y = 34;
         bounds.width = 34;
         bounds.height = 28;
 
+        initAnims();
+
+        inventory = new Inventory(handler, this);
+    }
+
+    private void initAnims() {
         // Animations - 500 = 0.5 second
         int speed = 135;
         int upDownSpeed = speed + 115;
@@ -55,13 +66,11 @@ public class EntityPlayer extends EntityCreature {
         int effectSpeed = 50;
         sprintEffect = new Animation(effectSpeed, Assets.SPRINT_EFFECT);
         splashEffect = new Animation(effectSpeed, Assets.SPLASH_EFFECT);
-
-        inventory = new Inventory(handler, this);
     }
 
     @Override
     public void tick() {
-        if (isActive()) {
+        if (isActive() && isLocal) {
             if (!inventory.isActive()) {
                 // Movement
                 getInput();
@@ -74,15 +83,16 @@ public class EntityPlayer extends EntityCreature {
                 tileInteract();
                 tickEquippedItem();
 
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {
-                    handler.getGame().gameState.setWorld("/assets/worlds/starter/final");
-                    inventory.resetAll();
-                }
+//                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {
+//                    handler.getGame().gameState.setWorld("/assets/worlds/starter/final");
+//                    inventory.resetAll();
+//                }
             }
 
             handler.getCamera().centerOnEntity(this);
-            inventory.tick();
         }
+
+        inventory.tick();
 
         // Animation
         currentAnim.tick();
@@ -120,7 +130,7 @@ public class EntityPlayer extends EntityCreature {
 
         attackTimer = 0;
 
-        for (Entity e : handler.getWorld().getEntityManager().getEntities()) {
+        for (Entity e : handler.getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
@@ -216,12 +226,27 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(currentAnim.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
+        int x = (int) (this.x - handler.getCamera().getxOffset());
+        int y = (int) (this.y - handler.getCamera().getyOffset());
+        g.drawImage(currentAnim.getCurrentFrame(), x, y, width, height, null);
         if (canSprint())
-            g.drawImage(sprintEffect.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
+            g.drawImage(sprintEffect.getCurrentFrame(), x, y, width, height, null);
 
         if (inWater())
-            g.drawImage(splashEffect.getCurrentFrame(), (int) (x - handler.getCamera().getxOffset()), (int) (y - handler.getCamera().getyOffset()), width, height, null);
+            g.drawImage(splashEffect.getCurrentFrame(), x, y, width, height, null);
+
+        Font font = Assets.FONT_20;
+        int nameWidth = Text.getWidth(g, username, font);
+        int nameHeight = Text.getHeight(g, font);
+        int add = 6;
+        Color tint = new Color(96, 96, 96, 127);
+        g.setColor(tint);
+
+        int xOff = nameWidth / 2 - width / 2;
+        int yOff = height / 2;
+
+        g.fillRect(x - xOff - add / 2, y - yOff - add / 2, nameWidth + add, nameHeight + add);
+        Text.drawString(g, username, x - xOff, y - yOff + nameHeight - add / 2, false, false, Color.white, font);
     }
 
     public void postRender(Graphics g) {
@@ -245,7 +270,43 @@ public class EntityPlayer extends EntityCreature {
         return sprintTimer;
     }
 
+    public float getMaxSprintTimer() {
+        return maxSprintTimer;
+    }
+
     public boolean canSprint() {
         return handler.getKeyManager().sprint && !inWater() && currentAnim != animIdle && sprintTimer > 0;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public int getGlubel() {
+        return glubel;
+    }
+
+    public void setGlubel(int glubel) {
+        this.glubel = glubel;
+        if (this.glubel >= maxGludel) {
+            this.glubel = 0;
+            lvl++;
+        }
+    }
+
+    public int getMaxGludel() {
+        return maxGludel;
+    }
+
+    public int getLvl() {
+        return lvl;
+    }
+
+    public void reset() {
+        inventory.resetAll();
+        glubel = 0;
+        lvl = 0;
+        equippedItem = null;
+        extraDmg = 0;
     }
 }

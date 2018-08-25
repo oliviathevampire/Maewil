@@ -4,6 +4,7 @@ import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.items.Item;
 import coffeecatteam.theultimatetile.items.ItemStack;
+import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,7 +17,7 @@ public class EntityCrop extends EntityStatic {
     private Item drop;
 
     public EntityCrop(Handler handler, String id, BufferedImage texture, Item drop) {
-        super(handler, id,  Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+        super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         isCollidable = false;
 
         this.texture = texture;
@@ -38,6 +39,6 @@ public class EntityCrop extends EntityStatic {
         super.die(it);
         int amt = new Random().nextInt(2) + 1;
         for (int i = 0; i < amt; i++)
-            handler.getWorld().getItemManager().addItem(new ItemStack(drop), (int) (x + new Random().nextInt(3)), (int) (y + new Random().nextInt(3)));
+            handler.getGame().getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
     }
 }

@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.utils;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,6 +8,24 @@ import java.io.InputStreamReader;
 import java.util.Random;
 
 public class Utils {
+
+    public static String getUsername() {
+        return getUsername("Player");
+    }
+
+    public static String getUsername(String defaultName) {
+        String username;
+        int nameLength = 16;
+        try {
+            username = JOptionPane.showInputDialog("Please enter a username\nMust be max " + nameLength + " characters", defaultName);
+            if (username.length() > nameLength || username.equalsIgnoreCase(""))
+                username = getUsername(username);
+            //username = username.substring(0, nameLength);
+        } catch (NullPointerException e) {
+            username = "you_clicked_cancel";
+        }
+        return username.replaceAll(" ", "_").replaceAll("[^a-zA-Z0-9_]+",""); // I'ma Cat
+    }
 
     public static Font loadFont(String path, float size) {
         try {
@@ -58,5 +77,19 @@ public class Utils {
             e.printStackTrace();
             return 0;
         }
+    }
+
+    public static float map(float from, float fromMin, float fromMax, float toMin, float toMax) {
+        float fromAbs = from - fromMin;
+        float fromMaxAbs = fromMax - fromMin;
+
+        float normal = fromAbs / fromMaxAbs;
+
+        float toMaxAbs = toMax - toMin;
+        float toAbs = toMaxAbs * normal;
+
+        float to = toAbs + toMin;
+
+        return to;
     }
 }

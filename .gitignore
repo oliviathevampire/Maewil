@@ -34,3 +34,4 @@ build
 .classpath
 .project
 build.bat
+logs/
