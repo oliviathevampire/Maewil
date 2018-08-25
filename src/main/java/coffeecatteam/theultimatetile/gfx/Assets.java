@@ -56,6 +56,7 @@ public class Assets {
     public static BufferedImage[] ZOMBIE_IDLE, ZOMBIE_UP, ZOMBIE_DOWN, ZOMBIE_LEFT, ZOMBIE_RIGHT;
     public static BufferedImage[] SKELETON_IDLE, SKELETON_UP, SKELETON_DOWN, SKELETON_LEFT, SKELETON_RIGHT;
     public static BufferedImage[] BOUNCER_IDLE, BOUNCER_UP, BOUNCER_DOWN, BOUNCER_LEFT, BOUNCER_RIGHT;
+    public static BufferedImage[] THING_IDLE, THING_UP, THING_DOWN, THING_LEFT, THING_RIGHT;
 
     /* Nature */
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
@@ -187,6 +188,12 @@ public class Assets {
         BOUNCER_DOWN = getFrames(undeadSheet, 2, 8, 15);
         BOUNCER_LEFT = getFrames(undeadSheet, 4, 8, 15);
         BOUNCER_RIGHT = getFrames(undeadSheet, 3, 8, 15);
+
+        THING_IDLE = getFrames(undeadSheet, 8, 0, 9);
+        THING_UP = getFrames(undeadSheet, 9, 0, 9);
+        THING_DOWN = getFrames(undeadSheet, 10, 0, 9);
+        THING_LEFT = getFrames(undeadSheet, 11, 0, 9);
+        THING_RIGHT = getFrames(undeadSheet, 12, 0, 9);
 
         /* Nature */
         TREE_SMALL = getSprite(natureSheet, 0, 0, width, height * 2);
