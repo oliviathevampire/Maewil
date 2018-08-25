@@ -24,7 +24,7 @@ public class Utils {
         } catch (NullPointerException e) {
             username = "you_clicked_cancel";
         }
-        return username;
+        return username.replaceAll(" ", "_").replaceAll("[^a-zA-Z0-9_]+",""); // I'ma Cat
     }
 
     public static Font loadFont(String path, float size) {
