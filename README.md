@@ -2,6 +2,8 @@
 
 An open world 2D adventure/puzzle game for you and your friends to play.
 
+##### The multiplayer function is not fully added hence the version "v0.1-alpha" if you want to start a server however then run the jar in the console (Or terminal if you're on a mac) by typing "java -jar TheUltimateTile-0.1-alpha.jar -runServer".
+
 [This game is protected by Copyright](https://github.com/CoffeeCatRailway/TheUltimateTile/blob/master/LICENSE.md)
 
 ## Controls:
