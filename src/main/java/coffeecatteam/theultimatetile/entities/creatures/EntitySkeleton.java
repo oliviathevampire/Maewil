@@ -12,6 +12,7 @@ public class EntitySkeleton extends EntityUndead {
         super(handler, id);
         this.drop = Items.BONE;
         this.setMaxHealth(Entity.DEFAULT_HEALTH / 2);
+        maxDistance = 400f;
     }
 
     @Override

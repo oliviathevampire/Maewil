@@ -19,11 +19,13 @@ public abstract class EntityUndead extends EntityCreature {
     protected Animation animIdle, animUp, animDown, animLeft, animRight;
     protected Animation currentAnim;
 
-    protected Item drop = Items.BONE;
+    protected Item drop = null;
 
     /* Animations - 500 = 0.5 second */
     protected int speed = 135;
     protected int upDownSpeed = speed + 115;
+
+    protected float maxDistance = 350f;
 
     public EntityUndead(Handler handler, String id) {
         super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
@@ -46,7 +48,7 @@ public abstract class EntityUndead extends EntityCreature {
             float distance = (float) Math.sqrt(x * x + y * y);
             float multiplier = 2.0f / distance;
 
-            if (distance < 350) {
+            if (distance < maxDistance) {
                 xMove = x * multiplier;
                 yMove = y * multiplier;
             }
@@ -121,8 +123,10 @@ public abstract class EntityUndead extends EntityCreature {
     @Override
     public void die(Iterator<Entity> it) {
         super.die(it);
-        int amt = new Random().nextInt(3) + 1;
-        for (int i = 0; i < amt; i++)
-            handler.getGame().getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+        if (drop != null) {
+            int amt = new Random().nextInt(3) + 1;
+            for (int i = 0; i < amt; i++)
+                handler.getGame().getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+        }
     }
 }
