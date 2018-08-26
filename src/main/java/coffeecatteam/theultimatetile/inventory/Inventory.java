@@ -6,6 +6,7 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.items.IInteractable;
 import coffeecatteam.theultimatetile.items.ItemStack;
+import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -90,7 +91,7 @@ public class Inventory {
                         addStackToHotbar(stack);
                     } else {
                         for (ItemStack s : hotbar)
-                            if (s.getId() == stack.getId())
+                            if (s.getId().equals(stack.getId()))
                                 if (s.getItem().isStackable())
                                     addStackToHotbar(stack);
                     }
@@ -110,7 +111,7 @@ public class Inventory {
                         hotbar.remove(hStack);
                     } else {
                         for (ItemStack s : inventory) {
-                            if (s.getId() == hStack.getId()) {
+                            if (s.getId().equals(hStack.getId())) {
                                 if (s.getItem().isStackable()) {
                                     addItem(hStack);
                                     hotbar.remove(hStack);
@@ -121,17 +122,32 @@ public class Inventory {
                 }
             }
         }
+        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Q))
+            dropItem(active, inventorySelectedIndex, hotbarSelectedIndex);
+
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_1))
             hotbarSelectedIndex = 0;
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_2))
             hotbarSelectedIndex = 1;
         if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_3))
             hotbarSelectedIndex = 2;
-        if (hotbarSelectedIndex < player.getInventory().getHotbar().size()) {
-            player.setEquippedItem(player.getInventory().getHotbar().get(hotbarSelectedIndex));
+        if (hotbarSelectedIndex < hotbar.size()) {
+            player.setEquippedItem(hotbar.get(hotbarSelectedIndex));
 
             if (player.getEquippedItem().getCount() <= 0)
                 hotbar.remove(player.getEquippedItem());
+        }
+    }
+
+    private void dropItem(boolean active, int inventorySelectedIndex, int hotbarSelectedIndex) {
+        float xOff = Tile.TILE_WIDTH / 4;
+        float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4;
+        if (active) {
+            inventory.get(inventorySelectedIndex).getItem().setPickedUp(false);
+            handler.getGame().getItemManager().addItem(inventory.remove(inventorySelectedIndex), player.getX() + xOff, player.getY() + yOff);
+        } else {
+            hotbar.get(inventorySelectedIndex).getItem().setPickedUp(false);
+            handler.getGame().getItemManager().addItem(hotbar.remove(hotbarSelectedIndex), player.getX() + xOff, player.getY() + yOff);
         }
     }
 
@@ -199,9 +215,9 @@ public class Inventory {
 
         int itemWidth = 32;
         int itemHeight = 32;
-        if (handler.getEntityManager().getPlayer().getInventory().getHotbar().size() > 0) {
-            for (int i = 0; i < handler.getEntityManager().getPlayer().getInventory().getHotbar().size(); i++) {
-                ItemStack stack = handler.getEntityManager().getPlayer().getInventory().getHotbar().get(i);
+        if (hotbar.size() > 0) {
+            for (int i = 0; i < hotbar.size(); i++) {
+                ItemStack stack = hotbar.get(i);
                 int xPos = x + 14 + 54 * i;
                 int yPos = handler.getHeight() - itemHeight - itemHeight / 2;
                 g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
