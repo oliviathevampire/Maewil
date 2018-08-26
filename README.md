@@ -1,8 +1,8 @@
-![Title](https://i.imgur.com/o7lLSLp.png)
+![Title](https://i.imgur.com/fydwLTw.png)
 
 An open world 2D adventure/puzzle game for you and your friends to play.
 
-[This game is protected by the DBAD Public License](https://github.com/CoffeeCatRailway/TheUltimateTile/blob/master/LICENSE.md)
+[This game is protected by Copyright](https://github.com/CoffeeCatRailway/TheUltimateTile/blob/master/LICENSE.md)
 
 ## Controls:
 * W,A,S,D	  - Move/selecting items in inventory 
