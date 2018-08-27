@@ -47,7 +47,8 @@ public class StateMenuMultiplayer extends State {
             Logger.print("IP set to [" + ip + "]");
         }));
 
-        uiManager.addObject(new UIButton(x, handler.getHeight() - joinBtnHeight - 50, joinBtnWidth, joinBtnHeight, "Join Server", () -> {
+        String btnServerText = (handler.getGame().isHosting()) ? "Host" : "Join";
+        uiManager.addObject(new UIButton(x, handler.getHeight() - joinBtnHeight - 50, joinBtnWidth, joinBtnHeight, btnServerText + " Server", () -> {
             if (!ip.equalsIgnoreCase("")) {
 //                    handler.getGame().getClient().sendData("ping");
 
