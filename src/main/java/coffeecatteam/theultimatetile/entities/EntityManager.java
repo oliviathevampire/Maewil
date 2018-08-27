@@ -91,4 +91,15 @@ public class EntityManager {
     public void reset() {
         entities.removeIf(entity -> !entity.getId().equals(player.getId()));
     }
+
+    public void removePlayerMP(String username) {
+        int index = 0;
+        for (Entity e : entities) {
+            if (e instanceof EntityPlayerMP && ((EntityPlayerMP) e).getUsername().equals(username)) {
+                break;
+            }
+            index++;
+        }
+        entities.remove(index);
+    }
 }

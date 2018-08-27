@@ -4,6 +4,7 @@ import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.net.packet.Packet;
 import coffeecatteam.theultimatetile.net.packet.Packet00Login;
+import coffeecatteam.theultimatetile.net.packet.Packet01Disconnect;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
 
@@ -53,17 +54,21 @@ public class Server extends Thread {
     private void parsePacket(byte[] data, InetAddress address, int port) {
         String message = new String(data).trim();
         Packet.PacketTypes type = Packet.lookupPacket(message.substring(0, 2));
+        Packet packet;
         switch (type) {
             default:
             case INVALID:
                 break;
             case LOGIN:
-                Packet00Login packet = new Packet00Login(data);
-                Logger.print("[" + address.getHostAddress() + ":" + port + "] " + packet.getUsername() + " has connected!");
-                EntityPlayerMP player = new EntityPlayerMP(handler, packet.getUsername(), address, port, false);
-                this.addConnection(player, packet);
+                packet = new Packet00Login(data);
+                Logger.print("[" + address.getHostAddress() + ":" + port + "] " + ((Packet00Login) packet).getUsername() + " has connected!");
+                EntityPlayerMP player = new EntityPlayerMP(handler, ((Packet00Login) packet).getUsername(), address, port, false);
+                this.addConnection(player, (Packet00Login) packet);
                 break;
             case DISCONNECT:
+                packet = new Packet01Disconnect(data);
+                Logger.print("[" + address.getHostAddress() + ":" + port + "] " + ((Packet01Disconnect) packet).getUsername() + " has disconnected!");
+                this.removeConnection((Packet01Disconnect) packet);
                 break;
         }
     }
@@ -89,6 +94,28 @@ public class Server extends Thread {
         if (!connected) {
             this.connectedPlayers.add(player);
         }
+    }
+
+    public void removeConnection(Packet01Disconnect packet) {
+        this.connectedPlayers.remove(getPlayerMPIndex(packet.getUsername()));
+        packet.writeData(this);
+    }
+
+    public EntityPlayerMP getPlayerMP(String username) {
+        for (EntityPlayerMP p : this.connectedPlayers)
+            if (p.getUsername().equals(username))
+                return p;
+        return null;
+    }
+
+    public int getPlayerMPIndex(String username) {
+        int index = 0;
+        for (EntityPlayerMP p : this.connectedPlayers) {
+            if (p.getUsername().equals(username))
+                break;
+            index++;
+        }
+        return index;
     }
 
     public void sendData(String data, InetAddress ipAddress, int port) {

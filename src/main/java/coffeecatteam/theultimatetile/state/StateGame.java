@@ -4,6 +4,7 @@ import coffeecatteam.theultimatetile.Handler;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIManager;
+import coffeecatteam.theultimatetile.net.packet.Packet01Disconnect;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.worlds.World;
@@ -37,9 +38,13 @@ public class StateGame extends State {
         int w = btnWidth + 128;
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - w / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
             State.setState(handler.getGame().stateMenu);
+            Packet01Disconnect packet = new Packet01Disconnect(handler.getGame().getEntityManager().getPlayer().getUsername());
+            packet.writeData(handler.getGame().getClient());
         }));
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
             Logger.print("Exiting...");
+            Packet01Disconnect packet = new Packet01Disconnect(handler.getGame().getEntityManager().getPlayer().getUsername());
+            packet.writeData(handler.getGame().getClient());
             System.exit(0);
         }));
     }

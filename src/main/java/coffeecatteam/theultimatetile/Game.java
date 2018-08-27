@@ -47,6 +47,7 @@ public class Game extends Canvas implements Runnable {
     private Camera camera;
 
     private Handler handler;
+    private WindowHandler windowHandler;
 
     private Client client;
     private Server server;
@@ -105,6 +106,7 @@ public class Game extends Canvas implements Runnable {
         entityManager = new EntityManager(handler, new EntityPlayerMP(handler, username, null, -1, true));
 
         itemManager = new ItemManager(handler);
+        windowHandler = new WindowHandler(this);
     }
 
     private void tick() {
