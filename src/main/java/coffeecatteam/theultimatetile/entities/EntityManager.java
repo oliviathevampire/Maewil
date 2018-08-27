@@ -102,4 +102,20 @@ public class EntityManager {
         }
         entities.remove(index);
     }
+
+    private int getPlayerMPIndex(String username) {
+        int index = 0;
+        for (Entity e : this.entities) {
+            if (e instanceof EntityPlayerMP && ((EntityPlayerMP) e).getUsername().equals(username))
+                break;
+            index++;
+        }
+        return index;
+    }
+
+    public void movePlayer(String username, float x, float y) {
+        int index = getPlayerMPIndex(username);
+        entities.get(index).setX(x);
+        entities.get(index).setY(y);
+    }
 }

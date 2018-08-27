@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.net.packet.Packet;
 import coffeecatteam.theultimatetile.net.packet.Packet00Login;
 import coffeecatteam.theultimatetile.net.packet.Packet01Disconnect;
+import coffeecatteam.theultimatetile.net.packet.Packet02Move;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
 
@@ -63,7 +64,15 @@ public class Client extends Thread {
                 Logger.print("[" + address.getHostAddress() + ":" + port + "] " + ((Packet01Disconnect) packet).getUsername() + " has disconnected!");
                 handler.getEntityManager().removePlayerMP(((Packet01Disconnect) packet).getUsername());
                 break;
+            case MOVE:
+                packet = new Packet02Move(data);
+                this.handleMove((Packet02Move) packet);
+                break;
         }
+    }
+
+    private void handleMove(Packet02Move packet) {
+        handler.getEntityManager().movePlayer(packet.getUsername(), packet.getX(), packet.getY());
     }
 
     public void sendData(String data) {

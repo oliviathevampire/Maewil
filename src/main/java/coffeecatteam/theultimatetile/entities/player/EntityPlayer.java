@@ -10,6 +10,7 @@ import coffeecatteam.theultimatetile.inventory.Inventory;
 import coffeecatteam.theultimatetile.items.IInteractable;
 import coffeecatteam.theultimatetile.items.ItemStack;
 import coffeecatteam.theultimatetile.items.ItemTool;
+import coffeecatteam.theultimatetile.net.packet.Packet02Move;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Utils;
@@ -76,17 +77,15 @@ public class EntityPlayer extends EntityCreature {
                 getInput();
                 move();
 
+                Packet02Move packet = new Packet02Move(this.username, this.x, this.y);
+                packet.writeData(handler.getGame().getClient());
+
                 // Attack
                 checkAttacks();
 
                 // Interact
                 tileInteract();
                 tickEquippedItem();
-
-//                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_C)) {
-//                    handler.getGame().gameState.setWorld("/assets/worlds/starter/final");
-//                    inventory.resetAll();
-//                }
             }
 
             handler.getCamera().centerOnEntity(this);
