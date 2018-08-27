@@ -207,7 +207,6 @@ public class World {
 
                 handler.getGame().getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
 
-
                 if (y % 2 == 0)
                     Logger.print(getLoaded(i) + "% Loaded!");
             }
