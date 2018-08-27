@@ -28,8 +28,6 @@ public class Item implements Cloneable {
         this.id = id;
 
         this.bounds = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-
-        items.put(id, this);
     }
 
     public void tick(int count) {

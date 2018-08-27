@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.input.KeyManager;
 import coffeecatteam.theultimatetile.input.MouseManager;
 import coffeecatteam.theultimatetile.items.ItemManager;
+import coffeecatteam.theultimatetile.items.Items;
 import coffeecatteam.theultimatetile.net.Client;
 import coffeecatteam.theultimatetile.net.Server;
 import coffeecatteam.theultimatetile.net.packet.Packet00Login;
@@ -107,6 +108,8 @@ public class Game extends Canvas implements Runnable {
 
         itemManager = new ItemManager(handler);
         windowHandler = new WindowHandler(this);
+
+        Items.init();
     }
 
     private void tick() {
@@ -246,5 +249,9 @@ public class Game extends Canvas implements Runnable {
 
     public ItemManager getItemManager() {
         return itemManager;
+    }
+
+    public boolean isHosting() {
+        return server != null;
     }
 }

@@ -30,4 +30,37 @@ public class Items {
 
     public static Item COIN_IRON = new Item(Assets.ITEM_COIN_IRON, "coin_iron");
     public static Item COIN_GOLD = new Item(Assets.ITEM_COIN_GOLD, "coin_gold");
+
+    public static void init() {
+        registerItem(STICK);
+        registerItem(LEAF);
+        registerItem(ROCK);
+
+        registerItem(ROTTEN_FLESH);
+        registerItem(BONE);
+        registerItem(BOUNCY_BALL);
+
+        registerItem(WOODEN_SWORD);
+        registerItem(WOODEN_PICK);
+        registerItem(WOODEN_HOE);
+
+        registerItem(STONE_SWORD);
+        registerItem(STONE_PICK);
+        registerItem(STONE_HOE);
+
+        registerItem(COAL);
+        registerItem(IRON_INGOT);
+        registerItem(GOLD_INGOT);
+        registerItem(DIAMOND);
+
+        registerItem(CARROT);
+        registerItem(APPLE);
+
+        registerItem(COIN_IRON);
+        registerItem(COIN_GOLD);
+    }
+
+    private static void registerItem(Item item) {
+        Item.items.put(item.getId(), item);
+    }
 }
