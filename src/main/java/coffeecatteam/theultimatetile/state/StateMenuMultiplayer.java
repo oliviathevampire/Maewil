@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
@@ -49,11 +50,13 @@ public class StateMenuMultiplayer extends State {
         uiManager.addObject(new UIButton(x, handler.getHeight() - joinBtnHeight - 50, joinBtnWidth, joinBtnHeight, "Join Server", () -> {
             if (!ip.equalsIgnoreCase("")) {
 //                    handler.getGame().getClient().sendData("ping");
-                Packet00Login packetLogin = new Packet00Login(this.username);
-                packetLogin.writeData(handler.getGame().getClient());
 
                 Logger.print("Joining Server [" + ip + "] as [" + this.username + "]");
                 State.setState(new StateGame(handler));
+                Packet00Login loginPacket = new Packet00Login(handler.getEntityManager().getPlayer().getUsername());
+                if (handler.getGame().getServer() != null)
+                    handler.getGame().getServer().addConnection((EntityPlayerMP) handler.getEntityManager().getPlayer(), loginPacket);
+                loginPacket.writeData(handler.getGame().getClient());
             }
         }));
 

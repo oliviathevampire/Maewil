@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile;
 
 import coffeecatteam.theultimatetile.entities.EntityManager;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.input.KeyManager;
@@ -9,6 +10,7 @@ import coffeecatteam.theultimatetile.input.MouseManager;
 import coffeecatteam.theultimatetile.items.ItemManager;
 import coffeecatteam.theultimatetile.net.Client;
 import coffeecatteam.theultimatetile.net.Server;
+import coffeecatteam.theultimatetile.net.packet.Packet00Login;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateGame;
 import coffeecatteam.theultimatetile.state.StateMenu;
@@ -100,7 +102,8 @@ public class Game extends Canvas implements Runnable {
         stateMenuMultiplayer = new StateMenuMultiplayer(handler, username);
         State.setState(stateMenu);
 
-        entityManager = new EntityManager(handler, new EntityPlayer(handler, username));
+        entityManager = new EntityManager(handler, new EntityPlayerMP(handler, username, null, -1, true));
+
         itemManager = new ItemManager(handler);
     }
 

@@ -1,6 +1,10 @@
 package coffeecatteam.theultimatetile.net;
 
 import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
+import coffeecatteam.theultimatetile.net.packet.Packet;
+import coffeecatteam.theultimatetile.net.packet.Packet00Login;
+import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.io.IOException;
@@ -30,8 +34,30 @@ public class Client extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String message = new String(packet.getData());
-            Logger.print("SERVER > " + message);
+            this.parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+
+//            String message = new String(packet.getData());
+//            Logger.print("SERVER > " + message);
+        }
+    }
+
+    private void parsePacket(byte[] data, InetAddress address, int port) {
+        String message = new String(data).trim();
+        Packet.PacketTypes type = Packet.lookupPacket(message.substring(0, 2));
+        switch (type) {
+            default:
+            case INVALID:
+                break;
+            case LOGIN:
+                Packet00Login packet = new Packet00Login(data);
+                Logger.print("[" + address.getHostAddress() + ":" + port + "] " + packet.getUsername() + " has joined the game!");
+                EntityPlayerMP player = new EntityPlayerMP(handler, packet.getUsername(), address, port, false);
+                player.setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
+                player.setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
+                handler.getEntityManager().addEntity(player);
+                break;
+            case DISCONNECT:
+                break;
         }
     }
 

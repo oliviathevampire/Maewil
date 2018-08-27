@@ -39,8 +39,7 @@ public class Server extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+            this.parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
 
 //            String message = new String(packet.getData());
 //            Logger.print("CLIENT [" + packet.getAddress().getHostAddress() + ":" + packet.getPort() + "]> "
@@ -61,20 +60,34 @@ public class Server extends Thread {
             case LOGIN:
                 Packet00Login packet = new Packet00Login(data);
                 Logger.print("[" + address.getHostAddress() + ":" + port + "] " + packet.getUsername() + " has connected!");
-                EntityPlayerMP player;
-                if (address.getHostAddress().equalsIgnoreCase("127.0.0.1") || address.getHostAddress().equalsIgnoreCase("localhost"))
-                    player = new EntityPlayerMP(handler, packet.getUsername(), address, port, true);
-                else
-                    player = new EntityPlayerMP(handler, packet.getUsername(), address, port, false);
-                connectedPlayers.add(player);
-                //handler.getEntityManager().addEntity(player);
-                handler.getEntityManager().setPlayer(player);
-
-                handler.getEntityManager().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
-                handler.getEntityManager().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
+                EntityPlayerMP player = new EntityPlayerMP(handler, packet.getUsername(), address, port, false);
+                this.addConnection(player, packet);
                 break;
             case DISCONNECT:
                 break;
+        }
+    }
+
+    public void addConnection(EntityPlayerMP player, Packet00Login packet) {
+        boolean connected = false;
+        player.setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
+        player.setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
+        for (EntityPlayerMP p : this.connectedPlayers) {
+            if (player.getUsername().equals(p.getUsername())) {
+                if (p.getIpAddress() == null)
+                    p.setIpAddress(player.getIpAddress());
+                if (p.getPort() == -1)
+                    p.setPort(player.getPort());
+                connected = true;
+            } else {
+                sendData(packet.getData(), p.getIpAddress(), p.getPort());
+
+                packet = new Packet00Login(p.getUsername());
+                sendData(packet.getData(), player.getIpAddress(), player.getPort());
+            }
+        }
+        if (!connected) {
+            this.connectedPlayers.add(player);
         }
     }
 
