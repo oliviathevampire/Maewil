@@ -41,8 +41,8 @@ public class EntityBush extends EntityStatic {
         super.die(it);
         int amt = new Random().nextInt(2) + 1;
         for (int i = 0; i < amt; i++) {
-            theUltimateTile.getTheUltimateTile().getItemManager().addItem(new ItemStack(Items.LEAF), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
-            theUltimateTile.getTheUltimateTile().getItemManager().addItem(new ItemStack(Items.STICK), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+            theUltimateTile.getItemManager().addItem(new ItemStack(Items.LEAF), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+            theUltimateTile.getItemManager().addItem(new ItemStack(Items.STICK), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
         }
     }
 }

@@ -144,10 +144,10 @@ public class Inventory {
         float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4;
         if (active) {
             inventory.get(inventorySelectedIndex).getItem().setPickedUp(false);
-            theUltimateTile.getTheUltimateTile().getItemManager().addItem(inventory.remove(inventorySelectedIndex), player.getX() + xOff, player.getY() + yOff);
+            theUltimateTile.getItemManager().addItem(inventory.remove(inventorySelectedIndex), player.getX() + xOff, player.getY() + yOff);
         } else {
             hotbar.get(inventorySelectedIndex).getItem().setPickedUp(false);
-            theUltimateTile.getTheUltimateTile().getItemManager().addItem(hotbar.remove(hotbarSelectedIndex), player.getX() + xOff, player.getY() + yOff);
+            theUltimateTile.getItemManager().addItem(hotbar.remove(hotbarSelectedIndex), player.getX() + xOff, player.getY() + yOff);
         }
     }
 

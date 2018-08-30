@@ -46,7 +46,7 @@ public class World {
             }
         }
 
-        theUltimateTile.getTheUltimateTile().getItemManager().tick();
+        theUltimateTile.getItemManager().tick();
         theUltimateTile.getEntityManager().tick();
         overlayManager.tick();
     }
@@ -64,7 +64,7 @@ public class World {
             }
         }
 
-        theUltimateTile.getTheUltimateTile().getItemManager().render(g);
+        theUltimateTile.getItemManager().render(g);
         theUltimateTile.getEntityManager().render(g);
         overlayManager.render(g);
     }
@@ -202,7 +202,7 @@ public class World {
                 if (!item.isStackable())
                     count = 1;
 
-                theUltimateTile.getTheUltimateTile().getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
+                theUltimateTile.getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
 
                 if (y % 2 == 0)
                     Logger.print(getLoaded(i) + "% Loaded!");
