@@ -11,6 +11,7 @@ import coffeecatteam.theultimatetile.worlds.World;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
 
 public class StateGame extends State {
 
@@ -38,18 +39,13 @@ public class StateGame extends State {
         int w = btnWidth + 128;
         uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - w / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
             State.setState(theUltimateTile.stateMenu);
-            disconnect();
+            theUltimateTile.disconnect();
         }));
         uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
-            disconnect();
+            theUltimateTile.disconnect();
             Logger.print("Exiting...");
             System.exit(0);
         }));
-    }
-
-    private void disconnect() {
-        Packet01Disconnect packet = new Packet01Disconnect(theUltimateTile.getEntityManager().getPlayer().getUsername());
-        packet.writeData(theUltimateTile.getClient());
     }
 
     @Override

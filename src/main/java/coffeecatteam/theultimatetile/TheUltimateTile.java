@@ -11,6 +11,7 @@ import coffeecatteam.theultimatetile.inventory.items.ItemManager;
 import coffeecatteam.theultimatetile.inventory.items.Items;
 import coffeecatteam.theultimatetile.net.Client;
 import coffeecatteam.theultimatetile.net.Server;
+import coffeecatteam.theultimatetile.net.packet.Packet01Disconnect;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateMenu;
 import coffeecatteam.theultimatetile.state.StateMenuMultiplayer;
@@ -54,6 +55,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
     private Client client;
     private Server server;
     private String username;
+    private boolean singlePlayer = true;
 
     public TheUltimateTile(String title, int width, int height) {
         this.title = title;
@@ -173,38 +175,6 @@ public class TheUltimateTile extends Canvas implements Runnable {
         stop();
     }
 
-    public KeyManager getKeyManager() {
-        return keyManager;
-    }
-
-    public MouseManager getMouseManager() {
-        return mouseManager;
-    }
-
-    public Camera getCamera() {
-        return camera;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public Server getServer() {
-        return server;
-    }
-
     public synchronized void start(String[] args) {
         if (running)
             return;
@@ -240,6 +210,38 @@ public class TheUltimateTile extends Canvas implements Runnable {
         }
     }
 
+    public KeyManager getKeyManager() {
+        return keyManager;
+    }
+
+    public MouseManager getMouseManager() {
+        return mouseManager;
+    }
+
+    public Camera getCamera() {
+        return camera;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public Server getServer() {
+        return server;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -262,6 +264,25 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
     public void setWorld(World world) {
         this.world = world;
+    }
+
+    public boolean isSinglePlayer() {
+        return singlePlayer;
+    }
+
+    public void setSinglePlayer(boolean singlePlayer) {
+        this.singlePlayer = singlePlayer;
+    }
+
+    /*
+     * Disconnect from server.
+     * Checks if in single player
+     */
+    public void disconnect() {
+        if (!singlePlayer) {
+            Packet01Disconnect packet = new Packet01Disconnect(this.getEntityManager().getPlayer().getUsername());
+            packet.writeData(client);
+        }
     }
 
     /*

@@ -25,12 +25,14 @@ public class StateMenu extends State {
         int spBtnWidth = 7 * 64;
         int spBtnHeight = 64;
         uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - spBtnWidth / 2, theUltimateTile.getHeight() / 2 - spBtnHeight / 2 + spBtnHeight - 50 + yOff, spBtnWidth, spBtnHeight, "Single Player", () -> {
+            theUltimateTile.setSinglePlayer(true);
             State.setState(new StateGame(theUltimateTile));
         }));
 
         int mpBtnWidth = 6 * 64;
         int mpBtnHeight = 64;
         uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - mpBtnWidth / 2, theUltimateTile.getHeight() / 2 - mpBtnHeight / 2 + mpBtnHeight + 35 + yOff, mpBtnWidth, mpBtnHeight, "Multiplayer", () -> {
+            theUltimateTile.setSinglePlayer(false);
             State.setState(theUltimateTile.stateMenuMultiplayer);
         }));
 
