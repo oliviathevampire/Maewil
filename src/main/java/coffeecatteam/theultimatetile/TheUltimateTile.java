@@ -24,9 +24,10 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 public class TheUltimateTile extends Canvas implements Runnable {
-    
+
     private static TheUltimateTile theUltimateTile;
 
+    private String[] args;
     private JFrame frame;
     private int width, height;
     public String title;
@@ -57,7 +58,8 @@ public class TheUltimateTile extends Canvas implements Runnable {
     private String username;
     private boolean singlePlayer = true;
 
-    public TheUltimateTile(String title, int width, int height) {
+    public TheUltimateTile(String[] args, String title, int width, int height) {
+        this.args = args;
         this.title = title;
         this.width = width;
         this.height = height;
@@ -101,7 +103,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
         camera = new Camera(this, 0, 0);
 
-        username = Utils.getUsername();
+        username = hasArgument("-username") ? getArgument("-username") : Utils.getUsername();
         //stateGame = new StateGame(this).reset();
         stateMenu = new StateMenu(this);
         stateMenuMultiplayer = new StateMenuMultiplayer(this, username);
@@ -175,18 +177,16 @@ public class TheUltimateTile extends Canvas implements Runnable {
         stop();
     }
 
-    public synchronized void start(String[] args) {
+    public synchronized void start() {
         if (running)
             return;
         running = true;
 
-        if (args.length > 0) { // JOptionPane.showConfirmDialog(this, "Do you want to host?") == 0
-            if (args[0].equalsIgnoreCase("-runServer")) {
-                Logger.print("Running game while hosting server!\n");
-                server = new Server(this);
-                server.setName("Thread-Server");
-                server.start();
-            }
+        if (hasArgument("-runServer")) {
+            Logger.print("Running game while hosting server!\n");
+            server = new Server(this);
+            server.setName("Thread-Server");
+            server.start();
         }
 
         client = new Client(this);
@@ -208,6 +208,35 @@ public class TheUltimateTile extends Canvas implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean hasArgument(String arg) {
+        for (String a : args) {
+            String regex = ":";
+            if (a.contains(regex))
+                a = a.split(regex)[0];
+
+            if (a.equals(arg))
+                return true;
+        }
+        return false;
+    }
+
+    public String getArgument(String arg) {
+        String value = null;
+        for (int i = 0; i < args.length; i++) {
+            if (hasArgument(arg)) {
+                String regex = ":";
+                String argName = args[i].split(regex)[0];
+                String argValue = null;
+                if (args[i].contains(regex))
+                    argValue = args[i].split(regex)[1];
+
+                if (argName.equals(arg))
+                    value = argValue;
+            }
+        }
+        return value;
     }
 
     public KeyManager getKeyManager() {
