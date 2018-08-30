@@ -38,15 +38,18 @@ public class StateGame extends State {
         int w = btnWidth + 128;
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - w / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
             State.setState(handler.getGame().stateMenu);
-            Packet01Disconnect packet = new Packet01Disconnect(handler.getGame().getEntityManager().getPlayer().getUsername());
-            packet.writeData(handler.getGame().getClient());
+            disconnect();
         }));
         uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
             Logger.print("Exiting...");
-            Packet01Disconnect packet = new Packet01Disconnect(handler.getGame().getEntityManager().getPlayer().getUsername());
-            packet.writeData(handler.getGame().getClient());
+            disconnect();
             System.exit(0);
         }));
+    }
+
+    private void disconnect() {
+        Packet01Disconnect packet = new Packet01Disconnect(handler.getGame().getEntityManager().getPlayer().getUsername());
+        packet.writeData(handler.getGame().getClient());
     }
 
     @Override
