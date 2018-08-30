@@ -1,11 +1,10 @@
 package coffeecatteam.theultimatetile.entities.creatures;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.gfx.*;
-import coffeecatteam.theultimatetile.items.Item;
-import coffeecatteam.theultimatetile.items.ItemStack;
-import coffeecatteam.theultimatetile.items.Items;
+import coffeecatteam.theultimatetile.inventory.items.Item;
+import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -27,8 +26,8 @@ public abstract class EntityUndead extends EntityCreature {
 
     protected float maxDistance = 350f;
 
-    public EntityUndead(Handler handler, String id) {
-        super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityUndead(TheUltimateTile theUltimateTile, String id) {
+        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         init();
         currentAnim = animIdle;
     }
@@ -41,9 +40,9 @@ public abstract class EntityUndead extends EntityCreature {
         yMove = 0;
 
         // Movement
-        if (handler.getEntityManager().getPlayer().isActive()) {
-            float x = handler.getEntityManager().getPlayer().getX() - this.x;
-            float y = handler.getEntityManager().getPlayer().getY() - this.y;
+        if (theUltimateTile.getEntityManager().getPlayer().isActive()) {
+            float x = theUltimateTile.getEntityManager().getPlayer().getX() - this.x;
+            float y = theUltimateTile.getEntityManager().getPlayer().getY() - this.y;
 
             float distance = (float) Math.sqrt(x * x + y * y);
             float multiplier = 2.0f / distance;
@@ -79,8 +78,8 @@ public abstract class EntityUndead extends EntityCreature {
 
         attackTimer = 0;
 
-        for (Entity e : handler.getEntityManager().getEntities())
-            if (e.equals(handler.getEntityManager().getPlayer()))
+        for (Entity e : theUltimateTile.getEntityManager().getEntities())
+            if (e.equals(theUltimateTile.getEntityManager().getPlayer()))
                 if (e.getCollisionBounds(0, 0).intersects(ar))
                     e.hurt(Utils.getRandomInt(1, 3));
     }
@@ -104,8 +103,8 @@ public abstract class EntityUndead extends EntityCreature {
 
     @Override
     public void render(Graphics g) {
-        int x = (int) (this.x - handler.getCamera().getxOffset());
-        int y = (int) (this.y - handler.getCamera().getyOffset());
+        int x = (int) (this.x - theUltimateTile.getCamera().getxOffset());
+        int y = (int) (this.y - theUltimateTile.getCamera().getyOffset());
         g.drawImage(currentAnim.getCurrentFrame(), x, y, width, height, null);
 
         int barWidth = 16;
@@ -126,7 +125,7 @@ public abstract class EntityUndead extends EntityCreature {
         if (drop != null) {
             int amt = new Random().nextInt(3) + 1;
             for (int i = 0; i < amt; i++)
-                handler.getGame().getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+                theUltimateTile.getTheUltimateTile().getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
         }
     }
 }

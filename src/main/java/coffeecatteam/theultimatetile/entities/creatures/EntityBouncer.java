@@ -1,14 +1,14 @@
 package coffeecatteam.theultimatetile.entities.creatures;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.items.Items;
+import coffeecatteam.theultimatetile.inventory.items.Items;
 
 public class EntityBouncer extends EntityUndead {
 
-    public EntityBouncer(Handler handler, String id) {
-        super(handler, id);
+    public EntityBouncer(TheUltimateTile theUltimateTile, String id) {
+        super(theUltimateTile, id);
         this.drop = Items.BOUNCY_BALL;
     }
 

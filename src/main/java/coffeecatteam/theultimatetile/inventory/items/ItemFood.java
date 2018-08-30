@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.items;
+package coffeecatteam.theultimatetile.inventory.items;
 
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayer;

@@ -1,16 +1,16 @@
 package coffeecatteam.theultimatetile.gfx;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
 public class Camera {
 
-    private Handler handler;
+    private TheUltimateTile theUltimateTile;
     private float xOffset, yOffset;
 
-    public Camera(Handler handler, float xOffset, float yOffset) {
-        this.handler = handler;
+    public Camera(TheUltimateTile theUltimateTile, float xOffset, float yOffset) {
+        this.theUltimateTile = theUltimateTile;
         this.xOffset = xOffset;
         this.yOffset = yOffset;
     }
@@ -18,18 +18,18 @@ public class Camera {
     public void checkBlankSpace() {
         if (xOffset < 0)
             xOffset = 0;
-        else if (xOffset > handler.getWorld().getWidth() * Tile.TILE_WIDTH - handler.getWidth())
-            xOffset = handler.getWorld().getWidth() * Tile.TILE_WIDTH - handler.getWidth();
+        else if (xOffset > theUltimateTile.getWorld().getWidth() * Tile.TILE_WIDTH - theUltimateTile.getWidth())
+            xOffset = theUltimateTile.getWorld().getWidth() * Tile.TILE_WIDTH - theUltimateTile.getWidth();
 
         if (yOffset < 0)
             yOffset = 0;
-        else if (yOffset > handler.getWorld().getHeight() * Tile.TILE_HEIGHT - handler.getHeight())
-            yOffset = handler.getWorld().getHeight() * Tile.TILE_HEIGHT - handler.getHeight();
+        else if (yOffset > theUltimateTile.getWorld().getHeight() * Tile.TILE_HEIGHT - theUltimateTile.getHeight())
+            yOffset = theUltimateTile.getWorld().getHeight() * Tile.TILE_HEIGHT - theUltimateTile.getHeight();
     }
 
     public void centerOnEntity(Entity e) {
-        xOffset = e.getX() - handler.getWidth() / 2 + e.getWidth() / 2;
-        yOffset = e.getY() - handler.getHeight() / 2 + e.getHeight() / 2;
+        xOffset = e.getX() - theUltimateTile.getWidth() / 2 + e.getWidth() / 2;
+        yOffset = e.getY() - theUltimateTile.getHeight() / 2 + e.getHeight() / 2;
         checkBlankSpace();
     }
 

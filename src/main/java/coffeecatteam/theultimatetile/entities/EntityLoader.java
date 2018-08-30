@@ -1,42 +1,42 @@
 package coffeecatteam.theultimatetile.entities;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.creatures.*;
 import coffeecatteam.theultimatetile.entities.statics.*;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.items.Items;
+import coffeecatteam.theultimatetile.inventory.items.Items;
 
 public class EntityLoader {
 
-    public static Entity loadEntity(Handler handler, String id) {
+    public static Entity loadEntity(TheUltimateTile theUltimateTile, String id) {
         switch (id) {
             case "tree_small":
-                return new EntityTree(handler, id, EntityTree.TreeType.SMALL);
+                return new EntityTree(theUltimateTile, id, EntityTree.TreeType.SMALL);
             case "tree_medium":
-                return new EntityTree(handler, id, EntityTree.TreeType.MEDIUM);
+                return new EntityTree(theUltimateTile, id, EntityTree.TreeType.MEDIUM);
             case "tree_large":
-                return new EntityTree(handler, id, EntityTree.TreeType.LARGE);
+                return new EntityTree(theUltimateTile, id, EntityTree.TreeType.LARGE);
             case "rock_medium":
-                return new EntityRock(handler, id, Assets.ROCK_V1);
+                return new EntityRock(theUltimateTile, id, Assets.ROCK_V1);
             case "rock_small":
-                return new EntityRock(handler, id, Assets.ROCK_V2);
+                return new EntityRock(theUltimateTile, id, Assets.ROCK_V2);
             case "zombie":
-                return new EntityZombie(handler, id);
+                return new EntityZombie(theUltimateTile, id);
             case "skeleton":
-                return new EntitySkeleton(handler, id);
+                return new EntitySkeleton(theUltimateTile, id);
             case "bouncer":
-                return new EntityBouncer(handler, id);
+                return new EntityBouncer(theUltimateTile, id);
             case "thing":
-                return new EntityThing(handler, id);
+                return new EntityThing(theUltimateTile, id);
             case "ultimate":
-                return new EntityUltimateTile(handler, id);
+                return new EntityUltimateTile(theUltimateTile, id);
             case "bush_small":
-                return new EntityBush(handler, id, Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH);
+                return new EntityBush(theUltimateTile, id, Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH);
             case "bush_large":
-                return new EntityBush(handler, id, Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2);
+                return new EntityBush(theUltimateTile, id, Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2);
             case "carrot_crop":
-                return new EntityCrop(handler, id, Assets.CARROT_CROP, Items.CARROT);
+                return new EntityCrop(theUltimateTile, id, Assets.CARROT_CROP, Items.CARROT);
         }
-        return new EntityRock(handler, "rock", Assets.ROCK_V1);
+        return new EntityRock(theUltimateTile, "rock", Assets.ROCK_V1);
     }
 }

@@ -1,14 +1,14 @@
 package coffeecatteam.theultimatetile.entities.creatures;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.items.Items;
+import coffeecatteam.theultimatetile.inventory.items.Items;
 
 public class EntityZombie extends EntityUndead {
 
-    public EntityZombie(Handler handler, String id) {
-        super(handler, id);
+    public EntityZombie(TheUltimateTile theUltimateTile, String id) {
+        super(theUltimateTile, id);
         this.drop = Items.ROTTEN_FLESH;
     }
 

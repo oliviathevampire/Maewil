@@ -1,6 +1,6 @@
-package coffeecatteam.theultimatetile.items;
+package coffeecatteam.theultimatetile.inventory.items;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -13,7 +13,7 @@ public class Item implements Cloneable {
 
     public static final int WIDTH = 32, HEIGHT = 32;
 
-    protected Handler handler;
+    protected TheUltimateTile theUltimateTile;
     protected BufferedImage texture;
     protected final String id;
 
@@ -31,11 +31,11 @@ public class Item implements Cloneable {
     }
 
     public void tick(int count) {
-        if (this.handler.getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
-            if (!this.handler.getEntityManager().getPlayer().getInventory().isFull()) {
+        if (this.theUltimateTile.getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
+            if (!this.theUltimateTile.getEntityManager().getPlayer().getInventory().isFull()) {
                 this.pickedUp = true;
             } else {
-                for (ItemStack stack : this.handler.getEntityManager().getPlayer().getInventory().getItems()) {
+                for (ItemStack stack : this.theUltimateTile.getEntityManager().getPlayer().getInventory().getItems()) {
                     if (stack.getId().equals(this.id)) {
                         if (stack.getItem().isStackable()) {
                             this.pickedUp = true;
@@ -45,15 +45,15 @@ public class Item implements Cloneable {
             }
         }
         if (this.pickedUp)
-            this.handler.getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this, count));
+            this.theUltimateTile.getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this, count));
 
         this.bounds = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
     }
 
     public void render(Graphics g) {
-        if (this.handler == null)
+        if (this.theUltimateTile == null)
             return;
-        render(g, (int) (this.x - this.handler.getCamera().getxOffset()), (int) (this.y - this.handler.getCamera().getyOffset()));
+        render(g, (int) (this.x - this.theUltimateTile.getCamera().getxOffset()), (int) (this.y - this.theUltimateTile.getCamera().getyOffset()));
     }
 
     public void render(Graphics g, int x, int y) {
@@ -67,12 +67,12 @@ public class Item implements Cloneable {
         this.bounds.y = y;
     }
 
-    public Handler getHandler() {
-        return this.handler;
+    public TheUltimateTile getTheUltimateTile() {
+        return this.theUltimateTile;
     }
 
-    public void setHandler(Handler handler) {
-        this.handler = handler;
+    public void setTheUltimateTile(TheUltimateTile theUltimateTile) {
+        this.theUltimateTile = theUltimateTile;
     }
 
     public BufferedImage getTexture() {

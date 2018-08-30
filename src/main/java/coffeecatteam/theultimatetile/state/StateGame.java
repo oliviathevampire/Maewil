@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.state;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIManager;
@@ -20,55 +20,55 @@ public class StateGame extends State {
 
     private UIManager uiManager;
 
-    public StateGame(Handler handlerIn) {
-        this(handlerIn, "/assets/worlds/starter/world1");
+    public StateGame(TheUltimateTile theUltimateTileIn) {
+        this(theUltimateTileIn, "/assets/worlds/starter/world1");
     }
 
-    public StateGame(Handler handlerIn, String world) {
-        super(handlerIn);
-        uiManager = new UIManager(handler);
+    public StateGame(TheUltimateTile theUltimateTileIn, String world) {
+        super(theUltimateTileIn);
+        uiManager = new UIManager(theUltimateTile);
         reset(world);
 
         int btnWidth = 192;
         int btnHeight = 64;
         int yOffset = 150;
-        uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 25, btnWidth, btnHeight, "Resume", () ->
+        uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25, btnWidth, btnHeight, "Resume", () ->
                 paused = false
         ));
         int w = btnWidth + 128;
-        uiManager.addObject(new UIButton(handler.getWidth() / 2 - w / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
-            State.setState(handler.getGame().stateMenu);
+        uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - w / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
+            State.setState(theUltimateTile.stateMenu);
             disconnect();
         }));
-        uiManager.addObject(new UIButton(handler.getWidth() / 2 - btnWidth / 2, handler.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
-            Logger.print("Exiting...");
+        uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
             disconnect();
+            Logger.print("Exiting...");
             System.exit(0);
         }));
     }
 
     private void disconnect() {
-        Packet01Disconnect packet = new Packet01Disconnect(handler.getGame().getEntityManager().getPlayer().getUsername());
-        packet.writeData(handler.getGame().getClient());
+        Packet01Disconnect packet = new Packet01Disconnect(theUltimateTile.getEntityManager().getPlayer().getUsername());
+        packet.writeData(theUltimateTile.getClient());
     }
 
     @Override
     public void init() {
         paused = false;
-        handler.getMouseManager().setUiManager(uiManager);
-        handler.getEntityManager().getPlayer().setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
-        handler.getEntityManager().getPlayer().setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
+        theUltimateTile.getMouseManager().setUiManager(uiManager);
+        theUltimateTile.getEntityManager().getPlayer().setX(world.getSpawnX() * Tile.TILE_WIDTH);
+        theUltimateTile.getEntityManager().getPlayer().setY(world.getSpawnY() * Tile.TILE_HEIGHT);
     }
 
     @Override
     public void tick() {
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE))
-            paused = !paused && !handler.getEntityManager().getPlayer().getInventory().isActive();
+        if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE))
+            paused = !paused && !theUltimateTile.getEntityManager().getPlayer().getInventory().isActive();
 
         if (paused)
-            handler.getMouseManager().setUiManager(uiManager);
+            theUltimateTile.getMouseManager().setUiManager(uiManager);
         else
-            handler.getMouseManager().setUiManager(null);
+            theUltimateTile.getMouseManager().setUiManager(null);
 
         if (!paused)
             world.tick();
@@ -82,7 +82,7 @@ public class StateGame extends State {
         if (paused) {
             Color tint = new Color(96, 96, 96, 127);
             g.setColor(tint);
-            g.fillRect(0, 0, handler.getWidth(), handler.getHeight());
+            g.fillRect(0, 0, theUltimateTile.getWidth(), theUltimateTile.getHeight());
 
             int w = 80 * 6;
             int h = 48 * 6;
@@ -93,14 +93,14 @@ public class StateGame extends State {
     }
 
     public void setWorld(String path) {
-        this.world = new World(handler, path);
-        handler.setWorld(world);
+        this.world = new World(theUltimateTile, path);
+        theUltimateTile.setWorld(world);
         init();
     }
 
     public void reset(String world) {
-        handler.getEntityManager().reset();
-        handler.getEntityManager().getPlayer().reset();
+        theUltimateTile.getEntityManager().reset();
+        theUltimateTile.getEntityManager().getPlayer().reset();
         setWorld(world);
     }
 }

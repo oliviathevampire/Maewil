@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.entities.statics;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
@@ -11,8 +11,8 @@ public class EntityUltimateTile extends EntityStatic {
 
     private Animation animation;
 
-    public EntityUltimateTile(Handler handler, String id) {
-        super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityUltimateTile(TheUltimateTile theUltimateTile, String id) {
+        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
 
         bounds.x = 0;
         bounds.y = height / 2;
@@ -30,6 +30,6 @@ public class EntityUltimateTile extends EntityStatic {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(animation.getCurrentFrame(), (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()), width, height, null);
+        g.drawImage(animation.getCurrentFrame(), (int) (this.x - theUltimateTile.getCamera().getxOffset()), (int) (this.y - theUltimateTile.getCamera().getyOffset()), width, height, null);
     }
 }

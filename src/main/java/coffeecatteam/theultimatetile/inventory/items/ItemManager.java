@@ -1,9 +1,8 @@
-package coffeecatteam.theultimatetile.items;
+package coffeecatteam.theultimatetile.inventory.items;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,11 +10,11 @@ import java.util.Iterator;
 
 public class ItemManager {
 
-    private Handler handler;
+    private TheUltimateTile theUltimateTile;
     private ArrayList<ItemStack> items;
 
-    public ItemManager(Handler handler) {
-        this.handler = handler;
+    public ItemManager(TheUltimateTile theUltimateTile) {
+        this.theUltimateTile = theUltimateTile;
         items = new ArrayList<>();
     }
 
@@ -32,7 +31,7 @@ public class ItemManager {
     public void render(Graphics g) {
         for (ItemStack stack : items) {
             stack.getItem().render(g);
-            Text.drawString(g, String.valueOf(stack.getCount()), (int) (stack.getItem().getX() - this.handler.getCamera().getxOffset()), (int) (stack.getItem().getY() + 15 - this.handler.getCamera().getyOffset()), false, false, Color.white, Assets.FONT_20);
+            Text.drawString(g, String.valueOf(stack.getCount()), (int) (stack.getItem().getX() - this.theUltimateTile.getCamera().getxOffset()), (int) (stack.getItem().getY() + 15 - this.theUltimateTile.getCamera().getyOffset()), false, false, Color.white, Assets.FONT_20);
         }
     }
 
@@ -46,16 +45,8 @@ public class ItemManager {
     }
 
     public void addItem(ItemStack stack) {
-        stack.setHandler(handler);
+        stack.setTheUltimateTile(theUltimateTile);
         items.add(stack);
-    }
-
-    public Handler getHandler() {
-        return handler;
-    }
-
-    public void setHandler(Handler handler) {
-        this.handler = handler;
     }
 
     public ArrayList<ItemStack> getItems() {

@@ -1,11 +1,11 @@
 package coffeecatteam.theultimatetile.inventory;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.theultimatetile.items.IInteractable;
-import coffeecatteam.theultimatetile.items.ItemStack;
+import coffeecatteam.theultimatetile.inventory.items.IInteractable;
+import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Inventory {
 
-    private Handler handler;
+    private TheUltimateTile theUltimateTile;
     protected EntityPlayer player;
 
     private boolean active = false;
@@ -26,8 +26,8 @@ public class Inventory {
     private int inventorySelectedIndex = 0;
     private int hotbarSelectedIndex = 0;
 
-    public Inventory(Handler handler, EntityPlayer player) {
-        this.handler = handler;
+    public Inventory(TheUltimateTile theUltimateTile, EntityPlayer player) {
+        this.theUltimateTile = theUltimateTile;
         this.player = player;
 
         inventory = new ArrayList<>();
@@ -48,17 +48,17 @@ public class Inventory {
     }
 
     public void tick() {
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_E))
+        if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_E))
             active = !active;
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE) && active)
+        if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE) && active)
             active = !active;
 
         if (active) {
             // Change select item
-            boolean up = handler.getKeyManager().keyJustPressed(KeyEvent.VK_W);
-            boolean down = handler.getKeyManager().keyJustPressed(KeyEvent.VK_S);
-            boolean left = handler.getKeyManager().keyJustPressed(KeyEvent.VK_A);
-            boolean right = handler.getKeyManager().keyJustPressed(KeyEvent.VK_D);
+            boolean up = theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_W);
+            boolean down = theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_S);
+            boolean left = theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_A);
+            boolean right = theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_D);
 
             if (up || down) {
                 inventorySelectedIndex += 6;
@@ -79,14 +79,14 @@ public class Inventory {
                 ItemStack stack = inventory.get(inventorySelectedIndex);
 
                 // Check if item was interacted with
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
+                if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
                     if (stack.getItem() instanceof IInteractable)
                         if (((IInteractable) stack.getItem()).onInteracted(player))
                             stack.setCount(stack.getCount() - 1);
                 }
 
                 // Put item in inventory back into hotbar
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
+                if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
                     if (!isHotbarFull()) {
                         addStackToHotbar(stack);
                     } else {
@@ -103,7 +103,7 @@ public class Inventory {
             }
 
             // Put item in hotbar into inventory
-            if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_X)) {
+            if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_X)) {
                 if (hotbarIsntEmpty()) {
                     ItemStack hStack = hotbar.get(hotbarSelectedIndex);
                     if (!isFull()) {
@@ -122,14 +122,14 @@ public class Inventory {
                 }
             }
         }
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_Q))
+        if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_Q))
             dropItem(active, inventorySelectedIndex, hotbarSelectedIndex);
 
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_1))
+        if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_1))
             hotbarSelectedIndex = 0;
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_2))
+        if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_2))
             hotbarSelectedIndex = 1;
-        if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_3))
+        if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_3))
             hotbarSelectedIndex = 2;
         if (hotbarSelectedIndex < hotbar.size()) {
             player.setEquippedItem(hotbar.get(hotbarSelectedIndex));
@@ -144,10 +144,10 @@ public class Inventory {
         float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4;
         if (active) {
             inventory.get(inventorySelectedIndex).getItem().setPickedUp(false);
-            handler.getGame().getItemManager().addItem(inventory.remove(inventorySelectedIndex), player.getX() + xOff, player.getY() + yOff);
+            theUltimateTile.getTheUltimateTile().getItemManager().addItem(inventory.remove(inventorySelectedIndex), player.getX() + xOff, player.getY() + yOff);
         } else {
             hotbar.get(inventorySelectedIndex).getItem().setPickedUp(false);
-            handler.getGame().getItemManager().addItem(hotbar.remove(hotbarSelectedIndex), player.getX() + xOff, player.getY() + yOff);
+            theUltimateTile.getTheUltimateTile().getItemManager().addItem(hotbar.remove(hotbarSelectedIndex), player.getX() + xOff, player.getY() + yOff);
         }
     }
 
@@ -158,8 +158,8 @@ public class Inventory {
         int multiplier = 6;
         int width = 57 * multiplier;
         int height = 41 * multiplier;
-        int x = handler.getWidth() / 2 - width / 2;
-        int y = handler.getHeight() / 2 - height / 2;
+        int x = theUltimateTile.getWidth() / 2 - width / 2;
+        int y = theUltimateTile.getHeight() / 2 - height / 2;
 
         g.drawImage(Assets.INVENTORY.crop(0, 0, width / multiplier, height / multiplier), x, y, width, height, null);
         g.drawImage(Assets.PLAYER_IDLE[0], x + player.getWidth() / 2, y + player.getHeight() / 2, player.getWidth(), player.getHeight(), null);
@@ -201,16 +201,16 @@ public class Inventory {
         int multiplier = 6;
         int width = barWidth * multiplier;
         int height = barHeight * multiplier;
-        int y = handler.getHeight() - height;
+        int y = theUltimateTile.getHeight() - height;
 
-        g.drawImage(Assets.INVENTORY.crop(10, 54, barWidth, barHeight), handler.getWidth() / 2 - width / 2, y, width, height, null);
+        g.drawImage(Assets.INVENTORY.crop(10, 54, barWidth, barHeight), theUltimateTile.getWidth() / 2 - width / 2, y, width, height, null);
 
         int selectedWidth = 10;
         int selectedHeight = 10;
         int sWidth = selectedWidth * multiplier;
         int sHeight = selectedHeight * multiplier;
 
-        int x = handler.getWidth() / 2 - width / 2;
+        int x = theUltimateTile.getWidth() / 2 - width / 2;
         g.drawImage(Assets.INVENTORY.crop(0, 54, selectedWidth, selectedHeight), x + hotbarSelectedIndex * (sWidth - multiplier), y, sWidth, sHeight, null);
 
         int itemWidth = 32;
@@ -219,7 +219,7 @@ public class Inventory {
             for (int i = 0; i < hotbar.size(); i++) {
                 ItemStack stack = hotbar.get(i);
                 int xPos = x + 14 + 54 * i;
-                int yPos = handler.getHeight() - itemHeight - itemHeight / 2;
+                int yPos = theUltimateTile.getHeight() - itemHeight - itemHeight / 2;
                 g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
                 Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, false, false, Color.white, Assets.FONT_20);
             }
@@ -282,12 +282,12 @@ public class Inventory {
         return hotbar;
     }
 
-    public Handler getHandler() {
-        return handler;
+    public TheUltimateTile getTheUltimateTile() {
+        return theUltimateTile;
     }
 
-    public void setHandler(Handler handler) {
-        this.handler = handler;
+    public void setTheUltimateTile(TheUltimateTile theUltimateTile) {
+        this.theUltimateTile = theUltimateTile;
     }
 
     public boolean isActive() {

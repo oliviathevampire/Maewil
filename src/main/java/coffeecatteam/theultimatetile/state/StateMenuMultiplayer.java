@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.state;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
@@ -27,7 +27,7 @@ public class StateMenuMultiplayer extends State {
 
     private int ipBtnWidth = 64 * 5;
     private int ipBtnHeight = 64;
-    private int ipBtnY = handler.getHeight() / 2 - ipBtnHeight / 2;
+    private int ipBtnY = theUltimateTile.getHeight() / 2 - ipBtnHeight / 2;
 
     private int joinBtnWidth = 64 * 6;
     private int joinBtnHeight = 64;
@@ -35,40 +35,40 @@ public class StateMenuMultiplayer extends State {
     private int backBtnWidth = 64 * 3;
     private int backBtnHeight = 64;
 
-    public StateMenuMultiplayer(Handler handlerIn, String username) {
-        super(handlerIn);
-        uiManager = new UIManager(handler);
+    public StateMenuMultiplayer(TheUltimateTile theUltimateTileIn, String username) {
+        super(theUltimateTileIn);
+        uiManager = new UIManager(theUltimateTile);
         init();
         this.username = username;
 
         uiManager.addObject(new UIButton(x, ipBtnY, ipBtnWidth, ipBtnHeight, "Server IP", () -> {
             ip = JOptionPane.showInputDialog("Enter server ip:", ip);
-            handler.getGame().getClient().setIpAddress(ip);
+            theUltimateTile.getClient().setIpAddress(ip);
             Logger.print("IP set to [" + ip + "]");
         }));
 
-        String btnServerText = (handler.getGame().isHosting()) ? "Host" : "Join";
-        uiManager.addObject(new UIButton(x, handler.getHeight() - joinBtnHeight - 50, joinBtnWidth, joinBtnHeight, btnServerText + " Server", () -> {
+        String btnServerText = (theUltimateTile.isHosting()) ? "Host" : "Join";
+        uiManager.addObject(new UIButton(x, theUltimateTile.getHeight() - joinBtnHeight - 50, joinBtnWidth, joinBtnHeight, btnServerText + " Server", () -> {
             if (!ip.equalsIgnoreCase("")) {
-//                    handler.getGame().getClient().sendData("ping");
+//                    theUltimateTile.getGame().getClient().sendData("ping");
 
                 Logger.print("Joining Server [" + ip + "] as [" + this.username + "]");
-                State.setState(new StateGame(handler));
-                Packet00Login loginPacket = new Packet00Login(handler.getEntityManager().getPlayer().getUsername());
-                if (handler.getGame().getServer() != null)
-                    handler.getGame().getServer().addConnection((EntityPlayerMP) handler.getEntityManager().getPlayer(), loginPacket);
-                loginPacket.writeData(handler.getGame().getClient());
+                State.setState(new StateGame(theUltimateTile));
+                Packet00Login loginPacket = new Packet00Login(theUltimateTile.getEntityManager().getPlayer().getUsername());
+                if (theUltimateTile.getServer() != null)
+                    theUltimateTile.getServer().addConnection((EntityPlayerMP) theUltimateTile.getEntityManager().getPlayer(), loginPacket);
+                loginPacket.writeData(theUltimateTile.getClient());
             }
         }));
 
-        uiManager.addObject(new UIButton(handler.getWidth() - backBtnWidth - x, handler.getHeight() - backBtnHeight - 50, backBtnWidth, backBtnHeight, "Back", () -> {
-            State.setState(handler.getGame().stateMenu);
+        uiManager.addObject(new UIButton(theUltimateTile.getWidth() - backBtnWidth - x, theUltimateTile.getHeight() - backBtnHeight - 50, backBtnWidth, backBtnHeight, "Back", () -> {
+            State.setState(theUltimateTile.stateMenu);
         }));
     }
 
     @Override
     public void init() {
-        handler.getMouseManager().setUiManager(uiManager);
+        theUltimateTile.getMouseManager().setUiManager(uiManager);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class StateMenuMultiplayer extends State {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.BACKGROUND, 0, 0, handler.getWidth(), handler.getHeight(), null);
+        g.drawImage(Assets.BACKGROUND, 0, 0, theUltimateTile.getWidth(), theUltimateTile.getHeight(), null);
         uiManager.render(g);
 
         Font font = Assets.FONT_30;

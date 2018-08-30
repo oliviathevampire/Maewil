@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.net;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.net.packet.Packet;
 import coffeecatteam.theultimatetile.net.packet.Packet00Login;
@@ -16,10 +16,10 @@ public class Client extends Thread {
 
     private InetAddress ipAddress;
     private DatagramSocket socket;
-    private Handler handler;
+    private TheUltimateTile theUltimateTile;
 
-    public Client(Handler handler) {
-        this.handler = handler;
+    public Client(TheUltimateTile theUltimateTile) {
+        this.theUltimateTile = theUltimateTile;
         try {
             this.socket = new DatagramSocket();
         } catch (SocketException e) {
@@ -54,15 +54,15 @@ public class Client extends Thread {
             case LOGIN:
                 packet = new Packet00Login(data);
                 Logger.print("[" + address.getHostAddress() + ":" + port + "] " + ((Packet00Login) packet).getUsername() + " has joined the game!");
-                EntityPlayerMP player = new EntityPlayerMP(handler, ((Packet00Login) packet).getUsername(), address, port, false);
-                player.setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
-                player.setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
-                handler.getEntityManager().addEntity(player);
+                EntityPlayerMP player = new EntityPlayerMP(theUltimateTile, ((Packet00Login) packet).getUsername(), address, port, false);
+                player.setX(theUltimateTile.getWorld().getSpawnX() * Tile.TILE_WIDTH);
+                player.setY(theUltimateTile.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
+                theUltimateTile.getEntityManager().addEntity(player);
                 break;
             case DISCONNECT:
                 packet = new Packet01Disconnect(data);
                 Logger.print("[" + address.getHostAddress() + ":" + port + "] " + ((Packet01Disconnect) packet).getUsername() + " has disconnected!");
-                handler.getEntityManager().removePlayerMP(((Packet01Disconnect) packet).getUsername());
+                theUltimateTile.getEntityManager().removePlayerMP(((Packet01Disconnect) packet).getUsername());
                 break;
             case MOVE:
                 packet = new Packet02Move(data);
@@ -72,7 +72,7 @@ public class Client extends Thread {
     }
 
     private void handleMove(Packet02Move packet) {
-        handler.getEntityManager().movePlayer(packet.getUsername(), packet.getX(), packet.getY());
+        theUltimateTile.getEntityManager().movePlayer(packet.getUsername(), packet.getX(), packet.getY());
     }
 
     public void sendData(String data) {

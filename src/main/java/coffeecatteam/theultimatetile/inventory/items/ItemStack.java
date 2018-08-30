@@ -1,6 +1,6 @@
-package coffeecatteam.theultimatetile.items;
+package coffeecatteam.theultimatetile.inventory.items;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 
 import java.awt.image.BufferedImage;
 
@@ -65,7 +65,7 @@ public class ItemStack {
             this.count = MAX_STACK_COUNT;
     }
 
-    public void setHandler(Handler handler) {
-        this.item.setHandler(handler);
+    public void setTheUltimateTile(TheUltimateTile theUltimateTile) {
+        this.item.setTheUltimateTile(theUltimateTile);
     }
 }

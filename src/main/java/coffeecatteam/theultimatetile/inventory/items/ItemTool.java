@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.items;
+package coffeecatteam.theultimatetile.inventory.items;
 
 import java.awt.image.BufferedImage;
 

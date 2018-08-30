@@ -1,13 +1,10 @@
 package coffeecatteam.theultimatetile.worlds;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.EntityLoader;
-import coffeecatteam.theultimatetile.entities.EntityManager;
-import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.overlays.OverlayManager;
-import coffeecatteam.theultimatetile.items.Item;
-import coffeecatteam.theultimatetile.items.ItemManager;
-import coffeecatteam.theultimatetile.items.ItemStack;
+import coffeecatteam.theultimatetile.inventory.items.Item;
+import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Logger;
@@ -18,7 +15,7 @@ import java.text.DecimalFormat;
 
 public class World {
 
-    private Handler handler;
+    private TheUltimateTile theUltimateTile;
     private int width, height;
     private int spawnX, spawnY;
 
@@ -27,20 +24,20 @@ public class World {
 
     private OverlayManager overlayManager;
 
-    public World(Handler handler, String path) {
-        this.handler = handler;
-        overlayManager = new OverlayManager(handler, handler.getEntityManager().getPlayer());
+    public World(TheUltimateTile theUltimateTile, String path) {
+        this.theUltimateTile = theUltimateTile;
+        overlayManager = new OverlayManager(theUltimateTile, theUltimateTile.getEntityManager().getPlayer());
 
         loadWorld(path);
-        handler.getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
-        handler.getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
+        theUltimateTile.getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
+        theUltimateTile.getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
     }
 
     public void tick() {
-        int xStart = (int) Math.max(0, handler.getCamera().getxOffset() / Tile.TILE_WIDTH);
-        int xEnd = (int) Math.min(width, (handler.getCamera().getxOffset() + handler.getWidth()) / Tile.TILE_WIDTH + 1);
-        int yStart = (int) Math.max(0, handler.getCamera().getyOffset() / Tile.TILE_HEIGHT);
-        int yEnd = (int) Math.min(height, (handler.getCamera().getyOffset() + handler.getHeight()) / Tile.TILE_HEIGHT + 1);
+        int xStart = (int) Math.max(0, theUltimateTile.getCamera().getxOffset() / Tile.TILE_WIDTH);
+        int xEnd = (int) Math.min(width, (theUltimateTile.getCamera().getxOffset() + theUltimateTile.getWidth()) / Tile.TILE_WIDTH + 1);
+        int yStart = (int) Math.max(0, theUltimateTile.getCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (theUltimateTile.getCamera().getyOffset() + theUltimateTile.getHeight()) / Tile.TILE_HEIGHT + 1);
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
@@ -49,26 +46,26 @@ public class World {
             }
         }
 
-        handler.getGame().getItemManager().tick();
-        handler.getEntityManager().tick();
+        theUltimateTile.getTheUltimateTile().getItemManager().tick();
+        theUltimateTile.getEntityManager().tick();
         overlayManager.tick();
     }
 
     public void render(Graphics g) {
-        int xStart = (int) Math.max(0, handler.getCamera().getxOffset() / Tile.TILE_WIDTH);
-        int xEnd = (int) Math.min(width, (handler.getCamera().getxOffset() + handler.getWidth()) / Tile.TILE_WIDTH + 1);
-        int yStart = (int) Math.max(0, handler.getCamera().getyOffset() / Tile.TILE_HEIGHT);
-        int yEnd = (int) Math.min(height, (handler.getCamera().getyOffset() + handler.getHeight()) / Tile.TILE_HEIGHT + 1);
+        int xStart = (int) Math.max(0, theUltimateTile.getCamera().getxOffset() / Tile.TILE_WIDTH);
+        int xEnd = (int) Math.min(width, (theUltimateTile.getCamera().getxOffset() + theUltimateTile.getWidth()) / Tile.TILE_WIDTH + 1);
+        int yStart = (int) Math.max(0, theUltimateTile.getCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (theUltimateTile.getCamera().getyOffset() + theUltimateTile.getHeight()) / Tile.TILE_HEIGHT + 1);
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
-                getTile(bg_tiles, x, y).render(g, (int) (x * Tile.TILE_WIDTH - handler.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - handler.getCamera().getyOffset()), new Color(63, 63, 63, 127));
-                getTile(tiles, x, y).render(g, (int) (x * Tile.TILE_WIDTH - handler.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - handler.getCamera().getyOffset()));
+                getTile(bg_tiles, x, y).render(g, (int) (x * Tile.TILE_WIDTH - theUltimateTile.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - theUltimateTile.getCamera().getyOffset()), new Color(63, 63, 63, 127));
+                getTile(tiles, x, y).render(g, (int) (x * Tile.TILE_WIDTH - theUltimateTile.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - theUltimateTile.getCamera().getyOffset()));
             }
         }
 
-        handler.getGame().getItemManager().render(g);
-        handler.getEntityManager().render(g);
+        theUltimateTile.getTheUltimateTile().getItemManager().render(g);
+        theUltimateTile.getEntityManager().render(g);
         overlayManager.render(g);
     }
 
@@ -182,7 +179,7 @@ public class World {
                 float x = Utils.parseFloat(entityTokens[i].split(spliter)[1]);
                 float y = Utils.parseFloat(entityTokens[i].split(spliter)[2]);
 
-                handler.getEntityManager().addEntity(EntityLoader.loadEntity(handler, entityId), x, y, true);
+                theUltimateTile.getEntityManager().addEntity(EntityLoader.loadEntity(theUltimateTile, entityId), x, y, true);
 
                 if (y % 2 == 0)
                     Logger.print(getLoaded(i) + "% Loaded!");
@@ -205,7 +202,7 @@ public class World {
                 if (!item.isStackable())
                     count = 1;
 
-                handler.getGame().getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
+                theUltimateTile.getTheUltimateTile().getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
 
                 if (y % 2 == 0)
                     Logger.print(getLoaded(i) + "% Loaded!");
@@ -213,8 +210,8 @@ public class World {
         }
     }
 
-    public Handler getHandler() {
-        return handler;
+    public TheUltimateTile getTheUltimateTile() {
+        return theUltimateTile;
     }
 
     public int getWidth() {

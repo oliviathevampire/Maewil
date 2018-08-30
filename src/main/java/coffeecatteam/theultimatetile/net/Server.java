@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.net;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.net.packet.Packet;
 import coffeecatteam.theultimatetile.net.packet.Packet00Login;
@@ -20,11 +20,11 @@ import java.util.List;
 public class Server extends Thread {
 
     private DatagramSocket socket;
-    private Handler handler;
+    private TheUltimateTile theUltimateTile;
     private List<EntityPlayerMP> connectedPlayers = new ArrayList<>();
 
-    public Server(Handler handler) {
-        this.handler = handler;
+    public Server(TheUltimateTile theUltimateTile) {
+        this.theUltimateTile = theUltimateTile;
         try {
             this.socket = new DatagramSocket(25565);
         } catch (SocketException e) {
@@ -63,7 +63,7 @@ public class Server extends Thread {
             case LOGIN:
                 packet = new Packet00Login(data);
                 Logger.print("[" + address.getHostAddress() + ":" + port + "] " + ((Packet00Login) packet).getUsername() + " has connected!");
-                EntityPlayerMP player = new EntityPlayerMP(handler, ((Packet00Login) packet).getUsername(), address, port, false);
+                EntityPlayerMP player = new EntityPlayerMP(theUltimateTile, ((Packet00Login) packet).getUsername(), address, port, false);
                 this.addConnection(player, (Packet00Login) packet);
                 break;
             case DISCONNECT:
@@ -89,8 +89,8 @@ public class Server extends Thread {
 
     public void addConnection(EntityPlayerMP player, Packet00Login packet) {
         boolean connected = false;
-        player.setX(handler.getWorld().getSpawnX() * Tile.TILE_WIDTH);
-        player.setY(handler.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
+        player.setX(theUltimateTile.getWorld().getSpawnX() * Tile.TILE_WIDTH);
+        player.setY(theUltimateTile.getWorld().getSpawnY() * Tile.TILE_HEIGHT);
         for (EntityPlayerMP p : this.connectedPlayers) {
             if (player.getUsername().equals(p.getUsername())) {
                 if (p.getIpAddress() == null)

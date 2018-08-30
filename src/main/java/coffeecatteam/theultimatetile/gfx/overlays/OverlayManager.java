@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.overlays;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
 
 import java.awt.*;
@@ -11,12 +11,12 @@ public class OverlayManager {
 
     private List<Overlay> overlays;
 
-    public OverlayManager(Handler handler, EntityPlayer player) {
+    public OverlayManager(TheUltimateTile theUltimateTile, EntityPlayer player) {
         overlays = new ArrayList<>();
 
-        addOverlay(new OverlayPlayerHealth(handler, player));
-        addOverlay(new OverlayPlayerSprint(handler, player));
-        addOverlay(new OverlayGlub(handler, player));
+        addOverlay(new OverlayPlayerHealth(theUltimateTile, player));
+        addOverlay(new OverlayPlayerSprint(theUltimateTile, player));
+        addOverlay(new OverlayGlub(theUltimateTile, player));
     }
 
     public void tick() {

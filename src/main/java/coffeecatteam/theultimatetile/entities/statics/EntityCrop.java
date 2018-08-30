@@ -1,9 +1,9 @@
 package coffeecatteam.theultimatetile.entities.statics;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
-import coffeecatteam.theultimatetile.items.Item;
-import coffeecatteam.theultimatetile.items.ItemStack;
+import coffeecatteam.theultimatetile.inventory.items.Item;
+import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -16,8 +16,8 @@ public class EntityCrop extends EntityStatic {
     private BufferedImage texture;
     private Item drop;
 
-    public EntityCrop(Handler handler, String id, BufferedImage texture, Item drop) {
-        super(handler, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityCrop(TheUltimateTile theUltimateTile, String id, BufferedImage texture, Item drop) {
+        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         isCollidable = false;
 
         this.texture = texture;
@@ -31,7 +31,7 @@ public class EntityCrop extends EntityStatic {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(texture, (int) (this.x - handler.getCamera().getxOffset()), (int) (this.y - handler.getCamera().getyOffset()), width, height, null);
+        g.drawImage(texture, (int) (this.x - theUltimateTile.getCamera().getxOffset()), (int) (this.y - theUltimateTile.getCamera().getyOffset()), width, height, null);
     }
 
     @Override
@@ -39,6 +39,6 @@ public class EntityCrop extends EntityStatic {
         super.die(it);
         int amt = new Random().nextInt(2) + 1;
         for (int i = 0; i < amt; i++)
-            handler.getGame().getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+            theUltimateTile.getTheUltimateTile().getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
     }
 }

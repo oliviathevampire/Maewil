@@ -1,17 +1,17 @@
 package coffeecatteam.theultimatetile.gfx.overlays;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
 
 import java.awt.*;
 
 public abstract class Overlay {
 
-    protected Handler handler;
+    protected TheUltimateTile theUltimateTile;
     protected EntityPlayer player;
 
-    public Overlay(Handler handler, EntityPlayer player) {
-        this.handler = handler;
+    public Overlay(TheUltimateTile theUltimateTile, EntityPlayer player) {
+        this.theUltimateTile = theUltimateTile;
         this.player = player;
     }
 
@@ -19,11 +19,11 @@ public abstract class Overlay {
 
     public abstract void render(Graphics g);
 
-    public Handler getHandler() {
-        return handler;
+    public TheUltimateTile getTheUltimateTile() {
+        return theUltimateTile;
     }
 
-    public void setHandler(Handler handler) {
-        this.handler = handler;
+    public void setTheUltimateTile(TheUltimateTile theUltimateTile) {
+        this.theUltimateTile = theUltimateTile;
     }
 }

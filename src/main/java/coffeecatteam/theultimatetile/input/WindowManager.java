@@ -1,17 +1,18 @@
-package coffeecatteam.theultimatetile;
+package coffeecatteam.theultimatetile.input;
 
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.net.packet.Packet01Disconnect;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-public class WindowHandler implements WindowListener {
+public class WindowManager implements WindowListener {
 
-    private Game game;
+    private TheUltimateTile theUltimateTile;
 
-    public WindowHandler(Game game) {
-        this.game = game;
-        this.game.getFrame().addWindowListener(this);
+    public WindowManager(TheUltimateTile theUltimateTile) {
+        this.theUltimateTile = theUltimateTile;
+        this.theUltimateTile.getFrame().addWindowListener(this);
     }
 
     @Override
@@ -20,8 +21,8 @@ public class WindowHandler implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        Packet01Disconnect packet = new Packet01Disconnect(this.game.getEntityManager().getPlayer().getUsername());
-        packet.writeData(this.game.getClient());
+        Packet01Disconnect packet = new Packet01Disconnect(this.theUltimateTile.getEntityManager().getPlayer().getUsername());
+        packet.writeData(this.theUltimateTile.getClient());
     }
 
     @Override

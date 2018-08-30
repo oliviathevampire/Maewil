@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -8,11 +8,11 @@ import java.util.ArrayList;
 
 public class UIManager {
 
-    private Handler handler;
+    private TheUltimateTile theUltimateTile;
     private ArrayList<UIObject> objects;
 
-    public UIManager(Handler handler) {
-        this.handler = handler;
+    public UIManager(TheUltimateTile theUltimateTile) {
+        this.theUltimateTile = theUltimateTile;
         objects = new ArrayList<>();
     }
 

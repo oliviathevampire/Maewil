@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.entities.creatures;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
@@ -11,8 +11,8 @@ public abstract class EntityCreature extends Entity {
     protected float speed;
     protected float xMove, yMove;
 
-    public EntityCreature(Handler handler, String id, int width, int height) {
-        super(handler, id, width, height);
+    public EntityCreature(TheUltimateTile theUltimateTile, String id, int width, int height) {
+        super(theUltimateTile, id, width, height);
         speed = DEFAULT_SPEED;
         xMove = 0;
         yMove = 0;
@@ -62,7 +62,7 @@ public abstract class EntityCreature extends Entity {
     }
 
     protected boolean collisionWidthTile(int x, int y) {
-        return handler.getWorld().getTile(x, y).isSolid();
+        return theUltimateTile.getWorld().getTile(x, y).isSolid();
     }
 
     public float getSpeed() {
