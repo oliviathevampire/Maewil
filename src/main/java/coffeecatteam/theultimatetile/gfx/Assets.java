@@ -67,6 +67,7 @@ public class Assets {
     /* GUI */
     public static BufferedImage BACKGROUND;
     public static BufferedImage TITLE;
+    public static BufferedImage DEAD_OVERLAY;
 
     public static BufferedImage[] BUTTON_ENABLED = new BufferedImage[3];
     public static BufferedImage[] BUTTON_HOVER = new BufferedImage[3];
@@ -208,6 +209,7 @@ public class Assets {
         /* GUI */
         BACKGROUND = getSprite(new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/bg.png")), 0, 0, 320, 320);
         TITLE = getSprite(menuSheet, 3, 0, 80, 48);
+        DEAD_OVERLAY = getSprite(new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/dead_overlay.png")), 0, 0, 512, 512);
 
         BUTTON_ENABLED = getFrames(menuSheet, 0, 0, 2, width, height);
         BUTTON_HOVER = getFrames(menuSheet, 1, 0, 2, width, height);

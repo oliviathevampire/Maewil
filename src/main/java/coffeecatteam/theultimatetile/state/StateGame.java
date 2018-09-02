@@ -4,14 +4,12 @@ import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIManager;
-import coffeecatteam.theultimatetile.net.packet.Packet01Disconnect;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.worlds.World;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
 
 public class StateGame extends State {
 
@@ -19,7 +17,8 @@ public class StateGame extends State {
 
     private boolean paused = false;
 
-    private UIManager uiManager;
+    private UIManager uiManagerPaused;
+    private UIManager uiManagerDead;
 
     public StateGame(TheUltimateTile theUltimateTileIn) {
         this(theUltimateTileIn, "/assets/worlds/starter/world1");
@@ -27,64 +26,87 @@ public class StateGame extends State {
 
     public StateGame(TheUltimateTile theUltimateTileIn, String world) {
         super(theUltimateTileIn);
-        uiManager = new UIManager(theUltimateTile);
+        uiManagerPaused = new UIManager(theUltimateTile);
+        uiManagerDead = new UIManager(theUltimateTile);
         reset(world);
 
         int btnWidth = 192;
         int btnHeight = 64;
         int yOffset = 150;
-        uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25, btnWidth, btnHeight, "Resume", () ->
+        uiManagerPaused.addObject(new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25, btnWidth, btnHeight, "Resume", () ->
                 paused = false
         ));
+
         int w = btnWidth + 128;
-        uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - w / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
+        UIButton btnMainMenu = new UIButton(theUltimateTile.getWidth() / 2 - w / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
             State.setState(theUltimateTile.stateMenu);
             theUltimateTile.disconnect();
-        }));
-        uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
+        });
+        UIButton btnQuit = new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
             theUltimateTile.disconnect();
             Logger.print("Exiting...");
             System.exit(0);
-        }));
+        });
+
+        uiManagerPaused.addObject(btnMainMenu);
+        uiManagerPaused.addObject(btnQuit);
+        uiManagerDead.addObject(btnMainMenu);
+        uiManagerDead.addObject(btnQuit);
     }
 
     @Override
     public void init() {
         paused = false;
-        theUltimateTile.getMouseManager().setUiManager(uiManager);
+        theUltimateTile.getMouseManager().setUiManager(uiManagerPaused);
         theUltimateTile.getEntityManager().getPlayer().setX(world.getSpawnX() * Tile.TILE_WIDTH);
         theUltimateTile.getEntityManager().getPlayer().setY(world.getSpawnY() * Tile.TILE_HEIGHT);
     }
 
     @Override
     public void tick() {
-        if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE))
+        if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE) && !theUltimateTile.getEntityManager().getPlayer().isDead)
             paused = !paused && !theUltimateTile.getEntityManager().getPlayer().getInventory().isActive();
 
         if (paused)
-            theUltimateTile.getMouseManager().setUiManager(uiManager);
-        else
+            theUltimateTile.getMouseManager().setUiManager(uiManagerPaused);
+
+        if (theUltimateTile.getEntityManager().getPlayer().isDead) {
+            theUltimateTile.getMouseManager().setUiManager(uiManagerDead);
+            uiManagerDead.tick();
+        }
+
+        if (!paused && !theUltimateTile.getEntityManager().getPlayer().isDead)
             theUltimateTile.getMouseManager().setUiManager(null);
 
         if (!paused)
             world.tick();
         else
-            uiManager.tick();
+            uiManagerPaused.tick();
     }
 
     @Override
     public void render(Graphics g) {
         world.render(g);
-        if (paused) {
+
+        if (theUltimateTile.getEntityManager().getPlayer().isDead) {
             Color tint = new Color(96, 96, 96, 127);
             g.setColor(tint);
             g.fillRect(0, 0, theUltimateTile.getWidth(), theUltimateTile.getHeight());
+            g.drawImage(Assets.DEAD_OVERLAY, 0, 0, theUltimateTile.getWidth(), theUltimateTile.getHeight(), null);
 
-            int w = 80 * 6;
-            int h = 48 * 6;
-            g.drawImage(Assets.TITLE, w / 6, 30, w, h, null);
+            uiManagerDead.render(g);
+        } else {
+            if (paused) {
+                Color tint = new Color(96, 96, 96, 127);
+                g.setColor(tint);
+                g.fillRect(0, 0, theUltimateTile.getWidth(), theUltimateTile.getHeight());
 
-            uiManager.render(g);
+                int w = 80 * 6;
+                int h = 48 * 6;
+                g.drawImage(Assets.TITLE, w / 6, 30, w, h, null);
+
+                uiManagerPaused.render(g);
+            }
         }
     }
 
