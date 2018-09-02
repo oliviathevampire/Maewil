@@ -31,14 +31,16 @@ public class Item implements Cloneable {
     }
 
     public void tick(int count) {
-        if (this.theUltimateTile.getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
-            if (!this.theUltimateTile.getEntityManager().getPlayer().getInventory().isFull()) {
-                this.pickedUp = true;
-            } else {
-                for (ItemStack stack : this.theUltimateTile.getEntityManager().getPlayer().getInventory().getItems()) {
-                    if (stack.getId().equals(this.id)) {
-                        if (stack.getItem().isStackable()) {
-                            this.pickedUp = true;
+        if (this.theUltimateTile.getEntityManager().getPlayer().isActive()) {
+            if (this.theUltimateTile.getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
+                if (!this.theUltimateTile.getEntityManager().getPlayer().getInventory().isFull()) {
+                    this.pickedUp = true;
+                } else {
+                    for (ItemStack stack : this.theUltimateTile.getEntityManager().getPlayer().getInventory().getItems()) {
+                        if (stack.getId().equals(this.id)) {
+                            if (stack.getItem().isStackable()) {
+                                this.pickedUp = true;
+                            }
                         }
                     }
                 }
