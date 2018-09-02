@@ -179,7 +179,7 @@ public class World {
                 float x = Utils.parseFloat(entityTokens[i].split(spliter)[1]);
                 float y = Utils.parseFloat(entityTokens[i].split(spliter)[2]);
 
-                theUltimateTile.getEntityManager().addEntity(EntityLoader.loadEntity(theUltimateTile, entityId), x, y, true);
+                theUltimateTile.getEntityManager().addEntity(EntityLoader.loadEntity(entityId), x, y, true);
 
                 if (y % 2 == 0)
                     Logger.print(getLoaded(i) + "% Loaded!");
