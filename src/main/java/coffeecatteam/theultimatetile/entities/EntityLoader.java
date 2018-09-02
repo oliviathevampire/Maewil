@@ -1,7 +1,10 @@
 package coffeecatteam.theultimatetile.entities;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
-import coffeecatteam.theultimatetile.entities.creatures.*;
+import coffeecatteam.theultimatetile.entities.creatures.undead.EntityBouncer;
+import coffeecatteam.theultimatetile.entities.creatures.undead.EntitySkeleton;
+import coffeecatteam.theultimatetile.entities.creatures.undead.EntityThing;
+import coffeecatteam.theultimatetile.entities.creatures.undead.EntityZombie;
 import coffeecatteam.theultimatetile.entities.statics.*;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.Items;
