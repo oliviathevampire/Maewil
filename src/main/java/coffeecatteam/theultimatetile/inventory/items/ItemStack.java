@@ -68,4 +68,8 @@ public class ItemStack {
     public void setTheUltimateTile(TheUltimateTile theUltimateTile) {
         this.item.setTheUltimateTile(theUltimateTile);
     }
+
+    public void setPickedUp(boolean pickedUp) {
+        this.item.setPickedUp(pickedUp);
+    }
 }
