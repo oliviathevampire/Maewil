@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.entities;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.tiles.Tile;
@@ -8,13 +8,11 @@ import coffeecatteam.theultimatetile.tiles.Tile;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
-import java.util.function.Predicate;
 
 public class EntityManager {
 
     // EntityManager
-    private Handler handler;
+    private TheUltimateTile theUltimateTile;
     private EntityPlayer player;
     private ArrayList<Entity> entities;
     private Comparator<Entity> renderSorter = (Entity a, Entity b) -> {
@@ -23,27 +21,30 @@ public class EntityManager {
         return 1;
     };
 
-    public EntityManager(Handler handler, EntityPlayer player) {
-        this.handler = handler;
+    public EntityManager(TheUltimateTile theUltimateTile, EntityPlayer player) {
+        this.theUltimateTile = theUltimateTile;
         this.player = player;
         entities = new ArrayList<>();
         addEntity(this.player);
     }
 
     public void tick() {
-        Iterator<Entity> it = entities.iterator();
-        while (it.hasNext()) {
-            Entity e = it.next();
+        for (int i = 0; i < entities.size(); i++) {
+            Entity e = entities.get(i);
             e.tick();
-            if (!e.isActive())
-                e.die(it);
+            if (!e.isActive()) {
+                e.die(entities, i);
+                if (!(e instanceof EntityPlayer))
+                    i--;
+            }
         }
         entities.sort(renderSorter);
     }
 
     public void render(Graphics g) {
-        for (Entity e : entities)
+        for (Entity e : entities) {
             e.renderA(g);
+        }
 
         /* Post Render */
         player.postRender(g);
@@ -63,12 +64,12 @@ public class EntityManager {
         entities.add(e);
     }
 
-    public Handler getHandler() {
-        return handler;
+    public TheUltimateTile getTheUltimateTile() {
+        return theUltimateTile;
     }
 
-    public void setHandler(Handler handler) {
-        this.handler = handler;
+    public void setTheUltimateTile(TheUltimateTile theUltimateTile) {
+        this.theUltimateTile = theUltimateTile;
     }
 
     public EntityPlayer getPlayer() {
@@ -95,9 +96,9 @@ public class EntityManager {
     public void removePlayerMP(String username) {
         int index = 0;
         for (Entity e : entities) {
-            if (e instanceof EntityPlayerMP && ((EntityPlayerMP) e).getUsername().equals(username)) {
-                break;
-            }
+            if (e instanceof EntityPlayerMP)
+                if (((EntityPlayerMP) e).getUsername().equals(username))
+                    break;
             index++;
         }
         entities.remove(index);
@@ -105,9 +106,10 @@ public class EntityManager {
 
     private int getPlayerMPIndex(String username) {
         int index = 0;
-        for (Entity e : this.entities) {
-            if (e instanceof EntityPlayerMP && ((EntityPlayerMP) e).getUsername().equals(username))
-                break;
+        for (Entity e : entities) {
+            if (e instanceof EntityPlayerMP)
+                if (((EntityPlayerMP) e).getUsername().equals(username))
+                    break;
             index++;
         }
         return index;
@@ -117,5 +119,10 @@ public class EntityManager {
         int index = getPlayerMPIndex(username);
         entities.get(index).setX(x);
         entities.get(index).setY(y);
+
+//        EntityPlayerMP player = (EntityPlayerMP) entities.get(index);
+//        player.setxMove(x);
+//        player.setyMove(y);
+        //player.move();
     }
 }

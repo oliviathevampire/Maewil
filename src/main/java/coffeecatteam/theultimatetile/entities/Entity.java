@@ -1,12 +1,13 @@
 package coffeecatteam.theultimatetile.entities;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Entity {
@@ -18,7 +19,7 @@ public abstract class Entity {
     public static final int DEFAULT_HEIGHT = 64;
 
     private String id;
-    protected Handler handler;
+    protected TheUltimateTile theUltimateTile;
     protected float x, y;
 
     protected int width, height;
@@ -28,8 +29,8 @@ public abstract class Entity {
 
     protected boolean showHitbox = false, isCollidable = true;
 
-    public Entity(Handler handler, String id, int width, int height) {
-        this.handler = handler;
+    public Entity(TheUltimateTile theUltimateTile, String id, int width, int height) {
+        this.theUltimateTile = theUltimateTile;
         this.id = id;
 
         this.width = width;
@@ -39,7 +40,7 @@ public abstract class Entity {
         bounds = new Rectangle(0, 0, width, height);
 
         entities.put(id, this);
-        entities.get(id).setHandler(handler);
+        entities.get(id).setTheUltimateTile(theUltimateTile);
     }
 
     public abstract void tick();
@@ -51,13 +52,13 @@ public abstract class Entity {
 
         if (showHitbox) {
             g.setColor(Color.red);
-            g.fillRect((int) (x + bounds.x - handler.getCamera().getxOffset()), (int) (y + bounds.y - handler.getCamera().getyOffset()), bounds.width, bounds.height);
+            g.fillRect((int) (x + bounds.x - theUltimateTile.getCamera().getxOffset()), (int) (y + bounds.y - theUltimateTile.getCamera().getyOffset()), bounds.width, bounds.height);
         }
     }
 
-    public void die(Iterator<Entity> it) {
-        it.remove();
-        handler.getEntityManager().getPlayer().setGlubel(handler.getEntityManager().getPlayer().getGlubel() + Utils.getRandomInt(1, 5));
+    public void die(List<Entity> entities, int index) {
+        entities.remove(index);
+        theUltimateTile.getEntityManager().getPlayer().setGlubel(theUltimateTile.getEntityManager().getPlayer().getGlubel() + Utils.getRandomInt(1, 5));
     }
 
     public void hurt(int damage) {
@@ -69,7 +70,7 @@ public abstract class Entity {
     }
 
     public boolean checkEntityCollisions(float xOffset, float yOffset) {
-        for (Entity e : handler.getEntityManager().getEntities()) {
+        for (Entity e : theUltimateTile.getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
             if (e instanceof EntityPlayer && this instanceof EntityPlayer)
@@ -85,12 +86,12 @@ public abstract class Entity {
         return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
     }
 
-    public Handler getHandler() {
-        return handler;
+    public TheUltimateTile getTheUltimateTile() {
+        return theUltimateTile;
     }
 
-    public void setHandler(Handler handler) {
-        this.handler = handler;
+    public void setTheUltimateTile(TheUltimateTile theUltimateTile) {
+        this.theUltimateTile = theUltimateTile;
     }
 
     public String getId() {

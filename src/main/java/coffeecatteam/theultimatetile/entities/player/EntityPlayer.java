@@ -1,15 +1,15 @@
 package coffeecatteam.theultimatetile.entities.player;
 
-import coffeecatteam.theultimatetile.Handler;
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.inventory.Inventory;
-import coffeecatteam.theultimatetile.items.IInteractable;
-import coffeecatteam.theultimatetile.items.ItemStack;
-import coffeecatteam.theultimatetile.items.ItemTool;
+import coffeecatteam.theultimatetile.inventory.items.IInteractable;
+import coffeecatteam.theultimatetile.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.inventory.items.ItemTool;
 import coffeecatteam.theultimatetile.net.packet.Packet02Move;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
@@ -17,7 +17,7 @@ import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Iterator;
+import java.util.List;
 
 public class EntityPlayer extends EntityCreature {
 
@@ -35,10 +35,11 @@ public class EntityPlayer extends EntityCreature {
     private int extraDmg = 0;
     private int glubel = 0, maxGludel = 100, lvl = 1;
     private String username;
-    public boolean isLocal = true;
 
-    public EntityPlayer(Handler handler, String username) {
-        super(handler, "player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public boolean isLocal = true, isDead = false;
+
+    public EntityPlayer(TheUltimateTile theUltimateTile, String username) {
+        super(theUltimateTile, "player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         this.username = username;
 
         bounds.x = 13;
@@ -48,7 +49,7 @@ public class EntityPlayer extends EntityCreature {
 
         initAnims();
 
-        inventory = new Inventory(handler, this);
+        inventory = new Inventory(theUltimateTile, this);
     }
 
     private void initAnims() {
@@ -71,27 +72,32 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void tick() {
-        if (isActive() && isLocal) {
-            if (!inventory.isActive()) {
-                // Movement
-                getInput();
-                move();
+        if (isActive()) {
+            if (this.isLocal) {
+                if (!inventory.isActive()) {
+                    // Movement
+                    getInput();
+                    move();
 
-                Packet02Move packet = new Packet02Move(this.username, this.x, this.y);
-                packet.writeData(handler.getGame().getClient());
+                    Packet02Move packet = new Packet02Move(this.username, this.x, this.y);
+                    packet.writeData(theUltimateTile.getClient());
 
-                // Attack
-                checkAttacks();
+                    // Attack
+                    checkAttacks();
 
-                // Interact
-                tileInteract();
-                tickEquippedItem();
+                    // Interact
+                    tileInteract();
+                    tickEquippedItem();
+                }
+
+                theUltimateTile.getCamera().centerOnEntity(this);
+            } else {
+//                Packet02Move packet = new Packet02Move(this.username, this.xMove, this.yMove);
+//                packet.writeData(theUltimateTile.getGame().getClient());
             }
 
-            handler.getCamera().centerOnEntity(this);
+            inventory.tick();
         }
-
-        inventory.tick();
 
         // Animation
         currentAnim.tick();
@@ -111,16 +117,16 @@ public class EntityPlayer extends EntityCreature {
         ar.width = arSize;
         ar.height = arSize;
 
-        if (handler.getKeyManager().up && handler.getKeyManager().attack) {
+        if (theUltimateTile.getKeyManager().up && theUltimateTile.getKeyManager().attack) {
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y - arSize;
-        } else if (handler.getKeyManager().down && handler.getKeyManager().attack) {
+        } else if (theUltimateTile.getKeyManager().down && theUltimateTile.getKeyManager().attack) {
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y + cb.height;
-        } else if (handler.getKeyManager().left && handler.getKeyManager().attack) {
+        } else if (theUltimateTile.getKeyManager().left && theUltimateTile.getKeyManager().attack) {
             ar.x = cb.x - arSize;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
-        } else if (handler.getKeyManager().right && handler.getKeyManager().attack) {
+        } else if (theUltimateTile.getKeyManager().right && theUltimateTile.getKeyManager().attack) {
             ar.x = cb.x + cb.width;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
         } else {
@@ -129,7 +135,7 @@ public class EntityPlayer extends EntityCreature {
 
         attackTimer = 0;
 
-        for (Entity e : handler.getEntityManager().getEntities()) {
+        for (Entity e : theUltimateTile.getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
@@ -144,7 +150,7 @@ public class EntityPlayer extends EntityCreature {
             if (inventory.getSelectedHotbarItemStack() == equippedItem) {
                 if (equippedItem.getItem() instanceof ItemTool)
                     extraDmg = ((ItemTool) equippedItem.getItem()).getDamage();
-                if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_R))
+                if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_R))
                     if (equippedItem.getItem() instanceof IInteractable)
                         if (((IInteractable) equippedItem.getItem()).onInteracted(this))
                             equippedItem.setCount(equippedItem.getCount() - 1);
@@ -153,8 +159,38 @@ public class EntityPlayer extends EntityCreature {
     }
 
     @Override
-    public void die(Iterator<Entity> it) {
+    public void die(List<Entity> entities, int index) {
         currentAnim = animDead;
+
+        if (!isDead) {
+            // Drop items in inventory
+            for (ItemStack stack : this.inventory.getItems()) {
+                // Check if the stack is bigger than 1
+                if (stack.getCount() > 1)
+                    for (int i = 0; i < stack.getCount(); i++)
+                        dropItem(new ItemStack(stack.getItem(), 1), x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
+                else
+                    dropItem(stack, x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
+            }
+
+            // Drop items in hotbar
+            for (ItemStack stack : this.inventory.getHotbar()) {
+                // Check if the stack is bigger than 1
+                if (stack.getCount() > 1)
+                    for (int i = 0; i < stack.getCount(); i++)
+                        dropItem(new ItemStack(stack.getItem(), 1), x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
+                else
+                    dropItem(stack, x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
+            }
+
+            this.inventory.resetAll();
+            isDead = true;
+        }
+    }
+
+    private void dropItem(ItemStack stack, float x, float y) {
+        stack.setPickedUp(false);
+        theUltimateTile.getItemManager().addItem(stack, x, y);
     }
 
     private void getInput() {
@@ -176,23 +212,23 @@ public class EntityPlayer extends EntityCreature {
             } else {
                 speed = EntityCreature.DEFAULT_SPEED;
             }
-            if (!handler.getKeyManager().sprint)
+            if (!theUltimateTile.getKeyManager().sprint)
                 sprintTimer = maxSprintTimer;
         }
 
-        if (handler.getKeyManager().up) {
+        if (theUltimateTile.getKeyManager().up) {
             yMove = -speed;
             currentAnim = animUp;
         }
-        if (handler.getKeyManager().down) {
+        if (theUltimateTile.getKeyManager().down) {
             yMove = speed;
             currentAnim = animDown;
         }
-        if (handler.getKeyManager().left) {
+        if (theUltimateTile.getKeyManager().left) {
             xMove = -speed;
             currentAnim = animLeft;
         }
-        if (handler.getKeyManager().right) {
+        if (theUltimateTile.getKeyManager().right) {
             xMove = speed;
             currentAnim = animRight;
         }
@@ -203,7 +239,7 @@ public class EntityPlayer extends EntityCreature {
     private boolean inWater() {
         int x = (int) this.x / Tile.TILE_WIDTH;
         int y = (int) this.y / Tile.TILE_HEIGHT;
-        Tile t = handler.getWorld().getTile(x, y);
+        Tile t = theUltimateTile.getWorld().getTile(x, y);
         if (t.getId() == Tiles.WATER.getId()) {
             float nx = x + Tile.TILE_WIDTH / 2;
             float ny = y + Tile.TILE_HEIGHT / 2;
@@ -217,16 +253,16 @@ public class EntityPlayer extends EntityCreature {
     private void tileInteract() {
         int x = (int) this.x / Tile.TILE_WIDTH;
         int y = (int) this.y / Tile.TILE_HEIGHT;
-        Tile t = handler.getWorld().getTile(x, y);
+        Tile t = theUltimateTile.getWorld().getTile(x, y);
 //        if (t.getId() == Tiles.DIRT.getId()) {
-//            handler.getWorld().setTile(x, y, Tiles.AIR);
+//            theUltimateTile.getWorld().setTile(x, y, Tiles.AIR);
 //        }
     }
 
     @Override
     public void render(Graphics g) {
-        int x = (int) (this.x - handler.getCamera().getxOffset());
-        int y = (int) (this.y - handler.getCamera().getyOffset());
+        int x = (int) (this.x - theUltimateTile.getCamera().getxOffset());
+        int y = (int) (this.y - theUltimateTile.getCamera().getyOffset());
         g.drawImage(currentAnim.getCurrentFrame(), x, y, width, height, null);
         if (canSprint())
             g.drawImage(sprintEffect.getCurrentFrame(), x, y, width, height, null);
@@ -274,11 +310,15 @@ public class EntityPlayer extends EntityCreature {
     }
 
     public boolean canSprint() {
-        return handler.getKeyManager().sprint && !inWater() && currentAnim != animIdle && sprintTimer > 0;
+        return theUltimateTile.getKeyManager().sprint && !inWater() && currentAnim != animIdle && sprintTimer > 0;
     }
 
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getGlubel() {

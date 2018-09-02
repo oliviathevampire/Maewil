@@ -11,6 +11,7 @@ import coffeecatteam.theultimatetile.utils.Utils;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
+import java.util.List;
 
 public class EntityTree extends EntityStatic {
 
@@ -37,8 +38,8 @@ public class EntityTree extends EntityStatic {
     }
 
     @Override
-    public void die(Iterator<Entity> it) {
-        super.die(it);
+    public void die(List<Entity> entities, int index) {
+        super.die(entities, index);
         for (int i = 0; i < Utils.getRandomInt(1, 3); i++) {
             theUltimateTile.getItemManager().addItem(new ItemStack(Items.STICK), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
             theUltimateTile.getItemManager().addItem(new ItemStack(Items.LEAF), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));

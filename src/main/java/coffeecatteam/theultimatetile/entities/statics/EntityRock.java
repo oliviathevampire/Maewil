@@ -9,6 +9,7 @@ import coffeecatteam.theultimatetile.utils.Utils;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 public class EntityRock extends EntityStatic {
@@ -36,8 +37,8 @@ public class EntityRock extends EntityStatic {
     }
 
     @Override
-    public void die(Iterator<Entity> it) {
-        super.die(it);
+    public void die(List<Entity> entities, int index) {
+        super.die(entities, index);
         int amt = new Random().nextInt(2) + 1;
         for (int i = 0; i < amt; i++)
             theUltimateTile.getItemManager().addItem(new ItemStack(Items.ROCK), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
