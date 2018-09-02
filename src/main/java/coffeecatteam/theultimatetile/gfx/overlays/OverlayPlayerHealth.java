@@ -24,15 +24,15 @@ public class OverlayPlayerHealth extends Overlay {
         int hHeight = 96;
         int hStage = 0;
 
-        if (player.getCurrentHealth() < Entity.DEFAULT_HEALTH && player.getCurrentHealth() > Entity.DEFAULT_HEALTH / 2 + Entity.DEFAULT_HEALTH / 4)
+        if (player.getCurrentHealth() <= Entity.DEFAULT_HEALTH && player.getCurrentHealth() >= Entity.DEFAULT_HEALTH / 2 + Entity.DEFAULT_HEALTH / 4)
             hStage = 0;
-        if (player.getCurrentHealth() < Entity.DEFAULT_HEALTH / 2 + Entity.DEFAULT_HEALTH / 4 && player.getCurrentHealth() > Entity.DEFAULT_HEALTH / 2)
+        if (player.getCurrentHealth() <= Entity.DEFAULT_HEALTH / 2 + Entity.DEFAULT_HEALTH / 4 && player.getCurrentHealth() >= Entity.DEFAULT_HEALTH / 2)
             hStage = 1;
-        if (player.getCurrentHealth() < Entity.DEFAULT_HEALTH / 2 && player.getCurrentHealth() > Entity.DEFAULT_HEALTH / 4)
+        if (player.getCurrentHealth() <= Entity.DEFAULT_HEALTH / 2 && player.getCurrentHealth() >= Entity.DEFAULT_HEALTH / 4)
             hStage = 2;
-        if (player.getCurrentHealth() < Entity.DEFAULT_HEALTH / 4 && player.getCurrentHealth() > 0)
+        if (player.getCurrentHealth() <= Entity.DEFAULT_HEALTH / 4 && player.getCurrentHealth() >= 0)
             hStage = 3;
-        if (player.getCurrentHealth() == 0)
+        if (player.getCurrentHealth() <= 0)
             hStage = 4;
 
         Text.drawString(g, "HP: " + player.getCurrentHealth(), 10, theUltimateTile.getHeight() - hHeight, false, false, Color.red, Assets.FONT_20);
