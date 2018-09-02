@@ -1,7 +1,8 @@
-package coffeecatteam.theultimatetile.entities.creatures;
+package coffeecatteam.theultimatetile.entities.creatures.undead;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.gfx.*;
 import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
@@ -9,6 +10,7 @@ import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 public abstract class EntityUndead extends EntityCreature {
@@ -19,6 +21,7 @@ public abstract class EntityUndead extends EntityCreature {
     protected Animation currentAnim;
 
     protected Item drop = null;
+    protected int dmgModifier = 0;
 
     /* Animations - 500 = 0.5 second */
     protected int speed = 135;
@@ -81,7 +84,7 @@ public abstract class EntityUndead extends EntityCreature {
         for (Entity e : theUltimateTile.getEntityManager().getEntities())
             if (e.equals(theUltimateTile.getEntityManager().getPlayer()))
                 if (e.getCollisionBounds(0, 0).intersects(ar))
-                    e.hurt(Utils.getRandomInt(1, 3));
+                    e.hurt(Utils.getRandomInt(1, 3) + dmgModifier);
     }
 
     private void updateAnim() {
@@ -120,8 +123,8 @@ public abstract class EntityUndead extends EntityCreature {
     }
 
     @Override
-    public void die(Iterator<Entity> it) {
-        super.die(it);
+    public void die(List<Entity> entities, int index) {
+        super.die(entities, index);
         if (drop != null) {
             int amt = new Random().nextInt(3) + 1;
             for (int i = 0; i < amt; i++)

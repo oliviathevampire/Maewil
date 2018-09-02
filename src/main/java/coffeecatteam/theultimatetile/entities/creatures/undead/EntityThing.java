@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.entities.creatures;
+package coffeecatteam.theultimatetile.entities.creatures.undead;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
