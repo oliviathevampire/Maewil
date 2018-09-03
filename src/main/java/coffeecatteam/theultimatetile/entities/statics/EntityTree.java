@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.entities.statics;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
@@ -16,8 +15,8 @@ public class EntityTree extends EntityStatic {
 
     private TreeType type;
 
-    public EntityTree(TheUltimateTile theUltimateTile, String id, TreeType type) {
-        super(theUltimateTile, id, type.getWidth(), type.getHeight());
+    public EntityTree(String id, TreeType type) {
+        super(id, type.getWidth(), type.getHeight());
         this.type = type;
 
         bounds.x = 20 + type.getBoundsOffset();

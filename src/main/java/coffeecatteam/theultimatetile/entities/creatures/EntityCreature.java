@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.entities.creatures;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
@@ -11,8 +10,8 @@ public abstract class EntityCreature extends Entity {
     protected float speed;
     protected float xMove, yMove;
 
-    public EntityCreature(TheUltimateTile theUltimateTile, String id, int width, int height) {
-        super(theUltimateTile, id, width, height);
+    public EntityCreature(String id, int width, int height) {
+        super(id, width, height);
         speed = DEFAULT_SPEED;
         xMove = 0;
         yMove = 0;

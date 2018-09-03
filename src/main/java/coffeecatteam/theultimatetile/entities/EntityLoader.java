@@ -16,35 +16,38 @@ public class EntityLoader {
     
     private static Map<String, Entity> ENTITIES = new HashMap<>();
     
-    public static void init(TheUltimateTile theUltimateTile) {
+    public static void init() {
+        ENTITIES.clear();
         // TREES
-        registerEntity(new EntityTree(theUltimateTile, "tree_small", EntityTree.TreeType.SMALL));
-        registerEntity(new EntityTree(theUltimateTile, "tree_medium", EntityTree.TreeType.MEDIUM));
-        registerEntity(new EntityTree(theUltimateTile, "tree_large", EntityTree.TreeType.LARGE));
+        registerEntity(new EntityTree("tree_small", EntityTree.TreeType.SMALL));
+        registerEntity(new EntityTree("tree_medium", EntityTree.TreeType.MEDIUM));
+        registerEntity(new EntityTree("tree_large", EntityTree.TreeType.LARGE));
         
         // ROCKS
-        registerEntity(new EntityRock(theUltimateTile, "rock_medium", Assets.ROCK_V1));
-        registerEntity(new EntityRock(theUltimateTile, "rock_small", Assets.ROCK_V2));
+        registerEntity(new EntityRock("rock_medium", Assets.ROCK_V1));
+        registerEntity(new EntityRock("rock_small", Assets.ROCK_V2));
         
         // UNDEAD
-        registerEntity(new EntityZombie(theUltimateTile, "zombie"));
-        registerEntity(new EntitySkeleton(theUltimateTile, "skeleton"));
-        registerEntity(new EntityBouncer(theUltimateTile, "bouncer"));
-        registerEntity(new EntityThing(theUltimateTile, "thing"));
+        registerEntity(new EntityZombie("zombie"));
+        registerEntity(new EntitySkeleton("skeleton"));
+        registerEntity(new EntityBouncer("bouncer"));
+        registerEntity(new EntityThing("thing"));
         
         // BUSHES
-        registerEntity(new EntityBush(theUltimateTile, "bush_small", Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH));
-        registerEntity(new EntityBush(theUltimateTile, "bush_large", Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2));
+        registerEntity(new EntityBush("bush_small", Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH));
+        registerEntity(new EntityBush("bush_large", Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2));
         
         // CROPS
-        registerEntity(new EntityCrop(theUltimateTile, "carrot_crop", Assets.CARROT_CROP, Items.CARROT));
+        registerEntity(new EntityCrop("carrot_crop", Assets.CARROT_CROP, Items.CARROT));
         
         // OTHER
-        registerEntity(new EntityUltimateTile(theUltimateTile, "ultimate"));
+        registerEntity(new EntityUltimateTile("ultimate"));
     }
     
     private static void registerEntity(Entity entity) {
-        ENTITIES.put(entity.getId(), entity);
+        String id = entity.getId();
+        entity.setTheUltimateTile(TheUltimateTile.getTheUltimateTile());
+        ENTITIES.put(id, entity);
     }
 
     public static Entity loadEntity(String id) {

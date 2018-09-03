@@ -39,8 +39,9 @@ public class EntityPlayer extends EntityCreature {
     public boolean isLocal = true, isDead = false;
 
     public EntityPlayer(TheUltimateTile theUltimateTile, String username) {
-        super(theUltimateTile, "player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+        super("player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         this.username = username;
+        setTheUltimateTile(theUltimateTile);
 
         bounds.x = 13;
         bounds.y = 34;

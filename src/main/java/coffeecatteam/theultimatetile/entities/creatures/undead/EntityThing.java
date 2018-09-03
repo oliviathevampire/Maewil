@@ -1,14 +1,13 @@
 package coffeecatteam.theultimatetile.entities.creatures.undead;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 
 public class EntityThing extends EntityUndead {
 
-    public EntityThing(TheUltimateTile theUltimateTile, String id) {
-        super(theUltimateTile, id);
+    public EntityThing(String id) {
+        super(id);
         this.setMaxHealth(Entity.DEFAULT_HEALTH + Entity.DEFAULT_HEALTH / 2);
         maxDistance = 400f;
     }
