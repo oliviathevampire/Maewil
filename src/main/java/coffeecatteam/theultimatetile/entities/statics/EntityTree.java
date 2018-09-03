@@ -9,6 +9,7 @@ import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
 import java.util.List;
 
 public class EntityTree extends EntityStatic {

@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
+import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 
 import java.awt.*;

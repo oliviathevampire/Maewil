@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 

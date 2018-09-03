@@ -99,7 +99,7 @@ public class World {
 
     private void loadWorld(String path) {
         EntityLoader.init();
-        
+
         String prop = Utils.loadFileAsString(path + "/world.prop");
         String bg = Utils.loadFileAsString(path + "/id_bg.wd");
         String tile = Utils.loadFileAsString(path + "/id_tile.wd");
