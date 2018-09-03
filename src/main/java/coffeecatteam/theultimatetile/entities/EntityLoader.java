@@ -10,45 +10,6 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.Items;
 
 public class EntityLoader {
-<<<<<<< HEAD
-    
-    private static Map<String, Entity> ENTITIES = new HashMap<>();
-    
-    public static void init() {
-        ENTITIES.clear();
-        // TREES
-        registerEntity(new EntityTree("tree_small", EntityTree.TreeType.SMALL));
-        registerEntity(new EntityTree("tree_medium", EntityTree.TreeType.MEDIUM));
-        registerEntity(new EntityTree("tree_large", EntityTree.TreeType.LARGE));
-        
-        // ROCKS
-        registerEntity(new EntityRock("rock_medium", Assets.ROCK_V1));
-        registerEntity(new EntityRock("rock_small", Assets.ROCK_V2));
-        
-        // UNDEAD
-        registerEntity(new EntityZombie("zombie"));
-        registerEntity(new EntitySkeleton("skeleton"));
-        registerEntity(new EntityBouncer("bouncer"));
-        registerEntity(new EntityThing("thing"));
-        
-        // BUSHES
-        registerEntity(new EntityBush("bush_small", Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH));
-        registerEntity(new EntityBush("bush_large", Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2));
-        
-        // CROPS
-        registerEntity(new EntityCrop("carrot_crop", Assets.CARROT_CROP, Items.CARROT));
-        
-        // OTHER
-        registerEntity(new EntityUltimateTile("ultimate"));
-    }
-    
-    private static void registerEntity(Entity entity) {
-        String id = entity.getId();
-        entity.setTheUltimateTile(TheUltimateTile.getTheUltimateTile());
-        ENTITIES.put(id, entity);
-    }
-=======
->>>>>>> parent of a7a9dc5... New entity registry PART-1
 
     public static Entity loadEntity(TheUltimateTile theUltimateTile, String id) {
         switch (id) {

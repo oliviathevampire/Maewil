@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.entities.creatures.undead;
 
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.gfx.*;
@@ -28,8 +29,8 @@ public abstract class EntityUndead extends EntityCreature {
 
     protected float maxDistance = 350f;
 
-    public EntityUndead(String id) {
-        super(id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityUndead(TheUltimateTile theUltimateTile, String id) {
+        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         init();
         currentAnim = animIdle;
     }

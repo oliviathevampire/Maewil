@@ -29,7 +29,7 @@ public abstract class Entity {
 
     protected boolean showHitbox = false, isCollidable = true;
 
-    public Entity(String id, int width, int height) {
+    public Entity(TheUltimateTile theUltimateTile, String id, int width, int height) {
         this.id = id;
 
         this.width = width;
@@ -39,6 +39,7 @@ public abstract class Entity {
         bounds = new Rectangle(0, 0, width, height);
 
         entities.put(id, this);
+        entities.get(id).setTheUltimateTile(theUltimateTile);
     }
 
     public abstract void tick();

@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.entities.statics;
 
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
@@ -16,8 +17,8 @@ public class EntityCrop extends EntityStatic {
     private BufferedImage texture;
     private Item drop;
 
-    public EntityCrop(String id, BufferedImage texture, Item drop) {
-        super(id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityCrop(TheUltimateTile theUltimateTile, String id, BufferedImage texture, Item drop) {
+        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         isCollidable = false;
 
         this.texture = texture;

@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.entities.statics;
 
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.inventory.items.Items;
@@ -15,8 +16,8 @@ public class EntityBush extends EntityStatic {
 
     private BufferedImage texture;
 
-    public EntityBush(String id, BufferedImage texture, int width) {
-        super(id, width, Entity.DEFAULT_HEIGHT);
+    public EntityBush(TheUltimateTile theUltimateTile, String id, BufferedImage texture, int width) {
+        super(theUltimateTile, id, width, Entity.DEFAULT_HEIGHT);
 
         this.texture = texture;
 

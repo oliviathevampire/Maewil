@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.entities.statics;
 
+import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.inventory.items.Items;
@@ -15,8 +16,8 @@ public class EntityRock extends EntityStatic {
 
     private BufferedImage texture;
 
-    public EntityRock(String id, BufferedImage texture) {
-        super(id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityRock(TheUltimateTile theUltimateTile, String id, BufferedImage texture) {
+        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         this.texture = texture;
 
         bounds.x = 0;
