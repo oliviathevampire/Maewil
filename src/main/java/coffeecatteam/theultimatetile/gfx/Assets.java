@@ -82,18 +82,18 @@ public class Assets {
         FONT_40 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 40);
 
         /* Sprite Sheets */
-        SpriteSheet terrainSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/terrain.png"));
-        SpriteSheet natureSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/static.png"));
-        SpriteSheet effectSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/effect.png"));
+        SpriteSheet terrainSheet = getSheet("/assets/textures/tiles/terrain.png");
+        SpriteSheet natureSheet = getSheet("/assets/textures/entities/static.png");
+        SpriteSheet effectSheet = getSheet("/assets/textures/effect.png");
 
-        SpriteSheet healthSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health.png"));
-        SpriteSheet glubSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/glub.png"));
-        SpriteSheet itemsSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/items.png"));
+        SpriteSheet healthSheet = getSheet("/assets/textures/gui/overlay/health.png");
+        SpriteSheet glubSheet = getSheet("/assets/textures/glub.png");
+        SpriteSheet itemsSheet = getSheet("/assets/textures/items.png");
 
-        SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/player.png"));
-        SpriteSheet undeadSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/undead.png"));
+        SpriteSheet playerSheet = getSheet("/assets/textures/entities/player.png");
+        SpriteSheet undeadSheet = getSheet("/assets/textures/entities/undead.png");
 
-        SpriteSheet menuSheet = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/menu.png"));
+        SpriteSheet menuSheet = getSheet("/assets/textures/gui/menu.png");
 
         /* Tiles */
         GRASS = getSprite(terrainSheet, 0, 0, width, height);
@@ -123,7 +123,7 @@ public class Assets {
         SPLASH_EFFECT = getFrames(effectSheet, 0, 0, 15);
         SPRINT_EFFECT = getFrames(effectSheet, 1, 0, 15);
 
-        ULTIMATE_TILE = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/tiles/ultimate.png")), 0, 0, 6, width * 2, height * 2);
+        ULTIMATE_TILE = getFrames("/assets/textures/tiles/ultimate.png", 0, 0, 6, width * 2, height * 2);
 
         /* Items */
         ITEM_STICK = getSprite(itemsSheet, 0, 0, width, height);
@@ -170,7 +170,7 @@ public class Assets {
         PLAYER_DEAD = getFrames(playerSheet, 4, 0, 7);
 
         /* Entities */
-        EXTRA_LIFE = getFrames(new SpriteSheet(ImageLoader.loadImage("/assets/textures/entities/extra_life.png")), 0, 7);
+        EXTRA_LIFE = getFrames("/assets/textures/entities/extra_life.png", 0, 7);
 
         ZOMBIE_IDLE = getFrames(undeadSheet, 0, 0, 3);
         ZOMBIE_UP = getFrames(undeadSheet, 1, 0, 2);
@@ -207,15 +207,27 @@ public class Assets {
         CARROT_CROP = getSprite(natureSheet, 3, 0, width, height);
 
         /* GUI */
-        BACKGROUND = getSprite(new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/bg.png")), 0, 0, 320, 320);
+        BACKGROUND = getSprite("/assets/textures/gui/bg.png", 0, 0, 320, 320);
         TITLE = getSprite(menuSheet, 3, 0, 80, 48);
-        DEAD_OVERLAY = getSprite(new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/dead_overlay.png")), 0, 0, 512, 512);
+        DEAD_OVERLAY = getSprite("/assets/textures/gui/dead_overlay.png", 0, 0, 512, 512);
 
         BUTTON_ENABLED = getFrames(menuSheet, 0, 0, 2, width, height);
         BUTTON_HOVER = getFrames(menuSheet, 1, 0, 2, width, height);
         BUTTON_DISABLED = getFrames(menuSheet, 2, 0, 2, width, height);
 
-        INVENTORY = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/inventory.png"));
+        INVENTORY = getSheet("/assets/textures/gui/inventory.png");
+    }
+
+    private static BufferedImage[] getFrames(String sheet, int xStart, int xEnd) {
+        return getFrames(sheet, 0, xStart, xEnd);
+    }
+
+    private static BufferedImage[] getFrames(String sheet, int y, int xStart, int xEnd) {
+        return getFrames(getSheet(sheet), y, xStart, xEnd, width, height);
+    }
+
+    private static BufferedImage[] getFrames(String sheet, int y, int xStart, int xEnd, int width, int height) {
+        return getFrames(getSheet(sheet), y, xStart, xEnd, width, height);
     }
 
     private static BufferedImage[] getFrames(SpriteSheet sheet, int xStart, int xEnd) {
@@ -241,6 +253,10 @@ public class Assets {
         return frames;
     }
 
+    private static BufferedImage getSprite(String sheet, int indexX, int indexY, int width, int height) {
+        return getSprite(getSheet(sheet), indexX, indexY, width, height);
+    }
+
     private static BufferedImage getSprite(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
         BufferedImage image = ImageLoader.loadImage("/assets/textures/missing.png");
         try {
@@ -249,5 +265,9 @@ public class Assets {
             e.printStackTrace();
         }
         return image;
+    }
+    
+    private static SpriteSheet getSheet(String path) {
+        return new SpriteSheet(ImageLoader.loadImage(path));
     }
 }
