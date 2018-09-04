@@ -29,6 +29,9 @@ public class EntityManager implements IRenderabelManager {
      */
     public static Entity loadEntity(TheUltimateTile theUltimateTile, String id) {
         switch (id) {
+            /*
+             * Nature / Statics
+             */
             case "tree_small":
                 return new EntityTree(theUltimateTile, id, EntityTree.TreeType.SMALL);
             case "tree_medium":
@@ -39,6 +42,17 @@ public class EntityManager implements IRenderabelManager {
                 return new EntityRock(theUltimateTile, id, Assets.ROCK_V1);
             case "rock_small":
                 return new EntityRock(theUltimateTile, id, Assets.ROCK_V2);
+            case "bush_small":
+                return new EntityBush(theUltimateTile, id, Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH);
+            case "bush_large":
+                return new EntityBush(theUltimateTile, id, Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2);
+
+            case "carrot_crop":
+                return new EntityCrop(theUltimateTile, id, Assets.CARROT_CROP, Items.CARROT);
+
+             /*
+              * Undead
+              */
             case "zombie":
                 return new EntityZombie(theUltimateTile, id);
             case "skeleton":
@@ -47,14 +61,15 @@ public class EntityManager implements IRenderabelManager {
                 return new EntityBouncer(theUltimateTile, id);
             case "thing":
                 return new EntityThing(theUltimateTile, id);
+
+            /*
+             * Other
+             */
             case "ultimate":
                 return new EntityUltimateTile(theUltimateTile, id);
-            case "bush_small":
-                return new EntityBush(theUltimateTile, id, Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH);
-            case "bush_large":
-                return new EntityBush(theUltimateTile, id, Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2);
-            case "carrot_crop":
-                return new EntityCrop(theUltimateTile, id, Assets.CARROT_CROP, Items.CARROT);
+
+            case "shop":
+                return new EntityShopStall(theUltimateTile, id);
         }
         return new EntityRock(theUltimateTile, "rock", Assets.ROCK_V1);
     }

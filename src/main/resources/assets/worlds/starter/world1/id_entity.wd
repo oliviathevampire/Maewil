@@ -17,7 +17,6 @@ rock_medium,6f,9f
 rock_small,3f,12f
 
 
-tree_small,17f,7f
 tree_small,10f,8f
 tree_small,12f,8f
 tree_small,14f,8f
@@ -42,3 +41,5 @@ zombie,1f,2f
 skeleton,4f,3f
 bouncer,17f,3f
 thing,18f,4f
+
+shop,17f,7f

@@ -65,6 +65,7 @@ public class Assets {
     public static BufferedImage CARROT_CROP;
 
     public static BufferedImage SHOP_STALL;
+    public static BufferedImage[] SHOP_ROOFS;
 
     /* GUI */
     public static BufferedImage BACKGROUND;
@@ -208,7 +209,8 @@ public class Assets {
         BUSH_LARGE = getSprite(natureSheet, 2, 1, width * 2, height);
         CARROT_CROP = getSprite(natureSheet, 3, 0, width, height);
 
-        SHOP_STALL = getSprite(natureSheet, 7, 0, width * 2, height *2);
+        SHOP_STALL = getSprite(natureSheet, 0, 6, width * 2, height *2);
+        SHOP_ROOFS = getFrames(natureSheet, 7, 2, 3, width * 2, height);
 
         /* GUI */
         BACKGROUND = getSprite("/assets/textures/gui/bg.png", 0, 0, 320, 320);

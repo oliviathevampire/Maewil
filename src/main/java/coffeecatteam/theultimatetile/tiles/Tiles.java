@@ -28,5 +28,4 @@ public class Tiles {
     public static Tile AIR = new TileBase(Assets.AIR, 15, false); // USES EMPPTY SPACE IN TILES SHEET
 
     public static Tile BOOKSHELF = new TileBase(Assets.BOOKSHELF, 16, true);
-    public static Tile CHEST = new TileBase(Assets.CHEST, 17, true);
 }
