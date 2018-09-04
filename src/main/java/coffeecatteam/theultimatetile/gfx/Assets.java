@@ -58,11 +58,13 @@ public class Assets {
     public static BufferedImage[] BOUNCER_IDLE, BOUNCER_UP, BOUNCER_DOWN, BOUNCER_LEFT, BOUNCER_RIGHT;
     public static BufferedImage[] THING_IDLE, THING_UP, THING_DOWN, THING_LEFT, THING_RIGHT;
 
-    /* Nature */
+    /* Nature / Statics */
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
     public static BufferedImage ROCK_V1, ROCK_V2;
     public static BufferedImage BUSH_SMALL, BUSH_LARGE;
     public static BufferedImage CARROT_CROP;
+
+    public static BufferedImage SHOP_STALL;
 
     /* GUI */
     public static BufferedImage BACKGROUND;
@@ -196,7 +198,7 @@ public class Assets {
         THING_LEFT = getFrames(undeadSheet, 11, 0, 9);
         THING_RIGHT = getFrames(undeadSheet, 12, 0, 9);
 
-        /* Nature */
+        /* Nature / Statics */
         TREE_SMALL = getSprite(natureSheet, 0, 0, width, height * 2);
         TREE_MEDIUM = getSprite(natureSheet, 0, 2, width * 2, height * 2);
         TREE_LARGE = getSprite(natureSheet, 0, 4, width * 2, height * 2);
@@ -205,6 +207,8 @@ public class Assets {
         BUSH_SMALL = getSprite(natureSheet, 2, 0, width, height);
         BUSH_LARGE = getSprite(natureSheet, 2, 1, width * 2, height);
         CARROT_CROP = getSprite(natureSheet, 3, 0, width, height);
+
+        SHOP_STALL = getSprite(natureSheet, 7, 0, width * 2, height *2);
 
         /* GUI */
         BACKGROUND = getSprite("/assets/textures/gui/bg.png", 0, 0, 320, 320);
