@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
-import coffeecatteam.theultimatetile.gfx.ui.UIManager;
+import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;

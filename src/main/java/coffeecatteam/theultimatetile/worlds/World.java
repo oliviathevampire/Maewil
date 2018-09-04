@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.worlds;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
-import coffeecatteam.theultimatetile.entities.EntityManager;
-import coffeecatteam.theultimatetile.gfx.overlays.OverlayManager;
+import coffeecatteam.theultimatetile.manager.EntityManager;
+import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.tiles.Tile;

@@ -1,6 +1,4 @@
-package coffeecatteam.theultimatetile.input;
-
-import coffeecatteam.theultimatetile.gfx.ui.UIManager;
+package coffeecatteam.theultimatetile.manager;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

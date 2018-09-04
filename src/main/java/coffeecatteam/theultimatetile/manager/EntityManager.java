@@ -1,6 +1,7 @@
-package coffeecatteam.theultimatetile.entities;
+package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityBouncer;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntitySkeleton;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityThing;
@@ -10,13 +11,14 @@ import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.entities.statics.*;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.Items;
+import coffeecatteam.theultimatetile.manager.iinterface.IRenderabelManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class EntityManager {
+public class EntityManager implements IRenderabelManager {
 
     /*
      * EntityLoader
@@ -72,6 +74,7 @@ public class EntityManager {
         addEntity(this.player);
     }
 
+    @Override
     public void tick() {
         for (int i = 0; i < entities.size(); i++) {
             Entity e = entities.get(i);
@@ -85,6 +88,7 @@ public class EntityManager {
         entities.sort(renderSorter);
     }
 
+    @Override
     public void render(Graphics g) {
         for (Entity e : entities) {
             e.renderA(g);

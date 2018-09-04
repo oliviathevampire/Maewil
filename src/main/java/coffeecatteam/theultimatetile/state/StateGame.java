@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.state;
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
-import coffeecatteam.theultimatetile.gfx.ui.UIManager;
+import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.worlds.World;

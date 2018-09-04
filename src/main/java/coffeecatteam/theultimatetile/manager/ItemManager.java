@@ -1,14 +1,16 @@
-package coffeecatteam.theultimatetile.inventory.items;
+package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.manager.iinterface.IRenderabelManager;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ItemManager {
+public class ItemManager implements IRenderabelManager {
 
     private TheUltimateTile theUltimateTile;
     private ArrayList<ItemStack> items;
@@ -18,6 +20,7 @@ public class ItemManager {
         items = new ArrayList<>();
     }
 
+    @Override
     public void tick() {
         Iterator<ItemStack> it = items.iterator();
         while (it.hasNext()) {
@@ -28,6 +31,7 @@ public class ItemManager {
         }
     }
 
+    @Override
     public void render(Graphics g) {
         for (ItemStack stack : items) {
             stack.getItem().render(g);

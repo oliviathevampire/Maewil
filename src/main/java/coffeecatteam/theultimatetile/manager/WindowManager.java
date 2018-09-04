@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.input;
+package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.net.packet.Packet01Disconnect;

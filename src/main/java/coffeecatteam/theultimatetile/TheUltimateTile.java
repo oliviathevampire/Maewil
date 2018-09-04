@@ -1,13 +1,13 @@
 package coffeecatteam.theultimatetile;
 
-import coffeecatteam.theultimatetile.entities.EntityManager;
+import coffeecatteam.theultimatetile.manager.EntityManager;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
-import coffeecatteam.theultimatetile.input.KeyManager;
-import coffeecatteam.theultimatetile.input.MouseManager;
-import coffeecatteam.theultimatetile.input.WindowManager;
-import coffeecatteam.theultimatetile.inventory.items.ItemManager;
+import coffeecatteam.theultimatetile.manager.KeyManager;
+import coffeecatteam.theultimatetile.manager.MouseManager;
+import coffeecatteam.theultimatetile.manager.WindowManager;
+import coffeecatteam.theultimatetile.manager.ItemManager;
 import coffeecatteam.theultimatetile.inventory.items.Items;
 import coffeecatteam.theultimatetile.net.Client;
 import coffeecatteam.theultimatetile.net.Server;

@@ -1,9 +1,11 @@
-package coffeecatteam.theultimatetile.input;
+package coffeecatteam.theultimatetile.manager;
+
+import coffeecatteam.theultimatetile.manager.iinterface.ITickableManager;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyManager implements KeyListener {
+public class KeyManager implements KeyListener, ITickableManager {
 
     private boolean[] keys, justPressed, cantPress;
     public boolean up, down, left, right, sprint;
@@ -15,6 +17,7 @@ public class KeyManager implements KeyListener {
         cantPress = new boolean[keys.length];
     }
 
+    @Override
     public void tick() {
         for (int i = 0; i < keys.length; i++) {
             if (cantPress[i] && !keys[i])
