@@ -1,9 +1,9 @@
-package coffeecatteam.theultimatetile.entities.statics;
+package coffeecatteam.theultimatetile.entities.statics.nature;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.inventory.items.Items;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -12,18 +12,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-public class EntityRock extends EntityStatic {
+public class EntityCrop extends EntityStatic {
 
     private BufferedImage texture;
+    private Item drop;
 
-    public EntityRock(TheUltimateTile theUltimateTile, String id, BufferedImage texture) {
+    public EntityCrop(TheUltimateTile theUltimateTile, String id, BufferedImage texture, Item drop) {
         super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
-        this.texture = texture;
+        isCollidable = false;
 
-        bounds.x = 0;
-        bounds.y = height / 2 + height / 3;
-        bounds.width = width;
-        bounds.height = height / 3;
+        this.texture = texture;
+        this.drop = drop;
     }
 
     @Override
@@ -41,6 +40,6 @@ public class EntityRock extends EntityStatic {
         super.die(entities, index);
         int amt = new Random().nextInt(2) + 1;
         for (int i = 0; i < amt; i++)
-            theUltimateTile.getItemManager().addItem(new ItemStack(Items.ROCK), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+            theUltimateTile.getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
     }
 }

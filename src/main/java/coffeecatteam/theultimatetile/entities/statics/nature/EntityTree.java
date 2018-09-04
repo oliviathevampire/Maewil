@@ -1,7 +1,8 @@
-package coffeecatteam.theultimatetile.entities.statics;
+package coffeecatteam.theultimatetile.entities.statics.nature;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.inventory.items.Items;
