@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
-import coffeecatteam.theultimatetile.net.packet.Packet01Disconnect;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -21,8 +20,7 @@ public class WindowManager implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        Packet01Disconnect packet = new Packet01Disconnect(this.theUltimateTile.getEntityManager().getPlayer().getUsername());
-        packet.writeData(this.theUltimateTile.getClient());
+        theUltimateTile.disconnect();
     }
 
     @Override
