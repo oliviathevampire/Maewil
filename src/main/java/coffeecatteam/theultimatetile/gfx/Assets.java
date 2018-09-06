@@ -65,7 +65,7 @@ public class Assets {
     public static BufferedImage CARROT_CROP;
 
     public static BufferedImage SHOP_STALL;
-    public static BufferedImage[] SHOP_ROOFS;
+    public static BufferedImage[] SHOP_ROOF_ORANGE, SHOP_ROOF_BLUE, SHOP_ROOF_RED, SHOP_ROOF_GREY;
 
     /* GUI */
     public static BufferedImage BACKGROUND;
@@ -86,7 +86,8 @@ public class Assets {
 
         /* Sprite Sheets */
         SpriteSheet terrainSheet = getSheet("/assets/textures/tiles/terrain.png");
-        SpriteSheet natureSheet = getSheet("/assets/textures/entities/static.png");
+        SpriteSheet natureSheet = getSheet("/assets/textures/entities/nature.png");
+        SpriteSheet staticSheet = getSheet("/assets/textures/entities/static.png");
         SpriteSheet effectSheet = getSheet("/assets/textures/effect.png");
 
         SpriteSheet healthSheet = getSheet("/assets/textures/gui/overlay/health.png");
@@ -209,8 +210,11 @@ public class Assets {
         BUSH_LARGE = getSprite(natureSheet, 2, 1, width * 2, height);
         CARROT_CROP = getSprite(natureSheet, 3, 0, width, height);
 
-        SHOP_STALL = getSprite(natureSheet, 0, 6, width * 2, height *2);
-        SHOP_ROOFS = getFrames(natureSheet, 7, 2, 3, width * 2, height);
+        SHOP_STALL = getSprite(staticSheet, 0, 4, width * 2, height *2);
+        SHOP_ROOF_ORANGE = getFrames(staticSheet, 0, 0, 3, width * 2, height);
+        SHOP_ROOF_BLUE = getFrames(staticSheet, 1, 0, 3, width * 2, height);
+        SHOP_ROOF_RED = getFrames(staticSheet, 2, 0, 3, width * 2, height);
+        SHOP_ROOF_GREY = getFrames(staticSheet, 3, 0, 3, width * 2, height);
 
         /* GUI */
         BACKGROUND = getSprite("/assets/textures/gui/bg.png", 0, 0, 320, 320);

@@ -27,7 +27,8 @@ public abstract class Entity {
     protected boolean active = true;
     protected Rectangle bounds;
 
-    protected boolean showHitbox = false, isCollidable = true;
+    protected boolean showHitbox = false, isCollidable = true, interacted = false;
+    private int extraDmg = 0;
 
     public Entity(TheUltimateTile theUltimateTile, String id, int width, int height) {
         this.id = id;
@@ -44,6 +45,13 @@ public abstract class Entity {
 
     public abstract void tick();
 
+    public void tickA() {
+        tick();
+
+        if (this.interacted)
+            this.interact();
+    }
+
     public abstract void render(Graphics g);
 
     public void renderA(Graphics g) {
@@ -58,6 +66,16 @@ public abstract class Entity {
     public void die(List<Entity> entities, int index) {
         entities.remove(index);
         theUltimateTile.getEntityManager().getPlayer().setGlubel(theUltimateTile.getEntityManager().getPlayer().getGlubel() + Utils.getRandomInt(1, 5));
+    }
+
+    public void interact() {
+        this.hurt(Utils.getRandomInt(5, 10) + this.extraDmg);
+        this.interacted = false;
+    }
+
+    public void isInteracted(int extraDmg) {
+        this.interacted = true;
+        this.extraDmg = extraDmg;
     }
 
     public void hurt(int damage) {

@@ -16,6 +16,10 @@ public class Animation {
         lastTime = System.currentTimeMillis();
     }
 
+    public void setFrames(BufferedImage[] frames) {
+        this.frames = frames;
+    }
+
     public void tick() {
         timer += System.currentTimeMillis() - lastTime;
         lastTime = System.currentTimeMillis();

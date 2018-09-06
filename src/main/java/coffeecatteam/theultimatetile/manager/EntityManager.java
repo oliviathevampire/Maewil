@@ -97,7 +97,7 @@ public class EntityManager implements IRenderabelManager {
     public void tick() {
         for (int i = 0; i < entities.size(); i++) {
             Entity e = entities.get(i);
-            e.tick();
+            e.tickA();
             if (!e.isActive()) {
                 e.die(entities, i);
                 if (!(e instanceof EntityPlayer))

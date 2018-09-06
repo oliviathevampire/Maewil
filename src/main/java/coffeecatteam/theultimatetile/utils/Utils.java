@@ -41,7 +41,10 @@ public class Utils {
         if (min >= max)
             throw new IllegalArgumentException("max must be greater than min");
 
-        return new Random().nextInt((max - min) + 1) + min;
+        int out = 0;
+        for (int i = 0; i < 50; i++)
+            out = new Random().nextInt((max - min) + 1) + min;
+        return out;
     }
 
     public static String loadFileAsString(String path) {
