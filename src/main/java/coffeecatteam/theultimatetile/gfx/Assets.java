@@ -9,6 +9,7 @@ import java.awt.image.RasterFormatException;
 public class Assets {
 
     private static final int width = 16, height = 16;
+    private static final BufferedImage MISSING_TEXTURE = ImageLoader.loadImage("/assets/textures/missing.png");
 
     /* Fonts */
     public static Font FONT_20, FONT_30, FONT_40;
@@ -76,7 +77,9 @@ public class Assets {
     public static BufferedImage[] BUTTON_HOVER = new BufferedImage[3];
     public static BufferedImage[] BUTTON_DISABLED = new BufferedImage[3];
 
-    public static SpriteSheet INVENTORY;
+    public static BufferedImage INVENTORY;
+    public static BufferedImage SLOT, SLOT_SELECTER;
+    public static BufferedImage HOTBAR, HOTBAR_SELECTER;
 
     public static void init() {
         /* Fonts */
@@ -98,30 +101,31 @@ public class Assets {
         SpriteSheet undeadSheet = getSheet("/assets/textures/entities/undead.png");
 
         SpriteSheet menuSheet = getSheet("/assets/textures/gui/menu.png");
+        SpriteSheet invSheet = getSheet("/assets/textures/gui/inventory.png");
 
         /* Tiles */
-        GRASS = getSprite(terrainSheet, 0, 0, width, height);
-        DIRT = getSprite(terrainSheet, 1, 0, width, height);
-        STONE = getSprite(terrainSheet, 2, 0, width, height);
-        SAND = getSprite(terrainSheet, 3, 0, width, height);
-        ANDESITE = getSprite(terrainSheet, 4, 0, width, height);
-        DIORITE = getSprite(terrainSheet, 5, 0, width, height);
-        COAL_ORE = getSprite(terrainSheet, 6, 0, width, height);
-        IRON_ORE = getSprite(terrainSheet, 7, 0, width, height);
-        GOLD_ORE = getSprite(terrainSheet, 8, 0, width, height);
-        DIAMOND_ORE = getSprite(terrainSheet, 9, 0, width, height);
-        OBSIDIAN = getSprite(terrainSheet, 10, 0, width, height);
+        GRASS = getSpriteInd(terrainSheet, 0, 0, width, height);
+        DIRT = getSpriteInd(terrainSheet, 1, 0, width, height);
+        STONE = getSpriteInd(terrainSheet, 2, 0, width, height);
+        SAND = getSpriteInd(terrainSheet, 3, 0, width, height);
+        ANDESITE = getSpriteInd(terrainSheet, 4, 0, width, height);
+        DIORITE = getSpriteInd(terrainSheet, 5, 0, width, height);
+        COAL_ORE = getSpriteInd(terrainSheet, 6, 0, width, height);
+        IRON_ORE = getSpriteInd(terrainSheet, 7, 0, width, height);
+        GOLD_ORE = getSpriteInd(terrainSheet, 8, 0, width, height);
+        DIAMOND_ORE = getSpriteInd(terrainSheet, 9, 0, width, height);
+        OBSIDIAN = getSpriteInd(terrainSheet, 10, 0, width, height);
 
-        PLANKS = getSprite(terrainSheet, 11, 0, width, height);
-        BROKEN_STONE = getSprite(terrainSheet, 12, 0, width, height);
+        PLANKS = getSpriteInd(terrainSheet, 11, 0, width, height);
+        BROKEN_STONE = getSpriteInd(terrainSheet, 12, 0, width, height);
 
         WATER = getFrames(terrainSheet, 6, 0, 15);
         LAVA = getFrames(terrainSheet, 7, 0, 15);
 
-        AIR = getSprite(terrainSheet, 13, 0, width, height);
+        AIR = getSpriteInd(terrainSheet, 13, 0, width, height);
 
-        BOOKSHELF = getSprite(terrainSheet, 14, 0, width, height);
-        CHEST = getSprite(terrainSheet, 15, 0, width, height);
+        BOOKSHELF = getSpriteInd(terrainSheet, 14, 0, width, height);
+        CHEST = getSpriteInd(terrainSheet, 15, 0, width, height);
 
         /* Special Tiles */
         SPLASH_EFFECT = getFrames(effectSheet, 0, 0, 15);
@@ -130,32 +134,32 @@ public class Assets {
         ULTIMATE_TILE = getFrames("/assets/textures/tiles/ultimate.png", 0, 0, 6, width * 2, height * 2);
 
         /* Items */
-        ITEM_STICK = getSprite(itemsSheet, 0, 0, width, height);
-        ITEM_LEAF = getSprite(itemsSheet, 0, 1, width, height);
-        ITEM_ROCK = getSprite(itemsSheet, 0, 2, width, height);
+        ITEM_STICK = getSpriteInd(itemsSheet, 0, 0, width, height);
+        ITEM_LEAF = getSpriteInd(itemsSheet, 0, 1, width, height);
+        ITEM_ROCK = getSpriteInd(itemsSheet, 0, 2, width, height);
 
-        ITEM_ROTTEN_FLESH = getSprite(itemsSheet, 1, 0, width, height);
-        ITEM_BONE = getSprite(itemsSheet, 1, 1, width, height);
-        ITEM_BOUNCY_BALL = getSprite(itemsSheet, 1, 2, width, height);
+        ITEM_ROTTEN_FLESH = getSpriteInd(itemsSheet, 1, 0, width, height);
+        ITEM_BONE = getSpriteInd(itemsSheet, 1, 1, width, height);
+        ITEM_BOUNCY_BALL = getSpriteInd(itemsSheet, 1, 2, width, height);
 
-        ITEM_WOODEN_SWORD = getSprite(itemsSheet, 6, 0, width, height);
-        ITEM_WOODEN_PICK = getSprite(itemsSheet, 6, 1, width, height);
-        ITEM_WOODEN_HOE = getSprite(itemsSheet, 6, 2, width, height);
+        ITEM_WOODEN_SWORD = getSpriteInd(itemsSheet, 6, 0, width, height);
+        ITEM_WOODEN_PICK = getSpriteInd(itemsSheet, 6, 1, width, height);
+        ITEM_WOODEN_HOE = getSpriteInd(itemsSheet, 6, 2, width, height);
 
-        ITEM_STONE_SWORD = getSprite(itemsSheet, 7, 0, width, height);
-        ITEM_STONE_PICK = getSprite(itemsSheet, 7, 1, width, height);
-        ITEM_STONE_HOE = getSprite(itemsSheet, 7, 2, width, height);
+        ITEM_STONE_SWORD = getSpriteInd(itemsSheet, 7, 0, width, height);
+        ITEM_STONE_PICK = getSpriteInd(itemsSheet, 7, 1, width, height);
+        ITEM_STONE_HOE = getSpriteInd(itemsSheet, 7, 2, width, height);
 
-        ITEM_COAL = getSprite(itemsSheet, 2, 0, width, height);
-        ITEM_IRON_INGOT = getSprite(itemsSheet, 2, 1, width, height);
-        ITEM_GOLD_INGOT = getSprite(itemsSheet, 2, 2, width, height);
-        ITEM_DIAMOND = getSprite(itemsSheet, 2, 3, width, height);
+        ITEM_COAL = getSpriteInd(itemsSheet, 2, 0, width, height);
+        ITEM_IRON_INGOT = getSpriteInd(itemsSheet, 2, 1, width, height);
+        ITEM_GOLD_INGOT = getSpriteInd(itemsSheet, 2, 2, width, height);
+        ITEM_DIAMOND = getSpriteInd(itemsSheet, 2, 3, width, height);
 
-        ITEM_CARROT = getSprite(itemsSheet, 3, 0, width, height);
-        ITEM_APPLE = getSprite(itemsSheet, 3, 1, width, height);
+        ITEM_CARROT = getSpriteInd(itemsSheet, 3, 0, width, height);
+        ITEM_APPLE = getSpriteInd(itemsSheet, 3, 1, width, height);
 
-        ITEM_COIN_IRON = getSprite(itemsSheet, 4, 0, width, height);
-        ITEM_COIN_GOLD = getSprite(itemsSheet, 4, 1, width, height);
+        ITEM_COIN_IRON = getSpriteInd(itemsSheet, 4, 0, width, height);
+        ITEM_COIN_GOLD = getSpriteInd(itemsSheet, 4, 1, width, height);
 
         /* Player */
         HEARTS = getFrames(healthSheet, 0, 0, 4);
@@ -201,31 +205,36 @@ public class Assets {
         THING_RIGHT = getFrames(undeadSheet, 12, 0, 9);
 
         /* Nature / Statics */
-        TREE_SMALL = getSprite(natureSheet, 0, 0, width, height * 2);
-        TREE_MEDIUM = getSprite(natureSheet, 0, 2, width * 2, height * 2);
-        TREE_LARGE = getSprite(natureSheet, 0, 4, width * 2, height * 2);
-        ROCK_V1 = getSprite(natureSheet, 1, 0, width, height);
-        ROCK_V2 = getSprite(natureSheet, 1, 1, width, height);
-        BUSH_SMALL = getSprite(natureSheet, 2, 0, width, height);
-        BUSH_LARGE = getSprite(natureSheet, 2, 1, width * 2, height);
-        CARROT_CROP = getSprite(natureSheet, 3, 0, width, height);
+        TREE_SMALL = getSpriteInd(natureSheet, 0, 0, width, height * 2);
+        TREE_MEDIUM = getSpriteInd(natureSheet, 0, 2, width * 2, height * 2);
+        TREE_LARGE = getSpriteInd(natureSheet, 0, 4, width * 2, height * 2);
+        ROCK_V1 = getSpriteInd(natureSheet, 1, 0, width, height);
+        ROCK_V2 = getSpriteInd(natureSheet, 1, 1, width, height);
+        BUSH_SMALL = getSpriteInd(natureSheet, 2, 0, width, height);
+        BUSH_LARGE = getSpriteInd(natureSheet, 2, 1, width * 2, height);
+        CARROT_CROP = getSpriteInd(natureSheet, 3, 0, width, height);
 
-        SHOP_STALL = getSprite(staticSheet, 0, 4, width * 2, height *2);
-        SHOP_ROOF_ORANGE = getFrames(staticSheet, 0, 0, 3, width * 2, height);
-        SHOP_ROOF_BLUE = getFrames(staticSheet, 1, 0, 3, width * 2, height);
-        SHOP_ROOF_RED = getFrames(staticSheet, 2, 0, 3, width * 2, height);
-        SHOP_ROOF_GREY = getFrames(staticSheet, 3, 0, 3, width * 2, height);
+        int shopRoofLength = 7;
+        SHOP_STALL = getSpriteInd(staticSheet, 0, 4, width * 2, height *2);
+        SHOP_ROOF_ORANGE = getFrames(staticSheet, 0, 0, shopRoofLength, width * 2, height);
+        SHOP_ROOF_BLUE = getFrames(staticSheet, 1, 0, shopRoofLength, width * 2, height);
+        SHOP_ROOF_RED = getFrames(staticSheet, 2, 0, shopRoofLength, width * 2, height);
+        SHOP_ROOF_GREY = getFrames(staticSheet, 3, 0, shopRoofLength, width * 2, height);
 
         /* GUI */
-        BACKGROUND = getSprite("/assets/textures/gui/bg.png", 0, 0, 320, 320);
-        TITLE = getSprite(menuSheet, 3, 0, 80, 48);
-        DEAD_OVERLAY = getSprite("/assets/textures/gui/dead_overlay.png", 0, 0, 512, 512);
+        BACKGROUND = getSpriteExact("/assets/textures/gui/bg.png", 0, 0, 320, 320);
+        TITLE = getSpriteInd(menuSheet, 3, 0, 80, 48);
+        DEAD_OVERLAY = getSpriteExact("/assets/textures/gui/dead_overlay.png", 0, 0, 512, 512);
 
         BUTTON_ENABLED = getFrames(menuSheet, 0, 0, 2, width, height);
         BUTTON_HOVER = getFrames(menuSheet, 1, 0, 2, width, height);
         BUTTON_DISABLED = getFrames(menuSheet, 2, 0, 2, width, height);
 
-        INVENTORY = getSheet("/assets/textures/gui/inventory.png");
+        INVENTORY = getSpriteExact(invSheet, 0, 0, 57, 41);
+        SLOT = getSpriteExact(invSheet, 2, 22, 8, 8);
+        SLOT_SELECTER = getSpriteExact(invSheet, 48, 48, width, height);
+        HOTBAR = getSpriteExact(invSheet, 10, 54, 28, 10);
+        HOTBAR_SELECTER = getSpriteExact(invSheet, 0, 54, 10, 10);
     }
 
     private static BufferedImage[] getFrames(String sheet, int xStart, int xEnd) {
@@ -256,21 +265,25 @@ public class Assets {
                 frames[index] = sheet.crop(x * width, y * height, width, height);
             } catch (RasterFormatException e) {
                 e.printStackTrace();
-                frames[index] = ImageLoader.loadImage("/assets/textures/missing.png");
+                frames[index] = MISSING_TEXTURE;
             }
             index++;
         }
         return frames;
     }
 
-    private static BufferedImage getSprite(String sheet, int indexX, int indexY, int width, int height) {
-        return getSprite(getSheet(sheet), indexX, indexY, width, height);
+    private static BufferedImage getSpriteExact(String sheet, int indexX, int indexY, int width, int height) {
+        return getSpriteExact(getSheet(sheet), indexX, indexY, width, height);
     }
 
-    private static BufferedImage getSprite(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
-        BufferedImage image = ImageLoader.loadImage("/assets/textures/missing.png");
+    private static BufferedImage getSpriteInd(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
+        return getSpriteExact(sheet, Assets.width * indexX, Assets.height * indexY, width, height);
+    }
+
+    private static BufferedImage getSpriteExact(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
+        BufferedImage image = MISSING_TEXTURE;
         try {
-            image = sheet.crop(Assets.width * indexX, Assets.height * indexY, width, height);
+            image = sheet.crop(indexX, indexY, width, height); // Assets.width * indexX, Assets.height * indexY <-- This caused so many problems!
         } catch (RasterFormatException e) {
             e.printStackTrace();
         }
