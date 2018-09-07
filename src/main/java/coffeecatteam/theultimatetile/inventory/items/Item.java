@@ -33,10 +33,10 @@ public class Item implements Cloneable {
     public void tick(int count) {
         if (this.theUltimateTile.getEntityManager().getPlayer().isActive()) {
             if (this.theUltimateTile.getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
-                if (!this.theUltimateTile.getEntityManager().getPlayer().getInventory().isFull()) {
+                if (!this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isFull()) {
                     this.pickedUp = true;
                 } else {
-                    for (ItemStack stack : this.theUltimateTile.getEntityManager().getPlayer().getInventory().getItems()) {
+                    for (ItemStack stack : this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().getItems()) {
                         if (stack.getId().equals(this.id)) {
                             if (stack.getItem().isStackable()) {
                                 this.pickedUp = true;
@@ -47,7 +47,7 @@ public class Item implements Cloneable {
             }
         }
         if (this.pickedUp)
-            this.theUltimateTile.getEntityManager().getPlayer().getInventory().addItem(new ItemStack(this, count));
+            this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().addItem(new ItemStack(this, count));
 
         this.bounds = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
     }

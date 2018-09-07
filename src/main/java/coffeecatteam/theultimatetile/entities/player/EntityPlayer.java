@@ -6,7 +6,7 @@ import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.theultimatetile.inventory.Inventory;
+import coffeecatteam.theultimatetile.inventory.InventoryPlayer;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.inventory.items.ItemTool;
@@ -30,7 +30,7 @@ public class EntityPlayer extends EntityCreature {
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
     private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
 
-    private Inventory inventory;
+    private InventoryPlayer inventoryPlayer;
     private ItemStack equippedItem;
     private int extraDmg = 0;
     private int glubel = 0, maxGludel = 100, lvl = 1;
@@ -49,7 +49,7 @@ public class EntityPlayer extends EntityCreature {
 
         initAnims();
 
-        inventory = new Inventory(theUltimateTile, this);
+        inventoryPlayer = new InventoryPlayer(theUltimateTile, this);
     }
 
     private void initAnims() {
@@ -74,7 +74,7 @@ public class EntityPlayer extends EntityCreature {
     public void tick() {
         if (isActive()) {
             if (this.isLocal) {
-                if (!inventory.isActive()) {
+                if (!inventoryPlayer.isActive()) {
                     // Movement
                     getInput();
                     move();
@@ -96,7 +96,7 @@ public class EntityPlayer extends EntityCreature {
 //                packet.writeData(theUltimateTile.getGame().getClient());
             }
 
-            inventory.tick();
+            inventoryPlayer.tick();
         }
 
         // Animation
@@ -139,7 +139,7 @@ public class EntityPlayer extends EntityCreature {
             if (e.equals(this))
                 continue;
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
-                e.hurt(Utils.getRandomInt(5, 10) + extraDmg);
+                e.isInteracted(extraDmg);
                 return;
             }
         }
@@ -147,7 +147,7 @@ public class EntityPlayer extends EntityCreature {
 
     private void tickEquippedItem() {
         if (equippedItem != null) {
-            if (inventory.getSelectedHotbarItemStack() == equippedItem) {
+            if (inventoryPlayer.getSelectedHotbarItemStack() == equippedItem) {
                 if (equippedItem.getItem() instanceof ItemTool)
                     extraDmg = ((ItemTool) equippedItem.getItem()).getDamage();
                 if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_R))
@@ -164,7 +164,7 @@ public class EntityPlayer extends EntityCreature {
 
         if (!isDead) {
             // Drop items in inventory
-            for (ItemStack stack : this.inventory.getItems()) {
+            for (ItemStack stack : this.inventoryPlayer.getItems()) {
                 // Check if the stack is bigger than 1
                 if (stack.getCount() > 1)
                     for (int i = 0; i < stack.getCount(); i++)
@@ -174,7 +174,7 @@ public class EntityPlayer extends EntityCreature {
             }
 
             // Drop items in hotbar
-            for (ItemStack stack : this.inventory.getHotbar()) {
+            for (ItemStack stack : this.inventoryPlayer.getHotbar()) {
                 // Check if the stack is bigger than 1
                 if (stack.getCount() > 1)
                     for (int i = 0; i < stack.getCount(); i++)
@@ -183,7 +183,7 @@ public class EntityPlayer extends EntityCreature {
                     dropItem(stack, x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
             }
 
-            this.inventory.resetAll();
+            this.inventoryPlayer.resetAll();
             isDead = true;
         }
     }
@@ -285,12 +285,12 @@ public class EntityPlayer extends EntityCreature {
     }
 
     public void postRender(Graphics g) {
-        inventory.render(g);
-        inventory.renderHotbar(g);
+        inventoryPlayer.render(g);
+        inventoryPlayer.renderHotbar(g);
     }
 
-    public Inventory getInventory() {
-        return inventory;
+    public InventoryPlayer getInventoryPlayer() {
+        return inventoryPlayer;
     }
 
     public ItemStack getEquippedItem() {
@@ -342,7 +342,7 @@ public class EntityPlayer extends EntityCreature {
     }
 
     public void reset() {
-        inventory.resetAll();
+        inventoryPlayer.resetAll();
         glubel = 0;
         lvl = 0;
         equippedItem = null;
