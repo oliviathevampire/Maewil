@@ -233,8 +233,8 @@ public class Assets {
         INVENTORY = getSpriteExact(invSheet, 0, 0, 57, 41);
         SLOT = getSpriteExact(invSheet, 2, 22, 8, 8);
         SLOT_SELECTER = getSpriteExact(invSheet, 48, 48, width, height);
-        HOTBAR = getSpriteExact(invSheet, 10, 54, 28, 10);
-        HOTBAR_SELECTER = getSpriteExact(invSheet, 0, 54, 10, 10);
+        HOTBAR = getSpriteExact(invSheet, 12, 54, 28, 10);
+        HOTBAR_SELECTER = getSpriteExact(invSheet, 0, 52, 12, 12);
     }
 
     private static BufferedImage[] getFrames(String sheet, int xStart, int xEnd) {
