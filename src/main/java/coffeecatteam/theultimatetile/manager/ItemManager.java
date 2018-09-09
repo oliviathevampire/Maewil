@@ -35,7 +35,8 @@ public class ItemManager implements IRenderabelManager {
     public void render(Graphics g) {
         for (ItemStack stack : items) {
             stack.getItem().render(g);
-            Text.drawString(g, String.valueOf(stack.getCount()), (int) (stack.getItem().getX() - this.theUltimateTile.getCamera().getxOffset()), (int) (stack.getItem().getY() + 15 - this.theUltimateTile.getCamera().getyOffset()), false, false, Color.white, Assets.FONT_20);
+            if (stack.getCount() > 1)
+                Text.drawString(g, String.valueOf(stack.getCount()), (int) (stack.getItem().getX() - this.theUltimateTile.getCamera().getxOffset()), (int) (stack.getItem().getY() + 15 - this.theUltimateTile.getCamera().getyOffset()), false, false, Color.white, Assets.FONT_20);
         }
     }
 
