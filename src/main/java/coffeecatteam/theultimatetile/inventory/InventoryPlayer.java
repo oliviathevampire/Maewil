@@ -19,7 +19,7 @@ public class InventoryPlayer extends Inventory {
     private boolean active = false;
     private List<ItemStack> hotbar;
 
-    private int maxInvSize = 12, maxHotbarSize = 3;
+    private int maxHotbarSize = 3;
     private int inventorySelectedIndex = 0;
     private int hotbarSelectedIndex = 0;
 
@@ -46,7 +46,7 @@ public class InventoryPlayer extends Inventory {
         for (int i = 0; i < 12; i++) {
             x = xd + 54 * i;
             y = yd;
-            if (i > maxInvSize / 2 - 1) {
+            if (i > maxSize / 2 - 1) {
                 x -= width * 7 - 12;
                 y += height + 5;
             }
@@ -70,8 +70,8 @@ public class InventoryPlayer extends Inventory {
 
             if (up || down) {
                 inventorySelectedIndex += 6;
-                if (inventorySelectedIndex > maxInvSize - 1)
-                    inventorySelectedIndex -= maxInvSize;
+                if (inventorySelectedIndex > maxSize - 1)
+                    inventorySelectedIndex -= maxSize;
             }
             if (left)
                 inventorySelectedIndex -= 1;
@@ -79,8 +79,8 @@ public class InventoryPlayer extends Inventory {
                 inventorySelectedIndex += 1;
 
             if (inventorySelectedIndex < 0)
-                inventorySelectedIndex = maxInvSize - 1;
-            if (inventorySelectedIndex > maxInvSize - 1)
+                inventorySelectedIndex = maxSize - 1;
+            if (inventorySelectedIndex > maxSize - 1)
                 inventorySelectedIndex = 0;
 
             if (inventorySelectedIndex < slots.size()) {
@@ -184,7 +184,7 @@ public class InventoryPlayer extends Inventory {
         g.setColor(hover);
         int xPos = x + 12 + 54 * inventorySelectedIndex;
         int yPos = y + height - 115;
-        if (inventorySelectedIndex > maxInvSize / 2 - 1) {
+        if (inventorySelectedIndex > maxSize / 2 - 1) {
             xPos -= itemWidth * 7 - 12;
             yPos += 55;
         }
@@ -252,15 +252,6 @@ public class InventoryPlayer extends Inventory {
         }
     }
 
-    private void add(ItemStack stack) {
-        for (Slot slot : slots) {
-            if (slot.getStack() == null) {
-                slot.setStack(stack);
-                return;
-            }
-        }
-    }
-
     public void addStackToHotbar(ItemStack stack) {
         for (ItemStack s : hotbar) {
             if (s.getId().equals(stack.getId())) {
@@ -274,20 +265,6 @@ public class InventoryPlayer extends Inventory {
         }
         hotbar.add(stack);
         remove(stack);
-    }
-
-    private void remove(ItemStack stack) {
-        for (Slot slot : slots)
-            if (slot.getStack() == stack)
-                slot.remove();
-    }
-
-    public boolean isFull() {
-        int size = 0;
-        for (Slot slot : slots)
-            if (slot.getStack() != null)
-                size++;
-        return size >= maxInvSize;
     }
 
     public boolean isHotbarFull() {
@@ -320,18 +297,12 @@ public class InventoryPlayer extends Inventory {
         return hotbarSelectedIndex <= hotbar.size() - 1;
     }
 
-    public void resetInventory() {
-        for (Slot slot : slots) {
-            slot.setStack(null);
-        }
-    }
-
     public void resetHotbar() {
         hotbar.clear();
     }
 
     public void resetAll() {
-        resetInventory();
+        clearInventory();
         resetHotbar();
     }
 }

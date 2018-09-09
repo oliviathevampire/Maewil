@@ -11,6 +11,7 @@ public abstract class Inventory {
 
     protected TheUltimateTile theUltimateTile;
     protected List<Slot> slots;
+    protected int maxSize = 12;
 
     public Inventory(TheUltimateTile theUltimateTile) {
         this.theUltimateTile = theUltimateTile;
@@ -44,5 +45,34 @@ public abstract class Inventory {
 
     public List<Slot> getSlots() {
         return slots;
+    }
+
+    protected void add(ItemStack stack) {
+        for (Slot slot : slots) {
+            if (slot.getStack() == null) {
+                slot.setStack(stack);
+                return;
+            }
+        }
+    }
+
+    protected void remove(ItemStack stack) {
+        for (Slot slot : slots)
+            if (slot.getStack() == stack)
+                slot.remove();
+    }
+
+    public boolean isFull() {
+        int size = 0;
+        for (Slot slot : slots)
+            if (slot.getStack() != null)
+                size++;
+        return size >= maxSize;
+    }
+
+    public void clearInventory() {
+        for (Slot slot : slots) {
+            slot.setStack(null);
+        }
     }
 }
