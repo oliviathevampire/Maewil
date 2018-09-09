@@ -8,7 +8,8 @@ import coffeecatteam.theultimatetile.entities.creatures.undead.EntityThing;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityZombie;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
 import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
-import coffeecatteam.theultimatetile.entities.statics.*;
+import coffeecatteam.theultimatetile.entities.statics.EntityShopStall;
+import coffeecatteam.theultimatetile.entities.statics.EntityUltimateTile;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityBush;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityCrop;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityRock;
@@ -50,9 +51,9 @@ public class EntityManager implements IRenderabelManager {
             case "carrot_crop":
                 return new EntityCrop(theUltimateTile, id, Assets.CARROT_CROP, Items.CARROT);
 
-             /*
-              * Undead
-              */
+            /*
+             * Undead
+             */
             case "zombie":
                 return new EntityZombie(theUltimateTile, id);
             case "skeleton":

@@ -215,7 +215,7 @@ public class Assets {
         CARROT_CROP = getSpriteInd(natureSheet, 3, 0, width, height);
 
         int shopRoofLength = 7;
-        SHOP_STALL = getSpriteInd(staticSheet, 0, 4, width * 2, height *2);
+        SHOP_STALL = getSpriteInd(staticSheet, 0, 4, width * 2, height * 2);
         SHOP_ROOF_ORANGE = getFrames(staticSheet, 0, 0, shopRoofLength, width * 2, height);
         SHOP_ROOF_BLUE = getFrames(staticSheet, 1, 0, shopRoofLength, width * 2, height);
         SHOP_ROOF_RED = getFrames(staticSheet, 2, 0, shopRoofLength, width * 2, height);
@@ -289,7 +289,7 @@ public class Assets {
         }
         return image;
     }
-    
+
     private static SpriteSheet getSheet(String path) {
         return new SpriteSheet(ImageLoader.loadImage(path));
     }
