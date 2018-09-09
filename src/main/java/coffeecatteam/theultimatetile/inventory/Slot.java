@@ -3,7 +3,6 @@ package coffeecatteam.theultimatetile.inventory;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.inventory.items.Items;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -28,19 +27,19 @@ public class Slot {
         this.width = width;
         this.height = height;
         this.scale = scale;
-        stack = new ItemStack(Items.APPLE, ItemStack.MAX_STACK_COUNT);
     }
 
     public void render(Graphics g) {
+        if (stack != null) {
+            g.drawImage(Assets.SLOT, x, y, width, height, null);
+            int itemWidth = (int) ((width / 2 + width / 4) * scale);
+            int itemHeight = (int) ((height / 2 + height / 4) * scale);
+            int xPos = x + itemWidth / 4;
+            int yPos = y + itemHeight / 4;
 
-        g.drawImage(Assets.SLOT, x, y, width, height, null);
-        int itemWidth = (int) ((width / 2 + width / 4) * scale);
-        int itemHeight = (int) ((height / 2 + height / 4) * scale);
-        int xPos = x + itemWidth / 4;
-        int yPos = y + itemHeight / 4;
-
-        g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
-        Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, false, false, Color.white, Assets.FONT_20);
+            g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
+            Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, false, false, Color.white, Assets.FONT_20);
+        }
     }
 
     public Slot setScale(float scale) {
@@ -71,5 +70,11 @@ public class Slot {
 
     public void setSelected(boolean selected) {
         isSelected = selected;
+    }
+
+    public ItemStack remove() {
+        ItemStack c = getStack().copy();
+        setStack(null);
+        return c;
     }
 }

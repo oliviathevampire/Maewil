@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.inventory.items;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.inventory.Slot;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -36,9 +37,9 @@ public class Item implements Cloneable {
                 if (!this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isFull()) {
                     this.pickedUp = true;
                 } else {
-                    for (ItemStack stack : this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().getItems()) {
-                        if (stack.getId().equals(this.id)) {
-                            if (stack.getItem().isStackable()) {
+                    for (Slot slot : this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().getSlots()) {
+                        if (slot.getStack().getId().equals(this.id)) {
+                            if (slot.getStack().getItem().isStackable()) {
                                 this.pickedUp = true;
                             }
                         }

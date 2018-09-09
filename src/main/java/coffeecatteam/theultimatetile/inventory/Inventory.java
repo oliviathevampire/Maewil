@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class Inventory {
 
     protected TheUltimateTile theUltimateTile;
-    private List<Slot> slots;
+    protected List<Slot> slots;
 
     public Inventory(TheUltimateTile theUltimateTile) {
         this.theUltimateTile = theUltimateTile;
@@ -40,5 +40,9 @@ public abstract class Inventory {
 
     public void render(Graphics g) {
         slots.forEach(s -> s.render(g));
+    }
+
+    public List<Slot> getSlots() {
+        return slots;
     }
 }

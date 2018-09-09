@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.inventory.InventoryPlayer;
+import coffeecatteam.theultimatetile.inventory.Slot;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.inventory.items.ItemTool;
@@ -164,13 +165,13 @@ public class EntityPlayer extends EntityCreature {
 
         if (!isDead) {
             // Drop items in inventory
-            for (ItemStack stack : this.inventoryPlayer.getItems()) {
+            for (Slot slot : this.inventoryPlayer.getSlots()) {
                 // Check if the stack is bigger than 1
-                if (stack.getCount() > 1)
-                    for (int i = 0; i < stack.getCount(); i++)
-                        dropItem(new ItemStack(stack.getItem(), 1), x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
+                if (slot.getStack().getCount() > 1)
+                    for (int i = 0; i < slot.getStack().getCount(); i++)
+                        dropItem(new ItemStack(slot.getStack().getItem(), 1), x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
                 else
-                    dropItem(stack, x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
+                    dropItem(slot.getStack(), x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
             }
 
             // Drop items in hotbar

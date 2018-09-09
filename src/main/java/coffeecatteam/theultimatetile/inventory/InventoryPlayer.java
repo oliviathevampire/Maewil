@@ -17,7 +17,6 @@ public class InventoryPlayer extends Inventory {
     protected EntityPlayer player;
 
     private boolean active = false;
-    private List<ItemStack> inventory;
     private List<ItemStack> hotbar;
 
     private int maxInvSize = 12, maxHotbarSize = 3;
@@ -28,7 +27,6 @@ public class InventoryPlayer extends Inventory {
         super(theUltimateTile);
         this.player = player;
 
-        inventory = new ArrayList<>();
         hotbar = new ArrayList<>();
 
 //        addItem(new ItemStack(Items.STICK, 5));
@@ -43,7 +41,17 @@ public class InventoryPlayer extends Inventory {
 //        addItem(new ItemStack(Items.WOODEN_PICK,1));
 //        addItem(new ItemStack(Items.CARROT,10));
 //        addItem(new ItemStack(Items.APPLE, 1));
-        addSlot(0, 161, 330, 48, 48);
+        int xd = 161, yd = 330, x, y;
+        int width = 48, height = 48;
+        for (int i = 0; i < 12; i++) {
+            x = xd + 54 * i;
+            y = yd;
+            if (i > maxInvSize / 2 - 1) {
+                x -= width * 7 - 12;
+                y += height + 5;
+            }
+            addSlot(i, x, y, width, height);
+        }
     }
 
     @Override
@@ -75,31 +83,33 @@ public class InventoryPlayer extends Inventory {
             if (inventorySelectedIndex > maxInvSize - 1)
                 inventorySelectedIndex = 0;
 
-            if (inventorySelectedIndex < inventory.size()) {
-                ItemStack stack = inventory.get(inventorySelectedIndex);
+            if (inventorySelectedIndex < slots.size()) {
+                ItemStack stack = slots.get(inventorySelectedIndex).getStack();
 
-                // Check if item was interacted with
-                if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
-                    if (stack.getItem() instanceof IInteractable)
-                        if (((IInteractable) stack.getItem()).onInteracted(player))
-                            stack.setCount(stack.getCount() - 1);
-                }
-
-                // Put item in inventory back into hotbar
-                if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
-                    if (!isHotbarFull()) {
-                        addStackToHotbar(stack);
-                    } else {
-                        for (ItemStack s : hotbar)
-                            if (s.getId().equals(stack.getId()))
-                                if (s.getItem().isStackable())
-                                    addStackToHotbar(stack);
+                if (stack != null) {
+                    // Check if item was interacted with
+                    if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_R)) {
+                        if (stack.getItem() instanceof IInteractable)
+                            if (((IInteractable) stack.getItem()).onInteracted(player))
+                                stack.setCount(stack.getCount() - 1);
                     }
-                }
 
-                // Check if item count is 0
-                if (stack.getCount() <= 0)
-                    inventory.remove(inventorySelectedIndex);
+                    // Put item in inventory back into hotbar
+                    if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_Z)) {
+                        if (!isHotbarFull()) {
+                            addStackToHotbar(stack);
+                        } else {
+                            for (ItemStack s : hotbar)
+                                if (s.getId().equals(stack.getId()))
+                                    if (s.getItem().isStackable())
+                                        addStackToHotbar(stack);
+                        }
+                    }
+
+                    // Check if item count is 0
+                    if (stack.getCount() <= 0)
+                        slots.get(inventorySelectedIndex).remove();
+                }
             }
 
             // Put item in hotbar into inventory
@@ -110,9 +120,9 @@ public class InventoryPlayer extends Inventory {
                         addItem(hStack);
                         hotbar.remove(hStack);
                     } else {
-                        for (ItemStack s : inventory) {
-                            if (s.getId().equals(hStack.getId())) {
-                                if (s.getItem().isStackable()) {
+                        for (Slot s : slots) {
+                            if (s.getStack().getId().equals(hStack.getId())) {
+                                if (s.getStack().getItem().isStackable()) {
                                     addItem(hStack);
                                     hotbar.remove(hStack);
                                 }
@@ -143,8 +153,8 @@ public class InventoryPlayer extends Inventory {
         float xOff = Tile.TILE_WIDTH / 4;
         float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4;
         if (active) {
-            inventory.get(inventorySelectedIndex).getItem().setPickedUp(false);
-            theUltimateTile.getItemManager().addItem(inventory.remove(inventorySelectedIndex), player.getX() + xOff, player.getY() + yOff);
+            slots.get(inventorySelectedIndex).getStack().getItem().setPickedUp(false);
+            theUltimateTile.getItemManager().addItem(slots.get(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
         } else {
             hotbar.get(inventorySelectedIndex).getItem().setPickedUp(false);
             theUltimateTile.getItemManager().addItem(hotbar.remove(hotbarSelectedIndex), player.getX() + xOff, player.getY() + yOff);
@@ -167,19 +177,6 @@ public class InventoryPlayer extends Inventory {
 
         int itemWidth = 48;
         int itemHeight = 48;
-        if (inventory.size() > 0) {
-            for (int i = 0; i < inventory.size(); i++) {
-                ItemStack stack = inventory.get(i);
-                int xPos = x + 12 + 54 * i;
-                int yPos = y + height - 115;
-                if (i > maxInvSize / 2 - 1) {
-                    xPos -= itemWidth * 7 - 12;
-                    yPos += 55;
-                }
-                g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
-                Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, false, false, Color.white, Assets.FONT_20);
-            }
-        }
 
         // RENDER SELECT SQUARE
         int c = 156;
@@ -230,26 +227,37 @@ public class InventoryPlayer extends Inventory {
 
     public void addItem(ItemStack stackIn) {
         if (!isFull()) {
-            for (ItemStack stack : inventory) {
-                if (stack.getId().equals(stackIn.getId())) {
-                    if (stack.getItem().isStackable()) {
-                        if (stack.getCount() != ItemStack.MAX_STACK_COUNT) {
-                            int size = stack.getCount() + stackIn.getCount();
-                            if (size > ItemStack.MAX_STACK_COUNT) {
-                                int extra = size - ItemStack.MAX_STACK_COUNT;
-                                ItemStack extraStack = new ItemStack(stack.getItem(), extra);
-                                if (!isFull()) {
-                                    inventory.add(extraStack);
-                                    stack.setCount(size);
-                                }
-                            } else
-                                stack.setCount(size);
-                            return;
+            for (Slot slot : slots) {
+                if (slot.getStack() != null) {
+                    if (slot.getStack().getId().equals(stackIn.getId())) {
+                        if (slot.getStack().getItem().isStackable()) {
+                            if (slot.getStack().getCount() != ItemStack.MAX_STACK_COUNT) {
+                                int size = slot.getStack().getCount() + stackIn.getCount();
+                                if (size > ItemStack.MAX_STACK_COUNT) {
+                                    int extra = size - ItemStack.MAX_STACK_COUNT;
+                                    ItemStack extraStack = new ItemStack(slot.getStack().getItem(), extra);
+                                    if (!isFull()) {
+                                        add(extraStack);
+                                        slot.getStack().setCount(size);
+                                    }
+                                } else
+                                    slot.getStack().setCount(size);
+                                return;
+                            }
                         }
                     }
                 }
             }
-            inventory.add(stackIn);
+            add(stackIn);
+        }
+    }
+
+    private void add(ItemStack stack) {
+        for (Slot slot : slots) {
+            if (slot.getStack() == null) {
+                slot.setStack(stack);
+                return;
+            }
         }
     }
 
@@ -265,19 +273,25 @@ public class InventoryPlayer extends Inventory {
             }
         }
         hotbar.add(stack);
-        inventory.remove(stack);
+        remove(stack);
+    }
+
+    private void remove(ItemStack stack) {
+        for (Slot slot : slots)
+            if (slot.getStack() == stack)
+                slot.remove();
     }
 
     public boolean isFull() {
-        return inventory.size() == maxInvSize;
+        int size = 0;
+        for (Slot slot : slots)
+            if (slot.getStack() != null)
+                size++;
+        return size >= maxInvSize;
     }
 
     public boolean isHotbarFull() {
         return hotbar.size() == maxHotbarSize;
-    }
-
-    public List<ItemStack> getItems() {
-        return inventory;
     }
 
     public List<ItemStack> getHotbar() {
@@ -307,7 +321,9 @@ public class InventoryPlayer extends Inventory {
     }
 
     public void resetInventory() {
-        inventory.clear();
+        for (Slot slot : slots) {
+            slot.setStack(null);
+        }
     }
 
     public void resetHotbar() {
