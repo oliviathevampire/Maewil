@@ -30,15 +30,15 @@ public class KeyManager implements KeyListener, ITickableManager {
                 justPressed[i] = true;
         }
 
-        up = keys[KeyEvent.VK_W];
-        down = keys[KeyEvent.VK_S];
-        left = keys[KeyEvent.VK_A];
-        right = keys[KeyEvent.VK_D];
-        sprint = keys[KeyEvent.VK_CONTROL];
+        up = keys[KeybindsManager.W];
+        down = keys[KeybindsManager.S];
+        left = keys[KeybindsManager.A];
+        right = keys[KeybindsManager.D];
+        sprint = keys[KeybindsManager.CONTROL];
 
-        attack = keys[KeyEvent.VK_SPACE];
-        inventory = keys[KeyEvent.VK_E];
-        pause = keys[KeyEvent.VK_ESCAPE];
+        attack = keys[KeybindsManager.SPACE];
+        inventory = keys[KeybindsManager.E];
+        pause = keys[KeybindsManager.ESCAPE];
     }
 
     public boolean keyJustPressed(int keyCode) {

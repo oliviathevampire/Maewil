@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.state;
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
+import coffeecatteam.theultimatetile.manager.KeybindsManager;
 import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
@@ -64,7 +65,7 @@ public class StateGame extends State {
 
     @Override
     public void tick() {
-        if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE) && !theUltimateTile.getEntityManager().getPlayer().isDead)
+        if (theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.ESCAPE) && !theUltimateTile.getEntityManager().getPlayer().isDead)
             paused = !paused && !theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isActive();
 
         if (paused)
