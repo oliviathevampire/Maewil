@@ -26,6 +26,14 @@ public abstract class Inventory {
         return slots.get(index);
     }
 
+    public Slot getSlot(ItemStack stack) {
+        Slot s = null;
+        for (Slot slot : slots)
+            if (slot.getStack() == stack)
+                return s = slot;
+        return s;
+    }
+
     protected void addSlot(Slot slot) {
         slot.setSelected(false);
         slots.add(slot);
