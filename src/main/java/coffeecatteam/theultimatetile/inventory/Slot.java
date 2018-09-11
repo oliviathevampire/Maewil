@@ -30,16 +30,21 @@ public class Slot {
     }
 
     public void render(Graphics g) {
-        if (stack != null) {
-            g.drawImage(Assets.SLOT, x, y, width, height, null);
-            int itemWidth = (int) ((width / 2 + width / 4) * scale);
-            int itemHeight = (int) ((height / 2 + height / 4) * scale);
-            int xPos = x + itemWidth / 4;
-            int yPos = y + itemHeight / 4;
+        g.drawImage(Assets.SLOT, x, y, width, height, null);
+        int itemWidth = (int) ((width / 2 + width / 4) * scale);
+        int itemHeight = (int) ((height / 2 + height / 4) * scale);
+        int xPos = x + itemWidth / 4;
+        int yPos = y + itemHeight / 4;
 
+        if (stack != null) {
             g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
             if (stack.getCount() > 1)
                 Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, false, false, Color.white, Assets.FONT_20);
+        }
+
+        if (isSelected) {
+            int off = 12;
+            g.drawImage(selector, x - off / 2, y - off / 2, width + off, height + off, null);
         }
     }
 
@@ -74,8 +79,16 @@ public class Slot {
     }
 
     public ItemStack remove() {
-        ItemStack c = getStack().copy();
-        setStack(null);
-        return c;
+        if (getStack() != null) {
+            ItemStack c = getStack().copy();
+            setStack(null);
+            return c;
+        }
+        return null;
+    }
+
+    public Slot copy() {
+        Slot slot = new Slot(this.index, this.x, this.y, this.width, this.height, this.scale);
+        return slot;
     }
 }

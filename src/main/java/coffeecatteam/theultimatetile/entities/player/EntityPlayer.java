@@ -11,9 +11,11 @@ import coffeecatteam.theultimatetile.inventory.Slot;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.inventory.items.ItemTool;
+import coffeecatteam.theultimatetile.manager.KeybindsManager;
 import coffeecatteam.theultimatetile.net.packet.Packet02Move;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
+import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -151,12 +153,15 @@ public class EntityPlayer extends EntityCreature {
             if (inventoryPlayer.getSelectedHotbarItemStack() == equippedItem) {
                 if (equippedItem.getItem() instanceof ItemTool)
                     extraDmg = ((ItemTool) equippedItem.getItem()).getDamage();
-                if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_R))
+                else
+                    extraDmg = 0;
+                if (theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.R))
                     if (equippedItem.getItem() instanceof IInteractable)
                         if (((IInteractable) equippedItem.getItem()).onInteracted(this))
                             equippedItem.setCount(equippedItem.getCount() - 1);
             }
-        }
+        } else
+            extraDmg = 0;
     }
 
     @Override
@@ -174,17 +179,7 @@ public class EntityPlayer extends EntityCreature {
                     dropItem(slot.getStack(), x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
             }
 
-            // Drop items in hotbar
-            for (ItemStack stack : this.inventoryPlayer.getHotbar()) {
-                // Check if the stack is bigger than 1
-                if (stack.getCount() > 1)
-                    for (int i = 0; i < stack.getCount(); i++)
-                        dropItem(new ItemStack(stack.getItem(), 1), x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
-                else
-                    dropItem(stack, x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
-            }
-
-            this.inventoryPlayer.resetAll();
+            this.inventoryPlayer.clearInventory();
             isDead = true;
         }
     }
@@ -287,7 +282,6 @@ public class EntityPlayer extends EntityCreature {
 
     public void postRender(Graphics g) {
         inventoryPlayer.render(g);
-        inventoryPlayer.renderHotbar(g);
     }
 
     public InventoryPlayer getInventoryPlayer() {
@@ -343,7 +337,7 @@ public class EntityPlayer extends EntityCreature {
     }
 
     public void reset() {
-        inventoryPlayer.resetAll();
+        inventoryPlayer.clearInventory();
         glubel = 0;
         lvl = 0;
         equippedItem = null;
