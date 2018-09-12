@@ -25,18 +25,6 @@ public class InventoryPlayer extends Inventory {
         super(theUltimateTile);
         this.player = player;
 
-//        addItem(new ItemStack(Items.STICK, 5));
-//        addItem(new ItemStack(Items.ROCK));
-//        addItem(new ItemStack(Items.ROTTEN_FLESH,3));
-//        addItem(new ItemStack(Items.LEAF));
-//        addItem(new ItemStack(Items.COAL,5));
-//        addItem(new ItemStack(Items.IRON_INGOT,3));
-//        addItem(new ItemStack(Items.GOLD_INGOT,3));
-//        addItem(new ItemStack(Items.DIAMOND,3));
-//        addItem(new ItemStack(Items.WOODEN_SWORD,1));
-//        addItem(new ItemStack(Items.WOODEN_PICK,1));
-//        addItem(new ItemStack(Items.CARROT,10));
-//        addItem(new ItemStack(Items.APPLE, 1));
         // Add inventory slots
         int xd = 161, yd = 330, x, y;
         int width = 48, height = 48;
@@ -59,7 +47,18 @@ public class InventoryPlayer extends Inventory {
             getSlot(i).setSelector(Assets.HOTBAR_SELECTER);
         }
 
-        add(new ItemStack(Items.STICK, 10));
+//        addItem(new ItemStack(Items.STICK, 5));
+//        addItem(new ItemStack(Items.ROCK));
+//        addItem(new ItemStack(Items.ROTTEN_FLESH,3));
+//        addItem(new ItemStack(Items.LEAF));
+//        addItem(new ItemStack(Items.COAL,5));
+//        addItem(new ItemStack(Items.IRON_INGOT,3));
+//        addItem(new ItemStack(Items.GOLD_INGOT,3));
+//        addItem(new ItemStack(Items.DIAMOND,3));
+//        addItem(new ItemStack(Items.WOODEN_SWORD,1));
+//        addItem(new ItemStack(Items.WOODEN_PICK,1));
+//        addItem(new ItemStack(Items.CARROT,10));
+//        addItem(new ItemStack(Items.APPLE, 1));
     }
 
     @Override
