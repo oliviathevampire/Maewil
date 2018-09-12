@@ -172,11 +172,13 @@ public class EntityPlayer extends EntityCreature {
             // Drop items in inventory
             for (Slot slot : this.inventoryPlayer.getSlots()) {
                 // Check if the stack is bigger than 1
-                if (slot.getStack().getCount() > 1)
-                    for (int i = 0; i < slot.getStack().getCount(); i++)
-                        dropItem(new ItemStack(slot.getStack().getItem(), 1), x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
-                else
-                    dropItem(slot.getStack(), x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
+                if (slot.getStack() != null) {
+                    if (slot.getStack().getCount() > 1)
+                        for (int i = 0; i < slot.getStack().getCount(); i++)
+                            dropItem(new ItemStack(slot.getStack().getItem(), 1), x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
+                    else
+                        dropItem(slot.getStack(), x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
+                }
             }
 
             this.inventoryPlayer.clearInventory();
