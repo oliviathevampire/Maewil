@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.entities.creatures.undead;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.ai.AIWander;
 import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.gfx.*;
 import coffeecatteam.theultimatetile.inventory.items.Item;
@@ -26,12 +27,17 @@ public abstract class EntityUndead extends EntityCreature {
     protected int speed = 135;
     protected int upDownSpeed = speed + 115;
 
-    protected float maxDistance = 350f;
+    protected float maxDistance = 200f;
+
+    // AI
+    private AIWander aiWander;
 
     public EntityUndead(TheUltimateTile theUltimateTile, String id) {
         super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         init();
         currentAnim = animIdle;
+
+        aiWander = new AIWander(this, 1.5f);
     }
 
     protected abstract void init();
@@ -52,6 +58,8 @@ public abstract class EntityUndead extends EntityCreature {
             if (distance < maxDistance) {
                 xMove = x * multiplier;
                 yMove = y * multiplier;
+            } else {
+                aiWander.tick();
             }
         }
         updateAnim();

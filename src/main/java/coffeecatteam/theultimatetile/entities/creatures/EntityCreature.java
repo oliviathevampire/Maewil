@@ -2,7 +2,11 @@ package coffeecatteam.theultimatetile.entities.creatures;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.ai.AI;
 import coffeecatteam.theultimatetile.tiles.Tile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class EntityCreature extends Entity {
 
@@ -11,11 +15,23 @@ public abstract class EntityCreature extends Entity {
     protected float speed;
     protected float xMove, yMove;
 
+    private List<AI> ais = new ArrayList<>();
+
     public EntityCreature(TheUltimateTile theUltimateTile, String id, int width, int height) {
         super(theUltimateTile, id, width, height);
         speed = DEFAULT_SPEED;
         xMove = 0;
         yMove = 0;
+    }
+
+    @Override
+    public void tickA() {
+        super.tickA();
+        ais.forEach(AI::tick);
+    }
+
+    protected void addAI(AI ai) {
+        ais.add(ai);
     }
 
     public void move() {
