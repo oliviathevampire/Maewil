@@ -2,31 +2,36 @@ package coffeecatteam.theultimatetile.entities.ai;
 
 import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 
-public class AIFollow extends AI {
+public class AIFollowFlee extends AI {
 
-    private EntityCreature follow;
+    private EntityCreature target;
     private float maxDistance, speed;
+    private boolean flee = false;
 
-    public AIFollow(EntityCreature entity, EntityCreature follow) {
-        this(entity, follow, 200f, 2.0f);
+    public AIFollowFlee(EntityCreature entity, EntityCreature target) {
+        this(entity, target, 200f, 2.0f);
     }
 
-    public AIFollow(EntityCreature entity, EntityCreature follow, float maxDistance, float speed) {
+    public AIFollowFlee(EntityCreature entity, EntityCreature target, float maxDistance, float speed) {
         super(entity);
-        this.follow = follow;
+        this.target = target;
         this.maxDistance = maxDistance;
         this.speed = speed;
     }
 
     @Override
     public boolean tick() {
-        float x = follow.getX() - entity.getX();
-        float y = follow.getY() - entity.getY();
+        float x = target.getX() - entity.getX();
+        float y = target.getY() - entity.getY();
 
         float distance = (float) Math.sqrt(x * x + y * y);
         float multiplier = speed / distance;
 
         boolean inRange = distance < maxDistance;
+        if (flee) {
+            x = -x;
+            y = -y;
+        }
         if (inRange) {
             entity.setxMove(x * multiplier);
             entity.setyMove(y * multiplier);
@@ -40,5 +45,10 @@ public class AIFollow extends AI {
 
     public void setSpeed(float speed) {
         this.speed = speed;
+    }
+
+    public AIFollowFlee setFlee() {
+        this.flee = true;
+        return this;
     }
 }

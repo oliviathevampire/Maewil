@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.entities.creatures.undead;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
-import coffeecatteam.theultimatetile.entities.ai.AIFollow;
+import coffeecatteam.theultimatetile.entities.ai.AIFollowFlee;
 import coffeecatteam.theultimatetile.entities.ai.AIWander;
 import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.gfx.*;
@@ -30,7 +30,7 @@ public abstract class EntityUndead extends EntityCreature {
 
     // AI
     private AIWander aiWander;
-    private AIFollow aiFollow;
+    private AIFollowFlee aiFollowFlee;
 
     public EntityUndead(TheUltimateTile theUltimateTile, String id) {
         super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
@@ -38,7 +38,7 @@ public abstract class EntityUndead extends EntityCreature {
         currentAnim = animIdle;
 
         aiWander = new AIWander(this, 1.5f);
-        aiFollow = new AIFollow(this, theUltimateTile.getEntityManager().getPlayer());
+        aiFollowFlee = new AIFollowFlee(this, theUltimateTile.getEntityManager().getPlayer());
     }
 
     protected abstract void init();
@@ -50,7 +50,7 @@ public abstract class EntityUndead extends EntityCreature {
 
         // Movement
         if (theUltimateTile.getEntityManager().getPlayer().isActive()) {
-            if (!aiFollow.tick()) {
+            if (!aiFollowFlee.tick()) {
                 aiWander.tick();
             }
         }
@@ -132,6 +132,6 @@ public abstract class EntityUndead extends EntityCreature {
     }
 
     protected void setMaxFollowDistance(float distance) {
-        aiFollow.setMaxDistance(distance);
+        aiFollowFlee.setMaxDistance(distance);
     }
 }
