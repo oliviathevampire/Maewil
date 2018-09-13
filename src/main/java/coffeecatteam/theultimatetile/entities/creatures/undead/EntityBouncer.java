@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.entities.creatures.undead;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.Items;
@@ -19,10 +20,10 @@ public class EntityBouncer extends EntityUndead {
         bounds.width = 34;
         bounds.height = 35;
 
-        animIdle = new Animation(speed, Assets.BOUNCER_IDLE);
-        animUp = new Animation(upDownSpeed, Assets.BOUNCER_UP);
-        animDown = new Animation(upDownSpeed, Assets.BOUNCER_DOWN);
-        animLeft = new Animation(speed, Assets.BOUNCER_LEFT);
-        animRight = new Animation(speed, Assets.BOUNCER_RIGHT);
+        animIdle = new Animation(animSpeed, Assets.BOUNCER_IDLE);
+        animUp = new Animation(animUpDownSpeed, Assets.BOUNCER_UP);
+        animDown = new Animation(animUpDownSpeed, Assets.BOUNCER_DOWN);
+        animLeft = new Animation(animSpeed, Assets.BOUNCER_LEFT);
+        animRight = new Animation(animSpeed, Assets.BOUNCER_RIGHT);
     }
 }

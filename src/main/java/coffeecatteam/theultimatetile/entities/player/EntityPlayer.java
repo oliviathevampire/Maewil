@@ -24,8 +24,7 @@ import java.util.List;
 
 public class EntityPlayer extends EntityCreature {
 
-    private Animation animIdle, animUp, animDown, animLeft, animRight, animDead;
-    private Animation currentAnim;
+    private Animation animDead;
 
     private Animation sprintEffect;
     private Animation splashEffect;
@@ -45,17 +44,16 @@ public class EntityPlayer extends EntityCreature {
         super(theUltimateTile, "player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         this.username = username;
 
+        inventoryPlayer = new InventoryPlayer(theUltimateTile, this);
+    }
+
+    @Override
+    protected void init() {
         bounds.x = 13;
         bounds.y = 34;
         bounds.width = 34;
         bounds.height = 28;
 
-        initAnims();
-
-        inventoryPlayer = new InventoryPlayer(theUltimateTile, this);
-    }
-
-    private void initAnims() {
         // Animations - 500 = 0.5 second
         int speed = 135;
         int upDownSpeed = speed + 115;

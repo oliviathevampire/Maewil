@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.entities.creatures.undead;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 
@@ -15,10 +16,10 @@ public class EntityThing extends EntityUndead {
 
     @Override
     protected void init() {
-        animIdle = new Animation(speed, Assets.THING_IDLE);
-        animUp = new Animation(upDownSpeed, Assets.THING_UP);
-        animDown = new Animation(upDownSpeed, Assets.THING_DOWN);
-        animLeft = new Animation(speed, Assets.THING_LEFT);
-        animRight = new Animation(speed, Assets.THING_RIGHT);
+        animIdle = new Animation(animSpeed, Assets.THING_IDLE);
+        animUp = new Animation(animUpDownSpeed, Assets.THING_UP);
+        animDown = new Animation(animUpDownSpeed, Assets.THING_DOWN);
+        animLeft = new Animation(animSpeed, Assets.THING_LEFT);
+        animRight = new Animation(animSpeed, Assets.THING_RIGHT);
     }
 }
