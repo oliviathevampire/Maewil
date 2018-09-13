@@ -10,7 +10,7 @@ public abstract class AI {
         this.entity = entity;
     }
 
-    public abstract void tick();
+    public abstract boolean tick();
 
     public EntityCreature getEntity() {
         return entity;

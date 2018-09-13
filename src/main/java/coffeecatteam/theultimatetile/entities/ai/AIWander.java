@@ -17,7 +17,7 @@ public class AIWander extends AI {
     }
 
     @Override
-    public void tick() {
+    public boolean tick() {
         wanderTimer += System.currentTimeMillis() - lastWanderTimer;
         lastWanderTimer = System.currentTimeMillis();
 
@@ -59,5 +59,7 @@ public class AIWander extends AI {
             entity.setxMove(-speed);
             entity.setyMove(-speed);
         }
+
+        return true;
     }
 }

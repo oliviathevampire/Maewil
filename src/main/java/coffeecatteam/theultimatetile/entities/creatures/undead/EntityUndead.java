@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.entities.creatures.undead;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.ai.AIFollow;
 import coffeecatteam.theultimatetile.entities.ai.AIWander;
 import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.gfx.*;
@@ -27,10 +28,9 @@ public abstract class EntityUndead extends EntityCreature {
     protected int speed = 135;
     protected int upDownSpeed = speed + 115;
 
-    protected float maxDistance = 200f;
-
     // AI
     private AIWander aiWander;
+    private AIFollow aiFollow;
 
     public EntityUndead(TheUltimateTile theUltimateTile, String id) {
         super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
@@ -38,6 +38,7 @@ public abstract class EntityUndead extends EntityCreature {
         currentAnim = animIdle;
 
         aiWander = new AIWander(this, 1.5f);
+        aiFollow = new AIFollow(this, theUltimateTile.getEntityManager().getPlayer());
     }
 
     protected abstract void init();
@@ -49,16 +50,7 @@ public abstract class EntityUndead extends EntityCreature {
 
         // Movement
         if (theUltimateTile.getEntityManager().getPlayer().isActive()) {
-            float x = theUltimateTile.getEntityManager().getPlayer().getX() - this.x;
-            float y = theUltimateTile.getEntityManager().getPlayer().getY() - this.y;
-
-            float distance = (float) Math.sqrt(x * x + y * y);
-            float multiplier = 2.0f / distance;
-
-            if (distance < maxDistance) {
-                xMove = x * multiplier;
-                yMove = y * multiplier;
-            } else {
+            if (!aiFollow.tick()) {
                 aiWander.tick();
             }
         }
@@ -137,5 +129,9 @@ public abstract class EntityUndead extends EntityCreature {
             for (int i = 0; i < amt; i++)
                 theUltimateTile.getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
         }
+    }
+
+    protected void setMaxFollowDistance(float distance) {
+        aiFollow.setMaxDistance(distance);
     }
 }
