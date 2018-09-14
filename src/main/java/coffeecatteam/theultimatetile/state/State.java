@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.manager.UIManager;
 
 import java.awt.*;
 
@@ -8,13 +9,17 @@ public abstract class State {
 
     private static State currentState = null;
 
+    protected UIManager uiManager;
     protected static TheUltimateTile theUltimateTile;
 
     public State(TheUltimateTile theUltimateTileIn) {
         theUltimateTile = theUltimateTileIn;
+        uiManager = new UIManager(theUltimateTile);
     }
 
-    public abstract void init();
+    public void init() {
+        theUltimateTile.getMouseManager().setUiManager(uiManager);
+    }
 
     public abstract void tick();
 

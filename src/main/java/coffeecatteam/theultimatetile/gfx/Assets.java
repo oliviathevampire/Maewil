@@ -85,6 +85,8 @@ public class Assets {
     public static BufferedImage SLOT, SLOT_SELECTER;
     public static BufferedImage HOTBAR, HOTBAR_SELECTER;
 
+    public static BufferedImage ICON_ON, ICON_OFF;
+
     public static void init() {
         /* Fonts */
         FONT_20 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 20);
@@ -250,6 +252,9 @@ public class Assets {
         SLOT_SELECTER = getSpriteExact(invSheet, 48, 48, width, height);
         HOTBAR = getSpriteExact(invSheet, 12, 54, 28, 10);
         HOTBAR_SELECTER = getSpriteExact(invSheet, 0, 52, 12, 12);
+
+        ICON_ON = getSpriteInd(menuSheet, 0, 3, width, height);
+        ICON_OFF = getSpriteInd(menuSheet, 1, 3, width, height);
     }
 
     private static BufferedImage[] getFrames(String sheet, int xStart, int xEnd) {

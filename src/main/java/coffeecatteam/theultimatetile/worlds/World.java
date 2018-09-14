@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.manager.EntityManager;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
+import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Logger;
@@ -151,7 +152,7 @@ public class World {
                 bg_tiles[x][y] = Utils.parseInt(bgTokens[(x + y * width)]);
             }
             if (y % 2 == 0)
-                Logger.print(getLoaded(y) + "% Loaded!");
+                printDebug(getLoaded(y) + "% Loaded!");
         }
     }
 
@@ -164,7 +165,7 @@ public class World {
                 tiles[x][y] = Utils.parseInt(tileTokens[(x + y * width)]);
             }
             if (y % 2 == 0)
-                Logger.print(getLoaded(y) + "% Loaded!");
+                printDebug(getLoaded(y) + "% Loaded!");
         }
     }
 
@@ -182,7 +183,7 @@ public class World {
                 theUltimateTile.getEntityManager().addEntity(EntityManager.loadEntity(theUltimateTile, entityId), x, y, true);
 
                 if (y % 2 == 0)
-                    Logger.print(getLoaded(i) + "% Loaded!");
+                    printDebug(getLoaded(i) + "% Loaded!");
             }
         }
     }
@@ -205,9 +206,14 @@ public class World {
                 theUltimateTile.getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
 
                 if (y % 2 == 0)
-                    Logger.print(getLoaded(i) + "% Loaded!");
+                    printDebug(getLoaded(i) + "% Loaded!");
             }
         }
+    }
+
+    private void printDebug(String msg) {
+        if (StateOptions.DEBUG)
+            Logger.print(msg);
     }
 
     public TheUltimateTile getTheUltimateTile() {

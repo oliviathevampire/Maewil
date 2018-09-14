@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.inventory.items.Items;
 import coffeecatteam.theultimatetile.manager.*;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateMenu;
+import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.utils.Utils;
 import coffeecatteam.theultimatetile.worlds.World;
 
@@ -31,6 +32,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
     // States
     public StateMenu stateMenu;
+    public StateOptions stateOptions;
 
     private KeyManager keyManager;
     private MouseManager mouseManager;
@@ -91,6 +93,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
         username = hasArgument("-username") ? getArgument("-username") : Utils.getUsername();
         stateMenu = new StateMenu(this);
+        stateOptions = new StateOptions(this);
         State.setState(stateMenu);
 
         entityManager = new EntityManager(this, new EntityPlayer(this, username));

@@ -11,6 +11,8 @@ public class KeyManager implements KeyListener, ITickableManager {
     public boolean up, down, left, right, sprint;
     public boolean attack, inventory, pause;
 
+    private int currentKeyPressed;
+
     public KeyManager() {
         keys = new boolean[256];
         justPressed = new boolean[keys.length];
@@ -52,6 +54,7 @@ public class KeyManager implements KeyListener, ITickableManager {
         if (e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
             return;
         keys[e.getKeyCode()] = true;
+        currentKeyPressed = e.getKeyCode();
     }
 
     @Override
@@ -63,6 +66,9 @@ public class KeyManager implements KeyListener, ITickableManager {
 
     @Override
     public void keyTyped(KeyEvent e) {
+    }
 
+    public int getCurrentKeyPressed() {
+        return currentKeyPressed;
     }
 }

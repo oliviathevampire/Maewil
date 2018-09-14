@@ -1,6 +1,8 @@
 package coffeecatteam.theultimatetile.entities.ai;
 
 import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
+import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.util.Random;
 
@@ -23,7 +25,8 @@ public class AIWander extends AI {
 
         if (wanderTimer > wanderCooldown) {
             dir = new Random().nextInt(9);
-            // Logger.print(dir);
+            if (StateOptions.DEBUG)
+                Logger.print(dir);
             wanderCooldown = new Random().nextInt(1) == 0 ? 1600 : 3200;
             wanderTimer = 0;
         }
@@ -62,11 +65,11 @@ public class AIWander extends AI {
 
         return true;
     }
-    
+
     public float getSpeed() {
         return speed;
     }
-    
+
     public void setSpeed(float speed) {
         this.speed = speed;
     }

@@ -5,37 +5,36 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
-import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 import java.net.URI;
 
-public class StateMenu extends State {
+public class StateOptions extends State {
 
-    public StateMenu(TheUltimateTile theUltimateTileIn) {
+    public static boolean DEBUG = false;
+
+    public StateOptions(TheUltimateTile theUltimateTileIn) {
         super(theUltimateTileIn);
         init();
 
-        int yOff = 20;
-
-        int spBtnWidth = 6 * 64;
-        int spBtnHeight = 64;
-        uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - spBtnWidth / 2, theUltimateTile.getHeight() / 2 - spBtnHeight / 2 + spBtnHeight - 50 + yOff, spBtnWidth, spBtnHeight, "Single Player", () -> {
-            State.setState(new StateGame(theUltimateTile));
+        int diBtnWidth = 6 * 64;
+        int diBtnHeight = 64;
+        uiManager.addObject(new UIButton(15, 15, diBtnWidth, diBtnHeight, "Debug Info", () -> {
+            DEBUG = !DEBUG;
+            Logger.print("Degbug info mode " + (DEBUG ? "enabled" : "disabled"));
         }));
 
-        int opBtnWidth = 4 * 64;
-        int opBtnHeight = 64;
-        uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - opBtnWidth / 2, theUltimateTile.getHeight() / 2 - opBtnHeight / 2 + opBtnHeight + 35 + yOff, opBtnWidth, opBtnHeight, "Options", () -> {
-            State.setState(theUltimateTile.stateOptions);
+        int coBtnWidth = 6 * 64;
+        int coBtnHeight = 64;
+        uiManager.addObject(new UIButton(15, 94, coBtnWidth, coBtnHeight, "Controls", () -> {
+            Logger.print("CONTROLS");
         }));
 
-        int quitBtnWidth = 192;
-        int quitBtnHeight = 64;
-        uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - quitBtnWidth / 2, theUltimateTile.getHeight() / 2 - quitBtnHeight / 2 + quitBtnHeight + 120 + yOff, quitBtnWidth, quitBtnHeight, "Quit", () -> {
-            Logger.print("Exiting...");
-            System.exit(0);
+        int exBtnWidth = 5 * 64;
+        int exBtnHeight = 64;
+        uiManager.addObject(new UIButton(15, theUltimateTile.getHeight() - exBtnHeight - 35, exBtnWidth, exBtnHeight, "Main Menu", () -> {
+            State.setState(theUltimateTile.stateMenu);
         }));
 
         Font font = Assets.FONT_20;
@@ -65,8 +64,6 @@ public class StateMenu extends State {
         g.drawImage(Assets.BACKGROUND, 0, 0, theUltimateTile.getWidth(), theUltimateTile.getHeight(), null);
         uiManager.render(g);
 
-        int w = 80 * 6;
-        int h = 48 * 6;
-        g.drawImage(Assets.TITLE, w / 6, 20, w, h, null);
+        g.drawImage(DEBUG ? Assets.ICON_ON : Assets.ICON_OFF, 15 + 6 * 64, 15, 64, 64, null);
     }
 }

@@ -29,6 +29,7 @@ public class StateGame extends State {
         uiManagerPaused = new UIManager(theUltimateTile);
         uiManagerDead = new UIManager(theUltimateTile);
         reset(world);
+        init();
 
         int btnWidth = 192;
         int btnHeight = 64;

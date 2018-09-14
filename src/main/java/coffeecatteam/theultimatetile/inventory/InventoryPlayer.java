@@ -6,7 +6,9 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.manager.KeybindsManager;
+import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.tiles.Tile;
+import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 
@@ -120,7 +122,8 @@ public class InventoryPlayer extends Inventory {
             hotbarSelectedIndex = 2;
         if (hotbarSelectedIndex < maxSize + maxHotbarSize) {
             player.setEquippedItem(getSlot(maxSize + hotbarSelectedIndex).getStack());
-            //Logger.print(getSlot(maxSize + hotbarSelectedIndex).getStack() != null ? getSlot(maxSize + hotbarSelectedIndex).getStack().getId() : "NO EQUIPPED STACK!");
+            if (StateOptions.DEBUG)
+                Logger.print(getSlot(maxSize + hotbarSelectedIndex).getStack() != null ? getSlot(maxSize + hotbarSelectedIndex).getStack().getId() : "NO EQUIPPED STACK!");
 
             if (player.getEquippedItem() != null && player.getEquippedItem().getCount() <= 0)
                 getSlot(maxSize + hotbarSelectedIndex).remove();
@@ -133,9 +136,10 @@ public class InventoryPlayer extends Inventory {
         slot1.setStack(s2);
         slot2.setStack(s1);
 
-        // Debug info
-//        Logger.print(slot1.getStack() != null ? slot1.getStack().getId() : "NO STACK!");
-//        Logger.print(slot2.getStack() != null ? slot2.getStack().getId() : "NO STACK!");
+        if (StateOptions.DEBUG) {
+            Logger.print(slot1.getStack() != null ? slot1.getStack().getId() : "NO STACK!");
+            Logger.print(slot2.getStack() != null ? slot2.getStack().getId() : "NO STACK!");
+        }
     }
 
     private void dropItem(boolean active, int inventorySelectedIndex, int hotbarSelectedIndex) {
