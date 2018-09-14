@@ -27,6 +27,8 @@ public class Items {
 
     public static Item CARROT = new ItemFood(Assets.ITEM_CARROT, "carrot", 4);
     public static Item APPLE = new ItemFood(Assets.ITEM_APPLE, "apple", 6);
+    public static Item RAW_PORK = new ItemFood(Assets.ITEM_RAW_PORK, "raw_pork", 2);
+    public static Item COOKED_PORK = new ItemFood(Assets.ITEM_COOKED_PORK, "cooked_pork", 4);
 
     public static Item COIN_IRON = new Item(Assets.ITEM_COIN_IRON, "coin_iron");
     public static Item COIN_GOLD = new Item(Assets.ITEM_COIN_GOLD, "coin_gold");
@@ -40,24 +42,19 @@ public class Items {
         registerItem(BONE);
         registerItem(BOUNCY_BALL);
 
-        registerItem(WOODEN_SWORD);
-        registerItem(WOODEN_PICK);
-        registerItem(WOODEN_HOE);
+        registerItem(WOODEN_SWORD, WOODEN_PICK, WOODEN_HOE);
+        registerItem(STONE_SWORD, STONE_PICK, STONE_HOE);
 
-        registerItem(STONE_SWORD);
-        registerItem(STONE_PICK);
-        registerItem(STONE_HOE);
+        registerItem(COAL, IRON_INGOT, GOLD_INGOT, DIAMOND);
 
-        registerItem(COAL);
-        registerItem(IRON_INGOT);
-        registerItem(GOLD_INGOT);
-        registerItem(DIAMOND);
+        registerItem(CARROT, APPLE, RAW_PORK, COOKED_PORK);
 
-        registerItem(CARROT);
-        registerItem(APPLE);
+        registerItem(COIN_IRON, COIN_GOLD);
+    }
 
-        registerItem(COIN_IRON);
-        registerItem(COIN_GOLD);
+    private static void registerItem(Item... items) {
+        for (Item item : items)
+            registerItem(item);
     }
 
     private static void registerItem(Item item) {

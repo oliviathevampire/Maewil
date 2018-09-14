@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.creatures.passive.EntityPig;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityBouncer;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntitySkeleton;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityThing;
@@ -62,6 +63,12 @@ public class EntityManager implements IRenderabelManager {
                 return new EntityBouncer(theUltimateTile, id);
             case "thing":
                 return new EntityThing(theUltimateTile, id);
+
+            /*
+             * Passive
+             */
+            case "pig":
+                return new EntityPig(theUltimateTile, id);
 
             /*
              * Other

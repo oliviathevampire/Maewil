@@ -36,7 +36,7 @@ public class Assets {
 
     public static BufferedImage ITEM_COAL, ITEM_IRON_INGOT, ITEM_GOLD_INGOT, ITEM_DIAMOND;
 
-    public static BufferedImage ITEM_CARROT, ITEM_APPLE;
+    public static BufferedImage ITEM_CARROT, ITEM_APPLE, ITEM_RAW_PORK, ITEM_COOKED_PORK;
 
     public static BufferedImage ITEM_COIN_IRON, ITEM_COIN_GOLD;
 
@@ -54,10 +54,14 @@ public class Assets {
     /* Entities */
     public static BufferedImage[] EXTRA_LIFE;
 
+    // Undead
     public static BufferedImage[] ZOMBIE_IDLE, ZOMBIE_UP, ZOMBIE_DOWN, ZOMBIE_LEFT, ZOMBIE_RIGHT;
     public static BufferedImage[] SKELETON_IDLE, SKELETON_UP, SKELETON_DOWN, SKELETON_LEFT, SKELETON_RIGHT;
     public static BufferedImage[] BOUNCER_IDLE, BOUNCER_UP, BOUNCER_DOWN, BOUNCER_LEFT, BOUNCER_RIGHT;
     public static BufferedImage[] THING_IDLE, THING_UP, THING_DOWN, THING_LEFT, THING_RIGHT;
+
+    // Passive
+    public static BufferedImage[] PIG_IDLE, PIG_UP, PIG_DOWN, PIG_LEFT, PIG_RIGHT;
 
     /* Nature / Statics */
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
@@ -99,6 +103,7 @@ public class Assets {
 
         SpriteSheet playerSheet = getSheet("/assets/textures/entities/player.png");
         SpriteSheet undeadSheet = getSheet("/assets/textures/entities/undead.png");
+        SpriteSheet passiveSheet = getSheet("/assets/textures/entities/passive.png");
 
         SpriteSheet menuSheet = getSheet("/assets/textures/gui/menu.png");
         SpriteSheet invSheet = getSheet("/assets/textures/gui/inventory.png");
@@ -157,6 +162,8 @@ public class Assets {
 
         ITEM_CARROT = getSpriteInd(itemsSheet, 3, 0, width, height);
         ITEM_APPLE = getSpriteInd(itemsSheet, 3, 1, width, height);
+        ITEM_RAW_PORK = getSpriteInd(itemsSheet, 3, 2, width, height);
+        ITEM_COOKED_PORK = getSpriteInd(itemsSheet, 3, 3, width, height);
 
         ITEM_COIN_IRON = getSpriteInd(itemsSheet, 4, 0, width, height);
         ITEM_COIN_GOLD = getSpriteInd(itemsSheet, 4, 1, width, height);
@@ -180,6 +187,7 @@ public class Assets {
         /* Entities */
         EXTRA_LIFE = getFrames("/assets/textures/entities/extra_life.png", 0, 7);
 
+        // Undead
         ZOMBIE_IDLE = getFrames(undeadSheet, 0, 0, 3);
         ZOMBIE_UP = getFrames(undeadSheet, 1, 0, 2);
         ZOMBIE_DOWN = getFrames(undeadSheet, 1, 3, 5);
@@ -203,6 +211,13 @@ public class Assets {
         THING_DOWN = getFrames(undeadSheet, 10, 0, 9);
         THING_LEFT = getFrames(undeadSheet, 11, 0, 9);
         THING_RIGHT = getFrames(undeadSheet, 12, 0, 9);
+
+        // Passive
+        PIG_IDLE = getFrames(passiveSheet, 0, 0, 7);
+        PIG_UP = getFrames(passiveSheet, 1, 0, 3);
+        PIG_DOWN = getFrames(passiveSheet, 1, 4, 7);
+        PIG_LEFT = getFrames(passiveSheet, 2, 4, 7);
+        PIG_RIGHT = getFrames(passiveSheet, 2, 0, 3);
 
         /* Nature / Statics */
         TREE_SMALL = getSpriteInd(natureSheet, 0, 0, width, height * 2);
