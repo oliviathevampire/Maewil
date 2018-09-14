@@ -2,13 +2,12 @@ package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.entities.creatures.passive.EntityPig;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityBouncer;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntitySkeleton;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityThing;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityZombie;
-import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
-import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
 import coffeecatteam.theultimatetile.entities.statics.EntityShopStall;
 import coffeecatteam.theultimatetile.entities.statics.EntityUltimateTile;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityBush;
@@ -166,38 +165,5 @@ public class EntityManager implements IRenderabelManager {
 
     public void reset() {
         entities.removeIf(entity -> !entity.getId().equals(player.getId()));
-    }
-
-    public void removePlayerMP(String username) {
-        int index = 0;
-        for (Entity e : entities) {
-            if (e instanceof EntityPlayerMP)
-                if (((EntityPlayerMP) e).getUsername().equals(username))
-                    break;
-            index++;
-        }
-        entities.remove(index);
-    }
-
-    private int getPlayerMPIndex(String username) {
-        int index = 0;
-        for (Entity e : entities) {
-            if (e instanceof EntityPlayerMP)
-                if (((EntityPlayerMP) e).getUsername().equals(username))
-                    break;
-            index++;
-        }
-        return index;
-    }
-
-    public void movePlayer(String username, float x, float y) {
-        int index = getPlayerMPIndex(username);
-        entities.get(index).setX(x);
-        entities.get(index).setY(y);
-
-//        EntityPlayerMP player = (EntityPlayerMP) entities.get(index);
-//        player.setxMove(x);
-//        player.setyMove(y);
-        //player.move();
     }
 }

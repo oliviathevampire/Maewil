@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.inventory.items;
 
 import coffeecatteam.theultimatetile.entities.Entity;
-import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 
 import java.awt.image.BufferedImage;
 

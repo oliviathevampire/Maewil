@@ -1,8 +1,7 @@
-package coffeecatteam.theultimatetile.entities.player;
+package coffeecatteam.theultimatetile.entities.creatures;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
-import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
@@ -12,14 +11,11 @@ import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.inventory.items.ItemTool;
 import coffeecatteam.theultimatetile.manager.KeybindsManager;
-import coffeecatteam.theultimatetile.net.packet.Packet02Move;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
-import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class EntityPlayer extends EntityCreature {
@@ -79,9 +75,6 @@ public class EntityPlayer extends EntityCreature {
                     // Movement
                     getInput();
                     move();
-
-                    Packet02Move packet = new Packet02Move(this.username, this.x, this.y);
-                    packet.writeData(theUltimateTile.getClient());
 
                     // Attack
                     checkAttacks();

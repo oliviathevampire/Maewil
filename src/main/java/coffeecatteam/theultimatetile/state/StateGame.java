@@ -10,7 +10,6 @@ import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.worlds.World;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class StateGame extends State {
 
@@ -41,10 +40,8 @@ public class StateGame extends State {
         int w = btnWidth + 128;
         UIButton btnMainMenu = new UIButton(theUltimateTile.getWidth() / 2 - w / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
             State.setState(theUltimateTile.stateMenu);
-            theUltimateTile.disconnect();
         });
         UIButton btnQuit = new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
-            theUltimateTile.disconnect();
             Logger.print("Exiting...");
             System.exit(0);
         });

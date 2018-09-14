@@ -20,7 +20,6 @@ public class WindowManager implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        theUltimateTile.disconnect();
     }
 
     @Override

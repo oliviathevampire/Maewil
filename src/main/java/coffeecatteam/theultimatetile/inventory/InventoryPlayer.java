@@ -1,16 +1,14 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
-import coffeecatteam.theultimatetile.entities.player.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.inventory.items.Items;
 import coffeecatteam.theultimatetile.manager.KeybindsManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class InventoryPlayer extends Inventory {
     protected EntityPlayer player;

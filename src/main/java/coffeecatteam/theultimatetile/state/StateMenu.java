@@ -25,15 +25,7 @@ public class StateMenu extends State {
         int spBtnWidth = 7 * 64;
         int spBtnHeight = 64;
         uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - spBtnWidth / 2, theUltimateTile.getHeight() / 2 - spBtnHeight / 2 + spBtnHeight - 50 + yOff, spBtnWidth, spBtnHeight, "Single Player", () -> {
-            theUltimateTile.setSinglePlayer(true);
             State.setState(new StateGame(theUltimateTile));
-        }));
-
-        int mpBtnWidth = 6 * 64;
-        int mpBtnHeight = 64;
-        uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - mpBtnWidth / 2, theUltimateTile.getHeight() / 2 - mpBtnHeight / 2 + mpBtnHeight + 35 + yOff, mpBtnWidth, mpBtnHeight, "Multiplayer", () -> {
-            theUltimateTile.setSinglePlayer(false);
-            State.setState(theUltimateTile.stateMenuMultiplayer);
         }));
 
         int quitBtnWidth = 192;
@@ -78,10 +70,5 @@ public class StateMenu extends State {
         int w = 80 * 6;
         int h = 48 * 6;
         g.drawImage(Assets.TITLE, w / 6, 20, w, h, null);
-
-//        Font font = Assets.FONT_20;
-//        int x = 5;
-//        int y = theUltimateTile.getHeight() - 10;
-//        Text.drawString(g, "Copyright (C) CoffeeCatTeam 2018", x, y, false, true, Color.white, font);
     }
 }

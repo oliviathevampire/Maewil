@@ -1,17 +1,12 @@
 package coffeecatteam.theultimatetile;
 
-import coffeecatteam.theultimatetile.entities.player.EntityPlayerMP;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.inventory.items.Items;
 import coffeecatteam.theultimatetile.manager.*;
-import coffeecatteam.theultimatetile.net.Client;
-import coffeecatteam.theultimatetile.net.Server;
-import coffeecatteam.theultimatetile.net.packet.Packet01Disconnect;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateMenu;
-import coffeecatteam.theultimatetile.state.StateMenuMultiplayer;
-import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 import coffeecatteam.theultimatetile.worlds.World;
 
@@ -35,9 +30,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
     private Graphics g;
 
     // States
-    //public StateGame stateGame;
     public StateMenu stateMenu;
-    public StateMenuMultiplayer stateMenuMultiplayer;
 
     private KeyManager keyManager;
     private MouseManager mouseManager;
@@ -49,10 +42,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
     private WindowManager windowManager;
 
-    private Client client;
-    private Server server;
     private String username;
-    private boolean singlePlayer = true;
 
     public TheUltimateTile(String[] args, String title, int width, int height) {
         this.args = args;
@@ -100,12 +90,10 @@ public class TheUltimateTile extends Canvas implements Runnable {
         camera = new Camera(this, 0, 0);
 
         username = hasArgument("-username") ? getArgument("-username") : Utils.getUsername();
-        //stateGame = new StateGame(this).reset();
         stateMenu = new StateMenu(this);
-        stateMenuMultiplayer = new StateMenuMultiplayer(this, username);
         State.setState(stateMenu);
 
-        entityManager = new EntityManager(this, new EntityPlayerMP(this, username, null, -1, true));
+        entityManager = new EntityManager(this, new EntityPlayer(this, username));
 
         itemManager = new ItemManager(this);
         windowManager = new WindowManager(this);
@@ -178,18 +166,6 @@ public class TheUltimateTile extends Canvas implements Runnable {
             return;
         running = true;
 
-        if (hasArgument("-runServer")) {
-            Logger.print("Running game while hosting server!\n");
-            server = new Server(this);
-            server.setName("Thread-Server");
-            server.start();
-        }
-
-        client = new Client(this);
-        client.setIpAddress("localhost");
-        client.setName("Thread-Client");
-        client.start();
-
         thread = new Thread(this);
         thread.setName("Thread-Main");
         thread.start();
@@ -259,14 +235,6 @@ public class TheUltimateTile extends Canvas implements Runnable {
         return frame;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public Server getServer() {
-        return server;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -279,35 +247,12 @@ public class TheUltimateTile extends Canvas implements Runnable {
         return itemManager;
     }
 
-    public boolean isHosting() {
-        return server != null;
-    }
-
     public World getWorld() {
         return world;
     }
 
     public void setWorld(World world) {
         this.world = world;
-    }
-
-    public boolean isSinglePlayer() {
-        return singlePlayer;
-    }
-
-    public void setSinglePlayer(boolean singlePlayer) {
-        this.singlePlayer = singlePlayer;
-    }
-
-    /*
-     * Disconnect from server.
-     * Checks if in single player
-     */
-    public void disconnect() {
-        if (!singlePlayer) {
-            Packet01Disconnect packet = new Packet01Disconnect(this.getEntityManager().getPlayer().getUsername());
-            packet.writeData(client);
-        }
     }
 
     /*
