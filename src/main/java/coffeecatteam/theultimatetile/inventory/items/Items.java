@@ -26,6 +26,8 @@ public class Items {
     public static Item DIAMOND = new Item(Assets.ITEM_DIAMOND, "diamond");
 
     public static Item CARROT = new ItemFood(Assets.ITEM_CARROT, "carrot", 4);
+    public static Item WHEAT = new ItemFood(Assets.ITEM_WHEAT, "wheat", 2);
+    public static Item BREAD = new ItemFood(Assets.ITEM_BREAD, "bread", 5);
     public static Item APPLE = new ItemFood(Assets.ITEM_APPLE, "apple", 6);
     public static Item RAW_PORK = new ItemFood(Assets.ITEM_RAW_PORK, "raw_pork", 2);
     public static Item COOKED_PORK = new ItemFood(Assets.ITEM_COOKED_PORK, "cooked_pork", 4);
@@ -47,7 +49,7 @@ public class Items {
 
         registerItem(COAL, IRON_INGOT, GOLD_INGOT, DIAMOND);
 
-        registerItem(CARROT, APPLE, RAW_PORK, COOKED_PORK);
+        registerItem(CARROT, WHEAT, BREAD, APPLE, RAW_PORK, COOKED_PORK);
 
         registerItem(COIN_IRON, COIN_GOLD);
     }

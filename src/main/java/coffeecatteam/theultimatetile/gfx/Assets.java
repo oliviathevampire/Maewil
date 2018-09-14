@@ -36,7 +36,7 @@ public class Assets {
 
     public static BufferedImage ITEM_COAL, ITEM_IRON_INGOT, ITEM_GOLD_INGOT, ITEM_DIAMOND;
 
-    public static BufferedImage ITEM_CARROT, ITEM_APPLE, ITEM_RAW_PORK, ITEM_COOKED_PORK;
+    public static BufferedImage ITEM_CARROT, ITEM_APPLE, ITEM_RAW_PORK, ITEM_COOKED_PORK, ITEM_BREAD, ITEM_WHEAT;
 
     public static BufferedImage ITEM_COIN_IRON, ITEM_COIN_GOLD;
 
@@ -67,7 +67,7 @@ public class Assets {
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
     public static BufferedImage ROCK_V1, ROCK_V2;
     public static BufferedImage BUSH_SMALL, BUSH_LARGE;
-    public static BufferedImage CARROT_CROP;
+    public static BufferedImage CROP_GROUND, CROP_CARROT, CROP_WHEAT;
 
     public static BufferedImage SHOP_STALL;
     public static BufferedImage[] SHOP_ROOF_ORANGE, SHOP_ROOF_BLUE, SHOP_ROOF_RED, SHOP_ROOF_GREY;
@@ -166,6 +166,8 @@ public class Assets {
         ITEM_APPLE = getSpriteInd(itemsSheet, 3, 1, width, height);
         ITEM_RAW_PORK = getSpriteInd(itemsSheet, 3, 2, width, height);
         ITEM_COOKED_PORK = getSpriteInd(itemsSheet, 3, 3, width, height);
+        ITEM_BREAD = getSpriteInd(itemsSheet, 3, 4, width, height);
+        ITEM_WHEAT = getSpriteInd(itemsSheet, 3, 5, width, height);
 
         ITEM_COIN_IRON = getSpriteInd(itemsSheet, 4, 0, width, height);
         ITEM_COIN_GOLD = getSpriteInd(itemsSheet, 4, 1, width, height);
@@ -229,7 +231,10 @@ public class Assets {
         ROCK_V2 = getSpriteInd(natureSheet, 1, 1, width, height);
         BUSH_SMALL = getSpriteInd(natureSheet, 2, 0, width, height);
         BUSH_LARGE = getSpriteInd(natureSheet, 2, 1, width * 2, height);
-        CARROT_CROP = getSpriteInd(natureSheet, 3, 0, width, height);
+
+        CROP_GROUND = getSpriteInd(natureSheet, 6, 0, width, height);
+        CROP_CARROT = getSpriteInd(natureSheet, 7, 0, width, height);
+        CROP_WHEAT = getSpriteInd(natureSheet, 7, 1, width, height);
 
         int shopRoofLength = 7;
         SHOP_STALL = getSpriteInd(staticSheet, 0, 4, width * 2, height * 2);

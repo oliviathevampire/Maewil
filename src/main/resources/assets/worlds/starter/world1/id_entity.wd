@@ -33,8 +33,9 @@ tree_medium,17f,9f
 
 rock_medium,15f,10f
 
-carrot_crop,1f,7f
-carrot_crop,2f,7f
+crop_carrot,1f,7f
+crop_carrot,2f,7f
+crop_wheat,1f,8f
 
 zombie,2f,1f
 zombie,1f,2f
