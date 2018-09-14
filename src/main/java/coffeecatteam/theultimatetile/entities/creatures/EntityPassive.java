@@ -3,11 +3,8 @@ package coffeecatteam.theultimatetile.entities.creatures;
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.ai.AIWander;
-import coffeecatteam.theultimatetile.inventory.items.Item;
 
 public abstract class EntityPassive extends EntityCreature {
-
-    protected Item drop = null;
 
     // AI
     private AIWander aiWander;
