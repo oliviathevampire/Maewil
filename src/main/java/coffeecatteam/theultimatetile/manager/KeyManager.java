@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.manager.iinterface.ITickableManager;
+import coffeecatteam.theultimatetile.state.options.Keybinds;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -11,7 +12,8 @@ public class KeyManager implements KeyListener, ITickableManager {
     public boolean up, down, left, right, sprint;
     public boolean attack, inventory, pause;
 
-    private int currentKeyPressed;
+    private int currentKeyPressedCode;
+    private char currentKeyPressedChar = '~';
 
     public KeyManager() {
         keys = new boolean[256];
@@ -32,15 +34,15 @@ public class KeyManager implements KeyListener, ITickableManager {
                 justPressed[i] = true;
         }
 
-        up = keys[KeybindsManager.W];
-        down = keys[KeybindsManager.S];
-        left = keys[KeybindsManager.A];
-        right = keys[KeybindsManager.D];
-        sprint = keys[KeybindsManager.CONTROL];
+        up = keys[Keybinds.W.getKey()];
+        down = keys[Keybinds.S.getKey()];
+        left = keys[Keybinds.A.getKey()];
+        right = keys[Keybinds.D.getKey()];
+        sprint = keys[Keybinds.CONTROL.getKey()];
 
-        attack = keys[KeybindsManager.SPACE];
-        inventory = keys[KeybindsManager.E];
-        pause = keys[KeybindsManager.ESCAPE];
+        attack = keys[Keybinds.SPACE.getKey()];
+        inventory = keys[Keybinds.E.getKey()];
+        pause = keys[Keybinds.ESCAPE.getKey()];
     }
 
     public boolean keyJustPressed(int keyCode) {
@@ -54,7 +56,11 @@ public class KeyManager implements KeyListener, ITickableManager {
         if (e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
             return;
         keys[e.getKeyCode()] = true;
-        currentKeyPressed = e.getKeyCode();
+
+        if (e.getKeyCode() != KeyEvent.VK_ENTER) {
+            currentKeyPressedCode = e.getKeyCode();
+            currentKeyPressedChar = e.getKeyChar();
+        }
     }
 
     @Override
@@ -68,7 +74,11 @@ public class KeyManager implements KeyListener, ITickableManager {
     public void keyTyped(KeyEvent e) {
     }
 
-    public int getCurrentKeyPressed() {
-        return currentKeyPressed;
+    public int getCurrentKeyPressedCode() {
+        return currentKeyPressedCode;
+    }
+
+    public char getCurrentKeyPressedChar() {
+        return currentKeyPressedChar;
     }
 }

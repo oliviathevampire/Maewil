@@ -10,7 +10,7 @@ import coffeecatteam.theultimatetile.inventory.Slot;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.inventory.items.ItemTool;
-import coffeecatteam.theultimatetile.manager.KeybindsManager;
+import coffeecatteam.theultimatetile.state.options.Keybinds;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Utils;
@@ -146,7 +146,7 @@ public class EntityPlayer extends EntityCreature {
                     extraDmg = ((ItemTool) equippedItem.getItem()).getDamage();
                 else
                     extraDmg = 0;
-                if (theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.R))
+                if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.R.getKey()))
                     if (equippedItem.getItem() instanceof IInteractable)
                         if (((IInteractable) equippedItem.getItem()).onInteracted(this))
                             equippedItem.setCount(equippedItem.getCount() - 1);

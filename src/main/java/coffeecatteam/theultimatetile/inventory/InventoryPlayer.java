@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.manager.KeybindsManager;
+import coffeecatteam.theultimatetile.state.options.Keybinds;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
@@ -63,17 +63,17 @@ public class InventoryPlayer extends Inventory {
 
     @Override
     public void tick() {
-        if (theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.E))
+        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.E.getKey()))
             active = !active;
-        if (theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.ESCAPE) && active)
+        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.ESCAPE.getKey()) && active)
             active = !active;
 
         if (active) {
             // Change select item
-            boolean up = theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.W);
-            boolean down = theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.S);
-            boolean left = theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.A);
-            boolean right = theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.D);
+            boolean up = theUltimateTile.getKeyManager().keyJustPressed(Keybinds.W.getKey());
+            boolean down = theUltimateTile.getKeyManager().keyJustPressed(Keybinds.S.getKey());
+            boolean left = theUltimateTile.getKeyManager().keyJustPressed(Keybinds.A.getKey());
+            boolean right = theUltimateTile.getKeyManager().keyJustPressed(Keybinds.D.getKey());
 
             if (up || down) {
                 inventorySelectedIndex += 6;
@@ -95,7 +95,7 @@ public class InventoryPlayer extends Inventory {
 
                 if (stack != null) {
                     // Check if item was interacted with
-                    if (theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.R)) {
+                    if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.R.getKey())) {
                         if (stack.getItem() instanceof IInteractable)
                             if (((IInteractable) stack.getItem()).onInteracted(player))
                                 stack.setCount(stack.getCount() - 1);
@@ -108,17 +108,17 @@ public class InventoryPlayer extends Inventory {
             }
 
             // Swap selected stacks
-            if (theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.Z))
+            if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.Z.getKey()))
                 swapSlots(getSlot(inventorySelectedIndex), getSlot(maxSize + hotbarSelectedIndex));
         }
-        if (theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.Q))
+        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.Q.getKey()))
             dropItem(active, inventorySelectedIndex, hotbarSelectedIndex);
 
-        if (theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.ONE))
+        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.ONE.getKey()))
             hotbarSelectedIndex = 0;
-        if (theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.TWO))
+        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.TWO.getKey()))
             hotbarSelectedIndex = 1;
-        if (theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.THREE))
+        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.THREE.getKey()))
             hotbarSelectedIndex = 2;
         if (hotbarSelectedIndex < maxSize + maxHotbarSize) {
             player.setEquippedItem(getSlot(maxSize + hotbarSelectedIndex).getStack());
@@ -145,12 +145,14 @@ public class InventoryPlayer extends Inventory {
     private void dropItem(boolean active, int inventorySelectedIndex, int hotbarSelectedIndex) {
         float xOff = Tile.TILE_WIDTH / 4;
         float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4;
-        if (active) {
-            getSlot(inventorySelectedIndex).getStack().getItem().setPickedUp(false);
-            theUltimateTile.getItemManager().addItem(getSlot(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
-        } else {
-            getSlot(hotbarSelectedIndex + maxHotbarSize).getStack().getItem().setPickedUp(false);
-            theUltimateTile.getItemManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), player.getX() + xOff, player.getY() + yOff);
+        if (getSlot(inventorySelectedIndex).getStack() != null) {
+            if (active) {
+                getSlot(inventorySelectedIndex).getStack().getItem().setPickedUp(false);
+                theUltimateTile.getItemManager().addItem(getSlot(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
+            } else {
+                getSlot(hotbarSelectedIndex + maxHotbarSize).getStack().getItem().setPickedUp(false);
+                theUltimateTile.getItemManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), player.getX() + xOff, player.getY() + yOff);
+            }
         }
     }
 

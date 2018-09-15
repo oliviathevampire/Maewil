@@ -2,9 +2,10 @@ package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
-import coffeecatteam.theultimatetile.manager.KeybindsManager;
 import coffeecatteam.theultimatetile.manager.UIManager;
+import coffeecatteam.theultimatetile.state.options.Keybinds;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.worlds.World;
@@ -34,17 +35,38 @@ public class StateGame extends State {
         int btnWidth = 192;
         int btnHeight = 64;
         int yOffset = 150;
-        uiManagerPaused.addObject(new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25, btnWidth, btnHeight, "Resume", () ->
-                paused = false
-        ));
+        uiManagerPaused.addObject(new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25, btnWidth, btnHeight, "Resume", new ClickListener() {
+            @Override
+            public void onClick() {
+                paused = false;
+            }
+
+            @Override
+            public void tick() {
+            }
+        }));
 
         int w = btnWidth + 128;
-        UIButton btnMainMenu = new UIButton(theUltimateTile.getWidth() / 2 - w / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", () -> {
-            State.setState(theUltimateTile.stateMenu);
+        UIButton btnMainMenu = new UIButton(theUltimateTile.getWidth() / 2 - w / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", new ClickListener() {
+            @Override
+            public void onClick() {
+                State.setState(theUltimateTile.stateMenu);
+            }
+
+            @Override
+            public void tick() {
+            }
         });
-        UIButton btnQuit = new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", () -> {
-            Logger.print("Exiting...");
-            System.exit(0);
+        UIButton btnQuit = new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", new ClickListener() {
+            @Override
+            public void onClick() {
+                Logger.print("Exiting...");
+                System.exit(0);
+            }
+
+            @Override
+            public void tick() {
+            }
         });
 
         uiManagerPaused.addObject(btnMainMenu);
@@ -63,7 +85,7 @@ public class StateGame extends State {
 
     @Override
     public void tick() {
-        if (theUltimateTile.getKeyManager().keyJustPressed(KeybindsManager.ESCAPE) && !theUltimateTile.getEntityManager().getPlayer().isDead)
+        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.ESCAPE.getKey()) && !theUltimateTile.getEntityManager().getPlayer().isDead)
             paused = !paused && !theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isActive();
 
         if (paused)

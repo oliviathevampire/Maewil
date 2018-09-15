@@ -42,6 +42,8 @@ public class UIButton extends UIObject {
             this.currentTexture = Assets.BUTTON_ENABLED;
         if (this.disabled)
             this.currentTexture = Assets.BUTTON_DISABLED;
+
+        listener.tick();
     }
 
     @Override
@@ -79,6 +81,10 @@ public class UIButton extends UIObject {
             onClick();
     }
 
+    public void setListener(ClickListener listener) {
+        this.listener = listener;
+    }
+
     public boolean isDisabled() {
         return this.disabled;
     }
@@ -94,5 +100,13 @@ public class UIButton extends UIObject {
 
     public void setHovering(boolean hovering) {
         this.hovering = hovering;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

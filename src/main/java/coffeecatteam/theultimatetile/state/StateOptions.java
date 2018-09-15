@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.state;
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
 import coffeecatteam.theultimatetile.utils.Logger;
@@ -20,21 +21,42 @@ public class StateOptions extends State {
 
         int diBtnWidth = 6 * 64;
         int diBtnHeight = 64;
-        uiManager.addObject(new UIButton(15, 15, diBtnWidth, diBtnHeight, "Debug Info", () -> {
-            DEBUG = !DEBUG;
-            Logger.print("Degbug info mode " + (DEBUG ? "enabled" : "disabled"));
+        uiManager.addObject(new UIButton(15, 15, diBtnWidth, diBtnHeight, "Debug Info", new ClickListener() {
+            @Override
+            public void onClick() {
+                DEBUG = !DEBUG;
+                Logger.print("Degbug info mode " + (DEBUG ? "enabled" : "disabled"));
+            }
+
+            @Override
+            public void tick() {
+            }
         }));
 
         int coBtnWidth = 6 * 64;
         int coBtnHeight = 64;
-        uiManager.addObject(new UIButton(15, 94, coBtnWidth, coBtnHeight, "Controls", () -> {
-            Logger.print("CONTROLS");
+        uiManager.addObject(new UIButton(15, 94, coBtnWidth, coBtnHeight, "Controls", new ClickListener() {
+            @Override
+            public void onClick() {
+                State.setState(theUltimateTile.optionsControls);
+            }
+
+            @Override
+            public void tick() {
+            }
         }));
 
         int exBtnWidth = 5 * 64;
         int exBtnHeight = 64;
-        uiManager.addObject(new UIButton(15, theUltimateTile.getHeight() - exBtnHeight - 35, exBtnWidth, exBtnHeight, "Main Menu", () -> {
-            State.setState(theUltimateTile.stateMenu);
+        uiManager.addObject(new UIButton(15, theUltimateTile.getHeight() - exBtnHeight - 35, exBtnWidth, exBtnHeight, "Main Menu", new ClickListener() {
+            @Override
+            public void onClick() {
+                State.setState(theUltimateTile.stateMenu);
+            }
+
+            @Override
+            public void tick() {
+            }
         }));
 
         Font font = Assets.FONT_20;
@@ -43,13 +65,20 @@ public class StateOptions extends State {
         int crHeight = Text.getHeight(theUltimateTile.getGraphics(), font);
         int crx = 5;
         int cry = theUltimateTile.getHeight() - 10;
-        uiManager.addObject(new UIHyperlink(crx, cry, crWidth, crHeight, crText, true, font, () -> {
-            try {
-                Desktop desktop = Desktop.getDesktop();
-                URI link = new URI("https://github.com/CoffeeCatRailway/TheUltimateTile/blob/master/LICENSE.md");
-                desktop.browse(link);
-            } catch (Exception e) {
-                e.printStackTrace();
+        uiManager.addObject(new UIHyperlink(crx, cry, crWidth, crHeight, crText, true, font, new ClickListener() {
+            @Override
+            public void onClick() {
+                try {
+                    Desktop desktop = Desktop.getDesktop();
+                    URI link = new URI("https://github.com/CoffeeCatRailway/TheUltimateTile/blob/master/LICENSE.md");
+                    desktop.browse(link);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void tick() {
             }
         }));
     }
