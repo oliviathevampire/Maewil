@@ -146,7 +146,7 @@ public class EntityPlayer extends EntityCreature {
                     extraDmg = ((ItemTool) equippedItem.getItem()).getDamage();
                 else
                     extraDmg = 0;
-                if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.R.getKey()))
+                if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.R.getKeyCode()))
                     if (equippedItem.getItem() instanceof IInteractable)
                         if (((IInteractable) equippedItem.getItem()).onInteracted(this))
                             equippedItem.setCount(equippedItem.getCount() - 1);

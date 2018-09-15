@@ -34,15 +34,15 @@ public class KeyManager implements KeyListener, ITickableManager {
                 justPressed[i] = true;
         }
 
-        up = keys[Keybinds.W.getKey()];
-        down = keys[Keybinds.S.getKey()];
-        left = keys[Keybinds.A.getKey()];
-        right = keys[Keybinds.D.getKey()];
-        sprint = keys[Keybinds.CONTROL.getKey()];
+        up = keys[Keybinds.W.getKeyCode()];
+        down = keys[Keybinds.S.getKeyCode()];
+        left = keys[Keybinds.A.getKeyCode()];
+        right = keys[Keybinds.D.getKeyCode()];
+        sprint = keys[Keybinds.CONTROL.getKeyCode()];
 
-        attack = keys[Keybinds.SPACE.getKey()];
-        inventory = keys[Keybinds.E.getKey()];
-        pause = keys[Keybinds.ESCAPE.getKey()];
+        attack = keys[Keybinds.SPACE.getKeyCode()];
+        inventory = keys[Keybinds.E.getKeyCode()];
+        pause = keys[Keybinds.ESCAPE.getKeyCode()];
     }
 
     public boolean keyJustPressed(int keyCode) {

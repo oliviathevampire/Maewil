@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
+import coffeecatteam.theultimatetile.gfx.ui.UIButtonControl;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
 import coffeecatteam.theultimatetile.state.State;
 
@@ -24,6 +25,20 @@ public class OptionsControls extends State {
             @Override
             public void onClick() {
                 State.setState(theUltimateTile.stateOptions);
+                Keybinds.load();
+            }
+
+            @Override
+            public void tick() {
+            }
+        }));
+
+        int saBtnWidth = 3 * 64;
+        int saBtnHeight = 64;
+        uiManager.addObject(new UIButton(30 + saBtnWidth, theUltimateTile.getHeight() - saBtnHeight - 35, saBtnWidth, saBtnHeight, "Save", new ClickListener() {
+            @Override
+            public void onClick() {
+                Keybinds.save();
             }
 
             @Override
@@ -64,68 +79,68 @@ public class OptionsControls extends State {
         int yOff = conBtnHeight + 10;
 
         // Z
-        UIButton btnZ = new UIButton(15, 15, conBtnWidth, conBtnHeight, "Z", null);
-        btnZ.setListener(new ControlClickListener(btnZ, Keybinds.Z));
+        UIButtonControl btnZ = new UIButtonControl(15, 15, conBtnWidth, conBtnHeight, Keybinds.Z, null);
+        btnZ.setListener(new ControlClickListener(btnZ));
         uiManager.addObject(btnZ);
 
         // R
-        UIButton btnR = new UIButton(15 + xOff, 15, conBtnWidth, conBtnHeight, "R", null);
-        btnR.setListener(new ControlClickListener(btnR, Keybinds.R));
+        UIButtonControl btnR = new UIButtonControl(15 + xOff, 15, conBtnWidth, conBtnHeight, Keybinds.R, null);
+        btnR.setListener(new ControlClickListener(btnR));
         uiManager.addObject(btnR);
 
         // E
-        UIButton btnE = new UIButton(15 + xOff * 2, 15, conBtnWidth, conBtnHeight, "E", null);
-        btnE.setListener(new ControlClickListener(btnE, Keybinds.E));
+        UIButtonControl btnE = new UIButtonControl(15 + xOff * 2, 15, conBtnWidth, conBtnHeight, Keybinds.E, null);
+        btnE.setListener(new ControlClickListener(btnE));
         uiManager.addObject(btnE);
 
         // Q
-        UIButton btnQ = new UIButton(15, 15 + yOff, conBtnWidth, conBtnHeight, "Q", null);
-        btnQ.setListener(new ControlClickListener(btnQ, Keybinds.Q));
+        UIButtonControl btnQ = new UIButtonControl(15, 15 + yOff, conBtnWidth, conBtnHeight, Keybinds.Q, null);
+        btnQ.setListener(new ControlClickListener(btnQ));
         uiManager.addObject(btnQ);
 
         // W
-        UIButton btnW = new UIButton(15 + xOff, 15 + yOff, conBtnWidth, conBtnHeight, "W", null);
-        btnW.setListener(new ControlClickListener(btnW, Keybinds.W));
+        UIButtonControl btnW = new UIButtonControl(15 + xOff, 15 + yOff, conBtnWidth, conBtnHeight, Keybinds.W, null);
+        btnW.setListener(new ControlClickListener(btnW));
         uiManager.addObject(btnW);
 
         // A
-        UIButton btnA = new UIButton(15 + xOff * 2, 15 + yOff, conBtnWidth, conBtnHeight, "A", null);
-        btnA.setListener(new ControlClickListener(btnA, Keybinds.A));
+        UIButtonControl btnA = new UIButtonControl(15 + xOff * 2, 15 + yOff, conBtnWidth, conBtnHeight, Keybinds.A, null);
+        btnA.setListener(new ControlClickListener(btnA));
         uiManager.addObject(btnA);
 
         // S
-        UIButton btnS = new UIButton(15, 15 + yOff * 2, conBtnWidth, conBtnHeight, "S", null);
-        btnS.setListener(new ControlClickListener(btnS, Keybinds.S));
+        UIButtonControl btnS = new UIButtonControl(15, 15 + yOff * 2, conBtnWidth, conBtnHeight, Keybinds.S, null);
+        btnS.setListener(new ControlClickListener(btnS));
         uiManager.addObject(btnS);
 
         // D
-        UIButton btnD = new UIButton(15 + xOff, 15 + yOff * 2, conBtnWidth, conBtnHeight, "D", null);
-        btnD.setListener(new ControlClickListener(btnD, Keybinds.D));
+        UIButtonControl btnD = new UIButtonControl(15 + xOff, 15 + yOff * 2, conBtnWidth, conBtnHeight, Keybinds.D, null);
+        btnD.setListener(new ControlClickListener(btnD));
         uiManager.addObject(btnD);
 
         // ONE
-        UIButton btnONE = new UIButton(15 + xOff * 2, 15 + yOff * 2, conBtnWidth, conBtnHeight, "ONE", null);
-        btnONE.setListener(new ControlClickListener(btnONE, Keybinds.ONE));
+        UIButtonControl btnONE = new UIButtonControl(15 + xOff * 2, 15 + yOff * 2, conBtnWidth, conBtnHeight, Keybinds.ONE, null);
+        btnONE.setListener(new ControlClickListener(btnONE));
         uiManager.addObject(btnONE);
 
         // TWO
-        UIButton btnTWO = new UIButton(15, 15 + yOff * 3, conBtnWidth, conBtnHeight, "TWO", null);
-        btnTWO.setListener(new ControlClickListener(btnTWO, Keybinds.TWO));
+        UIButtonControl btnTWO = new UIButtonControl(15, 15 + yOff * 3, conBtnWidth, conBtnHeight, Keybinds.TWO, null);
+        btnTWO.setListener(new ControlClickListener(btnTWO));
         uiManager.addObject(btnTWO);
 
         // THREE
-        UIButton btnTHREE = new UIButton(15 + xOff, 15 + yOff * 3, conBtnWidth, conBtnHeight, "THREE", null);
-        btnTHREE.setListener(new ControlClickListener(btnTHREE, Keybinds.THREE));
+        UIButtonControl btnTHREE = new UIButtonControl(15 + xOff, 15 + yOff * 3, conBtnWidth, conBtnHeight, Keybinds.THREE, null);
+        btnTHREE.setListener(new ControlClickListener(btnTHREE));
         uiManager.addObject(btnTHREE);
 
         // CONTROL
-        UIButton btnCONTROL = new UIButton(15 + xOff * 2, 15 + yOff * 3, conBtnWidth, conBtnHeight, "CONTROL", null);
-        btnCONTROL.setListener(new ControlClickListener(btnCONTROL, Keybinds.CONTROL));
+        UIButtonControl btnCONTROL = new UIButtonControl(15 + xOff * 2, 15 + yOff * 3, conBtnWidth, conBtnHeight, Keybinds.CONTROL, null);
+        btnCONTROL.setListener(new ControlClickListener(btnCONTROL));
         uiManager.addObject(btnCONTROL);
 
         // SPACE
-        UIButton btnSPACE = new UIButton(15, 15 + yOff * 4, conBtnWidth, conBtnHeight, "SPACE", null);
-        btnSPACE.setListener(new ControlClickListener(btnSPACE, Keybinds.SPACE));
+        UIButtonControl btnSPACE = new UIButtonControl(15, 15 + yOff * 4, conBtnWidth, conBtnHeight, Keybinds.SPACE, null);
+        btnSPACE.setListener(new ControlClickListener(btnSPACE));
         uiManager.addObject(btnSPACE);
     }
 
@@ -142,15 +157,15 @@ public class OptionsControls extends State {
 
     private class ControlClickListener implements ClickListener {
 
-        private UIButton button;
+        private UIButtonControl button;
         private boolean listening = false;
         private String ogText;
         private Keybinds key;
 
-        public ControlClickListener(UIButton button, Keybinds key) {
+        public ControlClickListener(UIButtonControl button) {
             this.button = button;
             ogText = button.getText();
-            this.key = key;
+            this.key = button.getKeybinds();
         }
 
         @Override
@@ -174,7 +189,7 @@ public class OptionsControls extends State {
                 }
                 if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER)) {
                     ogText = newText;
-                    key.setKey(code);
+                    key.setKeyCode(code);
                     listening = false;
                 }
             }

@@ -63,17 +63,17 @@ public class InventoryPlayer extends Inventory {
 
     @Override
     public void tick() {
-        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.E.getKey()))
+        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.E.getKeyCode()))
             active = !active;
-        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.ESCAPE.getKey()) && active)
+        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.ESCAPE.getKeyCode()) && active)
             active = !active;
 
         if (active) {
             // Change select item
-            boolean up = theUltimateTile.getKeyManager().keyJustPressed(Keybinds.W.getKey());
-            boolean down = theUltimateTile.getKeyManager().keyJustPressed(Keybinds.S.getKey());
-            boolean left = theUltimateTile.getKeyManager().keyJustPressed(Keybinds.A.getKey());
-            boolean right = theUltimateTile.getKeyManager().keyJustPressed(Keybinds.D.getKey());
+            boolean up = theUltimateTile.getKeyManager().keyJustPressed(Keybinds.W.getKeyCode());
+            boolean down = theUltimateTile.getKeyManager().keyJustPressed(Keybinds.S.getKeyCode());
+            boolean left = theUltimateTile.getKeyManager().keyJustPressed(Keybinds.A.getKeyCode());
+            boolean right = theUltimateTile.getKeyManager().keyJustPressed(Keybinds.D.getKeyCode());
 
             if (up || down) {
                 inventorySelectedIndex += 6;
@@ -95,7 +95,7 @@ public class InventoryPlayer extends Inventory {
 
                 if (stack != null) {
                     // Check if item was interacted with
-                    if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.R.getKey())) {
+                    if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.R.getKeyCode())) {
                         if (stack.getItem() instanceof IInteractable)
                             if (((IInteractable) stack.getItem()).onInteracted(player))
                                 stack.setCount(stack.getCount() - 1);
@@ -108,17 +108,17 @@ public class InventoryPlayer extends Inventory {
             }
 
             // Swap selected stacks
-            if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.Z.getKey()))
+            if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.Z.getKeyCode()))
                 swapSlots(getSlot(inventorySelectedIndex), getSlot(maxSize + hotbarSelectedIndex));
         }
-        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.Q.getKey()))
+        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.Q.getKeyCode()))
             dropItem(active, inventorySelectedIndex, hotbarSelectedIndex);
 
-        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.ONE.getKey()))
+        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.ONE.getKeyCode()))
             hotbarSelectedIndex = 0;
-        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.TWO.getKey()))
+        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.TWO.getKeyCode()))
             hotbarSelectedIndex = 1;
-        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.THREE.getKey()))
+        if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.THREE.getKeyCode()))
             hotbarSelectedIndex = 2;
         if (hotbarSelectedIndex < maxSize + maxHotbarSize) {
             player.setEquippedItem(getSlot(maxSize + hotbarSelectedIndex).getStack());
