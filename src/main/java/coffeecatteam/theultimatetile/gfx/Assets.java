@@ -12,7 +12,7 @@ public class Assets {
     private static final BufferedImage MISSING_TEXTURE = ImageLoader.loadImage("/assets/textures/missing.png");
 
     /* Fonts */
-    public static Font FONT_20, FONT_30, FONT_40;
+    public static Font FONT_20, FONT_30, FONT_40, FONT_80;
 
     /* Tiles */
     public static BufferedImage GRASS, DIRT, SAND;
@@ -92,6 +92,7 @@ public class Assets {
         FONT_20 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 20);
         FONT_30 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 30);
         FONT_40 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 40);
+        FONT_80 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 80);
 
         /* Sprite Sheets */
         SpriteSheet terrainSheet = getSheet("/assets/textures/tiles/terrain.png");

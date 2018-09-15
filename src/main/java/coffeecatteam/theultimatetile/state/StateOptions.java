@@ -6,6 +6,7 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
+import coffeecatteam.theultimatetile.state.options.Keybinds;
 import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
@@ -39,6 +40,7 @@ public class StateOptions extends State {
             @Override
             public void onClick() {
                 State.setState(theUltimateTile.optionsControls);
+                Keybinds.load();
             }
 
             @Override
@@ -94,5 +96,7 @@ public class StateOptions extends State {
         uiManager.render(g);
 
         g.drawImage(DEBUG ? Assets.ICON_ON : Assets.ICON_OFF, 15 + 6 * 64, 15, 64, 64, null);
+
+        Text.drawString(g, "EXPERIMENTAL!", theUltimateTile.getWidth() / 2, theUltimateTile.getHeight() / 2, true, true, Color.red, Assets.FONT_80);
     }
 }

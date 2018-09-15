@@ -78,7 +78,15 @@ public class KeyManager implements KeyListener, ITickableManager {
         return currentKeyPressedCode;
     }
 
+    public void setCurrentKeyPressedCode(int currentKeyPressedCode) {
+        this.currentKeyPressedCode = currentKeyPressedCode;
+    }
+
     public char getCurrentKeyPressedChar() {
         return currentKeyPressedChar;
+    }
+
+    public void setCurrentKeyPressedChar(char currentKeyPressedChar) {
+        this.currentKeyPressedChar = currentKeyPressedChar;
     }
 }

@@ -9,8 +9,8 @@ import coffeecatteam.theultimatetile.gfx.ui.UIButtonControl;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
 import coffeecatteam.theultimatetile.state.State;
 
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.net.URI;
 
 public class OptionsControls extends State {
@@ -175,21 +175,24 @@ public class OptionsControls extends State {
 
         @Override
         public void tick() {
+            int code = theUltimateTile.getKeyManager().getCurrentKeyPressedCode();
+            String newText = String.valueOf(theUltimateTile.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
+
             if (listening) {
-                button.setText("> ~ <");
+                button.setText("> " + ogText + " <");
             } else {
-                button.setText(ogText);
+                button.setText(key.toString().split(":")[2]);
             }
 
             if (listening) {
-                int code = theUltimateTile.getKeyManager().getCurrentKeyPressedCode();
-                String newText = String.valueOf(theUltimateTile.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
                 if (button.getText().contains(">") && button.getText().contains("<")) {
                     button.setText("> " + newText + " <");
                 }
-                if (theUltimateTile.getKeyManager().keyJustPressed(KeyEvent.VK_ENTER)) {
+                if (button.getText().equals("> " + newText + " <") && !ogText.equals(newText) && !newText.contains("~")) {
                     ogText = newText;
                     key.setKeyCode(code);
+                    theUltimateTile.getKeyManager().setCurrentKeyPressedCode(KeyStroke.getKeyStroke('~').getKeyCode());
+                    theUltimateTile.getKeyManager().setCurrentKeyPressedChar('~');
                     listening = false;
                 }
             }
