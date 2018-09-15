@@ -54,7 +54,10 @@ public class UIButton extends UIObject {
             g.drawImage(this.currentTexture[1], (int) this.x + (x - 1) * pWidth, (int) this.y, pWidth, pHeight, null);
             i = x;
         }
-        g.drawImage(this.currentTexture[2], (int) this.x + i * pWidth, (int) this.y, pWidth, pHeight, null);
+        int xOff = 0;
+        if (width <= 64)
+            xOff = 54;
+        g.drawImage(this.currentTexture[2], (int) this.x + i * pWidth - xOff, (int) this.y, pWidth, pHeight, null);
 
         Text.drawString(g, this.text, (int) this.x + this.width / 2, (int) this.y + this.height / 2, true, underlined, Color.gray, font);
     }
