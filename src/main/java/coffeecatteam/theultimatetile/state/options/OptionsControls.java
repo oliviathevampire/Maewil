@@ -78,70 +78,18 @@ public class OptionsControls extends State {
         int xOff = conBtnWidth + 10;
         int yOff = conBtnHeight + 10;
 
-        // Z
-        UIButtonControl btnZ = new UIButtonControl(15, 15, conBtnWidth, conBtnHeight, Keybinds.Z, null);
-        btnZ.setListener(new ControlClickListener(btnZ));
-        uiManager.addObject(btnZ);
+        int x = 0, y = 0;
+        for (Keybinds keybind : Keybinds.KEYBINDS) {
+            UIButtonControl btn = new UIButtonControl(15 + xOff * x, 15 + yOff * y, conBtnWidth, conBtnHeight, keybind, null);
+            btn.setListener(new ControlClickListener(btn));
+            uiManager.addObject(btn);
 
-        // R
-        UIButtonControl btnR = new UIButtonControl(15 + xOff, 15, conBtnWidth, conBtnHeight, Keybinds.R, null);
-        btnR.setListener(new ControlClickListener(btnR));
-        uiManager.addObject(btnR);
-
-        // E
-        UIButtonControl btnE = new UIButtonControl(15 + xOff * 2, 15, conBtnWidth, conBtnHeight, Keybinds.E, null);
-        btnE.setListener(new ControlClickListener(btnE));
-        uiManager.addObject(btnE);
-
-        // Q
-        UIButtonControl btnQ = new UIButtonControl(15, 15 + yOff, conBtnWidth, conBtnHeight, Keybinds.Q, null);
-        btnQ.setListener(new ControlClickListener(btnQ));
-        uiManager.addObject(btnQ);
-
-        // W
-        UIButtonControl btnW = new UIButtonControl(15 + xOff, 15 + yOff, conBtnWidth, conBtnHeight, Keybinds.W, null);
-        btnW.setListener(new ControlClickListener(btnW));
-        uiManager.addObject(btnW);
-
-        // A
-        UIButtonControl btnA = new UIButtonControl(15 + xOff * 2, 15 + yOff, conBtnWidth, conBtnHeight, Keybinds.A, null);
-        btnA.setListener(new ControlClickListener(btnA));
-        uiManager.addObject(btnA);
-
-        // S
-        UIButtonControl btnS = new UIButtonControl(15, 15 + yOff * 2, conBtnWidth, conBtnHeight, Keybinds.S, null);
-        btnS.setListener(new ControlClickListener(btnS));
-        uiManager.addObject(btnS);
-
-        // D
-        UIButtonControl btnD = new UIButtonControl(15 + xOff, 15 + yOff * 2, conBtnWidth, conBtnHeight, Keybinds.D, null);
-        btnD.setListener(new ControlClickListener(btnD));
-        uiManager.addObject(btnD);
-
-        // ONE
-        UIButtonControl btnONE = new UIButtonControl(15 + xOff * 2, 15 + yOff * 2, conBtnWidth, conBtnHeight, Keybinds.ONE, null);
-        btnONE.setListener(new ControlClickListener(btnONE));
-        uiManager.addObject(btnONE);
-
-        // TWO
-        UIButtonControl btnTWO = new UIButtonControl(15, 15 + yOff * 3, conBtnWidth, conBtnHeight, Keybinds.TWO, null);
-        btnTWO.setListener(new ControlClickListener(btnTWO));
-        uiManager.addObject(btnTWO);
-
-        // THREE
-        UIButtonControl btnTHREE = new UIButtonControl(15 + xOff, 15 + yOff * 3, conBtnWidth, conBtnHeight, Keybinds.THREE, null);
-        btnTHREE.setListener(new ControlClickListener(btnTHREE));
-        uiManager.addObject(btnTHREE);
-
-        // CONTROL
-        UIButtonControl btnCONTROL = new UIButtonControl(15 + xOff * 2, 15 + yOff * 3, conBtnWidth, conBtnHeight, Keybinds.CONTROL, null);
-        btnCONTROL.setListener(new ControlClickListener(btnCONTROL));
-        uiManager.addObject(btnCONTROL);
-
-        // SPACE
-        UIButtonControl btnSPACE = new UIButtonControl(15, 15 + yOff * 4, conBtnWidth, conBtnHeight, Keybinds.SPACE, null);
-        btnSPACE.setListener(new ControlClickListener(btnSPACE));
-        uiManager.addObject(btnSPACE);
+            x++;
+            if (x > 2) {
+                x = 0;
+                y++;
+            }
+        }
     }
 
     @Override

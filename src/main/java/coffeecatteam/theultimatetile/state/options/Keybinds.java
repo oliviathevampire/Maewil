@@ -6,12 +6,14 @@ import coffeecatteam.theultimatetile.utils.Utils;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Keybinds {
 
-    private static Map<String, Keybinds> KEYBINDS = new HashMap<>();
+    public static List<Keybinds> KEYBINDS = new ArrayList<>();
 
     /*
      * KEYS
@@ -43,7 +45,7 @@ public class Keybinds {
     public Keybinds(String id, int keyCode) {
         this.id = id;
         this.keyCode = keyCode;
-        KEYBINDS.put(id, this);
+        KEYBINDS.add(this);
     }
 
     public String getId() {
@@ -65,7 +67,7 @@ public class Keybinds {
 
             BufferedWriter bw = new BufferedWriter(new FileWriter(file.getAbsoluteFile()));
 
-            for (Keybinds keybind : KEYBINDS.values()) {
+            for (Keybinds keybind : KEYBINDS) {
                 bw.write(keybind.toString());
                 bw.newLine();
             }
@@ -89,7 +91,7 @@ public class Keybinds {
                 String id = line.split(":")[0];
                 String keyCode = line.split(":")[1];
 
-                for (Keybinds keybind : KEYBINDS.values())
+                for (Keybinds keybind : KEYBINDS)
                     if (keybind.getId().equals(id))
                         keybind.setKeyCode(Utils.parseInt(keyCode));
             }
