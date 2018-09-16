@@ -14,7 +14,11 @@ import java.net.URI;
 
 public class StateOptions extends State {
 
+    /*
+     * OPTIONS
+     */
     public static boolean DEBUG = false;
+    public static boolean FPS = false;
 
     public StateOptions(TheUltimateTile theUltimateTileIn) {
         super(theUltimateTileIn);
@@ -41,6 +45,20 @@ public class StateOptions extends State {
             public void onClick() {
                 State.setState(theUltimateTile.optionsControls);
                 Keybinds.load();
+            }
+
+            @Override
+            public void tick() {
+            }
+        }));
+
+        int fpsBtnWidth = 6 * 64;
+        int fpsBtnHeight = 64;
+        uiManager.addObject(new UIButton(15, 173, fpsBtnWidth, fpsBtnHeight, "FPS counter", new ClickListener() {
+            @Override
+            public void onClick() {
+                FPS = !FPS;
+                Logger.print("FPS counter " + (FPS ? "enabled" : "disabled"));
             }
 
             @Override

@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
+import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.inventory.items.Items;
 import coffeecatteam.theultimatetile.manager.*;
 import coffeecatteam.theultimatetile.state.State;
@@ -129,10 +130,18 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
         if (State.getState() != null)
             State.getState().render(g);
+        if (StateOptions.FPS)
+            renderFPSCounter(g);
 
         // End drawing
         bs.show();
         g.dispose();
+    }
+
+    private int fps = 0;
+    private void renderFPSCounter(Graphics g) {
+        Font font = Assets.FONT_20;
+        Text.drawString(g, "FPS: " + fps, 5, 5 + Text.getHeight(g, font), false,false, Color.orange, font);
     }
 
     @Override
@@ -161,7 +170,8 @@ public class TheUltimateTile extends Canvas implements Runnable {
             }
 
             if (timer >= 1000000000) {
-                frame.setTitle(title + " - " + username + " - FPS: " + ticks);
+                frame.setTitle(title);
+                this.fps = ticks;
                 ticks = 0;
                 timer = 0;
             }
