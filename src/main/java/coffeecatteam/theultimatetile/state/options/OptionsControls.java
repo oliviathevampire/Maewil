@@ -71,7 +71,6 @@ public class OptionsControls extends State {
     }
 
     private void initControlsButtons() {
-
         int conBtnWidth = 3 * 64;
         int conBtnHeight = 64;
 

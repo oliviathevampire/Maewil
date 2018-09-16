@@ -4,7 +4,6 @@ import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.ai.AIFollowFlee;
 import coffeecatteam.theultimatetile.entities.ai.AIWander;
-import coffeecatteam.theultimatetile.gfx.*;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;

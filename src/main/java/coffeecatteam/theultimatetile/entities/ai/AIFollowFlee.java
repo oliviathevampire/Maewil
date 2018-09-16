@@ -38,7 +38,7 @@ public class AIFollowFlee extends AI {
         }
         return inRange;
     }
-    
+
     public float getMaxDistance() {
         return maxDistance;
     }
@@ -46,7 +46,7 @@ public class AIFollowFlee extends AI {
     public void setMaxDistance(float maxDistance) {
         this.maxDistance = maxDistance;
     }
-    
+
     public float getSpeed() {
         return speed;
     }
