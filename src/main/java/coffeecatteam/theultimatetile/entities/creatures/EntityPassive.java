@@ -7,7 +7,7 @@ import coffeecatteam.theultimatetile.entities.ai.AIWander;
 public abstract class EntityPassive extends EntityCreature {
 
     // AI
-    private AIWander aiWander;
+    protected AIWander aiWander;
 
     public EntityPassive(TheUltimateTile theUltimateTile, String id) {
         super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);

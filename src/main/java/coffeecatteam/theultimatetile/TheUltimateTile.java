@@ -170,7 +170,6 @@ public class TheUltimateTile extends Canvas implements Runnable {
             }
 
             if (timer >= 1000000000) {
-                frame.setTitle(title);
                 this.fps = ticks;
                 ticks = 0;
                 timer = 0;
@@ -186,7 +185,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
         running = true;
 
         thread = new Thread(this);
-        thread.setName("Thread-Main");
+        thread.setName("Thread-" + title.replace(" ", "_"));
         thread.start();
     }
 

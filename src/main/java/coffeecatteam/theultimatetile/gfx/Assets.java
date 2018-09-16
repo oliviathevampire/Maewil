@@ -36,7 +36,7 @@ public class Assets {
 
     public static BufferedImage ITEM_COAL, ITEM_IRON_INGOT, ITEM_GOLD_INGOT, ITEM_DIAMOND;
 
-    public static BufferedImage ITEM_CARROT, ITEM_APPLE, ITEM_RAW_PORK, ITEM_COOKED_PORK, ITEM_BREAD, ITEM_WHEAT;
+    public static BufferedImage ITEM_CARROT, ITEM_APPLE, ITEM_RAW_PORK, ITEM_COOKED_PORK, ITEM_BREAD, ITEM_WHEAT, ITEM_RAW_STEAK, ITEM_COOKED_STEAK, ITEM_WOOL_BUNDLE;
 
     public static BufferedImage ITEM_COIN_IRON, ITEM_COIN_GOLD;
 
@@ -62,6 +62,8 @@ public class Assets {
 
     // Passive
     public static BufferedImage[] PIG_IDLE, PIG_UP, PIG_DOWN, PIG_LEFT, PIG_RIGHT;
+    public static BufferedImage[] COW_IDLE, COW_UP, COW_DOWN, COW_LEFT, COW_RIGHT;
+    public static BufferedImage[] SHEEP_IDLE, SHEEP_UP, SHEEP_DOWN, SHEEP_LEFT, SHEEP_RIGHT;
 
     /* Nature / Statics */
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
@@ -169,9 +171,12 @@ public class Assets {
         ITEM_COOKED_PORK = getSpriteInd(itemsSheet, 3, 3, width, height);
         ITEM_BREAD = getSpriteInd(itemsSheet, 3, 4, width, height);
         ITEM_WHEAT = getSpriteInd(itemsSheet, 3, 5, width, height);
+        ITEM_RAW_STEAK = getSpriteInd(itemsSheet, 4, 0, width, height);
+        ITEM_COOKED_STEAK = getSpriteInd(itemsSheet, 4, 1, width, height);
+        ITEM_WOOL_BUNDLE = getSpriteInd(itemsSheet, 1, 3, width, height);
 
-        ITEM_COIN_IRON = getSpriteInd(itemsSheet, 4, 0, width, height);
-        ITEM_COIN_GOLD = getSpriteInd(itemsSheet, 4, 1, width, height);
+        ITEM_COIN_IRON = getSpriteInd(itemsSheet, 5, 0, width, height);
+        ITEM_COIN_GOLD = getSpriteInd(itemsSheet, 5, 1, width, height);
 
         /* Player */
         HEARTS = getFrames(healthSheet, 0, 0, 4);
@@ -223,6 +228,18 @@ public class Assets {
         PIG_DOWN = getFrames(passiveSheet, 1, 4, 7);
         PIG_LEFT = getFrames(passiveSheet, 2, 4, 7);
         PIG_RIGHT = getFrames(passiveSheet, 2, 0, 3);
+
+        COW_IDLE = getFrames(passiveSheet, 3, 0, 7);
+        COW_UP = getFrames(passiveSheet, 4, 0, 3);
+        COW_DOWN = getFrames(passiveSheet, 4, 4, 7);
+        COW_LEFT = getFrames(passiveSheet, 5, 4, 7);
+        COW_RIGHT = getFrames(passiveSheet, 5, 0, 3);
+
+        SHEEP_IDLE = getFrames(passiveSheet, 0, 8, 15);
+        SHEEP_UP = getFrames(passiveSheet, 1, 12, 15);
+        SHEEP_DOWN = getFrames(passiveSheet, 1, 8, 11);
+        SHEEP_LEFT = getFrames(passiveSheet, 2, 12, 15);
+        SHEEP_RIGHT = getFrames(passiveSheet, 2, 8, 11);
 
         /* Nature / Statics */
         TREE_SMALL = getSpriteInd(natureSheet, 0, 0, width, height * 2);

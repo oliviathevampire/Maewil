@@ -3,7 +3,9 @@ package coffeecatteam.theultimatetile.manager;
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.passive.EntityCow;
 import coffeecatteam.theultimatetile.entities.creatures.passive.EntityPig;
+import coffeecatteam.theultimatetile.entities.creatures.passive.EntitySheep;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityBouncer;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntitySkeleton;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityThing;
@@ -70,6 +72,10 @@ public class EntityManager implements IRenderabelManager {
              */
             case "pig":
                 return new EntityPig(theUltimateTile, id);
+            case "cow":
+                return new EntityCow(theUltimateTile, id);
+            case "sheep":
+                return new EntitySheep(theUltimateTile, id);
 
             /*
              * Other
