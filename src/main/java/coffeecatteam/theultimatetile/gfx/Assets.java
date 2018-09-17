@@ -111,7 +111,7 @@ public class Assets {
         SpriteSheet passiveSheet = getSheet("/assets/textures/entities/passive.png");
 
         SpriteSheet menuSheet = getSheet("/assets/textures/gui/menu.png");
-        SpriteSheet invSheet = getSheet("/assets/textures/gui/inventory.png");
+        SpriteSheet invSheet = getSheet("/assets/textures/gui/inventory/inventory.png");
 
         /* Tiles */
         GRASS = getSpriteInd(terrainSheet, 0, 0, width, height);
