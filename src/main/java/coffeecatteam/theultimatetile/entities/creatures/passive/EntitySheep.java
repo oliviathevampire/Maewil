@@ -14,7 +14,7 @@ public class EntitySheep extends EntityPassive {
     public EntitySheep(TheUltimateTile theUltimateTile, String id) {
         super(theUltimateTile, id);
         this.drop = Items.WOOL_BUNDLE;
-        aiFollowFlee = new AIFollowFlee(this, theUltimateTile.getEntityManager().getPlayer(), 200f, 3.5f).setFlee();
+        aiFollowFlee = new AIFollowFlee(this, theUltimateTile.getEntityManager().getPlayer(), 100f, 3.5f).setFlee();
     }
 
     @Override
