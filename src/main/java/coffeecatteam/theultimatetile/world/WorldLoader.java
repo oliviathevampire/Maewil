@@ -34,6 +34,14 @@ public class WorldLoader {
         this.theUltimateTile = theUltimateTile;
     }
 
+    /*
+     * Load world
+     * ------------------
+     * World name, size
+     * Player spawn
+     * Background tiles
+     * Foreground tiles
+     */
     public void loadWorld(boolean inJar) throws IOException, ParseException, URISyntaxException {
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(loadFile(path + "/world.json", inJar));
@@ -68,30 +76,13 @@ public class WorldLoader {
         }
     }
 
-    private void loadEntityObj(JSONObject entityObj) {
-        String id = (String) entityObj.get("id");
-        JSONArray pos = (JSONArray) entityObj.get("pos");
-        float x = Utils.parseFloat(pos.get(0).toString());
-        float y = Utils.parseFloat(pos.get(1).toString());
-
-        if (entityObj.containsKey("count")) {
-            int count = Utils.parseInt(entityObj.get("count").toString());
-            if (count > 9)
-                count = 9;
-            float ogX = Utils.parseFloat(pos.get(0).toString());
-            for (int i = 0; i < count; i++) {
-                theUltimateTile.getEntityManager().addEntity(EntityManager.loadEntity(theUltimateTile, id), x, y, true);
-                x++;
-                if (x > ogX + 2) {
-                    x = ogX;
-                    y++;
-                }
-            }
-        } else {
-            theUltimateTile.getEntityManager().addEntity(EntityManager.loadEntity(theUltimateTile, id), x, y, true);
-        }
-    }
-
+    /*
+     * Load objects
+     * ------------------
+     * Static entities
+     * Creature entities
+     * Items
+     */
     public void loadObjects(boolean inJar) throws IOException, ParseException, URISyntaxException {
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(loadFile(path + "/objects.json", inJar));
@@ -139,6 +130,33 @@ public class WorldLoader {
 
                 theUltimateTile.getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
             }
+        }
+    }
+
+    /*
+     * Load an entity object
+     */
+    private void loadEntityObj(JSONObject entityObj) {
+        String id = (String) entityObj.get("id");
+        JSONArray pos = (JSONArray) entityObj.get("pos");
+        float x = Utils.parseFloat(pos.get(0).toString());
+        float y = Utils.parseFloat(pos.get(1).toString());
+
+        if (entityObj.containsKey("count")) {
+            int count = Utils.parseInt(entityObj.get("count").toString());
+            if (count > 9)
+                count = 9;
+            float ogX = Utils.parseFloat(pos.get(0).toString());
+            for (int i = 0; i < count; i++) {
+                theUltimateTile.getEntityManager().addEntity(EntityManager.loadEntity(theUltimateTile, id), x, y, true);
+                x++;
+                if (x > ogX + 2) {
+                    x = ogX;
+                    y++;
+                }
+            }
+        } else {
+            theUltimateTile.getEntityManager().addEntity(EntityManager.loadEntity(theUltimateTile, id), x, y, true);
         }
     }
 

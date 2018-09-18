@@ -27,6 +27,8 @@ public class TheUltimateTile extends Canvas implements Runnable {
     private int width, height;
     public String title;
 
+    private int fps = 0;
+
     private boolean running = false;
     private Thread thread;
 
@@ -138,10 +140,9 @@ public class TheUltimateTile extends Canvas implements Runnable {
         g.dispose();
     }
 
-    private int fps = 0;
     private void renderFPSCounter(Graphics g) {
         Font font = Assets.FONT_20;
-        Text.drawString(g, "FPS: " + fps, 5, 5 + Text.getHeight(g, font), false,false, Color.orange, font);
+        Text.drawString(g, "FPS: " + fps, 5, 5 + Text.getHeight(g, font), false, false, Color.orange, font);
     }
 
     @Override

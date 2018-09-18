@@ -1,21 +1,14 @@
 package coffeecatteam.theultimatetile.world;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
-import coffeecatteam.theultimatetile.inventory.items.Item;
-import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.manager.EntityManager;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
-import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
-import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.utils.Utils;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.text.DecimalFormat;
 
 public class World {
 
