@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.world;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.manager.EntityManager;
@@ -97,7 +98,7 @@ public class WorldLoader {
                 JSONArray statics = (JSONArray) entities.get("statics");
                 for (int i = 0; i < statics.size(); i++) {
                     JSONObject entity = (JSONObject) statics.get(i);
-                    loadEntityObj(entity);
+                    loadEntityObj(entity, false);
                 }
             }
 
@@ -105,7 +106,7 @@ public class WorldLoader {
                 JSONArray creatures = (JSONArray) entities.get("creatures");
                 for (int i = 0; i < creatures.size(); i++) {
                     JSONObject entity = (JSONObject) creatures.get(i);
-                    loadEntityObj(entity);
+                    loadEntityObj(entity, true);
                 }
             }
         }
@@ -136,8 +137,21 @@ public class WorldLoader {
     /*
      * Load an entity object
      */
-    private void loadEntityObj(JSONObject entityObj) {
+    private void loadEntityObj(JSONObject entityObj, boolean isCreature) {
         String id = (String) entityObj.get("id");
+        Entity entity = EntityManager.loadEntity(theUltimateTile, id);
+
+        if (isCreature) {
+            if (entityObj.containsKey("dataTags")) {
+                JSONArray dataTags = (JSONArray) entityObj.get("dataTags");
+                String[] data = new String[dataTags.size()];
+                for (int i = 0; i < dataTags.size(); i++) {
+                    data[i] = (String) dataTags.get(i);
+                }
+                entity.setDataTags(data);
+            }
+        }
+
         JSONArray pos = (JSONArray) entityObj.get("pos");
         float x = Utils.parseFloat(pos.get(0).toString());
         float y = Utils.parseFloat(pos.get(1).toString());
@@ -148,7 +162,7 @@ public class WorldLoader {
                 count = 9;
             float ogX = Utils.parseFloat(pos.get(0).toString());
             for (int i = 0; i < count; i++) {
-                theUltimateTile.getEntityManager().addEntity(EntityManager.loadEntity(theUltimateTile, id), x, y, true);
+                loadEntity(entity, x, y);
                 x++;
                 if (x > ogX + 2) {
                     x = ogX;
@@ -156,8 +170,12 @@ public class WorldLoader {
                 }
             }
         } else {
-            theUltimateTile.getEntityManager().addEntity(EntityManager.loadEntity(theUltimateTile, id), x, y, true);
+            loadEntity(entity, x, y);
         }
+    }
+
+    private void loadEntity(Entity e, float x, float y) {
+        theUltimateTile.getEntityManager().addEntity(e, x, y, true);
     }
 
     private FileReader loadFile(String path, boolean inJar) throws URISyntaxException, FileNotFoundException {

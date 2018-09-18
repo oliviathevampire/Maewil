@@ -24,7 +24,10 @@ public class EntitySheep extends EntityPassive {
 
         // Movement
         if (theUltimateTile.getEntityManager().getPlayer().isActive()) {
-            if (!aiFollowFlee.tick())
+            if (hasDataTag("FLEE_PLAYER")) {
+                if (!aiFollowFlee.tick())
+                    aiWander.tick();
+            } else
                 aiWander.tick();
         }
         move();

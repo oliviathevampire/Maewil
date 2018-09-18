@@ -29,6 +29,8 @@ public abstract class Entity {
     protected boolean showHitbox = false, isCollidable = true, interacted = false;
     private int extraDmg = 0;
 
+    private String[] dataTags;
+
     public Entity(TheUltimateTile theUltimateTile, String id, int width, int height) {
         this.id = id;
 
@@ -40,6 +42,19 @@ public abstract class Entity {
 
         entities.put(id, this);
         entities.get(id).setTheUltimateTile(theUltimateTile);
+    }
+
+    public void setDataTags(String[] dataTags) {
+        this.dataTags = dataTags;
+    }
+
+    public boolean hasDataTag(String tag) {
+        if (dataTags == null)
+            return false;
+        for (String t : dataTags)
+            if (t.equals(tag))
+                return true;
+        return false;
     }
 
     public abstract void tick();

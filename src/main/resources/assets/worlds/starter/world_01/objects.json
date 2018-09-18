@@ -283,6 +283,9 @@
         "pos": [
           "8f",
           "12f"
+        ],
+        "dataTags": [
+          "FLEE_PLAYER"
         ]
       }
     ]
