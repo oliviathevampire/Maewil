@@ -8,7 +8,7 @@ import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.state.options.Keybinds;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.worlds.World;
+import coffeecatteam.theultimatetile.world.World;
 
 import java.awt.*;
 
@@ -22,7 +22,7 @@ public class StateGame extends State {
     private UIManager uiManagerDead;
 
     public StateGame(TheUltimateTile theUltimateTileIn) {
-        this(theUltimateTileIn, "/assets/worlds/starter/world1");
+        this(theUltimateTileIn, "/assets/worlds/starter/final");
     }
 
     public StateGame(TheUltimateTile theUltimateTileIn, String world) {

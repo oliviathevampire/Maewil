@@ -12,7 +12,7 @@ import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.Keybinds;
 import coffeecatteam.theultimatetile.state.options.OptionsControls;
 import coffeecatteam.theultimatetile.utils.Utils;
-import coffeecatteam.theultimatetile.worlds.World;
+import coffeecatteam.theultimatetile.world.World;
 
 import javax.swing.*;
 import java.awt.*;

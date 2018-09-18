@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.worlds;
+package coffeecatteam.theultimatetile.world;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.inventory.items.Item;
@@ -10,8 +10,11 @@ import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
+import org.json.simple.parser.ParseException;
 
 import java.awt.*;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.DecimalFormat;
 
 public class World {
@@ -99,121 +102,25 @@ public class World {
     }
 
     private void loadWorld(String path) {
-        String prop = Utils.loadFileAsString(path + "/world.prop");
-        String bg = Utils.loadFileAsString(path + "/id_bg.wd");
-        String tile = Utils.loadFileAsString(path + "/id_tile.wd");
-        String entity = Utils.loadFileAsString(path + "/id_entity.wd");
-        String item = Utils.loadFileAsString(path + "/id_item.wd");
-
-        String spacer = "\\s+";
-        String[] propTokens = prop.split(spacer);
-        String[] bgTokens = bg.split(spacer);
-        String[] tileTokens = tile.split(spacer);
-        String[] entityTokens = entity.split(spacer);
-        String[] itemTokens = item.split(spacer);
-
-        String worldName = propTokens[0].replace("_", " ");
-        Logger.print("Loading World: " + worldName);
-
-        width = Utils.parseInt(propTokens[1]);
-        height = Utils.parseInt(propTokens[2]);
-        spawnX = Utils.parseInt(propTokens[3]);
-        spawnY = Utils.parseInt(propTokens[4]);
-
-        loadBG(bgTokens);
-        loadTiles(tileTokens);
-        if (!entity.equals(""))
-            loadEntities(entityTokens);
-        if (!item.equals(""))
-            loadItems(itemTokens);
-        Logger.print("World Loaded!\n");
-    }
-
-    private float getLoaded(int in) {
-        DecimalFormat format = new DecimalFormat("#.##");
-        float loadedF = ((in + 1) * 100.0f) / height;
-        String loadedS = format.format(loadedF);
-        float loaded;
+        WorldLoader worldLoader = new WorldLoader(path, theUltimateTile); // "/assets/worlds/dev_tests/json_format"
         try {
-            loaded = Float.parseFloat(loadedS);
-        } catch (NumberFormatException e) {
-            loaded = -1f;
+            worldLoader.loadWorld(true);
+        } catch (IOException | ParseException | URISyntaxException e) {
             e.printStackTrace();
         }
-        return loaded;
-    }
+        width = worldLoader.getWidth();
+        height = worldLoader.getHeight();
+        spawnX = worldLoader.getSpawnX();
+        spawnY = worldLoader.getSpawnY();
 
-    private void loadBG(String[] bgTokens) {
-        Logger.print("Loading Background Tiles");
+        bg_tiles = worldLoader.getBg_tiles();
+        tiles = worldLoader.getFg_tiles();
 
-        bg_tiles = new int[width][height];
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                bg_tiles[x][y] = Utils.parseInt(bgTokens[(x + y * width)]);
-            }
-            if (y % 2 == 0)
-                printDebug(getLoaded(y) + "% Loaded!");
+        try {
+            worldLoader.loadObjects(true);
+        } catch (IOException | ParseException | URISyntaxException e) {
+            e.printStackTrace();
         }
-    }
-
-    private void loadTiles(String[] tileTokens) {
-        Logger.print("Loading Tiles");
-
-        tiles = new int[width][height];
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                tiles[x][y] = Utils.parseInt(tileTokens[(x + y * width)]);
-            }
-            if (y % 2 == 0)
-                printDebug(getLoaded(y) + "% Loaded!");
-        }
-    }
-
-    private void loadEntities(String[] entityTokens) {
-        Logger.print("Loading Entities");
-        int height = entityTokens.length;
-        String spliter = ",";
-
-        for (int i = 0; i < height; i++) {
-            if (!entityTokens[i].contains("//")) {
-                String entityId = entityTokens[i].split(spliter)[0];
-                float x = Utils.parseFloat(entityTokens[i].split(spliter)[1]);
-                float y = Utils.parseFloat(entityTokens[i].split(spliter)[2]);
-
-                theUltimateTile.getEntityManager().addEntity(EntityManager.loadEntity(theUltimateTile, entityId), x, y, true);
-
-                if (y % 2 == 0)
-                    printDebug(getLoaded(i) + "% Loaded!");
-            }
-        }
-    }
-
-    private void loadItems(String[] itemTokens) {
-        Logger.print("Loading Items");
-        int height = itemTokens.length;
-        String spliter = ",";
-
-        for (int i = 0; i < height; i++) {
-            if (!itemTokens[i].contains("//")) {
-                String itemId = itemTokens[i].split(spliter)[0];
-                float x = Utils.parseFloat(itemTokens[i].split(spliter)[1]);
-                float y = Utils.parseFloat(itemTokens[i].split(spliter)[2]);
-                int count = Utils.parseInt(itemTokens[i].split(spliter)[3]);
-                Item item = Item.items.get(itemId);
-                if (!item.isStackable())
-                    count = 1;
-
-                theUltimateTile.getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
-
-                if (y % 2 == 0)
-                    printDebug(getLoaded(i) + "% Loaded!");
-            }
-        }
-    }
-
-    private void printDebug(String msg) {
-        if (StateOptions.DEBUG)
-            Logger.print(msg);
     }
 
     public TheUltimateTile getTheUltimateTile() {

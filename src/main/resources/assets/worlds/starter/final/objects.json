@@ -1,0 +1,48 @@
+{
+  "entities": {
+    "creatures": [
+      {
+        "id": "ultimate",
+        "pos": [
+          "4f",
+          "3f"
+        ]
+      },
+      {
+        "id": "zombie",
+        "pos": [
+          "2f",
+          "1f"
+        ]
+      },
+      {
+        "id": "zombie",
+        "pos": [
+          "6f",
+          "1f"
+        ]
+      },
+      {
+        "id": "zombie",
+        "pos": [
+          "2f",
+          "5f"
+        ]
+      },
+      {
+        "id": "zombie",
+        "pos": [
+          "6f",
+          "5f"
+        ]
+      },
+      {
+        "id": "zombie",
+        "pos": [
+          "25f",
+          "4f"
+        ]
+      }
+    ]
+  }
+}
