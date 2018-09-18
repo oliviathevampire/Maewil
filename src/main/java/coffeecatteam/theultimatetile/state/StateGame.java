@@ -22,7 +22,7 @@ public class StateGame extends State {
     private UIManager uiManagerDead;
 
     public StateGame(TheUltimateTile theUltimateTileIn) {
-        this(theUltimateTileIn, "/assets/worlds/starter/final");
+        this(theUltimateTileIn, "/assets/worlds/starter/world_01");
     }
 
     public StateGame(TheUltimateTile theUltimateTileIn, String world) {
