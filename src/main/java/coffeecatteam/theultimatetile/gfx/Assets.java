@@ -236,8 +236,8 @@ public class Assets {
         COW_RIGHT = getFrames(passiveSheet, 5, 0, 3);
 
         SHEEP_IDLE = getFrames(passiveSheet, 0, 8, 15);
-        SHEEP_UP = getFrames(passiveSheet, 1, 12, 15);
-        SHEEP_DOWN = getFrames(passiveSheet, 1, 8, 11);
+        SHEEP_UP = getFrames(passiveSheet, 1, 8, 11);
+        SHEEP_DOWN = getFrames(passiveSheet, 1, 12, 15);
         SHEEP_LEFT = getFrames(passiveSheet, 2, 12, 15);
         SHEEP_RIGHT = getFrames(passiveSheet, 2, 8, 11);
 
