@@ -44,8 +44,9 @@ public abstract class Entity {
         entities.get(id).setTheUltimateTile(theUltimateTile);
     }
 
-    public void setDataTags(String[] dataTags) {
+    public Entity setDataTags(String[] dataTags) {
         this.dataTags = dataTags;
+        return this;
     }
 
     public boolean hasDataTag(String tag) {

@@ -233,14 +233,8 @@
         "pos": [
           "2f",
           "1f"
-        ]
-      },
-      {
-        "id": "zombie",
-        "pos": [
-          "1f",
-          "2f"
-        ]
+        ],
+        "count": "2"
       },
       {
         "id": "skeleton",
@@ -269,14 +263,16 @@
         "pos": [
           "8f",
           "10f"
-        ]
+        ],
+        "count": "3"
       },
       {
         "id": "cow",
         "pos": [
           "8f",
           "7f"
-        ]
+        ],
+        "count": "2"
       },
       {
         "id": "sheep",
@@ -284,6 +280,7 @@
           "8f",
           "12f"
         ],
+        "count": "2",
         "dataTags": [
           "FLEE_PLAYER"
         ]

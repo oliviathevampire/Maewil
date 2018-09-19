@@ -139,16 +139,15 @@ public class WorldLoader {
      */
     private void loadEntityObj(JSONObject entityObj, boolean isCreature) {
         String id = (String) entityObj.get("id");
-        Entity entity = EntityManager.loadEntity(theUltimateTile, id);
 
+        String[] data = null;
         if (isCreature) {
             if (entityObj.containsKey("dataTags")) {
                 JSONArray dataTags = (JSONArray) entityObj.get("dataTags");
-                String[] data = new String[dataTags.size()];
+                data = new String[dataTags.size()];
                 for (int i = 0; i < dataTags.size(); i++) {
                     data[i] = (String) dataTags.get(i);
                 }
-                entity.setDataTags(data);
             }
         }
 
@@ -162,7 +161,7 @@ public class WorldLoader {
                 count = 9;
             float ogX = Utils.parseFloat(pos.get(0).toString());
             for (int i = 0; i < count; i++) {
-                loadEntity(entity, x, y);
+                loadEntity(EntityManager.loadEntity(theUltimateTile, id).setDataTags(data), x, y);
                 x++;
                 if (x > ogX + 2) {
                     x = ogX;
@@ -170,7 +169,7 @@ public class WorldLoader {
                 }
             }
         } else {
-            loadEntity(entity, x, y);
+            loadEntity(EntityManager.loadEntity(theUltimateTile, id).setDataTags(data), x, y);
         }
     }
 
