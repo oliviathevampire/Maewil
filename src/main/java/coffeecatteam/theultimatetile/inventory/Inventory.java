@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public abstract class Inventory {
         for (Slot slot : slots)
             if (slot.getStack() != null)
                 size++;
-        return size >= maxSize;
+        return size > maxSize;
     }
 
     public void clearInventory() {

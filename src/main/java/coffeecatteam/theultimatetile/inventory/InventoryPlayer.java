@@ -199,7 +199,7 @@ public class InventoryPlayer extends Inventory {
 
     public void addItem(ItemStack stackIn) {
         if (!isFull()) {
-            for (Slot slot : slots) {
+            for (Slot slot : getSlots()) {
                 if (slot.getStack() != null && stackIn != null) {
                     if (slot.getStack().getId().equals(stackIn.getId())) {
                         if (slot.getStack().getItem().isStackable()) {
@@ -283,5 +283,13 @@ public class InventoryPlayer extends Inventory {
             if (getSlot(i).getStack() != null)
                 size++;
         return size <= maxSize + maxHotbarSize;
+    }
+
+    public int size() {
+        int size = 0;
+        for (Slot slot : slots)
+            if (slot.getStack() != null)
+                size++;
+        return size;
     }
 }

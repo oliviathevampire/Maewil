@@ -37,18 +37,43 @@ public class Item implements Cloneable {
                 if (!this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isFull()) {
                     this.pickedUp = true;
                 } else {
+                    int hotbar = 0;
                     for (Slot slot : this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().getSlots()) {
-                        if (slot.getStack().getId().equals(this.id)) {
-                            if (slot.getStack().getItem().isStackable()) {
-                                this.pickedUp = true;
+                        if (slot.getStack() != null) {
+                            if (slot.getStack().getId().equals(this.id)) {
+                                if (slot.getStack().getItem().isStackable()) {
+                                    this.pickedUp = true;
+                                }
+                            } else {
+                                hotbar++;
+                            }
+                        }
+                    }
+
+                    if (hotbar >= this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().size()) {
+                        if (!this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isHotbarFull()) {
+                            this.pickedUp = true;
+                        } else {
+                            for (Slot slot : this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().getSlots()) {
+                                if (slot.getStack() != null) {
+                                    if (slot.getStack().getId().equals(this.id)) {
+                                        if (slot.getStack().getItem().isStackable()) {
+                                            this.pickedUp = true;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
-        if (this.pickedUp)
-            this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().addItem(new ItemStack(this, count));
+        if (this.pickedUp) {
+            if (!this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isFull())
+                this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().addItem(new ItemStack(this, count));
+            else
+                this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().addStackToHotbar(new ItemStack(this, count));
+        }
 
         this.bounds = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
     }
