@@ -296,7 +296,14 @@
       ]
     },
     {
-      "id": "wooden_sword",
+      "id": "wooden_pick",
+      "pos": [
+        "2.25f",
+        "16.25f"
+      ]
+    },
+    {
+      "id": "stone_pick",
       "pos": [
         "3.25f",
         "16.25f"
