@@ -18,6 +18,7 @@ public class Assets {
     public static BufferedImage GRASS, DIRT, SAND;
     public static BufferedImage STONE, ANDESITE, DIORITE, COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE, OBSIDIAN, BROKEN_STONE;
     public static BufferedImage PLANKS, BOOKSHELF, CHEST;
+    public static BufferedImage[] TILE_CRACKING;
 
     public static BufferedImage[] WATER, LAVA;
 
@@ -136,6 +137,8 @@ public class Assets {
 
         BOOKSHELF = getSpriteInd(terrainSheet, 14, 0, width, height);
         CHEST = getSpriteInd(terrainSheet, 15, 0, width, height);
+
+        TILE_CRACKING = getFrames("/assets/textures/tiles/tile_cracking.png", 0, 8);
 
         /* Special Tiles */
         SPLASH_EFFECT = getFrames(effectSheet, 0, 0, 15);
