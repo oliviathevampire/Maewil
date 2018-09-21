@@ -58,7 +58,7 @@ public class ItemManager implements IRenderabelManager {
         return items;
     }
 
-    public void setItems(ArrayList<ItemStack> items) {
-        this.items = items;
+    public void reset() {
+        items.clear();
     }
 }
