@@ -1,0 +1,62 @@
+{
+  "controls": {
+    "Z": {
+      "key_id": "90",
+      "key_char": "Z"
+    },
+    "R": {
+      "key_id": "82",
+      "key_char": "R"
+    },
+    "E": {
+      "key_id": "69",
+      "key_char": "E"
+    },
+    "Q": {
+      "key_id": "81",
+      "key_char": "Q"
+    },
+    "W": {
+      "key_id": "87",
+      "key_char": "W"
+    },
+    "A": {
+      "key_id": "65",
+      "key_char": "A"
+    },
+    "S": {
+      "key_id": "83",
+      "key_char": "S"
+    },
+    "D": {
+      "key_id": "68",
+      "key_char": "D"
+    },
+    "1": {
+      "key_id": "49",
+      "key_char": "1"
+    },
+    "2": {
+      "key_id": "50",
+      "key_char": "2"
+    },
+    "3": {
+      "key_id": "51",
+      "key_char": "3"
+    },
+    "CONTROL": {
+      "key_id": "17",
+      "key_char": "CONTROL"
+    },
+    "SPACE": {
+      "key_id": "32",
+      "key_char": "SPACE"
+    },
+    "ESCAPE": {
+      "key_id": "27",
+      "key_char": "ESCAPE"
+    }
+  },
+  "DEBUG_MODE": false,
+  "FPS_COUNTER": false
+}
