@@ -37,8 +37,8 @@ public class OptionsJsonParser {
             CONTROLS.put(jsonId.toString(), new Keybind(key_char, key_id));
         }
 
-        DEBUG_MODE = Boolean.valueOf(jsonObject.get("debugMode").toString());
-        FPS_COUNTER = Boolean.valueOf(jsonObject.get("fpsCounter").toString());
+        DEBUG_MODE = Boolean.valueOf(jsonObject.get("DEBUG_MODE").toString());
+        FPS_COUNTER = Boolean.valueOf(jsonObject.get("FPS_COUNTER").toString());
 
         Logger.print("Options loaded!");
     }
@@ -55,8 +55,8 @@ public class OptionsJsonParser {
         }
         jsonObject.put("controls", controls);
 
-        jsonObject.put("debugMode", DEBUG_MODE);
-        jsonObject.put("fpsCounter", FPS_COUNTER);
+        jsonObject.put("DEBUG_MODE", DEBUG_MODE);
+        jsonObject.put("FPS_COUNTER", FPS_COUNTER);
 
         FileWriter file = new FileWriter(path);
         file.write(jsonObject.toJSONString());
