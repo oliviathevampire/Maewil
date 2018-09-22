@@ -39,7 +39,7 @@ public class Assets {
 
     public static BufferedImage ITEM_CARROT, ITEM_APPLE, ITEM_RAW_PORK, ITEM_COOKED_PORK, ITEM_BREAD, ITEM_WHEAT, ITEM_RAW_STEAK, ITEM_COOKED_STEAK, ITEM_WOOL_BUNDLE;
 
-    public static BufferedImage ITEM_COIN_IRON, ITEM_COIN_GOLD;
+    public static BufferedImage ITEM_COIN_PENNY, ITEM_COIN_IRON, ITEM_COIN_GOLD;
 
     /* Player */
     public static BufferedImage[] HEARTS;
@@ -178,8 +178,9 @@ public class Assets {
         ITEM_COOKED_STEAK = getSpriteInd(itemsSheet, 4, 1, width, height);
         ITEM_WOOL_BUNDLE = getSpriteInd(itemsSheet, 1, 3, width, height);
 
-        ITEM_COIN_IRON = getSpriteInd(itemsSheet, 5, 0, width, height);
-        ITEM_COIN_GOLD = getSpriteInd(itemsSheet, 5, 1, width, height);
+        ITEM_COIN_PENNY = getSpriteInd(itemsSheet, 5, 0, width, height);
+        ITEM_COIN_IRON = getSpriteInd(itemsSheet, 5, 1, width, height);
+        ITEM_COIN_GOLD = getSpriteInd(itemsSheet, 5, 2, width, height);
 
         /* Player */
         HEARTS = getFrames(healthSheet, 0, 0, 4);

@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.state.options.Keybinds;
 import coffeecatteam.theultimatetile.tiles.Tile;
+import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.world.World;
 
@@ -27,6 +28,8 @@ public class StateGame extends State {
 
     public StateGame(TheUltimateTile theUltimateTileIn, String world) {
         super(theUltimateTileIn);
+        Tiles.init(theUltimateTile);
+
         uiManagerPaused = new UIManager(theUltimateTile);
         uiManagerDead = new UIManager(theUltimateTile);
         reset(world);
@@ -140,6 +143,7 @@ public class StateGame extends State {
     public void reset(String world) {
         theUltimateTile.getEntityManager().reset();
         theUltimateTile.getEntityManager().getPlayer().reset();
+        theUltimateTile.getItemManager().reset();
         setWorld(world);
     }
 }

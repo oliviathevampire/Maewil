@@ -11,6 +11,7 @@ import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.inventory.items.ItemTool;
 import coffeecatteam.theultimatetile.state.options.Keybinds;
+import coffeecatteam.theultimatetile.tiles.IDamageableTile;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Utils;
@@ -27,6 +28,7 @@ public class EntityPlayer extends EntityCreature {
 
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
     private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
+    private boolean isAttacking = false;
 
     private InventoryPlayer inventoryPlayer;
     private ItemStack equippedItem;
@@ -34,11 +36,12 @@ public class EntityPlayer extends EntityCreature {
     private int glubel = 0, maxGludel = 100, lvl = 1;
     private String username;
 
-    public boolean isLocal = true, isDead = false;
+    public boolean isDead;
 
     public EntityPlayer(TheUltimateTile theUltimateTile, String username) {
         super(theUltimateTile, "player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         this.username = username;
+        isDead = false;
 
         inventoryPlayer = new InventoryPlayer(theUltimateTile, this);
     }
@@ -70,28 +73,23 @@ public class EntityPlayer extends EntityCreature {
     @Override
     public void tick() {
         if (isActive()) {
-            if (this.isLocal) {
-                if (!inventoryPlayer.isActive()) {
-                    // Movement
-                    getInput();
-                    move();
+            if (!inventoryPlayer.isActive()) {
+                // Movement
+                getInput();
+                move();
 
-                    // Attack
-                    checkAttacks();
+                // Attack
+                checkAttacks();
 
-                    // Interact
-                    tileInteract();
-                    tickEquippedItem();
-                }
-
-                theUltimateTile.getCamera().centerOnEntity(this);
-            } else {
-//                Packet02Move packet = new Packet02Move(this.username, this.xMove, this.yMove);
-//                packet.writeData(theUltimateTile.getGame().getClient());
+                // Interact
+                tileInteract();
+                tickEquippedItem();
             }
 
-            inventoryPlayer.tick();
+            theUltimateTile.getCamera().centerOnEntity(this);
         }
+
+        inventoryPlayer.tick();
 
         // Animation
         currentAnim.tick();
@@ -112,26 +110,32 @@ public class EntityPlayer extends EntityCreature {
         ar.height = arSize;
 
         if (theUltimateTile.getKeyManager().up && theUltimateTile.getKeyManager().attack) {
+            isAttacking = true;
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y - arSize;
         } else if (theUltimateTile.getKeyManager().down && theUltimateTile.getKeyManager().attack) {
+            isAttacking = true;
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y + cb.height;
         } else if (theUltimateTile.getKeyManager().left && theUltimateTile.getKeyManager().attack) {
+            isAttacking = true;
             ar.x = cb.x - arSize;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
         } else if (theUltimateTile.getKeyManager().right && theUltimateTile.getKeyManager().attack) {
+            isAttacking = true;
             ar.x = cb.x + cb.width;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
         } else {
+            isAttacking = false;
             return;
         }
 
         attackTimer = 0;
 
         for (Entity e : theUltimateTile.getEntityManager().getEntities()) {
-            if (e.equals(this))
+            if (e.equals(this)) {
                 continue;
+            }
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
                 e.isInteracted(extraDmg);
                 return;
@@ -228,7 +232,7 @@ public class EntityPlayer extends EntityCreature {
     private boolean inWater() {
         int x = (int) this.x / Tile.TILE_WIDTH;
         int y = (int) this.y / Tile.TILE_HEIGHT;
-        Tile t = theUltimateTile.getWorld().getTile(x, y);
+        Tile t = theUltimateTile.getWorld().getFGTile(x, y);
         if (t.getId() == Tiles.WATER.getId()) {
             float nx = x + Tile.TILE_WIDTH / 2;
             float ny = y + Tile.TILE_HEIGHT / 2;
@@ -242,10 +246,20 @@ public class EntityPlayer extends EntityCreature {
     private void tileInteract() {
         int x = (int) this.x / Tile.TILE_WIDTH;
         int y = (int) this.y / Tile.TILE_HEIGHT;
-        Tile t = theUltimateTile.getWorld().getTile(x, y);
-//        if (t.getId() == Tiles.DIRT.getId()) {
-//            theUltimateTile.getWorld().setTile(x, y, Tiles.AIR);
-//        }
+        Tile t = theUltimateTile.getWorld().getFGTile(x, y);
+        if (t instanceof IDamageableTile) {
+            if (isAttacking) {
+                int dmg = Utils.getRandomInt(1, 5);
+                if (equippedItem != null) {
+                    if (equippedItem.getItem() instanceof ItemTool) {
+                        ItemTool tool = (ItemTool) equippedItem.getItem();
+                        if (tool.getToolType() == ItemTool.ToolType.PICKAXE)
+                            dmg += extraDmg;
+                    }
+                }
+                ((IDamageableTile) t).damage(dmg);
+            }
+        }
     }
 
     @Override

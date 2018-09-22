@@ -6,7 +6,9 @@ import coffeecatteam.theultimatetile.entities.ai.AI;
 import coffeecatteam.theultimatetile.gfx.*;
 import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.tiles.Tile;
+import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -146,7 +148,11 @@ public abstract class EntityCreature extends Entity {
     }
 
     protected boolean collisionWidthTile(int x, int y) {
-        return theUltimateTile.getWorld().getTile(x, y).isSolid();
+        if (this.getId().equals("player") && StateOptions.DEBUG) {
+            Logger.print("X: " + x + " Y: " + y);
+            Logger.print(theUltimateTile.getWorld().getFGTile(x, y).getId());
+        }
+        return theUltimateTile.getWorld().getFGTile(x, y).isSolid();
     }
 
     public float getSpeed() {

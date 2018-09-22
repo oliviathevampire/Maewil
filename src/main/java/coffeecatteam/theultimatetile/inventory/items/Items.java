@@ -36,8 +36,9 @@ public class Items {
 
     public static Item WOOL_BUNDLE = new Item(Assets.ITEM_WOOL_BUNDLE, "wool_bundle");
 
-    public static Item COIN_IRON = new Item(Assets.ITEM_COIN_IRON, "coin_iron");
-    public static Item COIN_GOLD = new Item(Assets.ITEM_COIN_GOLD, "coin_gold");
+    public static Item COIN_PENNY = new ItemCoin(Assets.ITEM_COIN_PENNY, "coin_penny", 0.25f);
+    public static Item COIN_IRON = new ItemCoin(Assets.ITEM_COIN_IRON, "coin_iron", 0.50f);
+    public static Item COIN_GOLD = new ItemCoin(Assets.ITEM_COIN_GOLD, "coin_gold", 1.00f);
 
     public static void init() {
         registerItem(STICK);
@@ -57,7 +58,7 @@ public class Items {
         registerItem(RAW_PORK, COOKED_PORK, RAW_STEAK, COOKED_STEAK);
         registerItem(WOOL_BUNDLE);
 
-        registerItem(COIN_IRON, COIN_GOLD);
+        registerItem(COIN_PENNY, COIN_IRON, COIN_GOLD);
     }
 
     private static void registerItem(Item... items) {

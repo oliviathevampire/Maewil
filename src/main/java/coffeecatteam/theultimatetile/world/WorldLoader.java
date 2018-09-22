@@ -6,17 +6,16 @@ import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.manager.EntityManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
+import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.InputStreamReader;
 
 public class WorldLoader {
 
@@ -43,9 +42,9 @@ public class WorldLoader {
      * Background tiles
      * Foreground tiles
      */
-    public void loadWorld(boolean inJar) throws IOException, ParseException, URISyntaxException {
+    public void loadWorld() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) parser.parse(loadFile(path + "/world.json", inJar));
+        JSONObject jsonObject = (JSONObject) parser.parse(loadFile(path + "/world.json"));
 
         name = (String) jsonObject.get("name");
 
@@ -62,16 +61,16 @@ public class WorldLoader {
 
         JSONObject bgTiles = (JSONObject) jsonObject.get("bg_tile");
         for (int y = 0; y < height; y++) {
+            JSONArray currentRow = (JSONArray) bgTiles.get("row" + y);
             for (int x = 0; x < width; x++) {
-                JSONArray currentRow = (JSONArray) bgTiles.get("row" + y);
                 bg_tiles[x][y] = Utils.parseInt(currentRow.get(x).toString());
             }
         }
 
         JSONObject fgTiles = (JSONObject) jsonObject.get("fg_tile");
         for (int y = 0; y < height; y++) {
+            JSONArray currentRow = (JSONArray) fgTiles.get("row" + y);
             for (int x = 0; x < width; x++) {
-                JSONArray currentRow = (JSONArray) fgTiles.get("row" + y);
                 fg_tiles[x][y] = Utils.parseInt(currentRow.get(x).toString());
             }
         }
@@ -84,9 +83,9 @@ public class WorldLoader {
      * Creature entities
      * Items
      */
-    public void loadObjects(boolean inJar) throws IOException, ParseException, URISyntaxException {
+    public void loadObjects() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) parser.parse(loadFile(path + "/objects.json", inJar));
+        JSONObject jsonObject = (JSONObject) parser.parse(loadFile(path + "/objects.json"));
 
         /*
          * Entities
@@ -177,11 +176,8 @@ public class WorldLoader {
         theUltimateTile.getEntityManager().addEntity(e, x, y, true);
     }
 
-    private FileReader loadFile(String path, boolean inJar) throws URISyntaxException, FileNotFoundException {
-        if (inJar)
-            return new FileReader(new File(WorldLoader.class.getResource(path).toURI()));
-        else
-            return new FileReader(new File(path));
+    private BufferedReader loadFile(String path) {
+        return new BufferedReader(new InputStreamReader(WorldLoader.class.getResourceAsStream(path)));
     }
 
     public String getName() {
