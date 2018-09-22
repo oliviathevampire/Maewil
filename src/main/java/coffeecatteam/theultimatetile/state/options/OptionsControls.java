@@ -10,8 +10,8 @@ import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateOptions;
 
-import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.net.URI;
 
 public class OptionsControls extends State {
@@ -26,7 +26,11 @@ public class OptionsControls extends State {
             @Override
             public void onClick() {
                 State.setState(theUltimateTile.stateOptions);
-                StateOptions.options.saveOptions();
+                try {
+                    StateOptions.OPTIONS.saveOptions();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -66,8 +70,8 @@ public class OptionsControls extends State {
         int yOff = conBtnHeight + 10;
 
         int x = 0, y = 0;
-        for (String jsonId : StateOptions.options.CONTROLS().keySet()) {
-            UIButtonControl button = new UIButtonControl(15 + xOff * x, 15 + yOff * y, conBtnWidth, conBtnHeight, StateOptions.options.CONTROLS().get(jsonId), null);
+        for (String jsonId : StateOptions.OPTIONS.controls().keySet()) {
+            UIButtonControl button = new UIButtonControl(15 + xOff * x, 15 + yOff * y, conBtnWidth, conBtnHeight, StateOptions.OPTIONS.controls().get(jsonId), null);
             button.setListener(new ControlClickListener(theUltimateTile, button, jsonId));
             uiManager.addObject(button);
 

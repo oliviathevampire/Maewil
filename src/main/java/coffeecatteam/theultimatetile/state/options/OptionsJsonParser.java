@@ -37,58 +37,51 @@ public class OptionsJsonParser {
             CONTROLS.put(jsonId.toString(), new Keybind(key_char, key_id));
         }
 
-        DEBUG_MODE = Boolean.valueOf(jsonObject.get("DEBUG_MODE").toString());
-        FPS_COUNTER = Boolean.valueOf(jsonObject.get("FPS_COUNTER").toString());
+        DEBUG_MODE = Boolean.valueOf(jsonObject.get("debugMode").toString());
+        FPS_COUNTER = Boolean.valueOf(jsonObject.get("fpsCounter").toString());
 
         Logger.print("Options loaded!");
     }
 
-    public void saveOptions() {
+    public void saveOptions() throws IOException {
         JSONObject jsonObject = new JSONObject();
 
         JSONObject controls = new JSONObject();
         for (String jsonId : CONTROLS.keySet()) {
-            JSONObject k = new JSONObject();
-            k.put("key_id", String.valueOf(CONTROLS.get(jsonId).getKeyCode()));
-            k.put("key_char", CONTROLS.get(jsonId).getId());
-            controls.put(jsonId, k);
+            JSONObject key = new JSONObject();
+            key.put("key_id", String.valueOf(CONTROLS.get(jsonId).getKeyCode()));
+            key.put("key_char", CONTROLS.get(jsonId).getId());
+            controls.put(jsonId, key);
         }
         jsonObject.put("controls", controls);
 
-        jsonObject.put("DEBUG_MODE", DEBUG_MODE);
-        jsonObject.put("FPS_COUNTER", FPS_COUNTER);
+        jsonObject.put("debugMode", DEBUG_MODE);
+        jsonObject.put("fpsCounter", FPS_COUNTER);
 
-        try (FileWriter file = new FileWriter(path)) {
-            file.write(jsonObject.toJSONString());
-            file.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileWriter file = new FileWriter(path);
+        file.write(jsonObject.toJSONString());
+        file.flush();
 
         Logger.print("Options saved!");
     }
 
-    public Map<String, Keybind> CONTROLS() {
+    public Map<String, Keybind> controls() {
         return CONTROLS;
     }
 
-    public void setCONTROLS(Map<String, Keybind> CONTROLS) {
-        this.CONTROLS = CONTROLS;
-    }
-
-    public boolean DEBUG_MODE() {
+    public boolean debugMode() {
         return DEBUG_MODE;
     }
 
-    public void setDEBUG_MODE(boolean DEBUG_MODE) {
+    public void setDebugMode(boolean DEBUG_MODE) {
         this.DEBUG_MODE = DEBUG_MODE;
     }
 
-    public boolean FPS_COUNTER() {
+    public boolean fpsCounter() {
         return FPS_COUNTER;
     }
 
-    public void setFPS_COUNTER(boolean FPS_COUNTER) {
+    public void setFpsCounter(boolean FPS_COUNTER) {
         this.FPS_COUNTER = FPS_COUNTER;
     }
 }

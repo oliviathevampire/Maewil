@@ -132,7 +132,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
         if (State.getState() != null)
             State.getState().render(g);
-        if (StateOptions.options.FPS_COUNTER())
+        if (StateOptions.OPTIONS.fpsCounter())
             renderFPSCounter(g);
 
         // End drawing

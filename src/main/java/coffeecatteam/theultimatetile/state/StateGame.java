@@ -88,7 +88,7 @@ public class StateGame extends State {
 
     @Override
     public void tick() {
-        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.ESCAPE).getKeyCode()) && !theUltimateTile.getEntityManager().getPlayer().isDead)
+        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !theUltimateTile.getEntityManager().getPlayer().isDead)
             paused = !paused && !theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isActive();
 
         if (paused)

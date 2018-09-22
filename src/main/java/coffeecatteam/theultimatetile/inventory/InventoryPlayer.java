@@ -62,17 +62,17 @@ public class InventoryPlayer extends Inventory {
 
     @Override
     public void tick() {
-        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.E).getKeyCode()))
+        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode()))
             active = !active;
-        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.ESCAPE).getKeyCode()) && active)
+        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && active)
             active = !active;
 
         if (active) {
             // Change select item
-            boolean up = theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.W).getKeyCode());
-            boolean down = theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.S).getKeyCode());
-            boolean left = theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.A).getKeyCode());
-            boolean right = theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.D).getKeyCode());
+            boolean up = theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.W).getKeyCode());
+            boolean down = theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.S).getKeyCode());
+            boolean left = theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.A).getKeyCode());
+            boolean right = theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.D).getKeyCode());
 
             if (up || down) {
                 inventorySelectedIndex += 6;
@@ -94,7 +94,7 @@ public class InventoryPlayer extends Inventory {
 
                 if (stack != null) {
                     // Check if item was interacted with
-                    if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.R).getKeyCode())) {
+                    if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.R).getKeyCode())) {
                         if (stack.getItem() instanceof IInteractable)
                             if (((IInteractable) stack.getItem()).onInteracted(player))
                                 stack.setCount(stack.getCount() - 1);
@@ -107,17 +107,17 @@ public class InventoryPlayer extends Inventory {
             }
 
             // Swap selected stacks
-            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.Z).getKeyCode()))
+            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Z).getKeyCode()))
                 swapSlots(getSlot(inventorySelectedIndex), getSlot(maxSize + hotbarSelectedIndex));
         }
-        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.Q).getKeyCode()))
+        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Q).getKeyCode()))
             dropItem(active, inventorySelectedIndex, hotbarSelectedIndex);
 
-        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.ONE).getKeyCode()))
+        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ONE).getKeyCode()))
             hotbarSelectedIndex = 0;
-        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.TWO).getKeyCode()))
+        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.TWO).getKeyCode()))
             hotbarSelectedIndex = 1;
-        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.THREE).getKeyCode()))
+        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.THREE).getKeyCode()))
             hotbarSelectedIndex = 2;
         if (hotbarSelectedIndex < maxSize + maxHotbarSize) {
             player.setEquippedItem(getSlot(maxSize + hotbarSelectedIndex).getStack());

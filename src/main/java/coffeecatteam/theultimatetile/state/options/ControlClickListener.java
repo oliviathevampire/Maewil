@@ -30,7 +30,7 @@ public class ControlClickListener implements ClickListener {
     public void tick() {
         int newKeyCode = theUltimateTile.getKeyManager().getCurrentKeyPressedCode();
         String newId = String.valueOf(theUltimateTile.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
-        Keybind keybind = StateOptions.options.CONTROLS().get(jsonId);
+        Keybind keybind = StateOptions.OPTIONS.controls().get(jsonId);
 
         if (listening) {
             button.setText("> " + jsonId + " <");
@@ -43,7 +43,7 @@ public class ControlClickListener implements ClickListener {
                 button.setText("> " + newId + " <");
             }
             if (button.getText().equals("> " + newId + " <") && !newId.contains("~")) {
-                StateOptions.options.CONTROLS().replace(jsonId, new Keybind(newId, newKeyCode));
+                StateOptions.OPTIONS.controls().replace(jsonId, new Keybind(newId, newKeyCode));
                 theUltimateTile.getKeyManager().setCurrentKeyPressedCode(KeyStroke.getKeyStroke('~').getKeyCode());
                 theUltimateTile.getKeyManager().setCurrentKeyPressedChar('~');
                 listening = false;
