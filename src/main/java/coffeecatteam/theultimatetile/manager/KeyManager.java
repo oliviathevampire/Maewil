@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 public class KeyManager implements KeyListener, ITickableManager {
 
     private boolean[] keys, justPressed, cantPress;
+    public boolean moveUp, moveDown, moveLeft, moveRight, useSprint, useAttack;
 
     private int currentKeyPressedCode;
     private char currentKeyPressedChar = '~';
@@ -32,6 +33,13 @@ public class KeyManager implements KeyListener, ITickableManager {
             if (!cantPress[i] && keys[i])
                 justPressed[i] = true;
         }
+
+        moveUp = keys[StateOptions.OPTIONS.controls().get(Keybind.W).getKeyCode()];
+        moveDown = keys[StateOptions.OPTIONS.controls().get(Keybind.S).getKeyCode()];
+        moveLeft = keys[StateOptions.OPTIONS.controls().get(Keybind.A).getKeyCode()];
+        moveRight = keys[StateOptions.OPTIONS.controls().get(Keybind.D).getKeyCode()];
+        useSprint = keys[StateOptions.OPTIONS.controls().get(Keybind.CONTROL).getKeyCode()];
+        useAttack = keys[StateOptions.OPTIONS.controls().get(Keybind.SPACE).getKeyCode()];
     }
 
     public boolean keyJustPressed(int keyCode) {
