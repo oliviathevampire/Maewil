@@ -15,7 +15,7 @@ public class Logger {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
         Date date = new Date();
 
-        logFile = new File("./logs/log_" + formatter.format(date) + ".txt");
+        logFile = new File("./logs/log_" + formatter.format(date) + ".tutlog");
         logFile.getParentFile().mkdirs();
     }
 
