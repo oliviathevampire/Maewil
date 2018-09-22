@@ -6,6 +6,8 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.8
 
+buildDir = file("build/TheUltimateTile-"+version)
+
 repositories {
     mavenCentral()
 }
@@ -20,4 +22,9 @@ jar {
     manifest {
         attributes 'Main-Class': 'coffeecatteam.theultimatetile.Launcher'
     }
+}
+
+task copyOptions(type: Copy) {
+    from file("options.json")
+    into file("build/TheUltimateTile-"+version+"/libs")
 }

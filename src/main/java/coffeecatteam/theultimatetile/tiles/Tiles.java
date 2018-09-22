@@ -63,7 +63,6 @@ public class Tiles {
 
     public static Tile getTile(TheUltimateTile theUltimateTile, int id) {
         switch (id) {
-            default:
             case 0:
                 return new Tile(theUltimateTile, Assets.GRASS, id, false);
             case 1:
@@ -105,5 +104,6 @@ public class Tiles {
             case 16:
                 return new Tile(theUltimateTile, Assets.BOOKSHELF, id, true);
         }
+        return new Tile(theUltimateTile, Assets.AIR, id, false);
     }
 }

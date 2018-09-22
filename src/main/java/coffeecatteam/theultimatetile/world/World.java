@@ -4,6 +4,7 @@ import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
+import coffeecatteam.theultimatetile.utils.Logger;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -55,6 +56,19 @@ public class World {
         overlayManager.render(g);
     }
 
+    public Tile getBGTile(int x, int y) {
+        if (x < 0)
+            x = 0;
+        if (y < 0)
+            y = 0;
+        if (x >= width)
+            x = width - 1;
+        if (y >= height)
+            y = height - 1;
+
+        return BG_TILES.get(bg_tile_ids[x][y]);
+    }
+
     public void setBGTile(int x, int y, Tile tile) {
         if (x < 0)
             x = 0;
@@ -66,6 +80,19 @@ public class World {
             y = height;
 
         BG_TILES.set(bg_tile_ids[x][y], tile.setPos(x, y));
+    }
+
+    public Tile getFGTile(int x, int y) {
+        if (x < 0)
+            x = 0;
+        if (y < 0)
+            y = 0;
+        if (x >= width)
+            x = width - 1;
+        if (y >= height)
+            y = height - 1;
+
+        return FG_TILES.get(fg_tile_ids[x][y]);
     }
 
     public void setFGTile(int x, int y, Tile tile) {
@@ -81,36 +108,11 @@ public class World {
         FG_TILES.set(fg_tile_ids[x][y], tile.setPos(x, y));
     }
 
-    public Tile getBGTile(int x, int y) {
-        if (x < 0)
-            x = 0;
-        if (y < 0)
-            y = 0;
-        if (x > width)
-            x = width;
-        if (y > height)
-            y = height;
-
-        return BG_TILES.get(fg_tile_ids[x][y]);
-    }
-
-    public Tile getFGTile(int x, int y) {
-        if (x < 0)
-            x = 0;
-        if (y < 0)
-            y = 0;
-        if (x > width)
-            x = width;
-        if (y > height)
-            y = height;
-
-        return FG_TILES.get(fg_tile_ids[x][y]);
-    }
-
     private void loadWorld(String path) throws IOException, ParseException {
         WorldLoader worldLoader = new WorldLoader(path, theUltimateTile); // "/assets/worlds/dev_tests/json_format"
 
         worldLoader.loadWorld();
+        Logger.print("\nLoading world [" + worldLoader.getName() + "]!");
 
         width = worldLoader.getWidth();
         height = worldLoader.getHeight();
@@ -121,35 +123,26 @@ public class World {
         fg_tile_ids = worldLoader.getFg_tiles().clone();
 
         int bgid;
-        int bgX = 0, bgY = 0;
-        for (int i = 0; i < width * height; i++) {
-            bgid = bg_tile_ids[bgX][bgY];
-            BG_TILES.add(Tiles.getTile(theUltimateTile, bgid).setPos(bgX, bgY).setSolid(false));
-            bgX++;
-            if (bgX >= 10) {
-                bgX = 0;
-                bgY++;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                bgid = bg_tile_ids[x][y];
+                BG_TILES.add(Tiles.getTile(theUltimateTile, bgid).setPos(x, y).setSolid(false));
             }
-
-            if (bgX >= width)
-                bgX = width - 1;
-            if (bgY >= height)
-                bgY = height - 1;
         }
+        Logger.print("Loaded background tiles!");
 
         int fgid;
-        int fgX = 0, fgY = 0;
-        for (int i = 0; i < width * height; i++) {
-            fgid = fg_tile_ids[fgX][fgY];
-            FG_TILES.add(Tiles.getTile(theUltimateTile, fgid).setPos(fgX, fgY));
-            fgX++;
-            if (fgX >= width) {
-                fgX = 0;
-                fgY++;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                fgid = fg_tile_ids[x][y];
+                FG_TILES.add(Tiles.getTile(theUltimateTile, fgid).setPos(x, y));
             }
         }
+        Logger.print("Loaded foreground tiles!");
 
         worldLoader.loadObjects();
+        Logger.print("Loaded entities!");
+        Logger.print("Loaded items!");
     }
 
     public TheUltimateTile getTheUltimateTile() {

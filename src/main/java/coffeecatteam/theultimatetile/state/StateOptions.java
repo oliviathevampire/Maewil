@@ -22,7 +22,7 @@ public class StateOptions extends State {
         super(theUltimateTileIn);
         init();
 
-        OPTIONS = new OptionsJsonParser("./OPTIONS.json", theUltimateTile);
+        OPTIONS = new OptionsJsonParser("./options.json", theUltimateTile);
         try {
             OPTIONS.loadOptions();
         } catch (IOException | ParseException e) {

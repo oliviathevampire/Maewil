@@ -35,7 +35,3 @@ build
 .project
 build.bat
 logs/
-options.json
-
-options-old.json
-options.json
