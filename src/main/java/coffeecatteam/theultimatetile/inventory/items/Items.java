@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.inventory.items;
 
 import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.utils.Logger;
 
 public class Items {
 
@@ -59,6 +60,8 @@ public class Items {
         registerItem(WOOL_BUNDLE);
 
         registerItem(COIN_PENNY, COIN_IRON, COIN_GOLD);
+
+        Logger.print("Items registered!");
     }
 
     private static void registerItem(Item... items) {

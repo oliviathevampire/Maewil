@@ -1,21 +1,21 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
-import coffeecatteam.theultimatetile.state.options.Keybinds;
+import coffeecatteam.theultimatetile.state.options.Keybind;
 
 public class UIButtonControl extends UIButton {
 
-    private Keybinds keybinds;
+    private Keybind keybind;
 
-    public UIButtonControl(float x, float y, int width, int height, Keybinds keybinds, ClickListener listener) {
-        super(x, y, width, height, keybinds.toString().split(":")[2], listener);
-        this.keybinds = keybinds;
+    public UIButtonControl(float x, float y, int width, int height, Keybind keybind, ClickListener listener) {
+        super(x, y, width, height, keybind.getId(), listener);
+        this.keybind = keybind;
     }
 
-    public Keybinds getKeybinds() {
-        return keybinds;
+    public Keybind getKeybind() {
+        return keybind;
     }
 
-    public void setKeybinds(Keybinds keybinds) {
-        this.keybinds = keybinds;
+    public void setKeybind(Keybind keybind) {
+        this.keybind = keybind;
     }
 }

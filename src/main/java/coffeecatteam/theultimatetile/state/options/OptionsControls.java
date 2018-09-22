@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIButtonControl;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
 import coffeecatteam.theultimatetile.state.State;
+import coffeecatteam.theultimatetile.state.StateOptions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,20 +26,7 @@ public class OptionsControls extends State {
             @Override
             public void onClick() {
                 State.setState(theUltimateTile.stateOptions);
-                Keybinds.load();
-            }
-
-            @Override
-            public void tick() {
-            }
-        }));
-
-        int saBtnWidth = 3 * 64;
-        int saBtnHeight = 64;
-        uiManager.addObject(new UIButton(30 + saBtnWidth, theUltimateTile.getHeight() - saBtnHeight - 35, saBtnWidth, saBtnHeight, "Save", new ClickListener() {
-            @Override
-            public void onClick() {
-                Keybinds.save();
+                StateOptions.options.saveOptions();
             }
 
             @Override
@@ -78,10 +66,10 @@ public class OptionsControls extends State {
         int yOff = conBtnHeight + 10;
 
         int x = 0, y = 0;
-        for (Keybinds keybind : Keybinds.KEYBINDS) {
-            UIButtonControl btn = new UIButtonControl(15 + xOff * x, 15 + yOff * y, conBtnWidth, conBtnHeight, keybind, null);
-            btn.setListener(new ControlClickListener(btn));
-            uiManager.addObject(btn);
+        for (String jsonId : StateOptions.options.CONTROLS().keySet()) {
+            UIButtonControl button = new UIButtonControl(15 + xOff * x, 15 + yOff * y, conBtnWidth, conBtnHeight, StateOptions.options.CONTROLS().get(jsonId), null);
+            button.setListener(new ControlClickListener(theUltimateTile, button, jsonId));
+            uiManager.addObject(button);
 
             x++;
             if (x > 2) {
@@ -100,49 +88,5 @@ public class OptionsControls extends State {
     public void render(Graphics g) {
         g.drawImage(Assets.BACKGROUND, 0, 0, theUltimateTile.getWidth(), theUltimateTile.getHeight(), null);
         uiManager.render(g);
-    }
-
-    private class ControlClickListener implements ClickListener {
-
-        private UIButtonControl button;
-        private boolean listening = false;
-        private String ogText;
-        private Keybinds key;
-
-        public ControlClickListener(UIButtonControl button) {
-            this.button = button;
-            ogText = button.getText();
-            this.key = button.getKeybinds();
-        }
-
-        @Override
-        public void onClick() {
-            listening = !listening;
-        }
-
-        @Override
-        public void tick() {
-            int code = theUltimateTile.getKeyManager().getCurrentKeyPressedCode();
-            String newText = String.valueOf(theUltimateTile.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
-
-            if (listening) {
-                button.setText("> " + ogText + " <");
-            } else {
-                button.setText(key.toString().split(":")[2]);
-            }
-
-            if (listening) {
-                if (button.getText().contains(">") && button.getText().contains("<")) {
-                    button.setText("> " + newText + " <");
-                }
-                if (button.getText().equals("> " + newText + " <") && !ogText.equals(newText) && !newText.contains("~")) {
-                    ogText = newText;
-                    key.setKeyCode(code);
-                    theUltimateTile.getKeyManager().setCurrentKeyPressedCode(KeyStroke.getKeyStroke('~').getKeyCode());
-                    theUltimateTile.getKeyManager().setCurrentKeyPressedChar('~');
-                    listening = false;
-                }
-            }
-        }
     }
 }

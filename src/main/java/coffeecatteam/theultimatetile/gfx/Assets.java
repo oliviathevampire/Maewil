@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.gfx;
 
+import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -282,6 +283,8 @@ public class Assets {
 
         ICON_ON = getSpriteInd(menuSheet, 0, 3, width, height);
         ICON_OFF = getSpriteInd(menuSheet, 1, 3, width, height);
+
+        Logger.print("Assets initialized!");
     }
 
     private static BufferedImage[] getFrames(String sheet, int xStart, int xEnd) {

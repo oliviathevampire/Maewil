@@ -1,7 +1,8 @@
 package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.manager.iinterface.ITickableManager;
-import coffeecatteam.theultimatetile.state.options.Keybinds;
+import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.options.Keybind;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -9,8 +10,6 @@ import java.awt.event.KeyListener;
 public class KeyManager implements KeyListener, ITickableManager {
 
     private boolean[] keys, justPressed, cantPress;
-    public boolean up, down, left, right, sprint;
-    public boolean attack, inventory, pause;
 
     private int currentKeyPressedCode;
     private char currentKeyPressedChar = '~';
@@ -33,16 +32,6 @@ public class KeyManager implements KeyListener, ITickableManager {
             if (!cantPress[i] && keys[i])
                 justPressed[i] = true;
         }
-
-        up = keys[Keybinds.W.getKeyCode()];
-        down = keys[Keybinds.S.getKeyCode()];
-        left = keys[Keybinds.A.getKeyCode()];
-        right = keys[Keybinds.D.getKeyCode()];
-        sprint = keys[Keybinds.CONTROL.getKeyCode()];
-
-        attack = keys[Keybinds.SPACE.getKeyCode()];
-        inventory = keys[Keybinds.E.getKeyCode()];
-        pause = keys[Keybinds.ESCAPE.getKeyCode()];
     }
 
     public boolean keyJustPressed(int keyCode) {

@@ -2,9 +2,7 @@ package coffeecatteam.theultimatetile.utils;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Random;
 
 public class Utils {
@@ -47,11 +45,19 @@ public class Utils {
         return out;
     }
 
+    public static BufferedReader loadFileInSideJar(String path) {
+        return new BufferedReader(new InputStreamReader(Utils.class.getResourceAsStream(path)));
+    }
+
+    public static BufferedReader loadFileOutSideJar(String path) throws FileNotFoundException {
+        return new BufferedReader(new FileReader(path));
+    }
+
     public static String loadFileAsString(String path) {
         StringBuilder builder = new StringBuilder();
 
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(Utils.class.getResourceAsStream(path)));
+            BufferedReader br = loadFileInSideJar(path);
             String line;
             while ((line = br.readLine()) != null)
                 builder.append(line + "\n");

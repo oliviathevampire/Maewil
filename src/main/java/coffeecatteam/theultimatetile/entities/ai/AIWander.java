@@ -25,7 +25,7 @@ public class AIWander extends AI {
 
         if (wanderTimer > wanderCooldown) {
             dir = new Random().nextInt(9);
-            if (StateOptions.DEBUG)
+            if (StateOptions.options.DEBUG_MODE())
                 Logger.print("Wander DIR for entity [" + entity.getId() + "]: " + dir);
             wanderCooldown = new Random().nextInt(1) == 0 ? 1600 : 3200;
             wanderTimer = 0;

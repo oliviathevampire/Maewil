@@ -9,8 +9,8 @@ import coffeecatteam.theultimatetile.manager.*;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateMenu;
 import coffeecatteam.theultimatetile.state.StateOptions;
-import coffeecatteam.theultimatetile.state.options.Keybinds;
 import coffeecatteam.theultimatetile.state.options.OptionsControls;
+import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 import coffeecatteam.theultimatetile.world.World;
 
@@ -98,7 +98,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
         camera = new Camera(this, 0, 0);
 
         username = hasArgument("-username") ? getArgument("-username") : Utils.getUsername();
-        Keybinds.load();
+        Logger.print("Set username: " + username);
 
         stateMenu = new StateMenu(this);
         stateOptions = new StateOptions(this);
@@ -132,7 +132,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
         if (State.getState() != null)
             State.getState().render(g);
-        if (StateOptions.FPS)
+        if (StateOptions.options.FPS_COUNTER())
             renderFPSCounter(g);
 
         // End drawing

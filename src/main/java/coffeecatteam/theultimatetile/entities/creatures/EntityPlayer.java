@@ -10,7 +10,8 @@ import coffeecatteam.theultimatetile.inventory.Slot;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.inventory.items.ItemTool;
-import coffeecatteam.theultimatetile.state.options.Keybinds;
+import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.options.Keybind;
 import coffeecatteam.theultimatetile.tiles.IDamageableTile;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
@@ -109,19 +110,19 @@ public class EntityPlayer extends EntityCreature {
         ar.width = arSize;
         ar.height = arSize;
 
-        if (theUltimateTile.getKeyManager().up && theUltimateTile.getKeyManager().attack) {
+        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.W).getKeyCode()) && theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.SPACE).getKeyCode())) {
             isAttacking = true;
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y - arSize;
-        } else if (theUltimateTile.getKeyManager().down && theUltimateTile.getKeyManager().attack) {
+        } else if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.S).getKeyCode()) && theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.SPACE).getKeyCode())) {
             isAttacking = true;
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y + cb.height;
-        } else if (theUltimateTile.getKeyManager().left && theUltimateTile.getKeyManager().attack) {
+        } else if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.A).getKeyCode()) && theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.SPACE).getKeyCode())) {
             isAttacking = true;
             ar.x = cb.x - arSize;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
-        } else if (theUltimateTile.getKeyManager().right && theUltimateTile.getKeyManager().attack) {
+        } else if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.D).getKeyCode()) && theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.SPACE).getKeyCode())) {
             isAttacking = true;
             ar.x = cb.x + cb.width;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
@@ -150,7 +151,7 @@ public class EntityPlayer extends EntityCreature {
                     extraDmg = ((ItemTool) equippedItem.getItem()).getDamage();
                 else
                     extraDmg = 0;
-                if (theUltimateTile.getKeyManager().keyJustPressed(Keybinds.R.getKeyCode()))
+                if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.R).getKeyCode()))
                     if (equippedItem.getItem() instanceof IInteractable)
                         if (((IInteractable) equippedItem.getItem()).onInteracted(this))
                             equippedItem.setCount(equippedItem.getCount() - 1);
@@ -205,23 +206,23 @@ public class EntityPlayer extends EntityCreature {
             } else {
                 speed = EntityCreature.DEFAULT_SPEED;
             }
-            if (!theUltimateTile.getKeyManager().sprint)
+            if (!theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.CONTROL).getKeyCode()))
                 sprintTimer = maxSprintTimer;
         }
 
-        if (theUltimateTile.getKeyManager().up) {
+        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.W).getKeyCode())) {
             yMove = -speed;
             currentAnim = animUp;
         }
-        if (theUltimateTile.getKeyManager().down) {
+        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.S).getKeyCode())) {
             yMove = speed;
             currentAnim = animDown;
         }
-        if (theUltimateTile.getKeyManager().left) {
+        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.A).getKeyCode())) {
             xMove = -speed;
             currentAnim = animLeft;
         }
-        if (theUltimateTile.getKeyManager().right) {
+        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.D).getKeyCode())) {
             xMove = speed;
             currentAnim = animRight;
         }
@@ -312,7 +313,7 @@ public class EntityPlayer extends EntityCreature {
     }
 
     public boolean canSprint() {
-        return theUltimateTile.getKeyManager().sprint && !inWater() && currentAnim != animIdle && sprintTimer > 0;
+        return theUltimateTile.getKeyManager().keyJustPressed(StateOptions.options.CONTROLS().get(Keybind.CONTROL).getKeyCode()) && !inWater() && currentAnim != animIdle && sprintTimer > 0;
     }
 
     public String getUsername() {

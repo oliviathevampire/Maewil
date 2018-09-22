@@ -6,16 +6,13 @@ import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.manager.EntityManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
-import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class WorldLoader {
 
@@ -44,7 +41,7 @@ public class WorldLoader {
      */
     public void loadWorld() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) parser.parse(loadFile(path + "/world.json"));
+        JSONObject jsonObject = (JSONObject) parser.parse(Utils.loadFileInSideJar(path + "/world.json"));
 
         name = (String) jsonObject.get("name");
 
@@ -85,7 +82,7 @@ public class WorldLoader {
      */
     public void loadObjects() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) parser.parse(loadFile(path + "/objects.json"));
+        JSONObject jsonObject = (JSONObject) parser.parse(Utils.loadFileInSideJar(path + "/objects.json"));
 
         /*
          * Entities
@@ -174,10 +171,6 @@ public class WorldLoader {
 
     private void loadEntity(Entity e, float x, float y) {
         theUltimateTile.getEntityManager().addEntity(e, x, y, true);
-    }
-
-    private BufferedReader loadFile(String path) {
-        return new BufferedReader(new InputStreamReader(WorldLoader.class.getResourceAsStream(path)));
     }
 
     public String getName() {
