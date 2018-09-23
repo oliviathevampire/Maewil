@@ -150,7 +150,7 @@ public abstract class EntityCreature extends Entity {
     protected boolean collisionWidthTile(int x, int y) {
         if (this.getId().equals("player") && StateOptions.OPTIONS.debugMode()) {
             Logger.print("X: " + x + " Y: " + y);
-            Logger.print(theUltimateTile.getWorld().getFGTile(x, y).getId());
+            Logger.print(theUltimateTile.getWorld().getFGTile(x, y).getId() + " - " + theUltimateTile.getWorld().getFGTile(x, y).isSolid());
         }
         return theUltimateTile.getWorld().getFGTile(x, y).isSolid();
     }

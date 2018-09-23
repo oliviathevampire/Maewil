@@ -2,7 +2,6 @@ package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 import java.util.ArrayList;

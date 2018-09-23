@@ -4,10 +4,6 @@ import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.Items;
-import coffeecatteam.theultimatetile.utils.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Tiles {
 

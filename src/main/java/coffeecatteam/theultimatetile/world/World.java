@@ -3,14 +3,13 @@ package coffeecatteam.theultimatetile.world;
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
+import coffeecatteam.theultimatetile.tiles.TileBreakable;
 import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Logger;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class World {
 
@@ -18,10 +17,8 @@ public class World {
     private int width, height;
     private int spawnX, spawnY;
 
-    private int[][] bg_tile_ids;
-    private int[][] fg_tile_ids;
-    private List<Tile> BG_TILES = new ArrayList<>();
-    private List<Tile> FG_TILES = new ArrayList<>();
+    private Tile[][] bg_tiles;
+    private Tile[][] fg_tiles;
 
     private OverlayManager overlayManager;
 
@@ -39,8 +36,17 @@ public class World {
     }
 
     public void tick() {
-        BG_TILES.forEach(Tile::updateBounds);
-        FG_TILES.forEach(Tile::tick);
+        int xStart = (int) Math.max(0, theUltimateTile.getCamera().getxOffset() / Tile.TILE_WIDTH);
+        int xEnd = (int) Math.min(width, (theUltimateTile.getCamera().getxOffset() + theUltimateTile.getWidth()) / Tile.TILE_WIDTH + 1);
+        int yStart = (int) Math.max(0, theUltimateTile.getCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (theUltimateTile.getCamera().getyOffset() + theUltimateTile.getHeight()) / Tile.TILE_HEIGHT + 1);
+
+        for (int y = yStart; y < yEnd; y++) {
+            for (int x = xStart; x < xEnd; x++) {
+                getBGTile(x, y).updateBounds();
+                getFGTile(x, y).tick();
+            }
+        }
 
         theUltimateTile.getItemManager().tick();
         theUltimateTile.getEntityManager().tick();
@@ -48,8 +54,17 @@ public class World {
     }
 
     public void render(Graphics g) {
-        BG_TILES.forEach(t -> t.render(g, new Color(63, 63, 63, 127)));
-        FG_TILES.forEach(t -> t.render(g));
+        int xStart = (int) Math.max(0, theUltimateTile.getCamera().getxOffset() / Tile.TILE_WIDTH);
+        int xEnd = (int) Math.min(width, (theUltimateTile.getCamera().getxOffset() + theUltimateTile.getWidth()) / Tile.TILE_WIDTH + 1);
+        int yStart = (int) Math.max(0, theUltimateTile.getCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (theUltimateTile.getCamera().getyOffset() + theUltimateTile.getHeight()) / Tile.TILE_HEIGHT + 1);
+
+        for (int y = yStart; y < yEnd; y++) {
+            for (int x = xStart; x < xEnd; x++) {
+                getBGTile(x, y).render(g, new Color(63, 63, 63, 127));
+                getFGTile(x, y).render(g);
+            }
+        }
 
         theUltimateTile.getItemManager().render(g);
         theUltimateTile.getEntityManager().render(g);
@@ -66,7 +81,7 @@ public class World {
         if (y >= height)
             y = height - 1;
 
-        return BG_TILES.get(bg_tile_ids[x][y]);
+        return bg_tiles[x][y];
     }
 
     public void setBGTile(int x, int y, Tile tile) {
@@ -79,7 +94,7 @@ public class World {
         if (y > height)
             y = height;
 
-        BG_TILES.set(bg_tile_ids[x][y], tile.setPos(x, y));
+        bg_tiles[x][y] = tile.setPos(x, y);
     }
 
     public Tile getFGTile(int x, int y) {
@@ -92,7 +107,7 @@ public class World {
         if (y >= height)
             y = height - 1;
 
-        return FG_TILES.get(fg_tile_ids[x][y]);
+        return fg_tiles[x][y];
     }
 
     public void setFGTile(int x, int y, Tile tile) {
@@ -105,7 +120,7 @@ public class World {
         if (y > height)
             y = height;
 
-        FG_TILES.set(fg_tile_ids[x][y], tile.setPos(x, y));
+        fg_tiles[x][y] = tile.setPos(x, y);
     }
 
     private void loadWorld(String path) throws IOException, ParseException {
@@ -119,14 +134,22 @@ public class World {
         spawnX = worldLoader.getSpawnX();
         spawnY = worldLoader.getSpawnY();
 
-        bg_tile_ids = worldLoader.getBg_tiles().clone();
-        fg_tile_ids = worldLoader.getFg_tiles().clone();
+        int[][] bg_tile_ids = worldLoader.getBg_tiles().clone();
+        int[][] fg_tile_ids = worldLoader.getFg_tiles().clone();
+        bg_tiles = new Tile[width][height];
+        fg_tiles = new Tile[width][height];
 
         int bgid;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 bgid = bg_tile_ids[x][y];
-                BG_TILES.add(Tiles.getTile(theUltimateTile, bgid).setPos(x, y).setSolid(false));
+                Tile tile = Tiles.getTile(theUltimateTile, bgid).setPos(x, y).setSolid(false);
+                if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
+                    tile.setSolid(true);
+                    if (tile instanceof TileBreakable)
+                        ((TileBreakable) tile).setMineable(false);
+                }
+                bg_tiles[x][y] = tile;
             }
         }
         Logger.print("Loaded background tiles!");
@@ -135,7 +158,13 @@ public class World {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 fgid = fg_tile_ids[x][y];
-                FG_TILES.add(Tiles.getTile(theUltimateTile, fgid).setPos(x, y));
+                Tile tile = Tiles.getTile(theUltimateTile, fgid).setPos(x, y);
+                if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
+                    tile.setSolid(true);
+                    if (tile instanceof TileBreakable)
+                        ((TileBreakable) tile).setMineable(false);
+                }
+                fg_tiles[x][y] = tile;
             }
         }
         Logger.print("Loaded foreground tiles!");
