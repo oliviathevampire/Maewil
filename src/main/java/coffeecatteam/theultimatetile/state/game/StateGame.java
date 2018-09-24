@@ -1,21 +1,26 @@
-package coffeecatteam.theultimatetile.state;
+package coffeecatteam.theultimatetile.state.game;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.manager.UIManager;
+import coffeecatteam.theultimatetile.state.State;
+import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.Keybind;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.world.World;
+import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;
 
 import java.awt.*;
+import java.io.IOException;
 
 public class StateGame extends State {
 
     private World world;
+    private String worldName;
 
     private boolean paused = false;
 
@@ -23,11 +28,12 @@ public class StateGame extends State {
     private UIManager uiManagerDead;
 
     public StateGame(TheUltimateTile theUltimateTileIn) {
-        this(theUltimateTileIn, "/assets/worlds/starter/world_01");
+        this(theUltimateTileIn, "/assets/worlds/starter/world_01", null);
     }
 
-    public StateGame(TheUltimateTile theUltimateTileIn, String world) {
+    public StateGame(TheUltimateTile theUltimateTileIn, String world, String worldName) {
         super(theUltimateTileIn);
+        this.worldName = worldName;
         Tiles.init(theUltimateTile);
 
         uiManagerPaused = new UIManager(theUltimateTile);
@@ -88,8 +94,15 @@ public class StateGame extends State {
 
     @Override
     public void tick() {
-        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !theUltimateTile.getEntityManager().getPlayer().isDead)
+        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !theUltimateTile.getEntityManager().getPlayer().isDead) {
             paused = !paused && !theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isActive();
+            WorldJsonSaver saver = new WorldJsonSaver("./saves/" + worldName, world, theUltimateTile);
+            try {
+                saver.save();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         if (paused)
             theUltimateTile.getMouseManager().setUiManager(uiManagerPaused);
