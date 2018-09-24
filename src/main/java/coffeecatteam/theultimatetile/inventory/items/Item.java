@@ -20,7 +20,7 @@ public class Item implements Cloneable {
 
     protected Rectangle bounds;
 
-    protected int x, y;
+    protected float x, y;
     protected boolean pickedUp = false;
     protected boolean isStackable = true;
 
@@ -28,7 +28,7 @@ public class Item implements Cloneable {
         this.texture = texture;
         this.id = id;
 
-        this.bounds = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
+        this.bounds = new Rectangle((int) this.x, (int) this.y, WIDTH, HEIGHT);
     }
 
     public void tick(int count) {
@@ -75,7 +75,7 @@ public class Item implements Cloneable {
                 this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().addStackToHotbar(new ItemStack(this, count));
         }
 
-        this.bounds = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
+        this.bounds = new Rectangle((int) this.x, (int) this.y, WIDTH, HEIGHT);
     }
 
     public void render(Graphics g) {
@@ -119,7 +119,7 @@ public class Item implements Cloneable {
         return bounds;
     }
 
-    public int getX() {
+    public float getX() {
         return this.x;
     }
 
@@ -127,7 +127,7 @@ public class Item implements Cloneable {
         this.x = x;
     }
 
-    public int getY() {
+    public float getY() {
         return this.y;
     }
 
