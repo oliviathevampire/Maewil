@@ -6,6 +6,7 @@ import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.TileBreakable;
 import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -14,6 +15,7 @@ import java.io.IOException;
 public class World {
 
     private TheUltimateTile theUltimateTile;
+    private String name;
     private int width, height;
     private int spawnX, spawnY;
 
@@ -124,18 +126,20 @@ public class World {
     }
 
     private void loadWorld(String path) throws IOException, ParseException {
-        WorldLoader worldLoader = new WorldLoader(path, theUltimateTile); // "/assets/worlds/dev_tests/json_format"
+        WorldJsonLoader worldJsonLoader = new WorldJsonLoader(path, theUltimateTile); // "/assets/worlds/dev_tests/json_format"
 
-        worldLoader.loadWorld();
-        Logger.print("\nLoading world [" + worldLoader.getName() + "]!");
+        worldJsonLoader.load();
+        Logger.print("Loading world [" + worldJsonLoader.getName() + "]!");
 
-        width = worldLoader.getWidth();
-        height = worldLoader.getHeight();
-        spawnX = worldLoader.getSpawnX();
-        spawnY = worldLoader.getSpawnY();
+        name = worldJsonLoader.getName();
 
-        int[][] bg_tile_ids = worldLoader.getBg_tiles().clone();
-        int[][] fg_tile_ids = worldLoader.getFg_tiles().clone();
+        width = worldJsonLoader.getWidth();
+        height = worldJsonLoader.getHeight();
+        spawnX = worldJsonLoader.getSpawnX();
+        spawnY = worldJsonLoader.getSpawnY();
+
+        int[][] bg_tile_ids = worldJsonLoader.getBg_tiles().clone();
+        int[][] fg_tile_ids = worldJsonLoader.getFg_tiles().clone();
         bg_tiles = new Tile[width][height];
         fg_tiles = new Tile[width][height];
 
@@ -167,15 +171,15 @@ public class World {
                 fg_tiles[x][y] = tile;
             }
         }
-        Logger.print("Loaded foreground tiles!");
-
-        worldLoader.loadObjects();
-        Logger.print("Loaded entities!");
-        Logger.print("Loaded items!");
+        Logger.print("Loaded foreground tiles!\n");
     }
 
     public TheUltimateTile getTheUltimateTile() {
         return theUltimateTile;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public int getWidth() {
