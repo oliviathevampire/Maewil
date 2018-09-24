@@ -6,7 +6,7 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
-import coffeecatteam.theultimatetile.state.options.OptionsJsonParser;
+import coffeecatteam.theultimatetile.jsonparsers.OptionsJsonParser;
 import coffeecatteam.theultimatetile.utils.Logger;
 import org.json.simple.parser.ParseException;
 
@@ -24,7 +24,7 @@ public class StateOptions extends State {
 
         OPTIONS = new OptionsJsonParser("./options.json", theUltimateTile);
         try {
-            OPTIONS.loadOptions();
+            OPTIONS.load();
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -50,7 +50,7 @@ public class StateOptions extends State {
             public void onClick() {
                 State.setState(theUltimateTile.optionsControls);
                 try {
-                    OPTIONS.loadOptions();
+                    OPTIONS.load();
                 } catch (IOException | ParseException e) {
                     e.printStackTrace();
                 }
@@ -81,7 +81,7 @@ public class StateOptions extends State {
             @Override
             public void onClick() {
                 try {
-                    OPTIONS.saveOptions();
+                    OPTIONS.save();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

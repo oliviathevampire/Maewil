@@ -40,7 +40,6 @@ public class TileBreakable extends Tile implements IDamageableTile {
         if (isMineable) {
             this.health -= damage;
             if (this.health <= 0) {
-                Logger.print(this.health);
                 if (x == 0 || x == theUltimateTile.getWorld().getWidth() || y == 0 || y == theUltimateTile.getWorld().getHeight())
                     return;
                 theUltimateTile.getWorld().setFGTile(x, y, Tiles.AIR);
