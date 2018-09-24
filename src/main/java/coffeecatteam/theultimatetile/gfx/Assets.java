@@ -90,6 +90,7 @@ public class Assets {
     public static BufferedImage HOTBAR, HOTBAR_SELECTER;
 
     public static BufferedImage ICON_ON, ICON_OFF;
+    public static BufferedImage TOOLTIP_SHORT_SMALL, TOOLTIP_SHORT_LARGE, TOOLTIP_LONG_SMALL, TOOLTIP_LONG_LARGE;
 
     public static void init() {
         /* Fonts */
@@ -283,6 +284,11 @@ public class Assets {
 
         ICON_ON = getSpriteInd(menuSheet, 0, 3, width, height);
         ICON_OFF = getSpriteInd(menuSheet, 1, 3, width, height);
+
+        TOOLTIP_SHORT_SMALL = getSpriteInd(menuSheet, 0, 4, width * 2, height);
+        TOOLTIP_SHORT_LARGE = getSpriteInd(menuSheet, 0, 4, width * 2, height * 2);
+        TOOLTIP_LONG_SMALL = getSpriteInd(menuSheet, 2, 4, width * 3, height);
+        TOOLTIP_LONG_LARGE = getSpriteInd(menuSheet, 2, 4, width * 3, height * 2);
 
         Logger.print("Assets initialized!");
     }

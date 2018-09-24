@@ -6,13 +6,16 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UIButton extends UIObject {
 
-    private ClickListener listener;
+    protected ClickListener listener;
 
     private boolean disabled = false;
     private boolean hovering = false;
+    private int mouseX = 0, mouseY = 0;
 
     private String text;
     private boolean underlined;
@@ -62,6 +65,24 @@ public class UIButton extends UIObject {
         g.drawImage(this.currentTexture[2], (int) this.x + i * pWidth - xOff, (int) this.y, pWidth, pHeight, null);
 
         Text.drawString(g, this.text, (int) this.x + this.width / 2, (int) this.y + this.height / 2, true, underlined, Color.gray, font);
+
+        List<String> tooltip = new ArrayList<>();
+        setTooltip(tooltip);
+        if (tooltip.size() > 0 && this.hovering) {
+            Font font = Assets.FONT_30;
+            int xTOff = 40;
+            int yTOff = 20;
+            g.drawImage(Assets.TOOLTIP_LONG_SMALL, mouseX, mouseY, Text.getWidth(g, tooltip.get(0), font) + xTOff, Text.getHeight(g, font) * tooltip.size() + yTOff, null);
+            int line = 1;
+            for (String tip : tooltip) {
+                Text.drawString(g, tip, mouseX + xTOff / 2, mouseY + Text.getHeight(g, font) * line + yTOff / 2, false, false, Color.white, font);
+                line++;
+            }
+        }
+    }
+
+    public UIButton setTooltip(List<String> tooltip) {
+        return this;
     }
 
     @Override
@@ -72,7 +93,9 @@ public class UIButton extends UIObject {
 
     @Override
     public void onMouseMoved(MouseEvent e) {
-        this.hovering = this.bounds.contains(e.getX(), e.getY()) && !this.disabled;
+        mouseX = e.getX();
+        mouseY = e.getY();
+        this.hovering = this.bounds.contains(mouseX, mouseY) && !this.disabled;
     }
 
     @Override
