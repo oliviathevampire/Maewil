@@ -27,7 +27,7 @@ public class OptionsControls extends State {
             public void onClick() {
                 State.setState(theUltimateTile.stateOptions);
                 try {
-                    StateOptions.OPTIONS.saveOptions();
+                    StateOptions.OPTIONS.save();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

@@ -1,18 +1,24 @@
-package coffeecatteam.theultimatetile.state.options;
+package coffeecatteam.theultimatetile.jsonparsers;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.jsonparsers.iinterface.IJSONLoader;
+import coffeecatteam.theultimatetile.jsonparsers.iinterface.IJSONSaver;
+import coffeecatteam.theultimatetile.state.options.Keybind;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class OptionsJsonParser {
+public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
 
     private String path;
     private TheUltimateTile theUltimateTile;
@@ -25,7 +31,8 @@ public class OptionsJsonParser {
         this.theUltimateTile = theUltimateTile;
     }
 
-    public void loadOptions() throws IOException, ParseException {
+    @Override
+    public void load() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path));
 
@@ -36,14 +43,17 @@ public class OptionsJsonParser {
             String key_char = k.get("key_char").toString();
             CONTROLS.put(jsonId.toString(), new Keybind(key_char, key_id));
         }
+        Logger.print("Options [controls] loaded!");
 
         DEBUG_MODE = Boolean.valueOf(jsonObject.get("DEBUG_MODE").toString());
         FPS_COUNTER = Boolean.valueOf(jsonObject.get("FPS_COUNTER").toString());
+        Logger.print("Options [FPS_COUNTER & DEBUG_MODE] loaded!");
 
-        Logger.print("Options loaded!");
+        Logger.print("Options loaded!\n");
     }
 
-    public void saveOptions() throws IOException {
+    @Override
+    public void save() throws IOException {
         JSONObject jsonObject = new JSONObject();
 
         JSONObject controls = new JSONObject();
@@ -54,9 +64,11 @@ public class OptionsJsonParser {
             controls.put(jsonId, key);
         }
         jsonObject.put("controls", controls);
+        Logger.print("Options [controls] saved!");
 
         jsonObject.put("DEBUG_MODE", DEBUG_MODE);
         jsonObject.put("FPS_COUNTER", FPS_COUNTER);
+        Logger.print("Options [FPS_COUNTER & DEBUG_MODE] saved!");
 
         FileWriter file = new FileWriter(path);
         file.write(jsonObject.toJSONString());
