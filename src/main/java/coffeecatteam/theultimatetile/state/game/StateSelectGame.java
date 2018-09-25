@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.state.game;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
@@ -10,6 +11,7 @@ import coffeecatteam.theultimatetile.utils.Logger;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,9 +28,12 @@ public class StateSelectGame extends StateAbstractMenu {
 
         int btnWidth = 5 * 64;
         int btnHeight = 64;
-        uiManager.addObject(new WorldButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 - 32 * 3, 1));
-        uiManager.addObject(new WorldButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2, 2));
-        uiManager.addObject(new WorldButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + 32 * 3, 3));
+        int x = theUltimateTile.getWidth() / 2 - btnWidth / 2;
+        int y = theUltimateTile.getHeight() / 2 - btnHeight / 2 + 25;
+        float yOff = 25 * 3f;
+        uiManager.addObject(new WorldButton(x, y, 1));
+        uiManager.addObject(new WorldButton(x, y + yOff, 2));
+        uiManager.addObject(new WorldButton(x, y + yOff * 2, 3));
     }
 
     private static String getWorldname(String defaultName) {
@@ -57,36 +62,44 @@ public class StateSelectGame extends StateAbstractMenu {
             super(x, y, 5 * 64, 64, "Game " + index, null);
             this.path = savesPath + path;
             this.listener = new ClickListenerWorld(this.path, this.savesPath, index);
+            hasTooltip = true;
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            ((ClickListenerWorld) this.listener).setText(this);
         }
 
         @Override
         public UIButton setTooltip(List<String> tooltip) {
-            if (!path.equals(savesPath))
-                tooltip.add("Current world: " + path.replace(savesPath, ""));
-            return super.setTooltip(tooltip);
+            tooltip.add("Current world: " + ((ClickListenerWorld) this.listener).getText());
+            return this;
         }
     }
 
     private class ClickListenerWorld implements ClickListener {
 
-        private String path;
-        private String savesPath;
+        private String path, savesPath, worldName;
         private int index;
+
+        private SavedGamesJSONParser gamesJSONParser;
 
         public ClickListenerWorld(String path, String savesPath, int index) {
             this.path = path;
             this.savesPath = savesPath;
             this.index = index - 1;
-        }
 
-        @Override
-        public void onClick() {
-            SavedGamesJSONParser gamesJSONParser = new SavedGamesJSONParser(theUltimateTile);
+            gamesJSONParser = new SavedGamesJSONParser(theUltimateTile);
             try {
                 gamesJSONParser.load();
             } catch (IOException | ParseException e) {
                 e.printStackTrace();
             }
+        }
+
+        @Override
+        public void onClick() {
             boolean isSaved = Boolean.valueOf(SavedGamesJSONParser.GAMES.get(index).split(":")[0]);
 
             String worldName;
@@ -113,6 +126,19 @@ public class StateSelectGame extends StateAbstractMenu {
         @Override
         public void tick() {
         }
+
+        public void setText(WorldButton button) {
+            boolean isSaved = Boolean.valueOf(SavedGamesJSONParser.GAMES.get(index).split(":")[0]);
+            if (isSaved)
+                button.setText(SavedGamesJSONParser.GAMES.get(index).split(":")[1].replace("_", " "));
+        }
+
+        public String getText() {
+            boolean isSaved = Boolean.valueOf(SavedGamesJSONParser.GAMES.get(index).split(":")[0]);
+            if (isSaved)
+                return SavedGamesJSONParser.GAMES.get(index).split(":")[1].replace("_", " ");
+            return "";
+        }
     }
 
     /**
@@ -134,6 +160,14 @@ public class StateSelectGame extends StateAbstractMenu {
         }
 
         return success;
+    }
 
+    @Override
+    public void render(Graphics g) {
+        super.render(g);
+
+        int w = 80 * 6;
+        int h = 48 * 6;
+        g.drawImage(Assets.TITLE, w / 6, 20, w, h, null);
     }
 }
