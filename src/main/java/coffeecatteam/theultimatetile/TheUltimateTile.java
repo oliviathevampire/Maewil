@@ -9,6 +9,7 @@ import coffeecatteam.theultimatetile.manager.*;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateMenu;
 import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.state.options.OptionsControls;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
@@ -37,6 +38,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
     // States
     public StateMenu stateMenu;
+    public StateSelectGame stateSelectGame;
     public StateOptions stateOptions;
     public OptionsControls optionsControls;
 
@@ -101,6 +103,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
         Logger.print("Set username: " + username);
 
         stateMenu = new StateMenu(this);
+        stateSelectGame = new StateSelectGame(this);
         stateOptions = new StateOptions(this);
         optionsControls = new OptionsControls(this);
         State.setState(stateMenu);

@@ -6,10 +6,12 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
+import coffeecatteam.theultimatetile.state.game.StateGame;
 import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 import java.net.URI;
+import java.util.List;
 
 public class StateMenu extends State {
 
@@ -19,12 +21,12 @@ public class StateMenu extends State {
 
         int yOff = 20;
 
-        int spBtnWidth = 6 * 64;
+        int spBtnWidth = 5 * 64;
         int spBtnHeight = 64;
-        uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - spBtnWidth / 2, theUltimateTile.getHeight() / 2 - spBtnHeight / 2 + spBtnHeight - 50 + yOff, spBtnWidth, spBtnHeight, "Single Player", new ClickListener() {
+        uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - spBtnWidth / 2, theUltimateTile.getHeight() / 2 - spBtnHeight / 2 + spBtnHeight - 50 + yOff, spBtnWidth, spBtnHeight, "Select Game", new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(new StateGame(theUltimateTile));
+                State.setState(theUltimateTile.stateSelectGame);
             }
 
             @Override
