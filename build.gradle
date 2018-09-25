@@ -6,7 +6,8 @@ apply plugin: 'java'
 
 sourceCompatibility = 1.8
 
-buildDir = file("build/TheUltimateTile-"+version)
+def buildPath = "build/TheUltimateTile-" + version
+buildDir = file(buildPath)
 
 repositories {
     mavenCentral()
@@ -25,6 +26,12 @@ jar {
 }
 
 task copyOptions(type: Copy) {
-    from file("options.json")
-    into file("build/TheUltimateTile-"+version+"/libs")
+    copy {
+        from "options.json"
+        copy {
+            from "saves/saved_games.json"
+            into buildPath + "/libs/saves"
+        }
+        into buildPath + "/libs"
+    }
 }
