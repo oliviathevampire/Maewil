@@ -1,16 +1,15 @@
 package coffeecatteam.theultimatetile.state.game;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
-import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
 import coffeecatteam.theultimatetile.state.State;
+import coffeecatteam.theultimatetile.state.StateAbstractMenu;
 import coffeecatteam.theultimatetile.utils.Logger;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +18,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
-public class StateSelectGame extends State {
+public class StateSelectGame extends StateAbstractMenu {
 
     public StateSelectGame(TheUltimateTile theUltimateTileIn) {
         super(theUltimateTileIn);
@@ -136,16 +135,5 @@ public class StateSelectGame extends State {
 
         return success;
 
-    }
-
-    @Override
-    public void tick() {
-        uiManager.tick();
-    }
-
-    @Override
-    public void render(Graphics g) {
-        g.drawImage(Assets.BACKGROUND, 0, 0, theUltimateTile.getWidth(), theUltimateTile.getHeight(), null);
-        uiManager.render(g);
     }
 }

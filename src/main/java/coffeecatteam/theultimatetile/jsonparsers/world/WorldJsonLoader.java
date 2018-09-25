@@ -23,7 +23,8 @@ public class WorldJsonLoader implements IJSONLoader {
 
     private String name;
     private int width, height;
-    private int spawnX, spawnY;
+    private float spawnX;
+    private float spawnY;
 
     private int[][] bg_tiles;
     private int[][] fg_tiles;
@@ -65,8 +66,8 @@ public class WorldJsonLoader implements IJSONLoader {
         fg_tiles = new int[width][height];
 
         JSONArray spawn = (JSONArray) jsonObject.get("spawn");
-        spawnX = Utils.parseInt(spawn.get(0).toString());
-        spawnY = Utils.parseInt(spawn.get(1).toString());
+        spawnX = Utils.parseFloat(spawn.get(0).toString());
+        spawnY = Utils.parseFloat(spawn.get(1).toString());
         Logger.print("Loaded world player spawn");
 
         JSONObject bgTiles = (JSONObject) jsonObject.get("bg_tile");
@@ -204,11 +205,11 @@ public class WorldJsonLoader implements IJSONLoader {
         return height;
     }
 
-    public int getSpawnX() {
+    public float getSpawnX() {
         return spawnX;
     }
 
-    public int getSpawnY() {
+    public float getSpawnY() {
         return spawnY;
     }
 

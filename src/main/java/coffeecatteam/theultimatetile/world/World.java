@@ -17,7 +17,8 @@ public class World {
     private TheUltimateTile theUltimateTile;
     private String name;
     private int width, height;
-    private int spawnX, spawnY;
+    private float spawnX;
+    private float spawnY;
 
     private Tile[][] bg_tiles;
     private Tile[][] fg_tiles;
@@ -190,11 +191,11 @@ public class World {
         return height;
     }
 
-    public int getSpawnX() {
+    public float getSpawnX() {
         return spawnX;
     }
 
-    public int getSpawnY() {
+    public float getSpawnY() {
         return spawnY;
     }
 }

@@ -50,8 +50,8 @@ public class WorldJsonSaver implements IJSONSaver {
         jsonObject.put("size", size);
 
         JSONArray spawn = new JSONArray();
-        spawn.add(0, world.getSpawnX());
-        spawn.add(1, world.getSpawnY());
+        spawn.add(0, String.valueOf(theUltimateTile.getEntityManager().getPlayer().getX() / Tile.TILE_WIDTH + "f"));
+        spawn.add(1, String.valueOf(theUltimateTile.getEntityManager().getPlayer().getY() / Tile.TILE_HEIGHT + "f"));
         jsonObject.put("spawn", spawn);
 
         JSONObject bg_tile = new JSONObject();
