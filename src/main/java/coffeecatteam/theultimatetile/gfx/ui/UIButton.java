@@ -22,6 +22,7 @@ public class UIButton extends UIObject {
     private Font font;
 
     private BufferedImage[] currentTexture;
+    protected boolean hasTooltip = false;
 
     public UIButton(float x, float y, int width, int height, String text, ClickListener listener) {
         this(x, y, width, height, text, false, Assets.FONT_40, listener);
@@ -53,7 +54,7 @@ public class UIButton extends UIObject {
     public void render(Graphics g) {
         int i = 1;
         int pWidth = 64;
-        int pHeight = 64;
+        int pHeight = height;
         g.drawImage(this.currentTexture[0], (int) this.x, (int) this.y, pWidth, pHeight, null);
         for (int x = 2; x < this.width / 64; x++) {
             g.drawImage(this.currentTexture[1], (int) this.x + (x - 1) * pWidth, (int) this.y, pWidth, pHeight, null);
@@ -68,15 +69,17 @@ public class UIButton extends UIObject {
 
         List<String> tooltip = new ArrayList<>();
         setTooltip(tooltip);
-        if (tooltip.size() > 0 && this.hovering) {
-            Font font = Assets.FONT_30;
-            int xTOff = 40;
-            int yTOff = 20;
-            g.drawImage(Assets.TOOLTIP_LONG_SMALL, mouseX, mouseY, Text.getWidth(g, tooltip.get(0), font) + xTOff, Text.getHeight(g, font) * tooltip.size() + yTOff, null);
-            int line = 1;
-            for (String tip : tooltip) {
-                Text.drawString(g, tip, mouseX + xTOff / 2, mouseY + Text.getHeight(g, font) * line + yTOff / 2, false, false, Color.white, font);
-                line++;
+        if (tooltip.size() > 0) {
+            if (hasTooltip && this.hovering) {
+                Font font = Assets.FONT_20;
+                int xTOff = 40;
+                int yTOff = 20;
+                g.drawImage(Assets.TOOLTIP_LONG_SMALL, mouseX, mouseY, Text.getWidth(g, tooltip.get(0), font) + xTOff, Text.getHeight(g, font) * tooltip.size() + yTOff, null);
+                int line = 1;
+                for (String tip : tooltip) {
+                    Text.drawString(g, tip, mouseX + xTOff / 2, mouseY + Text.getHeight(g, font) * line + yTOff / 2, false, false, Color.white, font);
+                    line++;
+                }
             }
         }
     }
