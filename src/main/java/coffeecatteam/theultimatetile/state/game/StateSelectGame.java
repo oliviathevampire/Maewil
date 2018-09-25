@@ -62,7 +62,7 @@ public class StateSelectGame extends StateAbstractMenu {
             super(x, y, 5 * 64, 64, "Game " + index, null);
             this.path = savesPath + path;
             this.listener = new ClickListenerWorld(this.path, this.savesPath, index);
-            hasTooltip = true;
+            // hasTooltip = true;
         }
 
         @Override
