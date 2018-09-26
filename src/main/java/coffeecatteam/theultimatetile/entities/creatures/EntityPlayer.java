@@ -344,6 +344,10 @@ public class EntityPlayer extends EntityCreature {
         return lvl;
     }
 
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
+    }
+
     public void reset() {
         inventoryPlayer.clearInventory();
         glubel = 0;

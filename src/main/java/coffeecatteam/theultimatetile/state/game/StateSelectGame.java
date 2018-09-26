@@ -5,9 +5,11 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
+import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateAbstractMenu;
 import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.theultimatetile.utils.Utils;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
@@ -15,6 +17,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -39,12 +42,13 @@ public class StateSelectGame extends StateAbstractMenu {
     private static String getWorldname(String defaultName) {
         String username;
         int nameLength = 16;
+        defaultName += "_" + Utils.getRandomInt(0, 1000);
         try {
             username = JOptionPane.showInputDialog("Please enter a world name\nMust be max " + nameLength + " characters", defaultName);
             if (username.length() > nameLength || username.equalsIgnoreCase(""))
-                username = getWorldname(username);
+                username = defaultName;
         } catch (NullPointerException e) {
-            username = getWorldname("");
+            username = defaultName;
         }
         return username.replaceAll(" ", "_").replaceAll("[^a-zA-Z0-9_]+", "");
     }
@@ -62,14 +66,14 @@ public class StateSelectGame extends StateAbstractMenu {
             super(x, y, 5 * 64, 64, "Game " + index, null);
             this.path = savesPath + path;
             this.listener = new ClickListenerWorld(this.path, this.savesPath, index);
-            // hasTooltip = true;
+            hasTooltip = true;
         }
 
-        @Override
-        public void tick() {
-            super.tick();
-            ((ClickListenerWorld) this.listener).setText(this);
-        }
+//        @Override
+//        public void tick() {
+//            super.tick();
+//            ((ClickListenerWorld) this.listener).setText(this);
+//        }
 
         @Override
         public UIButton setTooltip(List<String> tooltip) {
@@ -80,7 +84,7 @@ public class StateSelectGame extends StateAbstractMenu {
 
     private class ClickListenerWorld implements ClickListener {
 
-        private String path, savesPath, worldName;
+        private String path, savesPath;
         private int index;
 
         private SavedGamesJSONParser gamesJSONParser;
@@ -107,8 +111,7 @@ public class StateSelectGame extends StateAbstractMenu {
                 worldName = getWorldname("New World");
                 path = savesPath + worldName;
                 new File(path).mkdir();
-                copy(StateSelectGame.class.getResourceAsStream("/assets/worlds/starter/world_01/world.json"), path + "/world.json");
-                copy(StateSelectGame.class.getResourceAsStream("/assets/worlds/starter/world_01/objects.json"), path + "/objects.json");
+                WorldJsonLoader.copyFiles(path);
                 SavedGamesJSONParser.GAMES.set(index, "true:" + worldName);
                 try {
                     gamesJSONParser.save();
@@ -139,27 +142,6 @@ public class StateSelectGame extends StateAbstractMenu {
                 return SavedGamesJSONParser.GAMES.get(index).split(":")[1].replace("_", " ");
             return "";
         }
-    }
-
-    /**
-     * Copy a file from source to destination.
-     *
-     * @param source      the source
-     * @param destination the destination
-     * @return True if succeeded , False if not
-     */
-    public static boolean copy(InputStream source, String destination) {
-        boolean success = true;
-
-        System.out.println("Copying ->" + source + "\n\tto ->" + destination);
-
-        try {
-            Files.copy(source, Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException ex) {
-            success = false;
-        }
-
-        return success;
     }
 
     @Override

@@ -284,4 +284,20 @@ public class InventoryPlayer extends Inventory {
                 size++;
         return size;
     }
+
+    public int getInventorySelectedIndex() {
+        return inventorySelectedIndex;
+    }
+
+    public void setInventorySelectedIndex(int inventorySelectedIndex) {
+        this.inventorySelectedIndex = inventorySelectedIndex;
+    }
+
+    public int getHotbarSelectedIndex() {
+        return hotbarSelectedIndex;
+    }
+
+    public void setHotbarSelectedIndex(int hotbarSelectedIndex) {
+        this.hotbarSelectedIndex = hotbarSelectedIndex;
+    }
 }

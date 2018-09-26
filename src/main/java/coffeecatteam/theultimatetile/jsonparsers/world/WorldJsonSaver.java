@@ -37,6 +37,7 @@ public class WorldJsonSaver implements IJSONSaver {
     public void save() throws IOException {
         saveWorld(path, world);
         saveObjects(path);
+        savePlayerInfo(path);
     }
 
     public void saveWorld(String path, World world) throws IOException {
@@ -150,6 +151,54 @@ public class WorldJsonSaver implements IJSONSaver {
         Logger.print("World [" + path + "] items saved!");
 
         FileWriter file = new FileWriter(path + "/objects.json");
+        file.write(jsonObject.toJSONString());
+        file.flush();
+    }
+
+    public void savePlayerInfo(String path) throws IOException {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("username", theUltimateTile.getEntityManager().getPlayer().getUsername());
+        jsonObject.put("health", String.valueOf(theUltimateTile.getEntityManager().getPlayer().getCurrentHealth()));
+        jsonObject.put("glubel", String.valueOf(theUltimateTile.getEntityManager().getPlayer().getGlubel()));
+        jsonObject.put("lvl", String.valueOf(theUltimateTile.getEntityManager().getPlayer().getLvl()));
+
+        JSONArray selected_slots = new JSONArray();
+        selected_slots.add(0, theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().getInventorySelectedIndex());
+        selected_slots.add(1, theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().getHotbarSelectedIndex());
+        jsonObject.put("selected_slots", selected_slots);
+
+        JSONObject inventory = new JSONObject();
+        for (int i = 0; i < 12; i++) {
+            JSONObject slot = new JSONObject();
+            ItemStack stack = theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().getSlot(i).getStack();
+            if (stack == null)
+                slot.put("id", "null");
+            else {
+                slot.put("id", stack.getId());
+                if (stack.getCount() > 1)
+                    slot.put("count", stack.getCount());
+            }
+            inventory.put("slot_" + i, slot);
+        }
+        jsonObject.put("inventory", inventory);
+
+        JSONObject hotbar = new JSONObject();
+        for (int i = 12; i < 15; i++) {
+            JSONObject slot = new JSONObject();
+            ItemStack stack = theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().getSlot(i).getStack();
+            if (stack == null)
+                slot.put("id", "null");
+            else {
+                slot.put("id", stack.getId());
+                if (stack.getCount() > 1)
+                    slot.put("count", stack.getCount());
+            }
+            hotbar.put("slot_" + (i - 12), slot);
+        }
+        jsonObject.put("hotbar", hotbar);
+
+        FileWriter file = new FileWriter(path + "/player_info.json");
         file.write(jsonObject.toJSONString());
         file.flush();
     }
