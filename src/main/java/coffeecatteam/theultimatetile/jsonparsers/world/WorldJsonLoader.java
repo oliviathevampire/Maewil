@@ -255,26 +255,38 @@ public class WorldJsonLoader implements IJSONLoader {
         float x = Utils.parseFloat(pos.get(0).toString());
         float y = Utils.parseFloat(pos.get(1).toString());
 
-        if (entityObj.containsKey("count")) {
-            int count = Utils.parseInt(entityObj.get("count").toString());
-            if (count > 9)
-                count = 9;
-            float ogX = Utils.parseFloat(pos.get(0).toString());
-            for (int i = 0; i < count; i++) {
-                loadEntity(EntityManager.loadEntity(theUltimateTile, id).setDataTags(data), x, y);
-                x++;
-                if (x > ogX + 2) {
-                    x = ogX;
-                    y++;
-                }
-            }
-        } else {
-            loadEntity(EntityManager.loadEntity(theUltimateTile, id).setDataTags(data), x, y);
+        int health = EntityManager.loadEntity(theUltimateTile, id).getMaxHealth();
+        if (entityObj.containsKey("health")) {
+            int healthJ = Utils.parseInt(entityObj.get("health").toString());
+            if (healthJ < 0)
+                healthJ = 0;
+            if (healthJ > health)
+                healthJ = health;
+            health = healthJ;
         }
+
+        int count = 1;
+        if (entityObj.containsKey("count")) {
+            int countJ = Utils.parseInt(entityObj.get("count").toString());
+            if (countJ > 9)
+                countJ = 9;
+            if (countJ < 1)
+                countJ = 1;
+            count = countJ;
+        }
+        loadEntity(id, x, y, count, pos, health, data);
     }
 
-    private void loadEntity(Entity e, float x, float y) {
-        theUltimateTile.getEntityManager().addEntity(e, x, y, true);
+    private void loadEntity(String id, float x, float y, int count, JSONArray pos, int health, String[] data) {
+        float ogX = Utils.parseFloat(pos.get(0).toString());
+        for (int i = 0; i < count; i++) {
+            theUltimateTile.getEntityManager().addEntity(EntityManager.loadEntity(theUltimateTile, id).setDataTags(data).setCurrentHealth(health), x, y, true);
+            x++;
+            if (x > ogX + 2) {
+                x = ogX;
+                y++;
+            }
+        }
     }
 
     public static void copyFiles(String dest) {

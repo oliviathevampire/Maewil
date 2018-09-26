@@ -170,8 +170,9 @@ public abstract class Entity {
         return currentHealth;
     }
 
-    public void setCurrentHealth(int currentHealth) {
+    public Entity setCurrentHealth(int currentHealth) {
         this.currentHealth = currentHealth;
+        return this;
     }
 
     public void heal(int amt) {
@@ -190,6 +191,10 @@ public abstract class Entity {
         setX(x);
         setY(y);
         return this;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
     public void setMaxHealth(int maxHealth) {

@@ -221,6 +221,9 @@ public class WorldJsonSaver implements IJSONSaver {
             }
         }
 
+        if (entity.getCurrentHealth() < entity.getMaxHealth())
+            entityObj.put("health", String.valueOf(entity.getCurrentHealth()));
+
         entitiesArray.add(entityObj);
     }
 }
