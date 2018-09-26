@@ -1,5 +1,5 @@
 group 'coffeecatteam.theultimatetile'
-version '0.3-alpha'
+version '0.4-alpha'
 
 apply plugin: 'idea'
 apply plugin: 'java'
