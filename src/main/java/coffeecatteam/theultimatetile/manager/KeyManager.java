@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.manager.iinterface.ITickableManager;
 import coffeecatteam.theultimatetile.state.StateOptions;
-import coffeecatteam.theultimatetile.state.options.Keybind;
+import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;

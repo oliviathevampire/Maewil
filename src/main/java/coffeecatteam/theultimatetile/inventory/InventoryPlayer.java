@@ -6,7 +6,7 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.state.StateOptions;
-import coffeecatteam.theultimatetile.state.options.Keybind;
+import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
@@ -25,7 +25,7 @@ public class InventoryPlayer extends Inventory {
         this.player = player;
 
         // Add inventory slots
-        int xd = 161, yd = 330, x, y;
+        int xd = 190, yd = 360, x, y;
         int width = 48, height = 48;
         for (int i = 0; i < maxSize; i++) {
             x = xd + 54 * i;

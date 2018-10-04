@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.state.options;
+package coffeecatteam.theultimatetile.state.options.controls;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;

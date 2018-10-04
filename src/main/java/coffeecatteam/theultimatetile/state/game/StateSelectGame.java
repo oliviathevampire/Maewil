@@ -107,7 +107,7 @@ public class StateSelectGame extends StateAbstractMenu {
             boolean isSaved = Boolean.valueOf(SavedGamesJSONParser.GAMES.get(index).split(":")[0]);
 
             String worldName;
-            if (!isSaved) { // (new File(path + "/world.json").exists()) || !(new File(path + "/objects.json").exists())
+            if (!isSaved) { // (new File(fileName + "/world.json").exists()) || !(new File(fileName + "/objects.json").exists())
                 worldName = getWorldname("New World");
                 path = savesPath + worldName;
                 new File(path).mkdir();
@@ -150,6 +150,6 @@ public class StateSelectGame extends StateAbstractMenu {
 
         int w = 80 * 6;
         int h = 48 * 6;
-        g.drawImage(Assets.TITLE, w / 6, 20, w, h, null);
+        g.drawImage(Assets.TITLE, theUltimateTile.getWidth() / 2 - w / 2, 20, w, h, null);
     }
 }

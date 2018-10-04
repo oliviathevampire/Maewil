@@ -40,6 +40,11 @@ public class UIManager implements IRenderabelManager {
             o.onMouseRelease(e);
     }
 
+    public void mouseDragged(MouseEvent e) {
+        for (UIObject o : objects)
+            o.onMouseDragged(e);
+    }
+
     public void addObject(UIObject o) {
         objects.add(o);
     }

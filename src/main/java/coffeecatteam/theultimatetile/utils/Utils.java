@@ -1,5 +1,7 @@
 package coffeecatteam.theultimatetile.utils;
 
+import coffeecatteam.theultimatetile.TheUltimateTile;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -30,7 +32,7 @@ public class Utils {
             return Font.createFont(Font.TRUETYPE_FONT, Utils.class.getResourceAsStream(path)).deriveFont(Font.PLAIN, size);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
-            System.exit(1);
+            TheUltimateTile.getTheUltimateTile().setRunning(false);
         }
         return null;
     }

@@ -43,9 +43,23 @@ public class StateOptions extends StateAbstractMenu {
             }
         }));
 
+        int fpsBtnWidth = 6 * 64;
+        int fpsBtnHeight = 64;
+        uiManager.addObject(new UIButton(15, 94, fpsBtnWidth, fpsBtnHeight, "FPS counter", new ClickListener() {
+            @Override
+            public void onClick() {
+                OPTIONS.setFpsCounter(!OPTIONS.fpsCounter());
+                Logger.print("FPS counter " + (OPTIONS.fpsCounter() ? "enabled" : "disabled"));
+            }
+
+            @Override
+            public void tick() {
+            }
+        }));
+
         int coBtnWidth = 6 * 64;
         int coBtnHeight = 64;
-        uiManager.addObject(new UIButton(15, 94, coBtnWidth, coBtnHeight, "Controls", new ClickListener() {
+        uiManager.addObject(new UIButton(15, 173, coBtnWidth, coBtnHeight, "Controls", new ClickListener() {
             @Override
             public void onClick() {
                 State.setState(theUltimateTile.optionsControls);
@@ -61,13 +75,17 @@ public class StateOptions extends StateAbstractMenu {
             }
         }));
 
-        int fpsBtnWidth = 6 * 64;
-        int fpsBtnHeight = 64;
-        uiManager.addObject(new UIButton(15, 173, fpsBtnWidth, fpsBtnHeight, "FPS counter", new ClickListener() {
+        int soBtnWidth = 6 * 64;
+        int soBtnHeight = 64;
+        uiManager.addObject(new UIButton(15, 252, soBtnWidth, soBtnHeight, "Sounds", new ClickListener() {
             @Override
             public void onClick() {
-                OPTIONS.setFpsCounter(!OPTIONS.fpsCounter());
-                Logger.print("FPS counter " + (OPTIONS.fpsCounter() ? "enabled" : "disabled"));
+                State.setState(theUltimateTile.optionsSpounds);
+                try {
+                    OPTIONS.load();
+                } catch (IOException | ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

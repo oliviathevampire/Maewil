@@ -60,4 +60,8 @@ public class UIHyperlink extends UIObject {
         if (this.hovering && e.getButton() == MouseEvent.BUTTON1)
             onClick();
     }
+
+    @Override
+    public void onMouseDragged(MouseEvent e) {
+    }
 }

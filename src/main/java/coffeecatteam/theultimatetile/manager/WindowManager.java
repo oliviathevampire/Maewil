@@ -21,7 +21,7 @@ public class WindowManager implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        Logger.print("Exiting...");
+        theUltimateTile.setRunning(false);
     }
 
     @Override
