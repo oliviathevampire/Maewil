@@ -12,6 +12,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +24,8 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
     private Map<String, Keybind> CONTROLS = new HashMap<>();
     private boolean DEBUG_MODE, FPS_COUNTER;
 
-    private float volumeMusic;
+    private DecimalFormat volumeFormat = new DecimalFormat("#.#");
+    private float volumeMusic, volumePassive, volumeHostile, volumeOther;
 
     public OptionsJsonParser(String path, TheUltimateTile theUltimateTile) {
         this.path = path;
@@ -51,6 +53,9 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
 
         JSONObject sounds = (JSONObject) jsonObject.get("sounds");
         volumeMusic = Utils.parseFloat((String) sounds.get("volumeMusic"));
+        volumePassive = Utils.parseFloat((String) sounds.get("volumePassive"));
+        volumeHostile = Utils.parseFloat((String) sounds.get("volumeHostile"));
+        volumeOther = Utils.parseFloat((String) sounds.get("volumeOther"));
         Logger.print("Options [sounds] loaded!");
 
         Logger.print("Options loaded!\n");
@@ -77,6 +82,9 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
 
         JSONObject sounds = new JSONObject();
         sounds.put("volumeMusic", String.valueOf(volumeMusic));
+        sounds.put("volumePassive", String.valueOf(volumePassive));
+        sounds.put("volumeHostile", String.valueOf(volumeHostile));
+        sounds.put("volumeOther", String.valueOf(volumeOther));
         jsonObject.put("sounds", sounds);
         Logger.print("Options [sounds] saved!");
 
@@ -111,7 +119,31 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
         return volumeMusic;
     }
 
-    public void setVolumeMusic(float volumeMusic) {
-        this.volumeMusic = volumeMusic;
+    public void setVolumeMusic(double volumeMusic) {
+        this.volumeMusic = Utils.parseFloat(volumeFormat.format(volumeMusic));
+    }
+
+    public float getVolumePassive() {
+        return volumePassive;
+    }
+
+    public void setVolumePassive(double volumePassive) {
+        this.volumePassive = Utils.parseFloat(volumeFormat.format(volumePassive));
+    }
+
+    public float getVolumeHostile() {
+        return volumeHostile;
+    }
+
+    public void setVolumeHostile(double volumeHostile) {
+        this.volumeHostile = Utils.parseFloat(volumeFormat.format(volumeHostile));
+    }
+
+    public float getVolumeOther() {
+        return volumeOther;
+    }
+
+    public void setVolumeOther(double volumeOther) {
+        this.volumeOther = Utils.parseFloat(volumeFormat.format(volumeOther));
     }
 }

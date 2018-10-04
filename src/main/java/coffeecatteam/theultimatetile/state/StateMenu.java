@@ -6,12 +6,9 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
-import coffeecatteam.theultimatetile.state.game.StateGame;
-import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 import java.net.URI;
-import java.util.List;
 
 public class StateMenu extends State {
 

@@ -2,36 +2,36 @@ package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.theultimatetile.state.StateOptions;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class UISlider extends UIObject {
+public abstract class UISlider extends UIObject {
 
     private String title;
 
-    private float maxVolume = 1f;
-    private UIButton volumeDown, volumeUp;
+    protected float maxValue = 1f, v;
+    private UIButton valueDown, valueUp;
 
     public UISlider(float x, float y, String title) {
         super(x, y, 64, 64);
         this.title = title;
+        v = changeValue(0f);
 
-        volumeDown = new UIButton(x, y, width, height, "<", new ClickListener() {
+        valueDown = new UIButton(x, y, width, height, "<", new ClickListener() {
             @Override
             public void onClick() {
-                changeVolume(-0.1f);
+                v = changeValue(-0.1f);
             }
 
             @Override
             public void tick() {
             }
         });
-        volumeUp = new UIButton(x, y, width, height, ">", new ClickListener() {
+        valueUp = new UIButton(x, y, width, height, ">", new ClickListener() {
             @Override
             public void onClick() {
-                changeVolume(0.1f);
+                v = changeValue(0.1f);
             }
 
             @Override
@@ -40,55 +40,51 @@ public class UISlider extends UIObject {
         });
     }
 
-    private void changeVolume(float amt) {
-        StateOptions.OPTIONS.setVolumeMusic(StateOptions.OPTIONS.getVolumeMusic() + amt);
-        if (StateOptions.OPTIONS.getVolumeMusic() < 0f) StateOptions.OPTIONS.setVolumeMusic(0f);
-        if (StateOptions.OPTIONS.getVolumeMusic() > maxVolume) StateOptions.OPTIONS.setVolumeMusic(maxVolume);
-    }
+    public abstract float changeValue(float amt);
 
     @Override
     public void tick() {
-        volumeDown.tick();
-        volumeUp.tick();
+        valueDown.tick();
+        valueUp.tick();
     }
 
     @Override
     public void render(Graphics g) {
-        volumeDown.render(g);
+        valueDown.render(g);
 
         Font font = Assets.FONT_40;
-        String text = String.valueOf((int) (StateOptions.OPTIONS.getVolumeMusic() * 10));
+        String text = String.valueOf((int) (v * 10));
         int y = (int) (this.y + Text.getHeight(g, font) + 5);
         Text.drawString(g, text, (int) (x + 79), y, false, false, Color.lightGray, font);
 
         float vupx = x + 84 + Text.getWidth(g, text, font);
-        volumeUp.setX(vupx);
-        volumeUp.render(g);
+        valueUp.setX(vupx);
+        valueUp.render(g);
 
         Text.drawString(g, this.title, (int) (vupx + 79), y, false, false, Color.lightGray, font);
     }
 
     @Override
     public void onClick() {
-        volumeDown.onClick();
-        volumeUp.onClick();
+        valueDown.onClick();
+        valueUp.onClick();
     }
 
     @Override
     public void onMouseMoved(MouseEvent e) {
-        volumeDown.onMouseMoved(e);
-        volumeUp.onMouseMoved(e);
+        valueDown.onMouseMoved(e);
+        valueUp.onMouseMoved(e);
     }
 
     @Override
     public void onMouseRelease(MouseEvent e) {
-        volumeDown.onMouseRelease(e);
-        volumeUp.onMouseRelease(e);
+        valueDown.onMouseRelease(e);
+        valueUp.onMouseRelease(e);
     }
 
     @Override
     public void onMouseDragged(MouseEvent e) {
-        volumeDown.onMouseDragged(e);
-        volumeUp.onMouseDragged(e);
+        valueDown.onMouseDragged(e);
+        valueUp.onMouseDragged(e);
     }
 }

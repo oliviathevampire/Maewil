@@ -5,8 +5,6 @@ import coffeecatteam.theultimatetile.gfx.ui.UIButtonControl;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.StateAbstractOptions;
 
-import java.io.IOException;
-
 public class OptionsControls extends StateAbstractOptions {
 
     public OptionsControls(TheUltimateTile theUltimateTileIn) {

@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
-import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;

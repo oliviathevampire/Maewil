@@ -15,22 +15,22 @@ public class AudioMaster {
     private static long context;
 
     public static void init() {
-        device = ALC10.alcOpenDevice((ByteBuffer)null);
-        if(device == 0L){
+        device = ALC10.alcOpenDevice((ByteBuffer) null);
+        if (device == 0L) {
             Logger.print("\n\nUnable to open default audio device");
             return;
         }
 
         ALCCapabilities deviceCaps = ALC.createCapabilities(device);
 
-        if(!deviceCaps.OpenALC10){
+        if (!deviceCaps.OpenALC10) {
             Logger.print("\n\nOpenALC10 Unsupported");
             return;
         }
 
 
-        context = ALC10.alcCreateContext(device, (IntBuffer)null);
-        if(context == 0L){
+        context = ALC10.alcCreateContext(device, (IntBuffer) null);
+        if (context == 0L) {
             Logger.print("\n\nUnable to create ALC Context");
             return;
         }
