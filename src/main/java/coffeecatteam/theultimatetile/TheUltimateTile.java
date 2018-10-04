@@ -160,9 +160,11 @@ public class TheUltimateTile extends Canvas implements Runnable {
     public void run() {
         init();
 
+        // Audio/sound initialized
         AudioMaster.init();
         AudioMaster.setListenerData(0f, 0f, 0f);
 
+        // Background music init
         int buffer = AudioMaster.loadSound("bg_music.wav");
         Source bgMusic = new Source(1f, 1f);
         bgMusic.setLooping(true);
@@ -184,7 +186,10 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
             if (delta >= 1) {
                 tick();
+
+                // Background music volume update
                 bgMusic.setVolume(StateOptions.OPTIONS.getVolumeMusic());
+
                 render();
                 ticks++;
                 delta--;
@@ -197,6 +202,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
             }
         }
 
+        // Cleanup sounds
         bgMusic.delete();
         AudioMaster.cleanUp();
         stop();
