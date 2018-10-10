@@ -18,7 +18,7 @@ public class EntityTree extends EntityStatic {
     private TreeType type;
 
     public EntityTree(TheUltimateTile theUltimateTile, String id, TreeType type) {
-        super(theUltimateTile, id, type.getWidth(), type.getHeight());
+        super(theUltimateTile, id, type.getWidth(), type.getHeight(), EntityHitType.WOOD);
         this.type = type;
 
         bounds.x = 20 + type.getBoundsOffset();

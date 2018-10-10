@@ -30,8 +30,9 @@ public abstract class Entity {
     private int extraDmg = 0;
 
     private String[] dataTags;
+    private EntityHitType entityHitType;
 
-    public Entity(TheUltimateTile theUltimateTile, String id, int width, int height) {
+    public Entity(TheUltimateTile theUltimateTile, String id, int width, int height, EntityHitType entityHitType) {
         this.id = id;
 
         this.width = width;
@@ -42,6 +43,7 @@ public abstract class Entity {
 
         entities.put(id, this);
         entities.get(id).setTheUltimateTile(theUltimateTile);
+        this.entityHitType = entityHitType;
     }
 
     public String[] getDataTags() {
@@ -200,5 +202,17 @@ public abstract class Entity {
     public void setMaxHealth(int maxHealth) {
         this.maxHealth = maxHealth;
         this.currentHealth = this.maxHealth;
+    }
+
+    public EntityHitType getEntityHitType() {
+        return entityHitType;
+    }
+
+    public void setEntityHitType(EntityHitType entityHitType) {
+        this.entityHitType = entityHitType;
+    }
+
+    public enum EntityHitType {
+        CREATURE, WOOD, STONE, BUSH, NONE
     }
 }

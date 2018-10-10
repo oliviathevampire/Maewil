@@ -19,7 +19,7 @@ public class EntityCrop extends EntityStatic {
     private Item drop;
 
     public EntityCrop(TheUltimateTile theUltimateTile, String id, BufferedImage texture, Item drop) {
-        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.BUSH);
         isCollidable = false;
 
         this.texture = texture;

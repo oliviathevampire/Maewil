@@ -27,79 +27,79 @@ public class Tiles {
     public static Tile PLANKS;
     public static Tile BROKEN_STONE;
 
-    public static Tile AIR; // USES EMPPTY SPACE IN TILES SHEET
+    public static Tile AIR; // USES EMPTY SPACE IN TILES SHEET
 
     public static Tile BOOKSHELF;
 
     public static void init(TheUltimateTile theUltimateTile) {
-        GRASS = new Tile(theUltimateTile, Assets.GRASS, 0, false);
-        DIRT = new Tile(theUltimateTile, Assets.DIRT, 1, false);
-        STONE = new TileBreakable(theUltimateTile, Assets.STONE, 2, Items.ROCK);
-        SAND = new Tile(theUltimateTile, Assets.SAND, 3, false);
-        ANDESITE = new Tile(theUltimateTile, Assets.ANDESITE, 4, true);
-        DIORITE = new Tile(theUltimateTile, Assets.DIORITE, 5, true);
+        GRASS = getTile(theUltimateTile, 0);
+        DIRT = getTile(theUltimateTile, 1);
+        STONE = getTile(theUltimateTile, 2);
+        SAND = getTile(theUltimateTile, 3);
+        ANDESITE = getTile(theUltimateTile, 4);
+        DIORITE = getTile(theUltimateTile, 5);
 
-        COAL_ORE = new TileBreakable(theUltimateTile, Assets.COAL_ORE, 6, Items.COAL);
-        IRON_ORE = new TileBreakable(theUltimateTile, Assets.IRON_ORE, 7, Items.IRON_INGOT);
-        GOLD_ORE = new TileBreakable(theUltimateTile, Assets.GOLD_ORE, 8, Items.GOLD_INGOT);
-        DIAMOND_ORE = new TileBreakable(theUltimateTile, Assets.DIAMOND_ORE, 9, Items.DIAMOND);
+        COAL_ORE = getTile(theUltimateTile, 6);
+        IRON_ORE = getTile(theUltimateTile, 7);
+        GOLD_ORE = getTile(theUltimateTile, 8);
+        DIAMOND_ORE = getTile(theUltimateTile, 9);
 
-        OBSIDIAN = new Tile(theUltimateTile, Assets.OBSIDIAN, 10, true);
+        OBSIDIAN = getTile(theUltimateTile, 10);
 
-        WATER = new TileAnimated(theUltimateTile, new Animation(50, Assets.WATER), 11, false);
-        LAVA = new TileAnimated(theUltimateTile, new Animation(50, Assets.LAVA), 12, false);
+        WATER = getTile(theUltimateTile, 11);
+        LAVA = getTile(theUltimateTile, 12);
 
-        PLANKS = new Tile(theUltimateTile, Assets.PLANKS, 13, true);
-        BROKEN_STONE = new Tile(theUltimateTile, Assets.BROKEN_STONE, 14, true);
+        PLANKS = getTile(theUltimateTile, 13);
+        BROKEN_STONE = getTile(theUltimateTile, 14);
 
-        AIR = new Tile(theUltimateTile, Assets.AIR, 15, false); // USES EMPPTY SPACE IN TILES SHEET
+        AIR = getTile(theUltimateTile, 15);
 
-        BOOKSHELF = new Tile(theUltimateTile, Assets.BOOKSHELF, 16, true);
+        BOOKSHELF = getTile(theUltimateTile, 16);
     }
 
     public static Tile getTile(TheUltimateTile theUltimateTile, int id) {
         switch (id) {
             case 0:
-                return new Tile(theUltimateTile, Assets.GRASS, id, false);
+                return new Tile(theUltimateTile, Assets.GRASS, id, false, Tile.TileType.GROUND);
             case 1:
-                return new Tile(theUltimateTile, Assets.DIRT, id, false);
+                return new Tile(theUltimateTile, Assets.DIRT, id, false, Tile.TileType.GROUND);
             case 2:
-                return new TileBreakable(theUltimateTile, Assets.STONE, id, Items.ROCK);
+                return new TileBreakable(theUltimateTile, Assets.STONE, id, Items.ROCK, Tile.TileType.STONE);
             case 3:
-                return new Tile(theUltimateTile, Assets.SAND, id, false);
+                return new Tile(theUltimateTile, Assets.SAND, id, false, Tile.TileType.GROUND);
             case 4:
-                return new Tile(theUltimateTile, Assets.ANDESITE, id, true);
+                return new Tile(theUltimateTile, Assets.ANDESITE, id, true, Tile.TileType.STONE);
             case 5:
-                return new Tile(theUltimateTile, Assets.DIORITE, id, true);
+                return new Tile(theUltimateTile, Assets.DIORITE, id, true, Tile.TileType.STONE);
 
             case 6:
-                return new TileBreakable(theUltimateTile, Assets.COAL_ORE, id, Items.COAL);
+                return new TileBreakable(theUltimateTile, Assets.COAL_ORE, id, Items.COAL, Tile.TileType.STONE);
             case 7:
-                return new TileBreakable(theUltimateTile, Assets.IRON_ORE, id, Items.IRON_INGOT);
+                return new TileBreakable(theUltimateTile, Assets.IRON_ORE, id, Items.IRON_INGOT, Tile.TileType.STONE);
             case 8:
-                return new TileBreakable(theUltimateTile, Assets.GOLD_ORE, id, Items.GOLD_INGOT);
+                return new TileBreakable(theUltimateTile, Assets.GOLD_ORE, id, Items.GOLD_INGOT, Tile.TileType.STONE);
             case 9:
-                return new TileBreakable(theUltimateTile, Assets.DIAMOND_ORE, id, Items.DIAMOND);
+                return new TileBreakable(theUltimateTile, Assets.DIAMOND_ORE, id, Items.DIAMOND, Tile.TileType.STONE);
 
             case 10:
-                return new Tile(theUltimateTile, Assets.OBSIDIAN, id, true);
+                return new Tile(theUltimateTile, Assets.OBSIDIAN, id, true, Tile.TileType.STONE);
 
             case 11:
-                return new TileAnimated(theUltimateTile, new Animation(50, Assets.WATER), id, false);
+                return new TileAnimated(theUltimateTile, new Animation(50, Assets.WATER), id, false, Tile.TileType.FLUID);
             case 12:
-                return new TileAnimated(theUltimateTile, new Animation(50, Assets.LAVA), id, false);
+                return new TileAnimated(theUltimateTile, new Animation(50, Assets.LAVA), id, false, Tile.TileType.FLUID);
 
             case 13:
-                return new Tile(theUltimateTile, Assets.PLANKS, id, true);
+                return new Tile(theUltimateTile, Assets.PLANKS, id, true, Tile.TileType.WOOD);
             case 14:
-                return new Tile(theUltimateTile, Assets.BROKEN_STONE, id, true);
+                return new Tile(theUltimateTile, Assets.BROKEN_STONE, id, true, Tile.TileType.STONE);
 
             case 15:
-                return new Tile(theUltimateTile, Assets.AIR, id, false);
+                return new Tile(theUltimateTile, Assets.AIR, id, false, Tile.TileType.AIR);
 
             case 16:
-                return new Tile(theUltimateTile, Assets.BOOKSHELF, id, true);
+                return new Tile(theUltimateTile, Assets.BOOKSHELF, id, true, Tile.TileType.WOOD);
         }
-        return new Tile(theUltimateTile, Assets.AIR, id, false);
+        return getTile(theUltimateTile, 15);
     }
 }

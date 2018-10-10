@@ -36,7 +36,7 @@ public abstract class EntityCreature extends Entity {
     private List<AI> ais = new ArrayList<>();
 
     public EntityCreature(TheUltimateTile theUltimateTile, String id, int width, int height) {
-        super(theUltimateTile, id, width, height);
+        super(theUltimateTile, id, width, height, EntityHitType.CREATURE);
         init();
         currentAnim = animIdle;
 

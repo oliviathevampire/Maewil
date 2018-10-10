@@ -12,7 +12,7 @@ public class EntityUltimateTile extends EntityStatic {
     private Animation animation;
 
     public EntityUltimateTile(TheUltimateTile theUltimateTile, String id) {
-        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.NONE);
 
         bounds.x = 0;
         bounds.y = height / 2;

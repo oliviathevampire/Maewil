@@ -167,7 +167,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
         init();
 
         // Background music
-        Sound.play(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic(), 0f, 0f, 0f, true);
+        Sound.play(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic(), 0f, 0f, 0f, 1f, true);
 
         int fps = 60;
         double timePerTick = 1000000000 / fps;

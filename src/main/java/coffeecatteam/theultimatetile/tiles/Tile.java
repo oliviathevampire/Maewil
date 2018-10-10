@@ -14,18 +14,19 @@ public class Tile {
     protected final int id;
 
     protected Rectangle bounds;
-
     protected int x, y;
 
     private boolean isSolid;
+    private TileType tileType;
 
-    public Tile(TheUltimateTile theUltimateTile, BufferedImage texture, int id, boolean isSolid) {
+    public Tile(TheUltimateTile theUltimateTile, BufferedImage texture, int id, boolean isSolid, TileType tileType) {
         this.theUltimateTile = theUltimateTile;
         this.texture = texture;
         this.id = id;
 
         bounds = new Rectangle(0, 0, TILE_WIDTH, TILE_HEIGHT);
         this.isSolid = isSolid;
+        this.tileType = tileType;
     }
 
     public void updateBounds() {
@@ -67,5 +68,17 @@ public class Tile {
 
     public Rectangle getBounds() {
         return bounds;
+    }
+
+    public TileType getTileType() {
+        return tileType;
+    }
+
+    public void setTileType(TileType tileType) {
+        this.tileType = tileType;
+    }
+
+    public enum TileType {
+        GROUND, STONE, WOOD, FLUID, AIR
     }
 }

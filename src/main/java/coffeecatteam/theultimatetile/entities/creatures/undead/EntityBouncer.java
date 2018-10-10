@@ -4,9 +4,13 @@ import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.audio.Sound;
 import coffeecatteam.theultimatetile.inventory.items.Items;
+import coffeecatteam.theultimatetile.state.StateOptions;
 
 public class EntityBouncer extends EntityUndead {
+
+    private long lastSoundTimer, soundCooldown = 800, soundTimer = soundCooldown;
 
     public EntityBouncer(TheUltimateTile theUltimateTile, String id) {
         super(theUltimateTile, id);
@@ -25,5 +29,21 @@ public class EntityBouncer extends EntityUndead {
         animDown = new Animation(animUpDownSpeed, Assets.BOUNCER_DOWN);
         animLeft = new Animation(animSpeed, Assets.BOUNCER_LEFT);
         animRight = new Animation(animSpeed, Assets.BOUNCER_RIGHT);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        soundTimer += System.currentTimeMillis() - lastSoundTimer;
+        lastSoundTimer = System.currentTimeMillis();
+        if (soundTimer < soundCooldown)
+            return;
+
+        if (this.xMove > 0 || this.yMove > 0) {
+            Sound.play(Sound.BOUNCE, StateOptions.OPTIONS.getVolumeHostile(), this.x, this.y, 1f);
+        }
+
+        soundTimer = 0;
     }
 }

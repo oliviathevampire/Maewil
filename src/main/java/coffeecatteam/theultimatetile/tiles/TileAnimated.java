@@ -10,8 +10,8 @@ public class TileAnimated extends Tile {
 
     private Animation animation;
 
-    public TileAnimated(TheUltimateTile theUltimateTile, Animation animation, int id, boolean isSolid) {
-        super(theUltimateTile, Assets.WATER[0], id, isSolid);
+    public TileAnimated(TheUltimateTile theUltimateTile, Animation animation, int id, boolean isSolid, TileType tileType) {
+        super(theUltimateTile, Assets.WATER[0], id, isSolid, tileType);
         this.animation = animation;
     }
 

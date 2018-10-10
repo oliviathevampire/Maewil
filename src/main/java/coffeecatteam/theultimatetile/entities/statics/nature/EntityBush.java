@@ -17,7 +17,7 @@ public class EntityBush extends EntityStatic {
     private BufferedImage texture;
 
     public EntityBush(TheUltimateTile theUltimateTile, String id, BufferedImage texture, int width) {
-        super(theUltimateTile, id, width, Entity.DEFAULT_HEIGHT);
+        super(theUltimateTile, id, width, Entity.DEFAULT_HEIGHT, EntityHitType.BUSH);
 
         this.texture = texture;
 
