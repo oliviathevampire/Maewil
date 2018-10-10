@@ -144,6 +144,8 @@ public class World {
         bg_tiles = new Tile[width][height];
         fg_tiles = new Tile[width][height];
 
+        theUltimateTile.getEntityManager().getPlayer().setUsername(worldJsonLoader.getUsername());
+
         int bgid;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
