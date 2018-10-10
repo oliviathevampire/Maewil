@@ -34,15 +34,17 @@ public class EntityBouncer extends EntityUndead {
     @Override
     public void tick() {
         super.tick();
+        moveSound();
+    }
 
+    private void moveSound() {
         soundTimer += System.currentTimeMillis() - lastSoundTimer;
         lastSoundTimer = System.currentTimeMillis();
         if (soundTimer < soundCooldown)
             return;
 
-        if (this.xMove > 0 || this.yMove > 0) {
-            Sound.play(Sound.BOUNCE, StateOptions.OPTIONS.getVolumeHostile(), this.x, this.y, 1f);
-        }
+        if (this.xMove != 0 || this.yMove != 0)
+            Sound.play(Sound.BOUNCE, StateOptions.OPTIONS.getVolumeHostile(), 0, 0, 1f);
 
         soundTimer = 0;
     }
