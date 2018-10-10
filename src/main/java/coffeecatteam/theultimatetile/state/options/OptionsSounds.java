@@ -40,7 +40,17 @@ public class OptionsSounds extends StateAbstractOptions {
             }
         });
 
-        uiManager.addObject(new UISlider(15, 252, "Other") {
+        uiManager.addObject(new UISlider(15, 252, "Player") {
+            @Override
+            public float changeValue(float amt) {
+                StateOptions.OPTIONS.setVolumePlayer(StateOptions.OPTIONS.getVolumePlayer() + amt);
+                if (StateOptions.OPTIONS.getVolumePlayer() < 0f) StateOptions.OPTIONS.setVolumePlayer(0f);
+                if (StateOptions.OPTIONS.getVolumePlayer() > maxValue) StateOptions.OPTIONS.setVolumePlayer(maxValue);
+                return StateOptions.OPTIONS.getVolumePlayer();
+            }
+        });
+
+        uiManager.addObject(new UISlider(15, 331, "Other") {
             @Override
             public float changeValue(float amt) {
                 StateOptions.OPTIONS.setVolumeOther(StateOptions.OPTIONS.getVolumeOther() + amt);

@@ -5,6 +5,8 @@ import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
+import coffeecatteam.theultimatetile.gfx.audio.Sound;
 import coffeecatteam.theultimatetile.inventory.InventoryPlayer;
 import coffeecatteam.theultimatetile.inventory.Slot;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
@@ -88,6 +90,7 @@ public class EntityPlayer extends EntityCreature {
             }
 
             theUltimateTile.getCamera().centerOnEntity(this);
+            AudioMaster.setListenerData(this.x, this.y, 0f);
         }
 
         inventoryPlayer.tick();
@@ -137,8 +140,11 @@ public class EntityPlayer extends EntityCreature {
             if (e.equals(this)) {
                 continue;
             }
+
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
                 e.isInteracted(extraDmg);
+                if (e instanceof EntityCreature)
+                    Sound.play((Utils.getRandomInt(0, 100) > 50 ? Sound.PUNCH_LEFT : Sound.PUNCH_RIGHT), StateOptions.OPTIONS.getVolumePlayer(), e.getX(), e.getY(), 1f);
                 return;
             }
         }

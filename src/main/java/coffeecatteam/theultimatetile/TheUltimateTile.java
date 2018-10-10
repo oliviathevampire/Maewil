@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
-import coffeecatteam.theultimatetile.gfx.audio.Source;
+import coffeecatteam.theultimatetile.gfx.audio.Sound;
 import coffeecatteam.theultimatetile.inventory.items.Items;
 import coffeecatteam.theultimatetile.manager.*;
 import coffeecatteam.theultimatetile.state.State;
@@ -122,6 +122,12 @@ public class TheUltimateTile extends Canvas implements Runnable {
         windowManager = new WindowManager(this);
 
         Items.init();
+
+        // Audio/sound initialized
+        AudioMaster.init();
+        AudioMaster.setListenerData(0f, 0f, 0f);
+
+        Sound.init();
     }
 
     private void tick() {
@@ -160,15 +166,8 @@ public class TheUltimateTile extends Canvas implements Runnable {
     public void run() {
         init();
 
-        // Audio/sound initialized
-        AudioMaster.init();
-        AudioMaster.setListenerData(0f, 0f, 0f);
-
-        // Background music init
-        int buffer = AudioMaster.loadSound("bg_music.wav");
-        Source bgMusic = new Source(1f, 1f);
-        bgMusic.setLooping(true);
-        bgMusic.play(buffer);
+        // Background music
+        Sound.play(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic(), 0f, 0f, 0f, true);
 
         int fps = 60;
         double timePerTick = 1000000000 / fps;
@@ -188,7 +187,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
                 tick();
 
                 // Background music volume update
-                bgMusic.setVolume(StateOptions.OPTIONS.getVolumeMusic());
+                Sound.setVolume(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic());
 
                 render();
                 ticks++;
@@ -203,8 +202,9 @@ public class TheUltimateTile extends Canvas implements Runnable {
         }
 
         // Cleanup sounds
-        bgMusic.delete();
+        Sound.delete();
         AudioMaster.cleanUp();
+
         stop();
 
         Logger.print("Exiting game..");
