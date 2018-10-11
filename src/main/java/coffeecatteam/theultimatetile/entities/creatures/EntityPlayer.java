@@ -17,6 +17,7 @@ import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.tiles.IDamageableTile;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
+import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -31,7 +32,7 @@ public class EntityPlayer extends EntityCreature {
 
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
     private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
-    private long lastWalkSoundTimer, walkSoundCooldown = 1000, walkSoundTimer = walkSoundCooldown;
+    private long lastWalkSoundTimer, walkSoundCooldown = 1100, walkSoundTimer = walkSoundCooldown;
     private boolean isAttacking = false;
 
     private InventoryPlayer inventoryPlayer;
@@ -112,18 +113,23 @@ public class EntityPlayer extends EntityCreature {
         super.move();
 
         int stepSound = -1;
-        switch (theUltimateTile.getWorld().getBGTile((int) x / Tile.TILE_WIDTH, (int) y / Tile.TILE_HEIGHT).getTileType()) {
-            case GROUND:
-                stepSound = Sound.STEP_GROUND;
-                break;
-            case STONE:
-                stepSound = Sound.STEP_STONE;
-                break;
-            case WOOD:
-                stepSound = Sound.STEP_WOOD;
-                break;
-            case FLUID:
-                break;
+        int tileX = (int) (x + 0.5f) / Tile.TILE_WIDTH;
+        int tileY = (int) (y + 0.5f) / Tile.TILE_HEIGHT;
+
+        if (theUltimateTile.getWorld().getFGTile(tileX, tileY).getTileType() == Tile.TileType.AIR) {
+            switch (theUltimateTile.getWorld().getBGTile(tileX, tileY).getTileType()) {
+                case GROUND:
+                    stepSound = Sound.STEP_GROUND;
+                    break;
+                case STONE:
+                    stepSound = Sound.STEP_STONE;
+                    break;
+                case WOOD:
+                    stepSound = Sound.STEP_WOOD;
+                    break;
+            }
+        } else if (theUltimateTile.getWorld().getFGTile(tileX, tileY).getTileType() == Tile.TileType.FLUID) {
+            stepSound = Sound.SPLASH;
         }
 
         if (isMoving()) {
@@ -131,6 +137,7 @@ public class EntityPlayer extends EntityCreature {
             lastWalkSoundTimer = System.currentTimeMillis();
             if (walkSoundTimer < walkSoundCooldown)
                 return;
+
             if (stepSound != -1)
                 Sound.play(stepSound, StateOptions.OPTIONS.getVolumeOther(), this.x, this.y, 0f, (canSprint() ? 1.5f : 1f));
 

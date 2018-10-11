@@ -20,6 +20,8 @@ public class Sound {
     public static int BUSH_LEFT;
     public static int BUSH_RIGHT;
 
+    public static int SPLASH;
+
     public static void init() {
         register(BG_MUSIC = AudioMaster.loadSound("bg_music"));
         register(BOUNCE = AudioMaster.loadSound("bounce"));
@@ -33,6 +35,8 @@ public class Sound {
 
         register(BUSH_LEFT = AudioMaster.loadSound("bush_left"));
         register(BUSH_RIGHT = AudioMaster.loadSound("bush_right"));
+
+        register(SPLASH = AudioMaster.loadSound("splash"));
     }
 
     private static void register(int sound) {
