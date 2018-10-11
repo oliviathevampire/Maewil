@@ -103,4 +103,27 @@ public class Utils {
 
         return to;
     }
+
+    public static String getKeyPressed(TheUltimateTile theUltimateTile) {
+        switch (theUltimateTile.getKeyManager().getCurrentKeyPressedCode()) {
+            case 8:
+                return "BACKSPACE";
+            case 9:
+                return "TAB";
+            case 16:
+                return "SHIFT";
+            case 17:
+                return "CONTROL";
+            case 18:
+                return "ALT";
+            case 20:
+                return "CAPS LOCK";
+            case 27:
+                return "ESCAPE";
+            case 32:
+                return "SPACE";
+            default:
+                return String.valueOf(theUltimateTile.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
+        }
+    }
 }
