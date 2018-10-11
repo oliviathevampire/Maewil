@@ -1,9 +1,10 @@
-package coffeecatteam.theultimatetile.state.options;
+package coffeecatteam.theultimatetile.state.options.controls;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButtonControl;
 import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.utils.Utils;
 
 import javax.swing.*;
 
@@ -29,16 +30,12 @@ public class ControlClickListener implements ClickListener {
     @Override
     public void tick() {
         int newKeyCode = theUltimateTile.getKeyManager().getCurrentKeyPressedCode();
-        String newId = String.valueOf(theUltimateTile.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
+        String newId = Utils.getKeyPressed(theUltimateTile);
         Keybind keybind = StateOptions.OPTIONS.controls().get(jsonId);
 
         if (listening) {
             button.setText("> " + jsonId + " <");
-        } else {
-            button.setText(keybind.getId());
-        }
 
-        if (listening) {
             if (button.getText().contains(">") && button.getText().contains("<")) {
                 button.setText("> " + newId + " <");
             }
@@ -48,6 +45,8 @@ public class ControlClickListener implements ClickListener {
                 theUltimateTile.getKeyManager().setCurrentKeyPressedChar('~');
                 listening = false;
             }
+        } else {
+            button.setText(keybind.getId());
         }
     }
 }

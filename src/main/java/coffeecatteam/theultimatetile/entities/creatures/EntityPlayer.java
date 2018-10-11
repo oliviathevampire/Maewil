@@ -5,16 +5,19 @@ import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
+import coffeecatteam.theultimatetile.gfx.audio.Sound;
 import coffeecatteam.theultimatetile.inventory.InventoryPlayer;
 import coffeecatteam.theultimatetile.inventory.Slot;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.inventory.items.ItemTool;
 import coffeecatteam.theultimatetile.state.StateOptions;
-import coffeecatteam.theultimatetile.state.options.Keybind;
+import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.tiles.IDamageableTile;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
+import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -29,6 +32,7 @@ public class EntityPlayer extends EntityCreature {
 
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
     private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
+    private long lastWalkSoundTimer, walkSoundCooldown = 1100, walkSoundTimer = walkSoundCooldown;
     private boolean isAttacking = false;
 
     private InventoryPlayer inventoryPlayer;
@@ -38,6 +42,8 @@ public class EntityPlayer extends EntityCreature {
     private String username;
 
     public boolean isDead;
+
+    private float prevX, prevY;
 
     public EntityPlayer(TheUltimateTile theUltimateTile, String username) {
         super(theUltimateTile, "player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
@@ -73,6 +79,9 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void tick() {
+        this.prevX = this.x;
+        this.prevY = this.y;
+
         if (isActive()) {
             if (!inventoryPlayer.isActive()) {
                 // Movement
@@ -88,6 +97,7 @@ public class EntityPlayer extends EntityCreature {
             }
 
             theUltimateTile.getCamera().centerOnEntity(this);
+            AudioMaster.setListenerData(this.x, this.y, 0f);
         }
 
         inventoryPlayer.tick();
@@ -96,6 +106,43 @@ public class EntityPlayer extends EntityCreature {
         currentAnim.tick();
         sprintEffect.tick();
         splashEffect.tick();
+    }
+
+    @Override
+    public void move() {
+        super.move();
+
+        int stepSound = -1;
+        int tileX = (int) (x + 0.5f) / Tile.TILE_WIDTH;
+        int tileY = (int) (y + 0.5f) / Tile.TILE_HEIGHT;
+
+        if (theUltimateTile.getWorld().getFGTile(tileX, tileY).getTileType() == Tile.TileType.AIR) {
+            switch (theUltimateTile.getWorld().getBGTile(tileX, tileY).getTileType()) {
+                case GROUND:
+                    stepSound = Sound.STEP_GROUND;
+                    break;
+                case STONE:
+                    stepSound = Sound.STEP_STONE;
+                    break;
+                case WOOD:
+                    stepSound = Sound.STEP_WOOD;
+                    break;
+            }
+        } else if (theUltimateTile.getWorld().getFGTile(tileX, tileY).getTileType() == Tile.TileType.FLUID) {
+            stepSound = Sound.SPLASH;
+        }
+
+        if (isMoving()) {
+            walkSoundTimer += System.currentTimeMillis() - lastWalkSoundTimer;
+            lastWalkSoundTimer = System.currentTimeMillis();
+            if (walkSoundTimer < walkSoundCooldown)
+                return;
+
+            if (stepSound != -1)
+                Sound.play(stepSound, StateOptions.OPTIONS.getVolumeOther(), this.x, this.y, 0f, (canSprint() ? 1.5f : 1f));
+
+            walkSoundTimer = 0;
+        }
     }
 
     private void checkAttacks() {
@@ -137,8 +184,26 @@ public class EntityPlayer extends EntityCreature {
             if (e.equals(this)) {
                 continue;
             }
+
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
                 e.isInteracted(extraDmg);
+                int hitSound = -1;
+                switch (e.getEntityHitType()) {
+                    case CREATURE:
+                        hitSound = (Utils.getRandomInt(0, 10) > 5 ? Sound.PUNCH_LEFT : Sound.PUNCH_RIGHT);
+                        break;
+                    case WOOD:
+                        hitSound = Sound.STEP_WOOD;
+                        break;
+                    case STONE:
+                        hitSound = Sound.STEP_STONE;
+                        break;
+                    case BUSH:
+                        hitSound = (Utils.getRandomInt(0, 10) > 5 ? Sound.BUSH_LEFT : Sound.BUSH_RIGHT);
+                        break;
+                }
+                if (hitSound != -1)
+                    Sound.play(hitSound, StateOptions.OPTIONS.getVolumePlayer(), e.getX(), e.getY(), 1f);
                 return;
             }
         }
@@ -346,6 +411,10 @@ public class EntityPlayer extends EntityCreature {
 
     public void setLvl(int lvl) {
         this.lvl = lvl;
+    }
+
+    public boolean isMoving() {
+        return (this.xMove != 0 || this.yMove != 0) && (this.prevX != this.x || this.prevY != this.y);
     }
 
     public void reset() {

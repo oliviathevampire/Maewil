@@ -17,7 +17,7 @@ public class EntityRock extends EntityStatic {
     private BufferedImage texture;
 
     public EntityRock(TheUltimateTile theUltimateTile, String id, BufferedImage texture) {
-        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.STONE);
         this.texture = texture;
 
         bounds.x = 0;

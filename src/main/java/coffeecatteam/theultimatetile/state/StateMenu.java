@@ -6,12 +6,9 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
-import coffeecatteam.theultimatetile.state.game.StateGame;
-import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 import java.net.URI;
-import java.util.List;
 
 public class StateMenu extends State {
 
@@ -52,8 +49,7 @@ public class StateMenu extends State {
         uiManager.addObject(new UIButton(theUltimateTile.getWidth() / 2 - quitBtnWidth / 2, theUltimateTile.getHeight() / 2 - quitBtnHeight / 2 + quitBtnHeight + 120 + yOff, quitBtnWidth, quitBtnHeight, "Quit", new ClickListener() {
             @Override
             public void onClick() {
-                Logger.print("Exiting...");
-                System.exit(0);
+                theUltimateTile.setRunning(false);
             }
 
             @Override
@@ -97,6 +93,6 @@ public class StateMenu extends State {
 
         int w = 80 * 6;
         int h = 48 * 6;
-        g.drawImage(Assets.TITLE, w / 6, 20, w, h, null);
+        g.drawImage(Assets.TITLE, theUltimateTile.getWidth() / 2 - w / 2, 20, w, h, null);
     }
 }

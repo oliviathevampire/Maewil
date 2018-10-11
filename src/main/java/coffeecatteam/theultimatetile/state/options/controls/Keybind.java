@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.state.options;
+package coffeecatteam.theultimatetile.state.options.controls;
 
 public class Keybind {
 

@@ -48,6 +48,7 @@ public class UIButton extends UIObject {
             this.currentTexture = Assets.BUTTON_DISABLED;
 
         listener.tick();
+        bounds = new Rectangle((int) x, (int) y, width, height);
     }
 
     @Override
@@ -105,6 +106,10 @@ public class UIButton extends UIObject {
     public void onMouseRelease(MouseEvent e) {
         if (this.hovering && e.getButton() == MouseEvent.BUTTON1)
             onClick();
+    }
+
+    @Override
+    public void onMouseDragged(MouseEvent e) {
     }
 
     public void setListener(ClickListener listener) {

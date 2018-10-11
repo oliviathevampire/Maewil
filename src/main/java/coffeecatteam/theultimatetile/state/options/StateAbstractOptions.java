@@ -5,7 +5,6 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
-import coffeecatteam.theultimatetile.gfx.ui.UIButtonControl;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateOptions;
@@ -14,11 +13,10 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 
-public class OptionsControls extends State {
+public abstract class StateAbstractOptions extends State {
 
-    public OptionsControls(TheUltimateTile theUltimateTileIn) {
+    public StateAbstractOptions(TheUltimateTile theUltimateTileIn) {
         super(theUltimateTileIn);
-        initControlsButtons();
 
         int exBtnWidth = 3 * 64;
         int exBtnHeight = 64;
@@ -60,27 +58,6 @@ public class OptionsControls extends State {
             public void tick() {
             }
         }));
-    }
-
-    private void initControlsButtons() {
-        int conBtnWidth = 3 * 64;
-        int conBtnHeight = 64;
-
-        int xOff = conBtnWidth + 10;
-        int yOff = conBtnHeight + 10;
-
-        int x = 0, y = 0;
-        for (String jsonId : StateOptions.OPTIONS.controls().keySet()) {
-            UIButtonControl button = new UIButtonControl(15 + xOff * x, 15 + yOff * y, conBtnWidth, conBtnHeight, StateOptions.OPTIONS.controls().get(jsonId), null);
-            button.setListener(new ControlClickListener(theUltimateTile, button, jsonId));
-            uiManager.addObject(button);
-
-            x++;
-            if (x > 2) {
-                x = 0;
-                y++;
-            }
-        }
     }
 
     @Override

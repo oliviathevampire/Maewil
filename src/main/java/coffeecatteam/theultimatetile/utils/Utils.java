@@ -1,5 +1,7 @@
 package coffeecatteam.theultimatetile.utils;
 
+import coffeecatteam.theultimatetile.TheUltimateTile;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -30,7 +32,7 @@ public class Utils {
             return Font.createFont(Font.TRUETYPE_FONT, Utils.class.getResourceAsStream(path)).deriveFont(Font.PLAIN, size);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
-            System.exit(1);
+            TheUltimateTile.getTheUltimateTile().setRunning(false);
         }
         return null;
     }
@@ -100,5 +102,28 @@ public class Utils {
         float to = toAbs + toMin;
 
         return to;
+    }
+
+    public static String getKeyPressed(TheUltimateTile theUltimateTile) {
+        switch (theUltimateTile.getKeyManager().getCurrentKeyPressedCode()) {
+            case 8:
+                return "BACKSPACE";
+            case 9:
+                return "TAB";
+            case 16:
+                return "SHIFT";
+            case 17:
+                return "CONTROL";
+            case 18:
+                return "ALT";
+            case 20:
+                return "CAPS LOCK";
+            case 27:
+                return "ESCAPE";
+            case 32:
+                return "SPACE";
+            default:
+                return String.valueOf(theUltimateTile.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
+        }
     }
 }

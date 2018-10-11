@@ -1,12 +1,12 @@
 package coffeecatteam.theultimatetile.world;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.TileBreakable;
 import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -143,6 +143,8 @@ public class World {
         int[][] fg_tile_ids = worldJsonLoader.getFg_tiles().clone();
         bg_tiles = new Tile[width][height];
         fg_tiles = new Tile[width][height];
+
+        theUltimateTile.getEntityManager().getPlayer().setUsername(worldJsonLoader.getUsername());
 
         int bgid;
         for (int y = 0; y < height; y++) {

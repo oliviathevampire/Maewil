@@ -1,8 +1,6 @@
 package coffeecatteam.theultimatetile.jsonparsers.world;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
-import coffeecatteam.theultimatetile.entities.Entity;
-import coffeecatteam.theultimatetile.inventory.Slot;
 import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.jsonparsers.iinterface.IJSONLoader;
@@ -227,7 +225,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
         int hotbarIndex = 12;
         for (int i = 0; i < hotbar.length; i++) {
-            theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(hotbarIndex).setStack(hotbar[hotbarIndex-12]);
+            theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(hotbarIndex).setStack(hotbar[hotbarIndex - 12]);
             hotbarIndex++;
             if (hotbarIndex >= hotbar.length + 12)
                 break;
@@ -291,9 +289,9 @@ public class WorldJsonLoader implements IJSONLoader {
 
     public static void copyFiles(String dest) {
         String ogWorld = "/assets/worlds/starter/world_01";
-        String[] files = { "world", "objects", "player_info" };
+        String[] files = {"world", "objects", "player_info"};
         for (String file : files) {
-            copy(StateSelectGame.class.getResourceAsStream(ogWorld + "/"+ file + ".json"), dest + "/"+ file + ".json");
+            copy(StateSelectGame.class.getResourceAsStream(ogWorld + "/" + file + ".json"), dest + "/" + file + ".json");
         }
     }
 

@@ -14,7 +14,7 @@ public class EntityShopStall extends EntityStatic {
     private Animation ROOF;
 
     public EntityShopStall(TheUltimateTile theUltimateTile, String id) {
-        super(theUltimateTile, id, Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2);
+        super(theUltimateTile, id, Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, EntityHitType.WOOD);
 
         bounds = new Rectangle(0, height / 2 + height / 3, width, height / 12);
         ROOF = pickRoof();

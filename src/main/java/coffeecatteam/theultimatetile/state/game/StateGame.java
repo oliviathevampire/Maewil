@@ -4,15 +4,14 @@ import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
+import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;
 import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateOptions;
-import coffeecatteam.theultimatetile.state.options.Keybind;
+import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
-import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.world.World;
-import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;
 
 import java.awt.*;
 import java.io.IOException;
@@ -69,8 +68,7 @@ public class StateGame extends State {
         UIButton btnQuit = new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", new ClickListener() {
             @Override
             public void onClick() {
-                Logger.print("Exiting...");
-                System.exit(0);
+                theUltimateTile.setRunning(false);
             }
 
             @Override
@@ -140,7 +138,7 @@ public class StateGame extends State {
 
                 int w = 80 * 6;
                 int h = 48 * 6;
-                g.drawImage(Assets.TITLE, w / 6, 30, w, h, null);
+                g.drawImage(Assets.TITLE, theUltimateTile.getWidth() / 2 - w / 2, 30, w, h, null);
 
                 uiManagerPaused.render(g);
             }

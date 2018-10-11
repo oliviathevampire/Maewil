@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
-import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -21,7 +20,7 @@ public class WindowManager implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        Logger.print("Exiting...");
+        theUltimateTile.setRunning(false);
     }
 
     @Override

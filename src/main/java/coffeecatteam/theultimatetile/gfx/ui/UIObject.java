@@ -27,6 +27,8 @@ public abstract class UIObject {
 
     public abstract void onMouseRelease(MouseEvent e);
 
+    public abstract void onMouseDragged(MouseEvent e);
+
     public float getX() {
         return x;
     }

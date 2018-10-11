@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
-import coffeecatteam.theultimatetile.state.options.Keybind;
+import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 
 public class UIButtonControl extends UIButton {
 

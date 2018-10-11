@@ -21,6 +21,7 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
     protected TheUltimateTile theUltimateTile;
 
     public static List<String> GAMES = new ArrayList<>();
+
     static {
         GAMES.add("false");
         GAMES.add("false");

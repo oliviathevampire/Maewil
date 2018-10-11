@@ -4,13 +4,16 @@ import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
+import coffeecatteam.theultimatetile.gfx.audio.Sound;
 import coffeecatteam.theultimatetile.inventory.items.Items;
 import coffeecatteam.theultimatetile.manager.*;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateMenu;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.game.StateSelectGame;
-import coffeecatteam.theultimatetile.state.options.OptionsControls;
+import coffeecatteam.theultimatetile.state.options.OptionsSounds;
+import coffeecatteam.theultimatetile.state.options.controls.OptionsControls;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 import coffeecatteam.theultimatetile.world.World;
@@ -40,7 +43,10 @@ public class TheUltimateTile extends Canvas implements Runnable {
     public StateMenu stateMenu;
     public StateSelectGame stateSelectGame;
     public StateOptions stateOptions;
+
+    // Option states
     public OptionsControls optionsControls;
+    public OptionsSounds optionsSpounds;
 
     private KeyManager keyManager;
     private MouseManager mouseManager;
@@ -96,6 +102,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
         frame.addMouseMotionListener(mouseManager);
         this.addMouseListener(mouseManager);
         this.addMouseMotionListener(mouseManager);
+        frame.addWindowListener(windowManager);
 
         camera = new Camera(this, 0, 0);
 
@@ -106,6 +113,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
         stateSelectGame = new StateSelectGame(this);
         stateOptions = new StateOptions(this);
         optionsControls = new OptionsControls(this);
+        optionsSpounds = new OptionsSounds(this);
         State.setState(stateMenu);
 
         entityManager = new EntityManager(this, new EntityPlayer(this, username));
@@ -114,6 +122,12 @@ public class TheUltimateTile extends Canvas implements Runnable {
         windowManager = new WindowManager(this);
 
         Items.init();
+
+        // Audio/sound initialized
+        AudioMaster.init();
+        AudioMaster.setListenerData(0f, 0f, 0f);
+
+        Sound.init();
     }
 
     private void tick() {
@@ -152,6 +166,9 @@ public class TheUltimateTile extends Canvas implements Runnable {
     public void run() {
         init();
 
+        // Background music
+        Sound.play(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic(), 0f, 0f, 0f, 1f, true);
+
         int fps = 60;
         double timePerTick = 1000000000 / fps;
         double delta = 0;
@@ -168,6 +185,10 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
             if (delta >= 1) {
                 tick();
+
+                // Background music volume update
+                Sound.setVolume(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic());
+
                 render();
                 ticks++;
                 delta--;
@@ -180,13 +201,21 @@ public class TheUltimateTile extends Canvas implements Runnable {
             }
         }
 
+        // Cleanup sounds
+        Sound.delete();
+        AudioMaster.cleanUp();
+
         stop();
+
+        Logger.print("Exiting game..");
+        System.exit(0);
     }
 
     public synchronized void start() {
         if (running)
             return;
         running = true;
+
 
         thread = new Thread(this);
         thread.setName("Thread-" + title.replace(" ", "_"));
@@ -197,6 +226,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
         if (!running)
             return;
         running = false;
+
         try {
             thread.join();
         } catch (InterruptedException e) {
@@ -275,6 +305,10 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
     public void setWorld(World world) {
         this.world = world;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
     /*
