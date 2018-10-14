@@ -30,6 +30,7 @@ public class WorldJsonSaver implements IJSONSaver {
 
     @Override
     public void save() throws IOException {
+        Logger.print("\nSaving current world!");
         saveWorld(path, world);
         saveObjects(path);
         savePlayerInfo(path);

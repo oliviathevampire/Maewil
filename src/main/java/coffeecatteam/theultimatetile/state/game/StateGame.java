@@ -68,6 +68,7 @@ public class StateGame extends State {
         UIButton btnQuit = new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", new ClickListener() {
             @Override
             public void onClick() {
+                saveWorld();
                 theUltimateTile.setRunning(false);
             }
 
@@ -94,12 +95,7 @@ public class StateGame extends State {
     public void tick() {
         if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !theUltimateTile.getEntityManager().getPlayer().isDead) {
             paused = !paused && !theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isActive();
-            WorldJsonSaver saver = new WorldJsonSaver("./saves/" + worldName, world, theUltimateTile);
-            try {
-                saver.save();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            saveWorld();
         }
 
         if (paused)
@@ -142,6 +138,15 @@ public class StateGame extends State {
 
                 uiManagerPaused.render(g);
             }
+        }
+    }
+
+    public void saveWorld() {
+        WorldJsonSaver saver = new WorldJsonSaver("./saves/" + worldName, world, theUltimateTile);
+        try {
+            saver.save();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
