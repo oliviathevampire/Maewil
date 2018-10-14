@@ -54,9 +54,7 @@ public class AudioMaster {
     }
 
     public static void cleanUp() {
-        buffers.forEach(buffer -> {
-            AL10.alDeleteBuffers(buffer);
-        });
+        buffers.forEach(AL10::alDeleteBuffers);
         ALC10.alcDestroyContext(context);
         ALC10.alcCloseDevice(device);
     }
