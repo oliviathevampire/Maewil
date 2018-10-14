@@ -296,17 +296,11 @@ public class EntityPlayer extends EntityCreature {
     }
 
     private boolean inWater() {
-        int x = (int) this.x / Tile.TILE_WIDTH;
-        int y = (int) this.y / Tile.TILE_HEIGHT;
-        Tile t = theUltimateTile.getWorld().getFGTile(x, y);
-        if (t.getId() == Tiles.WATER.getId()) {
-            float nx = x + Tile.TILE_WIDTH / 2;
-            float ny = y + Tile.TILE_HEIGHT / 2;
-            if (t.getBounds().contains(nx, ny))
-                return true;
-        }
+        float x = (this.x + width / 2) / Tile.TILE_WIDTH;
+        float y = (this.y + height / 2) / Tile.TILE_HEIGHT;
+        Tile t = theUltimateTile.getWorld().getFGTile((int) x, (int) y);
 
-        return false;
+        return (t.getId() == Tiles.WATER.getId() && t.getBounds().contains(x, y));
     }
 
     private void tileInteract() {
