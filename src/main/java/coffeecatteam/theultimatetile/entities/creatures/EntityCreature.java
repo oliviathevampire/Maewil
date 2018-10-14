@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.tiles.Tile;
+import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
@@ -19,6 +20,8 @@ import java.util.Random;
 public abstract class EntityCreature extends Entity {
 
     public static final float DEFAULT_SPEED = 3.0f;
+    public static final float DEFAULT_WATER_SPEED = 1f, DEFAULT_IN_WATER_SPEED = 0.6f;
+    protected float waterSpeed = DEFAULT_WATER_SPEED;
 
     /* Animations - 500 = 0.5 second */
     protected Animation animIdle, animUp, animDown, animLeft, animRight;
@@ -27,17 +30,21 @@ public abstract class EntityCreature extends Entity {
     protected int animUpDownSpeed = animSpeed + 115;
 
     private SpriteSheet HEALTH_BAR = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health_bar.png"));
+    private Animation splashEffect;
 
     protected Item drop = null;
 
     protected float speed;
     protected float xMove, yMove;
 
-    private List<AI> ais = new ArrayList<>();
+    protected int renderX, renderY;
+
+    protected List<AI> ais = new ArrayList<>();
 
     public EntityCreature(TheUltimateTile theUltimateTile, String id, int width, int height) {
         super(theUltimateTile, id, width, height, EntityHitType.CREATURE);
         init();
+        splashEffect = new Animation(50, Assets.SPLASH_EFFECT);
         currentAnim = animIdle;
 
         speed = DEFAULT_SPEED;
@@ -50,10 +57,14 @@ public abstract class EntityCreature extends Entity {
     @Override
     public void tickA() {
         super.tickA();
+        renderX = (int) (this.x - theUltimateTile.getCamera().getxOffset());
+        renderY = (int) (this.y - theUltimateTile.getCamera().getyOffset());
+
         ais.forEach(AI::tick);
 
         // Animation
         currentAnim.tick();
+        splashEffect.tick();
         updateAnim();
     }
 
@@ -74,20 +85,25 @@ public abstract class EntityCreature extends Entity {
 
     @Override
     public void render(Graphics g) {
-        int x = (int) (this.x - theUltimateTile.getCamera().getxOffset());
-        int y = (int) (this.y - theUltimateTile.getCamera().getyOffset());
-        g.drawImage(currentAnim.getCurrentFrame(), x, y, width, height, null);
+        g.drawImage(currentAnim.getCurrentFrame(), renderX, renderY, width, height, null);
+
+        this.renderEffect(g);
 
         int barWidth = 16;
-        g.drawImage(HEALTH_BAR.crop(0, 9, barWidth, 2), x, y - 8, width, 4, null);
+        g.drawImage(HEALTH_BAR.crop(0, 9, barWidth, 2), renderX, renderY - 8, width, 4, null);
 
         int ht = (int) Utils.map(currentHealth, 0, maxHealth, 0, width); // (currentHealth * 100.0f) / 15
-        g.drawImage(HEALTH_BAR.crop(0, 5, barWidth, 2), x, y - 8, ht, 4, null);
+        g.drawImage(HEALTH_BAR.crop(0, 5, barWidth, 2), renderX, renderY - 8, ht, 4, null);
 
         Font font = Assets.FONT_20;
         String textHealth = "HP: " + currentHealth;
         int xOff = Text.getWidth(g, textHealth, font) / 2 - width / 2;
-        Text.drawString(g, textHealth, x - xOff, y - Text.getHeight(g, font) / 2, false, false, new Color(0, 255, 0), font);
+        Text.drawString(g, textHealth, renderX - xOff, renderY - Text.getHeight(g, font) / 2, false, false, new Color(0, 255, 0), font);
+    }
+
+    public void renderEffect(Graphics g) {
+        if (inWater())
+            g.drawImage(splashEffect.getCurrentFrame(), renderX, renderY, width, height, null);
     }
 
     @Override
@@ -100,11 +116,20 @@ public abstract class EntityCreature extends Entity {
         }
     }
 
-    protected void addAI(AI ai) {
-        ais.add(ai);
+    public boolean inWater() {
+        float x = (this.x + width / 2) / Tile.TILE_WIDTH;
+        float y = (this.y + height / 2 + height / 4) / Tile.TILE_HEIGHT;
+        Tile t = theUltimateTile.getWorld().getFGTile((int) x, (int) y);
+
+        return (t.getId() == Tiles.WATER.getId() && t.getBounds().contains(x, y));
     }
 
     public void move() {
+        if (this.inWater())
+            waterSpeed = DEFAULT_IN_WATER_SPEED;
+        else
+            waterSpeed = DEFAULT_WATER_SPEED;
+
         if (!checkEntityCollisions(xMove, 0.0f))
             moveX();
         if (!checkEntityCollisions(0.0f, yMove))
@@ -112,6 +137,9 @@ public abstract class EntityCreature extends Entity {
     }
 
     public void moveX() {
+        if (xMove != 0)
+            xMove *= waterSpeed;
+
         if (xMove > 0) {
             int tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILE_WIDTH;
 
@@ -130,6 +158,9 @@ public abstract class EntityCreature extends Entity {
     }
 
     public void moveY() {
+        if (yMove != 0)
+            yMove *= waterSpeed;
+
         if (yMove < 0) {
             int ty = (int) (y + yMove + bounds.y) / Tile.TILE_HEIGHT;
 

@@ -16,8 +16,6 @@ import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.tiles.IDamageableTile;
 import coffeecatteam.theultimatetile.tiles.Tile;
-import coffeecatteam.theultimatetile.tiles.Tiles;
-import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -28,7 +26,6 @@ public class EntityPlayer extends EntityCreature {
     private Animation animDead;
 
     private Animation sprintEffect;
-    private Animation splashEffect;
 
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
     private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
@@ -72,9 +69,7 @@ public class EntityPlayer extends EntityCreature {
 
         currentAnim = animIdle;
 
-        int effectSpeed = 50;
-        sprintEffect = new Animation(effectSpeed, Assets.SPRINT_EFFECT);
-        splashEffect = new Animation(effectSpeed, Assets.SPLASH_EFFECT);
+        sprintEffect = new Animation(50, Assets.SPRINT_EFFECT);
     }
 
     @Override
@@ -105,7 +100,6 @@ public class EntityPlayer extends EntityCreature {
         // Animation
         currentAnim.tick();
         sprintEffect.tick();
-        splashEffect.tick();
     }
 
     @Override
@@ -256,9 +250,7 @@ public class EntityPlayer extends EntityCreature {
         xMove = 0;
         yMove = 0;
 
-        if (inWater())
-            speed = EntityCreature.DEFAULT_SPEED * 0.65f;
-        else {
+        if (!inWater()) {
             if (sprintTimer <= 0)
                 sprintStartOver -= 0.25f;
             if (sprintStartOver <= 0) {
@@ -295,14 +287,6 @@ public class EntityPlayer extends EntityCreature {
             currentAnim = animIdle;
     }
 
-    private boolean inWater() {
-        float x = (this.x + width / 2) / Tile.TILE_WIDTH;
-        float y = (this.y + height / 2) / Tile.TILE_HEIGHT;
-        Tile t = theUltimateTile.getWorld().getFGTile((int) x, (int) y);
-
-        return (t.getId() == Tiles.WATER.getId() && t.getBounds().contains(x, y));
-    }
-
     private void tileInteract() {
         int x = (int) this.x / Tile.TILE_WIDTH;
         int y = (int) this.y / Tile.TILE_HEIGHT;
@@ -324,14 +308,9 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void render(Graphics g) {
-        int x = (int) (this.x - theUltimateTile.getCamera().getxOffset());
-        int y = (int) (this.y - theUltimateTile.getCamera().getyOffset());
-        g.drawImage(currentAnim.getCurrentFrame(), x, y, width, height, null);
-        if (canSprint())
-            g.drawImage(sprintEffect.getCurrentFrame(), x, y, width, height, null);
+        g.drawImage(currentAnim.getCurrentFrame(), renderX, renderY, width, height, null);
 
-        if (inWater())
-            g.drawImage(splashEffect.getCurrentFrame(), x, y, width, height, null);
+        this.renderEffect(g);
 
         Font font = Assets.FONT_20;
         int nameWidth = Text.getWidth(g, username, font);
@@ -343,8 +322,16 @@ public class EntityPlayer extends EntityCreature {
         int xOff = nameWidth / 2 - width / 2;
         int yOff = height / 2;
 
-        g.fillRect(x - xOff - add / 2, y - yOff - add / 2, nameWidth + add, nameHeight + add);
-        Text.drawString(g, username, x - xOff, y - yOff + nameHeight - add / 2, false, false, Color.white, font);
+        g.fillRect(renderX - xOff - add / 2, renderY - yOff - add / 2, nameWidth + add, nameHeight + add);
+        Text.drawString(g, username, renderX - xOff, renderY - yOff + nameHeight - add / 2, false, false, Color.white, font);
+    }
+
+    @Override
+    public void renderEffect(Graphics g) {
+        super.renderEffect(g);
+
+        if (canSprint())
+            g.drawImage(sprintEffect.getCurrentFrame(), renderX, renderY, width, height, null);
     }
 
     public void postRender(Graphics g) {
