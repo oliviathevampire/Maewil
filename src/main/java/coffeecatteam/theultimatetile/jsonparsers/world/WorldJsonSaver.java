@@ -77,11 +77,11 @@ public class WorldJsonSaver implements IJSONSaver {
     }
 
     public void saveObjects(String path) throws IOException {
-        JSONObject jsonObject = new JSONObject();
-
         /*
          * Entities
          */
+        JSONObject jsonObjectEntities = new JSONObject();
+
         JSONObject entities = new JSONObject();
         int entAmt = 0;
         for (Entity entity : theUltimateTile.getEntityManager().getEntities())
@@ -122,12 +122,18 @@ public class WorldJsonSaver implements IJSONSaver {
                 Logger.print("World [" + path + "] creature entities saved!");
             }
         }
-        jsonObject.put("entities", entities);
+        jsonObjectEntities.put("entities", entities);
         Logger.print("World [" + path + "] entities saved!");
+
+        FileWriter fileEntities = new FileWriter(path + "/entities.json");
+        fileEntities.write(jsonObjectEntities.toJSONString());
+        fileEntities.flush();
 
         /*
          * Items
          */
+        JSONObject jsonObjectItems = new JSONObject();
+
         JSONArray items = new JSONArray();
         for (ItemStack stack : theUltimateTile.getItemManager().getItems()) {
             JSONObject itemObj = new JSONObject();
@@ -143,12 +149,12 @@ public class WorldJsonSaver implements IJSONSaver {
             }
             items.add(itemObj);
         }
-        jsonObject.put("items", items);
+        jsonObjectItems.put("items", items);
         Logger.print("World [" + path + "] items saved!");
 
-        FileWriter file = new FileWriter(path + "/objects.json");
-        file.write(jsonObject.toJSONString());
-        file.flush();
+        FileWriter fileItems = new FileWriter(path + "/items.json");
+        fileItems.write(jsonObjectItems.toJSONString());
+        fileItems.flush();
     }
 
     public void savePlayerInfo(String path) throws IOException {

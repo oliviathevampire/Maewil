@@ -96,13 +96,14 @@ public class WorldJsonLoader implements IJSONLoader {
 
     public void loadObjects() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/objects.json"));
 
         /*
          * Entities
          */
-        if (jsonObject.containsKey("entities")) {
-            JSONObject entities = (JSONObject) jsonObject.get("entities");
+        JSONObject jsonObjectEntities = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/entities.json"));
+
+        if (jsonObjectEntities.containsKey("entities")) {
+            JSONObject entities = (JSONObject) jsonObjectEntities.get("entities");
 
             if (entities.containsKey("statics")) {
                 JSONArray statics = (JSONArray) entities.get("statics");
@@ -127,8 +128,10 @@ public class WorldJsonLoader implements IJSONLoader {
         /*
          * Items
          */
-        if (jsonObject.containsKey("items")) {
-            JSONArray items = (JSONArray) jsonObject.get("items");
+        JSONObject jsonObjectItems = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/items.json"));
+
+        if (jsonObjectItems.containsKey("items")) {
+            JSONArray items = (JSONArray) jsonObjectItems.get("items");
             for (Object item1 : items) {
                 JSONObject itemObj = (JSONObject) item1;
                 String id = (String) itemObj.get("id");
@@ -289,10 +292,9 @@ public class WorldJsonLoader implements IJSONLoader {
 
     public static void copyFiles(String dest) {
         String ogWorld = "/assets/worlds/starter/world_01";
-        String[] files = {"world", "objects", "player_info"};
-        for (String file : files) {
+        String[] files = {"world", "entities", "items", "player_info"};
+        for (String file : files)
             copy(StateSelectGame.class.getResourceAsStream(ogWorld + "/" + file + ".json"), dest + "/" + file + ".json");
-        }
     }
 
 

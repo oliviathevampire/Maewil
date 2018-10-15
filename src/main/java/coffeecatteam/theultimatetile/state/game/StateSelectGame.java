@@ -102,7 +102,7 @@ public class StateSelectGame extends StateAbstractMenu {
             boolean isSaved = Boolean.valueOf(SavedGamesJSONParser.GAMES.get(index).split(":")[0]);
 
             String worldName;
-            if (!isSaved) { // (new File(fileName + "/world.json").exists()) || !(new File(fileName + "/objects.json").exists())
+            if (!isSaved) { // (new File(fileName + "/world.json").exists()) || !(new File(fileName + "/items.json").exists())
                 worldName = getWorldname("New World");
                 path = savesPath + worldName;
                 new File(path).mkdir();
