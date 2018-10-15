@@ -34,6 +34,9 @@ public class Items {
     public static Item COOKED_PORK = new ItemFood(Assets.ITEM_COOKED_PORK, "cooked_pork", 4);
     public static Item RAW_STEAK = new ItemFood(Assets.ITEM_RAW_STEAK, "raw_steak", 3);
     public static Item COOKED_STEAK = new ItemFood(Assets.ITEM_COOKED_STEAK, "cooked_steak", 6);
+    public static Item POTATO = new ItemFood(Assets.ITEM_POTATO, "potato", 4);
+    public static Item TOMATO = new ItemFood(Assets.ITEM_TOMATO, "tomato", 4);
+    public static Item CORN = new ItemFood(Assets.ITEM_CORN, "corn", 5);
 
     public static Item WOOL_BUNDLE = new Item(Assets.ITEM_WOOL_BUNDLE, "wool_bundle");
 
@@ -55,7 +58,7 @@ public class Items {
 
         registerItem(COAL, IRON_INGOT, GOLD_INGOT, DIAMOND);
 
-        registerItem(CARROT, WHEAT, BREAD, APPLE);
+        registerItem(CARROT, WHEAT, BREAD, APPLE, POTATO, TOMATO, CORN);
         registerItem(RAW_PORK, COOKED_PORK, RAW_STEAK, COOKED_STEAK);
         registerItem(WOOL_BUNDLE);
 

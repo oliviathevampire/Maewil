@@ -198,16 +198,30 @@
         ]
       },
       {
-        "id": "crop_carrot",
+        "id": "crop_wheat",
         "pos": [
           "2f",
           "7f"
         ]
       },
       {
-        "id": "crop_wheat",
+        "id": "crop_potato",
         "pos": [
           "1f",
+          "8f"
+        ]
+      },
+      {
+        "id": "crop_tomato",
+        "pos": [
+          "2f",
+          "8f"
+        ]
+      },
+      {
+        "id": "crop_corn",
+        "pos": [
+          "3f",
           "8f"
         ]
       },

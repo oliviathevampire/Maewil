@@ -38,7 +38,7 @@ public class Assets {
 
     public static BufferedImage ITEM_COAL, ITEM_IRON_INGOT, ITEM_GOLD_INGOT, ITEM_DIAMOND;
 
-    public static BufferedImage ITEM_CARROT, ITEM_APPLE, ITEM_RAW_PORK, ITEM_COOKED_PORK, ITEM_BREAD, ITEM_WHEAT, ITEM_RAW_STEAK, ITEM_COOKED_STEAK, ITEM_WOOL_BUNDLE;
+    public static BufferedImage ITEM_CARROT, ITEM_APPLE, ITEM_RAW_PORK, ITEM_COOKED_PORK, ITEM_BREAD, ITEM_WHEAT, ITEM_RAW_STEAK, ITEM_COOKED_STEAK, ITEM_WOOL_BUNDLE, ITEM_POTATO, ITEM_TOMATO, ITEM_CORN;
 
     public static BufferedImage ITEM_COIN_PENNY, ITEM_COIN_IRON, ITEM_COIN_GOLD;
 
@@ -71,7 +71,7 @@ public class Assets {
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
     public static BufferedImage ROCK_V1, ROCK_V2;
     public static BufferedImage BUSH_SMALL, BUSH_LARGE;
-    public static BufferedImage CROP_GROUND, CROP_CARROT, CROP_WHEAT;
+    public static BufferedImage CROP_GROUND, CROP_CARROT, CROP_WHEAT, CROP_POTATO, CROP_TOMATO, CROP_CORN;
 
     public static BufferedImage SHOP_STALL;
     public static BufferedImage[] SHOP_ROOF_ORANGE, SHOP_ROOF_BLUE, SHOP_ROOF_RED, SHOP_ROOF_GREY;
@@ -179,6 +179,9 @@ public class Assets {
         ITEM_RAW_STEAK = getSpriteInd(itemsSheet, 4, 0, width, height);
         ITEM_COOKED_STEAK = getSpriteInd(itemsSheet, 4, 1, width, height);
         ITEM_WOOL_BUNDLE = getSpriteInd(itemsSheet, 1, 3, width, height);
+        ITEM_POTATO = getSpriteInd(itemsSheet, 4, 2, width, height);
+        ITEM_TOMATO = getSpriteInd(itemsSheet, 3, 6, width, height);
+        ITEM_CORN = getSpriteInd(itemsSheet, 3, 7, width, height);
 
         ITEM_COIN_PENNY = getSpriteInd(itemsSheet, 5, 0, width, height);
         ITEM_COIN_IRON = getSpriteInd(itemsSheet, 5, 1, width, height);
@@ -259,6 +262,9 @@ public class Assets {
         CROP_GROUND = getSpriteInd(natureSheet, 6, 0, width, height);
         CROP_CARROT = getSpriteInd(natureSheet, 7, 0, width, height);
         CROP_WHEAT = getSpriteInd(natureSheet, 7, 1, width, height);
+        CROP_POTATO = getSpriteInd(natureSheet, 7, 2, width, height);
+        CROP_TOMATO = getSpriteInd(natureSheet, 7, 3, width, height);
+        CROP_CORN = getSpriteInd(natureSheet, 7, 4, width, height);
 
         int shopRoofLength = 7;
         SHOP_STALL = getSpriteInd(staticSheet, 0, 4, width * 2, height * 2);

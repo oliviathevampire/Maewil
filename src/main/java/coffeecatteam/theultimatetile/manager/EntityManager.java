@@ -50,10 +50,19 @@ public class EntityManager implements IRenderabelManager {
             case "bush_large":
                 return new EntityBush(theUltimateTile, id, Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2);
 
+            /*
+             * Crops
+             */
             case "crop_carrot":
                 return new EntityCrop(theUltimateTile, id, Assets.CROP_CARROT, Items.CARROT);
             case "crop_wheat":
                 return new EntityCrop(theUltimateTile, id, Assets.CROP_WHEAT, Items.WHEAT);
+            case "crop_potato":
+                return new EntityCrop(theUltimateTile, id, Assets.CROP_POTATO, Items.POTATO);
+            case "crop_tomato":
+                return new EntityCrop(theUltimateTile, id, Assets.CROP_TOMATO, Items.TOMATO);
+            case "crop_corn":
+                return new EntityCrop(theUltimateTile, id, Assets.CROP_CORN, Items.CORN);
 
             /*
              * Undead
