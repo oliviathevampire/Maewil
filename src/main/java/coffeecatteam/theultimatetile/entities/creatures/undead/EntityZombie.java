@@ -4,13 +4,13 @@ import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.inventory.items.Items;
+import coffeecatteam.theultimatetile.manager.ItemManager;
 
 public class EntityZombie extends EntityUndead {
 
     public EntityZombie(TheUltimateTile theUltimateTile, String id) {
         super(theUltimateTile, id);
-        this.drop = Items.ROTTEN_FLESH;
+        this.drop = ItemManager.ROTTEN_FLESH;
     }
 
     @Override

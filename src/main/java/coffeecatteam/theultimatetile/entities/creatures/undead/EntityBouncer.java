@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.audio.Sound;
-import coffeecatteam.theultimatetile.inventory.items.Items;
+import coffeecatteam.theultimatetile.manager.ItemManager;
 import coffeecatteam.theultimatetile.state.StateOptions;
 
 public class EntityBouncer extends EntityUndead {
@@ -14,7 +14,7 @@ public class EntityBouncer extends EntityUndead {
 
     public EntityBouncer(TheUltimateTile theUltimateTile, String id) {
         super(theUltimateTile, id);
-        this.drop = Items.BOUNCY_BALL;
+        this.drop = ItemManager.BOUNCY_BALL;
     }
 
     @Override

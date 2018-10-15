@@ -4,13 +4,13 @@ import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPassive;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.inventory.items.Items;
+import coffeecatteam.theultimatetile.manager.ItemManager;
 
 public class EntityCow extends EntityPassive {
 
     public EntityCow(TheUltimateTile theUltimateTile, String id) {
         super(theUltimateTile, id);
-        this.drop = Items.RAW_STEAK;
+        this.drop = ItemManager.RAW_STEAK;
     }
 
     @Override

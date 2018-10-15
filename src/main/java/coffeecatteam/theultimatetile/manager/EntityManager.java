@@ -17,7 +17,6 @@ import coffeecatteam.theultimatetile.entities.statics.nature.EntityCrop;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityRock;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityTree;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.inventory.items.Items;
 import coffeecatteam.theultimatetile.manager.iinterface.IRenderabelManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
@@ -54,15 +53,15 @@ public class EntityManager implements IRenderabelManager {
              * Crops
              */
             case "crop_carrot":
-                return new EntityCrop(theUltimateTile, id, Assets.CROP_CARROT, Items.CARROT);
+                return new EntityCrop(theUltimateTile, id, Assets.CROP_CARROT, ItemManager.CARROT);
             case "crop_wheat":
-                return new EntityCrop(theUltimateTile, id, Assets.CROP_WHEAT, Items.WHEAT);
+                return new EntityCrop(theUltimateTile, id, Assets.CROP_WHEAT, ItemManager.WHEAT);
             case "crop_potato":
-                return new EntityCrop(theUltimateTile, id, Assets.CROP_POTATO, Items.POTATO);
+                return new EntityCrop(theUltimateTile, id, Assets.CROP_POTATO, ItemManager.POTATO);
             case "crop_tomato":
-                return new EntityCrop(theUltimateTile, id, Assets.CROP_TOMATO, Items.TOMATO);
+                return new EntityCrop(theUltimateTile, id, Assets.CROP_TOMATO, ItemManager.TOMATO);
             case "crop_corn":
-                return new EntityCrop(theUltimateTile, id, Assets.CROP_CORN, Items.CORN);
+                return new EntityCrop(theUltimateTile, id, Assets.CROP_CORN, ItemManager.CORN);
 
             /*
              * Undead

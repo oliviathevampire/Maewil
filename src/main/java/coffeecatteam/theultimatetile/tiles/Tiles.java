@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.tiles;
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.inventory.items.Items;
+import coffeecatteam.theultimatetile.manager.ItemManager;
 
 public class Tiles {
 
@@ -64,7 +64,7 @@ public class Tiles {
             case 1:
                 return new Tile(theUltimateTile, Assets.DIRT, id, false, Tile.TileType.GROUND);
             case 2:
-                return new TileBreakable(theUltimateTile, Assets.STONE, id, Items.ROCK, Tile.TileType.STONE);
+                return new TileBreakable(theUltimateTile, Assets.STONE, id, ItemManager.ROCK, Tile.TileType.STONE);
             case 3:
                 return new Tile(theUltimateTile, Assets.SAND, id, false, Tile.TileType.GROUND);
             case 4:
@@ -73,13 +73,13 @@ public class Tiles {
                 return new Tile(theUltimateTile, Assets.DIORITE, id, true, Tile.TileType.STONE);
 
             case 6:
-                return new TileBreakable(theUltimateTile, Assets.COAL_ORE, id, Items.COAL, Tile.TileType.STONE);
+                return new TileBreakable(theUltimateTile, Assets.COAL_ORE, id, ItemManager.COAL, Tile.TileType.STONE);
             case 7:
-                return new TileBreakable(theUltimateTile, Assets.IRON_ORE, id, Items.IRON_INGOT, Tile.TileType.STONE);
+                return new TileBreakable(theUltimateTile, Assets.IRON_ORE, id, ItemManager.IRON_INGOT, Tile.TileType.STONE);
             case 8:
-                return new TileBreakable(theUltimateTile, Assets.GOLD_ORE, id, Items.GOLD_INGOT, Tile.TileType.STONE);
+                return new TileBreakable(theUltimateTile, Assets.GOLD_ORE, id, ItemManager.GOLD_INGOT, Tile.TileType.STONE);
             case 9:
-                return new TileBreakable(theUltimateTile, Assets.DIAMOND_ORE, id, Items.DIAMOND, Tile.TileType.STONE);
+                return new TileBreakable(theUltimateTile, Assets.DIAMOND_ORE, id, ItemManager.DIAMOND, Tile.TileType.STONE);
 
             case 10:
                 return new Tile(theUltimateTile, Assets.OBSIDIAN, id, true, Tile.TileType.STONE);

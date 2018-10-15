@@ -4,7 +4,7 @@ import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.inventory.items.Items;
+import coffeecatteam.theultimatetile.manager.ItemManager;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -42,8 +42,8 @@ public class EntityBush extends EntityStatic {
         super.die(entities, index);
         int amt = new Random().nextInt(2) + 1;
         for (int i = 0; i < amt; i++) {
-            theUltimateTile.getItemManager().addItem(new ItemStack(Items.LEAF), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
-            theUltimateTile.getItemManager().addItem(new ItemStack(Items.STICK), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+            theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.LEAF), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+            theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.STICK), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
         }
     }
 }

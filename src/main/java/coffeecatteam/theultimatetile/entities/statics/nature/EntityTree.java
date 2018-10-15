@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.inventory.items.Items;
+import coffeecatteam.theultimatetile.manager.ItemManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Utils;
 
@@ -41,10 +41,10 @@ public class EntityTree extends EntityStatic {
     public void die(List<Entity> entities, int index) {
         super.die(entities, index);
         for (int i = 0; i < Utils.getRandomInt(1, 3); i++) {
-            theUltimateTile.getItemManager().addItem(new ItemStack(Items.STICK), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
-            theUltimateTile.getItemManager().addItem(new ItemStack(Items.LEAF), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+            theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.STICK), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+            theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.LEAF), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
         }
-        theUltimateTile.getItemManager().addItem(new ItemStack(Items.APPLE), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+        theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.APPLE), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
     }
 
     public enum TreeType {

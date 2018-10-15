@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.entities.ai.AIFollowFlee;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPassive;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.inventory.items.Items;
+import coffeecatteam.theultimatetile.manager.ItemManager;
 
 public class EntitySheep extends EntityPassive {
 
@@ -13,7 +13,7 @@ public class EntitySheep extends EntityPassive {
 
     public EntitySheep(TheUltimateTile theUltimateTile, String id) {
         super(theUltimateTile, id);
-        this.drop = Items.WOOL_BUNDLE;
+        this.drop = ItemManager.WOOL_BUNDLE;
         aiFollowFlee = new AIFollowFlee(this, theUltimateTile.getEntityManager().getPlayer(), 100f, 3.5f).setFlee();
     }
 

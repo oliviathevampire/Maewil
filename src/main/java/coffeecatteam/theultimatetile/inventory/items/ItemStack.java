@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.inventory.items;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.manager.ItemManager;
 
 import java.awt.image.BufferedImage;
 
@@ -20,7 +21,7 @@ public class ItemStack {
             this.item = (Item) item.clone();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
-            this.item = Items.STICK;
+            this.item = ItemManager.STICK;
         }
         setCount(count);
     }

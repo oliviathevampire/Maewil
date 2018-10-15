@@ -6,7 +6,6 @@ import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
 import coffeecatteam.theultimatetile.gfx.audio.Sound;
-import coffeecatteam.theultimatetile.inventory.items.Items;
 import coffeecatteam.theultimatetile.manager.*;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateMenu;
@@ -121,7 +120,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
         itemManager = new ItemManager(this);
         windowManager = new WindowManager(this);
 
-        Items.init();
+        ItemManager.init();
 
         // Audio/sound initialized
         AudioMaster.init();
