@@ -34,7 +34,7 @@ public class EntityTree extends EntityStatic {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(type.getTexture(), (int) (this.x - theUltimateTile.getCamera().getxOffset()), (int) (this.y - theUltimateTile.getCamera().getyOffset()), width, height, null);
+        g.drawImage(type.getTexture(), renderX, renderY, width, height, null);
     }
 
     @Override

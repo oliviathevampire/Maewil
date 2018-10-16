@@ -33,7 +33,7 @@ public class EntityRock extends EntityStatic {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(texture, (int) (this.x - theUltimateTile.getCamera().getxOffset()), (int) (this.y - theUltimateTile.getCamera().getyOffset()), width, height, null);
+        g.drawImage(texture, renderX, renderY, width, height, null);
     }
 
     @Override

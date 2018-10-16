@@ -37,8 +37,6 @@ public abstract class EntityCreature extends Entity {
     protected float speed;
     protected float xMove, yMove;
 
-    protected int renderX, renderY;
-
     protected List<AI> ais = new ArrayList<>();
 
     public EntityCreature(TheUltimateTile theUltimateTile, String id, int width, int height) {
@@ -57,8 +55,6 @@ public abstract class EntityCreature extends Entity {
     @Override
     public void tickA() {
         super.tickA();
-        renderX = (int) (this.x - theUltimateTile.getCamera().getxOffset());
-        renderY = (int) (this.y - theUltimateTile.getCamera().getyOffset());
 
         ais.forEach(AI::tick);
 

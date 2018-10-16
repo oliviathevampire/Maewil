@@ -33,8 +33,8 @@ public class EntityCrop extends EntityStatic {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.CROP_GROUND, (int) (this.x - theUltimateTile.getCamera().getxOffset()), (int) (this.y - theUltimateTile.getCamera().getyOffset()), width, height, null);
-        g.drawImage(texture, (int) (this.x - theUltimateTile.getCamera().getxOffset()), (int) (this.y - theUltimateTile.getCamera().getyOffset()), width, height, null);
+        g.drawImage(Assets.CROP_GROUND, renderX, renderY, width, height, null);
+        g.drawImage(texture, renderX, renderY, width, height, null);
     }
 
     @Override

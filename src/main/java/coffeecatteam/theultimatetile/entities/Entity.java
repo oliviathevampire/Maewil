@@ -32,6 +32,8 @@ public abstract class Entity {
     private String[] dataTags;
     private EntityHitType entityHitType;
 
+    protected int renderX, renderY;
+
     public Entity(TheUltimateTile theUltimateTile, String id, int width, int height, EntityHitType entityHitType) {
         this.id = id;
 
@@ -67,6 +69,9 @@ public abstract class Entity {
     public abstract void tick();
 
     public void tickA() {
+        renderX = (int) (this.x - theUltimateTile.getCamera().getxOffset());
+        renderY = (int) (this.y - theUltimateTile.getCamera().getyOffset());
+
         tick();
 
         if (this.interacted)
