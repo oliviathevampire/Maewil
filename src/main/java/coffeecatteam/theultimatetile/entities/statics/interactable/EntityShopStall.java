@@ -49,7 +49,7 @@ public class EntityShopStall extends EntityStatic {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.SHOP_STALL, renderX, renderY, width, height, null);
-        g.drawImage(ROOF.getCurrentFrame(), renderX, renderY, width, height / 2, null);
+        g.drawImage(Assets.SHOP_STALL, this.renderX, this.renderY, width, height, null);
+        g.drawImage(ROOF.getCurrentFrame(), this.renderX, this.renderY, width, height / 2, null);
     }
 }

@@ -81,25 +81,25 @@ public abstract class EntityCreature extends Entity {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(currentAnim.getCurrentFrame(), renderX, renderY, width, height, null);
+        g.drawImage(currentAnim.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
 
         this.renderEffect(g);
 
         int barWidth = 16;
-        g.drawImage(HEALTH_BAR.crop(0, 9, barWidth, 2), renderX, renderY - 8, width, 4, null);
+        g.drawImage(HEALTH_BAR.crop(0, 9, barWidth, 2), this.renderX, this.renderY - 8, width, 4, null);
 
         int ht = (int) Utils.map(currentHealth, 0, maxHealth, 0, width); // (currentHealth * 100.0f) / 15
-        g.drawImage(HEALTH_BAR.crop(0, 5, barWidth, 2), renderX, renderY - 8, ht, 4, null);
+        g.drawImage(HEALTH_BAR.crop(0, 5, barWidth, 2), this.renderX, this.renderY - 8, ht, 4, null);
 
         Font font = Assets.FONT_20;
         String textHealth = "HP: " + currentHealth;
         int xOff = Text.getWidth(g, textHealth, font) / 2 - width / 2;
-        Text.drawString(g, textHealth, renderX - xOff, renderY - Text.getHeight(g, font) / 2, false, false, new Color(0, 255, 0), font);
+        Text.drawString(g, textHealth, this.renderX - xOff, this.renderY - Text.getHeight(g, font) / 2, false, false, new Color(0, 255, 0), font);
     }
 
     public void renderEffect(Graphics g) {
         if (inWater())
-            g.drawImage(splashEffect.getCurrentFrame(), renderX, renderY, width, height, null);
+            g.drawImage(splashEffect.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
     }
 
     @Override

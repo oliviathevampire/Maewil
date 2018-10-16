@@ -308,7 +308,7 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(currentAnim.getCurrentFrame(), renderX, renderY, width, height, null);
+        g.drawImage(currentAnim.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
 
         this.renderEffect(g);
 
@@ -322,8 +322,8 @@ public class EntityPlayer extends EntityCreature {
         int xOff = nameWidth / 2 - width / 2;
         int yOff = height / 2;
 
-        g.fillRect(renderX - xOff - add / 2, renderY - yOff - add / 2, nameWidth + add, nameHeight + add);
-        Text.drawString(g, username, renderX - xOff, renderY - yOff + nameHeight - add / 2, false, false, Color.white, font);
+        g.fillRect(this.renderX - xOff - add / 2, this.renderY - yOff - add / 2, nameWidth + add, nameHeight + add);
+        Text.drawString(g, username, this.renderX - xOff, this.renderY - yOff + nameHeight - add / 2, false, false, Color.white, font);
     }
 
     @Override
@@ -331,7 +331,7 @@ public class EntityPlayer extends EntityCreature {
         super.renderEffect(g);
 
         if (canSprint())
-            g.drawImage(sprintEffect.getCurrentFrame(), renderX, renderY, width, height, null);
+            g.drawImage(sprintEffect.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
     }
 
     public void postRender(Graphics g) {

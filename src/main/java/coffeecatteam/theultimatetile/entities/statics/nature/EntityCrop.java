@@ -33,8 +33,8 @@ public class EntityCrop extends EntityStatic {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.CROP_GROUND, renderX, renderY, width, height, null);
-        g.drawImage(texture, renderX, renderY, width, height, null);
+        g.drawImage(Assets.CROP_GROUND, this.renderX, this.renderY, width, height, null);
+        g.drawImage(texture, this.renderX, this.renderY, width, height, null);
     }
 
     @Override

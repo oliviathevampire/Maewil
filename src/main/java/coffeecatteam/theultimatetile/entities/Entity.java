@@ -69,10 +69,10 @@ public abstract class Entity {
     public abstract void tick();
 
     public void tickA() {
-        renderX = (int) (this.x - theUltimateTile.getCamera().getxOffset());
-        renderY = (int) (this.y - theUltimateTile.getCamera().getyOffset());
-
         tick();
+
+        this.renderX = (int) (this.x - theUltimateTile.getCamera().getxOffset());
+        this.renderY = (int) (this.y - theUltimateTile.getCamera().getyOffset());
 
         if (this.interacted)
             this.interact();

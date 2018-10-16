@@ -34,7 +34,7 @@ public class EntityBush extends EntityStatic {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(texture, renderX, renderY, width, height, null);
+        g.drawImage(texture, this.renderX, this.renderY, width, height, null);
     }
 
     @Override

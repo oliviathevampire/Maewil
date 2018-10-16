@@ -31,6 +31,6 @@ public class EntityCampfire extends EntityStatic {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(anim.getCurrentFrame(), renderX, renderY, width, height, null);
+        g.drawImage(anim.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
     }
 }
