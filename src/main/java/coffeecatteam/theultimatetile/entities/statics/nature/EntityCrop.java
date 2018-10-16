@@ -15,7 +15,6 @@ import java.util.Random;
 
 public class EntityCrop extends EntityStatic {
 
-    private BufferedImage texture;
     private Item drop;
 
     public EntityCrop(TheUltimateTile theUltimateTile, String id, BufferedImage texture, Item drop) {
@@ -27,14 +26,9 @@ public class EntityCrop extends EntityStatic {
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public void render(Graphics g) {
         g.drawImage(Assets.CROP_GROUND, this.renderX, this.renderY, width, height, null);
-        g.drawImage(texture, this.renderX, this.renderY, width, height, null);
+        super.render(g);
     }
 
     @Override

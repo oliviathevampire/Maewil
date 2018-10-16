@@ -136,7 +136,8 @@ public class EntityManager implements IRenderabelManager {
     @Override
     public void render(Graphics g) {
         for (Entity e : entities) {
-            e.renderA(g);
+            e.renderDebug(g);
+            e.render(g);
         }
 
         /* Post Render */

@@ -28,11 +28,6 @@ public class EntityTree extends EntityStatic {
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public void render(Graphics g) {
         g.drawImage(type.getTexture(), this.renderX, this.renderY, width, height, null);
     }

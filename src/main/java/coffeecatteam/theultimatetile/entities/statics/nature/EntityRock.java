@@ -14,8 +14,6 @@ import java.util.Random;
 
 public class EntityRock extends EntityStatic {
 
-    private BufferedImage texture;
-
     public EntityRock(TheUltimateTile theUltimateTile, String id, BufferedImage texture) {
         super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.STONE);
         this.texture = texture;
@@ -24,16 +22,6 @@ public class EntityRock extends EntityStatic {
         bounds.y = height / 2 + height / 3;
         bounds.width = width;
         bounds.height = height / 3;
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void render(Graphics g) {
-        g.drawImage(texture, this.renderX, this.renderY, width, height, null);
     }
 
     @Override

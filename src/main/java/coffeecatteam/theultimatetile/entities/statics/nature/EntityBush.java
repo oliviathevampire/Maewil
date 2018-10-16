@@ -14,27 +14,14 @@ import java.util.Random;
 
 public class EntityBush extends EntityStatic {
 
-    private BufferedImage texture;
-
     public EntityBush(TheUltimateTile theUltimateTile, String id, BufferedImage texture, int width) {
         super(theUltimateTile, id, width, Entity.DEFAULT_HEIGHT, EntityHitType.BUSH);
-
         this.texture = texture;
 
         bounds.x = this.width / 4 - (this.width / 4) / 2;
         bounds.y = height / 2 + height / 3;
         bounds.width = this.width / 4 + this.width / 2;
         bounds.height = height / 3;
-    }
-
-    @Override
-    public void tick() {
-
-    }
-
-    @Override
-    public void render(Graphics g) {
-        g.drawImage(texture, this.renderX, this.renderY, width, height, null);
     }
 
     @Override
