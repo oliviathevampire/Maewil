@@ -10,7 +10,8 @@ import coffeecatteam.theultimatetile.entities.creatures.undead.EntityBouncer;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntitySkeleton;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityThing;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityZombie;
-import coffeecatteam.theultimatetile.entities.statics.EntityShopStall;
+import coffeecatteam.theultimatetile.entities.statics.interactable.EntityCampfire;
+import coffeecatteam.theultimatetile.entities.statics.interactable.EntityShopStall;
 import coffeecatteam.theultimatetile.entities.statics.EntityUltimateTile;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityBush;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityCrop;
@@ -93,6 +94,8 @@ public class EntityManager implements IRenderabelManager {
 
             case "shop":
                 return new EntityShopStall(theUltimateTile, id);
+            case "campfire":
+                return new EntityCampfire(theUltimateTile, id);
         }
         return new EntityRock(theUltimateTile, "rock", Assets.ROCK_V1);
     }
