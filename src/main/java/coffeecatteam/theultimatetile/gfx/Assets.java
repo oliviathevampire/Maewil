@@ -275,7 +275,7 @@ public class Assets {
         SHOP_ROOF_RED = getFrames(staticSheet, 2, 0, shopRoofLength, width * 2, height);
         SHOP_ROOF_GREY = getFrames(staticSheet, 3, 0, shopRoofLength, width * 2, height);
 
-        CAMPFIRE = getFrames(staticSheet, 7, 0, 1, width, height);
+        CAMPFIRE = getFrames(staticSheet, 7, 0, 9, width, height);
 
         /* GUI */
         BACKGROUND = getSpriteExact("/assets/textures/gui/bg.png", 0, 0, 320, 320);
