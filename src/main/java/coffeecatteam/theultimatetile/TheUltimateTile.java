@@ -13,6 +13,7 @@ import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.state.options.OptionsSounds;
 import coffeecatteam.theultimatetile.state.options.controls.OptionsControls;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 import coffeecatteam.theultimatetile.world.World;
@@ -164,6 +165,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
     @Override
     public void run() {
         init();
+        DiscordHandler.getInstance().setup();
 
         // Background music
         Sound.play(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic(), 0f, 0f, 0f, 1f, true);

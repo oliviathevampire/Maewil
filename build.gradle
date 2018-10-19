@@ -11,9 +11,18 @@ buildDir = file(buildPath)
 
 repositories {
     mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+
+configurations {
+    embed
+    compile.extendsFrom(embed)
 }
 
 dependencies {
+    embed 'com.github.Vatuu:discord-rpc:1.5.1'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
     compile fileTree(dir: "libs", include: "*.jar")
 

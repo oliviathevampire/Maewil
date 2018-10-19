@@ -8,6 +8,8 @@ import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateOptions;
+import net.arikia.dev.drpc.DiscordRPC;
+import net.arikia.dev.drpc.DiscordRichPresence;
 
 import java.awt.*;
 import java.io.IOException;
@@ -29,6 +31,12 @@ public abstract class StateAbstractOptions extends State {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                DiscordRichPresence rich = new DiscordRichPresence.Builder("")
+                        .setDetails("Main Menu - Options")
+                        .setBigImage("ultimatebg", "TUT")
+                        .build();
+                DiscordRPC.discordUpdatePresence(rich);
             }
 
             @Override

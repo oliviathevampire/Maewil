@@ -7,6 +7,8 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.OptionsJsonParser;
 import coffeecatteam.theultimatetile.utils.Logger;
+import net.arikia.dev.drpc.DiscordRPC;
+import net.arikia.dev.drpc.DiscordRichPresence;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -66,6 +68,7 @@ public class StateOptions extends StateAbstractMenu {
                 } catch (IOException | ParseException e) {
                     e.printStackTrace();
                 }
+                setPresence("Controls");
             }
 
             @Override
@@ -84,12 +87,21 @@ public class StateOptions extends StateAbstractMenu {
                 } catch (IOException | ParseException e) {
                     e.printStackTrace();
                 }
+                setPresence("Sounds");
             }
 
             @Override
             public void tick() {
             }
         }));
+    }
+
+    private void setPresence(String presence) {
+        DiscordRichPresence rich = new DiscordRichPresence.Builder("")
+                .setDetails("Main Menu - Options/" + presence)
+                .setBigImage("ultimatebg", "TUT")
+                .build();
+        DiscordRPC.discordUpdatePresence(rich);
     }
 
     @Override
