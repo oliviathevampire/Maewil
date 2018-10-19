@@ -36,10 +36,10 @@ public class EntityTree extends EntityStatic {
     public void die(List<Entity> entities, int index) {
         super.die(entities, index);
         for (int i = 0; i < Utils.getRandomInt(1, 3); i++) {
-            theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.STICK), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
-            theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.LEAF), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+            theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.STICK), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+            theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.LEAF), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
         }
-        theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.APPLE), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+        theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.APPLE), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
     }
 
     public enum TreeType {

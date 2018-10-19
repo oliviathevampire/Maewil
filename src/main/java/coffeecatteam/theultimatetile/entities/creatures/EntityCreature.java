@@ -106,9 +106,9 @@ public abstract class EntityCreature extends Entity {
     public void die(List<Entity> entities, int index) {
         super.die(entities, index);
         if (drop != null) {
-            int amt = new Random().nextInt(3) + 1;
+            int amt = Utils.getRandomInt(4);
             for (int i = 0; i < amt; i++)
-                theUltimateTile.getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+                theUltimateTile.getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
         }
     }
 

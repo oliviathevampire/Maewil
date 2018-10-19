@@ -3,8 +3,7 @@ package coffeecatteam.theultimatetile.entities.ai;
 import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.utils.Logger;
-
-import java.util.Random;
+import coffeecatteam.theultimatetile.utils.Utils;
 
 public class AIWander extends AI {
 
@@ -24,10 +23,10 @@ public class AIWander extends AI {
         lastWanderTimer = System.currentTimeMillis();
 
         if (wanderTimer > wanderCooldown) {
-            dir = new Random().nextInt(9);
+            dir = Utils.getRandomInt(8);
             if (StateOptions.OPTIONS.debugMode())
                 Logger.print("Wander DIR for entity [" + entity.getId() + "]: " + dir);
-            wanderCooldown = new Random().nextInt(1) == 0 ? 1600 : 3200;
+            wanderCooldown = Utils.getRandomBoolean() ? 1600 : 3200;
             wanderTimer = 0;
         }
 

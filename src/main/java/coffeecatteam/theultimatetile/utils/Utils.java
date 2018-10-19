@@ -9,6 +9,8 @@ import java.util.Random;
 
 public class Utils {
 
+    public static final long RANDOM_SEED = new Random().nextLong();
+
     public static String getUsername() {
         return getUsername("Player");
     }
@@ -37,14 +39,22 @@ public class Utils {
         return null;
     }
 
+    public static int getRandomInt(int max) {
+        return getRandomInt(0, max);
+    }
+
     public static int getRandomInt(int min, int max) {
         if (min >= max)
             throw new IllegalArgumentException("max must be greater than min");
 
         int out = 0;
         for (int i = 0; i < 50; i++)
-            out = new Random().nextInt((max - min) + 1) + min;
+            out = new Random(RANDOM_SEED).nextInt((max - min) + 1) + min;
         return out;
+    }
+
+    public static boolean getRandomBoolean() {
+        return getRandomInt(0, 1) == 0;
     }
 
     public static BufferedReader loadFileInSideJar(String path) {

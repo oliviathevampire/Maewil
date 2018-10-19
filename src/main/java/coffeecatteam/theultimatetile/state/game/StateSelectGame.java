@@ -37,7 +37,7 @@ public class StateSelectGame extends StateAbstractMenu {
     private static String getWorldname(String defaultName) {
         String username;
         int nameLength = 16;
-        defaultName += "_" + Utils.getRandomInt(0, 1000);
+        defaultName += "_" + Utils.getRandomInt(1000);
         try {
             username = JOptionPane.showInputDialog("Please enter a world name\nMust be max " + nameLength + " characters", defaultName);
             if (username.length() > nameLength || username.equalsIgnoreCase(""))

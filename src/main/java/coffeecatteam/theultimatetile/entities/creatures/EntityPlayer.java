@@ -184,7 +184,7 @@ public class EntityPlayer extends EntityCreature {
                 int hitSound = -1;
                 switch (e.getEntityHitType()) {
                     case CREATURE:
-                        hitSound = (Utils.getRandomInt(0, 10) > 5 ? Sound.PUNCH_LEFT : Sound.PUNCH_RIGHT);
+                        hitSound = (Utils.getRandomInt(10) > 5 ? Sound.PUNCH_LEFT : Sound.PUNCH_RIGHT);
                         break;
                     case WOOD:
                         hitSound = Sound.STEP_WOOD;
@@ -193,7 +193,7 @@ public class EntityPlayer extends EntityCreature {
                         hitSound = Sound.STEP_STONE;
                         break;
                     case BUSH:
-                        hitSound = (Utils.getRandomInt(0, 10) > 5 ? Sound.BUSH_LEFT : Sound.BUSH_RIGHT);
+                        hitSound = (Utils.getRandomInt(10) > 5 ? Sound.BUSH_LEFT : Sound.BUSH_RIGHT);
                         break;
                 }
                 if (hitSound != -1)
@@ -334,6 +334,7 @@ public class EntityPlayer extends EntityCreature {
             g.drawImage(sprintEffect.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
     }
 
+    @Override
     public void postRender(Graphics g) {
         inventoryPlayer.render(g);
     }

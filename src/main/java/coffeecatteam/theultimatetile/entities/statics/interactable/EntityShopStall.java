@@ -24,7 +24,7 @@ public class EntityShopStall extends EntityStatic {
     private Animation pickRoof() {
         int speed = 250;
         Animation anim = new Animation(speed, Assets.SHOP_ROOF_ORANGE);
-        int i = Utils.getRandomInt(0, 3);
+        int i = Utils.getRandomInt(3);
         if (i == 0)
             anim.setFrames(Assets.SHOP_ROOF_ORANGE);
         if (i == 1)

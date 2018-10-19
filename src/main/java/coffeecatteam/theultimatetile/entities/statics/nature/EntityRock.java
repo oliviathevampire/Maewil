@@ -27,8 +27,8 @@ public class EntityRock extends EntityStatic {
     @Override
     public void die(List<Entity> entities, int index) {
         super.die(entities, index);
-        int amt = new Random().nextInt(2) + 1;
+        int amt = Utils.getRandomInt(3);
         for (int i = 0; i < amt; i++)
-            theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.ROCK), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+            theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.ROCK), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
     }
 }
