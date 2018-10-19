@@ -81,16 +81,19 @@ public abstract class Entity {
             this.interact();
     }
 
+    public void preRender(Graphics g) {
+        if (showHitbox) {
+            g.setColor(Color.red);
+            g.fillRect((int) (x + bounds.x - theUltimateTile.getCamera().getxOffset()), (int) (y + bounds.y - theUltimateTile.getCamera().getyOffset()), bounds.width, bounds.height);
+        }
+    }
+
     public void render(Graphics g) {
         if (texture != null)
             g.drawImage(texture, this.renderX, this.renderY, width, height, null);
     }
 
-    public void renderDebug(Graphics g) {
-        if (showHitbox) {
-            g.setColor(Color.red);
-            g.fillRect((int) (x + bounds.x - theUltimateTile.getCamera().getxOffset()), (int) (y + bounds.y - theUltimateTile.getCamera().getyOffset()), bounds.width, bounds.height);
-        }
+    public void postRender(Graphics g) {
     }
 
     public void die(List<Entity> entities, int index) {

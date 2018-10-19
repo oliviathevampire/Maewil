@@ -12,17 +12,13 @@ import coffeecatteam.theultimatetile.tiles.Tile;
 import java.awt.*;
 
 public class InventoryPlayer extends Inventory {
-    protected EntityPlayer player;
-
-    private boolean active = false;
 
     private int maxHotbarSize = 3;
     private int inventorySelectedIndex = 0;
     private int hotbarSelectedIndex = 0;
 
     public InventoryPlayer(TheUltimateTile theUltimateTile, EntityPlayer player) {
-        super(theUltimateTile);
-        this.player = player;
+        super(theUltimateTile, player);
 
         // Add inventory slots
         int xd = 190, yd = 360, x, y;
@@ -45,19 +41,6 @@ public class InventoryPlayer extends Inventory {
             addSlot(i, hx, theUltimateTile.getHeight() - height - height / 2 + 13, width, height);
             getSlot(i).setSelector(Assets.HOTBAR_SELECTER);
         }
-
-//        addItem(new ItemStack(Items.STICK, 5));
-//        addItem(new ItemStack(Items.ROCK));
-//        addItem(new ItemStack(Items.ROTTEN_FLESH,3));
-//        addItem(new ItemStack(Items.LEAF));
-//        addItem(new ItemStack(Items.COAL,5));
-//        addItem(new ItemStack(Items.IRON_INGOT,3));
-//        addItem(new ItemStack(Items.GOLD_INGOT,3));
-//        addItem(new ItemStack(Items.DIAMOND,3));
-//        addItem(new ItemStack(Items.WOODEN_SWORD,1));
-//        addItem(new ItemStack(Items.WOODEN_PICK,1));
-//        addItem(new ItemStack(Items.CARROT,10));
-//        addItem(new ItemStack(Items.APPLE, 1));
     }
 
     @Override
@@ -127,14 +110,7 @@ public class InventoryPlayer extends Inventory {
         }
     }
 
-    private void swapSlots(Slot slot1, Slot slot2) {
-        ItemStack s1 = slot1.getStack() != null ? slot1.getStack().copy() : null;
-        ItemStack s2 = slot2.getStack() != null ? slot2.getStack().copy() : null;
-        slot1.setStack(s2);
-        slot2.setStack(s1);
-    }
-
-    private void dropItem(boolean active, int inventorySelectedIndex, int hotbarSelectedIndex) {
+    public void dropItem(boolean active, int inventorySelectedIndex, int hotbarSelectedIndex) {
         float xOff = Tile.TILE_WIDTH / 4;
         float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4;
         if (getSlot(inventorySelectedIndex).getStack() != null) {
@@ -257,10 +233,6 @@ public class InventoryPlayer extends Inventory {
 
     public void setTheUltimateTile(TheUltimateTile theUltimateTile) {
         this.theUltimateTile = theUltimateTile;
-    }
-
-    public boolean isActive() {
-        return active;
     }
 
     public ItemStack getSelectedHotbarItemStack() {

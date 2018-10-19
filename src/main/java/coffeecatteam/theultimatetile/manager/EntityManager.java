@@ -135,13 +135,14 @@ public class EntityManager implements IRenderabelManager {
 
     @Override
     public void render(Graphics g) {
-        for (Entity e : entities) {
-            e.renderDebug(g);
-            e.render(g);
-        }
+        for (Entity e : entities)
+            e.preRender(g);
 
-        /* Post Render */
-        player.postRender(g);
+        for (Entity e : entities)
+            e.render(g);
+
+        for (Entity e : entities)
+            e.postRender(g);
     }
 
     public void addEntity(Entity e) {
