@@ -87,7 +87,7 @@ public class Assets {
     public static BufferedImage[] BUTTON_HOVER = new BufferedImage[3];
     public static BufferedImage[] BUTTON_DISABLED = new BufferedImage[3];
 
-    public static BufferedImage INVENTORY;
+    public static BufferedImage INVENTORY, CAMPFIRE_INVENTORY;
     public static BufferedImage SLOT, SLOT_SELECTER;
     public static BufferedImage HOTBAR, HOTBAR_SELECTER;
 
@@ -117,6 +117,7 @@ public class Assets {
 
         SpriteSheet menuSheet = getSheet("/assets/textures/gui/menu.png");
         SpriteSheet invSheet = getSheet("/assets/textures/gui/inventory/inventory.png");
+        SpriteSheet campfireInvSheet = getSheet("/assets/textures/gui/inventory/campfire.png");
 
         /* Tiles */
         GRASS = getSpriteInd(terrainSheet, 0, 0, width, height);
@@ -287,6 +288,8 @@ public class Assets {
         BUTTON_DISABLED = getFrames(menuSheet, 2, 0, 2, width, height);
 
         INVENTORY = getSpriteExact(invSheet, 0, 0, 57, 41);
+        CAMPFIRE_INVENTORY = getSpriteExact(campfireInvSheet, 0, 0, 57, 44);
+
         SLOT = getSpriteExact(invSheet, 2, 22, 8, 8);
         SLOT_SELECTER = getSpriteExact(invSheet, 48, 48, width, height);
         HOTBAR = getSpriteExact(invSheet, 12, 54, 28, 10);
