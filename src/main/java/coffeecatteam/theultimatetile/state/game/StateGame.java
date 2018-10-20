@@ -159,7 +159,7 @@ public class StateGame extends State {
     }
 
     public void setWorld(String path) {
-        this.world = new World(theUltimateTile, path);
+        this.world = new World(theUltimateTile, path, worldName);
         theUltimateTile.setWorld(world);
         init();
     }

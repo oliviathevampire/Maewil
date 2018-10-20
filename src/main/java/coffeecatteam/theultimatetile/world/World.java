@@ -27,7 +27,7 @@ public class World {
 
     private OverlayManager overlayManager;
 
-    public World(TheUltimateTile theUltimateTile, String path) {
+    public World(TheUltimateTile theUltimateTile, String path, String worldName) {
         this.theUltimateTile = theUltimateTile;
         overlayManager = new OverlayManager(theUltimateTile, theUltimateTile.getEntityManager().getPlayer());
 
@@ -40,7 +40,7 @@ public class World {
         theUltimateTile.getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
 
         DiscordRichPresence rich = new DiscordRichPresence.Builder("")
-                .setDetails("Main Menu - As: " + theUltimateTile.getEntityManager().getPlayer().getUsername() + " - In world: " + name)
+                .setDetails("In Game [" + worldName + "] - As: " + theUltimateTile.getEntityManager().getPlayer().getUsername() + " - In World: " + name)
                 .setBigImage("ultimatebg", "TUT")
                 .build();
         DiscordRPC.discordUpdatePresence(rich);
