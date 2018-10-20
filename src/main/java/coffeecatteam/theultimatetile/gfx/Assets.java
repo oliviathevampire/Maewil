@@ -94,6 +94,8 @@ public class Assets {
     public static BufferedImage ICON_ON, ICON_OFF;
     public static BufferedImage TOOLTIP_SHORT_SMALL, TOOLTIP_SHORT_LARGE, TOOLTIP_LONG_SMALL, TOOLTIP_LONG_LARGE;
 
+    public static BufferedImage LOGO;
+
     public static void init() {
         /* Fonts */
         FONT_20 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 20);
@@ -302,6 +304,8 @@ public class Assets {
         TOOLTIP_SHORT_LARGE = getSpriteInd(menuSheet, 0, 4, width * 2, height * 2);
         TOOLTIP_LONG_SMALL = getSpriteInd(menuSheet, 2, 4, width * 3, height);
         TOOLTIP_LONG_LARGE = getSpriteInd(menuSheet, 2, 4, width * 3, height * 2);
+
+        LOGO = getSpriteExact("/assets/textures/logo.png", 0, 0, 128, 128);
 
         Logger.print("Assets initialized!");
     }

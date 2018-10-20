@@ -85,7 +85,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        frame.setIconImage(Assets.ULTIMATE_TILE[0]);
+        frame.setIconImage(Assets.LOGO);
 
         this.setPreferredSize(size);
         this.setMaximumSize(size);
