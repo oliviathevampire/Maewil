@@ -208,7 +208,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
         stop();
 
-        Logger.print("Exiting game..");
+        Logger.print("\nExiting game..");
         System.exit(0);
     }
 

@@ -39,7 +39,7 @@ public class World {
         theUltimateTile.getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
 
         DiscordHandler.getInstance().updatePresence("In Game - " + theUltimateTile.getEntityManager().getPlayer().getUsername(),
-                "World: " + name + " - Save: [" + worldName + "]");
+                "World: " + name + " - Save: [" + worldName + "]", true);
     }
 
     public void tick() {
