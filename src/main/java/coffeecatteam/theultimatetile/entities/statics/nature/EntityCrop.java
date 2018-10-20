@@ -11,7 +11,6 @@ import coffeecatteam.theultimatetile.utils.Utils;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.Random;
 
 public class EntityCrop extends EntityStatic {
 

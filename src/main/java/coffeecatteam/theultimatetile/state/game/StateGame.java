@@ -11,9 +11,8 @@ import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.world.World;
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
 
 import java.awt.*;
 import java.io.IOException;
@@ -62,11 +61,7 @@ public class StateGame extends State {
             public void onClick() {
                 State.setState(theUltimateTile.stateMenu);
 
-                DiscordRichPresence rich = new DiscordRichPresence.Builder("")
-                        .setDetails("Main Menu")
-                        .setBigImage("ultimatebg", "TUT")
-                        .build();
-                DiscordRPC.discordUpdatePresence(rich);
+                DiscordHandler.getInstance().updatePresence("Main Menu");
             }
 
             @Override

@@ -15,7 +15,6 @@ import coffeecatteam.theultimatetile.utils.Utils;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public abstract class EntityCreature extends Entity {
 

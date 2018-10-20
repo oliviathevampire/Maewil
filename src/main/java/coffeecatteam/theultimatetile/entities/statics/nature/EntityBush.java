@@ -7,10 +7,8 @@ import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 import coffeecatteam.theultimatetile.utils.Utils;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
-import java.util.Random;
 
 public class EntityBush extends EntityStatic {
 

@@ -6,8 +6,7 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 
 import java.awt.*;
 import java.net.URI;
@@ -24,11 +23,7 @@ public class StateAbstractMenu extends State {
                 initBack();
                 State.setState(theUltimateTile.stateMenu);
 
-                DiscordRichPresence rich = new DiscordRichPresence.Builder("")
-                        .setDetails("Main Menu")
-                        .setBigImage("ultimatebg", "TUT")
-                        .build();
-                DiscordRPC.discordUpdatePresence(rich);
+                DiscordHandler.getInstance().updatePresence("Main Menu");
             }
 
             @Override

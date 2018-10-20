@@ -23,10 +23,19 @@ public class DiscordHandler {
         DiscordRPC.discordInitialize("502962688733741056", handlers, true);
         DiscordRPC.discordRunCallbacks();
 
-        DiscordRPC.discordUpdatePresence(
-                new DiscordRichPresence.Builder("")
-                        .setDetails("Main Menu")
-                        .setBigImage("ultimatebg", "TUT")
-                        .build());
+        updatePresence("Main Menu");
+    }
+
+    public void updatePresence(String details) {
+        updatePresence(details, "");
+    }
+
+    public void updatePresence(String details, String state) {
+        DiscordRichPresence rich = new DiscordRichPresence();
+        rich.details = details;
+        rich.state = state;
+        rich.largeImageKey = "ultimatebg";
+        rich.largeImageText = "TUT";
+        DiscordRPC.discordUpdatePresence(rich);
     }
 }

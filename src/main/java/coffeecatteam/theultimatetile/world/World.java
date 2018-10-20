@@ -6,9 +6,8 @@ import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.TileBreakable;
 import coffeecatteam.theultimatetile.tiles.Tiles;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.utils.Logger;
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -39,11 +38,8 @@ public class World {
         theUltimateTile.getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
         theUltimateTile.getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
 
-        DiscordRichPresence rich = new DiscordRichPresence.Builder("")
-                .setDetails("In Game [" + worldName + "] - As: " + theUltimateTile.getEntityManager().getPlayer().getUsername() + " - In World: " + name)
-                .setBigImage("ultimatebg", "TUT")
-                .build();
-        DiscordRPC.discordUpdatePresence(rich);
+        DiscordHandler.getInstance().updatePresence("In Game - " + theUltimateTile.getEntityManager().getPlayer().getUsername(),
+                "World: " + name + " - Save: [" + worldName + "]");
     }
 
     public void tick() {
