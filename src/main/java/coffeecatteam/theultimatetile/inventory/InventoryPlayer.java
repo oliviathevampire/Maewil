@@ -3,11 +3,6 @@ package coffeecatteam.theultimatetile.inventory;
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.inventory.items.IInteractable;
-import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.state.StateOptions;
-import coffeecatteam.theultimatetile.state.options.controls.Keybind;
-import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
 
