@@ -6,31 +6,10 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 
 import java.awt.*;
 
-public class InventoryCampfire extends Inventory {
+public class InventoryCampfire extends InventoryAbstractPlayer {
 
     public InventoryCampfire(TheUltimateTile theUltimateTile, EntityPlayer player) {
-        super(theUltimateTile, player);
-
-        // Add inventory slots
-        int xd = 190, yd = 360, x, y;
-        int width = 48, height = 48;
-        for (int i = 0; i < maxSize; i++) {
-            x = xd + 54 * i;
-            y = yd;
-            if (i > maxSize / 2 - 1) {
-                x -= width * 7 - 12;
-                y += height + 5;
-            }
-            addSlot(i, x, y, width, height);
-            getSlot(i).setSelector(Assets.SLOT_SELECTER);
-        }
-    }
-
-    @Override
-    public void tick() {
-        for (int i = 0; i < maxSize; i++) {
-            this.slots.set(i, player.getInventoryPlayer().getSlot(i));
-        }
+        super(theUltimateTile, player, 190, 370);
     }
 
     @Override
@@ -44,9 +23,7 @@ public class InventoryCampfire extends Inventory {
 
             g.drawImage(Assets.CAMPFIRE_INVENTORY, x, y, width, height, null);
 
-            for (int i = 0; i < maxSize; i++) {
-                getSlot(i).render(g);
-            }
+            super.renderInventorySlots(g);
         }
     }
 }

@@ -97,7 +97,8 @@ public class StateGame extends State {
     @Override
     public void tick() {
         if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !theUltimateTile.getEntityManager().getPlayer().isDead) {
-            paused = !paused && !theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isActive();
+            if (!theUltimateTile.getEntityManager().getPlayer().isGuiOpen())
+                paused = !paused && !theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isActive();
             saveWorld();
         }
 

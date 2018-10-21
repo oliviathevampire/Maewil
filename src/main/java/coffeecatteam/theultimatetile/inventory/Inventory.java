@@ -11,6 +11,8 @@ import java.util.List;
 
 public abstract class Inventory {
 
+    public static List<Inventory> inventories = new ArrayList<>();
+
     protected TheUltimateTile theUltimateTile;
     protected EntityPlayer player;
 
@@ -23,6 +25,8 @@ public abstract class Inventory {
         this.theUltimateTile = theUltimateTile;
         this.player = player;
         slots = new ArrayList<>();
+
+        inventories.add(this);
     }
 
     public void swapSlots(Slot slot1, Slot slot2) {

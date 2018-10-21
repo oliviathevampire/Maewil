@@ -7,6 +7,8 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
 import coffeecatteam.theultimatetile.gfx.audio.Sound;
+import coffeecatteam.theultimatetile.inventory.Inventory;
+import coffeecatteam.theultimatetile.inventory.InventoryAbstractPlayer;
 import coffeecatteam.theultimatetile.inventory.InventoryPlayer;
 import coffeecatteam.theultimatetile.inventory.Slot;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
@@ -38,7 +40,7 @@ public class EntityPlayer extends EntityCreature {
     private int glubel = 0, maxGludel = 100, lvl = 1;
     private String username;
 
-    public boolean isDead;
+    public boolean isDead, guiOpen = false;
 
     private float prevX, prevY;
 
@@ -78,18 +80,24 @@ public class EntityPlayer extends EntityCreature {
         this.prevY = this.y;
 
         if (isActive()) {
-            if (!inventoryPlayer.isActive()) {
+            if (!guiOpen) {
                 // Movement
                 getInput();
                 move();
-
-                // Attack
-                checkAttacks();
 
                 // Interact
                 tileInteract();
                 tickEquippedItem();
             }
+
+            // Attack
+            checkAttacks();
+
+            // Open/close inventory
+            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode()))
+                openCloseInventory(inventoryPlayer);
+            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && inventoryPlayer.isActive())
+                closeInventory();
 
             theUltimateTile.getCamera().centerOnEntity(this);
             AudioMaster.setListenerData(this.x, this.y, 0f);
@@ -311,19 +319,6 @@ public class EntityPlayer extends EntityCreature {
         g.drawImage(currentAnim.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
 
         this.renderEffect(g);
-
-        Font font = Assets.FONT_20;
-        int nameWidth = Text.getWidth(g, username, font);
-        int nameHeight = Text.getHeight(g, font);
-        int add = 6;
-        Color tint = new Color(96, 96, 96, 127);
-        g.setColor(tint);
-
-        int xOff = nameWidth / 2 - width / 2;
-        int yOff = height / 2;
-
-        g.fillRect(this.renderX - xOff - add / 2, this.renderY - yOff - add / 2, nameWidth + add, nameHeight + add);
-        Text.drawString(g, username, this.renderX - xOff, this.renderY - yOff + nameHeight - add / 2, false, false, Color.white, font);
     }
 
     @Override
@@ -336,7 +331,21 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void postRender(Graphics g) {
+        Font font = Assets.FONT_20;
+        int nameWidth = Text.getWidth(g, username, font);
+        int nameHeight = Text.getHeight(g, font);
+        int add = 6;
+        Color tint = new Color(96, 96, 96, 127);
+        g.setColor(tint);
+
+        int xOff = nameWidth / 2 - width / 2;
+        int yOff = height / 2;
+
+        g.fillRect(this.renderX - xOff - add / 2, this.renderY - yOff - add / 2, nameWidth + add, nameHeight + add);
+        Text.drawString(g, username, this.renderX - xOff, this.renderY - yOff + nameHeight - add / 2, false, false, Color.white, font);
+
         inventoryPlayer.render(g);
+        inventoryPlayer.renderHotbar(g);
     }
 
     public InventoryPlayer getInventoryPlayer() {
@@ -405,5 +414,34 @@ public class EntityPlayer extends EntityCreature {
         lvl = 0;
         equippedItem = null;
         extraDmg = 0;
+    }
+
+    public boolean isGuiOpen() {
+        return guiOpen;
+    }
+
+    public void setGuiOpen(boolean guiOpen) {
+        this.guiOpen = guiOpen;
+    }
+
+    public boolean openInventory(InventoryAbstractPlayer inventory) {
+        if (!guiOpen) {
+            inventory.setActive(true);
+            guiOpen = true;
+            return true;
+        }
+        return false;
+    }
+
+    public void closeInventory() {
+        Inventory.inventories.forEach(inventory -> {
+            inventory.setActive(false);
+            guiOpen = false;
+        });
+    }
+
+    public void openCloseInventory(InventoryAbstractPlayer inventory) {
+        if (!openInventory(inventory))
+            closeInventory();
     }
 }

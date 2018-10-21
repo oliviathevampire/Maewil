@@ -6,7 +6,6 @@ import coffeecatteam.theultimatetile.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.InventoryCampfire;
-import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 
@@ -31,8 +30,7 @@ public class EntityCampfire extends EntityStatic {
 
     @Override
     public void interact() {
-        Logger.print("Cook Cook!");
-        inventoryCampfire.setActive(!inventoryCampfire.isActive());
+        theUltimateTile.getEntityManager().getPlayer().openCloseInventory(inventoryCampfire);
         this.interacted = false;
     }
 
