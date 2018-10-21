@@ -310,27 +310,27 @@ public class Assets {
         Logger.print("Assets initialized!");
     }
 
-    private static BufferedImage[] getFrames(String sheet, int xStart, int xEnd) {
+    public static BufferedImage[] getFrames(String sheet, int xStart, int xEnd) {
         return getFrames(sheet, 0, xStart, xEnd);
     }
 
-    private static BufferedImage[] getFrames(String sheet, int y, int xStart, int xEnd) {
+    public static BufferedImage[] getFrames(String sheet, int y, int xStart, int xEnd) {
         return getFrames(getSheet(sheet), y, xStart, xEnd, width, height);
     }
 
-    private static BufferedImage[] getFrames(String sheet, int y, int xStart, int xEnd, int width, int height) {
+    public static BufferedImage[] getFrames(String sheet, int y, int xStart, int xEnd, int width, int height) {
         return getFrames(getSheet(sheet), y, xStart, xEnd, width, height);
     }
 
-    private static BufferedImage[] getFrames(SpriteSheet sheet, int xStart, int xEnd) {
+    public static BufferedImage[] getFrames(SpriteSheet sheet, int xStart, int xEnd) {
         return getFrames(sheet, 0, xStart, xEnd);
     }
 
-    private static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd) {
+    public static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd) {
         return getFrames(sheet, y, xStart, xEnd, width, height);
     }
 
-    private static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd, int width, int height) {
+    public static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd, int width, int height) {
         BufferedImage[] frames = new BufferedImage[(xEnd - xStart) + 1];
         int index = 0;
         for (int x = xStart; x < xEnd + 1; x++) {
@@ -345,15 +345,15 @@ public class Assets {
         return frames;
     }
 
-    private static BufferedImage getSpriteExact(String sheet, int indexX, int indexY, int width, int height) {
+    public static BufferedImage getSpriteExact(String sheet, int indexX, int indexY, int width, int height) {
         return getSpriteExact(getSheet(sheet), indexX, indexY, width, height);
     }
 
-    private static BufferedImage getSpriteInd(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
+    public static BufferedImage getSpriteInd(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
         return getSpriteExact(sheet, Assets.width * indexX, Assets.height * indexY, width, height);
     }
 
-    private static BufferedImage getSpriteExact(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
+    public static BufferedImage getSpriteExact(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
         BufferedImage image = MISSING_TEXTURE;
         try {
             image = sheet.crop(indexX, indexY, width, height); // Assets.width * indexX, Assets.height * indexY <-- This caused so many problems!
@@ -363,7 +363,7 @@ public class Assets {
         return image;
     }
 
-    private static SpriteSheet getSheet(String path) {
+    public static SpriteSheet getSheet(String path) {
         return new SpriteSheet(ImageLoader.loadImage(path));
     }
 }
