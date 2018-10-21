@@ -13,7 +13,7 @@ import java.awt.*;
 
 public abstract class InventoryAbstractPlayer extends Inventory {
 
-    private int maxHotbarSize = 3;
+    private static int maxHotbarSize = 3;
     private int inventorySelectedIndex = 0;
     private int hotbarSelectedIndex = 0;
 
@@ -46,6 +46,17 @@ public abstract class InventoryAbstractPlayer extends Inventory {
             hx = hxd + 54 * i;
             addSlot(i, hx, theUltimateTile.getHeight() - height - height / 2 + 13, width, height);
             getSlot(i).setSelector(Assets.HOTBAR_SELECTER);
+        }
+    }
+
+    public static void copyItems(InventoryAbstractPlayer from, InventoryAbstractPlayer to) {
+        for (int i = 0; i < maxSize + maxHotbarSize; i++) {
+            Slot s1 = from.getSlot(i);
+            Slot s2 = to.getSlot(i);
+
+            if (s1.getStack() != null) {
+                s2.setStack(s1.getStack().copy());
+            }
         }
     }
 
