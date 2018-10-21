@@ -9,8 +9,6 @@ import java.util.Random;
 
 public class Utils {
 
-    public static final long RANDOM_SEED = new Random().nextLong();
-
     public static String getUsername() {
         return getUsername("Player");
     }
@@ -49,7 +47,7 @@ public class Utils {
 
         int out = 0;
         for (int i = 0; i < 50; i++)
-            out = new Random(RANDOM_SEED).nextInt((max - min) + 1) + min;
+            out = new Random().nextInt((max - min) + 1) + min;
         return out;
     }
 
