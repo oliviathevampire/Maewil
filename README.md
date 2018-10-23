@@ -14,7 +14,7 @@ An open world 2D adventure/puzzle game for you and your friends to play.
 * 1,2,3 	  - Select hotbar item
 * Z 		    - Move item to hotbar from inventory 
 * X 		    - Move item from hotbar to inventory
-* Space 	  - Attack (undead creatures & static entities)
+* Space 	  - Attack (undead creatures & static entities), When attacking face the way that you want to attack using WASD
 * ESC		    - Pause
   
 ## People who helped:
