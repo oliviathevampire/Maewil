@@ -30,6 +30,7 @@ public class WorldJsonSaver implements IJSONSaver {
 
     @Override
     public void save() throws IOException {
+        Logger.print("\nSaving current world!");
         saveWorld(path, world);
         saveObjects(path);
         savePlayerInfo(path);
@@ -76,11 +77,11 @@ public class WorldJsonSaver implements IJSONSaver {
     }
 
     public void saveObjects(String path) throws IOException {
-        JSONObject jsonObject = new JSONObject();
-
         /*
          * Entities
          */
+        JSONObject jsonObjectEntities = new JSONObject();
+
         JSONObject entities = new JSONObject();
         int entAmt = 0;
         for (Entity entity : theUltimateTile.getEntityManager().getEntities())
@@ -105,7 +106,7 @@ public class WorldJsonSaver implements IJSONSaver {
                 for (Entity entity : theUltimateTile.getEntityManager().getEntities())
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityStatic)
-                            saveEntityObj(entity, statics, false);
+                            saveEntityObj(entity, statics);
                 entities.put("statics", statics);
                 Logger.print("World [" + path + "] static entities saved!");
             }
@@ -116,17 +117,23 @@ public class WorldJsonSaver implements IJSONSaver {
                 for (Entity entity : theUltimateTile.getEntityManager().getEntities())
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityCreature)
-                            saveEntityObj(entity, creatures, true);
+                            saveEntityObj(entity, creatures);
                 entities.put("creatures", creatures);
                 Logger.print("World [" + path + "] creature entities saved!");
             }
         }
-        jsonObject.put("entities", entities);
+        jsonObjectEntities.put("entities", entities);
         Logger.print("World [" + path + "] entities saved!");
+
+        FileWriter fileEntities = new FileWriter(path + "/entities.json");
+        fileEntities.write(jsonObjectEntities.toJSONString());
+        fileEntities.flush();
 
         /*
          * Items
          */
+        JSONObject jsonObjectItems = new JSONObject();
+
         JSONArray items = new JSONArray();
         for (ItemStack stack : theUltimateTile.getItemManager().getItems()) {
             JSONObject itemObj = new JSONObject();
@@ -142,12 +149,12 @@ public class WorldJsonSaver implements IJSONSaver {
             }
             items.add(itemObj);
         }
-        jsonObject.put("items", items);
+        jsonObjectItems.put("items", items);
         Logger.print("World [" + path + "] items saved!");
 
-        FileWriter file = new FileWriter(path + "/objects.json");
-        file.write(jsonObject.toJSONString());
-        file.flush();
+        FileWriter fileItems = new FileWriter(path + "/items.json");
+        fileItems.write(jsonObjectItems.toJSONString());
+        fileItems.flush();
     }
 
     public void savePlayerInfo(String path) throws IOException {
@@ -198,7 +205,7 @@ public class WorldJsonSaver implements IJSONSaver {
         file.flush();
     }
 
-    private void saveEntityObj(Entity entity, JSONArray entitiesArray, boolean isCreature) {
+    private void saveEntityObj(Entity entity, JSONArray entitiesArray) {
         JSONObject entityObj = new JSONObject();
         entityObj.put("id", entity.getId());
 
@@ -207,13 +214,11 @@ public class WorldJsonSaver implements IJSONSaver {
         pos.add(1, String.valueOf(entity.getY() / Tile.TILE_HEIGHT) + "f");
         entityObj.put("pos", pos);
 
-        if (isCreature) {
-            if (entity.getDataTags() != null) {
-                JSONArray dataTags = new JSONArray();
-                for (String tag : entity.getDataTags())
-                    dataTags.add(tag);
-                entityObj.put("dataTags", dataTags);
-            }
+        if (entity.getDataTags() != null) {
+            JSONArray dataTags = new JSONArray();
+            for (String tag : entity.getDataTags())
+                dataTags.add(tag);
+            entityObj.put("dataTags", dataTags);
         }
 
         if (entity.getCurrentHealth() < entity.getMaxHealth())

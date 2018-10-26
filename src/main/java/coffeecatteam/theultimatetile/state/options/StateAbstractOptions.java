@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 
 import java.awt.*;
 import java.io.IOException;
@@ -29,6 +30,8 @@ public abstract class StateAbstractOptions extends State {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                DiscordHandler.getInstance().updatePresence("Main Menu", "Options");
             }
 
             @Override

@@ -30,6 +30,6 @@ public class EntityUltimateTile extends EntityStatic {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(animation.getCurrentFrame(), (int) (this.x - theUltimateTile.getCamera().getxOffset()), (int) (this.y - theUltimateTile.getCamera().getyOffset()), width, height, null);
+        g.drawImage(animation.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
     }
 }

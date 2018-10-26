@@ -6,6 +6,7 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 
 import java.awt.*;
 import java.net.URI;
@@ -21,6 +22,8 @@ public class StateAbstractMenu extends State {
             public void onClick() {
                 initBack();
                 State.setState(theUltimateTile.stateMenu);
+
+                DiscordHandler.getInstance().updatePresence("Main Menu");
             }
 
             @Override

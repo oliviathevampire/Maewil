@@ -9,6 +9,7 @@ public class Keybind {
     public static final String R = "R";
     public static final String E = "E";
     public static final String Q = "Q";
+    public static final String X = "X";
 
     public static final String W = "W";
     public static final String A = "A";

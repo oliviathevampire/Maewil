@@ -1,7 +1,9 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,13 +11,40 @@ import java.util.List;
 
 public abstract class Inventory {
 
-    protected TheUltimateTile theUltimateTile;
-    protected List<Slot> slots;
-    protected int maxSize = 12;
+    public static List<Inventory> inventories = new ArrayList<>();
 
-    public Inventory(TheUltimateTile theUltimateTile) {
+    protected TheUltimateTile theUltimateTile;
+    protected EntityPlayer player;
+
+    protected List<Slot> slots;
+    public static int maxSize = 12;
+
+    protected boolean active = false;
+
+    public Inventory(TheUltimateTile theUltimateTile, EntityPlayer player) {
         this.theUltimateTile = theUltimateTile;
+        this.player = player;
         slots = new ArrayList<>();
+
+        inventories.add(this);
+    }
+
+    public void swapSlots(Slot slot1, Slot slot2) {
+        ItemStack s1 = slot1.getStack() != null ? slot1.getStack().copy() : null;
+        ItemStack s2 = slot2.getStack() != null ? slot2.getStack().copy() : null;
+        slot1.setStack(s2);
+        slot2.setStack(s1);
+    }
+
+    public void dropItem(boolean active, int selectedIndex) {
+        float xOff = Tile.TILE_WIDTH / 4;
+        float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4;
+        if (getSlot(selectedIndex).getStack() != null) {
+            if (active) {
+                getSlot(selectedIndex).getStack().getItem().setPickedUp(false);
+                theUltimateTile.getItemManager().addItem(getSlot(selectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
+            }
+        }
     }
 
     public ItemStack getSlotStack(int index) {
@@ -30,19 +59,23 @@ public abstract class Inventory {
         Slot s = null;
         for (Slot slot : slots)
             if (slot.getStack() == stack)
-                return s = slot;
+                s = slot;
         return s;
     }
 
-    protected void addSlot(Slot slot) {
-        slot.setSelected(false);
-        slots.add(slot);
+    protected Slot addSlot(int index, int x, int y) {
+        return addSlot(index, x, y, 48, 48);
     }
 
-    protected void addSlot(int index, int x, int y, int width, int height) {
-        Slot slot = new Slot(index, x, y, width, height);
-        slot.setSelected(false);
+    protected Slot addSlot(int index, int x, int y, int width, int height) {
+        return addSlot(new Slot(index, x, y, width, height));
+    }
+
+    protected Slot addSlot(Slot slot) {
+        if (!slot.isSelected())
+            slot.setSelected(false);
         slots.add(slot);
+        return slots.get(slots.size() - 1);
     }
 
     public abstract void tick();
@@ -82,5 +115,13 @@ public abstract class Inventory {
         for (Slot slot : slots) {
             slot.setStack(null);
         }
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

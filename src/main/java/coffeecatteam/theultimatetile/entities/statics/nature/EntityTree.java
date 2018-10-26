@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.inventory.items.Items;
+import coffeecatteam.theultimatetile.manager.ItemManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.utils.Utils;
 
@@ -28,23 +28,18 @@ public class EntityTree extends EntityStatic {
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public void render(Graphics g) {
-        g.drawImage(type.getTexture(), (int) (this.x - theUltimateTile.getCamera().getxOffset()), (int) (this.y - theUltimateTile.getCamera().getyOffset()), width, height, null);
+        g.drawImage(type.getTexture(), this.renderX, this.renderY, width, height, null);
     }
 
     @Override
     public void die(List<Entity> entities, int index) {
         super.die(entities, index);
         for (int i = 0; i < Utils.getRandomInt(1, 3); i++) {
-            theUltimateTile.getItemManager().addItem(new ItemStack(Items.STICK), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
-            theUltimateTile.getItemManager().addItem(new ItemStack(Items.LEAF), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+            theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.STICK), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+            theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.LEAF), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
         }
-        theUltimateTile.getItemManager().addItem(new ItemStack(Items.APPLE), x + Utils.getRandomInt(0, width), y + Utils.getRandomInt(0, height));
+        theUltimateTile.getItemManager().addItem(new ItemStack(ItemManager.APPLE), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
     }
 
     public enum TreeType {

@@ -6,6 +6,7 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.OptionsJsonParser;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.utils.Logger;
 import org.json.simple.parser.ParseException;
 
@@ -66,6 +67,7 @@ public class StateOptions extends StateAbstractMenu {
                 } catch (IOException | ParseException e) {
                     e.printStackTrace();
                 }
+                setPresence("Controls");
             }
 
             @Override
@@ -84,12 +86,17 @@ public class StateOptions extends StateAbstractMenu {
                 } catch (IOException | ParseException e) {
                     e.printStackTrace();
                 }
+                setPresence("Sounds");
             }
 
             @Override
             public void tick() {
             }
         }));
+    }
+
+    private void setPresence(String presence) {
+        DiscordHandler.getInstance().updatePresence("Main Menu", "Options/" + presence);
     }
 
     @Override

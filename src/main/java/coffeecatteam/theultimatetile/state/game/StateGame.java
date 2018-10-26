@@ -11,6 +11,7 @@ import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.world.World;
 
 import java.awt.*;
@@ -59,6 +60,8 @@ public class StateGame extends State {
             @Override
             public void onClick() {
                 State.setState(theUltimateTile.stateMenu);
+
+                DiscordHandler.getInstance().updatePresence("Main Menu");
             }
 
             @Override
@@ -68,6 +71,7 @@ public class StateGame extends State {
         UIButton btnQuit = new UIButton(theUltimateTile.getWidth() / 2 - btnWidth / 2, theUltimateTile.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", new ClickListener() {
             @Override
             public void onClick() {
+                saveWorld();
                 theUltimateTile.setRunning(false);
             }
 
@@ -80,6 +84,8 @@ public class StateGame extends State {
         uiManagerPaused.addObject(btnQuit);
         uiManagerDead.addObject(btnMainMenu);
         uiManagerDead.addObject(btnQuit);
+
+        saveWorld();
     }
 
     @Override
@@ -93,13 +99,9 @@ public class StateGame extends State {
     @Override
     public void tick() {
         if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !theUltimateTile.getEntityManager().getPlayer().isDead) {
-            paused = !paused && !theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isActive();
-            WorldJsonSaver saver = new WorldJsonSaver("./saves/" + worldName, world, theUltimateTile);
-            try {
-                saver.save();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            if (!theUltimateTile.getEntityManager().getPlayer().isGuiOpen())
+                paused = !paused && !theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isActive();
+            saveWorld();
         }
 
         if (paused)
@@ -145,8 +147,17 @@ public class StateGame extends State {
         }
     }
 
+    public void saveWorld() {
+        WorldJsonSaver saver = new WorldJsonSaver("./saves/" + worldName, world, theUltimateTile);
+        try {
+            saver.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setWorld(String path) {
-        this.world = new World(theUltimateTile, path);
+        this.world = new World(theUltimateTile, path, worldName);
         theUltimateTile.setWorld(world);
         init();
     }

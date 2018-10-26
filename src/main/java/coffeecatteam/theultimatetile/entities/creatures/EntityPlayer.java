@@ -7,6 +7,8 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
 import coffeecatteam.theultimatetile.gfx.audio.Sound;
+import coffeecatteam.theultimatetile.inventory.Inventory;
+import coffeecatteam.theultimatetile.inventory.InventoryAbstractPlayer;
 import coffeecatteam.theultimatetile.inventory.InventoryPlayer;
 import coffeecatteam.theultimatetile.inventory.Slot;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
@@ -16,8 +18,6 @@ import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.tiles.IDamageableTile;
 import coffeecatteam.theultimatetile.tiles.Tile;
-import coffeecatteam.theultimatetile.tiles.Tiles;
-import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -28,7 +28,6 @@ public class EntityPlayer extends EntityCreature {
     private Animation animDead;
 
     private Animation sprintEffect;
-    private Animation splashEffect;
 
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
     private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
@@ -41,7 +40,7 @@ public class EntityPlayer extends EntityCreature {
     private int glubel = 0, maxGludel = 100, lvl = 1;
     private String username;
 
-    public boolean isDead;
+    public boolean isDead, guiOpen = false;
 
     private float prevX, prevY;
 
@@ -72,9 +71,7 @@ public class EntityPlayer extends EntityCreature {
 
         currentAnim = animIdle;
 
-        int effectSpeed = 50;
-        sprintEffect = new Animation(effectSpeed, Assets.SPRINT_EFFECT);
-        splashEffect = new Animation(effectSpeed, Assets.SPLASH_EFFECT);
+        sprintEffect = new Animation(50, Assets.SPRINT_EFFECT);
     }
 
     @Override
@@ -83,18 +80,24 @@ public class EntityPlayer extends EntityCreature {
         this.prevY = this.y;
 
         if (isActive()) {
-            if (!inventoryPlayer.isActive()) {
+            if (!guiOpen) {
                 // Movement
                 getInput();
                 move();
-
-                // Attack
-                checkAttacks();
 
                 // Interact
                 tileInteract();
                 tickEquippedItem();
             }
+
+            // Attack
+            checkAttacks();
+
+            // Open/close inventory
+            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode()))
+                openCloseInventory(inventoryPlayer);
+            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && inventoryPlayer.isActive())
+                closeInventory();
 
             theUltimateTile.getCamera().centerOnEntity(this);
             AudioMaster.setListenerData(this.x, this.y, 0f);
@@ -105,7 +108,6 @@ public class EntityPlayer extends EntityCreature {
         // Animation
         currentAnim.tick();
         sprintEffect.tick();
-        splashEffect.tick();
     }
 
     @Override
@@ -190,7 +192,7 @@ public class EntityPlayer extends EntityCreature {
                 int hitSound = -1;
                 switch (e.getEntityHitType()) {
                     case CREATURE:
-                        hitSound = (Utils.getRandomInt(0, 10) > 5 ? Sound.PUNCH_LEFT : Sound.PUNCH_RIGHT);
+                        hitSound = (Utils.getRandomInt(10) > 5 ? Sound.PUNCH_LEFT : Sound.PUNCH_RIGHT);
                         break;
                     case WOOD:
                         hitSound = Sound.STEP_WOOD;
@@ -199,7 +201,7 @@ public class EntityPlayer extends EntityCreature {
                         hitSound = Sound.STEP_STONE;
                         break;
                     case BUSH:
-                        hitSound = (Utils.getRandomInt(0, 10) > 5 ? Sound.BUSH_LEFT : Sound.BUSH_RIGHT);
+                        hitSound = (Utils.getRandomInt(10) > 5 ? Sound.BUSH_LEFT : Sound.BUSH_RIGHT);
                         break;
                 }
                 if (hitSound != -1)
@@ -256,9 +258,7 @@ public class EntityPlayer extends EntityCreature {
         xMove = 0;
         yMove = 0;
 
-        if (inWater())
-            speed = EntityCreature.DEFAULT_SPEED * 0.65f;
-        else {
+        if (!inWater()) {
             if (sprintTimer <= 0)
                 sprintStartOver -= 0.25f;
             if (sprintStartOver <= 0) {
@@ -295,20 +295,6 @@ public class EntityPlayer extends EntityCreature {
             currentAnim = animIdle;
     }
 
-    private boolean inWater() {
-        int x = (int) this.x / Tile.TILE_WIDTH;
-        int y = (int) this.y / Tile.TILE_HEIGHT;
-        Tile t = theUltimateTile.getWorld().getFGTile(x, y);
-        if (t.getId() == Tiles.WATER.getId()) {
-            float nx = x + Tile.TILE_WIDTH / 2;
-            float ny = y + Tile.TILE_HEIGHT / 2;
-            if (t.getBounds().contains(nx, ny))
-                return true;
-        }
-
-        return false;
-    }
-
     private void tileInteract() {
         int x = (int) this.x / Tile.TILE_WIDTH;
         int y = (int) this.y / Tile.TILE_HEIGHT;
@@ -330,31 +316,38 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void render(Graphics g) {
-        int x = (int) (this.x - theUltimateTile.getCamera().getxOffset());
-        int y = (int) (this.y - theUltimateTile.getCamera().getyOffset());
-        g.drawImage(currentAnim.getCurrentFrame(), x, y, width, height, null);
-        if (canSprint())
-            g.drawImage(sprintEffect.getCurrentFrame(), x, y, width, height, null);
+        g.drawImage(currentAnim.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
 
-        if (inWater())
-            g.drawImage(splashEffect.getCurrentFrame(), x, y, width, height, null);
-
-        Font font = Assets.FONT_20;
-        int nameWidth = Text.getWidth(g, username, font);
-        int nameHeight = Text.getHeight(g, font);
-        int add = 6;
-        Color tint = new Color(96, 96, 96, 127);
-        g.setColor(tint);
-
-        int xOff = nameWidth / 2 - width / 2;
-        int yOff = height / 2;
-
-        g.fillRect(x - xOff - add / 2, y - yOff - add / 2, nameWidth + add, nameHeight + add);
-        Text.drawString(g, username, x - xOff, y - yOff + nameHeight - add / 2, false, false, Color.white, font);
+        this.renderEffect(g);
     }
 
+    @Override
+    public void renderEffect(Graphics g) {
+        super.renderEffect(g);
+
+        if (canSprint())
+            g.drawImage(sprintEffect.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
+    }
+
+    @Override
     public void postRender(Graphics g) {
+        Font font = Assets.FONT_20;
+        if (username != null) {
+            int nameWidth = Text.getWidth(g, username, font);
+            int nameHeight = Text.getHeight(g, font);
+            int add = 6;
+            Color tint = new Color(96, 96, 96, 127);
+            g.setColor(tint);
+
+            int xOff = nameWidth / 2 - width / 2;
+            int yOff = height / 2;
+
+            g.fillRect(this.renderX - xOff - add / 2, this.renderY - yOff - add / 2, nameWidth + add, nameHeight + add);
+            Text.drawString(g, username, this.renderX - xOff, this.renderY - yOff + nameHeight - add / 2, false, false, Color.white, font);
+        }
+
         inventoryPlayer.render(g);
+        inventoryPlayer.renderHotbar(g);
     }
 
     public InventoryPlayer getInventoryPlayer() {
@@ -423,5 +416,34 @@ public class EntityPlayer extends EntityCreature {
         lvl = 0;
         equippedItem = null;
         extraDmg = 0;
+    }
+
+    public boolean isGuiOpen() {
+        return guiOpen;
+    }
+
+    public void setGuiOpen(boolean guiOpen) {
+        this.guiOpen = guiOpen;
+    }
+
+    public boolean openInventory(InventoryAbstractPlayer inventory) {
+        if (!guiOpen) {
+            inventory.setActive(true);
+            guiOpen = true;
+            return true;
+        }
+        return false;
+    }
+
+    public void closeInventory() {
+        Inventory.inventories.forEach(inventory -> {
+            inventory.setActive(false);
+            guiOpen = false;
+        });
+    }
+
+    public void openCloseInventory(InventoryAbstractPlayer inventory) {
+        if (!openInventory(inventory))
+            closeInventory();
     }
 }

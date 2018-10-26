@@ -6,7 +6,6 @@ import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
 import coffeecatteam.theultimatetile.gfx.audio.Sound;
-import coffeecatteam.theultimatetile.inventory.items.Items;
 import coffeecatteam.theultimatetile.manager.*;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateMenu;
@@ -14,6 +13,7 @@ import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.state.options.OptionsSounds;
 import coffeecatteam.theultimatetile.state.options.controls.OptionsControls;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 import coffeecatteam.theultimatetile.world.World;
@@ -58,8 +58,6 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
     private WindowManager windowManager;
 
-    private String username;
-
     public TheUltimateTile(String[] args, String title, int width, int height) {
         this.args = args;
         this.title = title;
@@ -85,7 +83,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        frame.setIconImage(Assets.ULTIMATE_TILE[0]);
+        frame.setIconImage(Assets.LOGO);
 
         this.setPreferredSize(size);
         this.setMaximumSize(size);
@@ -106,9 +104,6 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
         camera = new Camera(this, 0, 0);
 
-        username = hasArgument("-username") ? getArgument("-username") : Utils.getUsername();
-        Logger.print("Set username: " + username);
-
         stateMenu = new StateMenu(this);
         stateSelectGame = new StateSelectGame(this);
         stateOptions = new StateOptions(this);
@@ -116,12 +111,12 @@ public class TheUltimateTile extends Canvas implements Runnable {
         optionsSpounds = new OptionsSounds(this);
         State.setState(stateMenu);
 
-        entityManager = new EntityManager(this, new EntityPlayer(this, username));
+        entityManager = new EntityManager(this, new EntityPlayer(this, ""));
 
         itemManager = new ItemManager(this);
         windowManager = new WindowManager(this);
 
-        Items.init();
+        ItemManager.init();
 
         // Audio/sound initialized
         AudioMaster.init();
@@ -165,6 +160,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
     @Override
     public void run() {
         init();
+        DiscordHandler.getInstance().setup();
 
         // Background music
         Sound.play(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic(), 0f, 0f, 0f, 1f, true);
@@ -207,7 +203,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
         stop();
 
-        Logger.print("Exiting game..");
+        Logger.print("\nExiting game..");
         System.exit(0);
     }
 
@@ -288,7 +284,11 @@ public class TheUltimateTile extends Canvas implements Runnable {
     }
 
     public String getUsername() {
-        return username;
+        return this.entityManager.getPlayer().getUsername();
+    }
+
+    public void setUsername(String username) {
+        this.entityManager.getPlayer().setUsername(username);
     }
 
     public EntityManager getEntityManager() {

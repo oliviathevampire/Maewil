@@ -5,13 +5,13 @@ import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.inventory.items.Items;
+import coffeecatteam.theultimatetile.manager.ItemManager;
 
 public class EntitySkeleton extends EntityUndead {
 
     public EntitySkeleton(TheUltimateTile theUltimateTile, String id) {
         super(theUltimateTile, id);
-        this.drop = Items.BONE;
+        this.drop = ItemManager.BONE;
         this.setMaxHealth(Entity.DEFAULT_HEALTH / 2);
         setMaxFollowDistance(250f);
         this.dmgModifier = 2;

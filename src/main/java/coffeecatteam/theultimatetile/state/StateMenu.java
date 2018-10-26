@@ -6,6 +6,7 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 
 import java.awt.*;
 import java.net.URI;
@@ -24,6 +25,8 @@ public class StateMenu extends State {
             @Override
             public void onClick() {
                 State.setState(theUltimateTile.stateSelectGame);
+
+                DiscordHandler.getInstance().updatePresence("Main Menu", "Selecting A Game");
             }
 
             @Override
@@ -37,6 +40,8 @@ public class StateMenu extends State {
             @Override
             public void onClick() {
                 State.setState(theUltimateTile.stateOptions);
+
+                DiscordHandler.getInstance().updatePresence("Main Menu", "Options");
             }
 
             @Override

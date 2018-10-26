@@ -38,7 +38,7 @@ public class Assets {
 
     public static BufferedImage ITEM_COAL, ITEM_IRON_INGOT, ITEM_GOLD_INGOT, ITEM_DIAMOND;
 
-    public static BufferedImage ITEM_CARROT, ITEM_APPLE, ITEM_RAW_PORK, ITEM_COOKED_PORK, ITEM_BREAD, ITEM_WHEAT, ITEM_RAW_STEAK, ITEM_COOKED_STEAK, ITEM_WOOL_BUNDLE;
+    public static BufferedImage ITEM_CARROT, ITEM_APPLE, ITEM_RAW_PORK, ITEM_COOKED_PORK, ITEM_BREAD, ITEM_WHEAT, ITEM_RAW_STEAK, ITEM_COOKED_STEAK, ITEM_WOOL_BUNDLE, ITEM_POTATO, ITEM_TOMATO, ITEM_CORN;
 
     public static BufferedImage ITEM_COIN_PENNY, ITEM_COIN_IRON, ITEM_COIN_GOLD;
 
@@ -71,10 +71,12 @@ public class Assets {
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
     public static BufferedImage ROCK_V1, ROCK_V2;
     public static BufferedImage BUSH_SMALL, BUSH_LARGE;
-    public static BufferedImage CROP_GROUND, CROP_CARROT, CROP_WHEAT;
+    public static BufferedImage CROP_GROUND, CROP_CARROT, CROP_WHEAT, CROP_POTATO, CROP_TOMATO, CROP_CORN;
 
     public static BufferedImage SHOP_STALL;
     public static BufferedImage[] SHOP_ROOF_ORANGE, SHOP_ROOF_BLUE, SHOP_ROOF_RED, SHOP_ROOF_GREY;
+
+    public static BufferedImage[] CAMPFIRE;
 
     /* GUI */
     public static BufferedImage BACKGROUND;
@@ -85,12 +87,14 @@ public class Assets {
     public static BufferedImage[] BUTTON_HOVER = new BufferedImage[3];
     public static BufferedImage[] BUTTON_DISABLED = new BufferedImage[3];
 
-    public static BufferedImage INVENTORY;
+    public static BufferedImage INVENTORY, CAMPFIRE_INVENTORY;
     public static BufferedImage SLOT, SLOT_SELECTER;
     public static BufferedImage HOTBAR, HOTBAR_SELECTER;
 
     public static BufferedImage ICON_ON, ICON_OFF;
     public static BufferedImage TOOLTIP_SHORT_SMALL, TOOLTIP_SHORT_LARGE, TOOLTIP_LONG_SMALL, TOOLTIP_LONG_LARGE;
+
+    public static BufferedImage LOGO;
 
     public static void init() {
         /* Fonts */
@@ -115,6 +119,7 @@ public class Assets {
 
         SpriteSheet menuSheet = getSheet("/assets/textures/gui/menu.png");
         SpriteSheet invSheet = getSheet("/assets/textures/gui/inventory/inventory.png");
+        SpriteSheet campfireInvSheet = getSheet("/assets/textures/gui/inventory/campfire.png");
 
         /* Tiles */
         GRASS = getSpriteInd(terrainSheet, 0, 0, width, height);
@@ -179,6 +184,9 @@ public class Assets {
         ITEM_RAW_STEAK = getSpriteInd(itemsSheet, 4, 0, width, height);
         ITEM_COOKED_STEAK = getSpriteInd(itemsSheet, 4, 1, width, height);
         ITEM_WOOL_BUNDLE = getSpriteInd(itemsSheet, 1, 3, width, height);
+        ITEM_POTATO = getSpriteInd(itemsSheet, 4, 2, width, height);
+        ITEM_TOMATO = getSpriteInd(itemsSheet, 3, 6, width, height);
+        ITEM_CORN = getSpriteInd(itemsSheet, 3, 7, width, height);
 
         ITEM_COIN_PENNY = getSpriteInd(itemsSheet, 5, 0, width, height);
         ITEM_COIN_IRON = getSpriteInd(itemsSheet, 5, 1, width, height);
@@ -259,6 +267,9 @@ public class Assets {
         CROP_GROUND = getSpriteInd(natureSheet, 6, 0, width, height);
         CROP_CARROT = getSpriteInd(natureSheet, 7, 0, width, height);
         CROP_WHEAT = getSpriteInd(natureSheet, 7, 1, width, height);
+        CROP_POTATO = getSpriteInd(natureSheet, 7, 2, width, height);
+        CROP_TOMATO = getSpriteInd(natureSheet, 7, 3, width, height);
+        CROP_CORN = getSpriteInd(natureSheet, 7, 4, width, height);
 
         int shopRoofLength = 7;
         SHOP_STALL = getSpriteInd(staticSheet, 0, 4, width * 2, height * 2);
@@ -266,6 +277,8 @@ public class Assets {
         SHOP_ROOF_BLUE = getFrames(staticSheet, 1, 0, shopRoofLength, width * 2, height);
         SHOP_ROOF_RED = getFrames(staticSheet, 2, 0, shopRoofLength, width * 2, height);
         SHOP_ROOF_GREY = getFrames(staticSheet, 3, 0, shopRoofLength, width * 2, height);
+
+        CAMPFIRE = getFrames(staticSheet, 7, 0, 9, width, height);
 
         /* GUI */
         BACKGROUND = getSpriteExact("/assets/textures/gui/bg.png", 0, 0, 320, 320);
@@ -277,6 +290,8 @@ public class Assets {
         BUTTON_DISABLED = getFrames(menuSheet, 2, 0, 2, width, height);
 
         INVENTORY = getSpriteExact(invSheet, 0, 0, 57, 41);
+        CAMPFIRE_INVENTORY = getSpriteExact(campfireInvSheet, 0, 0, 57, 44);
+
         SLOT = getSpriteExact(invSheet, 2, 22, 8, 8);
         SLOT_SELECTER = getSpriteExact(invSheet, 48, 48, width, height);
         HOTBAR = getSpriteExact(invSheet, 12, 54, 28, 10);
@@ -290,30 +305,32 @@ public class Assets {
         TOOLTIP_LONG_SMALL = getSpriteInd(menuSheet, 2, 4, width * 3, height);
         TOOLTIP_LONG_LARGE = getSpriteInd(menuSheet, 2, 4, width * 3, height * 2);
 
+        LOGO = getSpriteExact("/assets/textures/logo.png", 0, 0, 128, 128);
+
         Logger.print("Assets initialized!");
     }
 
-    private static BufferedImage[] getFrames(String sheet, int xStart, int xEnd) {
+    public static BufferedImage[] getFrames(String sheet, int xStart, int xEnd) {
         return getFrames(sheet, 0, xStart, xEnd);
     }
 
-    private static BufferedImage[] getFrames(String sheet, int y, int xStart, int xEnd) {
+    public static BufferedImage[] getFrames(String sheet, int y, int xStart, int xEnd) {
         return getFrames(getSheet(sheet), y, xStart, xEnd, width, height);
     }
 
-    private static BufferedImage[] getFrames(String sheet, int y, int xStart, int xEnd, int width, int height) {
+    public static BufferedImage[] getFrames(String sheet, int y, int xStart, int xEnd, int width, int height) {
         return getFrames(getSheet(sheet), y, xStart, xEnd, width, height);
     }
 
-    private static BufferedImage[] getFrames(SpriteSheet sheet, int xStart, int xEnd) {
+    public static BufferedImage[] getFrames(SpriteSheet sheet, int xStart, int xEnd) {
         return getFrames(sheet, 0, xStart, xEnd);
     }
 
-    private static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd) {
+    public static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd) {
         return getFrames(sheet, y, xStart, xEnd, width, height);
     }
 
-    private static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd, int width, int height) {
+    public static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd, int width, int height) {
         BufferedImage[] frames = new BufferedImage[(xEnd - xStart) + 1];
         int index = 0;
         for (int x = xStart; x < xEnd + 1; x++) {
@@ -328,15 +345,15 @@ public class Assets {
         return frames;
     }
 
-    private static BufferedImage getSpriteExact(String sheet, int indexX, int indexY, int width, int height) {
+    public static BufferedImage getSpriteExact(String sheet, int indexX, int indexY, int width, int height) {
         return getSpriteExact(getSheet(sheet), indexX, indexY, width, height);
     }
 
-    private static BufferedImage getSpriteInd(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
+    public static BufferedImage getSpriteInd(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
         return getSpriteExact(sheet, Assets.width * indexX, Assets.height * indexY, width, height);
     }
 
-    private static BufferedImage getSpriteExact(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
+    public static BufferedImage getSpriteExact(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
         BufferedImage image = MISSING_TEXTURE;
         try {
             image = sheet.crop(indexX, indexY, width, height); // Assets.width * indexX, Assets.height * indexY <-- This caused so many problems!
@@ -346,7 +363,7 @@ public class Assets {
         return image;
     }
 
-    private static SpriteSheet getSheet(String path) {
+    public static SpriteSheet getSheet(String path) {
         return new SpriteSheet(ImageLoader.loadImage(path));
     }
 }

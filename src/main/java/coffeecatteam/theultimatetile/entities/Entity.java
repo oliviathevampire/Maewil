@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,9 @@ public abstract class Entity {
 
     private String[] dataTags;
     private EntityHitType entityHitType;
+
+    protected int renderX, renderY;
+    protected BufferedImage texture;
 
     public Entity(TheUltimateTile theUltimateTile, String id, int width, int height, EntityHitType entityHitType) {
         this.id = id;
@@ -64,24 +68,32 @@ public abstract class Entity {
         return false;
     }
 
-    public abstract void tick();
+    public void tick() {
+    }
 
     public void tickA() {
         tick();
+
+        this.renderX = (int) (this.x - this.theUltimateTile.getCamera().getxOffset());
+        this.renderY = (int) (this.y - this.theUltimateTile.getCamera().getyOffset());
 
         if (this.interacted)
             this.interact();
     }
 
-    public abstract void render(Graphics g);
-
-    public void renderA(Graphics g) {
-        render(g);
-
+    public void preRender(Graphics g) {
         if (showHitbox) {
             g.setColor(Color.red);
             g.fillRect((int) (x + bounds.x - theUltimateTile.getCamera().getxOffset()), (int) (y + bounds.y - theUltimateTile.getCamera().getyOffset()), bounds.width, bounds.height);
         }
+    }
+
+    public void render(Graphics g) {
+        if (texture != null)
+            g.drawImage(texture, this.renderX, this.renderY, width, height, null);
+    }
+
+    public void postRender(Graphics g) {
     }
 
     public void die(List<Entity> entities, int index) {

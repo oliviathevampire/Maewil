@@ -198,16 +198,30 @@
         ]
       },
       {
-        "id": "crop_carrot",
+        "id": "crop_wheat",
         "pos": [
           "2f",
           "7f"
         ]
       },
       {
-        "id": "crop_wheat",
+        "id": "crop_potato",
         "pos": [
           "1f",
+          "8f"
+        ]
+      },
+      {
+        "id": "crop_tomato",
+        "pos": [
+          "2f",
+          "8f"
+        ]
+      },
+      {
+        "id": "crop_corn",
+        "pos": [
+          "3f",
           "8f"
         ]
       },
@@ -224,6 +238,16 @@
         "pos": [
           "14f",
           "11.5f"
+        ]
+      },
+      {
+        "id": "campfire",
+        "pos": [
+          "18f",
+          "17f"
+        ],
+        "dataTags": [
+          "raw_pork:1"
         ]
       }
     ],
@@ -286,28 +310,5 @@
         ]
       }
     ]
-  },
-  "items": [
-    {
-      "id": "stone_sword",
-      "pos": [
-        "3.25f",
-        "18.25f"
-      ]
-    },
-    {
-      "id": "wooden_pick",
-      "pos": [
-        "2.25f",
-        "16.25f"
-      ]
-    },
-    {
-      "id": "stone_pick",
-      "pos": [
-        "3.25f",
-        "16.25f"
-      ]
-    }
-  ]
+  }
 }

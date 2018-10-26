@@ -10,14 +10,14 @@ import coffeecatteam.theultimatetile.entities.creatures.undead.EntityBouncer;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntitySkeleton;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityThing;
 import coffeecatteam.theultimatetile.entities.creatures.undead.EntityZombie;
-import coffeecatteam.theultimatetile.entities.statics.EntityShopStall;
 import coffeecatteam.theultimatetile.entities.statics.EntityUltimateTile;
+import coffeecatteam.theultimatetile.entities.statics.interactable.EntityCampfire;
+import coffeecatteam.theultimatetile.entities.statics.interactable.EntityShopStall;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityBush;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityCrop;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityRock;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityTree;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.inventory.items.Items;
 import coffeecatteam.theultimatetile.manager.iinterface.IRenderabelManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
@@ -50,10 +50,19 @@ public class EntityManager implements IRenderabelManager {
             case "bush_large":
                 return new EntityBush(theUltimateTile, id, Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2);
 
+            /*
+             * Crops
+             */
             case "crop_carrot":
-                return new EntityCrop(theUltimateTile, id, Assets.CROP_CARROT, Items.CARROT);
+                return new EntityCrop(theUltimateTile, id, Assets.CROP_CARROT, ItemManager.CARROT);
             case "crop_wheat":
-                return new EntityCrop(theUltimateTile, id, Assets.CROP_WHEAT, Items.WHEAT);
+                return new EntityCrop(theUltimateTile, id, Assets.CROP_WHEAT, ItemManager.WHEAT);
+            case "crop_potato":
+                return new EntityCrop(theUltimateTile, id, Assets.CROP_POTATO, ItemManager.POTATO);
+            case "crop_tomato":
+                return new EntityCrop(theUltimateTile, id, Assets.CROP_TOMATO, ItemManager.TOMATO);
+            case "crop_corn":
+                return new EntityCrop(theUltimateTile, id, Assets.CROP_CORN, ItemManager.CORN);
 
             /*
              * Undead
@@ -85,6 +94,8 @@ public class EntityManager implements IRenderabelManager {
 
             case "shop":
                 return new EntityShopStall(theUltimateTile, id);
+            case "campfire":
+                return new EntityCampfire(theUltimateTile, id);
         }
         return new EntityRock(theUltimateTile, "rock", Assets.ROCK_V1);
     }
@@ -124,12 +135,14 @@ public class EntityManager implements IRenderabelManager {
 
     @Override
     public void render(Graphics g) {
-        for (Entity e : entities) {
-            e.renderA(g);
-        }
+        for (Entity e : entities)
+            e.preRender(g);
 
-        /* Post Render */
-        player.postRender(g);
+        for (Entity e : entities)
+            e.render(g);
+
+        for (Entity e : entities)
+            e.postRender(g);
     }
 
     public void addEntity(Entity e) {

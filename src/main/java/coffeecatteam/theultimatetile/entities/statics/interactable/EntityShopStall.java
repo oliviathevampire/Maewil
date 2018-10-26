@@ -1,7 +1,8 @@
-package coffeecatteam.theultimatetile.entities.statics;
+package coffeecatteam.theultimatetile.entities.statics.interactable;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.utils.Logger;
@@ -23,7 +24,7 @@ public class EntityShopStall extends EntityStatic {
     private Animation pickRoof() {
         int speed = 250;
         Animation anim = new Animation(speed, Assets.SHOP_ROOF_ORANGE);
-        int i = Utils.getRandomInt(0, 3);
+        int i = Utils.getRandomInt(3);
         if (i == 0)
             anim.setFrames(Assets.SHOP_ROOF_ORANGE);
         if (i == 1)
@@ -48,7 +49,7 @@ public class EntityShopStall extends EntityStatic {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.SHOP_STALL, (int) (this.x - theUltimateTile.getCamera().getxOffset()), (int) (this.y - theUltimateTile.getCamera().getyOffset()), width, height, null);
-        g.drawImage(ROOF.getCurrentFrame(), (int) (this.x - theUltimateTile.getCamera().getxOffset()), (int) (this.y - theUltimateTile.getCamera().getyOffset()), width, height / 2, null);
+        g.drawImage(Assets.SHOP_STALL, this.renderX, this.renderY, width, height, null);
+        g.drawImage(ROOF.getCurrentFrame(), this.renderX, this.renderY, width, height / 2, null);
     }
 }

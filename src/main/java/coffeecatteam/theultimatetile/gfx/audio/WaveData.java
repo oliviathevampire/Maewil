@@ -67,13 +67,10 @@ public class WaveData {
         AudioInputStream audioStream = null;
         try {
             audioStream = AudioSystem.getAudioInputStream(bufferedInput);
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (UnsupportedAudioFileException | IOException e) {
             e.printStackTrace();
         }
-        WaveData wavStream = new WaveData(audioStream);
-        return wavStream;
+        return new WaveData(audioStream);
     }
 
 

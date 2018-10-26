@@ -37,7 +37,7 @@ public class StateSelectGame extends StateAbstractMenu {
     private static String getWorldname(String defaultName) {
         String username;
         int nameLength = 16;
-        defaultName += "_" + Utils.getRandomInt(0, 1000);
+        defaultName += "_" + Utils.getRandomInt(1000);
         try {
             username = JOptionPane.showInputDialog("Please enter a world name\nMust be max " + nameLength + " characters", defaultName);
             if (username.length() > nameLength || username.equalsIgnoreCase(""))
@@ -63,12 +63,6 @@ public class StateSelectGame extends StateAbstractMenu {
             this.listener = new ClickListenerWorld(this.path, this.savesPath, index);
             hasTooltip = true;
         }
-
-//        @Override
-//        public void tick() {
-//            super.tick();
-//            ((ClickListenerWorld) this.listener).setText(this);
-//        }
 
         @Override
         public UIButton setTooltip(List<String> tooltip) {
@@ -102,12 +96,15 @@ public class StateSelectGame extends StateAbstractMenu {
             boolean isSaved = Boolean.valueOf(SavedGamesJSONParser.GAMES.get(index).split(":")[0]);
 
             String worldName;
-            if (!isSaved) { // (new File(fileName + "/world.json").exists()) || !(new File(fileName + "/objects.json").exists())
+            if (!isSaved) {
                 worldName = getWorldname("New World");
                 path = savesPath + worldName;
                 new File(path).mkdir();
-                WorldJsonLoader.copyFiles(path);
+
+                String ogWorld = "/assets/worlds/starter/world_01";
+                WorldJsonLoader.copyFiles(ogWorld, path);
                 SavedGamesJSONParser.GAMES.set(index, "true:" + worldName);
+
                 try {
                     gamesJSONParser.save();
                 } catch (IOException e) {
@@ -118,11 +115,22 @@ public class StateSelectGame extends StateAbstractMenu {
                 path = savesPath + worldName;
             }
             State.setState(new StateGame(theUltimateTile, path, worldName));
+
+            if (!isSaved) {
+                String username = theUltimateTile.hasArgument("-username") ? theUltimateTile.getArgument("-username") : Utils.getUsername();
+                theUltimateTile.setUsername(username);
+                Logger.print("Set username: " + username);
+            }
+
             Logger.print("Loading game [" + path + "]!");
         }
 
         @Override
         public void tick() {
+        }
+
+        public String getPath() {
+            return path;
         }
 
         public void setText(WorldButton button) {

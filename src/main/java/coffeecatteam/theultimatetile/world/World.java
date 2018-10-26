@@ -6,6 +6,7 @@ import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.TileBreakable;
 import coffeecatteam.theultimatetile.tiles.Tiles;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.utils.Logger;
 import org.json.simple.parser.ParseException;
 
@@ -25,7 +26,7 @@ public class World {
 
     private OverlayManager overlayManager;
 
-    public World(TheUltimateTile theUltimateTile, String path) {
+    public World(TheUltimateTile theUltimateTile, String path, String worldName) {
         this.theUltimateTile = theUltimateTile;
         overlayManager = new OverlayManager(theUltimateTile, theUltimateTile.getEntityManager().getPlayer());
 
@@ -36,6 +37,9 @@ public class World {
         }
         theUltimateTile.getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
         theUltimateTile.getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
+
+        DiscordHandler.getInstance().updatePresence("In Game - " + theUltimateTile.getEntityManager().getPlayer().getUsername(),
+                "World: " + name + " - Save: [" + worldName + "]", true);
     }
 
     public void tick() {
