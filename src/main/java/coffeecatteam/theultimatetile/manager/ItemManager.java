@@ -85,6 +85,10 @@ public class ItemManager implements IRenderabelManager {
         Item.items.put(item.getId(), item);
     }
 
+    public static Item getItemById(String id) {
+        return Item.items.get(id);
+    }
+
     // Item Manager
     private TheUltimateTile theUltimateTile;
     private ArrayList<ItemStack> items;
