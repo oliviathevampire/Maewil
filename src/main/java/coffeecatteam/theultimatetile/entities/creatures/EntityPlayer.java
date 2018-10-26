@@ -332,17 +332,19 @@ public class EntityPlayer extends EntityCreature {
     @Override
     public void postRender(Graphics g) {
         Font font = Assets.FONT_20;
-        int nameWidth = Text.getWidth(g, username, font);
-        int nameHeight = Text.getHeight(g, font);
-        int add = 6;
-        Color tint = new Color(96, 96, 96, 127);
-        g.setColor(tint);
+        if (username != null) {
+            int nameWidth = Text.getWidth(g, username, font);
+            int nameHeight = Text.getHeight(g, font);
+            int add = 6;
+            Color tint = new Color(96, 96, 96, 127);
+            g.setColor(tint);
 
-        int xOff = nameWidth / 2 - width / 2;
-        int yOff = height / 2;
+            int xOff = nameWidth / 2 - width / 2;
+            int yOff = height / 2;
 
-        g.fillRect(this.renderX - xOff - add / 2, this.renderY - yOff - add / 2, nameWidth + add, nameHeight + add);
-        Text.drawString(g, username, this.renderX - xOff, this.renderY - yOff + nameHeight - add / 2, false, false, Color.white, font);
+            g.fillRect(this.renderX - xOff - add / 2, this.renderY - yOff - add / 2, nameWidth + add, nameHeight + add);
+            Text.drawString(g, username, this.renderX - xOff, this.renderY - yOff + nameHeight - add / 2, false, false, Color.white, font);
+        }
 
         inventoryPlayer.render(g);
         inventoryPlayer.renderHotbar(g);

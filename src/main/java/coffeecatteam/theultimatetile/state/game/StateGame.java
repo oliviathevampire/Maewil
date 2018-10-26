@@ -84,6 +84,8 @@ public class StateGame extends State {
         uiManagerPaused.addObject(btnQuit);
         uiManagerDead.addObject(btnMainMenu);
         uiManagerDead.addObject(btnQuit);
+
+        saveWorld();
     }
 
     @Override

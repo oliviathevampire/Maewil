@@ -58,8 +58,6 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
     private WindowManager windowManager;
 
-    private String username;
-
     public TheUltimateTile(String[] args, String title, int width, int height) {
         this.args = args;
         this.title = title;
@@ -106,9 +104,6 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
         camera = new Camera(this, 0, 0);
 
-        username = hasArgument("-username") ? getArgument("-username") : Utils.getUsername();
-        Logger.print("Set username: " + username);
-
         stateMenu = new StateMenu(this);
         stateSelectGame = new StateSelectGame(this);
         stateOptions = new StateOptions(this);
@@ -116,7 +111,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
         optionsSpounds = new OptionsSounds(this);
         State.setState(stateMenu);
 
-        entityManager = new EntityManager(this, new EntityPlayer(this, username));
+        entityManager = new EntityManager(this, new EntityPlayer(this, ""));
 
         itemManager = new ItemManager(this);
         windowManager = new WindowManager(this);
@@ -289,7 +284,11 @@ public class TheUltimateTile extends Canvas implements Runnable {
     }
 
     public String getUsername() {
-        return username;
+        return this.entityManager.getPlayer().getUsername();
+    }
+
+    public void setUsername(String username) {
+        this.entityManager.getPlayer().setUsername(username);
     }
 
     public EntityManager getEntityManager() {
