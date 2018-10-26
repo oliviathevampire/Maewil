@@ -36,16 +36,16 @@ public abstract class InventoryAbstractPlayer extends Inventory {
                 x -= width * 7 - 12;
                 y += height + 5;
             }
-            addSlot(i, x, y, width, height);
-            getSlot(i).setSelector(Assets.SLOT_SELECTER);
+            Slot s = new Slot(i, x, y, width, height);
+            addSlot(s).setSelector(Assets.SLOT_SELECTER);
         }
 
         // Add hotbar slots
         int hxd = (theUltimateTile.getWidth() / 2 - width / 2) - width - 6, hx;
         for (int i = 0; i < maxHotbarSize; i++) {
             hx = hxd + 54 * i;
-            addSlot(i, hx, theUltimateTile.getHeight() - height - height / 2 + 13, width, height);
-            getSlot(i).setSelector(Assets.HOTBAR_SELECTER);
+            Slot s = new Slot(i, hx, theUltimateTile.getHeight() - height - height / 2 + 13, width, height);
+            addSlot(s).setSelector(Assets.HOTBAR_SELECTER);
         }
     }
 
@@ -225,9 +225,17 @@ public abstract class InventoryAbstractPlayer extends Inventory {
                 getSlot(i).remove();
     }
 
+    public boolean isPInventoryFull() {
+        int size = 0;
+        for (int i = 0; i < maxSize; i++)
+            if (getSlot(i).getStack() != null)
+                size++;
+        return size >= maxSize;
+    }
+
     public boolean isHotbarFull() {
         int size = 0;
-        for (int i = 0; i < maxSize + maxHotbarSize; i++)
+        for (int i = maxSize; i < maxSize + maxHotbarSize; i++)
             if (getSlot(i).getStack() != null)
                 size++;
         return size >= maxSize + maxHotbarSize;

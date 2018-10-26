@@ -19,7 +19,7 @@ public class EntityCampfire extends EntityStatic {
         super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.WOOD);
         anim = new Animation(135, Assets.CAMPFIRE);
 
-        inventoryCampfire = new InventoryCampfire(theUltimateTile, theUltimateTile.getEntityManager().getPlayer());
+        inventoryCampfire = new InventoryCampfire(theUltimateTile, theUltimateTile.getEntityManager().getPlayer(), this);
     }
 
     @Override

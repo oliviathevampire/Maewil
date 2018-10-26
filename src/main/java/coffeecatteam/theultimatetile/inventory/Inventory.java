@@ -17,7 +17,7 @@ public abstract class Inventory {
     protected EntityPlayer player;
 
     protected List<Slot> slots;
-    protected int maxSize = 12;
+    public static int maxSize = 12;
 
     protected boolean active = false;
 
@@ -63,15 +63,19 @@ public abstract class Inventory {
         return s;
     }
 
-    protected void addSlot(Slot slot) {
-        slot.setSelected(false);
-        slots.add(slot);
+    protected Slot addSlot(int index, int x, int y) {
+        return addSlot(index, x, y, 48, 48);
     }
 
-    protected void addSlot(int index, int x, int y, int width, int height) {
-        Slot slot = new Slot(index, x, y, width, height);
-        slot.setSelected(false);
+    protected Slot addSlot(int index, int x, int y, int width, int height) {
+        return addSlot(new Slot(index, x, y, width, height));
+    }
+
+    protected Slot addSlot(Slot slot) {
+        if (!slot.isSelected())
+            slot.setSelected(false);
         slots.add(slot);
+        return slots.get(slots.size() - 1);
     }
 
     public abstract void tick();

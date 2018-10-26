@@ -74,8 +74,9 @@ public class Slot {
         return isSelected;
     }
 
-    public void setSelected(boolean selected) {
+    public Slot setSelected(boolean selected) {
         isSelected = selected;
+        return this;
     }
 
     public ItemStack remove() {
