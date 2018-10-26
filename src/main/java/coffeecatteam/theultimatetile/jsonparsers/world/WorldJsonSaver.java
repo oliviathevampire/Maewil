@@ -106,7 +106,7 @@ public class WorldJsonSaver implements IJSONSaver {
                 for (Entity entity : theUltimateTile.getEntityManager().getEntities())
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityStatic)
-                            saveEntityObj(entity, statics, false);
+                            saveEntityObj(entity, statics);
                 entities.put("statics", statics);
                 Logger.print("World [" + path + "] static entities saved!");
             }
@@ -117,7 +117,7 @@ public class WorldJsonSaver implements IJSONSaver {
                 for (Entity entity : theUltimateTile.getEntityManager().getEntities())
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityCreature)
-                            saveEntityObj(entity, creatures, true);
+                            saveEntityObj(entity, creatures);
                 entities.put("creatures", creatures);
                 Logger.print("World [" + path + "] creature entities saved!");
             }
@@ -205,7 +205,7 @@ public class WorldJsonSaver implements IJSONSaver {
         file.flush();
     }
 
-    private void saveEntityObj(Entity entity, JSONArray entitiesArray, boolean isCreature) {
+    private void saveEntityObj(Entity entity, JSONArray entitiesArray) {
         JSONObject entityObj = new JSONObject();
         entityObj.put("id", entity.getId());
 
@@ -214,13 +214,11 @@ public class WorldJsonSaver implements IJSONSaver {
         pos.add(1, String.valueOf(entity.getY() / Tile.TILE_HEIGHT) + "f");
         entityObj.put("pos", pos);
 
-        if (isCreature) {
-            if (entity.getDataTags() != null) {
-                JSONArray dataTags = new JSONArray();
-                for (String tag : entity.getDataTags())
-                    dataTags.add(tag);
-                entityObj.put("dataTags", dataTags);
-            }
+        if (entity.getDataTags() != null) {
+            JSONArray dataTags = new JSONArray();
+            for (String tag : entity.getDataTags())
+                dataTags.add(tag);
+            entityObj.put("dataTags", dataTags);
         }
 
         if (entity.getCurrentHealth() < entity.getMaxHealth())

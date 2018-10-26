@@ -109,7 +109,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 JSONArray statics = (JSONArray) entities.get("statics");
                 for (Object aStatic : statics) {
                     JSONObject entity = (JSONObject) aStatic;
-                    loadEntityObj(entity, false);
+                    loadEntityObj(entity);
                 }
                 Logger.print("Loaded world static entities");
             }
@@ -118,7 +118,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 JSONArray creatures = (JSONArray) entities.get("creatures");
                 for (Object creature : creatures) {
                     JSONObject entity = (JSONObject) creature;
-                    loadEntityObj(entity, true);
+                    loadEntityObj(entity);
                 }
                 Logger.print("Loaded world creature entities");
             }
@@ -155,9 +155,11 @@ public class WorldJsonLoader implements IJSONLoader {
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/player_info.json"));
 
-        username = (String) jsonObject.get("username");
-        theUltimateTile.getEntityManager().getPlayer().setUsername(username);
-        Logger.print("loaded player username!");
+        if (jsonObject.containsKey("username")) {
+            username = (String) jsonObject.get("username");
+            theUltimateTile.getEntityManager().getPlayer().setUsername(username);
+            Logger.print("loaded player username!");
+        }
 
         health = Utils.parseInt(jsonObject.get("health").toString());
         theUltimateTile.getEntityManager().getPlayer().setCurrentHealth(health);
@@ -238,17 +240,15 @@ public class WorldJsonLoader implements IJSONLoader {
     /*
      * Load an entity object
      */
-    private void loadEntityObj(JSONObject entityObj, boolean isCreature) {
+    private void loadEntityObj(JSONObject entityObj) {
         String id = (String) entityObj.get("id");
 
         String[] data = null;
-        if (isCreature) {
-            if (entityObj.containsKey("dataTags")) {
-                JSONArray dataTags = (JSONArray) entityObj.get("dataTags");
-                data = new String[dataTags.size()];
-                for (int i = 0; i < dataTags.size(); i++) {
-                    data[i] = (String) dataTags.get(i);
-                }
+        if (entityObj.containsKey("dataTags")) {
+            JSONArray dataTags = (JSONArray) entityObj.get("dataTags");
+            data = new String[dataTags.size()];
+            for (int i = 0; i < dataTags.size(); i++) {
+                data[i] = (String) dataTags.get(i);
             }
         }
 
@@ -290,11 +290,10 @@ public class WorldJsonLoader implements IJSONLoader {
         }
     }
 
-    public static void copyFiles(String dest) {
-        String ogWorld = "/assets/worlds/starter/world_01";
+    public static void copyFiles(String from, String dest) {
         String[] files = {"world", "entities", "items", "player_info"};
         for (String file : files)
-            copy(StateSelectGame.class.getResourceAsStream(ogWorld + "/" + file + ".json"), dest + "/" + file + ".json");
+            copy(StateSelectGame.class.getResourceAsStream(from + "/" + file + ".json"), dest + "/" + file + ".json");
     }
 
 
