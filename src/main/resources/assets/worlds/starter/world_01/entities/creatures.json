@@ -1,0 +1,60 @@
+{
+  "creatures": [
+    {
+      "id": "zombie",
+      "pos": [
+        "2f",
+        "1f"
+      ],
+      "count": "2"
+    },
+    {
+      "id": "skeleton",
+      "pos": [
+        "4f",
+        "3f"
+      ]
+    },
+    {
+      "id": "bouncer",
+      "pos": [
+        "17f",
+        "3f"
+      ]
+    },
+    {
+      "id": "thing",
+      "pos": [
+        "18f",
+        "4f"
+      ]
+    },
+    {
+      "id": "pig",
+      "pos": [
+        "8f",
+        "10f"
+      ],
+      "count": "3"
+    },
+    {
+      "id": "cow",
+      "pos": [
+        "8f",
+        "7f"
+      ],
+      "count": "2"
+    },
+    {
+      "id": "sheep",
+      "pos": [
+        "8f",
+        "12f"
+      ],
+      "count": "2",
+      "dataTags": [
+        "FLEE_PLAYER"
+      ]
+    }
+  ]
+}

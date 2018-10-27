@@ -14,13 +14,28 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WorldJsonLoader implements IJSONLoader {
+
+    public static final Map<String, String> BASE_FILES = new HashMap<>();
+
+    static {
+        BASE_FILES.put("world", "world_info");
+        BASE_FILES.put("player", "player_info");
+        BASE_FILES.put("items", "items");
+        BASE_FILES.put("entity_s", "entities/statics");
+        BASE_FILES.put("entity_c", "entities/creatures");
+        BASE_FILES.put("tile_bg", "tiles/background");
+        BASE_FILES.put("tile_fg", "tiles/foreground");
+    }
 
     private String path;
     private TheUltimateTile theUltimateTile;
@@ -47,17 +62,25 @@ public class WorldJsonLoader implements IJSONLoader {
 
     @Override
     public void load() throws IOException, ParseException {
-        loadWorld();
-        Logger.print("World " + name + ", loaded!\n");
-        loadObjects();
-        Logger.print("World " + name + ", objects (e.g. entities & items) loaded!\n");
+        loadWorldInfo();
+        Logger.print("World [" + name + "] info loaded!\n");
+
+        loadTiles();
+        Logger.print("World [" + name + "] tiles loaded!\n");
+
+        loadEntities();
+        Logger.print("World [" + name + "] entities loaded!\n");
+
+        loadItems();
+        Logger.print("World [" + name + "] items loaded!\n");
+
         loadPlayerInfo();
-        Logger.print("World " + name + ", player info loaded!\n");
+        Logger.print("World [" + name + "] player info loaded!\n");
     }
 
-    public void loadWorld() throws IOException, ParseException {
+    public void loadWorldInfo() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/world.json"));
+        JSONObject jsonObject = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/" + BASE_FILES.get("world") + ".json"));
 
         name = (String) jsonObject.get("name");
         Logger.print("Loaded world name");
@@ -67,68 +90,69 @@ public class WorldJsonLoader implements IJSONLoader {
         height = Utils.parseInt(size.get(1).toString());
         Logger.print("Loaded world size");
 
-        bg_tiles = new int[width][height];
-        fg_tiles = new int[width][height];
-
         JSONArray spawn = (JSONArray) jsonObject.get("spawn");
         spawnX = Utils.parseFloat(spawn.get(0).toString());
         spawnY = Utils.parseFloat(spawn.get(1).toString());
         Logger.print("Loaded world player spawn");
+    }
 
-        JSONObject bgTiles = (JSONObject) jsonObject.get("bg_tile");
+    public void loadTiles() throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObjectBG = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/" + BASE_FILES.get("tile_bg") + ".json"));
+        JSONObject jsonObjectFG = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/" + BASE_FILES.get("tile_fg") + ".json"));
+
+        bg_tiles = new int[width][height];
+        fg_tiles = new int[width][height];
+
+        JSONObject bgTiles = (JSONObject) jsonObjectBG.get("bg_tile");
         for (int y = 0; y < height; y++) {
             JSONArray currentRow = (JSONArray) bgTiles.get("row" + y);
             for (int x = 0; x < width; x++) {
                 bg_tiles[x][y] = Utils.parseInt(currentRow.get(x).toString());
             }
         }
-        Logger.print("Loaded world bg tiles");
+        Logger.print("Loaded world background tiles");
 
-        JSONObject fgTiles = (JSONObject) jsonObject.get("fg_tile");
+        JSONObject fgTiles = (JSONObject) jsonObjectFG.get("fg_tile");
         for (int y = 0; y < height; y++) {
             JSONArray currentRow = (JSONArray) fgTiles.get("row" + y);
             for (int x = 0; x < width; x++) {
                 fg_tiles[x][y] = Utils.parseInt(currentRow.get(x).toString());
             }
         }
-        Logger.print("Loaded world fg tiles");
+        Logger.print("Loaded world foreground tiles");
     }
 
-    public void loadObjects() throws IOException, ParseException {
+    public void loadEntities() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
+        JSONObject jsonObjectStatic = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/" + BASE_FILES.get("entity_s") + ".json"));
+        JSONObject jsonObjectCreature = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/" + BASE_FILES.get("entity_c") + ".json"));
 
-        /*
-         * Entities
-         */
-        JSONObject jsonObjectEntities = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/entities.json"));
-
-        if (jsonObjectEntities.containsKey("entities")) {
-            JSONObject entities = (JSONObject) jsonObjectEntities.get("entities");
-
-            if (entities.containsKey("statics")) {
-                JSONArray statics = (JSONArray) entities.get("statics");
-                for (Object aStatic : statics) {
-                    JSONObject entity = (JSONObject) aStatic;
-                    loadEntityObj(entity);
-                }
-                Logger.print("Loaded world static entities");
+        // Static
+        if (jsonObjectStatic.containsKey("statics")) {
+            JSONArray statics = (JSONArray) jsonObjectStatic.get("statics");
+            for (Object aStatic : statics) {
+                JSONObject entity = (JSONObject) aStatic;
+                loadEntityObj(entity);
             }
-
-            if (entities.containsKey("creatures")) {
-                JSONArray creatures = (JSONArray) entities.get("creatures");
-                for (Object creature : creatures) {
-                    JSONObject entity = (JSONObject) creature;
-                    loadEntityObj(entity);
-                }
-                Logger.print("Loaded world creature entities");
-            }
-            Logger.print("Loaded world entities");
+            Logger.print("Loaded world static entities");
         }
 
-        /*
-         * Items
-         */
-        JSONObject jsonObjectItems = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/items.json"));
+        // Creatures
+        if (jsonObjectCreature.containsKey("creatures")) {
+            JSONArray creatures = (JSONArray) jsonObjectCreature.get("creatures");
+            for (Object creature : creatures) {
+                JSONObject entity = (JSONObject) creature;
+                loadEntityObj(entity);
+            }
+            Logger.print("Loaded world creature entities");
+        }
+        Logger.print("Loaded world entities");
+    }
+
+    public void loadItems() throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObjectItems = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/" + BASE_FILES.get("items") + ".json"));
 
         if (jsonObjectItems.containsKey("items")) {
             JSONArray items = (JSONArray) jsonObjectItems.get("items");
@@ -153,7 +177,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
     public void loadPlayerInfo() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/player_info.json"));
+        JSONObject jsonObject = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/" + BASE_FILES.get("player") + ".json"));
 
         if (jsonObject.containsKey("username")) {
             username = (String) jsonObject.get("username");
@@ -291,8 +315,7 @@ public class WorldJsonLoader implements IJSONLoader {
     }
 
     public static void copyFiles(String from, String dest) {
-        String[] files = {"world", "entities", "items", "player_info"};
-        for (String file : files)
+        for (String file : BASE_FILES.values())
             copy(StateSelectGame.class.getResourceAsStream(from + "/" + file + ".json"), dest + "/" + file + ".json");
     }
 
@@ -303,6 +326,9 @@ public class WorldJsonLoader implements IJSONLoader {
         System.out.println("Copying ->" + source + "\n\tto ->" + destination);
 
         try {
+            if (!new File(destination).exists())
+                new File(destination).mkdirs();
+
             Files.copy(source, Paths.get(destination), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
             success = false;

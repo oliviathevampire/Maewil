@@ -31,12 +31,23 @@ public class WorldJsonSaver implements IJSONSaver {
     @Override
     public void save() throws IOException {
         Logger.print("\nSaving current world!");
-        saveWorld(path, world);
-        saveObjects(path);
-        savePlayerInfo(path);
+        saveWorldInfo(world);
+        Logger.print("World [" + world.getName() + "] info saved!\n");
+
+        saveTiles();
+        Logger.print("World [" + world.getName() + "] tiles saved!\n");
+
+        saveEntities();
+        Logger.print("World [" + world.getName() + "] entities saved!\n");
+
+        saveItems();
+        Logger.print("World [" + world.getName() + "] items saved!\n");
+
+        savePlayerInfo();
+        Logger.print("World [" + world.getName() + "] player info saved!\n");
     }
 
-    public void saveWorld(String path, World world) throws IOException {
+    public void saveWorldInfo(World world) throws IOException {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("name", world.getName());
@@ -51,6 +62,13 @@ public class WorldJsonSaver implements IJSONSaver {
         spawn.add(1, String.valueOf(theUltimateTile.getEntityManager().getPlayer().getY() / Tile.TILE_HEIGHT + "f"));
         jsonObject.put("spawn", spawn);
 
+        saveJSONFile(WorldJsonLoader.BASE_FILES.get("world"), jsonObject);
+    }
+
+    public void saveTiles() throws IOException {
+        JSONObject jsonObjectBG = new JSONObject();
+        JSONObject jsonObjectFG = new JSONObject();
+
         JSONObject bg_tile = new JSONObject();
         for (int y = 0; y < world.getHeight(); y++) {
             JSONArray currentRow = new JSONArray();
@@ -59,7 +77,7 @@ public class WorldJsonSaver implements IJSONSaver {
             }
             bg_tile.put("row" + y, currentRow);
         }
-        jsonObject.put("bg_tile", bg_tile);
+        jsonObjectBG.put("bg_tile", bg_tile);
 
         JSONObject fg_tile = new JSONObject();
         for (int y = 0; y < world.getHeight(); y++) {
@@ -69,20 +87,16 @@ public class WorldJsonSaver implements IJSONSaver {
             }
             fg_tile.put("row" + y, currentRow);
         }
-        jsonObject.put("fg_tile", fg_tile);
+        jsonObjectFG.put("fg_tile", fg_tile);
 
-        FileWriter file = new FileWriter(path + "/world.json");
-        file.write(jsonObject.toJSONString());
-        file.flush();
+        saveJSONFile(WorldJsonLoader.BASE_FILES.get("tile_bg"), jsonObjectBG);
+        saveJSONFile(WorldJsonLoader.BASE_FILES.get("tile_fg"), jsonObjectFG);
     }
 
-    public void saveObjects(String path) throws IOException {
-        /*
-         * Entities
-         */
-        JSONObject jsonObjectEntities = new JSONObject();
+    public void saveEntities() throws IOException {
+        JSONObject jsonObjectStatic = new JSONObject();
+        JSONObject jsonObjectCreature = new JSONObject();
 
-        JSONObject entities = new JSONObject();
         int entAmt = 0;
         for (Entity entity : theUltimateTile.getEntityManager().getEntities())
             if (!(entity instanceof EntityPlayer))
@@ -101,16 +115,18 @@ public class WorldJsonSaver implements IJSONSaver {
                 }
             }
 
+            // Static
             if (staticAmt > 0) {
                 JSONArray statics = new JSONArray();
                 for (Entity entity : theUltimateTile.getEntityManager().getEntities())
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityStatic)
                             saveEntityObj(entity, statics);
-                entities.put("statics", statics);
+                jsonObjectStatic.put("statics", statics);
                 Logger.print("World [" + path + "] static entities saved!");
             }
 
+            // Creature
             if (creatureAmt > 0) {
                 JSONArray creatures = new JSONArray();
 
@@ -118,21 +134,18 @@ public class WorldJsonSaver implements IJSONSaver {
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityCreature)
                             saveEntityObj(entity, creatures);
-                entities.put("creatures", creatures);
+                jsonObjectCreature.put("creatures", creatures);
                 Logger.print("World [" + path + "] creature entities saved!");
             }
         }
-        jsonObjectEntities.put("entities", entities);
         Logger.print("World [" + path + "] entities saved!");
 
-        FileWriter fileEntities = new FileWriter(path + "/entities.json");
-        fileEntities.write(jsonObjectEntities.toJSONString());
-        fileEntities.flush();
+        saveJSONFile(WorldJsonLoader.BASE_FILES.get("entity_s"), jsonObjectStatic);
+        saveJSONFile(WorldJsonLoader.BASE_FILES.get("entity_c"), jsonObjectCreature);
+    }
 
-        /*
-         * Items
-         */
-        JSONObject jsonObjectItems = new JSONObject();
+    public void saveItems() throws IOException {
+        JSONObject jsonObject = new JSONObject();
 
         JSONArray items = new JSONArray();
         for (ItemStack stack : theUltimateTile.getItemManager().getItems()) {
@@ -149,15 +162,13 @@ public class WorldJsonSaver implements IJSONSaver {
             }
             items.add(itemObj);
         }
-        jsonObjectItems.put("items", items);
+        jsonObject.put("items", items);
         Logger.print("World [" + path + "] items saved!");
 
-        FileWriter fileItems = new FileWriter(path + "/items.json");
-        fileItems.write(jsonObjectItems.toJSONString());
-        fileItems.flush();
+        saveJSONFile(WorldJsonLoader.BASE_FILES.get("items"), jsonObject);
     }
 
-    public void savePlayerInfo(String path) throws IOException {
+    public void savePlayerInfo() throws IOException {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("username", theUltimateTile.getEntityManager().getPlayer().getUsername());
@@ -200,9 +211,7 @@ public class WorldJsonSaver implements IJSONSaver {
         }
         jsonObject.put("hotbar", hotbar);
 
-        FileWriter file = new FileWriter(path + "/player_info.json");
-        file.write(jsonObject.toJSONString());
-        file.flush();
+        saveJSONFile(WorldJsonLoader.BASE_FILES.get("player"), jsonObject);
     }
 
     private void saveEntityObj(Entity entity, JSONArray entitiesArray) {
@@ -225,5 +234,11 @@ public class WorldJsonSaver implements IJSONSaver {
             entityObj.put("health", String.valueOf(entity.getCurrentHealth()));
 
         entitiesArray.add(entityObj);
+    }
+
+    private void saveJSONFile(String name, JSONObject data) throws IOException {
+        FileWriter file = new FileWriter(path + "/" + name + ".json");
+        file.write(data.toJSONString());
+        file.flush();
     }
 }
