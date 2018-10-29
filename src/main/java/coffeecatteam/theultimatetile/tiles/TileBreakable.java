@@ -15,7 +15,7 @@ public class TileBreakable extends Tile implements IDamageableTile {
     private int health, maxHealth = 300;
     private boolean isMineable = true;
 
-    public TileBreakable(TheUltimateTile theUltimateTile, BufferedImage texture, int id, Item drop, TileType tileType) {
+    public TileBreakable(TheUltimateTile theUltimateTile, BufferedImage texture, String id, Item drop, TileType tileType) {
         super(theUltimateTile, texture, id, true, tileType);
         this.drop = drop;
         this.health = this.maxHealth;

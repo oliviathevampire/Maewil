@@ -71,26 +71,34 @@ public class WorldJsonSaver implements IJSONSaver {
 
         JSONObject bg_tile = new JSONObject();
         for (int y = 0; y < world.getHeight(); y++) {
-            JSONArray currentRow = new JSONArray();
+            JSONArray chunk = new JSONArray();
             for (int x = 0; x < world.getWidth(); x++) {
-                currentRow.add(String.valueOf(world.getBGTile(x, y).getId()));
+                saveTile(chunk, true, x, y);
             }
-            bg_tile.put("row" + y, currentRow);
+            bg_tile.put("chunk" + y, chunk);
         }
         jsonObjectBG.put("bg_tile", bg_tile);
 
         JSONObject fg_tile = new JSONObject();
         for (int y = 0; y < world.getHeight(); y++) {
-            JSONArray currentRow = new JSONArray();
+            JSONArray chunk = new JSONArray();
             for (int x = 0; x < world.getWidth(); x++) {
-                currentRow.add(String.valueOf(world.getFGTile(x, y).getId()));
+                saveTile(chunk, false, x, y);
             }
-            fg_tile.put("row" + y, currentRow);
+            fg_tile.put("chunk" + y, chunk);
         }
         jsonObjectFG.put("fg_tile", fg_tile);
 
         saveJSONFile(WorldJsonLoader.BASE_FILES.get("tile_bg"), jsonObjectBG);
         saveJSONFile(WorldJsonLoader.BASE_FILES.get("tile_fg"), jsonObjectFG);
+    }
+
+    private void saveTile(JSONArray chunk, boolean bg, int x, int y) {
+        JSONObject tileObj = new JSONObject();
+        tileObj.put("id", (bg ? world.getBGTile(x, y) : world.getFGTile(x, y)).getId());
+        tileObj.put("x", String.valueOf(x));
+        tileObj.put("y", String.valueOf(y));
+        chunk.add(tileObj);
     }
 
     public void saveEntities() throws IOException {

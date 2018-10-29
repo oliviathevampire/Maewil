@@ -32,74 +32,74 @@ public class Tiles {
     public static Tile BOOKSHELF;
 
     public static void init(TheUltimateTile theUltimateTile) {
-        GRASS = getTile(theUltimateTile, 0);
-        DIRT = getTile(theUltimateTile, 1);
-        STONE = getTile(theUltimateTile, 2);
-        SAND = getTile(theUltimateTile, 3);
-        ANDESITE = getTile(theUltimateTile, 4);
-        DIORITE = getTile(theUltimateTile, 5);
+        GRASS = getTile(theUltimateTile, "grass");
+        DIRT = getTile(theUltimateTile, "dirt");
+        STONE = getTile(theUltimateTile, "stone");
+        SAND = getTile(theUltimateTile, "sand");
+        ANDESITE = getTile(theUltimateTile, "andesite");
+        DIORITE = getTile(theUltimateTile, "diorite");
 
-        COAL_ORE = getTile(theUltimateTile, 6);
-        IRON_ORE = getTile(theUltimateTile, 7);
-        GOLD_ORE = getTile(theUltimateTile, 8);
-        DIAMOND_ORE = getTile(theUltimateTile, 9);
+        COAL_ORE = getTile(theUltimateTile, "coal_ore");
+        IRON_ORE = getTile(theUltimateTile, "iron_ore");
+        GOLD_ORE = getTile(theUltimateTile, "gold_ore");
+        DIAMOND_ORE = getTile(theUltimateTile, "diamond_ore");
 
-        OBSIDIAN = getTile(theUltimateTile, 10);
+        OBSIDIAN = getTile(theUltimateTile, "obsidian");
 
-        WATER = getTile(theUltimateTile, 11);
-        LAVA = getTile(theUltimateTile, 12);
+        WATER = getTile(theUltimateTile, "water");
+        LAVA = getTile(theUltimateTile, "lava");
 
-        PLANKS = getTile(theUltimateTile, 13);
-        BROKEN_STONE = getTile(theUltimateTile, 14);
+        PLANKS = getTile(theUltimateTile, "planks");
+        BROKEN_STONE = getTile(theUltimateTile, "broken_stone");
 
-        AIR = getTile(theUltimateTile, 15);
+        AIR = getTile(theUltimateTile, "air");
 
-        BOOKSHELF = getTile(theUltimateTile, 16);
+        BOOKSHELF = getTile(theUltimateTile, "bookshelf");
     }
 
-    public static Tile getTile(TheUltimateTile theUltimateTile, int id) {
+    public static Tile getTile(TheUltimateTile theUltimateTile, String id) {
         switch (id) {
-            case 0:
+            case "grass":
                 return new Tile(theUltimateTile, Assets.GRASS, id, false, Tile.TileType.GROUND);
-            case 1:
+            case "dirt":
                 return new Tile(theUltimateTile, Assets.DIRT, id, false, Tile.TileType.GROUND);
-            case 2:
+            case "stone":
                 return new TileBreakable(theUltimateTile, Assets.STONE, id, ItemManager.ROCK, Tile.TileType.STONE);
-            case 3:
+            case "sand":
                 return new Tile(theUltimateTile, Assets.SAND, id, false, Tile.TileType.GROUND);
-            case 4:
+            case "andesite":
                 return new Tile(theUltimateTile, Assets.ANDESITE, id, true, Tile.TileType.STONE);
-            case 5:
+            case "diorite":
                 return new Tile(theUltimateTile, Assets.DIORITE, id, true, Tile.TileType.STONE);
 
-            case 6:
+            case "coal_ore":
                 return new TileBreakable(theUltimateTile, Assets.COAL_ORE, id, ItemManager.COAL, Tile.TileType.STONE);
-            case 7:
+            case "iron_ore":
                 return new TileBreakable(theUltimateTile, Assets.IRON_ORE, id, ItemManager.IRON_INGOT, Tile.TileType.STONE);
-            case 8:
+            case "gold_ore":
                 return new TileBreakable(theUltimateTile, Assets.GOLD_ORE, id, ItemManager.GOLD_INGOT, Tile.TileType.STONE);
-            case 9:
+            case "diamond_ore":
                 return new TileBreakable(theUltimateTile, Assets.DIAMOND_ORE, id, ItemManager.DIAMOND, Tile.TileType.STONE);
 
-            case 10:
+            case "obsidian":
                 return new Tile(theUltimateTile, Assets.OBSIDIAN, id, true, Tile.TileType.STONE);
 
-            case 11:
+            case "water":
                 return new TileAnimated(theUltimateTile, new Animation(50, Assets.WATER), id, false, Tile.TileType.FLUID);
-            case 12:
+            case "lava":
                 return new TileAnimated(theUltimateTile, new Animation(50, Assets.LAVA), id, false, Tile.TileType.FLUID);
 
-            case 13:
+            case "planks":
                 return new Tile(theUltimateTile, Assets.PLANKS, id, true, Tile.TileType.WOOD);
-            case 14:
+            case "broken_stone":
                 return new Tile(theUltimateTile, Assets.BROKEN_STONE, id, true, Tile.TileType.STONE);
 
-            case 15:
+            case "air":
                 return new Tile(theUltimateTile, Assets.AIR, id, false, Tile.TileType.AIR);
 
-            case 16:
+            case "bookshelf":
                 return new Tile(theUltimateTile, Assets.BOOKSHELF, id, true, Tile.TileType.WOOD);
         }
-        return getTile(theUltimateTile, 15);
+        return getTile(theUltimateTile, "air");
     }
 }

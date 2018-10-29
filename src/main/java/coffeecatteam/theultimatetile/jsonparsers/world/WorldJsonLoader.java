@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.jsonparsers.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.manager.EntityManager;
 import coffeecatteam.theultimatetile.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.tiles.Tile;
+import coffeecatteam.theultimatetile.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.json.simple.JSONArray;
@@ -46,8 +47,8 @@ public class WorldJsonLoader implements IJSONLoader {
     private float spawnX;
     private float spawnY;
 
-    private int[][] bg_tiles;
-    private int[][] fg_tiles;
+    private Tile[][] bg_tiles;
+    private Tile[][] fg_tiles;
 
     // Player Info
     private String username;
@@ -101,26 +102,38 @@ public class WorldJsonLoader implements IJSONLoader {
         JSONObject jsonObjectBG = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/" + BASE_FILES.get("tile_bg") + ".json"));
         JSONObject jsonObjectFG = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/" + BASE_FILES.get("tile_fg") + ".json"));
 
-        bg_tiles = new int[width][height];
-        fg_tiles = new int[width][height];
+        bg_tiles = new Tile[width][height];
+        fg_tiles = new Tile[width][height];
 
         JSONObject bgTiles = (JSONObject) jsonObjectBG.get("bg_tile");
         for (int y = 0; y < height; y++) {
-            JSONArray currentRow = (JSONArray) bgTiles.get("row" + y);
+            JSONArray chunk = (JSONArray) bgTiles.get("chunk" + y);
             for (int x = 0; x < width; x++) {
-                bg_tiles[x][y] = Utils.parseInt(currentRow.get(x).toString());
+                loadTile(chunk, true, x);
             }
         }
         Logger.print("Loaded world background tiles");
 
         JSONObject fgTiles = (JSONObject) jsonObjectFG.get("fg_tile");
         for (int y = 0; y < height; y++) {
-            JSONArray currentRow = (JSONArray) fgTiles.get("row" + y);
+            JSONArray chunk = (JSONArray) fgTiles.get("chunk" + y);
             for (int x = 0; x < width; x++) {
-                fg_tiles[x][y] = Utils.parseInt(currentRow.get(x).toString());
+                loadTile(chunk, false, x);
             }
         }
         Logger.print("Loaded world foreground tiles");
+    }
+
+    private void loadTile(JSONArray chunk, boolean bg, int x) {
+        JSONObject tileObj = (JSONObject) chunk.get(x);
+        Tile tile = Tiles.getTile(theUltimateTile, (String) tileObj.get("id"));
+        int tx = Utils.parseInt((String) tileObj.get("x"));
+        int ty = Utils.parseInt((String) tileObj.get("y"));
+
+        if (bg)
+            bg_tiles[tx][ty] = tile;
+        else
+            fg_tiles[tx][ty] = tile;
     }
 
     public void loadEntities() throws IOException, ParseException {
@@ -358,11 +371,11 @@ public class WorldJsonLoader implements IJSONLoader {
         return spawnY;
     }
 
-    public int[][] getBg_tiles() {
+    public Tile[][] getBg_tiles() {
         return bg_tiles;
     }
 
-    public int[][] getFg_tiles() {
+    public Tile[][] getFg_tiles() {
         return fg_tiles;
     }
 

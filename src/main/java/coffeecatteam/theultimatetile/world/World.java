@@ -143,18 +143,16 @@ public class World {
         spawnX = worldJsonLoader.getSpawnX();
         spawnY = worldJsonLoader.getSpawnY();
 
-        int[][] bg_tile_ids = worldJsonLoader.getBg_tiles().clone();
-        int[][] fg_tile_ids = worldJsonLoader.getFg_tiles().clone();
+        Tile[][] bg_tile_ids = worldJsonLoader.getBg_tiles().clone();
+        Tile[][] fg_tile_ids = worldJsonLoader.getFg_tiles().clone();
         bg_tiles = new Tile[width][height];
         fg_tiles = new Tile[width][height];
 
         theUltimateTile.getEntityManager().getPlayer().setUsername(worldJsonLoader.getUsername());
 
-        int bgid;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                bgid = bg_tile_ids[x][y];
-                Tile tile = Tiles.getTile(theUltimateTile, bgid).setPos(x, y).setSolid(false);
+                Tile tile = bg_tile_ids[x][y].setPos(x, y).setSolid(false);
                 if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
                     tile.setSolid(true);
                     if (tile instanceof TileBreakable)
@@ -165,11 +163,9 @@ public class World {
         }
         Logger.print("Loaded background tiles!");
 
-        int fgid;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                fgid = fg_tile_ids[x][y];
-                Tile tile = Tiles.getTile(theUltimateTile, fgid).setPos(x, y);
+                Tile tile = fg_tile_ids[x][y].setPos(x, y);
                 if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
                     tile.setSolid(true);
                     if (tile instanceof TileBreakable)

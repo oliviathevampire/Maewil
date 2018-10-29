@@ -11,7 +11,7 @@ public class Tile {
 
     protected TheUltimateTile theUltimateTile;
     protected BufferedImage texture;
-    protected final int id;
+    protected final String id;
 
     protected Rectangle bounds;
     protected int x, y;
@@ -19,7 +19,7 @@ public class Tile {
     private boolean isSolid;
     private TileType tileType;
 
-    public Tile(TheUltimateTile theUltimateTile, BufferedImage texture, int id, boolean isSolid, TileType tileType) {
+    public Tile(TheUltimateTile theUltimateTile, BufferedImage texture, String id, boolean isSolid, TileType tileType) {
         this.theUltimateTile = theUltimateTile;
         this.texture = texture;
         this.id = id;
@@ -62,7 +62,7 @@ public class Tile {
         return this;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
