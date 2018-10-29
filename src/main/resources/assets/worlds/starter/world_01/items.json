@@ -1,7 +1,7 @@
 {
   "items": [
     {
-      "id": "stone_sword",
+      "id": "wooden_sword",
       "pos": [
         "3.25f",
         "18.25f"
@@ -11,13 +11,6 @@
       "id": "wooden_pick",
       "pos": [
         "2.25f",
-        "16.25f"
-      ]
-    },
-    {
-      "id": "stone_pick",
-      "pos": [
-        "3.25f",
         "16.25f"
       ]
     }

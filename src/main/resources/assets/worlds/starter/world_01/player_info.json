@@ -8,8 +8,7 @@
   ],
   "inventory": {
     "slot_0": {
-      "id": "carrot",
-      "count": "5"
+      "id": "null"
     },
     "slot_1": {
       "id": "null"
@@ -47,8 +46,7 @@
   },
   "hotbar": {
     "slot_0": {
-      "id": "apple",
-      "count": "5"
+      "id": "null"
     },
     "slot_1": {
       "id": "null"
