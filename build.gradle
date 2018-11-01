@@ -3,17 +3,38 @@ version '0.5-alpha'
 
 apply plugin: 'idea'
 apply plugin: 'java'
+apply plugin: 'edu.sc.seis.launch4j'
 
 sourceCompatibility = 1.8
 
-def buildPath = "build/TheUltimateTile-" + version
+def exeJarName = "TheUltimateTile-" + version
+def buildPath = "build/" + exeJarName
 buildDir = file(buildPath)
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'edu.sc.seis.gradle:launch4j:2.4.4'
+    }
+}
 
 repositories {
     mavenCentral()
+    jcenter()
     maven {
         url 'https://jitpack.io'
     }
+}
+
+launch4j {
+    outfile = exeJarName + ".exe"
+    println("Generating exe file: " + outfile)
+    outputDir = "libs"
+    companyName = "CoffeeCatTeam"
+    mainClassName = 'coffeecatteam.theultimatetile.Launcher'
+    icon = "${projectDir}/icon.ico"
 }
 
 configurations {
@@ -37,8 +58,10 @@ jar {
 }
 
 task copyOptions(type: Copy) {
+    println("Copying options.json, saves folder & etc. to " + buildPath + "/libs")
     copy {
         from "options.json"
+        from "LICENSE.md"
         copy {
             from "saves/saved_games.json"
             into buildPath + "/libs/saves"
