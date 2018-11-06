@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Map;
 
 public class WorldJsonSaver implements IJSONSaver {
 
@@ -231,12 +232,12 @@ public class WorldJsonSaver implements IJSONSaver {
         pos.add(1, String.valueOf(entity.getY() / Tile.TILE_HEIGHT) + "f");
         entityObj.put("pos", pos);
 
-        if (entity.getDataTags() != null) {
-            JSONArray dataTags = new JSONArray();
-            for (String tag : entity.getDataTags())
-                dataTags.add(tag);
-            entityObj.put("dataTags", dataTags);
+        Map<String, String> tags = entity.saveTags();
+        JSONObject tagsObj = new JSONObject(tags);
+        for (Object key : tags.keySet()) {
+            tagsObj.put(String.valueOf(key), tags.get(String.valueOf(key)));
         }
+        entityObj.put("tags", tagsObj);
 
         if (entity.getCurrentHealth() < entity.getMaxHealth())
             entityObj.put("health", String.valueOf(entity.getCurrentHealth()));

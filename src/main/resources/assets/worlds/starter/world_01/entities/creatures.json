@@ -32,7 +32,7 @@
     {
       "id": "pig",
       "pos": [
-        "8f",
+        "7f",
         "10f"
       ],
       "count": "3"
@@ -52,9 +52,9 @@
         "12f"
       ],
       "count": "2",
-      "dataTags": [
-        "FLEE_PLAYER"
-      ]
+      "tags": {
+        "fleePlayer": "true"
+      }
     }
   ]
 }

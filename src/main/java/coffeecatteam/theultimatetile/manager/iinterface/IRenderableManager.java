@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.manager.iinterface;
 
 import java.awt.*;
 
-public interface IRenderabelManager extends ITickableManager {
+public interface IRenderableManager extends ITickableManager {
 
     void render(Graphics g);
 }

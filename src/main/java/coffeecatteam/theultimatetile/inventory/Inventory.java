@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.inventory;
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.manager.InventoryManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
@@ -11,22 +12,22 @@ import java.util.List;
 
 public abstract class Inventory {
 
-    public static List<Inventory> inventories = new ArrayList<>();
-
     protected TheUltimateTile theUltimateTile;
     protected EntityPlayer player;
+    protected String invName;
 
     protected List<Slot> slots;
     public static int maxSize = 12;
 
     protected boolean active = false;
 
-    public Inventory(TheUltimateTile theUltimateTile, EntityPlayer player) {
+    public Inventory(TheUltimateTile theUltimateTile, EntityPlayer player, String invName) {
         this.theUltimateTile = theUltimateTile;
         this.player = player;
+        this.invName = invName;
         slots = new ArrayList<>();
 
-        inventories.add(this);
+        InventoryManager.INVENTORIES.add(this);
     }
 
     public void swapSlots(Slot slot1, Slot slot2) {
@@ -123,5 +124,17 @@ public abstract class Inventory {
 
     public void setActive(boolean active) {
         this.active = active;
+
+        if (this.active)
+            onOpen();
+        else
+            onClose();
+    }
+
+    public void onOpen() {}
+    public void onClose() {}
+
+    public String getInvName() {
+        return invName;
     }
 }

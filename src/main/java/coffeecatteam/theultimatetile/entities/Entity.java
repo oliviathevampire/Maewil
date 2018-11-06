@@ -30,7 +30,7 @@ public abstract class Entity {
     protected boolean showHitbox = false, isCollidable = true, interacted = false;
     private int extraDmg = 0;
 
-    private String[] dataTags;
+    protected Map<String, String> TAGS = new HashMap<>();
     private EntityHitType entityHitType;
 
     protected int renderX, renderY;
@@ -50,20 +50,20 @@ public abstract class Entity {
         this.entityHitType = entityHitType;
     }
 
-    public String[] getDataTags() {
-        return dataTags;
-    }
-
-    public Entity setDataTags(String[] dataTags) {
-        this.dataTags = dataTags;
+    public Entity loadTags(Map<String, String> tags) {
+        this.TAGS = tags;
         return this;
     }
 
-    public boolean hasDataTag(String tag) {
-        if (dataTags == null)
+    public Map<String, String> saveTags() {
+        return TAGS;
+    }
+
+    public boolean hasTag(String tag) {
+        if (TAGS == null)
             return false;
-        for (String t : dataTags)
-            if (t.equals(tag))
+        for (String key : TAGS.keySet())
+            if (key.equals(tag))
                 return true;
         return false;
     }

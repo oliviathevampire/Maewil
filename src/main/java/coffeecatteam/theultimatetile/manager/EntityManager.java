@@ -18,14 +18,14 @@ import coffeecatteam.theultimatetile.entities.statics.nature.EntityCrop;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityRock;
 import coffeecatteam.theultimatetile.entities.statics.nature.EntityTree;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.manager.iinterface.IRenderabelManager;
+import coffeecatteam.theultimatetile.manager.iinterface.IRenderableManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class EntityManager implements IRenderabelManager {
+public class EntityManager implements IRenderableManager {
 
     /*
      * EntityLoader

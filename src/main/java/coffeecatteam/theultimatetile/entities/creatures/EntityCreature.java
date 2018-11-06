@@ -116,7 +116,7 @@ public abstract class EntityCreature extends Entity {
         float y = (this.y + height / 2 + height / 4) / Tile.TILE_HEIGHT;
         Tile t = theUltimateTile.getWorld().getFGTile((int) x, (int) y);
 
-        return (t.getId() == Tiles.WATER.getId() && t.getBounds().contains(x, y));
+        return (t.getId().equals(Tiles.WATER.getId()) && t.getBounds().contains(x, y));
     }
 
     public void move() {

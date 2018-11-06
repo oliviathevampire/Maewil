@@ -9,7 +9,7 @@ import java.awt.*;
 public class InventoryPlayer extends InventoryAbstractPlayer {
 
     public InventoryPlayer(TheUltimateTile theUltimateTile, EntityPlayer player) {
-        super(theUltimateTile, player);
+        super(theUltimateTile, player, "Player");
         isDefault = true;
     }
 

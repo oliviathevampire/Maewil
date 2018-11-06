@@ -280,12 +280,11 @@ public class WorldJsonLoader implements IJSONLoader {
     private void loadEntityObj(JSONObject entityObj) {
         String id = (String) entityObj.get("id");
 
-        String[] data = null;
-        if (entityObj.containsKey("dataTags")) {
-            JSONArray dataTags = (JSONArray) entityObj.get("dataTags");
-            data = new String[dataTags.size()];
-            for (int i = 0; i < dataTags.size(); i++) {
-                data[i] = (String) dataTags.get(i);
+        Map<String, String> data = new HashMap<>();
+        if (entityObj.containsKey("tags")) {
+            JSONObject tags = (JSONObject) entityObj.get("tags");
+            for (Object key : tags.keySet()) {
+                data.put(String.valueOf(key), (String) tags.get(key));
             }
         }
 
@@ -315,10 +314,10 @@ public class WorldJsonLoader implements IJSONLoader {
         loadEntity(id, x, y, count, pos, health, data);
     }
 
-    private void loadEntity(String id, float x, float y, int count, JSONArray pos, int health, String[] data) {
+    private void loadEntity(String id, float x, float y, int count, JSONArray pos, int health, Map<String, String> tags) {
         float ogX = Utils.parseFloat(pos.get(0).toString());
         for (int i = 0; i < count; i++) {
-            theUltimateTile.getEntityManager().addEntity(EntityManager.loadEntity(theUltimateTile, id).setDataTags(data).setCurrentHealth(health), x, y, true);
+            theUltimateTile.getEntityManager().addEntity(EntityManager.loadEntity(theUltimateTile, id).loadTags(tags).setCurrentHealth(health), x, y, true);
             x++;
             if (x > ogX + 2) {
                 x = ogX;

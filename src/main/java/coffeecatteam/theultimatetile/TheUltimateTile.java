@@ -15,7 +15,6 @@ import coffeecatteam.theultimatetile.state.options.OptionsSounds;
 import coffeecatteam.theultimatetile.state.options.controls.OptionsControls;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.utils.Utils;
 import coffeecatteam.theultimatetile.world.World;
 
 import javax.swing.*;
@@ -52,6 +51,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
     private MouseManager mouseManager;
     private EntityManager entityManager;
     private ItemManager itemManager;
+    private InventoryManager inventoryManager;
 
     private Camera camera;
     private World world;
@@ -123,6 +123,8 @@ public class TheUltimateTile extends Canvas implements Runnable {
         AudioMaster.setListenerData(0f, 0f, 0f);
 
         Sound.init();
+
+        inventoryManager = new InventoryManager(this);
     }
 
     private void tick() {
@@ -295,8 +297,16 @@ public class TheUltimateTile extends Canvas implements Runnable {
         return entityManager;
     }
 
+    public EntityPlayer getPlayer() {
+        return entityManager.getPlayer();
+    }
+
     public ItemManager getItemManager() {
         return itemManager;
+    }
+
+    public InventoryManager getInventoryManager() {
+        return inventoryManager;
     }
 
     public World getWorld() {

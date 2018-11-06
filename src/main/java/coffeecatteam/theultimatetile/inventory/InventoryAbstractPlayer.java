@@ -19,12 +19,12 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
     protected boolean isDefault = false;
 
-    public InventoryAbstractPlayer(TheUltimateTile theUltimateTile, EntityPlayer player) {
-        this(theUltimateTile, player, 190, 360);
+    public InventoryAbstractPlayer(TheUltimateTile theUltimateTile, EntityPlayer player, String invName) {
+        this(theUltimateTile, player, invName, 190, 360);
     }
 
-    public InventoryAbstractPlayer(TheUltimateTile theUltimateTile, EntityPlayer player, int xOff, int yOff) {
-        super(theUltimateTile, player);
+    public InventoryAbstractPlayer(TheUltimateTile theUltimateTile, EntityPlayer player, String invName, int xOff, int yOff) {
+        super(theUltimateTile, player, invName);
 
         // Add inventory slots
         int xd = xOff, yd = yOff, x, y;
@@ -49,22 +49,27 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         }
     }
 
-    public static void copyItems(InventoryAbstractPlayer from, InventoryAbstractPlayer to) {
+    public static void copyItems(InventoryAbstractPlayer from, InventoryAbstractPlayer to, boolean includeNull) {
         for (int i = 0; i < maxSize + maxHotbarSize; i++) {
             Slot s1 = from.getSlot(i);
             Slot s2 = to.getSlot(i);
 
-            if (s1.getStack() != null) {
-                s2.setStack(s1.getStack().copy());
+            if (includeNull)
+                s2.setStack(s1.getStack());
+            else {
+                if (s1.getStack() != null) {
+                    s2.setStack(s1.getStack().copy());
+                }
             }
         }
     }
 
     @Override
     public void tick() {
-        if (!isDefault)
-            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode() | StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()))
-                player.closeInventory();
+//        if (!isDefault)
+//            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode() | StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()))
+//                player.openCloseInventory(this);
+//                //player.closeAllInventories();
 
         if (active) {
             // Change select item
@@ -109,8 +114,9 @@ public abstract class InventoryAbstractPlayer extends Inventory {
             if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Z).getKeyCode()))
                 swapSlots(getSlot(inventorySelectedIndex), getSlot(maxSize + hotbarSelectedIndex));
         }
-        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Q).getKeyCode()))
-            dropItem(active, inventorySelectedIndex, hotbarSelectedIndex);
+        if (this.active)
+            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Q).getKeyCode()))
+                dropItem(active, inventorySelectedIndex, hotbarSelectedIndex);
 
         if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ONE).getKeyCode()))
             hotbarSelectedIndex = 0;
@@ -277,5 +283,15 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
     public void setHotbarSelectedIndex(int hotbarSelectedIndex) {
         this.hotbarSelectedIndex = hotbarSelectedIndex;
+    }
+
+    @Override
+    public void onOpen() {
+        copyItems(theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer(), this, false);
+    }
+
+    @Override
+    public void onClose() {
+        copyItems(this, theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer(), false);
     }
 }

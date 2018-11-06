@@ -6,13 +6,13 @@ import coffeecatteam.theultimatetile.gfx.overlays.Overlay;
 import coffeecatteam.theultimatetile.gfx.overlays.OverlayGlub;
 import coffeecatteam.theultimatetile.gfx.overlays.OverlayPlayerHealth;
 import coffeecatteam.theultimatetile.gfx.overlays.OverlayPlayerSprint;
-import coffeecatteam.theultimatetile.manager.iinterface.IRenderabelManager;
+import coffeecatteam.theultimatetile.manager.iinterface.IRenderableManager;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OverlayManager implements IRenderabelManager {
+public class OverlayManager implements IRenderableManager {
 
     private List<Overlay> overlays;
 

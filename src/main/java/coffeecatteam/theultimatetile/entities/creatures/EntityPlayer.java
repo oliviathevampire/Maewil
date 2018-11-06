@@ -14,10 +14,12 @@ import coffeecatteam.theultimatetile.inventory.Slot;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.inventory.items.ItemTool;
+import coffeecatteam.theultimatetile.manager.InventoryManager;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.tiles.IDamageableTile;
 import coffeecatteam.theultimatetile.tiles.Tile;
+import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -94,10 +96,14 @@ public class EntityPlayer extends EntityCreature {
             checkAttacks();
 
             // Open/close inventory
-            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode()))
-                openCloseInventory(inventoryPlayer);
+            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode())) {
+                if (guiOpen && !inventoryPlayer.isActive())
+                    theUltimateTile.getInventoryManager().closeAllInventories();
+                else
+                    theUltimateTile.getInventoryManager().openCloseInventory(inventoryPlayer);
+            }
             if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && inventoryPlayer.isActive())
-                closeInventory();
+                theUltimateTile.getInventoryManager().closeAllInventories();
 
             theUltimateTile.getCamera().centerOnEntity(this);
             AudioMaster.setListenerData(this.x, this.y, 0f);
@@ -424,26 +430,5 @@ public class EntityPlayer extends EntityCreature {
 
     public void setGuiOpen(boolean guiOpen) {
         this.guiOpen = guiOpen;
-    }
-
-    public boolean openInventory(InventoryAbstractPlayer inventory) {
-        if (!guiOpen) {
-            inventory.setActive(true);
-            guiOpen = true;
-            return true;
-        }
-        return false;
-    }
-
-    public void closeInventory() {
-        Inventory.inventories.forEach(inventory -> {
-            inventory.setActive(false);
-            guiOpen = false;
-        });
-    }
-
-    public void openCloseInventory(InventoryAbstractPlayer inventory) {
-        if (!openInventory(inventory))
-            closeInventory();
     }
 }

@@ -244,9 +244,9 @@
         "18f",
         "17f"
       ],
-      "dataTags": [
-        "raw_pork:1"
-      ]
+      "tags": {
+        "item": "raw_pork:1"
+      }
     }
   ]
 }

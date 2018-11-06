@@ -2,13 +2,13 @@ package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.ui.UIObject;
-import coffeecatteam.theultimatetile.manager.iinterface.IRenderabelManager;
+import coffeecatteam.theultimatetile.manager.iinterface.IRenderableManager;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class UIManager implements IRenderabelManager {
+public class UIManager implements IRenderableManager {
 
     private TheUltimateTile theUltimateTile;
     private ArrayList<UIObject> objects;

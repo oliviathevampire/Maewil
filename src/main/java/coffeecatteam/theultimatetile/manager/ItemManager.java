@@ -4,14 +4,14 @@ import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.inventory.items.*;
-import coffeecatteam.theultimatetile.manager.iinterface.IRenderabelManager;
+import coffeecatteam.theultimatetile.manager.iinterface.IRenderableManager;
 import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ItemManager implements IRenderabelManager {
+public class ItemManager implements IRenderableManager {
 
     // Items
     public static Item STICK = new Item(Assets.ITEM_STICK, "stick");
