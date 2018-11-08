@@ -131,8 +131,11 @@ public abstract class Inventory {
             onClose();
     }
 
-    public void onOpen() {}
-    public void onClose() {}
+    public void onOpen() {
+    }
+
+    public void onClose() {
+    }
 
     public String getInvName() {
         return invName;

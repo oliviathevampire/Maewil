@@ -4,7 +4,6 @@ import coffeecatteam.theultimatetile.TheUltimateTile;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.Item;
-import coffeecatteam.theultimatetile.inventory.items.ItemFood;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 import coffeecatteam.theultimatetile.state.StateOptions;
@@ -62,7 +61,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
         if (active) {
             if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.X).getKeyCode())) {
                 //if (slots.get(getInventorySelectedIndex()).getStack() == null || slots.get(getInventorySelectedIndex()).getStack().getItem() instanceof ItemFood) {
-                    swapSlots(slots.get(slots.size() - 1), slots.get(getInventorySelectedIndex()));
+                swapSlots(slots.get(slots.size() - 1), slots.get(getInventorySelectedIndex()));
                 //}
             }
         }
