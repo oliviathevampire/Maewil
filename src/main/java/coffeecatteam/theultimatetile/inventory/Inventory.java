@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.inventory;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.manager.InventoryManager;
@@ -12,7 +12,7 @@ import java.util.List;
 
 public abstract class Inventory {
 
-    protected TheUltimateTile theUltimateTile;
+    protected GameEngine gameEngine;
     protected EntityPlayer player;
     protected String invName;
 
@@ -21,8 +21,8 @@ public abstract class Inventory {
 
     protected boolean active = false;
 
-    public Inventory(TheUltimateTile theUltimateTile, EntityPlayer player, String invName) {
-        this.theUltimateTile = theUltimateTile;
+    public Inventory(GameEngine gameEngine, EntityPlayer player, String invName) {
+        this.gameEngine = gameEngine;
         this.player = player;
         this.invName = invName;
         slots = new ArrayList<>();
@@ -43,7 +43,7 @@ public abstract class Inventory {
         if (getSlot(selectedIndex).getStack() != null) {
             if (active) {
                 getSlot(selectedIndex).getStack().getItem().setPickedUp(false);
-                theUltimateTile.getItemManager().addItem(getSlot(selectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
+                gameEngine.getItemManager().addItem(getSlot(selectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
             }
         }
     }

@@ -1,13 +1,13 @@
 package coffeecatteam.theultimatetile.state.options;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.gfx.ui.UISlider;
 import coffeecatteam.theultimatetile.state.StateOptions;
 
 public class OptionsSounds extends StateAbstractOptions {
 
-    public OptionsSounds(TheUltimateTile theUltimateTileIn) {
-        super(theUltimateTileIn);
+    public OptionsSounds(GameEngine gameEngineIn) {
+        super(gameEngineIn);
         init();
 
         uiManager.addObject(new UISlider(15, 15, "Music") {

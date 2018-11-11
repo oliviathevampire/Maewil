@@ -2,8 +2,8 @@ package coffeecatteam.theultimatetile.entities.ai;
 
 import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.state.StateOptions;
-import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.utils.Logger;
+import coffeecatteam.utils.Utils;
 
 public class AIWander extends AI {
 

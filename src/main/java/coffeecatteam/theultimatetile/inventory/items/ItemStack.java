@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.inventory.items;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
 import java.awt.image.BufferedImage;
@@ -66,8 +66,8 @@ public class ItemStack {
             this.count = MAX_STACK_COUNT;
     }
 
-    public void setTheUltimateTile(TheUltimateTile theUltimateTile) {
-        this.item.setTheUltimateTile(theUltimateTile);
+    public void setTheUltimateTile(GameEngine gameEngine) {
+        this.item.setGameEngine(gameEngine);
     }
 
     public void setPickedUp(boolean pickedUp) {

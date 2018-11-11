@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.tiles;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,8 +15,8 @@ public class TileBreakable extends Tile implements IDamageableTile {
     private int health, maxHealth = 300;
     private boolean isMineable = true;
 
-    public TileBreakable(TheUltimateTile theUltimateTile, BufferedImage texture, String id, Item drop, TileType tileType) {
-        super(theUltimateTile, texture, id, true, tileType);
+    public TileBreakable(GameEngine gameEngine, BufferedImage texture, String id, Item drop, TileType tileType) {
+        super(gameEngine, texture, id, true, tileType);
         this.drop = drop;
         this.health = this.maxHealth;
     }
@@ -30,7 +30,7 @@ public class TileBreakable extends Tile implements IDamageableTile {
             if (index < 0)
                 index = 0;
             BufferedImage currentFrame = Assets.TILE_CRACKING[index];
-            g.drawImage(currentFrame, (int) (x * Tile.TILE_WIDTH - theUltimateTile.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - theUltimateTile.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
+            g.drawImage(currentFrame, (int) (x * Tile.TILE_WIDTH - gameEngine.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - gameEngine.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
         }
     }
 
@@ -39,10 +39,10 @@ public class TileBreakable extends Tile implements IDamageableTile {
         if (isMineable) {
             this.health -= damage;
             if (this.health <= 0) {
-                if (x == 0 || x == theUltimateTile.getWorld().getWidth() || y == 0 || y == theUltimateTile.getWorld().getHeight())
+                if (x == 0 || x == gameEngine.getWorld().getWidth() || y == 0 || y == gameEngine.getWorld().getHeight())
                     return;
-                theUltimateTile.getWorld().setFGTile(x, y, Tiles.AIR);
-                theUltimateTile.getItemManager().addItem(new ItemStack(drop), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
+                gameEngine.getWorld().setFGTile(x, y, Tiles.AIR);
+                gameEngine.getItemManager().addItem(new ItemStack(drop), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
                 this.health = this.maxHealth;
             }
         }

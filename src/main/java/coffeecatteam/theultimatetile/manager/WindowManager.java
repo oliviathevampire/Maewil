@@ -1,17 +1,17 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 public class WindowManager implements WindowListener {
 
-    private TheUltimateTile theUltimateTile;
+    private GameEngine gameEngine;
 
-    public WindowManager(TheUltimateTile theUltimateTile) {
-        this.theUltimateTile = theUltimateTile;
-        this.theUltimateTile.getFrame().addWindowListener(this);
+    public WindowManager(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
+        this.gameEngine.getFrame().addWindowListener(this);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class WindowManager implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        theUltimateTile.setRunning(false);
+        gameEngine.setRunning(false);
     }
 
     @Override

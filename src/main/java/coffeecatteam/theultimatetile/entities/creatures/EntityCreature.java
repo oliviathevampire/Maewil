@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.entities.creatures;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.ai.AI;
 import coffeecatteam.theultimatetile.gfx.*;
@@ -9,8 +9,8 @@ import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.Tiles;
-import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.utils.Logger;
+import coffeecatteam.utils.Utils;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -38,8 +38,8 @@ public abstract class EntityCreature extends Entity {
 
     protected List<AI> ais = new ArrayList<>();
 
-    public EntityCreature(TheUltimateTile theUltimateTile, String id, int width, int height) {
-        super(theUltimateTile, id, width, height, EntityHitType.CREATURE);
+    public EntityCreature(GameEngine gameEngine, String id, int width, int height) {
+        super(gameEngine, id, width, height, EntityHitType.CREATURE);
         init();
         splashEffect = new Animation(50, Assets.SPLASH_EFFECT);
         currentAnim = animIdle;
@@ -107,14 +107,14 @@ public abstract class EntityCreature extends Entity {
         if (drop != null) {
             int amt = Utils.getRandomInt(4);
             for (int i = 0; i < amt; i++)
-                theUltimateTile.getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+                gameEngine.getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
         }
     }
 
     public boolean inWater() {
         float x = (this.x + width / 2) / Tile.TILE_WIDTH;
         float y = (this.y + height / 2 + height / 4) / Tile.TILE_HEIGHT;
-        Tile t = theUltimateTile.getWorld().getFGTile((int) x, (int) y);
+        Tile t = gameEngine.getWorld().getFGTile((int) x, (int) y);
 
         return (t.getId().equals(Tiles.WATER.getId()) && t.getBounds().contains(x, y));
     }
@@ -176,9 +176,9 @@ public abstract class EntityCreature extends Entity {
     protected boolean collisionWidthTile(int x, int y) {
         if (this.getId().equals("player") && StateOptions.OPTIONS.debugMode()) {
             Logger.print("X: " + x + " Y: " + y);
-            Logger.print(theUltimateTile.getWorld().getFGTile(x, y).getId() + " - " + theUltimateTile.getWorld().getFGTile(x, y).isSolid());
+            Logger.print(gameEngine.getWorld().getFGTile(x, y).getId() + " - " + gameEngine.getWorld().getFGTile(x, y).isSolid());
         }
-        return theUltimateTile.getWorld().getFGTile(x, y).isSolid();
+        return gameEngine.getWorld().getFGTile(x, y).isSolid();
     }
 
     public float getSpeed() {

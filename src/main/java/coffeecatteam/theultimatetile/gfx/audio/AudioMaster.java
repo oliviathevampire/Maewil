@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.audio;
 
-import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.utils.Logger;
 import org.lwjgl.openal.*;
 
 import java.nio.ByteBuffer;

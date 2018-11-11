@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.gfx.ui.UIObject;
 import coffeecatteam.theultimatetile.manager.iinterface.IRenderableManager;
 
@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 public class UIManager implements IRenderableManager {
 
-    private TheUltimateTile theUltimateTile;
+    private GameEngine gameEngine;
     private ArrayList<UIObject> objects;
 
-    public UIManager(TheUltimateTile theUltimateTile) {
-        this.theUltimateTile = theUltimateTile;
+    public UIManager(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
         objects = new ArrayList<>();
     }
 

@@ -13,17 +13,17 @@ import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.state.options.OptionsSounds;
 import coffeecatteam.theultimatetile.state.options.controls.OptionsControls;
-import coffeecatteam.theultimatetile.utils.DiscordHandler;
-import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.utils.DiscordHandler;
+import coffeecatteam.utils.Logger;
 import coffeecatteam.theultimatetile.world.World;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class TheUltimateTile extends Canvas implements Runnable {
+public class GameEngine extends Canvas implements Runnable {
 
-    private static TheUltimateTile theUltimateTile;
+    private static GameEngine gameEngine;
 
     private String[] args;
     private JFrame frame;
@@ -58,7 +58,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
     private WindowManager windowManager;
 
-    public TheUltimateTile(String[] args, String title, int width, int height) {
+    public GameEngine(String[] args, String title, int width, int height) {
         this.args = args;
         this.title = title;
         this.width = width;
@@ -70,7 +70,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
         Assets.init();
         createDisplay();
 
-        theUltimateTile = this;
+        gameEngine = this;
     }
 
     private void createDisplay() {
@@ -162,7 +162,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
     @Override
     public void run() {
         init();
-        DiscordHandler.getInstance().setup();
+        DiscordHandler.INSTANCE.setup();
 
         // Background music
         Sound.play(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic(), 0f, 0f, 0f, 1f, true);
@@ -205,7 +205,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
 
         stop();
 
-        Logger.print("\nExiting game..");
+        Logger.print("\nExiting [" + title + "]..");
         System.exit(0);
     }
 
@@ -213,7 +213,6 @@ public class TheUltimateTile extends Canvas implements Runnable {
         if (running)
             return;
         running = true;
-
 
         thread = new Thread(this);
         thread.setName("Thread-" + title.replace(" ", "_"));
@@ -324,7 +323,7 @@ public class TheUltimateTile extends Canvas implements Runnable {
     /*
      * Gets an instance of the game.
      */
-    public static TheUltimateTile getTheUltimateTile() {
-        return theUltimateTile;
+    public static GameEngine getGameEngine() {
+        return gameEngine;
     }
 }

@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.entities.creatures.passive.EntityCow;
@@ -30,80 +30,80 @@ public class EntityManager implements IRenderableManager {
     /*
      * EntityLoader
      */
-    public static Entity loadEntity(TheUltimateTile theUltimateTile, String id) {
+    public static Entity loadEntity(GameEngine gameEngine, String id) {
         switch (id) {
             /*
              * Nature / Statics
              */
             case "tree_small":
-                return new EntityTree(theUltimateTile, id, EntityTree.TreeType.SMALL);
+                return new EntityTree(gameEngine, id, EntityTree.TreeType.SMALL);
             case "tree_medium":
-                return new EntityTree(theUltimateTile, id, EntityTree.TreeType.MEDIUM);
+                return new EntityTree(gameEngine, id, EntityTree.TreeType.MEDIUM);
             case "tree_large":
-                return new EntityTree(theUltimateTile, id, EntityTree.TreeType.LARGE);
+                return new EntityTree(gameEngine, id, EntityTree.TreeType.LARGE);
             case "rock_medium":
-                return new EntityRock(theUltimateTile, id, Assets.ROCK_V1);
+                return new EntityRock(gameEngine, id, Assets.ROCK_V1);
             case "rock_small":
-                return new EntityRock(theUltimateTile, id, Assets.ROCK_V2);
+                return new EntityRock(gameEngine, id, Assets.ROCK_V2);
             case "bush_small":
-                return new EntityBush(theUltimateTile, id, Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH);
+                return new EntityBush(gameEngine, id, Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH);
             case "bush_large":
-                return new EntityBush(theUltimateTile, id, Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2);
+                return new EntityBush(gameEngine, id, Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2);
 
             /*
              * Crops
              */
             case "crop_carrot":
-                return new EntityCrop(theUltimateTile, id, Assets.CROP_CARROT, ItemManager.CARROT);
+                return new EntityCrop(gameEngine, id, Assets.CROP_CARROT, ItemManager.CARROT);
             case "crop_wheat":
-                return new EntityCrop(theUltimateTile, id, Assets.CROP_WHEAT, ItemManager.WHEAT);
+                return new EntityCrop(gameEngine, id, Assets.CROP_WHEAT, ItemManager.WHEAT);
             case "crop_potato":
-                return new EntityCrop(theUltimateTile, id, Assets.CROP_POTATO, ItemManager.POTATO);
+                return new EntityCrop(gameEngine, id, Assets.CROP_POTATO, ItemManager.POTATO);
             case "crop_tomato":
-                return new EntityCrop(theUltimateTile, id, Assets.CROP_TOMATO, ItemManager.TOMATO);
+                return new EntityCrop(gameEngine, id, Assets.CROP_TOMATO, ItemManager.TOMATO);
             case "crop_corn":
-                return new EntityCrop(theUltimateTile, id, Assets.CROP_CORN, ItemManager.CORN);
+                return new EntityCrop(gameEngine, id, Assets.CROP_CORN, ItemManager.CORN);
 
             /*
              * Undead
              */
             case "zombie":
-                return new EntityZombie(theUltimateTile, id);
+                return new EntityZombie(gameEngine, id);
             case "skeleton":
-                return new EntitySkeleton(theUltimateTile, id);
+                return new EntitySkeleton(gameEngine, id);
             case "bouncer":
-                return new EntityBouncer(theUltimateTile, id);
+                return new EntityBouncer(gameEngine, id);
             case "thing":
-                return new EntityThing(theUltimateTile, id);
+                return new EntityThing(gameEngine, id);
 
             /*
              * Passive
              */
             case "pig":
-                return new EntityPig(theUltimateTile, id);
+                return new EntityPig(gameEngine, id);
             case "cow":
-                return new EntityCow(theUltimateTile, id);
+                return new EntityCow(gameEngine, id);
             case "sheep":
-                return new EntitySheep(theUltimateTile, id);
+                return new EntitySheep(gameEngine, id);
 
             /*
              * Other
              */
             case "ultimate":
-                return new EntityUltimateTile(theUltimateTile, id);
+                return new EntityUltimateTile(gameEngine, id);
 
             case "shop":
-                return new EntityShopStall(theUltimateTile, id);
+                return new EntityShopStall(gameEngine, id);
             case "campfire":
-                return new EntityCampfire(theUltimateTile, id);
+                return new EntityCampfire(gameEngine, id);
         }
-        return new EntityRock(theUltimateTile, "rock", Assets.ROCK_V1);
+        return new EntityRock(gameEngine, "rock", Assets.ROCK_V1);
     }
 
     /*
      * EntityManager
      */
-    private TheUltimateTile theUltimateTile;
+    private GameEngine gameEngine;
     private EntityPlayer player;
     private ArrayList<Entity> entities;
     private Comparator<Entity> renderSorter = (Entity a, Entity b) -> {
@@ -112,8 +112,8 @@ public class EntityManager implements IRenderableManager {
         return 1;
     };
 
-    public EntityManager(TheUltimateTile theUltimateTile, EntityPlayer player) {
-        this.theUltimateTile = theUltimateTile;
+    public EntityManager(GameEngine gameEngine, EntityPlayer player) {
+        this.gameEngine = gameEngine;
         this.player = player;
         entities = new ArrayList<>();
         addEntity(this.player);
@@ -159,12 +159,12 @@ public class EntityManager implements IRenderableManager {
         entities.add(e);
     }
 
-    public TheUltimateTile getTheUltimateTile() {
-        return theUltimateTile;
+    public GameEngine getGameEngine() {
+        return gameEngine;
     }
 
-    public void setTheUltimateTile(TheUltimateTile theUltimateTile) {
-        this.theUltimateTile = theUltimateTile;
+    public void setGameEngine(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
     }
 
     public EntityPlayer getPlayer() {

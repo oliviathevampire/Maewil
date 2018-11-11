@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.utils;
+package coffeecatteam.utils;
 
 import net.arikia.dev.drpc.DiscordEventHandlers;
 import net.arikia.dev.drpc.DiscordRPC;
@@ -7,11 +7,9 @@ import net.arikia.dev.drpc.DiscordRichPresence;
 public class DiscordHandler {
 
     private static final long timeStamp = System.currentTimeMillis();
-    private static DiscordHandler instance = new DiscordHandler();
+    public static final DiscordHandler INSTANCE = new DiscordHandler();
 
-    public static DiscordHandler getInstance() {
-        return instance;
-    }
+    private boolean LEVEL_CREATE = false;
 
     public void setup() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -24,7 +22,7 @@ public class DiscordHandler {
         DiscordRPC.discordInitialize("502962688733741056", handlers, true);
         DiscordRPC.discordRunCallbacks();
 
-        updatePresence("Main Menu");
+        updatePresence((LEVEL_CREATE ? "Level Creator" : "Main Menu"));
     }
 
     public void updatePresence(String details) {
@@ -62,5 +60,9 @@ public class DiscordHandler {
             case 5:
                 return "tree";
         }
+    }
+
+    public void LEVEL_CREATE(boolean LEVEL_CREATE) {
+        this.LEVEL_CREATE = LEVEL_CREATE;
     }
 }

@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.entities.creatures.undead;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
@@ -8,8 +8,8 @@ import coffeecatteam.theultimatetile.manager.ItemManager;
 
 public class EntityZombie extends EntityUndead {
 
-    public EntityZombie(TheUltimateTile theUltimateTile, String id) {
-        super(theUltimateTile, id);
+    public EntityZombie(GameEngine gameEngine, String id) {
+        super(gameEngine, id);
         this.drop = ItemManager.ROTTEN_FLESH;
     }
 

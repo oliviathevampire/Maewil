@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.entities.creatures;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.ai.AIFollowFlee;
 import coffeecatteam.theultimatetile.entities.ai.AIWander;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.utils.Utils;
 
 import java.awt.*;
 
@@ -17,10 +17,10 @@ public abstract class EntityUndead extends EntityCreature {
     private AIWander aiWander;
     private AIFollowFlee aiFollowFlee;
 
-    public EntityUndead(TheUltimateTile theUltimateTile, String id) {
-        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityUndead(GameEngine gameEngine, String id) {
+        super(gameEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         aiWander = new AIWander(this, 1.5f);
-        aiFollowFlee = new AIFollowFlee(this, theUltimateTile.getEntityManager().getPlayer());
+        aiFollowFlee = new AIFollowFlee(this, gameEngine.getEntityManager().getPlayer());
     }
 
     @Override
@@ -29,7 +29,7 @@ public abstract class EntityUndead extends EntityCreature {
         yMove = 0;
 
         // Movement
-        if (theUltimateTile.getEntityManager().getPlayer().isActive()) {
+        if (gameEngine.getEntityManager().getPlayer().isActive()) {
             if (!aiFollowFlee.tick()) {
                 aiWander.tick();
             }
@@ -56,8 +56,8 @@ public abstract class EntityUndead extends EntityCreature {
 
         attackTimer = 0;
 
-        for (Entity e : theUltimateTile.getEntityManager().getEntities())
-            if (e.equals(theUltimateTile.getEntityManager().getPlayer()))
+        for (Entity e : gameEngine.getEntityManager().getEntities())
+            if (e.equals(gameEngine.getEntityManager().getPlayer()))
                 if (e.getCollisionBounds(0, 0).intersects(ar))
                     e.hurt(Utils.getRandomInt(1, 3) + dmgModifier);
     }

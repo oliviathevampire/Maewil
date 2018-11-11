@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.entities.creatures.passive;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.entities.ai.AIFollowFlee;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPassive;
 import coffeecatteam.theultimatetile.gfx.Animation;
@@ -11,10 +11,10 @@ public class EntitySheep extends EntityPassive {
 
     private AIFollowFlee aiFollowFlee;
 
-    public EntitySheep(TheUltimateTile theUltimateTile, String id) {
-        super(theUltimateTile, id);
+    public EntitySheep(GameEngine gameEngine, String id) {
+        super(gameEngine, id);
         this.drop = ItemManager.WOOL_BUNDLE;
-        aiFollowFlee = new AIFollowFlee(this, theUltimateTile.getEntityManager().getPlayer(), 100f, 3.5f).setFlee();
+        aiFollowFlee = new AIFollowFlee(this, gameEngine.getEntityManager().getPlayer(), 100f, 3.5f).setFlee();
     }
 
     @Override
@@ -23,7 +23,7 @@ public class EntitySheep extends EntityPassive {
         yMove = 0;
 
         // Movement
-        if (theUltimateTile.getEntityManager().getPlayer().isActive()) {
+        if (gameEngine.getEntityManager().getPlayer().isActive()) {
             if (Boolean.valueOf(TAGS.get("fleePlayer"))) {
                 if (!aiFollowFlee.tick())
                     aiWander.tick();

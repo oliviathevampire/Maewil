@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.utils;
+package coffeecatteam.utils;
 
 import java.io.BufferedWriter;
 import java.io.File;

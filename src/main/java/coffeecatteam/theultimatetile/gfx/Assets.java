@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.gfx;
 
-import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.utils.Logger;
+import coffeecatteam.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

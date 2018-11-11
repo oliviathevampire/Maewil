@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.overlays.Overlay;
 import coffeecatteam.theultimatetile.gfx.overlays.OverlayGlub;
@@ -16,12 +16,12 @@ public class OverlayManager implements IRenderableManager {
 
     private List<Overlay> overlays;
 
-    public OverlayManager(TheUltimateTile theUltimateTile, EntityPlayer player) {
+    public OverlayManager(GameEngine gameEngine, EntityPlayer player) {
         overlays = new ArrayList<>();
 
-        addOverlay(new OverlayPlayerHealth(theUltimateTile, player));
-        addOverlay(new OverlayPlayerSprint(theUltimateTile, player));
-        addOverlay(new OverlayGlub(theUltimateTile, player));
+        addOverlay(new OverlayPlayerHealth(gameEngine, player));
+        addOverlay(new OverlayPlayerSprint(gameEngine, player));
+        addOverlay(new OverlayGlub(gameEngine, player));
     }
 
     @Override

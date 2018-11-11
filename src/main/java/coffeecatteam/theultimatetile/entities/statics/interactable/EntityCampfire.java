@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.entities.statics.interactable;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.gfx.Animation;
@@ -14,11 +14,11 @@ public class EntityCampfire extends EntityStatic {
     private Animation anim;
     private InventoryCampfire inventoryCampfire;
 
-    public EntityCampfire(TheUltimateTile theUltimateTile, String id) {
-        super(theUltimateTile, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.WOOD);
+    public EntityCampfire(GameEngine gameEngine, String id) {
+        super(gameEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.WOOD);
         anim = new Animation(135, Assets.CAMPFIRE);
 
-        inventoryCampfire = new InventoryCampfire(theUltimateTile, theUltimateTile.getEntityManager().getPlayer(), TAGS);
+        inventoryCampfire = new InventoryCampfire(gameEngine, gameEngine.getEntityManager().getPlayer(), TAGS);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class EntityCampfire extends EntityStatic {
     @Override
     public void interact() {
         if (!inventoryCampfire.isActive()) {
-            theUltimateTile.getInventoryManager().openCloseInventory(inventoryCampfire);
+            gameEngine.getInventoryManager().openCloseInventory(inventoryCampfire);
         }
 
         this.interacted = false;

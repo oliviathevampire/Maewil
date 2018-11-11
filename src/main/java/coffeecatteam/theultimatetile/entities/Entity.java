@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.entities;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -19,7 +19,7 @@ public abstract class Entity {
     public static final int DEFAULT_HEIGHT = 64;
 
     private String id;
-    protected TheUltimateTile theUltimateTile;
+    protected GameEngine gameEngine;
     protected float x, y;
 
     protected int width, height;
@@ -36,7 +36,7 @@ public abstract class Entity {
     protected int renderX, renderY;
     protected BufferedImage texture;
 
-    public Entity(TheUltimateTile theUltimateTile, String id, int width, int height, EntityHitType entityHitType) {
+    public Entity(GameEngine gameEngine, String id, int width, int height, EntityHitType entityHitType) {
         this.id = id;
 
         this.width = width;
@@ -46,7 +46,7 @@ public abstract class Entity {
         bounds = new Rectangle(0, 0, width, height);
 
         entities.put(id, this);
-        entities.get(id).setTheUltimateTile(theUltimateTile);
+        entities.get(id).setGameEngine(gameEngine);
         this.entityHitType = entityHitType;
     }
 
@@ -74,8 +74,8 @@ public abstract class Entity {
     public void tickA() {
         tick();
 
-        this.renderX = (int) (this.x - this.theUltimateTile.getCamera().getxOffset());
-        this.renderY = (int) (this.y - this.theUltimateTile.getCamera().getyOffset());
+        this.renderX = (int) (this.x - this.gameEngine.getCamera().getxOffset());
+        this.renderY = (int) (this.y - this.gameEngine.getCamera().getyOffset());
 
         if (this.interacted)
             this.interact();
@@ -84,7 +84,7 @@ public abstract class Entity {
     public void preRender(Graphics g) {
         if (showHitbox) {
             g.setColor(Color.red);
-            g.fillRect((int) (x + bounds.x - theUltimateTile.getCamera().getxOffset()), (int) (y + bounds.y - theUltimateTile.getCamera().getyOffset()), bounds.width, bounds.height);
+            g.fillRect((int) (x + bounds.x - gameEngine.getCamera().getxOffset()), (int) (y + bounds.y - gameEngine.getCamera().getyOffset()), bounds.width, bounds.height);
         }
     }
 
@@ -98,7 +98,7 @@ public abstract class Entity {
 
     public void die(List<Entity> entities, int index) {
         entities.remove(index);
-        theUltimateTile.getEntityManager().getPlayer().setGlubel(theUltimateTile.getEntityManager().getPlayer().getGlubel() + Utils.getRandomInt(1, 5));
+        gameEngine.getEntityManager().getPlayer().setGlubel(gameEngine.getEntityManager().getPlayer().getGlubel() + Utils.getRandomInt(1, 5));
     }
 
     public void interact() {
@@ -120,7 +120,7 @@ public abstract class Entity {
     }
 
     public boolean checkEntityCollisions(float xOffset, float yOffset) {
-        for (Entity e : theUltimateTile.getEntityManager().getEntities()) {
+        for (Entity e : gameEngine.getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
             if (e instanceof EntityPlayer && this instanceof EntityPlayer)
@@ -136,12 +136,12 @@ public abstract class Entity {
         return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
     }
 
-    public TheUltimateTile getTheUltimateTile() {
-        return theUltimateTile;
+    public GameEngine getGameEngine() {
+        return gameEngine;
     }
 
-    public void setTheUltimateTile(TheUltimateTile theUltimateTile) {
-        this.theUltimateTile = theUltimateTile;
+    public void setGameEngine(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
     }
 
     public String getId() {

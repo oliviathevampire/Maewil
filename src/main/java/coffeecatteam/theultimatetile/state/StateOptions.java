@@ -1,13 +1,13 @@
 package coffeecatteam.theultimatetile.state;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.OptionsJsonParser;
-import coffeecatteam.theultimatetile.utils.DiscordHandler;
-import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.utils.DiscordHandler;
+import coffeecatteam.utils.Logger;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -17,11 +17,11 @@ public class StateOptions extends StateAbstractMenu {
 
     public static OptionsJsonParser OPTIONS;
 
-    public StateOptions(TheUltimateTile theUltimateTileIn) {
-        super(theUltimateTileIn);
+    public StateOptions(GameEngine gameEngineIn) {
+        super(gameEngineIn);
         init();
 
-        OPTIONS = new OptionsJsonParser("./options.json", theUltimateTile);
+        OPTIONS = new OptionsJsonParser("./options.json", gameEngine);
         try {
             OPTIONS.load();
         } catch (IOException | ParseException e) {
@@ -61,7 +61,7 @@ public class StateOptions extends StateAbstractMenu {
         uiManager.addObject(new UIButton(15, 173, coBtnWidth, coBtnHeight, "Controls", new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(theUltimateTile.optionsControls);
+                State.setState(gameEngine.optionsControls);
                 try {
                     OPTIONS.load();
                 } catch (IOException | ParseException e) {
@@ -80,7 +80,7 @@ public class StateOptions extends StateAbstractMenu {
         uiManager.addObject(new UIButton(15, 252, soBtnWidth, soBtnHeight, "Sounds", new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(theUltimateTile.optionsSpounds);
+                State.setState(gameEngine.optionsSpounds);
                 try {
                     OPTIONS.load();
                 } catch (IOException | ParseException e) {
@@ -96,7 +96,7 @@ public class StateOptions extends StateAbstractMenu {
     }
 
     private void setPresence(String presence) {
-        DiscordHandler.getInstance().updatePresence("Main Menu", "Options/" + presence);
+        DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options/" + presence);
     }
 
     @Override
@@ -113,6 +113,6 @@ public class StateOptions extends StateAbstractMenu {
         super.render(g);
         g.drawImage(OPTIONS.debugMode() ? Assets.ICON_ON : Assets.ICON_OFF, 15 + 6 * 64, 15, 64, 64, null);
 
-        Text.drawString(g, "EXPERIMENTAL!", theUltimateTile.getWidth() / 2, theUltimateTile.getHeight() / 2, true, true, Color.red, Assets.FONT_80);
+        Text.drawString(g, "EXPERIMENTAL!", gameEngine.getWidth() / 2, gameEngine.getHeight() / 2, true, true, Color.red, Assets.FONT_80);
     }
 }

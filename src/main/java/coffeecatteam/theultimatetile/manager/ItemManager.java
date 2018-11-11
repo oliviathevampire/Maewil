@@ -1,11 +1,11 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.inventory.items.*;
 import coffeecatteam.theultimatetile.manager.iinterface.IRenderableManager;
-import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.utils.Logger;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -90,11 +90,11 @@ public class ItemManager implements IRenderableManager {
     }
 
     // Item Manager
-    private TheUltimateTile theUltimateTile;
+    private GameEngine gameEngine;
     private ArrayList<ItemStack> items;
 
-    public ItemManager(TheUltimateTile theUltimateTile) {
-        this.theUltimateTile = theUltimateTile;
+    public ItemManager(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
         items = new ArrayList<>();
     }
 
@@ -114,7 +114,7 @@ public class ItemManager implements IRenderableManager {
         for (ItemStack stack : items) {
             stack.getItem().render(g);
             if (stack.getCount() > 1)
-                Text.drawString(g, String.valueOf(stack.getCount()), (int) (stack.getItem().getX() - this.theUltimateTile.getCamera().getxOffset()), (int) (stack.getItem().getY() + 15 - this.theUltimateTile.getCamera().getyOffset()), false, false, Color.white, Assets.FONT_20);
+                Text.drawString(g, String.valueOf(stack.getCount()), (int) (stack.getItem().getX() - this.gameEngine.getCamera().getxOffset()), (int) (stack.getItem().getY() + 15 - this.gameEngine.getCamera().getyOffset()), false, false, Color.white, Assets.FONT_20);
         }
     }
 
@@ -128,7 +128,7 @@ public class ItemManager implements IRenderableManager {
     }
 
     public void addItem(ItemStack stack) {
-        stack.setTheUltimateTile(theUltimateTile);
+        stack.setTheUltimateTile(gameEngine);
         items.add(stack);
     }
 

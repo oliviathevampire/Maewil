@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.state.game;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
@@ -8,8 +8,8 @@ import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateAbstractMenu;
-import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.utils.Logger;
+import coffeecatteam.utils.Utils;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
@@ -20,14 +20,14 @@ import java.util.List;
 
 public class StateSelectGame extends StateAbstractMenu {
 
-    public StateSelectGame(TheUltimateTile theUltimateTileIn) {
-        super(theUltimateTileIn);
+    public StateSelectGame(GameEngine gameEngineIn) {
+        super(gameEngineIn);
         init();
 
         int btnWidth = 5 * 64;
         int btnHeight = 64;
-        int x = theUltimateTile.getWidth() / 2 - btnWidth / 2;
-        int y = theUltimateTile.getHeight() / 2 - btnHeight / 2 + 25;
+        int x = gameEngine.getWidth() / 2 - btnWidth / 2;
+        int y = gameEngine.getHeight() / 2 - btnHeight / 2 + 25;
         float yOff = 25 * 3f;
         uiManager.addObject(new WorldButton(x, y, 1));
         uiManager.addObject(new WorldButton(x, y + yOff, 2));
@@ -83,7 +83,7 @@ public class StateSelectGame extends StateAbstractMenu {
             this.savesPath = savesPath;
             this.index = index - 1;
 
-            gamesJSONParser = new SavedGamesJSONParser(theUltimateTile);
+            gamesJSONParser = new SavedGamesJSONParser(gameEngine);
             try {
                 gamesJSONParser.load();
             } catch (IOException | ParseException e) {
@@ -114,11 +114,11 @@ public class StateSelectGame extends StateAbstractMenu {
                 worldName = SavedGamesJSONParser.GAMES.get(index).split(":")[1];
                 path = savesPath + worldName;
             }
-            State.setState(new StateGame(theUltimateTile, path, worldName));
+            State.setState(new StateGame(gameEngine, path, worldName));
 
             if (!isSaved) {
-                String username = theUltimateTile.hasArgument("-username") ? theUltimateTile.getArgument("-username") : Utils.getUsername();
-                theUltimateTile.setUsername(username);
+                String username = gameEngine.hasArgument("-username") ? gameEngine.getArgument("-username") : Utils.getUsername();
+                gameEngine.setUsername(username);
                 Logger.print("Set username: " + username);
             }
 
@@ -153,6 +153,6 @@ public class StateSelectGame extends StateAbstractMenu {
 
         int w = 80 * 6;
         int h = 48 * 6;
-        g.drawImage(Assets.TITLE, theUltimateTile.getWidth() / 2 - w / 2, 20, w, h, null);
+        g.drawImage(Assets.TITLE, gameEngine.getWidth() / 2 - w / 2, 20, w, h, null);
     }
 }

@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.tiles;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 
@@ -10,8 +10,8 @@ public class TileAnimated extends Tile {
 
     private Animation animation;
 
-    public TileAnimated(TheUltimateTile theUltimateTile, Animation animation, String id, boolean isSolid, TileType tileType) {
-        super(theUltimateTile, Assets.WATER[0], id, isSolid, tileType);
+    public TileAnimated(GameEngine gameEngine, Animation animation, String id, boolean isSolid, TileType tileType) {
+        super(gameEngine, Assets.WATER[0], id, isSolid, tileType);
         this.animation = animation;
     }
 
@@ -22,6 +22,6 @@ public class TileAnimated extends Tile {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(animation.getCurrentFrame(), (int) (x * Tile.TILE_WIDTH - theUltimateTile.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - theUltimateTile.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
+        g.drawImage(animation.getCurrentFrame(), (int) (x * Tile.TILE_WIDTH - gameEngine.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - gameEngine.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
     }
 }

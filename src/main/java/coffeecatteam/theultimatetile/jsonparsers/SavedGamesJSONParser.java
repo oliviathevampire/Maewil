@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.jsonparsers.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.jsonparsers.iinterface.IJSONSaver;
-import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.utils.Logger;
+import coffeecatteam.utils.Utils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,7 +18,7 @@ import java.util.List;
 public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
 
     private String path = "./saves/saved_games.json";
-    protected TheUltimateTile theUltimateTile;
+    protected GameEngine gameEngine;
 
     public static List<String> GAMES = new ArrayList<>();
 
@@ -28,8 +28,8 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
         GAMES.add("false");
     }
 
-    public SavedGamesJSONParser(TheUltimateTile theUltimateTile) {
-        this.theUltimateTile = theUltimateTile;
+    public SavedGamesJSONParser(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
     }
 
     @Override

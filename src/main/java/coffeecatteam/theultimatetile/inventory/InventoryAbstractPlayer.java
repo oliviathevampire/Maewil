@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.inventory;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
@@ -19,12 +19,12 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
     protected boolean isDefault = false;
 
-    public InventoryAbstractPlayer(TheUltimateTile theUltimateTile, EntityPlayer player, String invName) {
-        this(theUltimateTile, player, invName, 190, 360);
+    public InventoryAbstractPlayer(GameEngine gameEngine, EntityPlayer player, String invName) {
+        this(gameEngine, player, invName, 190, 360);
     }
 
-    public InventoryAbstractPlayer(TheUltimateTile theUltimateTile, EntityPlayer player, String invName, int xOff, int yOff) {
-        super(theUltimateTile, player, invName);
+    public InventoryAbstractPlayer(GameEngine gameEngine, EntityPlayer player, String invName, int xOff, int yOff) {
+        super(gameEngine, player, invName);
 
         // Add inventory slots
         int xd = xOff, yd = yOff, x, y;
@@ -41,10 +41,10 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         }
 
         // Add hotbar slots
-        int hxd = (theUltimateTile.getWidth() / 2 - width / 2) - width - 6, hx;
+        int hxd = (gameEngine.getWidth() / 2 - width / 2) - width - 6, hx;
         for (int i = 0; i < maxHotbarSize; i++) {
             hx = hxd + 54 * i;
-            Slot s = new Slot(i, hx, theUltimateTile.getHeight() - height - height / 2 + 13, width, height);
+            Slot s = new Slot(i, hx, gameEngine.getHeight() - height - height / 2 + 13, width, height);
             addSlot(s).setSelector(Assets.HOTBAR_SELECTER);
         }
     }
@@ -73,10 +73,10 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
         if (active) {
             // Change select item
-            boolean up = theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.W).getKeyCode());
-            boolean down = theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.S).getKeyCode());
-            boolean left = theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.A).getKeyCode());
-            boolean right = theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.D).getKeyCode());
+            boolean up = gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.W).getKeyCode());
+            boolean down = gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.S).getKeyCode());
+            boolean left = gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.A).getKeyCode());
+            boolean right = gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.D).getKeyCode());
 
             if (up || down) {
                 inventorySelectedIndex += 6;
@@ -98,7 +98,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
                 if (stack != null) {
                     // Check if item was interacted with
-                    if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.R).getKeyCode())) {
+                    if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.R).getKeyCode())) {
                         if (stack.getItem() instanceof IInteractable)
                             if (((IInteractable) stack.getItem()).onInteracted(player))
                                 stack.setCount(stack.getCount() - 1);
@@ -111,18 +111,18 @@ public abstract class InventoryAbstractPlayer extends Inventory {
             }
 
             // Swap selected stacks
-            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Z).getKeyCode()))
+            if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Z).getKeyCode()))
                 swapSlots(getSlot(inventorySelectedIndex), getSlot(maxSize + hotbarSelectedIndex));
         }
         if (this.active)
-            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Q).getKeyCode()))
+            if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Q).getKeyCode()))
                 dropItem(active, inventorySelectedIndex, hotbarSelectedIndex);
 
-        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ONE).getKeyCode()))
+        if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ONE).getKeyCode()))
             hotbarSelectedIndex = 0;
-        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.TWO).getKeyCode()))
+        if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.TWO).getKeyCode()))
             hotbarSelectedIndex = 1;
-        if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.THREE).getKeyCode()))
+        if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.THREE).getKeyCode()))
             hotbarSelectedIndex = 2;
         if (hotbarSelectedIndex < maxSize + maxHotbarSize) {
             player.setEquippedItem(getSlot(maxSize + hotbarSelectedIndex).getStack());
@@ -149,9 +149,9 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         int multiplier = 6;
         int width = barWidth * multiplier;
         int height = barHeight * multiplier;
-        int y = theUltimateTile.getHeight() - height - 5;
+        int y = gameEngine.getHeight() - height - 5;
 
-        g.drawImage(Assets.HOTBAR, theUltimateTile.getWidth() / 2 - width / 2, y, width, height, null);
+        g.drawImage(Assets.HOTBAR, gameEngine.getWidth() / 2 - width / 2, y, width, height, null);
 
         // Render hotbar slots
         for (int i = maxSize; i < maxSize + maxHotbarSize; i++) {
@@ -169,10 +169,10 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         if (getSlot(inventorySelectedIndex).getStack() != null) {
             if (active) {
                 getSlot(inventorySelectedIndex).getStack().getItem().setPickedUp(false);
-                theUltimateTile.getItemManager().addItem(getSlot(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
+                gameEngine.getItemManager().addItem(getSlot(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
             } else {
                 getSlot(hotbarSelectedIndex + maxHotbarSize).getStack().getItem().setPickedUp(false);
-                theUltimateTile.getItemManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), player.getX() + xOff, player.getY() + yOff);
+                gameEngine.getItemManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), player.getX() + xOff, player.getY() + yOff);
             }
         }
     }
@@ -287,11 +287,11 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
     @Override
     public void onOpen() {
-        copyItems(theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer(), this, false);
+        copyItems(gameEngine.getEntityManager().getPlayer().getInventoryPlayer(), this, false);
     }
 
     @Override
     public void onClose() {
-        copyItems(this, theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer(), false);
+        copyItems(this, gameEngine.getEntityManager().getPlayer().getInventoryPlayer(), false);
     }
 }

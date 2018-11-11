@@ -1,17 +1,17 @@
 package coffeecatteam.theultimatetile.gfx.overlays;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.utils.Utils;
 
 import java.awt.*;
 
 public class OverlayPlayerSprint extends Overlay {
 
-    public OverlayPlayerSprint(TheUltimateTile theUltimateTile, EntityPlayer player) {
-        super(theUltimateTile, player);
+    public OverlayPlayerSprint(GameEngine gameEngine, EntityPlayer player) {
+        super(gameEngine, player);
     }
 
     @Override
@@ -30,10 +30,10 @@ public class OverlayPlayerSprint extends Overlay {
         int sprint = (int) player.getSprintTimer();
         String text = "Sprint moveLeft: " + sprint;
         Font font = Assets.FONT_20;
-        int x = theUltimateTile.getWidth() - width;
-        int y = theUltimateTile.getHeight() - height;
+        int x = gameEngine.getWidth() - width;
+        int y = gameEngine.getHeight() - height;
 
-        Text.drawString(g, text, theUltimateTile.getWidth() - Text.getWidth(g, text, font) - 10, theUltimateTile.getHeight() - height, false, false, Color.white, font);
+        Text.drawString(g, text, gameEngine.getWidth() - Text.getWidth(g, text, font) - 10, gameEngine.getHeight() - height, false, false, Color.white, font);
         g.drawImage(Assets.SPRINT[0], x, y, width, height, null);
 
         int sprintWidth = (int) Utils.map(sprint - 1, 0, player.getMaxSprintTimer(), 0, sWidth);

@@ -1,11 +1,11 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.jsonparsers.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.jsonparsers.iinterface.IJSONSaver;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
-import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.utils.Logger;
+import coffeecatteam.utils.Utils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
 
     private String path;
-    private TheUltimateTile theUltimateTile;
+    private GameEngine gameEngine;
 
     private Map<String, Keybind> CONTROLS = new HashMap<>();
     private boolean DEBUG_MODE, FPS_COUNTER;
@@ -27,9 +27,9 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
     private DecimalFormat volumeFormat = new DecimalFormat("#.#");
     private float volumeMusic, volumePassive, volumeHostile, volumePlayer, volumeOther;
 
-    public OptionsJsonParser(String path, TheUltimateTile theUltimateTile) {
+    public OptionsJsonParser(String path, GameEngine gameEngine) {
         this.path = path;
-        this.theUltimateTile = theUltimateTile;
+        this.gameEngine = gameEngine;
     }
 
     @Override

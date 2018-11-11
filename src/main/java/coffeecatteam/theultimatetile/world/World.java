@@ -1,12 +1,12 @@
 package coffeecatteam.theultimatetile.world;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.tiles.Tile;
 import coffeecatteam.theultimatetile.tiles.TileBreakable;
-import coffeecatteam.theultimatetile.utils.DiscordHandler;
-import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.utils.DiscordHandler;
+import coffeecatteam.utils.Logger;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class World {
 
-    private TheUltimateTile theUltimateTile;
+    private GameEngine gameEngine;
     private String name;
     private int width, height;
     private float spawnX;
@@ -25,27 +25,27 @@ public class World {
 
     private OverlayManager overlayManager;
 
-    public World(TheUltimateTile theUltimateTile, String path, String worldName) {
-        this.theUltimateTile = theUltimateTile;
-        overlayManager = new OverlayManager(theUltimateTile, theUltimateTile.getEntityManager().getPlayer());
+    public World(GameEngine gameEngine, String path, String worldName) {
+        this.gameEngine = gameEngine;
+        overlayManager = new OverlayManager(gameEngine, gameEngine.getEntityManager().getPlayer());
 
         try {
             loadWorld(path);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        theUltimateTile.getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
-        theUltimateTile.getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
+        gameEngine.getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
+        gameEngine.getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
 
-        DiscordHandler.getInstance().updatePresence("In Game - " + theUltimateTile.getEntityManager().getPlayer().getUsername(),
+        DiscordHandler.INSTANCE.updatePresence("In Game - " + gameEngine.getEntityManager().getPlayer().getUsername(),
                 "World: " + name + " - Save: [" + worldName + "]", true);
     }
 
     public void tick() {
-        int xStart = (int) Math.max(0, theUltimateTile.getCamera().getxOffset() / Tile.TILE_WIDTH);
-        int xEnd = (int) Math.min(width, (theUltimateTile.getCamera().getxOffset() + theUltimateTile.getWidth()) / Tile.TILE_WIDTH + 1);
-        int yStart = (int) Math.max(0, theUltimateTile.getCamera().getyOffset() / Tile.TILE_HEIGHT);
-        int yEnd = (int) Math.min(height, (theUltimateTile.getCamera().getyOffset() + theUltimateTile.getHeight()) / Tile.TILE_HEIGHT + 1);
+        int xStart = (int) Math.max(0, gameEngine.getCamera().getxOffset() / Tile.TILE_WIDTH);
+        int xEnd = (int) Math.min(width, (gameEngine.getCamera().getxOffset() + gameEngine.getWidth()) / Tile.TILE_WIDTH + 1);
+        int yStart = (int) Math.max(0, gameEngine.getCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (gameEngine.getCamera().getyOffset() + gameEngine.getHeight()) / Tile.TILE_HEIGHT + 1);
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
@@ -54,16 +54,16 @@ public class World {
             }
         }
 
-        theUltimateTile.getItemManager().tick();
-        theUltimateTile.getEntityManager().tick();
+        gameEngine.getItemManager().tick();
+        gameEngine.getEntityManager().tick();
         overlayManager.tick();
     }
 
     public void render(Graphics g) {
-        int xStart = (int) Math.max(0, theUltimateTile.getCamera().getxOffset() / Tile.TILE_WIDTH);
-        int xEnd = (int) Math.min(width, (theUltimateTile.getCamera().getxOffset() + theUltimateTile.getWidth()) / Tile.TILE_WIDTH + 1);
-        int yStart = (int) Math.max(0, theUltimateTile.getCamera().getyOffset() / Tile.TILE_HEIGHT);
-        int yEnd = (int) Math.min(height, (theUltimateTile.getCamera().getyOffset() + theUltimateTile.getHeight()) / Tile.TILE_HEIGHT + 1);
+        int xStart = (int) Math.max(0, gameEngine.getCamera().getxOffset() / Tile.TILE_WIDTH);
+        int xEnd = (int) Math.min(width, (gameEngine.getCamera().getxOffset() + gameEngine.getWidth()) / Tile.TILE_WIDTH + 1);
+        int yStart = (int) Math.max(0, gameEngine.getCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (gameEngine.getCamera().getyOffset() + gameEngine.getHeight()) / Tile.TILE_HEIGHT + 1);
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
@@ -72,8 +72,8 @@ public class World {
             }
         }
 
-        theUltimateTile.getItemManager().render(g);
-        theUltimateTile.getEntityManager().render(g);
+        gameEngine.getItemManager().render(g);
+        gameEngine.getEntityManager().render(g);
         overlayManager.render(g);
     }
 
@@ -130,7 +130,7 @@ public class World {
     }
 
     private void loadWorld(String path) throws IOException, ParseException {
-        WorldJsonLoader worldJsonLoader = new WorldJsonLoader(path, theUltimateTile); // "/assets/worlds/dev_tests/json_format"
+        WorldJsonLoader worldJsonLoader = new WorldJsonLoader(path, gameEngine); // "/assets/worlds/dev_tests/json_format"
 
         worldJsonLoader.load();
         Logger.print("Loading world [" + worldJsonLoader.getName() + "]!");
@@ -147,7 +147,7 @@ public class World {
         bg_tiles = new Tile[width][height];
         fg_tiles = new Tile[width][height];
 
-        theUltimateTile.getEntityManager().getPlayer().setUsername(worldJsonLoader.getUsername());
+        gameEngine.getEntityManager().getPlayer().setUsername(worldJsonLoader.getUsername());
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -176,8 +176,8 @@ public class World {
         Logger.print("Loaded foreground tiles!\n");
     }
 
-    public TheUltimateTile getTheUltimateTile() {
-        return theUltimateTile;
+    public GameEngine getGameEngine() {
+        return gameEngine;
     }
 
     public String getName() {

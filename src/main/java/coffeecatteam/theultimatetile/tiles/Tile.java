@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.tiles;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -9,7 +9,7 @@ public class Tile {
 
     public static final int TILE_WIDTH = 64, TILE_HEIGHT = 64;
 
-    protected TheUltimateTile theUltimateTile;
+    protected GameEngine gameEngine;
     protected BufferedImage texture;
     protected final String id;
 
@@ -19,8 +19,8 @@ public class Tile {
     private boolean isSolid;
     private TileType tileType;
 
-    public Tile(TheUltimateTile theUltimateTile, BufferedImage texture, String id, boolean isSolid, TileType tileType) {
-        this.theUltimateTile = theUltimateTile;
+    public Tile(GameEngine gameEngine, BufferedImage texture, String id, boolean isSolid, TileType tileType) {
+        this.gameEngine = gameEngine;
         this.texture = texture;
         this.id = id;
 
@@ -30,7 +30,7 @@ public class Tile {
     }
 
     public void updateBounds() {
-        bounds = new Rectangle((int) (x * Tile.TILE_WIDTH - theUltimateTile.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - theUltimateTile.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
+        bounds = new Rectangle((int) (x * Tile.TILE_WIDTH - gameEngine.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - gameEngine.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
     }
 
     public void tick() {
@@ -42,9 +42,9 @@ public class Tile {
     }
 
     public void render(Graphics g, Color tint) {
-        g.drawImage(texture, (int) (x * Tile.TILE_WIDTH - theUltimateTile.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - theUltimateTile.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
+        g.drawImage(texture, (int) (x * Tile.TILE_WIDTH - gameEngine.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - gameEngine.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
         g.setColor(tint);
-        g.fillRect((int) (x * Tile.TILE_WIDTH - theUltimateTile.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - theUltimateTile.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
+        g.fillRect((int) (x * Tile.TILE_WIDTH - gameEngine.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - gameEngine.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
     }
 
     public Tile setPos(int x, int y) {

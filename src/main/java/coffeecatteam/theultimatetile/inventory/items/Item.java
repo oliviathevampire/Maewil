@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.inventory.items;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 import coffeecatteam.theultimatetile.inventory.Slot;
 
 import java.awt.*;
@@ -14,7 +14,7 @@ public class Item implements Cloneable {
 
     public static final int WIDTH = 32, HEIGHT = 32;
 
-    protected TheUltimateTile theUltimateTile;
+    protected GameEngine gameEngine;
     protected BufferedImage texture;
     protected final String id;
 
@@ -32,13 +32,13 @@ public class Item implements Cloneable {
     }
 
     public void tick(int count) {
-        if (this.theUltimateTile.getEntityManager().getPlayer().isActive()) {
-            if (this.theUltimateTile.getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
-                if (!this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isFull()) {
+        if (this.gameEngine.getEntityManager().getPlayer().isActive()) {
+            if (this.gameEngine.getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
+                if (!this.gameEngine.getEntityManager().getPlayer().getInventoryPlayer().isFull()) {
                     this.pickedUp = true;
                 } else {
                     int hotbar = 0;
-                    for (Slot slot : this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().getSlots()) {
+                    for (Slot slot : this.gameEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlots()) {
                         if (slot.getStack() != null) {
                             if (slot.getStack().getId().equals(this.id)) {
                                 if (slot.getStack().getItem().isStackable()) {
@@ -50,11 +50,11 @@ public class Item implements Cloneable {
                         }
                     }
 
-                    if (hotbar >= this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().size()) {
-                        if (!this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isHotbarFull()) {
+                    if (hotbar >= this.gameEngine.getEntityManager().getPlayer().getInventoryPlayer().size()) {
+                        if (!this.gameEngine.getEntityManager().getPlayer().getInventoryPlayer().isHotbarFull()) {
                             this.pickedUp = true;
                         } else {
-                            for (Slot slot : this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().getSlots()) {
+                            for (Slot slot : this.gameEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlots()) {
                                 if (slot.getStack() != null) {
                                     if (slot.getStack().getId().equals(this.id)) {
                                         if (slot.getStack().getItem().isStackable()) {
@@ -69,19 +69,19 @@ public class Item implements Cloneable {
             }
         }
         if (this.pickedUp) {
-            if (!this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().isFull())
-                this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().addItem(new ItemStack(this, count));
+            if (!this.gameEngine.getEntityManager().getPlayer().getInventoryPlayer().isFull())
+                this.gameEngine.getEntityManager().getPlayer().getInventoryPlayer().addItem(new ItemStack(this, count));
             else
-                this.theUltimateTile.getEntityManager().getPlayer().getInventoryPlayer().addStackToHotbar(new ItemStack(this, count));
+                this.gameEngine.getEntityManager().getPlayer().getInventoryPlayer().addStackToHotbar(new ItemStack(this, count));
         }
 
         this.bounds = new Rectangle((int) this.x, (int) this.y, WIDTH, HEIGHT);
     }
 
     public void render(Graphics g) {
-        if (this.theUltimateTile == null)
+        if (this.gameEngine == null)
             return;
-        render(g, (int) (this.x - this.theUltimateTile.getCamera().getxOffset()), (int) (this.y - this.theUltimateTile.getCamera().getyOffset()));
+        render(g, (int) (this.x - this.gameEngine.getCamera().getxOffset()), (int) (this.y - this.gameEngine.getCamera().getyOffset()));
     }
 
     public void render(Graphics g, int x, int y) {
@@ -95,12 +95,12 @@ public class Item implements Cloneable {
         this.bounds.y = y;
     }
 
-    public TheUltimateTile getTheUltimateTile() {
-        return this.theUltimateTile;
+    public GameEngine getGameEngine() {
+        return this.gameEngine;
     }
 
-    public void setTheUltimateTile(TheUltimateTile theUltimateTile) {
-        this.theUltimateTile = theUltimateTile;
+    public void setGameEngine(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
     }
 
     public BufferedImage getTexture() {

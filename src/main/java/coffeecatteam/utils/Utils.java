@@ -1,6 +1,6 @@
-package coffeecatteam.theultimatetile.utils;
+package coffeecatteam.utils;
 
-import coffeecatteam.theultimatetile.TheUltimateTile;
+import coffeecatteam.theultimatetile.GameEngine;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +32,7 @@ public class Utils {
             return Font.createFont(Font.TRUETYPE_FONT, Utils.class.getResourceAsStream(path)).deriveFont(Font.PLAIN, size);
         } catch (FontFormatException | IOException e) {
             e.printStackTrace();
-            TheUltimateTile.getTheUltimateTile().setRunning(false);
+            GameEngine.getGameEngine().setRunning(false);
         }
         return null;
     }
@@ -112,8 +112,8 @@ public class Utils {
         return to;
     }
 
-    public static String getKeyPressed(TheUltimateTile theUltimateTile) {
-        switch (theUltimateTile.getKeyManager().getCurrentKeyPressedCode()) {
+    public static String getKeyPressed(GameEngine gameEngine) {
+        switch (gameEngine.getKeyManager().getCurrentKeyPressedCode()) {
             case 8:
                 return "BACKSPACE";
             case 9:
@@ -131,7 +131,7 @@ public class Utils {
             case 32:
                 return "SPACE";
             default:
-                return String.valueOf(theUltimateTile.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
+                return String.valueOf(gameEngine.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
         }
     }
 }
