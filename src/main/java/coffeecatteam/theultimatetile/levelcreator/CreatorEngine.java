@@ -103,7 +103,6 @@ public class CreatorEngine extends GameEngine implements Runnable {
         // Start drawing
 
         mainMenu.render(g);
-        renderFPSCounter(g, fps);
 
         // End drawing
         bs.show();

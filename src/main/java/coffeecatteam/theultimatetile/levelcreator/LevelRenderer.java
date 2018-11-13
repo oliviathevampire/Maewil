@@ -6,7 +6,6 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.levelcreator.grid.Grid;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridTile;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridTileSelect;
-import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class LevelRenderer {
         grids.add(new Grid(creatorEngine, ogX, ogY, gridSize, ogX, ogY, xWorldSize, yWorldSize) {
             @Override
             public void tick() {
-                int offAmt = 2;
+                int offAmt = 3;
                 if (creatorEngine.getKeyManager().moveUp)
                     updateYOffset(offAmt);
                 if (creatorEngine.getKeyManager().moveDown)
@@ -93,7 +92,9 @@ public class LevelRenderer {
             private void updateXOffset(int amt) {
                 xOff += amt;
                 int maxX = 32;
-                int minX = -(gridSize * 2 * xWorldSize - (maxX / 2));
+                int w = (ogX * 2) / gridSize;
+                int minX = -((w * xWorldSize) - creatorEngine.getWidth() / 2 + maxX);
+
                 if (xOff > maxX)
                     xOff = maxX;
                 if (xOff < minX)
@@ -104,13 +105,14 @@ public class LevelRenderer {
                         grid[x][y].setxOff(xOff);
                     }
                 }
-                Logger.print(xOff);
             }
 
             private void updateYOffset(int amt) {
                 yOff += amt;
                 int maxY = 32;
-                int minY = -(gridSize * 2 * yWorldSize - (maxY / 2));
+                int h = (ogY * 2) / gridSize;
+                int minY = -((h * yWorldSize) - creatorEngine.getHeight() / 2 + maxY);
+
                 if (yOff > maxY)
                     yOff = maxY;
                 if (yOff < minY)
@@ -121,7 +123,6 @@ public class LevelRenderer {
                         grid[x][y].setyOff(yOff);
                     }
                 }
-                Logger.print(yOff);
             }
         });
 
