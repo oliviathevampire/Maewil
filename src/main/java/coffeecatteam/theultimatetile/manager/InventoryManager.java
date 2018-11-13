@@ -1,9 +1,9 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.GameEngine;
-import coffeecatteam.theultimatetile.inventory.Inventory;
-import coffeecatteam.theultimatetile.inventory.InventoryAbstractPlayer;
-import coffeecatteam.utils.Logger;
+import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.game.inventory.Inventory;
+import coffeecatteam.theultimatetile.game.inventory.InventoryAbstractPlayer;
+import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;

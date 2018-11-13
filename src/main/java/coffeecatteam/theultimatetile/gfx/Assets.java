@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.gfx;
 
-import coffeecatteam.utils.Logger;
-import coffeecatteam.utils.Utils;
+import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,6 +11,24 @@ public class Assets {
 
     private static final int width = 16, height = 16;
     private static final BufferedImage MISSING_TEXTURE = ImageLoader.loadImage("/assets/textures/missing.png");
+
+    /* Sprite Sheets */
+    private static SpriteSheet terrainSheet;
+    private static SpriteSheet natureSheet;
+    private static SpriteSheet staticSheet;
+    private static SpriteSheet effectSheet;
+
+    private static SpriteSheet healthSheet;
+    private static SpriteSheet glubSheet;
+    private static SpriteSheet itemsSheet;
+
+    private static SpriteSheet playerSheet;
+    private static SpriteSheet undeadSheet;
+    private static SpriteSheet passiveSheet;
+
+    private static SpriteSheet menuSheet;
+    private static SpriteSheet invSheet;
+    private static SpriteSheet campfireInvSheet;
 
     /* Fonts */
     public static Font FONT_20, FONT_30, FONT_40, FONT_80;
@@ -96,32 +114,22 @@ public class Assets {
 
     public static BufferedImage LOGO;
 
-    public static void init() {
-        /* Fonts */
+    // Level Creator
+    public static BufferedImage MG_OVERLAY_OUTER, MG_OVERLAY_INNER_MID, MG_OVERLAY_INNER_MID_RIGHT;
+    public static BufferedImage EDIT_GRID_TILE, SELECTED_TILE;
+
+    /* Fonts */
+    private static void initFonts() {
         FONT_20 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 20);
         FONT_30 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 30);
         FONT_40 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 40);
         FONT_80 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 80);
 
-        /* Sprite Sheets */
-        SpriteSheet terrainSheet = getSheet("/assets/textures/tiles/terrain.png");
-        SpriteSheet natureSheet = getSheet("/assets/textures/entities/nature.png");
-        SpriteSheet staticSheet = getSheet("/assets/textures/entities/static.png");
-        SpriteSheet effectSheet = getSheet("/assets/textures/effect.png");
+        Logger.print("Assets [Fonts] loaded!");
+    }
 
-        SpriteSheet healthSheet = getSheet("/assets/textures/gui/overlay/health.png");
-        SpriteSheet glubSheet = getSheet("/assets/textures/glub.png");
-        SpriteSheet itemsSheet = getSheet("/assets/textures/items.png");
-
-        SpriteSheet playerSheet = getSheet("/assets/textures/entities/player.png");
-        SpriteSheet undeadSheet = getSheet("/assets/textures/entities/undead.png");
-        SpriteSheet passiveSheet = getSheet("/assets/textures/entities/passive.png");
-
-        SpriteSheet menuSheet = getSheet("/assets/textures/gui/menu.png");
-        SpriteSheet invSheet = getSheet("/assets/textures/gui/inventory/inventory.png");
-        SpriteSheet campfireInvSheet = getSheet("/assets/textures/gui/inventory/campfire.png");
-
-        /* Tiles */
+    /* Tiles */
+    private static void initTiles() {
         GRASS = getSpriteInd(terrainSheet, 0, 0, width, height);
         DIRT = getSpriteInd(terrainSheet, 1, 0, width, height);
         STONE = getSpriteInd(terrainSheet, 2, 0, width, height);
@@ -153,7 +161,11 @@ public class Assets {
 
         ULTIMATE_TILE = getFrames("/assets/textures/tiles/ultimate.png", 0, 0, 6, width * 2, height * 2);
 
-        /* Items */
+        Logger.print("Assets [Tiles] loaded!");
+    }
+
+    /* Items */
+    private static void initItems() {
         ITEM_STICK = getSpriteInd(itemsSheet, 0, 0, width, height);
         ITEM_LEAF = getSpriteInd(itemsSheet, 0, 1, width, height);
         ITEM_ROCK = getSpriteInd(itemsSheet, 0, 2, width, height);
@@ -192,7 +204,11 @@ public class Assets {
         ITEM_COIN_IRON = getSpriteInd(itemsSheet, 5, 1, width, height);
         ITEM_COIN_GOLD = getSpriteInd(itemsSheet, 5, 2, width, height);
 
-        /* Player */
+        Logger.print("Assets [Items] loaded!");
+    }
+
+    /* Entities */
+    private static void initEntities() {
         HEARTS = getFrames(healthSheet, 0, 0, 4);
         ARMOR = getFrames(healthSheet, 1, 0, 3);
         SPRINT = getFrames(healthSheet, 3, 0, 1, width * 2, height);
@@ -280,7 +296,11 @@ public class Assets {
 
         CAMPFIRE = getFrames(staticSheet, 7, 0, 9, width, height);
 
-        /* GUI */
+        Logger.print("Assets [Entities] loaded!");
+    }
+
+    /* GUI */
+    private static void initGui() {
         BACKGROUND = getSpriteExact("/assets/textures/gui/bg.png", 0, 0, 320, 320);
         TITLE = getSpriteInd(menuSheet, 3, 0, 80, 48);
         DEAD_OVERLAY = getSpriteExact("/assets/textures/gui/dead_overlay.png", 0, 0, 512, 512);
@@ -307,7 +327,43 @@ public class Assets {
 
         LOGO = getSpriteExact("/assets/textures/logo.png", 0, 0, 128, 128);
 
-        Logger.print("Assets initialized!");
+        // Level Creator
+        MG_OVERLAY_OUTER = getSpriteExact("/assets/textures/gui/level_creator/mg_overlay_outer.png", 0, 0, 700, 700);
+        MG_OVERLAY_INNER_MID = getSpriteExact("/assets/textures/gui/level_creator/mg_overlay_inner_mid.png", 0, 0, 700, 700);
+        MG_OVERLAY_INNER_MID_RIGHT = getSpriteExact("/assets/textures/gui/level_creator/mg_overlay_inner_mid_right.png", 0, 0, 700, 700);
+
+        EDIT_GRID_TILE = getSpriteExact("/assets/textures/gui/level_creator/edit_grid_tile.png", 0, 0, 32, 32);
+        SELECTED_TILE = getSpriteExact("/assets/textures/gui/level_creator/selected_tile.png", 0, 0, 64, 64);
+
+        Logger.print("Assets [GUI] loaded!");
+    }
+
+    public static void init() {
+        /* Sprite Sheets */
+        terrainSheet = getSheet("/assets/textures/tiles/terrain.png");
+        natureSheet = getSheet("/assets/textures/entities/nature.png");
+        staticSheet = getSheet("/assets/textures/entities/static.png");
+        effectSheet = getSheet("/assets/textures/effect.png");
+
+        healthSheet = getSheet("/assets/textures/gui/overlay/health.png");
+        glubSheet = getSheet("/assets/textures/glub.png");
+        itemsSheet = getSheet("/assets/textures/items.png");
+
+        playerSheet = getSheet("/assets/textures/entities/player.png");
+        undeadSheet = getSheet("/assets/textures/entities/undead.png");
+        passiveSheet = getSheet("/assets/textures/entities/passive.png");
+
+        menuSheet = getSheet("/assets/textures/gui/menu.png");
+        invSheet = getSheet("/assets/textures/gui/inventory/inventory.png");
+        campfireInvSheet = getSheet("/assets/textures/gui/inventory/campfire.png");
+
+        initFonts();
+        initTiles();
+        initItems();
+        initEntities();
+        initGui();
+
+        Logger.print("Assets loaded!");
     }
 
     public static BufferedImage[] getFrames(String sheet, int xStart, int xEnd) {

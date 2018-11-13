@@ -1,31 +1,30 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.GameEngine;
-import coffeecatteam.theultimatetile.entities.Entity;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.entities.creatures.passive.EntityCow;
-import coffeecatteam.theultimatetile.entities.creatures.passive.EntityPig;
-import coffeecatteam.theultimatetile.entities.creatures.passive.EntitySheep;
-import coffeecatteam.theultimatetile.entities.creatures.undead.EntityBouncer;
-import coffeecatteam.theultimatetile.entities.creatures.undead.EntitySkeleton;
-import coffeecatteam.theultimatetile.entities.creatures.undead.EntityThing;
-import coffeecatteam.theultimatetile.entities.creatures.undead.EntityZombie;
-import coffeecatteam.theultimatetile.entities.statics.EntityUltimateTile;
-import coffeecatteam.theultimatetile.entities.statics.interactable.EntityCampfire;
-import coffeecatteam.theultimatetile.entities.statics.interactable.EntityShopStall;
-import coffeecatteam.theultimatetile.entities.statics.nature.EntityBush;
-import coffeecatteam.theultimatetile.entities.statics.nature.EntityCrop;
-import coffeecatteam.theultimatetile.entities.statics.nature.EntityRock;
-import coffeecatteam.theultimatetile.entities.statics.nature.EntityTree;
+import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.game.entities.Entity;
+import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.game.entities.creatures.passive.EntityCow;
+import coffeecatteam.theultimatetile.game.entities.creatures.passive.EntityPig;
+import coffeecatteam.theultimatetile.game.entities.creatures.passive.EntitySheep;
+import coffeecatteam.theultimatetile.game.entities.creatures.undead.EntityBouncer;
+import coffeecatteam.theultimatetile.game.entities.creatures.undead.EntitySkeleton;
+import coffeecatteam.theultimatetile.game.entities.creatures.undead.EntityThing;
+import coffeecatteam.theultimatetile.game.entities.creatures.undead.EntityZombie;
+import coffeecatteam.theultimatetile.game.entities.statics.EntityUltimateTile;
+import coffeecatteam.theultimatetile.game.entities.statics.interactable.EntityCampfire;
+import coffeecatteam.theultimatetile.game.entities.statics.interactable.EntityShopStall;
+import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityBush;
+import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityCrop;
+import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityRock;
+import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityTree;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.manager.iinterface.IRenderableManager;
-import coffeecatteam.theultimatetile.tiles.Tile;
+import coffeecatteam.theultimatetile.game.tiles.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class EntityManager implements IRenderableManager {
+public class EntityManager {
 
     /*
      * EntityLoader
@@ -119,7 +118,6 @@ public class EntityManager implements IRenderableManager {
         addEntity(this.player);
     }
 
-    @Override
     public void tick() {
         for (int i = 0; i < entities.size(); i++) {
             Entity e = entities.get(i);
@@ -133,7 +131,6 @@ public class EntityManager implements IRenderableManager {
         entities.sort(renderSorter);
     }
 
-    @Override
     public void render(Graphics g) {
         for (Entity e : entities)
             e.preRender(g);

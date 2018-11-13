@@ -7,6 +7,7 @@ import java.awt.event.MouseMotionListener;
 public class MouseManager implements MouseListener, MouseMotionListener {
 
     private boolean leftPressed, rightPressed;
+    private boolean leftDown, rightDown;
     private int mouseX, mouseY;
     private UIManager uiManager;
 
@@ -23,6 +24,14 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 
     public boolean isRightPressed() {
         return rightPressed;
+    }
+
+    public boolean isLeftDown() {
+        return leftDown;
+    }
+
+    public boolean isRightDown() {
+        return rightDown;
     }
 
     public int getMouseX() {
@@ -63,6 +72,17 @@ public class MouseManager implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        mouseX = e.getX();
+        mouseY = e.getY();
+
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            leftDown = true;
+            rightDown = false;
+        } else if (e.getButton() == MouseEvent.BUTTON3) {
+            leftDown = false;
+            rightDown = true;
+        }
+
         if (uiManager != null)
             uiManager.mouseDragged(e);
     }

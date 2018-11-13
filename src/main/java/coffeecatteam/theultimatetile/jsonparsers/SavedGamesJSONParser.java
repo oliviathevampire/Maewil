@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
-import coffeecatteam.theultimatetile.GameEngine;
-import coffeecatteam.theultimatetile.jsonparsers.iinterface.IJSONLoader;
-import coffeecatteam.theultimatetile.jsonparsers.iinterface.IJSONSaver;
-import coffeecatteam.utils.Logger;
-import coffeecatteam.utils.Utils;
+import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
+import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
+import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.theultimatetile.utils.Utils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -60,9 +60,5 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
         file.flush();
 
         Logger.print("Games saved!");
-    }
-
-    public List<String> getGames() {
-        return GAMES;
     }
 }

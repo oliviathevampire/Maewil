@@ -1,18 +1,17 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.GameEngine;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.gfx.overlays.Overlay;
-import coffeecatteam.theultimatetile.gfx.overlays.OverlayGlub;
-import coffeecatteam.theultimatetile.gfx.overlays.OverlayPlayerHealth;
-import coffeecatteam.theultimatetile.gfx.overlays.OverlayPlayerSprint;
-import coffeecatteam.theultimatetile.manager.iinterface.IRenderableManager;
+import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.game.overlays.Overlay;
+import coffeecatteam.theultimatetile.game.overlays.OverlayGlub;
+import coffeecatteam.theultimatetile.game.overlays.OverlayPlayerHealth;
+import coffeecatteam.theultimatetile.game.overlays.OverlayPlayerSprint;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OverlayManager implements IRenderableManager {
+public class OverlayManager {
 
     private List<Overlay> overlays;
 
@@ -24,12 +23,10 @@ public class OverlayManager implements IRenderableManager {
         addOverlay(new OverlayGlub(gameEngine, player));
     }
 
-    @Override
     public void tick() {
         overlays.forEach(overlay -> overlay.tick());
     }
 
-    @Override
     public void render(Graphics g) {
         overlays.forEach(overlay -> overlay.render(g));
     }

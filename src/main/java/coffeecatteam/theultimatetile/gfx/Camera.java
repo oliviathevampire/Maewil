@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.gfx;
 
-import coffeecatteam.theultimatetile.GameEngine;
-import coffeecatteam.theultimatetile.entities.Entity;
-import coffeecatteam.theultimatetile.tiles.Tile;
+import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.game.entities.Entity;
+import coffeecatteam.theultimatetile.game.tiles.Tile;
 
 public class Camera {
 

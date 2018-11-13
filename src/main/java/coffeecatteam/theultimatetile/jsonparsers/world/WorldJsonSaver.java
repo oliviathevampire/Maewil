@@ -1,15 +1,15 @@
 package coffeecatteam.theultimatetile.jsonparsers.world;
 
-import coffeecatteam.theultimatetile.GameEngine;
-import coffeecatteam.theultimatetile.entities.Entity;
-import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.entities.statics.EntityStatic;
-import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.jsonparsers.iinterface.IJSONSaver;
-import coffeecatteam.theultimatetile.tiles.Tile;
-import coffeecatteam.utils.Logger;
-import coffeecatteam.theultimatetile.world.World;
+import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.game.entities.Entity;
+import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
+import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
+import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
+import coffeecatteam.theultimatetile.game.tiles.Tile;
+import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.theultimatetile.game.world.World;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 

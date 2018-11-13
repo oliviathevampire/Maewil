@@ -1,17 +1,16 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.GameEngine;
+import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.theultimatetile.inventory.items.*;
-import coffeecatteam.theultimatetile.manager.iinterface.IRenderableManager;
-import coffeecatteam.utils.Logger;
+import coffeecatteam.theultimatetile.game.inventory.items.*;
+import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ItemManager implements IRenderableManager {
+public class ItemManager {
 
     // Items
     public static Item STICK = new Item(Assets.ITEM_STICK, "stick");
@@ -98,7 +97,6 @@ public class ItemManager implements IRenderableManager {
         items = new ArrayList<>();
     }
 
-    @Override
     public void tick() {
         Iterator<ItemStack> it = items.iterator();
         while (it.hasNext()) {
@@ -109,7 +107,6 @@ public class ItemManager implements IRenderableManager {
         }
     }
 
-    @Override
     public void render(Graphics g) {
         for (ItemStack stack : items) {
             stack.getItem().render(g);
