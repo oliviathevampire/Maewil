@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.inventory;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
@@ -19,12 +20,12 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
     protected boolean isDefault = false;
 
-    public InventoryAbstractPlayer(GameEngine gameEngine, EntityPlayer player, String invName) {
-        this(gameEngine, player, invName, 190, 360);
+    public InventoryAbstractPlayer(Engine engine, EntityPlayer player, String invName) {
+        this(engine, player, invName, 190, 360);
     }
 
-    public InventoryAbstractPlayer(GameEngine gameEngine, EntityPlayer player, String invName, int xOff, int yOff) {
-        super(gameEngine, player, invName);
+    public InventoryAbstractPlayer(Engine engine, EntityPlayer player, String invName, int xOff, int yOff) {
+        super(engine, player, invName);
 
         // Add inventory slots
         int xd = xOff, yd = yOff, x, y;
@@ -41,10 +42,10 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         }
 
         // Add hotbar slots
-        int hxd = (gameEngine.getWidth() / 2 - width / 2) - width - 6, hx;
+        int hxd = (this.engine.getWidth() / 2 - width / 2) - width - 6, hx;
         for (int i = 0; i < maxHotbarSize; i++) {
             hx = hxd + 54 * i;
-            Slot s = new Slot(i, hx, gameEngine.getHeight() - height - height / 2 + 13, width, height);
+            Slot s = new Slot(i, hx, this.engine.getHeight() - height - height / 2 + 13, width, height);
             addSlot(s).setSelector(Assets.HOTBAR_SELECTER);
         }
     }
@@ -73,10 +74,10 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
         if (active) {
             // Change select item
-            boolean up = gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.W).getKeyCode());
-            boolean down = gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.S).getKeyCode());
-            boolean left = gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.A).getKeyCode());
-            boolean right = gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.D).getKeyCode());
+            boolean up = engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.W).getKeyCode());
+            boolean down = engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.S).getKeyCode());
+            boolean left = engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.A).getKeyCode());
+            boolean right = engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.D).getKeyCode());
 
             if (up || down) {
                 inventorySelectedIndex += 6;
@@ -98,7 +99,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
                 if (stack != null) {
                     // Check if item was interacted with
-                    if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.R).getKeyCode())) {
+                    if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.R).getKeyCode())) {
                         if (stack.getItem() instanceof IInteractable)
                             if (((IInteractable) stack.getItem()).onInteracted(player))
                                 stack.setCount(stack.getCount() - 1);
@@ -111,18 +112,18 @@ public abstract class InventoryAbstractPlayer extends Inventory {
             }
 
             // Swap selected stacks
-            if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Z).getKeyCode()))
+            if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Z).getKeyCode()))
                 swapSlots(getSlot(inventorySelectedIndex), getSlot(maxSize + hotbarSelectedIndex));
         }
         if (this.active)
-            if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Q).getKeyCode()))
+            if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Q).getKeyCode()))
                 dropItem(active, inventorySelectedIndex, hotbarSelectedIndex);
 
-        if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ONE).getKeyCode()))
+        if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ONE).getKeyCode()))
             hotbarSelectedIndex = 0;
-        if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.TWO).getKeyCode()))
+        if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.TWO).getKeyCode()))
             hotbarSelectedIndex = 1;
-        if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.THREE).getKeyCode()))
+        if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.THREE).getKeyCode()))
             hotbarSelectedIndex = 2;
         if (hotbarSelectedIndex < maxSize + maxHotbarSize) {
             player.setEquippedItem(getSlot(maxSize + hotbarSelectedIndex).getStack());
@@ -149,9 +150,9 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         int multiplier = 6;
         int width = barWidth * multiplier;
         int height = barHeight * multiplier;
-        int y = gameEngine.getHeight() - height - 5;
+        int y = engine.getHeight() - height - 5;
 
-        g.drawImage(Assets.HOTBAR, gameEngine.getWidth() / 2 - width / 2, y, width, height, null);
+        g.drawImage(Assets.HOTBAR, engine.getWidth() / 2 - width / 2, y, width, height, null);
 
         // Render hotbar slots
         for (int i = maxSize; i < maxSize + maxHotbarSize; i++) {
@@ -169,10 +170,10 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         if (getSlot(inventorySelectedIndex).getStack() != null) {
             if (active) {
                 getSlot(inventorySelectedIndex).getStack().getItem().setPickedUp(false);
-                gameEngine.getItemManager().addItem(getSlot(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
+                ((GameEngine) engine).getItemManager().addItem(getSlot(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
             } else {
                 getSlot(hotbarSelectedIndex + maxHotbarSize).getStack().getItem().setPickedUp(false);
-                gameEngine.getItemManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), player.getX() + xOff, player.getY() + yOff);
+                ((GameEngine) engine).getItemManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), player.getX() + xOff, player.getY() + yOff);
             }
         }
     }
@@ -287,11 +288,11 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
     @Override
     public void onOpen() {
-        copyItems(gameEngine.getEntityManager().getPlayer().getInventoryPlayer(), this, false);
+        copyItems(((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer(), this, false);
     }
 
     @Override
     public void onClose() {
-        copyItems(this, gameEngine.getEntityManager().getPlayer().getInventoryPlayer(), false);
+        copyItems(this, ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer(), false);
     }
 }

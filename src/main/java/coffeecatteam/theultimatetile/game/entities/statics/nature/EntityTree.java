@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.statics.nature;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
@@ -17,8 +18,8 @@ public class EntityTree extends EntityStatic {
 
     private TreeType type;
 
-    public EntityTree(GameEngine gameEngine, String id, TreeType type) {
-        super(gameEngine, id, type.getWidth(), type.getHeight(), EntityHitType.WOOD);
+    public EntityTree(Engine engine, String id, TreeType type) {
+        super(engine, id, type.getWidth(), type.getHeight(), EntityHitType.WOOD);
         this.type = type;
 
         bounds.x = 20 + type.getBoundsOffset();
@@ -36,10 +37,10 @@ public class EntityTree extends EntityStatic {
     public void die(List<Entity> entities, int index) {
         super.die(entities, index);
         for (int i = 0; i < Utils.getRandomInt(1, 3); i++) {
-            gameEngine.getItemManager().addItem(new ItemStack(ItemManager.STICK), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
-            gameEngine.getItemManager().addItem(new ItemStack(ItemManager.LEAF), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.STICK), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.LEAF), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
         }
-        gameEngine.getItemManager().addItem(new ItemStack(ItemManager.APPLE), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+        ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.APPLE), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
     }
 
     public enum TreeType {

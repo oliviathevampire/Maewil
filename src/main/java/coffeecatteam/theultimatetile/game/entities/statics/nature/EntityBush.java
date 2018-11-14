@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.statics.nature;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public class EntityBush extends EntityStatic {
 
-    public EntityBush(GameEngine gameEngine, String id, BufferedImage texture, int width) {
-        super(gameEngine, id, width, Entity.DEFAULT_HEIGHT, EntityHitType.BUSH);
+    public EntityBush(Engine engine, String id, BufferedImage texture, int width) {
+        super(engine, id, width, Entity.DEFAULT_HEIGHT, EntityHitType.BUSH);
         this.texture = texture;
 
         bounds.x = this.width / 4 - (this.width / 4) / 2;
@@ -27,8 +28,8 @@ public class EntityBush extends EntityStatic {
         super.die(entities, index);
         int amt = Utils.getRandomInt(3);
         for (int i = 0; i < amt; i++) {
-            gameEngine.getItemManager().addItem(new ItemStack(ItemManager.LEAF), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
-            gameEngine.getItemManager().addItem(new ItemStack(ItemManager.STICK), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.LEAF), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.STICK), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
         }
     }
 }

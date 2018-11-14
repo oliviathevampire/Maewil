@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.tiles;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 
 import java.awt.*;
@@ -9,7 +10,7 @@ public class Tile {
 
     public static final int TILE_WIDTH = 64, TILE_HEIGHT = 64;
 
-    protected GameEngine gameEngine;
+    protected Engine engine;
     protected BufferedImage texture;
     protected final String id;
 
@@ -19,8 +20,8 @@ public class Tile {
     private boolean isSolid;
     private TileType tileType;
 
-    public Tile(GameEngine gameEngine, BufferedImage texture, String id, boolean isSolid, TileType tileType) {
-        this.gameEngine = gameEngine;
+    public Tile(Engine engine, BufferedImage texture, String id, boolean isSolid, TileType tileType) {
+        this.engine = engine;
         this.texture = texture;
         this.id = id;
 
@@ -30,7 +31,7 @@ public class Tile {
     }
 
     public void updateBounds() {
-        bounds = new Rectangle((int) (x * Tile.TILE_WIDTH - gameEngine.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - gameEngine.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
+        bounds = new Rectangle((int) (x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
     }
 
     public void tick() {
@@ -38,7 +39,7 @@ public class Tile {
     }
 
     public void render(Graphics g) {
-        g.drawImage(texture, (int) (x * Tile.TILE_WIDTH - gameEngine.getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - gameEngine.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
+        g.drawImage(texture, (int) (x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
     }
 
     public Tile setPos(int x, int y) {

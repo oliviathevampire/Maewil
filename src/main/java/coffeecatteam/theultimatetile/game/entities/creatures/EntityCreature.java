@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.creatures;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.ai.AI;
@@ -38,8 +39,8 @@ public abstract class EntityCreature extends Entity {
 
     protected List<AI> ais = new ArrayList<>();
 
-    public EntityCreature(GameEngine gameEngine, String id, int width, int height) {
-        super(gameEngine, id, width, height, EntityHitType.CREATURE);
+    public EntityCreature(Engine engine, String id, int width, int height) {
+        super(engine, id, width, height, EntityHitType.CREATURE);
         init();
         splashEffect = new Animation(50, Assets.SPLASH_EFFECT);
         currentAnim = animIdle;
@@ -107,14 +108,14 @@ public abstract class EntityCreature extends Entity {
         if (drop != null) {
             int amt = Utils.getRandomInt(4);
             for (int i = 0; i < amt; i++)
-                gameEngine.getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+                ((GameEngine) engine).getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
         }
     }
 
     public boolean inWater() {
         float x = (this.x + width / 2) / Tile.TILE_WIDTH;
         float y = (this.y + height / 2 + height / 4) / Tile.TILE_HEIGHT;
-        Tile t = gameEngine.getWorld().getFGTile((int) x, (int) y);
+        Tile t = ((GameEngine) engine).getWorld().getFGTile((int) x, (int) y);
 
         return (t.getId().equals(Tiles.WATER.getId()) && t.getBounds().contains(x, y));
     }
@@ -176,9 +177,9 @@ public abstract class EntityCreature extends Entity {
     protected boolean collisionWidthTile(int x, int y) {
         if (this.getId().equals("player") && StateOptions.OPTIONS.debugMode()) {
             Logger.print("X: " + x + " Y: " + y);
-            Logger.print(gameEngine.getWorld().getFGTile(x, y).getId() + " - " + gameEngine.getWorld().getFGTile(x, y).isSolid());
+            Logger.print(((GameEngine) engine).getWorld().getFGTile(x, y).getId() + " - " + ((GameEngine) engine).getWorld().getFGTile(x, y).isSolid());
         }
-        return gameEngine.getWorld().getFGTile(x, y).isSolid();
+        return ((GameEngine) engine).getWorld().getFGTile(x, y).isSolid();
     }
 
     public float getSpeed() {

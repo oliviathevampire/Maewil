@@ -114,16 +114,20 @@ public class Assets {
 
     public static BufferedImage LOGO;
 
+    public static BufferedImage[] SLIDER_BUTTON;
+    public static BufferedImage SLIDER_BAR;
+
     // Level Creator
     public static BufferedImage MG_OVERLAY_OUTER, MG_OVERLAY_INNER_MID, MG_OVERLAY_INNER_MID_RIGHT;
     public static BufferedImage EDIT_GRID_TILE, SELECTED_TILE;
 
     /* Fonts */
     private static void initFonts() {
-        FONT_20 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 20);
-        FONT_30 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 30);
-        FONT_40 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 40);
-        FONT_80 = Utils.loadFont("/assets/fonts/LCD_Solid.ttf", 80);
+        String fontPath = "/assets/fonts/LCD_Solid.ttf";
+        FONT_20 = Utils.loadFont(fontPath, 20);
+        FONT_30 = Utils.loadFont(fontPath, 30);
+        FONT_40 = Utils.loadFont(fontPath, 40);
+        FONT_80 = Utils.loadFont(fontPath, 80);
 
         Logger.print("Assets [Fonts] loaded!");
     }
@@ -326,6 +330,11 @@ public class Assets {
         TOOLTIP_LONG_LARGE = getSpriteInd(menuSheet, 2, 4, width * 3, height * 2);
 
         LOGO = getSpriteExact("/assets/textures/logo.png", 0, 0, 128, 128);
+
+        SLIDER_BUTTON = new BufferedImage[2];
+        SLIDER_BUTTON[0] = getSpriteExact(menuSheet, 0, 120, 8, 4);
+        SLIDER_BUTTON[1] = getSpriteExact(menuSheet, 4, 120, 8, 4);
+        SLIDER_BAR = getSpriteExact(menuSheet, 0, 112, 48, 6);
 
         // Level Creator
         MG_OVERLAY_OUTER = getSpriteExact("/assets/textures/gui/level_creator/mg_overlay_outer.png", 0, 0, 700, 700);

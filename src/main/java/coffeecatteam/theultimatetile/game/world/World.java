@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.world;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 public class World {
 
-    private GameEngine gameEngine;
+    private Engine engine;
     private String name;
     private int width, height;
     private float spawnX;
@@ -25,27 +26,27 @@ public class World {
 
     private OverlayManager overlayManager;
 
-    public World(GameEngine gameEngine, String path, String worldName) {
-        this.gameEngine = gameEngine;
-        overlayManager = new OverlayManager(gameEngine, gameEngine.getEntityManager().getPlayer());
+    public World(Engine engine, String path, String worldName) {
+        this.engine = engine;
+        overlayManager = new OverlayManager(engine, ((GameEngine) engine).getEntityManager().getPlayer());
 
         try {
             loadWorld(path);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        gameEngine.getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
-        gameEngine.getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
+        ((GameEngine) engine).getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
+        ((GameEngine) engine).getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
 
-        DiscordHandler.INSTANCE.updatePresence("In Game - " + gameEngine.getEntityManager().getPlayer().getUsername(),
+        DiscordHandler.INSTANCE.updatePresence("In Game - " + ((GameEngine) engine).getEntityManager().getPlayer().getUsername(),
                 "World: " + name + " - Save: [" + worldName + "]", true);
     }
 
     public void tick() {
-        int xStart = (int) Math.max(0, gameEngine.getCamera().getxOffset() / Tile.TILE_WIDTH);
-        int xEnd = (int) Math.min(width, (gameEngine.getCamera().getxOffset() + gameEngine.getWidth()) / Tile.TILE_WIDTH + 1);
-        int yStart = (int) Math.max(0, gameEngine.getCamera().getyOffset() / Tile.TILE_HEIGHT);
-        int yEnd = (int) Math.min(height, (gameEngine.getCamera().getyOffset() + gameEngine.getHeight()) / Tile.TILE_HEIGHT + 1);
+        int xStart = (int) Math.max(0, ((GameEngine) engine).getCamera().getxOffset() / Tile.TILE_WIDTH);
+        int xEnd = (int) Math.min(width, (((GameEngine) engine).getCamera().getxOffset() + ((GameEngine) engine).getWidth()) / Tile.TILE_WIDTH + 1);
+        int yStart = (int) Math.max(0, ((GameEngine) engine).getCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (((GameEngine) engine).getCamera().getyOffset() + ((GameEngine) engine).getHeight()) / Tile.TILE_HEIGHT + 1);
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
@@ -54,16 +55,16 @@ public class World {
             }
         }
 
-        gameEngine.getItemManager().tick();
-        gameEngine.getEntityManager().tick();
+        ((GameEngine) engine).getItemManager().tick();
+        ((GameEngine) engine).getEntityManager().tick();
         overlayManager.tick();
     }
 
     public void render(Graphics g) {
-        int xStart = (int) Math.max(0, gameEngine.getCamera().getxOffset() / Tile.TILE_WIDTH);
-        int xEnd = (int) Math.min(width, (gameEngine.getCamera().getxOffset() + gameEngine.getWidth()) / Tile.TILE_WIDTH + 1);
-        int yStart = (int) Math.max(0, gameEngine.getCamera().getyOffset() / Tile.TILE_HEIGHT);
-        int yEnd = (int) Math.min(height, (gameEngine.getCamera().getyOffset() + gameEngine.getHeight()) / Tile.TILE_HEIGHT + 1);
+        int xStart = (int) Math.max(0, ((GameEngine) engine).getCamera().getxOffset() / Tile.TILE_WIDTH);
+        int xEnd = (int) Math.min(width, (((GameEngine) engine).getCamera().getxOffset() + engine.getWidth()) / Tile.TILE_WIDTH + 1);
+        int yStart = (int) Math.max(0, ((GameEngine) engine).getCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (((GameEngine) engine).getCamera().getyOffset() + engine.getHeight()) / Tile.TILE_HEIGHT + 1);
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)
@@ -71,14 +72,14 @@ public class World {
 
 
         g.setColor(new Color(63, 63, 63, 127));
-        g.fillRect(0, 0, gameEngine.getWidth(), gameEngine.getHeight());
+        g.fillRect(0, 0, engine.getWidth(), engine.getHeight());
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)
                 getFGTile(x, y).render(g);
 
-        gameEngine.getItemManager().render(g);
-        gameEngine.getEntityManager().render(g);
+        ((GameEngine) engine).getItemManager().render(g);
+        ((GameEngine) engine).getEntityManager().render(g);
         overlayManager.render(g);
     }
 
@@ -135,7 +136,7 @@ public class World {
     }
 
     private void loadWorld(String path) throws IOException, ParseException {
-        WorldJsonLoader worldJsonLoader = new WorldJsonLoader(path, gameEngine); // "/assets/worlds/dev_tests/json_format"
+        WorldJsonLoader worldJsonLoader = new WorldJsonLoader(path, engine); // "/assets/worlds/dev_tests/json_format"
 
         worldJsonLoader.load();
         Logger.print("Loading world [" + worldJsonLoader.getName() + "]!");
@@ -152,7 +153,7 @@ public class World {
         bg_tiles = new Tile[width][height];
         fg_tiles = new Tile[width][height];
 
-        gameEngine.getEntityManager().getPlayer().setUsername(worldJsonLoader.getUsername());
+        ((GameEngine) engine).getEntityManager().getPlayer().setUsername(worldJsonLoader.getUsername());
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -179,10 +180,6 @@ public class World {
             }
         }
         Logger.print("Loaded foreground tiles!\n");
-    }
-
-    public GameEngine getGameEngine() {
-        return gameEngine;
     }
 
     public String getName() {

@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.utils;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 
 import javax.swing.*;
@@ -112,8 +113,8 @@ public class Utils {
         return to;
     }
 
-    public static String getKeyPressed(GameEngine gameEngine) {
-        switch (gameEngine.getKeyManager().getCurrentKeyPressedCode()) {
+    public static String getKeyPressed(Engine engine) {
+        switch (engine.getKeyManager().getCurrentKeyPressedCode()) {
             case 8:
                 return "BACKSPACE";
             case 9:
@@ -131,7 +132,7 @@ public class Utils {
             case 32:
                 return "SPACE";
             default:
-                return String.valueOf(gameEngine.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
+                return String.valueOf(engine.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
         }
     }
 }

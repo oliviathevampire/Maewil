@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.statics.nature;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
@@ -12,8 +13,8 @@ import java.util.List;
 
 public class EntityRock extends EntityStatic {
 
-    public EntityRock(GameEngine gameEngine, String id, BufferedImage texture) {
-        super(gameEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.STONE);
+    public EntityRock(Engine engine, String id, BufferedImage texture) {
+        super(engine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.STONE);
         this.texture = texture;
 
         bounds.x = 0;
@@ -27,6 +28,6 @@ public class EntityRock extends EntityStatic {
         super.die(entities, index);
         int amt = Utils.getRandomInt(3);
         for (int i = 0; i < amt; i++)
-            gameEngine.getItemManager().addItem(new ItemStack(ItemManager.ROCK), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.ROCK), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
     }
 }

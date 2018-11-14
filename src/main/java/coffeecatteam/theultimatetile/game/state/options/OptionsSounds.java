@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.game.state.options;
 
 import coffeecatteam.theultimatetile.game.GameEngine;
-import coffeecatteam.theultimatetile.gfx.ui.UISlider;
+import coffeecatteam.theultimatetile.gfx.ui.UIButtonSlider;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 
 public class OptionsSounds extends StateAbstractOptions {
@@ -10,7 +10,7 @@ public class OptionsSounds extends StateAbstractOptions {
         super(gameEngineIn);
         init();
 
-        uiManager.addObject(new UISlider(15, 15, "Music") {
+        uiManager.addObject(new UIButtonSlider(15, 15, "Music") {
             @Override
             public float changeValue(float amt) {
                 StateOptions.OPTIONS.setVolumeMusic(StateOptions.OPTIONS.getVolumeMusic() + amt);
@@ -20,7 +20,7 @@ public class OptionsSounds extends StateAbstractOptions {
             }
         });
 
-        uiManager.addObject(new UISlider(15, 94, "Passive") {
+        uiManager.addObject(new UIButtonSlider(15, 94, "Passive") {
             @Override
             public float changeValue(float amt) {
                 StateOptions.OPTIONS.setVolumePassive(StateOptions.OPTIONS.getVolumePassive() + amt);
@@ -30,7 +30,7 @@ public class OptionsSounds extends StateAbstractOptions {
             }
         });
 
-        uiManager.addObject(new UISlider(15, 173, "Hostile") {
+        uiManager.addObject(new UIButtonSlider(15, 173, "Hostile") {
             @Override
             public float changeValue(float amt) {
                 StateOptions.OPTIONS.setVolumeHostile(StateOptions.OPTIONS.getVolumeHostile() + amt);
@@ -40,7 +40,7 @@ public class OptionsSounds extends StateAbstractOptions {
             }
         });
 
-        uiManager.addObject(new UISlider(15, 252, "Player") {
+        uiManager.addObject(new UIButtonSlider(15, 252, "Player") {
             @Override
             public float changeValue(float amt) {
                 StateOptions.OPTIONS.setVolumePlayer(StateOptions.OPTIONS.getVolumePlayer() + amt);
@@ -50,7 +50,7 @@ public class OptionsSounds extends StateAbstractOptions {
             }
         });
 
-        uiManager.addObject(new UISlider(15, 331, "Other") {
+        uiManager.addObject(new UIButtonSlider(15, 331, "Other") {
             @Override
             public float changeValue(float amt) {
                 StateOptions.OPTIONS.setVolumeOther(StateOptions.OPTIONS.getVolumeOther() + amt);

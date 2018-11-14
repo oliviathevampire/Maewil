@@ -92,16 +92,16 @@ public class EntityPlayer extends EntityCreature {
             checkAttacks();
 
             // Open/close inventory
-            if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode())) {
+            if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode())) {
                 if (guiOpen && !inventoryPlayer.isActive())
-                    gameEngine.getInventoryManager().closeAllInventories();
+                    ((GameEngine) engine).getInventoryManager().closeAllInventories();
                 else
-                    gameEngine.getInventoryManager().openCloseInventory(inventoryPlayer);
+                    ((GameEngine) engine).getInventoryManager().openCloseInventory(inventoryPlayer);
             }
-            if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && inventoryPlayer.isActive())
-                gameEngine.getInventoryManager().closeAllInventories();
+            if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && inventoryPlayer.isActive())
+                ((GameEngine) engine).getInventoryManager().closeAllInventories();
 
-            gameEngine.getCamera().centerOnEntity(this);
+            ((GameEngine) engine).getCamera().centerOnEntity(this);
             AudioMaster.setListenerData(this.x, this.y, 0f);
         }
 
@@ -120,8 +120,8 @@ public class EntityPlayer extends EntityCreature {
         int tileX = (int) (x + 0.5f) / Tile.TILE_WIDTH;
         int tileY = (int) (y + 0.5f) / Tile.TILE_HEIGHT;
 
-        if (gameEngine.getWorld().getFGTile(tileX, tileY).getTileType() == Tile.TileType.AIR) {
-            switch (gameEngine.getWorld().getBGTile(tileX, tileY).getTileType()) {
+        if (((GameEngine) engine).getWorld().getFGTile(tileX, tileY).getTileType() == Tile.TileType.AIR) {
+            switch (((GameEngine) engine).getWorld().getBGTile(tileX, tileY).getTileType()) {
                 case GROUND:
                     stepSound = Sound.STEP_GROUND;
                     break;
@@ -132,7 +132,7 @@ public class EntityPlayer extends EntityCreature {
                     stepSound = Sound.STEP_WOOD;
                     break;
             }
-        } else if (gameEngine.getWorld().getFGTile(tileX, tileY).getTileType() == Tile.TileType.FLUID) {
+        } else if (((GameEngine) engine).getWorld().getFGTile(tileX, tileY).getTileType() == Tile.TileType.FLUID) {
             stepSound = Sound.SPLASH;
         }
 
@@ -161,19 +161,19 @@ public class EntityPlayer extends EntityCreature {
         ar.width = arSize;
         ar.height = arSize;
 
-        if (gameEngine.getKeyManager().moveUp && gameEngine.getKeyManager().useAttack) {
+        if (engine.getKeyManager().moveUp && engine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y - arSize;
-        } else if (gameEngine.getKeyManager().moveDown && gameEngine.getKeyManager().useAttack) {
+        } else if (engine.getKeyManager().moveDown && engine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x + cb.width / 2 - arSize / 2;
             ar.y = cb.y + cb.height;
-        } else if (gameEngine.getKeyManager().moveLeft && gameEngine.getKeyManager().useAttack) {
+        } else if (engine.getKeyManager().moveLeft && engine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x - arSize;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
-        } else if (gameEngine.getKeyManager().moveRight && gameEngine.getKeyManager().useAttack) {
+        } else if (engine.getKeyManager().moveRight && engine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x + cb.width;
             ar.y = cb.y + cb.height / 2 - arSize / 2;
@@ -184,7 +184,7 @@ public class EntityPlayer extends EntityCreature {
 
         attackTimer = 0;
 
-        for (Entity e : gameEngine.getEntityManager().getEntities()) {
+        for (Entity e : ((GameEngine) engine).getEntityManager().getEntities()) {
             if (e.equals(this)) {
                 continue;
             }
@@ -220,7 +220,7 @@ public class EntityPlayer extends EntityCreature {
                     extraDmg = ((ItemTool) equippedItem.getItem()).getDamage();
                 else
                     extraDmg = 0;
-                if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.R).getKeyCode()))
+                if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.R).getKeyCode()))
                     if (equippedItem.getItem() instanceof IInteractable)
                         if (((IInteractable) equippedItem.getItem()).onInteracted(this))
                             equippedItem.setCount(equippedItem.getCount() - 1);
@@ -253,7 +253,7 @@ public class EntityPlayer extends EntityCreature {
 
     private void dropItem(ItemStack stack, float x, float y) {
         stack.setPickedUp(false);
-        gameEngine.getItemManager().addItem(stack, x, y);
+        ((GameEngine) engine).getItemManager().addItem(stack, x, y);
     }
 
     private void getInput() {
@@ -273,23 +273,23 @@ public class EntityPlayer extends EntityCreature {
             } else {
                 speed = EntityCreature.DEFAULT_SPEED;
             }
-            if (!gameEngine.getKeyManager().useSprint)
+            if (!engine.getKeyManager().useSprint)
                 sprintTimer = maxSprintTimer;
         }
 
-        if (gameEngine.getKeyManager().moveUp) {
+        if (engine.getKeyManager().moveUp) {
             yMove = -speed;
             currentAnim = animUp;
         }
-        if (gameEngine.getKeyManager().moveDown) {
+        if (engine.getKeyManager().moveDown) {
             yMove = speed;
             currentAnim = animDown;
         }
-        if (gameEngine.getKeyManager().moveLeft) {
+        if (engine.getKeyManager().moveLeft) {
             xMove = -speed;
             currentAnim = animLeft;
         }
-        if (gameEngine.getKeyManager().moveRight) {
+        if (engine.getKeyManager().moveRight) {
             xMove = speed;
             currentAnim = animRight;
         }
@@ -300,7 +300,7 @@ public class EntityPlayer extends EntityCreature {
     private void tileInteract() {
         int x = (int) this.x / Tile.TILE_WIDTH;
         int y = (int) this.y / Tile.TILE_HEIGHT;
-        Tile t = gameEngine.getWorld().getFGTile(x, y);
+        Tile t = ((GameEngine) engine).getWorld().getFGTile(x, y);
         if (t instanceof IDamageableTile) {
             if (isAttacking) {
                 int dmg = Utils.getRandomInt(1, 5);
@@ -373,7 +373,7 @@ public class EntityPlayer extends EntityCreature {
     }
 
     public boolean canSprint() {
-        return gameEngine.getKeyManager().useSprint && !inWater() && currentAnim != animIdle && sprintTimer > 0;
+        return engine.getKeyManager().useSprint && !inWater() && currentAnim != animIdle && sprintTimer > 0;
     }
 
     public String getUsername() {

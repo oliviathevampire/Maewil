@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.statics.nature;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
@@ -16,8 +17,8 @@ public class EntityCrop extends EntityStatic {
 
     private Item drop;
 
-    public EntityCrop(GameEngine gameEngine, String id, BufferedImage texture, Item drop) {
-        super(gameEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.BUSH);
+    public EntityCrop(Engine engine, String id, BufferedImage texture, Item drop) {
+        super(engine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.BUSH);
         isCollidable = false;
 
         this.texture = texture;
@@ -35,6 +36,6 @@ public class EntityCrop extends EntityStatic {
         super.die(entities, index);
         int amt = Utils.getRandomInt(3);
         for (int i = 0; i < amt; i++)
-            gameEngine.getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+            ((GameEngine) engine).getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
     }
 }

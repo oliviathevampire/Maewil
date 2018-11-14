@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.game.overlays.Overlay;
@@ -15,12 +16,12 @@ public class OverlayManager {
 
     private List<Overlay> overlays;
 
-    public OverlayManager(GameEngine gameEngine, EntityPlayer player) {
+    public OverlayManager(Engine engine, EntityPlayer player) {
         overlays = new ArrayList<>();
 
-        addOverlay(new OverlayPlayerHealth(gameEngine, player));
-        addOverlay(new OverlayPlayerSprint(gameEngine, player));
-        addOverlay(new OverlayGlub(gameEngine, player));
+        addOverlay(new OverlayPlayerHealth(engine, player));
+        addOverlay(new OverlayPlayerSprint(engine, player));
+        addOverlay(new OverlayGlub(engine, player));
     }
 
     public void tick() {

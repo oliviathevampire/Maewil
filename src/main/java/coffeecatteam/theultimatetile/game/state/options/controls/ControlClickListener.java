@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.game.state.options.controls;
 
-import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButtonControl;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
@@ -10,14 +10,14 @@ import javax.swing.*;
 
 public class ControlClickListener implements ClickListener {
 
-    private GameEngine gameEngine;
+    private Engine engine;
     private UIButtonControl button;
     private String jsonId;
 
     private boolean listening = false;
 
-    public ControlClickListener(GameEngine gameEngine, UIButtonControl button, String jsonId) {
-        this.gameEngine = gameEngine;
+    public ControlClickListener(Engine engine, UIButtonControl button, String jsonId) {
+        this.engine = engine;
         this.button = button;
         this.jsonId = jsonId;
     }
@@ -29,8 +29,8 @@ public class ControlClickListener implements ClickListener {
 
     @Override
     public void tick() {
-        int newKeyCode = gameEngine.getKeyManager().getCurrentKeyPressedCode();
-        String newId = Utils.getKeyPressed(gameEngine);
+        int newKeyCode = engine.getKeyManager().getCurrentKeyPressedCode();
+        String newId = Utils.getKeyPressed(engine);
         Keybind keybind = StateOptions.OPTIONS.controls().get(jsonId);
 
         if (listening) {
@@ -41,8 +41,8 @@ public class ControlClickListener implements ClickListener {
             }
             if (button.getText().equals("> " + newId + " <") && !newId.contains("~")) {
                 StateOptions.OPTIONS.controls().replace(jsonId, new Keybind(newId, newKeyCode));
-                gameEngine.getKeyManager().setCurrentKeyPressedCode(KeyStroke.getKeyStroke('~').getKeyCode());
-                gameEngine.getKeyManager().setCurrentKeyPressedChar('~');
+                engine.getKeyManager().setCurrentKeyPressedCode(KeyStroke.getKeyStroke('~').getKeyCode());
+                engine.getKeyManager().setCurrentKeyPressedChar('~');
                 listening = false;
             }
         } else {

@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.statics;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.gfx.Animation;
@@ -11,8 +12,8 @@ public class EntityUltimateTile extends EntityStatic {
 
     private Animation animation;
 
-    public EntityUltimateTile(GameEngine gameEngine, String id) {
-        super(gameEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.NONE);
+    public EntityUltimateTile(Engine engine, String id) {
+        super(engine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.NONE);
 
         bounds.x = 0;
         bounds.y = height / 2;

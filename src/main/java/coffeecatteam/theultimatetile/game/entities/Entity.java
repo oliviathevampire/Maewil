@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.utils.Utils;
@@ -19,7 +20,7 @@ public abstract class Entity {
     public static final int DEFAULT_HEIGHT = 64;
 
     private String id;
-    protected GameEngine gameEngine;
+    protected Engine engine;
     protected float x, y;
 
     protected int width, height;
@@ -36,7 +37,7 @@ public abstract class Entity {
     protected int renderX, renderY;
     protected BufferedImage texture;
 
-    public Entity(GameEngine gameEngine, String id, int width, int height, EntityHitType entityHitType) {
+    public Entity(Engine engine, String id, int width, int height, EntityHitType entityHitType) {
         this.id = id;
 
         this.width = width;
@@ -46,7 +47,7 @@ public abstract class Entity {
         bounds = new Rectangle(0, 0, width, height);
 
         entities.put(id, this);
-        entities.get(id).setGameEngine(gameEngine);
+        entities.get(id).setEngine(engine);
         this.entityHitType = entityHitType;
     }
 
@@ -74,8 +75,8 @@ public abstract class Entity {
     public void tickA() {
         tick();
 
-        this.renderX = (int) (this.x - this.gameEngine.getCamera().getxOffset());
-        this.renderY = (int) (this.y - this.gameEngine.getCamera().getyOffset());
+        this.renderX = (int) (this.x - ((GameEngine) this.engine).getCamera().getxOffset());
+        this.renderY = (int) (this.y - ((GameEngine) this.engine).getCamera().getyOffset());
 
         if (this.interacted)
             this.interact();
@@ -84,7 +85,7 @@ public abstract class Entity {
     public void preRender(Graphics g) {
         if (showHitbox) {
             g.setColor(Color.red);
-            g.fillRect((int) (x + bounds.x - gameEngine.getCamera().getxOffset()), (int) (y + bounds.y - gameEngine.getCamera().getyOffset()), bounds.width, bounds.height);
+            g.fillRect((int) (x + bounds.x - ((GameEngine) engine).getCamera().getxOffset()), (int) (y + bounds.y - ((GameEngine) engine).getCamera().getyOffset()), bounds.width, bounds.height);
         }
     }
 
@@ -98,7 +99,7 @@ public abstract class Entity {
 
     public void die(List<Entity> entities, int index) {
         entities.remove(index);
-        gameEngine.getEntityManager().getPlayer().setGlubel(gameEngine.getEntityManager().getPlayer().getGlubel() + Utils.getRandomInt(1, 5));
+        ((GameEngine) engine).getEntityManager().getPlayer().setGlubel(((GameEngine) engine).getEntityManager().getPlayer().getGlubel() + Utils.getRandomInt(1, 5));
     }
 
     public void interact() {
@@ -120,7 +121,7 @@ public abstract class Entity {
     }
 
     public boolean checkEntityCollisions(float xOffset, float yOffset) {
-        for (Entity e : gameEngine.getEntityManager().getEntities()) {
+        for (Entity e : ((GameEngine) engine).getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
             if (e instanceof EntityPlayer && this instanceof EntityPlayer)
@@ -136,12 +137,12 @@ public abstract class Entity {
         return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
     }
 
-    public GameEngine getGameEngine() {
-        return gameEngine;
+    public Engine getEngine() {
+        return engine;
     }
 
-    public void setGameEngine(GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
+    public void setEngine(Engine engine) {
+        this.engine = engine;
     }
 
     public String getId() {

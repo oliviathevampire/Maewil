@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.state.game;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
@@ -20,14 +21,14 @@ import java.util.List;
 
 public class StateSelectGame extends StateAbstractMenu {
 
-    public StateSelectGame(GameEngine gameEngineIn) {
-        super(gameEngineIn);
+    public StateSelectGame(Engine engine) {
+        super(engine);
         init();
 
         int btnWidth = 5 * 64;
         int btnHeight = 64;
-        int x = gameEngine.getWidth() / 2 - btnWidth / 2;
-        int y = gameEngine.getHeight() / 2 - btnHeight / 2 + 25;
+        int x = engine.getWidth() / 2 - btnWidth / 2;
+        int y = engine.getHeight() / 2 - btnHeight / 2 + 25;
         float yOff = 25 * 3f;
         uiManager.addObject(new WorldButton(x, y, 1));
         uiManager.addObject(new WorldButton(x, y + yOff, 2));
@@ -83,7 +84,7 @@ public class StateSelectGame extends StateAbstractMenu {
             this.savesPath = savesPath;
             this.index = index - 1;
 
-            gamesJSONParser = new SavedGamesJSONParser(gameEngine);
+            gamesJSONParser = new SavedGamesJSONParser(engine);
             try {
                 gamesJSONParser.load();
             } catch (IOException | ParseException e) {
@@ -115,11 +116,11 @@ public class StateSelectGame extends StateAbstractMenu {
                 worldName = SavedGamesJSONParser.GAMES.get(index).split(":")[1];
                 path = savesPath + worldName;
             }
-            State.setState(new StateGame(gameEngine, path, worldName));
+            State.setState(new StateGame(engine, path, worldName));
 
             if (!isSaved) {
-                String username = gameEngine.hasArgument("-username") ? gameEngine.getArgument("-username") : Utils.getUsername();
-                gameEngine.setUsername(username);
+                String username = engine.hasArgument("-username") ? engine.getArgument("-username") : Utils.getUsername();
+                ((GameEngine) engine).setUsername(username);
                 Logger.print("Set username: " + username);
             }
 
@@ -154,6 +155,6 @@ public class StateSelectGame extends StateAbstractMenu {
 
         int w = 80 * 6;
         int h = 48 * 6;
-        g.drawImage(Assets.TITLE, gameEngine.getWidth() / 2 - w / 2, 20, w, h, null);
+        g.drawImage(Assets.TITLE, engine.getWidth() / 2 - w / 2, 20, w, h, null);
     }
 }

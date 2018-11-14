@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.jsonparsers.world;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
@@ -39,7 +40,7 @@ public class WorldJsonLoader implements IJSONLoader {
     }
 
     private String path;
-    private GameEngine gameEngine;
+    private Engine engine;
 
     // World
     private String name;
@@ -56,9 +57,9 @@ public class WorldJsonLoader implements IJSONLoader {
     private int[] selected_slots;
     private ItemStack[] inventory, hotbar;
 
-    public WorldJsonLoader(String path, GameEngine gameEngine) {
+    public WorldJsonLoader(String path, Engine engine) {
         this.path = path;
-        this.gameEngine = gameEngine;
+        this.engine = engine;
     }
 
     @Override
@@ -126,7 +127,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
     private void loadTile(JSONArray chunk, boolean bg, int x) {
         JSONObject tileObj = (JSONObject) chunk.get(x);
-        Tile tile = Tiles.getTile(gameEngine, (String) tileObj.get("id"));
+        Tile tile = Tiles.getTile(engine, (String) tileObj.get("id"));
         int tx = Utils.parseInt((String) tileObj.get("x"));
         int ty = Utils.parseInt((String) tileObj.get("y"));
 
@@ -182,7 +183,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 if (!item.isStackable())
                     count = 1;
 
-                gameEngine.getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
+                ((GameEngine) engine).getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
             }
             Logger.print("Loaded world items");
         }
@@ -194,28 +195,28 @@ public class WorldJsonLoader implements IJSONLoader {
 
         if (jsonObject.containsKey("username")) {
             username = (String) jsonObject.get("username");
-            gameEngine.getEntityManager().getPlayer().setUsername(username);
+            ((GameEngine) engine).getEntityManager().getPlayer().setUsername(username);
             Logger.print("loaded player username!");
         }
 
         health = Utils.parseInt(jsonObject.get("health").toString());
-        gameEngine.getEntityManager().getPlayer().setCurrentHealth(health);
+        ((GameEngine) engine).getEntityManager().getPlayer().setCurrentHealth(health);
         Logger.print("loaded player health!");
 
         glubel = Utils.parseInt(jsonObject.get("glubel").toString());
-        gameEngine.getEntityManager().getPlayer().setGlubel(glubel);
+        ((GameEngine) engine).getEntityManager().getPlayer().setGlubel(glubel);
         Logger.print("loaded player glubel!");
 
         lvl = Utils.parseInt(jsonObject.get("lvl").toString());
-        gameEngine.getEntityManager().getPlayer().setLvl(lvl);
+        ((GameEngine) engine).getEntityManager().getPlayer().setLvl(lvl);
         Logger.print("loaded player lvl!");
 
         selected_slots = new int[2];
         JSONArray selected_slotsJ = (JSONArray) jsonObject.get("selected_slots");
         selected_slots[0] = Utils.parseInt(selected_slotsJ.get(0).toString());
         selected_slots[1] = Utils.parseInt(selected_slotsJ.get(1).toString());
-        gameEngine.getEntityManager().getPlayer().getInventoryPlayer().setInventorySelectedIndex(selected_slots[0]);
-        gameEngine.getEntityManager().getPlayer().getInventoryPlayer().setHotbarSelectedIndex(selected_slots[1]);
+        ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().setInventorySelectedIndex(selected_slots[0]);
+        ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().setHotbarSelectedIndex(selected_slots[1]);
 
         inventory = new ItemStack[12];
         JSONObject inventoryJ = (JSONObject) jsonObject.get("inventory");
@@ -259,7 +260,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
         int invIndex = 0;
         for (int i = 0; i < inventory.length; i++) {
-            gameEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(invIndex).setStack(inventory[invIndex]);
+            ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(invIndex).setStack(inventory[invIndex]);
             invIndex++;
             if (invIndex >= inventory.length)
                 break;
@@ -267,7 +268,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
         int hotbarIndex = 12;
         for (int i = 0; i < hotbar.length; i++) {
-            gameEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(hotbarIndex).setStack(hotbar[hotbarIndex - 12]);
+            ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(hotbarIndex).setStack(hotbar[hotbarIndex - 12]);
             hotbarIndex++;
             if (hotbarIndex >= hotbar.length + 12)
                 break;
@@ -292,7 +293,7 @@ public class WorldJsonLoader implements IJSONLoader {
         float x = Utils.parseFloat(pos.get(0).toString());
         float y = Utils.parseFloat(pos.get(1).toString());
 
-        int health = EntityManager.loadEntity(gameEngine, id).getMaxHealth();
+        int health = EntityManager.loadEntity(engine, id).getMaxHealth();
         if (entityObj.containsKey("health")) {
             int healthJ = Utils.parseInt(entityObj.get("health").toString());
             if (healthJ < 0)
@@ -317,7 +318,7 @@ public class WorldJsonLoader implements IJSONLoader {
     private void loadEntity(String id, float x, float y, int count, JSONArray pos, int health, Map<String, String> tags) {
         float ogX = Utils.parseFloat(pos.get(0).toString());
         for (int i = 0; i < count; i++) {
-            gameEngine.getEntityManager().addEntity(EntityManager.loadEntity(gameEngine, id).loadTags(tags).setCurrentHealth(health), x, y, true);
+            ((GameEngine) engine).getEntityManager().addEntity(EntityManager.loadEntity(engine, id).loadTags(tags).setCurrentHealth(health), x, y, true);
             x++;
             if (x > ogX + 2) {
                 x = ogX;

@@ -19,7 +19,7 @@ public class Launcher {
             CreatorEngine creatorEngine = new CreatorEngine(args, title + " - Level Creator", width, height);
             creatorEngine.start();
         } else {
-            GameEngine gameEngine = new GameEngine(args, title, width, height, true);
+            GameEngine gameEngine = new GameEngine(args, title, width, height);
             gameEngine.start();
         }
     }

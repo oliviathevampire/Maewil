@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.creatures.undead;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.gfx.Animation;
@@ -12,8 +13,8 @@ public class EntityBouncer extends EntityUndead {
 
     private long lastSoundTimer, soundCooldown = 800, soundTimer = soundCooldown;
 
-    public EntityBouncer(GameEngine gameEngine, String id) {
-        super(gameEngine, id);
+    public EntityBouncer(Engine engine, String id) {
+        super(engine, id);
         this.drop = ItemManager.BOUNCY_BALL;
     }
 

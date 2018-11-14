@@ -1,90 +1,70 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
-import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.game.GameEngine;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public abstract class UISlider extends UIObject {
+public class UISlider extends UIObject {
 
-    private String title;
-
-    protected float maxValue = 1f, v;
-    private UIButton valueDown, valueUp;
-
-    public UISlider(float x, float y, String title) {
-        super(x, y, 64, 64);
-        this.title = title;
-        v = changeValue(0f);
-
-        valueDown = new UIButton(x, y, width, height, "<", new ClickListener() {
-            @Override
-            public void onClick() {
-                v = changeValue(-0.1f);
-            }
-
-            @Override
-            public void tick() {
-            }
-        });
-        valueUp = new UIButton(x, y, width, height, ">", new ClickListener() {
-            @Override
-            public void onClick() {
-                v = changeValue(0.1f);
-            }
-
-            @Override
-            public void tick() {
-            }
-        });
+    public UISlider(float x, float y, int width, int height) {
+        super(x, y, width, height);
     }
-
-    public abstract float changeValue(float amt);
 
     @Override
     public void tick() {
-        valueDown.tick();
-        valueUp.tick();
+
     }
 
     @Override
     public void render(Graphics g) {
-        valueDown.render(g);
 
-        Font font = Assets.FONT_40;
-        String text = String.valueOf((int) (v * 10));
-        int y = (int) (this.y + Text.getHeight(g, font) + 5);
-        Text.drawString(g, text, (int) (x + 79), y, false, false, Color.lightGray, font);
-
-        float vupx = x + 84 + Text.getWidth(g, text, font);
-        valueUp.setX(vupx);
-        valueUp.render(g);
-
-        Text.drawString(g, this.title, (int) (vupx + 79), y, false, false, Color.lightGray, font);
     }
 
     @Override
     public void onClick() {
-        valueDown.onClick();
-        valueUp.onClick();
+
     }
 
     @Override
     public void onMouseMoved(MouseEvent e) {
-        valueDown.onMouseMoved(e);
-        valueUp.onMouseMoved(e);
+
     }
 
     @Override
     public void onMouseRelease(MouseEvent e) {
-        valueDown.onMouseRelease(e);
-        valueUp.onMouseRelease(e);
+
     }
 
     @Override
     public void onMouseDragged(MouseEvent e) {
-        valueDown.onMouseDragged(e);
-        valueUp.onMouseDragged(e);
+
+    }
+
+    class Slider {
+
+        private GameEngine gameEngine;
+        private int x, y;
+        private int width, height;
+
+        private Rectangle bounds;
+
+        public Slider(GameEngine gameEngine, int x, int y, int width, int height) {
+            this.gameEngine = gameEngine;
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+
+            bounds = new Rectangle(x, y, width, height);
+        }
+
+        public void tick() {
+            bounds = new Rectangle(x, y, width, height);
+        }
+
+        public boolean isMouseInBounds() {
+            return bounds.contains(gameEngine.getMouseManager().getMouseX(), gameEngine.getMouseManager().getMouseY());
+        }
     }
 }

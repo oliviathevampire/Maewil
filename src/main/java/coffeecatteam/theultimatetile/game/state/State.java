@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.game.state;
 
-import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.manager.UIManager;
 
 import java.awt.*;
@@ -10,15 +10,15 @@ public abstract class State {
     private static State currentState = null;
 
     protected UIManager uiManager;
-    protected static GameEngine gameEngine;
+    protected static Engine engine;
 
-    public State(GameEngine gameEngineIn) {
-        gameEngine = gameEngineIn;
-        uiManager = new UIManager(gameEngine);
+    public State(Engine engine) {
+        State.engine = engine;
+        uiManager = new UIManager(engine);
     }
 
     public void init() {
-        gameEngine.getMouseManager().setUiManager(uiManager);
+        engine.getMouseManager().setUiManager(uiManager);
     }
 
     public abstract void tick();
@@ -27,7 +27,7 @@ public abstract class State {
 
     public static void setState(State state) {
         currentState = state;
-        gameEngine.getMouseManager().setUiManager(null);
+        engine.getMouseManager().setUiManager(null);
         currentState.init();
     }
 

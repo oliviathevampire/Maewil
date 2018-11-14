@@ -20,8 +20,8 @@ public class InventoryPlayer extends InventoryAbstractPlayer {
             int multiplier = 6;
             int width = 57 * multiplier;
             int height = 41 * multiplier;
-            int x = gameEngine.getWidth() / 2 - width / 2;
-            int y = gameEngine.getHeight() / 2 - height / 2;
+            int x = engine.getWidth() / 2 - width / 2;
+            int y = engine.getHeight() / 2 - height / 2;
 
             g.drawImage(Assets.INVENTORY, x, y, width, height, null);
             g.drawImage(Assets.PLAYER_IDLE[0], x + player.getWidth() / 2, y + player.getHeight() / 2, player.getWidth(), player.getHeight(), null);

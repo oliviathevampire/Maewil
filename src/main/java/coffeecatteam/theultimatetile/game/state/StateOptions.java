@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.state;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
@@ -17,18 +18,18 @@ public class StateOptions extends StateAbstractMenu {
 
     public static OptionsJsonParser OPTIONS;
 
-    public StateOptions(GameEngine gameEngineIn) {
-        super(gameEngineIn);
+    public StateOptions(Engine engine, boolean initUI) {
+        super(engine, initUI);
         init();
 
-        OPTIONS = new OptionsJsonParser("./options.json", gameEngine);
+        OPTIONS = new OptionsJsonParser("./options.json", engine);
         try {
             OPTIONS.load();
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
 
-        if (!DiscordHandler.INSTANCE.LEVEL_CREATE()) {
+        if (initUI) {
             int diBtnWidth = 6 * 64;
             int diBtnHeight = 64;
             uiManager.addObject(new UIButton(15, 15, diBtnWidth, diBtnHeight, "Debug Info", new ClickListener() {
@@ -62,7 +63,7 @@ public class StateOptions extends StateAbstractMenu {
             uiManager.addObject(new UIButton(15, 173, coBtnWidth, coBtnHeight, "Controls", new ClickListener() {
                 @Override
                 public void onClick() {
-                    State.setState(gameEngine.optionsControls);
+                    State.setState(((GameEngine) engine).optionsControls);
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {
@@ -81,7 +82,7 @@ public class StateOptions extends StateAbstractMenu {
             uiManager.addObject(new UIButton(15, 252, soBtnWidth, soBtnHeight, "Sounds", new ClickListener() {
                 @Override
                 public void onClick() {
-                    State.setState(gameEngine.optionsSpounds);
+                    State.setState(((GameEngine) engine).optionsSpounds);
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {
@@ -115,6 +116,6 @@ public class StateOptions extends StateAbstractMenu {
         super.render(g);
         g.drawImage(OPTIONS.debugMode() ? Assets.ICON_ON : Assets.ICON_OFF, 15 + 6 * 64, 15, 64, 64, null);
 
-        Text.drawString(g, "EXPERIMENTAL!", gameEngine.getWidth() / 2, gameEngine.getHeight() / 2, true, true, Color.red, Assets.FONT_80);
+        Text.drawString(g, "EXPERIMENTAL!", engine.getWidth() / 2, engine.getHeight() / 2, true, true, Color.red, Assets.FONT_80);
     }
 }

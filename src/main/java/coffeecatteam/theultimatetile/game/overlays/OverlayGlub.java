@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.overlays;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
@@ -10,8 +11,8 @@ import java.awt.*;
 
 public class OverlayGlub extends Overlay {
 
-    public OverlayGlub(GameEngine gameEngine, EntityPlayer player) {
-        super(gameEngine, player);
+    public OverlayGlub(Engine engine, EntityPlayer player) {
+        super(engine, player);
     }
 
     @Override
@@ -31,9 +32,9 @@ public class OverlayGlub extends Overlay {
         int lvl = player.getLvl();
         String text = "Level: " + lvl;
         Font font = Assets.FONT_20;
-        int x = gameEngine.getWidth() / 2 - width / 2;
+        int x = engine.getWidth() / 2 - width / 2;
 
-        Text.drawString(g, text, gameEngine.getWidth() / 2, height + Text.getHeight(g, font) / 2, true, false, new Color(4, 79, 163), font);
+        Text.drawString(g, text, engine.getWidth() / 2, height + Text.getHeight(g, font) / 2, true, false, new Color(4, 79, 163), font);
         g.drawImage(Assets.GLUB_METER[0], x, 0, width, height, null);
 
         int glubWidth = (int) Utils.map(glub - 1, 0, player.getMaxGludel(), 0, sWidth);

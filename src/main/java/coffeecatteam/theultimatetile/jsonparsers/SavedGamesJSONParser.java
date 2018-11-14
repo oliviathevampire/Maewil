@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
@@ -18,7 +19,7 @@ import java.util.List;
 public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
 
     private String path = "./saves/saved_games.json";
-    protected GameEngine gameEngine;
+    protected Engine engine;
 
     public static List<String> GAMES = new ArrayList<>();
 
@@ -28,8 +29,8 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
         GAMES.add("false");
     }
 
-    public SavedGamesJSONParser(GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
+    public SavedGamesJSONParser(Engine engine) {
+        this.engine = engine;
     }
 
     @Override

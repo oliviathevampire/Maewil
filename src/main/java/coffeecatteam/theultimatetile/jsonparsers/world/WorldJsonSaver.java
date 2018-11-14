@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.jsonparsers.world;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
@@ -21,12 +22,12 @@ public class WorldJsonSaver implements IJSONSaver {
 
     private String path;
     private World world;
-    private GameEngine gameEngine;
+    private Engine engine;
 
-    public WorldJsonSaver(String path, World world, GameEngine gameEngine) {
+    public WorldJsonSaver(String path, World world, Engine engine) {
         this.path = path;
         this.world = world;
-        this.gameEngine = gameEngine;
+        this.engine = engine;
     }
 
     @Override
@@ -59,8 +60,8 @@ public class WorldJsonSaver implements IJSONSaver {
         jsonObject.put("size", size);
 
         JSONArray spawn = new JSONArray();
-        spawn.add(0, String.valueOf(gameEngine.getEntityManager().getPlayer().getX() / Tile.TILE_WIDTH + "f"));
-        spawn.add(1, String.valueOf(gameEngine.getEntityManager().getPlayer().getY() / Tile.TILE_HEIGHT + "f"));
+        spawn.add(0, String.valueOf(((GameEngine) engine).getEntityManager().getPlayer().getX() / Tile.TILE_WIDTH + "f"));
+        spawn.add(1, String.valueOf(((GameEngine) engine).getEntityManager().getPlayer().getY() / Tile.TILE_HEIGHT + "f"));
         jsonObject.put("spawn", spawn);
 
         saveJSONFile(WorldJsonLoader.BASE_FILES.get("world"), jsonObject);
@@ -107,13 +108,13 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject jsonObjectCreature = new JSONObject();
 
         int entAmt = 0;
-        for (Entity entity : gameEngine.getEntityManager().getEntities())
+        for (Entity entity : ((GameEngine) engine).getEntityManager().getEntities())
             if (!(entity instanceof EntityPlayer))
                 entAmt++;
         if (entAmt > 0) {
             int staticAmt = 0;
             int creatureAmt = 0;
-            for (Entity entity : gameEngine.getEntityManager().getEntities()) {
+            for (Entity entity : ((GameEngine) engine).getEntityManager().getEntities()) {
                 if (!(entity instanceof EntityPlayer)) {
                     if (entity instanceof EntityStatic) {
                         staticAmt++;
@@ -127,7 +128,7 @@ public class WorldJsonSaver implements IJSONSaver {
             // Static
             if (staticAmt > 0) {
                 JSONArray statics = new JSONArray();
-                for (Entity entity : gameEngine.getEntityManager().getEntities())
+                for (Entity entity : ((GameEngine) engine).getEntityManager().getEntities())
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityStatic)
                             saveEntityObj(entity, statics);
@@ -139,7 +140,7 @@ public class WorldJsonSaver implements IJSONSaver {
             if (creatureAmt > 0) {
                 JSONArray creatures = new JSONArray();
 
-                for (Entity entity : gameEngine.getEntityManager().getEntities())
+                for (Entity entity : ((GameEngine) engine).getEntityManager().getEntities())
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityCreature)
                             saveEntityObj(entity, creatures);
@@ -157,7 +158,7 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject jsonObject = new JSONObject();
 
         JSONArray items = new JSONArray();
-        for (ItemStack stack : gameEngine.getItemManager().getItems()) {
+        for (ItemStack stack : ((GameEngine) engine).getItemManager().getItems()) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("id", stack.getId());
 
@@ -180,20 +181,20 @@ public class WorldJsonSaver implements IJSONSaver {
     public void savePlayerInfo() throws IOException {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("username", gameEngine.getEntityManager().getPlayer().getUsername());
-        jsonObject.put("health", String.valueOf(gameEngine.getEntityManager().getPlayer().getCurrentHealth()));
-        jsonObject.put("glubel", String.valueOf(gameEngine.getEntityManager().getPlayer().getGlubel()));
-        jsonObject.put("lvl", String.valueOf(gameEngine.getEntityManager().getPlayer().getLvl()));
+        jsonObject.put("username", ((GameEngine) engine).getEntityManager().getPlayer().getUsername());
+        jsonObject.put("health", String.valueOf(((GameEngine) engine).getEntityManager().getPlayer().getCurrentHealth()));
+        jsonObject.put("glubel", String.valueOf(((GameEngine) engine).getEntityManager().getPlayer().getGlubel()));
+        jsonObject.put("lvl", String.valueOf(((GameEngine) engine).getEntityManager().getPlayer().getLvl()));
 
         JSONArray selected_slots = new JSONArray();
-        selected_slots.add(0, gameEngine.getEntityManager().getPlayer().getInventoryPlayer().getInventorySelectedIndex());
-        selected_slots.add(1, gameEngine.getEntityManager().getPlayer().getInventoryPlayer().getHotbarSelectedIndex());
+        selected_slots.add(0, ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().getInventorySelectedIndex());
+        selected_slots.add(1, ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().getHotbarSelectedIndex());
         jsonObject.put("selected_slots", selected_slots);
 
         JSONObject inventory = new JSONObject();
         for (int i = 0; i < 12; i++) {
             JSONObject slot = new JSONObject();
-            ItemStack stack = gameEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlot(i).getStack();
+            ItemStack stack = ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().getSlot(i).getStack();
             if (stack == null)
                 slot.put("id", "null");
             else {
@@ -208,7 +209,7 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject hotbar = new JSONObject();
         for (int i = 12; i < 15; i++) {
             JSONObject slot = new JSONObject();
-            ItemStack stack = gameEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlot(i).getStack();
+            ItemStack stack = ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().getSlot(i).getStack();
             if (stack == null)
                 slot.put("id", "null");
             else {

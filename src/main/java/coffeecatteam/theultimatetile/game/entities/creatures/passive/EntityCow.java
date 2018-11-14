@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.creatures.passive;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPassive;
 import coffeecatteam.theultimatetile.gfx.Animation;
@@ -8,8 +9,8 @@ import coffeecatteam.theultimatetile.manager.ItemManager;
 
 public class EntityCow extends EntityPassive {
 
-    public EntityCow(GameEngine gameEngine, String id) {
-        super(gameEngine, id);
+    public EntityCow(Engine engine, String id) {
+        super(engine, id);
         this.drop = ItemManager.RAW_STEAK;
     }
 

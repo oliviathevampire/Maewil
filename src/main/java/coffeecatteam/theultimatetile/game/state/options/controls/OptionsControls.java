@@ -22,7 +22,7 @@ public class OptionsControls extends StateAbstractOptions {
         int x = 0, y = 0;
         for (String jsonId : StateOptions.OPTIONS.controls().keySet()) {
             UIButtonControl button = new UIButtonControl(15 + xOff * x, 15 + yOff * y, conBtnWidth, conBtnHeight, StateOptions.OPTIONS.controls().get(jsonId), null);
-            button.setListener(new ControlClickListener(gameEngine, button, jsonId));
+            button.setListener(new ControlClickListener(engine, button, jsonId));
             uiManager.addObject(button);
 
             x++;

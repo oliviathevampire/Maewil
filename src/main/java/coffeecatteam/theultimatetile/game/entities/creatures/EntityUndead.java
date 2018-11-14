@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.creatures;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.ai.AIFollowFlee;
@@ -17,10 +18,10 @@ public abstract class EntityUndead extends EntityCreature {
     private AIWander aiWander;
     private AIFollowFlee aiFollowFlee;
 
-    public EntityUndead(GameEngine gameEngine, String id) {
-        super(gameEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+    public EntityUndead(Engine engine, String id) {
+        super(engine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         aiWander = new AIWander(this, 1.5f);
-        aiFollowFlee = new AIFollowFlee(this, gameEngine.getEntityManager().getPlayer());
+        aiFollowFlee = new AIFollowFlee(this, ((GameEngine) engine).getEntityManager().getPlayer());
     }
 
     @Override
@@ -29,7 +30,7 @@ public abstract class EntityUndead extends EntityCreature {
         yMove = 0;
 
         // Movement
-        if (gameEngine.getEntityManager().getPlayer().isActive()) {
+        if (((GameEngine) engine).getEntityManager().getPlayer().isActive()) {
             if (!aiFollowFlee.tick()) {
                 aiWander.tick();
             }
@@ -56,8 +57,8 @@ public abstract class EntityUndead extends EntityCreature {
 
         attackTimer = 0;
 
-        for (Entity e : gameEngine.getEntityManager().getEntities())
-            if (e.equals(gameEngine.getEntityManager().getPlayer()))
+        for (Entity e : ((GameEngine) engine).getEntityManager().getEntities())
+            if (e.equals(((GameEngine) engine).getEntityManager().getPlayer()))
                 if (e.getCollisionBounds(0, 0).intersects(ar))
                     e.hurt(Utils.getRandomInt(1, 3) + dmgModifier);
     }

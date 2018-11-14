@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
 
@@ -8,7 +9,7 @@ import java.awt.event.WindowListener;
 
 public class WindowManager implements WindowListener {
 
-    public WindowManager(GameEngine gameEngine) {
+    public WindowManager(Engine gameEngine) {
         gameEngine.getFrame().addWindowListener(this);
     }
 
@@ -18,8 +19,10 @@ public class WindowManager implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        GameEngine.setRunning(false);
-        CreatorEngine.setRunning(false);
+        if (GameEngine.getGameEngine() != null)
+            GameEngine.getGameEngine().setRunning(false);
+        if (CreatorEngine.getCreatorEngine() != null)
+            CreatorEngine.getCreatorEngine().setRunning(false);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.overlays;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
@@ -10,8 +11,8 @@ import java.awt.*;
 
 public class OverlayPlayerSprint extends Overlay {
 
-    public OverlayPlayerSprint(GameEngine gameEngine, EntityPlayer player) {
-        super(gameEngine, player);
+    public OverlayPlayerSprint(Engine engine, EntityPlayer player) {
+        super(engine, player);
     }
 
     @Override
@@ -30,10 +31,10 @@ public class OverlayPlayerSprint extends Overlay {
         int sprint = (int) player.getSprintTimer();
         String text = "Sprint moveLeft: " + sprint;
         Font font = Assets.FONT_20;
-        int x = gameEngine.getWidth() - width;
-        int y = gameEngine.getHeight() - height;
+        int x = engine.getWidth() - width;
+        int y = engine.getHeight() - height;
 
-        Text.drawString(g, text, gameEngine.getWidth() - Text.getWidth(g, text, font) - 10, gameEngine.getHeight() - height, false, false, Color.white, font);
+        Text.drawString(g, text, engine.getWidth() - Text.getWidth(g, text, font) - 10, engine.getHeight() - height, false, false, Color.white, font);
         g.drawImage(Assets.SPRINT[0], x, y, width, height, null);
 
         int sprintWidth = (int) Utils.map(sprint - 1, 0, player.getMaxSprintTimer(), 0, sWidth);

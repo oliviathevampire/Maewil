@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.overlays;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
@@ -10,8 +11,8 @@ import java.awt.*;
 
 public class OverlayPlayerHealth extends Overlay {
 
-    public OverlayPlayerHealth(GameEngine gameEngine, EntityPlayer player) {
-        super(gameEngine, player);
+    public OverlayPlayerHealth(Engine engine, EntityPlayer player) {
+        super(engine, player);
     }
 
     @Override
@@ -35,8 +36,8 @@ public class OverlayPlayerHealth extends Overlay {
         if (player.getCurrentHealth() <= 0)
             hStage = 4;
 
-        Text.drawString(g, "HP: " + player.getCurrentHealth(), 10, gameEngine.getHeight() - hHeight, false, false, Color.red, Assets.FONT_20);
+        Text.drawString(g, "HP: " + player.getCurrentHealth(), 10, engine.getHeight() - hHeight, false, false, Color.red, Assets.FONT_20);
 
-        g.drawImage(Assets.HEARTS[hStage], 0, gameEngine.getHeight() - hHeight, hWidth, hHeight, null);
+        g.drawImage(Assets.HEARTS[hStage], 0, engine.getHeight() - hHeight, hWidth, hHeight, null);
     }
 }

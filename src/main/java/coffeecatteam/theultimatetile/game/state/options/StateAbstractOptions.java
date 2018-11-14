@@ -21,10 +21,10 @@ public abstract class StateAbstractOptions extends State {
 
         int exBtnWidth = 3 * 64;
         int exBtnHeight = 64;
-        uiManager.addObject(new UIButton(15, gameEngine.getHeight() - exBtnHeight - 35, exBtnWidth, exBtnHeight, "Back", new ClickListener() {
+        uiManager.addObject(new UIButton(15, engine.getHeight() - exBtnHeight - 35, exBtnWidth, exBtnHeight, "Back", new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(gameEngine.stateOptions);
+                State.setState(engine.stateOptions);
                 try {
                     StateOptions.OPTIONS.save();
                 } catch (IOException e) {
@@ -41,10 +41,10 @@ public abstract class StateAbstractOptions extends State {
 
         Font font = Assets.FONT_20;
         String crText = "Copyright (C) CoffeeCatTeam 2018";
-        int crWidth = Text.getWidth(gameEngine.getGraphics(), crText, font);
-        int crHeight = Text.getHeight(gameEngine.getGraphics(), font);
+        int crWidth = Text.getWidth(engine.getGraphics(), crText, font);
+        int crHeight = Text.getHeight(engine.getGraphics(), font);
         int crx = 5;
-        int cry = gameEngine.getHeight() - 10;
+        int cry = engine.getHeight() - 10;
         uiManager.addObject(new UIHyperlink(crx, cry, crWidth, crHeight, crText, true, font, new ClickListener() {
             @Override
             public void onClick() {
@@ -70,7 +70,7 @@ public abstract class StateAbstractOptions extends State {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.BACKGROUND, 0, 0, gameEngine.getWidth(), gameEngine.getHeight(), null);
+        g.drawImage(Assets.BACKGROUND, 0, 0, engine.getWidth(), engine.getHeight(), null);
         uiManager.render(g);
     }
 }

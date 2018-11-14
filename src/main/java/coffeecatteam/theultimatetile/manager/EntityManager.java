@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
@@ -29,80 +30,80 @@ public class EntityManager {
     /*
      * EntityLoader
      */
-    public static Entity loadEntity(GameEngine gameEngine, String id) {
+    public static Entity loadEntity(Engine engine, String id) {
         switch (id) {
             /*
              * Nature / Statics
              */
             case "tree_small":
-                return new EntityTree(gameEngine, id, EntityTree.TreeType.SMALL);
+                return new EntityTree(engine, id, EntityTree.TreeType.SMALL);
             case "tree_medium":
-                return new EntityTree(gameEngine, id, EntityTree.TreeType.MEDIUM);
+                return new EntityTree(engine, id, EntityTree.TreeType.MEDIUM);
             case "tree_large":
-                return new EntityTree(gameEngine, id, EntityTree.TreeType.LARGE);
+                return new EntityTree(engine, id, EntityTree.TreeType.LARGE);
             case "rock_medium":
-                return new EntityRock(gameEngine, id, Assets.ROCK_V1);
+                return new EntityRock(engine, id, Assets.ROCK_V1);
             case "rock_small":
-                return new EntityRock(gameEngine, id, Assets.ROCK_V2);
+                return new EntityRock(engine, id, Assets.ROCK_V2);
             case "bush_small":
-                return new EntityBush(gameEngine, id, Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH);
+                return new EntityBush(engine, id, Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH);
             case "bush_large":
-                return new EntityBush(gameEngine, id, Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2);
+                return new EntityBush(engine, id, Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2);
 
             /*
              * Crops
              */
             case "crop_carrot":
-                return new EntityCrop(gameEngine, id, Assets.CROP_CARROT, ItemManager.CARROT);
+                return new EntityCrop(engine, id, Assets.CROP_CARROT, ItemManager.CARROT);
             case "crop_wheat":
-                return new EntityCrop(gameEngine, id, Assets.CROP_WHEAT, ItemManager.WHEAT);
+                return new EntityCrop(engine, id, Assets.CROP_WHEAT, ItemManager.WHEAT);
             case "crop_potato":
-                return new EntityCrop(gameEngine, id, Assets.CROP_POTATO, ItemManager.POTATO);
+                return new EntityCrop(engine, id, Assets.CROP_POTATO, ItemManager.POTATO);
             case "crop_tomato":
-                return new EntityCrop(gameEngine, id, Assets.CROP_TOMATO, ItemManager.TOMATO);
+                return new EntityCrop(engine, id, Assets.CROP_TOMATO, ItemManager.TOMATO);
             case "crop_corn":
-                return new EntityCrop(gameEngine, id, Assets.CROP_CORN, ItemManager.CORN);
+                return new EntityCrop(engine, id, Assets.CROP_CORN, ItemManager.CORN);
 
             /*
              * Undead
              */
             case "zombie":
-                return new EntityZombie(gameEngine, id);
+                return new EntityZombie(engine, id);
             case "skeleton":
-                return new EntitySkeleton(gameEngine, id);
+                return new EntitySkeleton(engine, id);
             case "bouncer":
-                return new EntityBouncer(gameEngine, id);
+                return new EntityBouncer(engine, id);
             case "thing":
-                return new EntityThing(gameEngine, id);
+                return new EntityThing(engine, id);
 
             /*
              * Passive
              */
             case "pig":
-                return new EntityPig(gameEngine, id);
+                return new EntityPig(engine, id);
             case "cow":
-                return new EntityCow(gameEngine, id);
+                return new EntityCow(engine, id);
             case "sheep":
-                return new EntitySheep(gameEngine, id);
+                return new EntitySheep(engine, id);
 
             /*
              * Other
              */
             case "ultimate":
-                return new EntityUltimateTile(gameEngine, id);
+                return new EntityUltimateTile(engine, id);
 
             case "shop":
-                return new EntityShopStall(gameEngine, id);
+                return new EntityShopStall(engine, id);
             case "campfire":
-                return new EntityCampfire(gameEngine, id);
+                return new EntityCampfire(engine, id);
         }
-        return new EntityRock(gameEngine, "rock", Assets.ROCK_V1);
+        return new EntityRock(engine, "rock", Assets.ROCK_V1);
     }
 
     /*
      * EntityManager
      */
-    private GameEngine gameEngine;
+    private Engine engine;
     private EntityPlayer player;
     private ArrayList<Entity> entities;
     private Comparator<Entity> renderSorter = (Entity a, Entity b) -> {
@@ -111,8 +112,8 @@ public class EntityManager {
         return 1;
     };
 
-    public EntityManager(GameEngine gameEngine, EntityPlayer player) {
-        this.gameEngine = gameEngine;
+    public EntityManager(Engine engine, EntityPlayer player) {
+        this.engine = engine;
         this.player = player;
         entities = new ArrayList<>();
         addEntity(this.player);
@@ -154,14 +155,6 @@ public class EntityManager {
             e.setY(e.getY() / Tile.TILE_HEIGHT);
         }
         entities.add(e);
-    }
-
-    public GameEngine getGameEngine() {
-        return gameEngine;
-    }
-
-    public void setGameEngine(GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
     }
 
     public EntityPlayer getPlayer() {

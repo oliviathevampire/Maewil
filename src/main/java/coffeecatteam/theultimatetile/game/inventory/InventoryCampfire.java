@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.game.inventory;
 
-import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
@@ -19,8 +19,8 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
     private BufferedImage flame = Assets.getSpriteExact("/assets/textures/gui/inventory/campfire.png", 57, 0, 16, 15);
     private Map<String, String> TAGS;
 
-    public InventoryCampfire(GameEngine gameEngine, EntityPlayer player, Map<String, String> TAGS) {
-        super(gameEngine, player, "Campfire", 190, 370);
+    public InventoryCampfire(Engine engine, EntityPlayer player, Map<String, String> TAGS) {
+        super(engine, player, "Campfire", 190, 370);
         this.TAGS = TAGS;
 
         int y = 266;
@@ -59,7 +59,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
         super.tick();
 
         if (active) {
-            if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.X).getKeyCode())) {
+            if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.X).getKeyCode())) {
                 //if (slots.get(getInventorySelectedIndex()).getStack() == null || slots.get(getInventorySelectedIndex()).getStack().getItem() instanceof ItemFood) {
                 swapSlots(slots.get(slots.size() - 1), slots.get(getInventorySelectedIndex()));
                 //}
@@ -73,8 +73,8 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
             int multiplier = 6;
             int width = 57 * multiplier;
             int height = 44 * multiplier;
-            int x = gameEngine.getWidth() / 2 - width / 2;
-            int y = gameEngine.getHeight() / 2 - height / 2;
+            int x = engine.getWidth() / 2 - width / 2;
+            int y = engine.getHeight() / 2 - height / 2;
 
             g.drawImage(Assets.CAMPFIRE_INVENTORY, x, y, width, height, null);
 

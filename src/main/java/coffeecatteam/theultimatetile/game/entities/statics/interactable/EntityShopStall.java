@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.statics.interactable;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
@@ -14,8 +15,8 @@ public class EntityShopStall extends EntityStatic {
 
     private Animation ROOF;
 
-    public EntityShopStall(GameEngine gameEngine, String id) {
-        super(gameEngine, id, Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, EntityHitType.WOOD);
+    public EntityShopStall(Engine engine, String id) {
+        super(engine, id, Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, EntityHitType.WOOD);
 
         bounds = new Rectangle(0, height / 2 + height / 3, width, height / 12);
         ROOF = pickRoof();

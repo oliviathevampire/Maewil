@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
-import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
 
     private String path;
-    private GameEngine gameEngine;
+    private Engine engine;
 
     private Map<String, Keybind> CONTROLS = new HashMap<>();
     private boolean DEBUG_MODE, FPS_COUNTER;
@@ -27,9 +27,9 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
     private DecimalFormat volumeFormat = new DecimalFormat("#.#");
     private float volumeMusic, volumePassive, volumeHostile, volumePlayer, volumeOther;
 
-    public OptionsJsonParser(String path, GameEngine gameEngine) {
+    public OptionsJsonParser(String path, Engine engine) {
         this.path = path;
-        this.gameEngine = gameEngine;
+        this.engine = engine;
     }
 
     @Override

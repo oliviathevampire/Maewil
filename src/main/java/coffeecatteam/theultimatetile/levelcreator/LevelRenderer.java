@@ -20,7 +20,7 @@ public class LevelRenderer {
 
     private GridTile[][] grid;
     private Rectangle gridBounds;
-    private int ogX, ogY, gridSize = 10;
+    private int ogX, ogY, worldGridSize = 10, selectGridSize = 10;
 
     private List<Grid> grids = new ArrayList<>();
 
@@ -40,14 +40,14 @@ public class LevelRenderer {
     }
 
     private void initGrids() {
-        int w = (ogX * 2) / gridSize, h = (ogY * 2) / gridSize;
+        int w = (ogX * 2) / worldGridSize, h = (ogY * 2) / worldGridSize;
         for (int x = 0; x < xWorldSize; x++) {
             for (int y = 0; y < yWorldSize; y++) {
                 grid[x][y] = new GridTile(ogX + w * x, ogY + h * y, w, h);
             }
         }
 
-        grids.add(new Grid(creatorEngine, ogX, ogY, gridSize, ogX, ogY, xWorldSize, yWorldSize) {
+        grids.add(new Grid(creatorEngine, ogX, ogY, worldGridSize, ogX, ogY, xWorldSize, yWorldSize) {
             @Override
             public void tick() {
                 int offAmt = 3;
@@ -126,7 +126,7 @@ public class LevelRenderer {
             }
         });
 
-        grids.add(new GridTileSelect(creatorEngine, ogX, ogY, gridSize, (int) (ogX + ((ogX * 2) / gridSize) * 10.5f), ogY, 4, gridSize));
+        grids.add(new GridTileSelect(creatorEngine, ogX, ogY, selectGridSize, (int) (ogX + ((ogX * 2) / selectGridSize) * 10.5f), ogY, 4, selectGridSize));
     }
 
     public void tick() {

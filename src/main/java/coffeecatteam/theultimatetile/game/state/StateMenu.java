@@ -21,10 +21,10 @@ public class StateMenu extends State {
 
         int spBtnWidth = 5 * 64;
         int spBtnHeight = 64;
-        uiManager.addObject(new UIButton(gameEngine.getWidth() / 2 - spBtnWidth / 2, gameEngine.getHeight() / 2 - spBtnHeight / 2 + spBtnHeight - 50 + yOff, spBtnWidth, spBtnHeight, "Select Game", new ClickListener() {
+        uiManager.addObject(new UIButton(engine.getWidth() / 2 - spBtnWidth / 2, engine.getHeight() / 2 - spBtnHeight / 2 + spBtnHeight - 50 + yOff, spBtnWidth, spBtnHeight, "Select Game", new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(gameEngine.stateSelectGame);
+                State.setState(((GameEngine) engine).stateSelectGame);
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu", "Selecting A Game");
             }
@@ -36,10 +36,10 @@ public class StateMenu extends State {
 
         int opBtnWidth = 4 * 64;
         int opBtnHeight = 64;
-        uiManager.addObject(new UIButton(gameEngine.getWidth() / 2 - opBtnWidth / 2, gameEngine.getHeight() / 2 - opBtnHeight / 2 + opBtnHeight + 35 + yOff, opBtnWidth, opBtnHeight, "Options", new ClickListener() {
+        uiManager.addObject(new UIButton(engine.getWidth() / 2 - opBtnWidth / 2, engine.getHeight() / 2 - opBtnHeight / 2 + opBtnHeight + 35 + yOff, opBtnWidth, opBtnHeight, "Options", new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(gameEngine.stateOptions);
+                State.setState(engine.stateOptions);
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options");
             }
@@ -51,10 +51,10 @@ public class StateMenu extends State {
 
         int quitBtnWidth = 192;
         int quitBtnHeight = 64;
-        uiManager.addObject(new UIButton(gameEngine.getWidth() / 2 - quitBtnWidth / 2, gameEngine.getHeight() / 2 - quitBtnHeight / 2 + quitBtnHeight + 120 + yOff, quitBtnWidth, quitBtnHeight, "Quit", new ClickListener() {
+        uiManager.addObject(new UIButton(engine.getWidth() / 2 - quitBtnWidth / 2, engine.getHeight() / 2 - quitBtnHeight / 2 + quitBtnHeight + 120 + yOff, quitBtnWidth, quitBtnHeight, "Quit", new ClickListener() {
             @Override
             public void onClick() {
-                gameEngine.setRunning(false);
+                engine.setRunning(false);
             }
 
             @Override
@@ -64,10 +64,10 @@ public class StateMenu extends State {
 
         Font font = Assets.FONT_20;
         String crText = "Copyright (C) CoffeeCatTeam 2018";
-        int crWidth = Text.getWidth(gameEngine.getGraphics(), crText, font);
-        int crHeight = Text.getHeight(gameEngine.getGraphics(), font);
+        int crWidth = Text.getWidth(engine.getGraphics(), crText, font);
+        int crHeight = Text.getHeight(engine.getGraphics(), font);
         int crx = 5;
-        int cry = gameEngine.getHeight() - 10;
+        int cry = engine.getHeight() - 10;
         uiManager.addObject(new UIHyperlink(crx, cry, crWidth, crHeight, crText, true, font, new ClickListener() {
             @Override
             public void onClick() {
@@ -93,11 +93,11 @@ public class StateMenu extends State {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.BACKGROUND, 0, 0, gameEngine.getWidth(), gameEngine.getHeight(), null);
+        g.drawImage(Assets.BACKGROUND, 0, 0, engine.getWidth(), engine.getHeight(), null);
         uiManager.render(g);
 
         int w = 80 * 6;
         int h = 48 * 6;
-        g.drawImage(Assets.TITLE, gameEngine.getWidth() / 2 - w / 2, 20, w, h, null);
+        g.drawImage(Assets.TITLE, engine.getWidth() / 2 - w / 2, 20, w, h, null);
     }
 }

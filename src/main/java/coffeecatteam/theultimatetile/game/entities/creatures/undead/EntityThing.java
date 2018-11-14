@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.creatures.undead;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityUndead;
@@ -8,8 +9,8 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 
 public class EntityThing extends EntityUndead {
 
-    public EntityThing(GameEngine gameEngine, String id) {
-        super(gameEngine, id);
+    public EntityThing(Engine engine, String id) {
+        super(engine, id);
         this.setMaxHealth(Entity.DEFAULT_HEALTH + Entity.DEFAULT_HEALTH / 2);
         setMaxFollowDistance(250f);
     }

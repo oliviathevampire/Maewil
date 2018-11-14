@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.state.game;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
@@ -27,24 +28,24 @@ public class StateGame extends State {
     private UIManager uiManagerPaused;
     private UIManager uiManagerDead;
 
-    public StateGame(GameEngine gameEngineIn) {
-        this(gameEngineIn, "/assets/worlds/starter/world_01", null);
+    public StateGame(Engine engine) {
+        this(engine, "/assets/worlds/starter/world_01", null);
     }
 
-    public StateGame(GameEngine gameEngineIn, String world, String worldName) {
-        super(gameEngineIn);
+    public StateGame(Engine engine, String world, String worldName) {
+        super(engine);
         this.worldName = worldName;
-        Tiles.init(gameEngine);
+        Tiles.init(engine);
 
-        uiManagerPaused = new UIManager(gameEngine);
-        uiManagerDead = new UIManager(gameEngine);
+        uiManagerPaused = new UIManager(engine);
+        uiManagerDead = new UIManager(engine);
         reset(world);
         init();
 
         int btnWidth = 192;
         int btnHeight = 64;
         int yOffset = 150;
-        uiManagerPaused.addObject(new UIButton(gameEngine.getWidth() / 2 - btnWidth / 2, gameEngine.getHeight() / 2 - btnHeight / 2 + btnHeight - 25, btnWidth, btnHeight, "Resume", new ClickListener() {
+        uiManagerPaused.addObject(new UIButton(engine.getWidth() / 2 - btnWidth / 2, engine.getHeight() / 2 - btnHeight / 2 + btnHeight - 25, btnWidth, btnHeight, "Resume", new ClickListener() {
             @Override
             public void onClick() {
                 paused = false;
@@ -56,10 +57,10 @@ public class StateGame extends State {
         }));
 
         int w = btnWidth + 128;
-        UIButton btnMainMenu = new UIButton(gameEngine.getWidth() / 2 - w / 2, gameEngine.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", new ClickListener() {
+        UIButton btnMainMenu = new UIButton(engine.getWidth() / 2 - w / 2, engine.getHeight() / 2 - btnHeight / 2 + btnHeight - 100 + yOffset, w, btnHeight, "Main Menu", new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(gameEngine.stateMenu);
+                State.setState(((GameEngine) engine).stateMenu);
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu");
                 saveWorld();
@@ -69,11 +70,11 @@ public class StateGame extends State {
             public void tick() {
             }
         });
-        UIButton btnQuit = new UIButton(gameEngine.getWidth() / 2 - btnWidth / 2, gameEngine.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", new ClickListener() {
+        UIButton btnQuit = new UIButton(engine.getWidth() / 2 - btnWidth / 2, engine.getHeight() / 2 - btnHeight / 2 + btnHeight - 25 + yOffset, btnWidth, btnHeight, "Quit", new ClickListener() {
             @Override
             public void onClick() {
                 saveWorld();
-                gameEngine.setRunning(false);
+                engine.setRunning(false);
             }
 
             @Override
@@ -92,29 +93,29 @@ public class StateGame extends State {
     @Override
     public void init() {
         paused = false;
-        gameEngine.getMouseManager().setUiManager(uiManagerPaused);
-        gameEngine.getEntityManager().getPlayer().setX(world.getSpawnX() * Tile.TILE_WIDTH);
-        gameEngine.getEntityManager().getPlayer().setY(world.getSpawnY() * Tile.TILE_HEIGHT);
+        engine.getMouseManager().setUiManager(uiManagerPaused);
+        ((GameEngine) engine).getEntityManager().getPlayer().setX(world.getSpawnX() * Tile.TILE_WIDTH);
+        ((GameEngine) engine).getEntityManager().getPlayer().setY(world.getSpawnY() * Tile.TILE_HEIGHT);
     }
 
     @Override
     public void tick() {
-        if (gameEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !gameEngine.getEntityManager().getPlayer().isDead) {
-            if (!gameEngine.getEntityManager().getPlayer().isGuiOpen())
-                paused = !paused && !gameEngine.getEntityManager().getPlayer().getInventoryPlayer().isActive();
+        if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !((GameEngine) engine).getEntityManager().getPlayer().isDead) {
+            if (!((GameEngine) engine).getEntityManager().getPlayer().isGuiOpen())
+                paused = !paused && !((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().isActive();
             saveWorld();
         }
 
         if (paused)
-            gameEngine.getMouseManager().setUiManager(uiManagerPaused);
+            engine.getMouseManager().setUiManager(uiManagerPaused);
 
-        if (gameEngine.getEntityManager().getPlayer().isDead) {
-            gameEngine.getMouseManager().setUiManager(uiManagerDead);
+        if (((GameEngine) engine).getEntityManager().getPlayer().isDead) {
+            engine.getMouseManager().setUiManager(uiManagerDead);
             uiManagerDead.tick();
         }
 
-        if (!paused && !gameEngine.getEntityManager().getPlayer().isDead)
-            gameEngine.getMouseManager().setUiManager(null);
+        if (!paused && !((GameEngine) engine).getEntityManager().getPlayer().isDead)
+            engine.getMouseManager().setUiManager(null);
 
         if (!paused)
             world.tick();
@@ -126,22 +127,22 @@ public class StateGame extends State {
     public void render(Graphics g) {
         world.render(g);
 
-        if (gameEngine.getEntityManager().getPlayer().isDead) {
+        if (((GameEngine) engine).getEntityManager().getPlayer().isDead) {
             Color tint = new Color(96, 96, 96, 127);
             g.setColor(tint);
-            g.fillRect(0, 0, gameEngine.getWidth(), gameEngine.getHeight());
-            g.drawImage(Assets.DEAD_OVERLAY, 0, 0, gameEngine.getWidth(), gameEngine.getHeight(), null);
+            g.fillRect(0, 0, engine.getWidth(), engine.getHeight());
+            g.drawImage(Assets.DEAD_OVERLAY, 0, 0, engine.getWidth(), engine.getHeight(), null);
 
             uiManagerDead.render(g);
         } else {
             if (paused) {
                 Color tint = new Color(96, 96, 96, 127);
                 g.setColor(tint);
-                g.fillRect(0, 0, gameEngine.getWidth(), gameEngine.getHeight());
+                g.fillRect(0, 0, engine.getWidth(), engine.getHeight());
 
                 int w = 80 * 6;
                 int h = 48 * 6;
-                g.drawImage(Assets.TITLE, gameEngine.getWidth() / 2 - w / 2, 30, w, h, null);
+                g.drawImage(Assets.TITLE, engine.getWidth() / 2 - w / 2, 30, w, h, null);
 
                 uiManagerPaused.render(g);
             }
@@ -149,7 +150,7 @@ public class StateGame extends State {
     }
 
     public void saveWorld() {
-        WorldJsonSaver saver = new WorldJsonSaver("./saves/" + worldName, world, gameEngine);
+        WorldJsonSaver saver = new WorldJsonSaver("./saves/" + worldName, world, engine);
         try {
             saver.save();
         } catch (IOException e) {
@@ -158,15 +159,15 @@ public class StateGame extends State {
     }
 
     public void setWorld(String path) {
-        this.world = new World(gameEngine, path, worldName);
-        gameEngine.setWorld(world);
+        this.world = new World(engine, path, worldName);
+        ((GameEngine) engine).setWorld(world);
         init();
     }
 
     public void reset(String world) {
-        gameEngine.getEntityManager().reset();
-        gameEngine.getEntityManager().getPlayer().reset();
-        gameEngine.getItemManager().reset();
+        ((GameEngine) engine).getEntityManager().reset();
+        ((GameEngine) engine).getEntityManager().getPlayer().reset();
+        ((GameEngine) engine).getItemManager().reset();
         setWorld(world);
     }
 }
