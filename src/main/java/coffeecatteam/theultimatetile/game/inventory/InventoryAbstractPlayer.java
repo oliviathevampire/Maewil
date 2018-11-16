@@ -3,12 +3,12 @@ package coffeecatteam.theultimatetile.game.inventory;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.game.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
+import coffeecatteam.theultimatetile.gfx.Assets;
 
 import java.awt.*;
 

@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.creatures.undead;
 
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.gfx.Animation;

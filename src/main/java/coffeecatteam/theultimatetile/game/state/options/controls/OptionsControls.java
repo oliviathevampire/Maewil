@@ -1,9 +1,9 @@
 package coffeecatteam.theultimatetile.game.state.options.controls;
 
 import coffeecatteam.theultimatetile.game.GameEngine;
-import coffeecatteam.theultimatetile.gfx.ui.UIButtonControl;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.options.StateAbstractOptions;
+import coffeecatteam.theultimatetile.gfx.ui.UIButtonControl;
 
 public class OptionsControls extends StateAbstractOptions {
 

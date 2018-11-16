@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.statics;
 
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 
 public abstract class EntityStatic extends Entity {

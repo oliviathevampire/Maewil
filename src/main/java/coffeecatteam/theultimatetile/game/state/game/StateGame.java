@@ -2,18 +2,18 @@ package coffeecatteam.theultimatetile.game.state.game;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
-import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
-import coffeecatteam.theultimatetile.gfx.ui.UIButton;
-import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;
-import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.game.state.State;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
-import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.game.world.World;
+import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
+import coffeecatteam.theultimatetile.gfx.ui.UIButton;
+import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;
+import coffeecatteam.theultimatetile.manager.UIManager;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 
 import java.awt.*;
 import java.io.IOException;

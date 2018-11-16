@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.game.entities.creatures.passive.EntityCow;
@@ -18,8 +17,8 @@ import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityBush;
 import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityCrop;
 import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityRock;
 import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityTree;
-import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
+import coffeecatteam.theultimatetile.gfx.Assets;
 
 import java.awt.*;
 import java.util.ArrayList;

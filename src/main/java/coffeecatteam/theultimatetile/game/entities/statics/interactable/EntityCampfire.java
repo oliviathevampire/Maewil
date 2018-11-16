@@ -4,9 +4,9 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
+import coffeecatteam.theultimatetile.game.inventory.InventoryCampfire;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.game.inventory.InventoryCampfire;
 
 import java.awt.*;
 

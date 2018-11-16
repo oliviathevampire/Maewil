@@ -1,11 +1,10 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.GameEngine;
-import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
-import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
+import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

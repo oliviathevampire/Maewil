@@ -2,9 +2,9 @@ package coffeecatteam.theultimatetile.game.tiles;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
-import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;

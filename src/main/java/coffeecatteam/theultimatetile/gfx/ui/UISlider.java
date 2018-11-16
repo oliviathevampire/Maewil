@@ -1,24 +1,64 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
-import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 public class UISlider extends UIObject {
 
-    public UISlider(float x, float y, int width, int height) {
-        super(x, y, width, height);
+    private Engine engine;
+    private int minValue = 0, maxValue = 10, value = minValue;
+
+    private int segWidth, startX, endX;
+    private int slMinX, slMaxX;
+    private Slider slider;
+
+    public UISlider(Engine engine, float x, float y, int width) {
+        super(x, y, width, 20);
+        this.engine = engine;
+
+        segWidth = 10;
+        startX = (int) x + segWidth;
+        endX = startX + width;
+        int slWidth = 20;
+        int slHeight = height * 2;
+
+        slMinX = startX - slWidth / 2;
+        slMaxX = slMinX + width;
+        slider = new Slider(engine, slMinX, (int) (y - slHeight / 4), slWidth, slHeight);
     }
 
     @Override
     public void tick() {
+        slider.tick();
+        if (slider.isMouseHovering()) {
+            if (engine.getMouseManager().isLeftDown() || engine.getMouseManager().isLeftPressed()) {
+                slider.setX(engine.getMouseManager().getMouseX() - slider.getWidth() / 2);
 
+                if (slider.getX() < slMinX) slider.setX(slMinX);
+                if (slider.getX() > slMaxX) slider.setX(slMaxX);
+            }
+        }
+
+        value = (int) Utils.map(slider.getX(), slMinX, slMaxX, minValue, maxValue);
     }
 
     @Override
     public void render(Graphics g) {
+        BufferedImage bgSegStart = Assets.SLIDER_BAR.getSubimage(0, 0, 2, 6);
+        BufferedImage bgSegMiddle = Assets.SLIDER_BAR.getSubimage(2, 0, 44, 6);
+        BufferedImage bgSegEnd = Assets.SLIDER_BAR.getSubimage(46, 0, 2, 6);
 
+        g.drawImage(bgSegStart, (int) x, (int) y, segWidth, height, null);
+        g.drawImage(bgSegMiddle, startX, (int) y, width, height, null);
+        g.drawImage(bgSegEnd, endX, (int) y, segWidth, height, null);
+
+        slider.render(g);
     }
 
     @Override
@@ -41,16 +81,28 @@ public class UISlider extends UIObject {
 
     }
 
+    protected void setMinValue(int minValue) {
+        this.minValue = minValue;
+    }
+
+    protected void setMaxValue(int maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
     class Slider {
 
-        private GameEngine gameEngine;
+        private Engine engine;
         private int x, y;
         private int width, height;
 
         private Rectangle bounds;
 
-        public Slider(GameEngine gameEngine, int x, int y, int width, int height) {
-            this.gameEngine = gameEngine;
+        public Slider(Engine engine, int x, int y, int width, int height) {
+            this.engine = engine;
             this.x = x;
             this.y = y;
             this.width = width;
@@ -63,8 +115,44 @@ public class UISlider extends UIObject {
             bounds = new Rectangle(x, y, width, height);
         }
 
-        public boolean isMouseInBounds() {
-            return bounds.contains(gameEngine.getMouseManager().getMouseX(), gameEngine.getMouseManager().getMouseY());
+        public void render(Graphics g) {
+            g.drawImage((isMouseHovering() ? Assets.SLIDER_BUTTON[1] : Assets.SLIDER_BUTTON[0]), x, y, width, height, null);
+        }
+
+        public boolean isMouseHovering() {
+            return bounds.contains(engine.getMouseManager().getMouseX(), engine.getMouseManager().getMouseY());
+        }
+
+        public int getX() {
+            return x;
+        }
+
+        public void setX(int x) {
+            this.x = x;
+        }
+
+        public int getY() {
+            return y;
+        }
+
+        public void setY(int y) {
+            this.y = y;
+        }
+
+        public int getWidth() {
+            return width;
+        }
+
+        public void setWidth(int width) {
+            this.width = width;
+        }
+
+        public int getHeight() {
+            return height;
+        }
+
+        public void setHeight(int height) {
+            this.height = height;
         }
     }
 }

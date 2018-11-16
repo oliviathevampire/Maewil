@@ -33,6 +33,7 @@ build
 *.pdn
 .classpath
 .project
-build.bat
+build - with exe.bat
+build - with out exe.bat
 logs/
 saves/

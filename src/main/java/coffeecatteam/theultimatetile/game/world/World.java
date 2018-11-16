@@ -2,10 +2,10 @@ package coffeecatteam.theultimatetile.game.world;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
-import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
-import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.TileBreakable;
+import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
+import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.utils.Logger;
 import org.json.simple.parser.ParseException;

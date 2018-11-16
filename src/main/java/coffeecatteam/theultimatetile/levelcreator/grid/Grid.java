@@ -45,4 +45,12 @@ public abstract class Grid {
     public void setyOff(int yOff) {
         this.yOff = yOff;
     }
+
+    public int getGridSize() {
+        return gridSize;
+    }
+
+    public void setGridSize(int gridSize) {
+        this.gridSize = gridSize;
+    }
 }

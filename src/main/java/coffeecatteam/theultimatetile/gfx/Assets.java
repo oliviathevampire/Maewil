@@ -332,8 +332,8 @@ public class Assets {
         LOGO = getSpriteExact("/assets/textures/logo.png", 0, 0, 128, 128);
 
         SLIDER_BUTTON = new BufferedImage[2];
-        SLIDER_BUTTON[0] = getSpriteExact(menuSheet, 0, 120, 8, 4);
-        SLIDER_BUTTON[1] = getSpriteExact(menuSheet, 4, 120, 8, 4);
+        SLIDER_BUTTON[0] = getSpriteExact(menuSheet, 0, 120, 4, 8);
+        SLIDER_BUTTON[1] = getSpriteExact(menuSheet, 4, 120, 4, 8);
         SLIDER_BAR = getSpriteExact(menuSheet, 0, 112, 48, 6);
 
         // Level Creator

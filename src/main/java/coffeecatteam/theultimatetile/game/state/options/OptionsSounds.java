@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.game.state.options;
 
 import coffeecatteam.theultimatetile.game.GameEngine;
-import coffeecatteam.theultimatetile.gfx.ui.UIButtonSlider;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
+import coffeecatteam.theultimatetile.gfx.ui.UIButtonSlider;
 
 public class OptionsSounds extends StateAbstractOptions {
 

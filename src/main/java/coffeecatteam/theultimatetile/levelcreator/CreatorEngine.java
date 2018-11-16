@@ -10,10 +10,10 @@ public class CreatorEngine extends Engine {
 
     private MainMenu mainMenu;
 
-
     public CreatorEngine(String[] args, String title, int width, int height) {
         super(args, title, width, height);
         initOptionsUI = false;
+        playBGMusic = false;
         creatorEngine = this;
     }
 

@@ -1,13 +1,12 @@
 package coffeecatteam.theultimatetile.game.entities.creatures.undead;
 
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityUndead;
+import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.audio.Sound;
 import coffeecatteam.theultimatetile.manager.ItemManager;
-import coffeecatteam.theultimatetile.game.state.StateOptions;
 
 public class EntityBouncer extends EntityUndead {
 

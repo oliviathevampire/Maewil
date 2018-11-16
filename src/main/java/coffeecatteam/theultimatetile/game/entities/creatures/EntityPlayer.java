@@ -2,11 +2,6 @@ package coffeecatteam.theultimatetile.game.entities.creatures;
 
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
-import coffeecatteam.theultimatetile.gfx.Animation;
-import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
-import coffeecatteam.theultimatetile.gfx.audio.Sound;
 import coffeecatteam.theultimatetile.game.inventory.InventoryPlayer;
 import coffeecatteam.theultimatetile.game.inventory.Slot;
 import coffeecatteam.theultimatetile.game.inventory.items.IInteractable;
@@ -16,6 +11,11 @@ import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.game.tiles.IDamageableTile;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
+import coffeecatteam.theultimatetile.gfx.Animation;
+import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
+import coffeecatteam.theultimatetile.gfx.audio.Sound;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;

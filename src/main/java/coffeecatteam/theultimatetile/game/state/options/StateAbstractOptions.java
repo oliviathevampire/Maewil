@@ -1,13 +1,13 @@
 package coffeecatteam.theultimatetile.game.state.options;
 
 import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.game.state.State;
+import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
-import coffeecatteam.theultimatetile.game.state.State;
-import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 
 import java.awt.*;

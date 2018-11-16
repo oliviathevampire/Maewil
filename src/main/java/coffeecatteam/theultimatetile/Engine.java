@@ -12,12 +12,10 @@ import coffeecatteam.theultimatetile.manager.WindowManager;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.utils.Logger;
 import net.arikia.dev.drpc.DiscordRPC;
-import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.io.IOException;
 
 public abstract class Engine extends Canvas implements Runnable {
 
@@ -28,7 +26,7 @@ public abstract class Engine extends Canvas implements Runnable {
 
     protected int fps = 0;
 
-    protected boolean running = false, initOptionsUI = true;
+    protected boolean running = false, initOptionsUI = true, playBGMusic = true;
     protected Thread thread;
 
     protected BufferStrategy bs;
@@ -101,6 +99,7 @@ public abstract class Engine extends Canvas implements Runnable {
     }
 
     public abstract void render(Graphics g);
+
     private void renderA() {
         bs = this.getBufferStrategy();
         if (bs == null) {
@@ -123,7 +122,8 @@ public abstract class Engine extends Canvas implements Runnable {
         DiscordHandler.INSTANCE.setup();
 
         // Background music
-        Sound.play(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic(), 0f, 0f, 0f, 1f, true);
+        if (playBGMusic)
+            Sound.play(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic(), 0f, 0f, 0f, 1f, true);
 
         int fps = 60;
         double timePerTick = 1000000000 / fps;
@@ -143,7 +143,8 @@ public abstract class Engine extends Canvas implements Runnable {
                 tick();
 
                 // Background music volume update
-                Sound.setVolume(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic());
+                if (playBGMusic)
+                    Sound.setVolume(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic());
 
                 renderA();
                 ticks++;
