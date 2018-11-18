@@ -11,7 +11,6 @@ import coffeecatteam.theultimatetile.manager.MouseManager;
 import coffeecatteam.theultimatetile.manager.WindowManager;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.utils.Logger;
-import net.arikia.dev.drpc.DiscordRPC;
 
 import javax.swing.*;
 import java.awt.*;
@@ -163,9 +162,6 @@ public abstract class Engine extends Canvas implements Runnable {
         AudioMaster.cleanUp();
 
         stop();
-
-        Logger.print("Shutting down DiscordHook.");
-        DiscordRPC.discordShutdown();
 
         Logger.print("\nExiting [" + title + "]..");
         System.exit(0);
