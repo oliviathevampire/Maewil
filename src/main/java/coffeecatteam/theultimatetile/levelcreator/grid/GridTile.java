@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.levelcreator.grid;
 
 import coffeecatteam.theultimatetile.game.tiles.Tile;
+import coffeecatteam.theultimatetile.game.tiles.TileAnimated;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
 
 import java.awt.*;
@@ -22,10 +23,19 @@ public class GridTile {
         bounds = new Rectangle(x, y, width, height);
     }
 
+    public void tick() {
+        if (tile instanceof TileAnimated) {
+            ((TileAnimated) tile).getAnimation().tick();
+        }
+    }
+
     public void render(Graphics g) {
         bounds = new Rectangle(x + xOff, y + yOff, width, height);
 
-        g.drawImage(tile.getTexture(), x + xOff, y + yOff, width, height, null);
+        if (tile instanceof TileAnimated) {
+            g.drawImage(((TileAnimated) tile).getAnimation().getCurrentFrame(), x + xOff, y + yOff, width, height, null);
+        } else
+            g.drawImage(tile.getTexture(), x + xOff, y + yOff, width, height, null);
     }
 
     public int getX() {

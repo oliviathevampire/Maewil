@@ -34,7 +34,7 @@ public class UIManager {
 
     public void onMouseRelease(MouseEvent e) {
         for (UIObject o : objects)
-            o.onMouseRelease(e);
+            o.onMouseReleaseA(e);
     }
 
     public void mouseDragged(MouseEvent e) {

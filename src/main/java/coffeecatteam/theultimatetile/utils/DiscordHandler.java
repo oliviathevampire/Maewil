@@ -1,21 +1,36 @@
 package coffeecatteam.theultimatetile.utils;
 
-import net.arikia.dev.drpc.DiscordEventHandlers;
-import net.arikia.dev.drpc.DiscordRPC;
-import net.arikia.dev.drpc.DiscordRichPresence;
+import club.minnced.discord.rpc.DiscordEventHandlers;
+import club.minnced.discord.rpc.DiscordRPC;
+import club.minnced.discord.rpc.DiscordRichPresence;
 
 public class DiscordHandler {
 
     private static final long timeStamp = System.currentTimeMillis();
     public static final DiscordHandler INSTANCE = new DiscordHandler();
 
+    private DiscordRPC lib;
     private boolean LEVEL_CREATE = false;
 
     public void setup() {
-        DiscordEventHandlers handlers = new DiscordEventHandlers.Builder().setReadyEventHandler((user) -> {
-        }).build();
-        DiscordRPC.discordInitialize("502962688733741056", handlers, true);
-        DiscordRPC.discordRunCallbacks();
+        lib = DiscordRPC.INSTANCE;
+        String appID = "502962688733741056";
+        DiscordEventHandlers handlers = new DiscordEventHandlers();
+        handlers.ready = user -> Logger.print("Connected to discord : " + user.username + "#" + user.discriminator);
+        lib.Discord_Initialize(appID, handlers, true, "");
+
+        Thread t = new Thread(() -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                lib.Discord_RunCallbacks();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    lib.Discord_Shutdown();
+                    break;
+                }
+            }
+        }, "RPC-Callback-Handler");
+        t.start();
 
         updatePresence((LEVEL_CREATE ? "Level Creator" : "Main Menu"));
     }
@@ -29,14 +44,14 @@ public class DiscordHandler {
     }
 
     public void updatePresence(String details, String state, boolean inGame) {
-        DiscordRichPresence rich = new DiscordRichPresence();
-        rich.details = details;
-        rich.state = state;
-        rich.largeImageKey = "ultimatebg" + (LEVEL_CREATE ? "_edit" : "");
+        DiscordRichPresence presence = new DiscordRichPresence();
+        presence.details = details;
+        presence.state = state;
+        presence.largeImageKey = "ultimatebg" + (LEVEL_CREATE ? "_edit" : "");
         if (inGame)
-            rich.smallImageKey = getSmallImage(Utils.getRandomInt(5));
-        rich.startTimestamp = timeStamp;
-        DiscordRPC.discordUpdatePresence(rich);
+            presence.smallImageKey = getSmallImage(Utils.getRandomInt(5));
+        presence.startTimestamp = timeStamp;
+        lib.Discord_UpdatePresence(presence);
     }
 
     private String getSmallImage(int id) {

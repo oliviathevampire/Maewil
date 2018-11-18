@@ -4,12 +4,13 @@ import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.ui.UICheckBox;
 import coffeecatteam.theultimatetile.gfx.ui.UISlider;
 import coffeecatteam.theultimatetile.levelcreator.grid.Grid;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridTile;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridTileSelect;
+import coffeecatteam.theultimatetile.levelcreator.grid.GridWorldEditor;
 import coffeecatteam.theultimatetile.manager.UIManager;
-import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -22,14 +23,17 @@ public class LevelRenderer {
     private CreatorEngine creatorEngine;
     private int xWorldSize, yWorldSize, mouseX, mouseY;
 
-    private GridTile[][] grid;
     private Rectangle gridBounds;
     private int ogX, ogY, ogWorldGridSize = 10, worldGridSize = ogWorldGridSize, selectGridSize = 10;
 
     private List<Grid> grids = new ArrayList<>();
     private UIManager uiManager;
 
-    public LevelRenderer(CreatorEngine creatorEngine, int xWorldSize, int yWorldSize) {
+    private GridWorldEditor gridWorldEditorBG, gridWorldEditorFG;
+    private UISlider zoomSlider;
+    private UICheckBox fgCheckBox;
+
+    public LevelRenderer(CreatorEngine creatorEngine, int xWorldSize, int yWorldSize, UIManager uiManager) {
         this.creatorEngine = creatorEngine;
         this.xWorldSize = xWorldSize;
         this.yWorldSize = yWorldSize;
@@ -37,142 +41,75 @@ public class LevelRenderer {
         Tiles.init(creatorEngine);
         SELECTED_TILE = Tiles.GRASS;
 
-        grid = new GridTile[xWorldSize][yWorldSize];
         ogX = creatorEngine.getWidth() / 4;
         ogY = creatorEngine.getHeight() / 4;
         gridBounds = new Rectangle(ogX, ogY, creatorEngine.getWidth() / 2, creatorEngine.getHeight() / 2);
         initGrids();
+
+        this.uiManager = uiManager;
         initUI();
     }
 
-    Grid worldEditorGrid;
-    private void initGrids() {
-        int w = (ogX * 2) / worldGridSize, h = (ogY * 2) / worldGridSize;
-        for (int x = 0; x < xWorldSize; x++) {
-            for (int y = 0; y < yWorldSize; y++) {
-                grid[x][y] = new GridTile(ogX + w * x, ogY + h * y, w, h);
-            }
-        }
+    private void initUI() {
+        zoomSlider = new UISlider(creatorEngine, 10, 50, 200, 2);
+        uiManager.addObject(zoomSlider);
 
-        worldEditorGrid = new Grid(creatorEngine, ogX, ogY, worldGridSize, ogX, ogY, xWorldSize, yWorldSize) {
-            @Override
-            public void tick() {
-                int offAmt = 3;
-                if (creatorEngine.getKeyManager().moveUp)
-                    updateYOffset(offAmt);
-                if (creatorEngine.getKeyManager().moveDown)
-                    updateYOffset(-offAmt);
-                if (creatorEngine.getKeyManager().moveLeft)
-                    updateXOffset(offAmt);
-                if (creatorEngine.getKeyManager().moveRight)
-                    updateXOffset(-offAmt);
-
-                for (int x = 0; x < xWorldSize; x++) {
-                    for (int y = 0; y < yWorldSize; y++) {
-                        GridTile tile = grid[x][y];
-
-                        if (tile.getBounds().contains(mouseX, mouseY)) {
-                            if (gridBounds.contains(mouseX, mouseY)) {
-                                if (creatorEngine.getMouseManager().isLeftDown() || creatorEngine.getMouseManager().isLeftPressed()) {
-                                    if (tile.getTile() != SELECTED_TILE)
-                                        tile.setTile(LevelRenderer.getSelectedTile());
-                                } else if (creatorEngine.getMouseManager().isRightDown() || creatorEngine.getMouseManager().isRightPressed())
-                                    tile.setTile(Tiles.AIR);
-                            }
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void render(Graphics g) {
-                super.render(g);
-                for (int x = 0; x < xWorldSize; x++) {
-                    for (int y = 0; y < yWorldSize; y++) {
-                        GridTile tile = grid[x][y];
-
-                        tile.render(g);
-                    }
-                }
-            }
-
-            private void updateXOffset(int amt) {
-                xOff += amt;
-                int maxX = 32;
-                int w = (ogX * 2) / gridSize;
-                int minX = -((w * xWorldSize) - creatorEngine.getWidth() / 2 + maxX);
-
-                if (xOff > maxX)
-                    xOff = maxX;
-                if (xOff < minX)
-                    xOff = minX;
-
-                for (int x = 0; x < xWorldSize; x++) {
-                    for (int y = 0; y < yWorldSize; y++) {
-                        grid[x][y].setxOff(xOff);
-                    }
-                }
-            }
-
-            private void updateYOffset(int amt) {
-                yOff += amt;
-                int maxY = 32;
-                int h = (ogY * 2) / gridSize;
-                int minY = -((h * yWorldSize) - creatorEngine.getHeight() / 2 + maxY);
-
-                if (yOff > maxY)
-                    yOff = maxY;
-                if (yOff < minY)
-                    yOff = minY;
-
-                for (int x = 0; x < xWorldSize; x++) {
-                    for (int y = 0; y < yWorldSize; y++) {
-                        grid[x][y].setyOff(yOff);
-                    }
-                }
-            }
-        };
-        grids.add(worldEditorGrid);
-
-        grids.add(new GridTileSelect(creatorEngine, ogX, ogY, selectGridSize, (int) (ogX + ((ogX * 2) / selectGridSize) * 10.5f), ogY, 4, selectGridSize));
+        fgCheckBox = new UICheckBox(10, 140, true);
+        uiManager.addObject(fgCheckBox);
     }
 
-    UISlider zoomSlider;
-    private void initUI() {
-        uiManager = new UIManager(creatorEngine);
+    private void initGrids() {
+        gridWorldEditorBG = new GridWorldEditor(creatorEngine, ogX, ogY, worldGridSize, ogX, ogY, xWorldSize, yWorldSize, false);
+        //grids.add(gridWorldEditorBG);
+        gridWorldEditorFG = new GridWorldEditor(creatorEngine, ogX, ogY, worldGridSize, ogX, ogY, xWorldSize, yWorldSize, true);
+        //grids.add(gridWorldEditorFG);
 
-        zoomSlider = new UISlider(creatorEngine, 10, 50, 200);
-        uiManager.addObject(zoomSlider);
+        grids.add(new GridTileSelect(creatorEngine, ogX, ogY, selectGridSize, (int) (ogX + ((ogX * 2) / selectGridSize) * 10.5f), ogY, 4, selectGridSize));
     }
 
     public void tick() {
         mouseX = creatorEngine.getMouseManager().getMouseX();
         mouseY = creatorEngine.getMouseManager().getMouseY();
 
-        uiManager.tick();
+        gridWorldEditorBG.updateVars(gridBounds, mouseX, mouseY, SELECTED_TILE);
         worldGridSize = ogWorldGridSize + zoomSlider.getValue();
-        worldEditorGrid.setGridSize(worldGridSize);
+        gridWorldEditorBG.setGridSize(worldGridSize);
 
-        int w = (ogX * 2) / worldGridSize, h = (ogY * 2) / worldGridSize;
-        for (int x = 0; x < xWorldSize; x++) {
-            for (int y = 0; y < yWorldSize; y++) {
-                grid[x][y].setX(ogX + w * x);
-                grid[x][y].setY(ogY + h * y);
-                grid[x][y].setWidth(w);
-                grid[x][y].setHeight(h);
-            }
+        gridWorldEditorFG.updateVars(gridBounds, mouseX, mouseY, SELECTED_TILE);
+        gridWorldEditorFG.setGridSize(worldGridSize);
+
+        if (fgCheckBox.isChecked()) {
+            gridWorldEditorBG.setBeingUsed(false);
+            gridWorldEditorBG.setShowRendered(true);
+
+            gridWorldEditorFG.setBeingUsed(true);
+            gridWorldEditorFG.setShowRendered(true);
+        } else {
+            gridWorldEditorBG.setBeingUsed(true);
+            gridWorldEditorBG.setShowRendered(true);
+
+            gridWorldEditorFG.setBeingUsed(false);
+            gridWorldEditorFG.setShowRendered(false);
         }
+        gridWorldEditorBG.tick();
+        gridWorldEditorFG.tick();
 
         grids.forEach(Grid::tick);
     }
 
     public void render(Graphics g) {
         g.drawImage(Assets.MG_OVERLAY_INNER_MID, 0, 0, creatorEngine.getWidth(), creatorEngine.getHeight(), null);
+
+        gridWorldEditorBG.render(g);
+        Color tint = new Color(63, 63, 63, 127);
+        g.setColor(tint);
+        g.fillRect(0, 0, creatorEngine.getWidth(), creatorEngine.getHeight());
+        gridWorldEditorFG.render(g);
+
         grids.forEach(grid -> grid.render(g));
     }
 
     public void postRender(Graphics g) {
-        uiManager.render(g);
         Font font = Assets.FONT_20;
         Text.drawString(g, "Zoom: x" + zoomSlider.getValue(), (int) zoomSlider.getX() + zoomSlider.getWidth() + 25, (int) zoomSlider.getY() + Text.getHeight(g, font), false, false, Color.white, font);
     }

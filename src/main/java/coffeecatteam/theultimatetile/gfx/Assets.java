@@ -117,6 +117,8 @@ public class Assets {
     public static BufferedImage[] SLIDER_BUTTON;
     public static BufferedImage SLIDER_BAR;
 
+    public static BufferedImage CHECK_BOX_BG, CHECK_BOX_FG;
+
     // Level Creator
     public static BufferedImage MG_OVERLAY_OUTER, MG_OVERLAY_INNER_MID, MG_OVERLAY_INNER_MID_RIGHT;
     public static BufferedImage EDIT_GRID_TILE, SELECTED_TILE;
@@ -335,6 +337,9 @@ public class Assets {
         SLIDER_BUTTON[0] = getSpriteExact(menuSheet, 0, 120, 4, 8);
         SLIDER_BUTTON[1] = getSpriteExact(menuSheet, 4, 120, 4, 8);
         SLIDER_BAR = getSpriteExact(menuSheet, 0, 112, 48, 6);
+
+        CHECK_BOX_BG = getSpriteInd(menuSheet, 2, 3, width, height);
+        CHECK_BOX_FG = getSpriteInd(menuSheet, 3, 3, width, height);
 
         // Level Creator
         MG_OVERLAY_OUTER = getSpriteExact("/assets/textures/gui/level_creator/mg_overlay_outer.png", 0, 0, 700, 700);

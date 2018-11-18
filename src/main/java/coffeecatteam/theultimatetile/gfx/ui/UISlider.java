@@ -2,7 +2,6 @@ package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -12,15 +11,22 @@ import java.awt.image.BufferedImage;
 public class UISlider extends UIObject {
 
     private Engine engine;
-    private int minValue = 0, maxValue = 10, value = minValue;
+    private int minValue = 0, maxValue = 10, value;
 
     private int segWidth, startX, endX;
     private int slMinX, slMaxX;
     private Slider slider;
 
     public UISlider(Engine engine, float x, float y, int width) {
+        this(engine, x, y, width, 0);
+    }
+
+    public UISlider(Engine engine, float x, float y, int width, int defaultValue) {
         super(x, y, width, 20);
         this.engine = engine;
+        if (defaultValue < minValue) defaultValue = minValue;
+        if (defaultValue > maxValue) defaultValue = maxValue;
+        this.value = defaultValue;
 
         segWidth = 10;
         startX = (int) x + segWidth;
@@ -30,7 +36,8 @@ public class UISlider extends UIObject {
 
         slMinX = startX - slWidth / 2;
         slMaxX = slMinX + width;
-        slider = new Slider(engine, slMinX, (int) (y - slHeight / 4), slWidth, slHeight);
+
+        slider = new Slider(engine, valueToX(defaultValue), (int) (y - slHeight / 4), slWidth, slHeight);
     }
 
     @Override
@@ -45,7 +52,7 @@ public class UISlider extends UIObject {
             }
         }
 
-        value = (int) Utils.map(slider.getX(), slMinX, slMaxX, minValue, maxValue);
+        value = xToValue();
     }
 
     @Override
@@ -63,22 +70,18 @@ public class UISlider extends UIObject {
 
     @Override
     public void onClick() {
-
     }
 
     @Override
     public void onMouseMoved(MouseEvent e) {
-
     }
 
     @Override
     public void onMouseRelease(MouseEvent e) {
-
     }
 
     @Override
     public void onMouseDragged(MouseEvent e) {
-
     }
 
     protected void setMinValue(int minValue) {
@@ -91,6 +94,19 @@ public class UISlider extends UIObject {
 
     public int getValue() {
         return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+        slider.setX(valueToX(value));
+    }
+
+    private int valueToX(int value) {
+        return (int) Utils.map(value, minValue, maxValue, slMinX, slMaxX);
+    }
+
+    private int xToValue() {
+        return (int) Utils.map(slider.getX(), slMinX, slMaxX, minValue, maxValue);
     }
 
     class Slider {

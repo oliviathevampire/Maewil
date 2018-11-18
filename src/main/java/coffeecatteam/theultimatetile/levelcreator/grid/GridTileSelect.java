@@ -43,6 +43,7 @@ public class GridTileSelect extends Grid {
         for (int x = 0; x < xWorldSize; x++) {
             for (int y = 0; y < yWorldSize; y++) {
                 if (grid[x][y] != null) {
+                    grid[x][y].tick();
 
                     if (grid[x][y].getBounds().contains(mouseX, mouseY)) {
                         if (creatorEngine.getMouseManager().isLeftPressed()) {

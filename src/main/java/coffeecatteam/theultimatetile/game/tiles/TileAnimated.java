@@ -31,4 +31,8 @@ public class TileAnimated extends Tile {
     public BufferedImage getTexture() {
         return animation.getFrames()[0];
     }
+
+    public Animation getAnimation() {
+        return animation;
+    }
 }
