@@ -26,6 +26,11 @@ public abstract class UIObject {
     public abstract void onMouseMoved(MouseEvent e);
 
     public abstract void onMouseRelease(MouseEvent e);
+    public void onMouseReleaseA(MouseEvent e) {
+        onMouseRelease(e);
+        if (this.bounds.contains(e.getPoint()) && e.getButton() == MouseEvent.BUTTON1)
+            onClick();
+    }
 
     public abstract void onMouseDragged(MouseEvent e);
 
