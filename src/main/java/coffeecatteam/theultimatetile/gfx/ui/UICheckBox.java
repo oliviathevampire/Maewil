@@ -11,10 +11,18 @@ public class UICheckBox extends UIObject {
     private static int size = 30;
 
     public UICheckBox(float x, float y) {
-        this(x, y, false);
+        this(x, y, size);
     }
 
     public UICheckBox(float x, float y, boolean checked) {
+        this(x, y, size, checked);
+    }
+
+    public UICheckBox(float x, float y, int size) {
+        this(x, y, size, false);
+    }
+
+    public UICheckBox(float x, float y, int size, boolean checked) {
         super(x, y, size, size);
         this.checked = checked;
     }

@@ -137,4 +137,16 @@ public class GridWorldEditor extends Grid {
     public void setShowRendered(boolean showRendered) {
         this.showRendered = showRendered;
     }
+
+    public Tile[][] convertGridToArray() {
+        Tile[][] tiles = new Tile[xWorldSize][yWorldSize];
+
+        for (int x = 0; x < xWorldSize; x++) {
+            for (int y = 0; y < yWorldSize; y++) {
+                tiles[x][y] = grid[x][y].getTile();
+            }
+        }
+
+        return tiles.clone();
+    }
 }

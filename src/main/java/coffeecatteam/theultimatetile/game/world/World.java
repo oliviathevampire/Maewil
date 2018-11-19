@@ -201,4 +201,12 @@ public class World {
     public float getSpawnY() {
         return spawnY;
     }
+
+    public Tile[][] getBg_tiles() {
+        return bg_tiles;
+    }
+
+    public Tile[][] getFg_tiles() {
+        return fg_tiles;
+    }
 }

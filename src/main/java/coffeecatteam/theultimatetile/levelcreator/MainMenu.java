@@ -33,8 +33,6 @@ public class MainMenu {
         Font font = Assets.FONT_20;
         Text.drawString(g, "Level Creator", 10, Text.getHeight(g, font) + 6, false, true, Color.white, font);
 
-        Text.drawString(g, "Edit foreground", 10, 135, false, false, Color.white, font);
-
         levelRenderer.postRender(g);
         uiManager.render(g);
     }

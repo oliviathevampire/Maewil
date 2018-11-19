@@ -104,8 +104,6 @@ public class UIButton extends UIObject {
 
     @Override
     public void onMouseRelease(MouseEvent e) {
-        if (this.hovering && e.getButton() == MouseEvent.BUTTON1)
-            onClick();
     }
 
     @Override

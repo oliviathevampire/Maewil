@@ -4,15 +4,24 @@ import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
+import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UICheckBox;
 import coffeecatteam.theultimatetile.gfx.ui.UISlider;
+import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;
 import coffeecatteam.theultimatetile.levelcreator.grid.Grid;
-import coffeecatteam.theultimatetile.levelcreator.grid.GridTile;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridTileSelect;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridWorldEditor;
 import coffeecatteam.theultimatetile.manager.UIManager;
+import coffeecatteam.theultimatetile.utils.Logger;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileView;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,11 +60,56 @@ public class LevelRenderer {
     }
 
     private void initUI() {
-        zoomSlider = new UISlider(creatorEngine, 10, 50, 200, 2);
+        zoomSlider = new UISlider(creatorEngine, 185, 18, 200, 2);
         uiManager.addObject(zoomSlider);
 
-        fgCheckBox = new UICheckBox(10, 140, true);
+        fgCheckBox = new UICheckBox(10, 50, true);
         uiManager.addObject(fgCheckBox);
+
+        int exportBtnWidth = 4 * 32;
+        int exportBtnHeight = 32;
+        uiManager.addObject(new UIButton(creatorEngine.getWidth() - exportBtnWidth - 10, 10, exportBtnWidth, exportBtnHeight, "Save World", false, Assets.FONT_20, new ClickListener() {
+            @Override
+            public void onClick() {
+                WorldJsonSaver saver = new WorldJsonSaver(null, null, null);
+                try {
+                    javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                    JFileChooser exporter = new JFileChooser();
+                    exporter.setDialogTitle("Export World");
+                    exporter.setCurrentDirectory(new File("./export"));
+                    exporter.setDialogType(JFileChooser.SAVE_DIALOG);
+
+                    exporter.setFileFilter(new FileFilter() {
+                        @Override
+                        public boolean accept(File file) {
+                            String filename = file.getName();
+                            return filename.endsWith(".json");
+                        }
+
+                        @Override
+                        public String getDescription() {
+                            return "JSON Files (*.json)";
+                        }
+                    });
+
+                    int userSelection = exporter.showSaveDialog(creatorEngine.getFrame());
+
+                    if (userSelection == JFileChooser.APPROVE_OPTION) {
+                        String fileName = exporter.getSelectedFile().getName();
+                        String filePath = exporter.getSelectedFile().getParent();
+                        String finalPath = (filePath + "/" + fileName).replace(".json", "");
+                        saver.saveTiles(xWorldSize, yWorldSize, gridWorldEditorBG.convertGridToArray(), gridWorldEditorFG.convertGridToArray(), finalPath + "_bg", finalPath + "_fg");
+                    }
+                } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+                    e.printStackTrace();
+                }
+                Logger.print("Exported world!");
+            }
+
+            @Override
+            public void tick() {
+            }
+        }));
     }
 
     private void initGrids() {
@@ -112,6 +166,8 @@ public class LevelRenderer {
     public void postRender(Graphics g) {
         Font font = Assets.FONT_20;
         Text.drawString(g, "Zoom: x" + zoomSlider.getValue(), (int) zoomSlider.getX() + zoomSlider.getWidth() + 25, (int) zoomSlider.getY() + Text.getHeight(g, font), false, false, Color.white, font);
+
+        Text.drawString(g, "Edit foreground", (int) (fgCheckBox.getX() + fgCheckBox.getWidth() + 5), (int) (fgCheckBox.getY() + fgCheckBox.getHeight() - 5), false, false, Color.white, font);
     }
 
     public static Tile getSelectedTile() {
