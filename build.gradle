@@ -68,6 +68,11 @@ task copyOptions(type: Copy) {
             from "saves/saved_games.json"
             into buildPath + "/libs/saves"
         }
+        copy {
+            from "export/example/background.json"
+            from "export/example/foreground.json"
+            into buildPath + "/libs/export/example"
+        }
         into buildPath + "/libs"
     }
 }
