@@ -36,7 +36,7 @@ public class WorldJsonSaver implements IJSONSaver {
         saveWorldInfo(world);
         Logger.print("World [" + world.getName() + "] info saved!\n");
 
-        saveTiles(world.getWidth(), world.getHeight(), world.getBg_tiles(), world.getFg_tiles(), WorldJsonLoader.BASE_FILES.get("tile_bg"), WorldJsonLoader.BASE_FILES.get("tile_fg"));
+        saveTiles(world.getWidth(), world.getHeight(), world.getBg_tiles(), world.getFg_tiles(), path + "/" + WorldJsonLoader.BASE_FILES.get("tile_bg"), path + "/" + WorldJsonLoader.BASE_FILES.get("tile_fg"));
         Logger.print("World [" + world.getName() + "] tiles saved!\n");
 
         saveEntities();

@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.utils;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
+import sun.rmi.runtime.Log;
 
 import javax.swing.*;
 import java.awt.*;
@@ -134,5 +135,19 @@ public class Utils {
             default:
                 return String.valueOf(engine.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
         }
+    }
+
+    public static void createSaveFolder(String path) {
+        File file = new File(path);
+
+        int v = 1;
+        String newPath;
+        while (file.exists()) {
+            newPath = path + "_" + v;
+            file = new File(newPath);
+            v++;
+        }
+        Logger.print("Created path [" + path + "]");
+        file.mkdirs();
     }
 }

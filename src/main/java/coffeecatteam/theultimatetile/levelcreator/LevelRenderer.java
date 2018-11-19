@@ -14,6 +14,7 @@ import coffeecatteam.theultimatetile.levelcreator.grid.GridTileSelect;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridWorldEditor;
 import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.theultimatetile.utils.Utils;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -83,7 +84,7 @@ public class LevelRenderer {
                         @Override
                         public boolean accept(File file) {
                             String filename = file.getName();
-                            return filename.endsWith(".json");
+                            return filename.endsWith(".json") || file.isDirectory();
                         }
 
                         @Override
@@ -97,13 +98,14 @@ public class LevelRenderer {
                     if (userSelection == JFileChooser.APPROVE_OPTION) {
                         String fileName = exporter.getSelectedFile().getName();
                         String filePath = exporter.getSelectedFile().getParent();
-                        String finalPath = (filePath + "/" + fileName).replace(".json", "");
-                        saver.saveTiles(xWorldSize, yWorldSize, gridWorldEditorBG.convertGridToArray(), gridWorldEditorFG.convertGridToArray(), finalPath + "_bg", finalPath + "_fg");
+                        String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
+                        Utils.createSaveFolder(finalPath);
+                        saver.saveTiles(xWorldSize, yWorldSize, gridWorldEditorBG.convertGridToArray(), gridWorldEditorFG.convertGridToArray(), finalPath + "background", finalPath + "foreground");
+                        Logger.print("Exported world!");
                     }
                 } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                     e.printStackTrace();
                 }
-                Logger.print("Exported world!");
             }
 
             @Override
