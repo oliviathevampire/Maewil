@@ -30,9 +30,7 @@ public class StateOptions extends StateAbstractMenu {
         }
 
         if (initUI) {
-            int diBtnWidth = 6 * 64;
-            int diBtnHeight = 64;
-            uiManager.addObject(new UIButton(15, 15, diBtnWidth, diBtnHeight, "Debug Info", new ClickListener() {
+            uiManager.addObject(new UIButton(engine, 15, 15, "Debug Info", new ClickListener() {
                 @Override
                 public void onClick() {
                     OPTIONS.setDebugMode(!OPTIONS.debugMode());
@@ -44,9 +42,7 @@ public class StateOptions extends StateAbstractMenu {
                 }
             }));
 
-            int fpsBtnWidth = 6 * 64;
-            int fpsBtnHeight = 64;
-            uiManager.addObject(new UIButton(15, 94, fpsBtnWidth, fpsBtnHeight, "FPS counter", new ClickListener() {
+            uiManager.addObject(new UIButton(engine, 15, 94, "FPS counter", new ClickListener() {
                 @Override
                 public void onClick() {
                     OPTIONS.setFpsCounter(!OPTIONS.fpsCounter());
@@ -58,9 +54,7 @@ public class StateOptions extends StateAbstractMenu {
                 }
             }));
 
-            int coBtnWidth = 6 * 64;
-            int coBtnHeight = 64;
-            uiManager.addObject(new UIButton(15, 173, coBtnWidth, coBtnHeight, "Controls", new ClickListener() {
+            uiManager.addObject(new UIButton(engine, 15, 173, "Controls", new ClickListener() {
                 @Override
                 public void onClick() {
                     State.setState(((GameEngine) engine).optionsControls);
@@ -77,9 +71,7 @@ public class StateOptions extends StateAbstractMenu {
                 }
             }));
 
-            int soBtnWidth = 6 * 64;
-            int soBtnHeight = 64;
-            uiManager.addObject(new UIButton(15, 252, soBtnWidth, soBtnHeight, "Sounds", new ClickListener() {
+            uiManager.addObject(new UIButton(engine, 15, 252, "Sounds", new ClickListener() {
                 @Override
                 public void onClick() {
                     State.setState(((GameEngine) engine).optionsSpounds);

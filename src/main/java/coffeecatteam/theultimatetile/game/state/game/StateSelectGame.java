@@ -30,9 +30,9 @@ public class StateSelectGame extends StateAbstractMenu {
         int x = engine.getWidth() / 2 - btnWidth / 2;
         int y = engine.getHeight() / 2 - btnHeight / 2 + 25;
         float yOff = 25 * 3f;
-        uiManager.addObject(new WorldButton(x, y, 1));
-        uiManager.addObject(new WorldButton(x, y + yOff, 2));
-        uiManager.addObject(new WorldButton(x, y + yOff * 2, 3));
+        uiManager.addObject(new WorldButton(y, 1));
+        uiManager.addObject(new WorldButton(y + yOff, 2));
+        uiManager.addObject(new WorldButton(y + yOff * 2, 3));
     }
 
     private static String getWorldname(String defaultName) {
@@ -54,12 +54,12 @@ public class StateSelectGame extends StateAbstractMenu {
         private String path;
         private String savesPath = "./saves/";
 
-        public WorldButton(float x, float y, int index) {
-            this(x, y, index, "");
+        public WorldButton(float y, int index) {
+            this(y, index, "");
         }
 
-        public WorldButton(float x, float y, int index, String path) {
-            super(x, y, 5 * 64, 64, "Game " + index, null);
+        public WorldButton(float y, int index, String path) {
+            super(State.engine, true, (int) y, "Game " + index, null);
             this.path = savesPath + path;
             this.listener = new ClickListenerWorld(this.path, this.savesPath, index);
             hasTooltip = true;

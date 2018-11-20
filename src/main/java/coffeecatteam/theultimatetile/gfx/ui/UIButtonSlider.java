@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 
@@ -13,12 +14,12 @@ public abstract class UIButtonSlider extends UIObject {
     protected float maxValue = 1f, v;
     private UIButton valueDown, valueUp;
 
-    public UIButtonSlider(float x, float y, String title) {
+    public UIButtonSlider(Engine engine, float x, float y, String title) {
         super(x, y, 64, 64);
         this.title = title;
         v = changeValue(0f);
 
-        valueDown = new UIButton(x, y, width, height, "<", new ClickListener() {
+        valueDown = new UIButton(engine, x, y, "<", new ClickListener() {
             @Override
             public void onClick() {
                 v = changeValue(-0.1f);
@@ -28,7 +29,7 @@ public abstract class UIButtonSlider extends UIObject {
             public void tick() {
             }
         });
-        valueUp = new UIButton(x, y, width, height, ">", new ClickListener() {
+        valueUp = new UIButton(engine, x, y, ">", new ClickListener() {
             @Override
             public void onClick() {
                 v = changeValue(0.1f);

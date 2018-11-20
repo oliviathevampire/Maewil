@@ -19,9 +19,7 @@ public class StateMenu extends State {
 
         int yOff = 20;
 
-        int spBtnWidth = 5 * 64;
-        int spBtnHeight = 64;
-        uiManager.addObject(new UIButton(engine.getWidth() / 2 - spBtnWidth / 2, engine.getHeight() / 2 - spBtnHeight / 2 + spBtnHeight - 50 + yOff, spBtnWidth, spBtnHeight, "Select Game", new ClickListener() {
+        uiManager.addObject(new UIButton(gameEngineIn, true, engine.getHeight() / 2 - yOff, "Select Game", new ClickListener() {
             @Override
             public void onClick() {
                 State.setState(((GameEngine) engine).stateSelectGame);
@@ -34,9 +32,7 @@ public class StateMenu extends State {
             }
         }));
 
-        int opBtnWidth = 4 * 64;
-        int opBtnHeight = 64;
-        uiManager.addObject(new UIButton(engine.getWidth() / 2 - opBtnWidth / 2, engine.getHeight() / 2 - opBtnHeight / 2 + opBtnHeight + 35 + yOff, opBtnWidth, opBtnHeight, "Options", new ClickListener() {
+        uiManager.addObject(new UIButton(gameEngineIn, true, engine.getHeight() / 2 - yOff + 80, "Options", new ClickListener() {
             @Override
             public void onClick() {
                 State.setState(engine.stateOptions);
@@ -49,9 +45,7 @@ public class StateMenu extends State {
             }
         }));
 
-        int quitBtnWidth = 192;
-        int quitBtnHeight = 64;
-        uiManager.addObject(new UIButton(engine.getWidth() / 2 - quitBtnWidth / 2, engine.getHeight() / 2 - quitBtnHeight / 2 + quitBtnHeight + 120 + yOff, quitBtnWidth, quitBtnHeight, "Quit", new ClickListener() {
+        uiManager.addObject(new UIButton(gameEngineIn, true, engine.getHeight() / 2 - yOff + 160, "Quit", new ClickListener() {
             @Override
             public void onClick() {
                 engine.setRunning(false);

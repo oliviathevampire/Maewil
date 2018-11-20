@@ -19,9 +19,7 @@ public abstract class StateAbstractOptions extends State {
     public StateAbstractOptions(GameEngine gameEngineIn) {
         super(gameEngineIn);
 
-        int exBtnWidth = 3 * 64;
-        int exBtnHeight = 64;
-        uiManager.addObject(new UIButton(15, engine.getHeight() - exBtnHeight - 35, exBtnWidth, exBtnHeight, "Back", new ClickListener() {
+        uiManager.addObject(new UIButton(gameEngineIn, 15, engine.getHeight() - 95, "Back", new ClickListener() {
             @Override
             public void onClick() {
                 State.setState(engine.stateOptions);

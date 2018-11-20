@@ -1,5 +1,7 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
+import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 
@@ -11,6 +13,7 @@ import java.util.List;
 
 public class UIButton extends UIObject {
 
+    protected Engine engine;
     protected ClickListener listener;
 
     private boolean disabled = false;
@@ -24,18 +27,38 @@ public class UIButton extends UIObject {
     private BufferedImage[] currentTexture;
     protected boolean hasTooltip = false;
 
-    public UIButton(float x, float y, int width, int height, String text, ClickListener listener) {
-        this(x, y, width, height, text, false, Assets.FONT_40, listener);
+    private boolean centeredX, centeredY;
+
+    public UIButton(Engine engine, boolean centered, String text, ClickListener listener) {
+        this(engine, 0, 0, text, false, Assets.FONT_40, listener);
+        this.centeredX = centeredY = centered;
     }
 
-    public UIButton(float x, float y, int width, int height, String text, boolean underlined, Font font, ClickListener listener) {
-        super(x, y, width, height);
+    public UIButton(Engine engine, boolean centeredX, int y, String text, ClickListener listener) {
+        this(engine, 0, y, text, false, Assets.FONT_40, listener);
+        this.centeredX = centeredX;
+    }
+
+    public UIButton(Engine engine, int x, boolean centeredY, String text, ClickListener listener) {
+        this(engine, x, 0, text, false, Assets.FONT_40, listener);
+        this.centeredY = centeredY;
+    }
+
+    public UIButton(Engine engine, float x, float y, String text, ClickListener listener) {
+        this(engine, x, y, text, false, Assets.FONT_40, listener);
+    }
+
+    public UIButton(Engine engine, float x, float y, String text, boolean underlined, Font font, ClickListener listener) {
+        super(x, y, 0, 0);
+        this.engine = engine;
         this.listener = listener;
 
         this.text = text;
         this.underlined = underlined;
         this.font = font;
         this.currentTexture = Assets.BUTTON_ENABLED;
+
+        this.centeredX = centeredY = false;
     }
 
     @Override
@@ -53,20 +76,35 @@ public class UIButton extends UIObject {
 
     @Override
     public void render(Graphics g) {
-        int i = 1;
-        int pWidth = 64;
-        int pHeight = height;
-        g.drawImage(this.currentTexture[0], (int) this.x, (int) this.y, pWidth, pHeight, null);
-        for (int x = 2; x < this.width / 64; x++) {
-            g.drawImage(this.currentTexture[1], (int) this.x + (x - 1) * pWidth, (int) this.y, pWidth, pHeight, null);
-            i = x;
-        }
-        int xOff = 0;
-        if (width <= 64)
-            xOff = 54;
-        g.drawImage(this.currentTexture[2], (int) this.x + i * pWidth - xOff, (int) this.y, pWidth, pHeight, null);
+        int textWidth = Text.getWidth(g, text, font);
+        int textHeight = Text.getHeight(g, font);
 
-        Text.drawString(g, this.text, (int) this.x + this.width / 2, (int) this.y + this.height / 2, true, underlined, Color.gray, font);
+        int pWidth = 64;
+        int pHeight = textHeight + 16;
+
+        int textX = (int) this.x + pWidth / 4;
+        int textY = (int) this.y + textHeight + 8;
+
+        g.drawImage(this.currentTexture[0], (int) this.x, (int) this.y, pWidth, pHeight, null);
+
+        g.drawImage(this.currentTexture[1], textX, (int) this.y, textWidth, pHeight, null);
+
+        g.drawImage(this.currentTexture[2], textX + (textWidth - (pWidth / 2 + pWidth / 4)), (int) this.y, pWidth, pHeight, null);
+
+        this.width = textWidth + pWidth / 2;
+        this.height = pHeight;
+
+        if (StateOptions.OPTIONS.debugMode()) {
+            g.setColor(Color.RED);
+            g.drawRect((int) x, (int) y, width, height);
+        }
+
+        Text.drawString(g, this.text, textX, textY, false, underlined, Color.gray, font);
+
+        if (centeredX)
+            this.x = engine.getWidth() / 2 - this.width / 2;
+        if (centeredY)
+            this.y = engine.getHeight() / 2 - this.height / 2;
 
         List<String> tooltip = new ArrayList<>();
         setTooltip(tooltip);

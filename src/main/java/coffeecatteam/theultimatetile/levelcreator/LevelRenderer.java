@@ -18,11 +18,11 @@ import coffeecatteam.theultimatetile.utils.Utils;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileView;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,31 +67,25 @@ public class LevelRenderer {
         fgCheckBox = new UICheckBox(10, 50, true);
         uiManager.addObject(fgCheckBox);
 
-        int exportBtnWidth = 4 * 32;
-        int exportBtnHeight = 32;
-        uiManager.addObject(new UIButton(creatorEngine.getWidth() - exportBtnWidth - 10, 10, exportBtnWidth, exportBtnHeight, "Save World", false, Assets.FONT_20, new ClickListener() {
+        UIButton btnExport = new UIButton(creatorEngine, creatorEngine.getWidth() - 170, 10, "Save World", false, Assets.FONT_20, new ClickListener() {
             @Override
             public void onClick() {
                 WorldJsonSaver saver = new WorldJsonSaver(null, null, null);
                 try {
                     javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                    //com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel
+                    //com.sun.java.swing.plaf.windows.WindowsLookAndFeel
+                    //com.sun.java.swing.plaf.motif.MotifLookAndFeel
+                    //com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel
+                    //javax.swing.plaf.metal.MetalLookAndFeel
+
                     JFileChooser exporter = new JFileChooser();
                     exporter.setDialogTitle("Export World");
                     exporter.setCurrentDirectory(new File("./export"));
                     exporter.setDialogType(JFileChooser.SAVE_DIALOG);
+                    exporter.setMultiSelectionEnabled(true);
 
-                    exporter.setFileFilter(new FileFilter() {
-                        @Override
-                        public boolean accept(File file) {
-                            String filename = file.getName();
-                            return filename.endsWith(".json") || file.isDirectory();
-                        }
-
-                        @Override
-                        public String getDescription() {
-                            return "JSON Files (*.json)";
-                        }
-                    });
+                    exporter.addChoosableFileFilter(new CustomFileFilter(".json", "JSON Files (*.json)"));
 
                     int userSelection = exporter.showSaveDialog(creatorEngine.getFrame());
 
@@ -101,7 +95,9 @@ public class LevelRenderer {
                         String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
                         Utils.createSaveFolder(finalPath);
                         saver.saveTiles(xWorldSize, yWorldSize, gridWorldEditorBG.convertGridToArray(), gridWorldEditorFG.convertGridToArray(), finalPath + "background", finalPath + "foreground");
-                        Logger.print("Exported world!");
+                        Logger.print("Saved world!");
+                    } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+                        Logger.print("Canceling save...");
                     }
                 } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
                     e.printStackTrace();
@@ -111,7 +107,29 @@ public class LevelRenderer {
             @Override
             public void tick() {
             }
-        }));
+        });
+        uiManager.addObject(btnExport);
+    }
+
+    private class CustomFileFilter extends FileFilter {
+
+        private String extension, description;
+
+        public CustomFileFilter(String extension, String description) {
+            this.extension = extension;
+            this.description = description;
+        }
+
+        @Override
+        public boolean accept(File file) {
+            String filename = file.getName();
+            return filename.endsWith(extension) || file.isDirectory();
+        }
+
+        @Override
+        public String getDescription() {
+            return this.description;
+        }
     }
 
     private void initGrids() {

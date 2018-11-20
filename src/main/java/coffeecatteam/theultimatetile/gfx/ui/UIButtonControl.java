@@ -1,13 +1,14 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
 
 public class UIButtonControl extends UIButton {
 
     private Keybind keybind;
 
-    public UIButtonControl(float x, float y, int width, int height, Keybind keybind, ClickListener listener) {
-        super(x, y, width, height, keybind.getId(), listener);
+    public UIButtonControl(Engine engine, float x, float y, Keybind keybind, ClickListener listener) {
+        super(engine, x, y, keybind.getId(), listener);
         this.keybind = keybind;
     }
 

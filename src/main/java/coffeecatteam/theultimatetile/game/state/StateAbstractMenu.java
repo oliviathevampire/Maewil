@@ -22,9 +22,7 @@ public class StateAbstractMenu extends State {
         super(engine);
 
         if (initUI) {
-            int exBtnWidth = 5 * 64;
-            int exBtnHeight = 64;
-            uiManager.addObject(new UIButton(15, engine.getHeight() - exBtnHeight - 35, exBtnWidth, exBtnHeight, "Main Menu", new ClickListener() {
+            uiManager.addObject(new UIButton(engine, 15, engine.getHeight() - 95, "Main Menu", new ClickListener() {
                 @Override
                 public void onClick() {
                     initBack();
