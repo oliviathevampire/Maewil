@@ -16,6 +16,7 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
 import coffeecatteam.theultimatetile.gfx.audio.Sound;
+import coffeecatteam.theultimatetile.utils.AABB;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -155,8 +156,8 @@ public class EntityPlayer extends EntityCreature {
         if (attackTimer < attackCooldown)
             return;
 
-        Rectangle cb = getCollisionBounds(0, 0);
-        Rectangle ar = new Rectangle();
+        AABB cb = getCollisionBounds(0, 0);
+        AABB ar = new AABB();
         int arSize = 20;
         ar.width = arSize;
         ar.height = arSize;

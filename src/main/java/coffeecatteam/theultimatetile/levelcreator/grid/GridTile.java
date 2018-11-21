@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.levelcreator.grid;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.TileAnimated;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
+import coffeecatteam.theultimatetile.utils.AABB;
 
 import java.awt.*;
 
@@ -11,7 +12,7 @@ public class GridTile {
     private int x, y, xOff = 0, yOff = 0;
     private int width, height;
 
-    private Rectangle bounds;
+    private AABB bounds;
     private Tile tile = Tiles.AIR;
 
     public GridTile(int x, int y, int width, int height) {
@@ -20,7 +21,7 @@ public class GridTile {
         this.width = width;
         this.height = height;
 
-        bounds = new Rectangle(x, y, width, height);
+        bounds = new AABB(x, y, width, height);
     }
 
     public void tick() {
@@ -30,7 +31,7 @@ public class GridTile {
     }
 
     public void render(Graphics g) {
-        bounds = new Rectangle(x + xOff, y + yOff, width, height);
+        bounds = new AABB(x + xOff, y + yOff, width, height);
 
         if (tile instanceof TileAnimated) {
             g.drawImage(((TileAnimated) tile).getAnimation().getCurrentFrame(), x + xOff, y + yOff, width, height, null);
@@ -86,7 +87,7 @@ public class GridTile {
         this.height = height;
     }
 
-    public Rectangle getBounds() {
+    public AABB getBounds() {
         return bounds;
     }
 

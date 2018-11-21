@@ -13,16 +13,15 @@ import coffeecatteam.theultimatetile.levelcreator.grid.Grid;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridTileSelect;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridWorldEditor;
 import coffeecatteam.theultimatetile.manager.UIManager;
+import coffeecatteam.theultimatetile.utils.AABB;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class LevelRenderer {
     private CreatorEngine creatorEngine;
     private int xWorldSize, yWorldSize, mouseX, mouseY;
 
-    private Rectangle gridBounds;
+    private AABB gridBounds;
     private int ogX, ogY, ogWorldGridSize = 10, worldGridSize = ogWorldGridSize, selectGridSize = 10;
 
     private List<Grid> grids = new ArrayList<>();
@@ -53,7 +52,7 @@ public class LevelRenderer {
 
         ogX = creatorEngine.getWidth() / 4;
         ogY = creatorEngine.getHeight() / 4;
-        gridBounds = new Rectangle(ogX, ogY, creatorEngine.getWidth() / 2, creatorEngine.getHeight() / 2);
+        gridBounds = new AABB(ogX, ogY, creatorEngine.getWidth() / 2, creatorEngine.getHeight() / 2);
         initGrids();
 
         this.uiManager = uiManager;

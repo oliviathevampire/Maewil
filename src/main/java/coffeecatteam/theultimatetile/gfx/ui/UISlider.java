@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.utils.AABB;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -115,7 +116,7 @@ public class UISlider extends UIObject {
         private int x, y;
         private int width, height;
 
-        private Rectangle bounds;
+        private AABB bounds;
 
         public Slider(Engine engine, int x, int y, int width, int height) {
             this.engine = engine;
@@ -124,11 +125,11 @@ public class UISlider extends UIObject {
             this.width = width;
             this.height = height;
 
-            bounds = new Rectangle(x, y, width, height);
+            bounds = new AABB(x, y, width, height);
         }
 
         public void tick() {
-            bounds = new Rectangle(x, y, width, height);
+            bounds = new AABB(x, y, width, height);
         }
 
         public void render(Graphics g) {

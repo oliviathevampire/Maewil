@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.utils.AABB;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 
@@ -17,7 +18,7 @@ public class EntityShopStall extends EntityStatic {
     public EntityShopStall(Engine engine, String id) {
         super(engine, id, Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, EntityHitType.WOOD);
 
-        bounds = new Rectangle(0, height / 2 + height / 3, width, height / 12);
+        bounds = new AABB(0, height / 2 + height / 3, width, height / 12);
         ROOF = pickRoof();
     }
 

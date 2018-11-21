@@ -4,13 +4,14 @@ import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
 import coffeecatteam.theultimatetile.levelcreator.LevelRenderer;
+import coffeecatteam.theultimatetile.utils.AABB;
 
 import java.awt.*;
 
 public class GridWorldEditor extends Grid {
 
     private GridTile[][] grid;
-    private Rectangle gridBounds;
+    private AABB gridBounds;
     private int mouseX, mouseY;
     private Tile SELECTED_TILE;
 
@@ -30,7 +31,7 @@ public class GridWorldEditor extends Grid {
         this.beingUsed = beingUsed;
     }
 
-    public void updateVars(Rectangle gridBounds, int mouseX, int mouseY, Tile SELECTED_TILE) {
+    public void updateVars(AABB gridBounds, int mouseX, int mouseY, Tile SELECTED_TILE) {
         this.gridBounds = gridBounds;
         this.mouseX = mouseX;
         this.mouseY = mouseY;

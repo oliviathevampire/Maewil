@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.game.entities;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.utils.AABB;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -26,7 +27,7 @@ public abstract class Entity {
     protected int width, height;
     protected int currentHealth, maxHealth = DEFAULT_HEALTH;
     protected boolean active = true;
-    protected Rectangle bounds;
+    protected AABB bounds;
 
     protected boolean showHitbox = false, isCollidable = true, interacted = false;
     private int extraDmg = 0;
@@ -44,7 +45,7 @@ public abstract class Entity {
         this.height = height;
         currentHealth = maxHealth;
 
-        bounds = new Rectangle(0, 0, width, height);
+        bounds = new AABB(0, 0, width, height);
 
         entities.put(id, this);
         entities.get(id).setEngine(engine);
@@ -133,8 +134,8 @@ public abstract class Entity {
         return false;
     }
 
-    public Rectangle getCollisionBounds(float xOffset, float yOffset) {
-        return new Rectangle((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
+    public AABB getCollisionBounds(float xOffset, float yOffset) {
+        return new AABB((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
     }
 
     public Engine getEngine() {

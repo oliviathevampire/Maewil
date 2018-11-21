@@ -1,5 +1,7 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
+import coffeecatteam.theultimatetile.utils.AABB;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
@@ -7,14 +9,14 @@ public abstract class UIObject {
 
     protected float x, y;
     protected int width, height;
-    protected Rectangle bounds;
+    protected AABB bounds;
 
     public UIObject(float x, float y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        bounds = new Rectangle((int) x, (int) y, width, height);
+        bounds = new AABB((int) x, (int) y, width, height);
     }
 
     public abstract void tick();
@@ -26,6 +28,7 @@ public abstract class UIObject {
     public abstract void onMouseMoved(MouseEvent e);
 
     public abstract void onMouseRelease(MouseEvent e);
+
     public void onMouseReleaseA(MouseEvent e) {
         onMouseRelease(e);
         if (this.bounds.contains(e.getPoint()) && e.getButton() == MouseEvent.BUTTON1)

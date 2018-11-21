@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.game.tiles;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.utils.AABB;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,7 +15,7 @@ public class Tile {
     protected BufferedImage texture;
     protected final String id;
 
-    protected Rectangle bounds;
+    protected AABB bounds;
     protected int x, y;
 
     private boolean isSolid;
@@ -25,13 +26,13 @@ public class Tile {
         this.texture = texture;
         this.id = id;
 
-        bounds = new Rectangle(0, 0, TILE_WIDTH, TILE_HEIGHT);
+        bounds = new AABB(0, 0, TILE_WIDTH, TILE_HEIGHT);
         this.isSolid = isSolid;
         this.tileType = tileType;
     }
 
     public void updateBounds() {
-        bounds = new Rectangle((int) (x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
+        bounds = new AABB((int) (x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
     }
 
     public void tick() {
@@ -61,7 +62,7 @@ public class Tile {
         return id;
     }
 
-    public Rectangle getBounds() {
+    public AABB getBounds() {
         return bounds;
     }
 

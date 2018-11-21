@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.utils.AABB;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -23,7 +24,7 @@ public class UIHyperlink extends UIObject {
         this.text = text;
         this.underlined = underlined;
         this.font = font;
-        bounds = new Rectangle((int) x, (int) y - height, width, height);
+        bounds = new AABB((int) x, (int) y - height, width, height);
     }
 
     public UIHyperlink setColors(Color mainColor, Color hoverColor) {

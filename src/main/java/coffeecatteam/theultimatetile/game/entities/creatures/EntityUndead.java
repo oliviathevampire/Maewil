@@ -5,9 +5,8 @@ import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.ai.AIFollowFlee;
 import coffeecatteam.theultimatetile.game.entities.ai.AIWander;
+import coffeecatteam.theultimatetile.utils.AABB;
 import coffeecatteam.theultimatetile.utils.Utils;
-
-import java.awt.*;
 
 public abstract class EntityUndead extends EntityCreature {
 
@@ -37,7 +36,7 @@ public abstract class EntityUndead extends EntityCreature {
         }
         move();
 
-        // Attack arSizeRectangle
+        // Attack arSizeAABB
         checkAttacks();
     }
 
@@ -47,8 +46,8 @@ public abstract class EntityUndead extends EntityCreature {
         if (attackTimer < attackCooldown)
             return;
 
-        Rectangle cb = getCollisionBounds(0, 0);
-        Rectangle ar = new Rectangle();
+        AABB cb = getCollisionBounds(0, 0);
+        AABB ar = new AABB();
         int arSize = width * 2;
         ar.x = cb.x - arSize / 2;
         ar.y = cb.y - arSize / 2;

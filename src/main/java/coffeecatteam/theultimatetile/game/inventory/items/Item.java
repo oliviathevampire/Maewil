@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.game.inventory.items;
 
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.Slot;
+import coffeecatteam.theultimatetile.utils.AABB;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -18,7 +19,7 @@ public class Item implements Cloneable {
     protected BufferedImage texture;
     protected final String id;
 
-    protected Rectangle bounds;
+    protected AABB bounds;
 
     protected float x, y;
     protected boolean pickedUp = false;
@@ -28,7 +29,7 @@ public class Item implements Cloneable {
         this.texture = texture;
         this.id = id;
 
-        this.bounds = new Rectangle((int) this.x, (int) this.y, WIDTH, HEIGHT);
+        this.bounds = new AABB((int) this.x, (int) this.y, WIDTH, HEIGHT);
     }
 
     public void tick(int count) {
@@ -75,7 +76,7 @@ public class Item implements Cloneable {
                 this.gameEngine.getEntityManager().getPlayer().getInventoryPlayer().addStackToHotbar(new ItemStack(this, count));
         }
 
-        this.bounds = new Rectangle((int) this.x, (int) this.y, WIDTH, HEIGHT);
+        this.bounds = new AABB((int) this.x, (int) this.y, WIDTH, HEIGHT);
     }
 
     public void render(Graphics g) {
@@ -115,7 +116,7 @@ public class Item implements Cloneable {
         return this.id;
     }
 
-    public Rectangle getBounds() {
+    public AABB getBounds() {
         return bounds;
     }
 

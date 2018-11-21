@@ -4,6 +4,7 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.utils.AABB;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -71,7 +72,7 @@ public class UIButton extends UIObject {
             this.currentTexture = Assets.BUTTON_DISABLED;
 
         listener.tick();
-        bounds = new Rectangle((int) x, (int) y, width, height);
+        bounds = new AABB((int) x, (int) y, width, height);
     }
 
     @Override

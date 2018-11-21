@@ -2,7 +2,6 @@ package coffeecatteam.theultimatetile.utils;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
-import sun.rmi.runtime.Log;
 
 import javax.swing.*;
 import java.awt.*;
