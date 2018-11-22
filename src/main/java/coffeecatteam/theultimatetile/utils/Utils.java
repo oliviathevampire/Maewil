@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.Random;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 public class Utils {
 
@@ -136,17 +138,38 @@ public class Utils {
         }
     }
 
-    public static void createSaveFolder(String path) {
-        File file = new File(path);
+    /**
+     * Code from https://examples.javacodegeeks.com/core-java/util/zip/zipoutputstream/java-zip-file-example/
+     * Edited slightly!
+     *
+     * @param files
+     * @param zipFilePath
+     */
+    public static void zipFiles(File[] files, String zipFilePath) {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(zipFilePath);
+            ZipOutputStream zipOutputStream = new ZipOutputStream(fileOutputStream);
 
-        int v = 1;
-        String newPath;
-        while (file.exists()) {
-            newPath = path + "_" + v;
-            file = new File(newPath);
-            v++;
+            for (File file : files) {
+                ZipEntry zipEntry = new ZipEntry(file.getName());
+                zipOutputStream.putNextEntry(zipEntry);
+
+                FileInputStream fileInputStream = new FileInputStream(file);
+                byte[] buf = new byte[1024];
+                int bytesRead;
+
+                while ((bytesRead = fileInputStream.read(buf)) > 0) {
+                    zipOutputStream.write(buf, 0, bytesRead);
+                }
+                fileInputStream.close();
+            }
+
+            zipOutputStream.closeEntry();
+            zipOutputStream.close();
+
+            fileOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        Logger.print("Created path [" + path + "]");
-        file.mkdirs();
     }
 }

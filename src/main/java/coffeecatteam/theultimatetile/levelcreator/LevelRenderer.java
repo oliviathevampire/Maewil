@@ -66,18 +66,10 @@ public class LevelRenderer {
         fgCheckBox = new UICheckBox(10, 50, true);
         uiManager.addObject(fgCheckBox);
 
-        UIButton btnExport = new UIButton(creatorEngine, creatorEngine.getWidth() - 170, 10, "Save World", false, Assets.FONT_20, new ClickListener() {
+        uiManager.addObject(new UIButton(creatorEngine, creatorEngine.getWidth() - 170, 10, "Save World", false, Assets.FONT_20, new ClickListener() {
             @Override
             public void onClick() {
-                WorldJsonSaver saver = new WorldJsonSaver(null, null, null);
                 try {
-                    javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-                    //com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel
-                    //com.sun.java.swing.plaf.windows.WindowsLookAndFeel
-                    //com.sun.java.swing.plaf.motif.MotifLookAndFeel
-                    //com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel
-                    //javax.swing.plaf.metal.MetalLookAndFeel
-
                     JFileChooser exporter = new JFileChooser();
                     exporter.setDialogTitle("Export World");
                     exporter.setCurrentDirectory(new File("./export"));
@@ -92,13 +84,12 @@ public class LevelRenderer {
                         String fileName = exporter.getSelectedFile().getName();
                         String filePath = exporter.getSelectedFile().getParent();
                         String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
-                        Utils.createSaveFolder(finalPath);
-                        saver.saveTiles(xWorldSize, yWorldSize, gridWorldEditorBG.convertGridToArray(), gridWorldEditorFG.convertGridToArray(), finalPath + "background", finalPath + "foreground");
-                        Logger.print("Saved world!");
+
+                        saveWorld(finalPath);
                     } else if (userSelection == JFileChooser.CANCEL_OPTION) {
                         Logger.print("Canceling save...");
                     }
-                } catch (IOException | ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -106,8 +97,60 @@ public class LevelRenderer {
             @Override
             public void tick() {
             }
-        });
-        uiManager.addObject(btnExport);
+        }));
+
+        uiManager.addObject(new UIButton(creatorEngine, creatorEngine.getWidth() - 158, 60, "Zip World", false, Assets.FONT_20, new ClickListener() {
+            @Override
+            public void onClick() {
+                try {
+                    JFileChooser exporter = new JFileChooser();
+                    exporter.setDialogTitle("Export World");
+                    exporter.setCurrentDirectory(new File("./export"));
+                    exporter.setDialogType(JFileChooser.SAVE_DIALOG);
+                    exporter.setMultiSelectionEnabled(true);
+
+                    exporter.addChoosableFileFilter(new CustomFileFilter(".json", "JSON Files (*.json)"));
+
+                    int userSelection = exporter.showSaveDialog(creatorEngine.getFrame());
+
+                    if (userSelection == JFileChooser.APPROVE_OPTION) {
+                        String fileName = exporter.getSelectedFile().getName();
+                        String filePath = exporter.getSelectedFile().getParent();
+                        String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
+
+                        zipWorld(finalPath, fileName);
+                    } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+                        Logger.print("Canceling save...");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void tick() {
+            }
+        }));
+    }
+
+    private void saveWorld(String path) throws IOException {
+        WorldJsonSaver saver = new WorldJsonSaver(null, null, null);
+        File dir = new File(path);
+        if (!dir.mkdirs())
+            throw new IOException("Directory [" + dir + "] couldn't be made!");
+
+        saver.saveTiles(xWorldSize, yWorldSize, gridWorldEditorBG.convertGridToArray(), gridWorldEditorFG.convertGridToArray(), path + "background", path + "foreground");
+        Logger.print("World [" + dir + "] saved!");
+    }
+
+    private void zipWorld(String path, String fileName) throws IOException {
+        saveWorld(path);
+        File bg = new File(path + "background.json");
+        File fg = new File(path + "foreground.json");
+
+        String zipPath = path + fileName + ".zip";
+        Utils.zipFiles(new File[]{bg, fg}, zipPath);
+        Logger.print("World [" + zipPath + "] zipped!");
     }
 
     private class CustomFileFilter extends FileFilter {
