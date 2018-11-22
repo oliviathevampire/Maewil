@@ -42,8 +42,8 @@ public class StateGame extends State {
         reset(world);
         init();
 
-        int yOffset = 150;
-        uiManagerPaused.addObject(new UIButton(engine, engine.getWidth() / 2, engine.getHeight() / 2, "Resume", new ClickListener() {
+        int yOffset = 30;
+        uiManagerPaused.addObject(new UIButton(engine, true, engine.getHeight() / 2 - yOffset, "Resume", new ClickListener() {
             @Override
             public void onClick() {
                 paused = false;
@@ -54,7 +54,7 @@ public class StateGame extends State {
             }
         }));
 
-        UIButton btnMainMenu = new UIButton(engine, engine.getWidth() / 2, engine.getHeight() / 2 - yOffset, "Main Menu", new ClickListener() {
+        UIButton btnMainMenu = new UIButton(engine, true, engine.getHeight() / 2 + yOffset + 10, "Main Menu", new ClickListener() {
             @Override
             public void onClick() {
                 State.setState(((GameEngine) engine).stateMenu);
@@ -67,7 +67,7 @@ public class StateGame extends State {
             public void tick() {
             }
         });
-        UIButton btnQuit = new UIButton(engine, engine.getWidth() / 2, engine.getHeight() / 2 - yOffset, "Quit", new ClickListener() {
+        UIButton btnQuit = new UIButton(engine, true, engine.getHeight() / 2 + yOffset * 3 + 20, "Quit", new ClickListener() {
             @Override
             public void onClick() {
                 saveWorld();
