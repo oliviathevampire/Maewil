@@ -26,7 +26,7 @@ public class UIButton extends UIObject {
     private Font font;
 
     private BufferedImage[] currentTexture;
-    protected boolean hasTooltip = false;
+    protected boolean hasTooltip = false, hasCustomWidth = false;
 
     private boolean centeredX, centeredY;
 
@@ -88,11 +88,12 @@ public class UIButton extends UIObject {
 
         g.drawImage(this.currentTexture[0], (int) this.x, (int) this.y, pWidth, pHeight, null);
 
-        g.drawImage(this.currentTexture[1], textX, (int) this.y, textWidth, pHeight, null);
+        g.drawImage(this.currentTexture[1], textX, (int) this.y, (hasCustomWidth ? width : textWidth), pHeight, null);
 
-        g.drawImage(this.currentTexture[2], textX + (textWidth - (pWidth / 2 + pWidth / 4)), (int) this.y, pWidth, pHeight, null);
+        g.drawImage(this.currentTexture[2], textX + ((hasCustomWidth ? width : textWidth) - (pWidth / 2 + pWidth / 4)), (int) this.y, pWidth, pHeight, null);
 
-        this.width = textWidth + pWidth / 2;
+        if (!hasCustomWidth)
+            this.width = textWidth + pWidth / 2;
         this.height = pHeight;
 
         if (StateOptions.OPTIONS.debugMode()) {
@@ -100,6 +101,9 @@ public class UIButton extends UIObject {
             g.drawRect((int) x, (int) y, width, height);
         }
 
+        if (hasCustomWidth) {
+            textX = (int) this.x + pWidth / 4 + (width / 2 - textWidth / 2);
+        }
         Text.drawString(g, this.text, textX, textY, false, underlined, Color.gray, font);
 
         if (centeredX)
@@ -122,6 +126,12 @@ public class UIButton extends UIObject {
                 }
             }
         }
+    }
+
+    public UIButton setCustomWidth(int width) {
+        this.width = width;
+        this.hasCustomWidth = true;
+        return this;
     }
 
     public UIButton setTooltip(List<String> tooltip) {

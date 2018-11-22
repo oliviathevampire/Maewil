@@ -4,9 +4,7 @@ import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.theultimatetile.gfx.ui.UIButtonSlider;
 import coffeecatteam.theultimatetile.gfx.ui.UISlider;
-import coffeecatteam.theultimatetile.utils.Logger;
 
 import java.awt.*;
 
