@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.game.world;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
+import coffeecatteam.theultimatetile.game.tiles.TileAnimated;
 import coffeecatteam.theultimatetile.game.tiles.TileBreakable;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
@@ -44,14 +45,21 @@ public class World {
 
     public void tick() {
         int xStart = (int) Math.max(0, ((GameEngine) engine).getCamera().getxOffset() / Tile.TILE_WIDTH);
-        int xEnd = (int) Math.min(width, (((GameEngine) engine).getCamera().getxOffset() + ((GameEngine) engine).getWidth()) / Tile.TILE_WIDTH + 1);
+        int xEnd = (int) Math.min(width, (((GameEngine) engine).getCamera().getxOffset() + engine.getWidth()) / Tile.TILE_WIDTH + 1);
         int yStart = (int) Math.max(0, ((GameEngine) engine).getCamera().getyOffset() / Tile.TILE_HEIGHT);
-        int yEnd = (int) Math.min(height, (((GameEngine) engine).getCamera().getyOffset() + ((GameEngine) engine).getHeight()) / Tile.TILE_HEIGHT + 1);
+        int yEnd = (int) Math.min(height, (((GameEngine) engine).getCamera().getyOffset() + engine.getHeight()) / Tile.TILE_HEIGHT + 1);
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
                 getBGTile(x, y).updateBounds();
                 getFGTile(x, y).tick();
+            }
+        }
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                getBGTile(x, y).forcedTick();
+                getFGTile(x, y).forcedTick();
             }
         }
 

@@ -18,7 +18,7 @@ public class TileAnimated extends Tile {
     }
 
     @Override
-    public void tick() {
+    public void forcedTick() {
         animation.tick();
     }
 

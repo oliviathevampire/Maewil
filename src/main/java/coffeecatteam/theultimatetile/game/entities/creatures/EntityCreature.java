@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
+import coffeecatteam.theultimatetile.game.tiles.TileAnimated;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
 import coffeecatteam.theultimatetile.gfx.*;
 import coffeecatteam.theultimatetile.utils.Logger;
@@ -117,7 +118,7 @@ public abstract class EntityCreature extends Entity {
         float y = (this.y + height / 2 + height / 4) / Tile.TILE_HEIGHT;
         Tile t = ((GameEngine) engine).getWorld().getFGTile((int) x, (int) y);
 
-        return (t.getId().equals(Tiles.WATER.getId()) && t.getBounds().contains(x, y));
+        return t instanceof TileAnimated;
     }
 
     public void move() {
