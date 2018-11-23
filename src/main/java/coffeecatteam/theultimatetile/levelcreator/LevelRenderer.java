@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UICheckBox;
 import coffeecatteam.theultimatetile.gfx.ui.UISlider;
+import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;
 import coffeecatteam.theultimatetile.levelcreator.grid.Grid;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridTileSelect;
@@ -16,6 +17,7 @@ import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.utils.AABB;
 import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
+import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -71,22 +73,20 @@ public class LevelRenderer {
             public void onClick() {
                 try {
                     JFileChooser exporter = new JFileChooser();
-                    exporter.setDialogTitle("Export World");
+                    exporter.setDialogTitle("Save World");
                     exporter.setCurrentDirectory(new File("./export"));
                     exporter.setDialogType(JFileChooser.SAVE_DIALOG);
                     exporter.setMultiSelectionEnabled(true);
 
                     exporter.addChoosableFileFilter(new CustomFileFilter(".json", "JSON Files (*.json)"));
 
-                    int userSelection = exporter.showSaveDialog(creatorEngine.getFrame());
-
-                    if (userSelection == JFileChooser.APPROVE_OPTION) {
+                    if (exporter.showSaveDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
                         String fileName = exporter.getSelectedFile().getName();
                         String filePath = exporter.getSelectedFile().getParent();
                         String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
 
                         saveWorld(finalPath);
-                    } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+                    } else {
                         Logger.print("Canceling save...");
                     }
                 } catch (IOException e) {
@@ -104,22 +104,20 @@ public class LevelRenderer {
             public void onClick() {
                 try {
                     JFileChooser exporter = new JFileChooser();
-                    exporter.setDialogTitle("Export World");
+                    exporter.setDialogTitle("Save/Zip World");
                     exporter.setCurrentDirectory(new File("./export"));
                     exporter.setDialogType(JFileChooser.SAVE_DIALOG);
                     exporter.setMultiSelectionEnabled(true);
 
                     exporter.addChoosableFileFilter(new CustomFileFilter(".json", "JSON Files (*.json)"));
 
-                    int userSelection = exporter.showSaveDialog(creatorEngine.getFrame());
-
-                    if (userSelection == JFileChooser.APPROVE_OPTION) {
+                    if (exporter.showSaveDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
                         String fileName = exporter.getSelectedFile().getName();
                         String filePath = exporter.getSelectedFile().getParent();
                         String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
 
                         zipWorld(finalPath, fileName);
-                    } else if (userSelection == JFileChooser.CANCEL_OPTION) {
+                    } else {
                         Logger.print("Canceling save...");
                     }
                 } catch (IOException e) {
@@ -131,6 +129,57 @@ public class LevelRenderer {
             public void tick() {
             }
         }));
+
+        uiManager.addObject(new UIButton(creatorEngine, creatorEngine.getWidth() - 170, 110, "Load World", false, Assets.FONT_20, new ClickListener() {
+            @Override
+            public void onClick() {
+                try {
+                    JFileChooser exporter = new JFileChooser();
+                    exporter.setDialogTitle("Load World");
+                    exporter.setCurrentDirectory(new File("./export"));
+                    exporter.setFileFilter(new DirFilter());
+                    exporter.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    exporter.setAcceptAllFileFilterUsed(false);
+
+                    if (exporter.showOpenDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
+                        String fileName = exporter.getSelectedFile().getName();
+                        String filePath = exporter.getSelectedFile().getParent();
+                        String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
+
+                        loadWorld(finalPath);
+                    } else {
+                        Logger.print("Canceling load...");
+                    }
+                } catch (IOException | ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void tick() {
+            }
+
+            class DirFilter extends FileFilter {
+                public boolean accept(File f) {
+                    return (f.isDirectory());
+                }
+
+                public String getDescription() {
+                    return ("Directories");
+                }
+            }
+        }));
+    }
+
+    private void loadWorld(String path) throws IOException, ParseException {
+        WorldJsonLoader loader = new WorldJsonLoader(null, creatorEngine);
+        Tile[][] bgT = new Tile[xWorldSize][yWorldSize];
+        Tile[][] fgT = new Tile[xWorldSize][yWorldSize];
+        loader.loadTiles(xWorldSize, yWorldSize, path + "background.json", path + "foreground.json", bgT, fgT);
+
+        gridWorldEditorBG.setGridFromArray(bgT, xWorldSize, yWorldSize);
+        gridWorldEditorFG.setGridFromArray(fgT, xWorldSize, yWorldSize);
+        Logger.print("World [" + path + "] loaded!");
     }
 
     private void saveWorld(String path) throws IOException {

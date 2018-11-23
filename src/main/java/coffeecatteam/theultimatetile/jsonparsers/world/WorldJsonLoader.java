@@ -67,7 +67,9 @@ public class WorldJsonLoader implements IJSONLoader {
         loadWorldInfo();
         Logger.print("World [" + name + "] info loaded!\n");
 
-        loadTiles();
+        bg_tiles = new Tile[width][height];
+        fg_tiles = new Tile[width][height];
+        loadTiles(width, height, path + "/" + BASE_FILES.get("tile_bg") + ".json", path + "/" + BASE_FILES.get("tile_fg") + ".json", bg_tiles, fg_tiles);
         Logger.print("World [" + name + "] tiles loaded!\n");
 
         loadEntities();
@@ -98,19 +100,16 @@ public class WorldJsonLoader implements IJSONLoader {
         Logger.print("Loaded world player spawn");
     }
 
-    public void loadTiles() throws IOException, ParseException {
+    public void loadTiles(int width, int height, String bgLoadPath, String fgLoadPath, Tile[][] bg_tiles, Tile[][] fg_tiles) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObjectBG = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/" + BASE_FILES.get("tile_bg") + ".json"));
-        JSONObject jsonObjectFG = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path + "/" + BASE_FILES.get("tile_fg") + ".json"));
-
-        bg_tiles = new Tile[width][height];
-        fg_tiles = new Tile[width][height];
+        JSONObject jsonObjectBG = (JSONObject) parser.parse(Utils.loadFileOutSideJar(bgLoadPath));
+        JSONObject jsonObjectFG = (JSONObject) parser.parse(Utils.loadFileOutSideJar(fgLoadPath));
 
         JSONObject bgTiles = (JSONObject) jsonObjectBG.get("bg_tile");
         for (int y = 0; y < height; y++) {
             JSONArray chunk = (JSONArray) bgTiles.get("chunk" + y);
             for (int x = 0; x < width; x++) {
-                loadTile(chunk, true, x);
+                loadTile(chunk, true, x, bg_tiles, fg_tiles);
             }
         }
         Logger.print("Loaded world background tiles");
@@ -119,13 +118,13 @@ public class WorldJsonLoader implements IJSONLoader {
         for (int y = 0; y < height; y++) {
             JSONArray chunk = (JSONArray) fgTiles.get("chunk" + y);
             for (int x = 0; x < width; x++) {
-                loadTile(chunk, false, x);
+                loadTile(chunk, false, x, bg_tiles, fg_tiles);
             }
         }
         Logger.print("Loaded world foreground tiles");
     }
 
-    private void loadTile(JSONArray chunk, boolean bg, int x) {
+    private void loadTile(JSONArray chunk, boolean bg, int x, Tile[][] bg_tiles, Tile[][] fg_tiles) {
         JSONObject tileObj = (JSONObject) chunk.get(x);
         Tile tile = Tiles.getTile(engine, (String) tileObj.get("id"));
         int tx = Utils.parseInt((String) tileObj.get("x"));
@@ -336,7 +335,7 @@ public class WorldJsonLoader implements IJSONLoader {
     public static boolean copy(InputStream source, String destination) {
         boolean success = true;
 
-        System.out.println("Copying ->" + source + "\n\tto ->" + destination);
+        Logger.print("Copying ->" + source + "\n\tto ->" + destination);
 
         try {
             if (!new File(destination).exists())

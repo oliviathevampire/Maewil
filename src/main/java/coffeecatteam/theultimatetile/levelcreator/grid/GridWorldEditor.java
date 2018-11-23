@@ -19,6 +19,12 @@ public class GridWorldEditor extends Grid {
 
     public GridWorldEditor(CreatorEngine creatorEngine, int ogX, int ogY, int gridSize, int x, int y, int xWorldSize, int yWorldSize, boolean beingUsed) {
         super(creatorEngine, ogX, ogY, gridSize, x, y, xWorldSize, yWorldSize);
+        initGrid();
+
+        this.beingUsed = beingUsed;
+    }
+
+    private void initGrid() {
         grid = new GridTile[xWorldSize][yWorldSize];
 
         int w = (ogX * 2) / gridSize, h = (ogY * 2) / gridSize;
@@ -27,8 +33,6 @@ public class GridWorldEditor extends Grid {
                 grid[gx][gy] = new GridTile(ogX + w * gx, ogY + h * gy, w, h);
             }
         }
-
-        this.beingUsed = beingUsed;
     }
 
     public void updateVars(AABB gridBounds, int mouseX, int mouseY, Tile SELECTED_TILE) {
@@ -149,5 +153,16 @@ public class GridWorldEditor extends Grid {
         }
 
         return tiles.clone();
+    }
+
+    public void setGridFromArray(Tile[][] tilesArray, int xWorldSize, int yWorldSize) {
+        this.setSize(xWorldSize, yWorldSize);
+        initGrid();
+
+        for (int x = 0; x < xWorldSize; x++) {
+            for (int y = 0; y < yWorldSize; y++) {
+                grid[x][y].setTile(tilesArray[x][y]);
+            }
+        }
     }
 }

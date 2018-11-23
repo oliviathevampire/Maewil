@@ -53,4 +53,9 @@ public abstract class Grid {
     public void setGridSize(int gridSize) {
         this.gridSize = gridSize;
     }
+
+    public void setSize(int xWorldSize, int yWorldSize) {
+        this.xWorldSize = xWorldSize;
+        this.yWorldSize = yWorldSize;
+    }
 }
