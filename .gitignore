@@ -37,3 +37,4 @@ build - with exe.bat
 build - with out exe.bat
 logs/
 saves/
+saves/saved_games.json
