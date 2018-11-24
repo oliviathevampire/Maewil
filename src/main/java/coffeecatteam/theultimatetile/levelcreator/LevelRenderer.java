@@ -202,32 +202,9 @@ public class LevelRenderer {
         Logger.print("World [" + zipPath + "] zipped!");
     }
 
-    private class CustomFileFilter extends FileFilter {
-
-        private String extension, description;
-
-        public CustomFileFilter(String extension, String description) {
-            this.extension = extension;
-            this.description = description;
-        }
-
-        @Override
-        public boolean accept(File file) {
-            String filename = file.getName();
-            return filename.endsWith(extension) || file.isDirectory();
-        }
-
-        @Override
-        public String getDescription() {
-            return this.description;
-        }
-    }
-
     private void initGrids() {
         gridWorldEditorBG = new GridWorldEditor(creatorEngine, ogX, ogY, worldGridSize, ogX, ogY, xWorldSize, yWorldSize, false);
-        //grids.add(gridWorldEditorBG);
         gridWorldEditorFG = new GridWorldEditor(creatorEngine, ogX, ogY, worldGridSize, ogX, ogY, xWorldSize, yWorldSize, true);
-        //grids.add(gridWorldEditorFG);
 
         grids.add(new GridTileSelect(creatorEngine, ogX, ogY, selectGridSize, (int) (ogX + ((ogX * 2) / selectGridSize) * 10.5f), ogY, 4, selectGridSize));
     }
