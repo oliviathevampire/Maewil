@@ -53,6 +53,7 @@ public class GridWorldEditor extends Grid {
             updateXOffset(offAmt);
         if (creatorEngine.getKeyManager().moveRight)
             updateXOffset(-offAmt);
+        updateSizePosCheck();
 
         int w = (ogX * 2) / gridSize, h = (ogY * 2) / gridSize;
         for (int x = 0; x < xWorldSize; x++) {
@@ -97,6 +98,11 @@ public class GridWorldEditor extends Grid {
                 }
             }
         }
+    }
+
+    private void updateSizePosCheck() {
+        updateXOffset(0);
+        updateYOffset(0);
     }
 
     private void updateXOffset(int amt) {
