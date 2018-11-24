@@ -32,7 +32,9 @@ public class LevelRenderer {
     private static Tile SELECTED_TILE;
 
     private CreatorEngine creatorEngine;
-    private int xWorldSize, yWorldSize, mouseX, mouseY;
+    private int xWorldSize, minXWorldSize = 10, maxXWorldSize = 100;
+    private int yWorldSize, minYWorldSize = 10, maxYWorldSize = 100;
+    private int mouseX, mouseY;
 
     private AABB gridBounds;
     private int ogX, ogY, ogWorldGridSize = 10, worldGridSize = ogWorldGridSize, selectGridSize = 10;
@@ -44,10 +46,9 @@ public class LevelRenderer {
     private UISlider zoomSlider;
     private UICheckBox fgCheckBox;
 
-    public LevelRenderer(CreatorEngine creatorEngine, int xWorldSize, int yWorldSize, UIManager uiManager) {
+    public LevelRenderer(CreatorEngine creatorEngine, int xWorldSize, int yWorldSize) {
         this.creatorEngine = creatorEngine;
-        this.xWorldSize = xWorldSize;
-        this.yWorldSize = yWorldSize;
+        setSize(xWorldSize, yWorldSize);
 
         Tiles.init(creatorEngine);
         SELECTED_TILE = Tiles.GRASS;
@@ -57,7 +58,8 @@ public class LevelRenderer {
         gridBounds = new AABB(ogX, ogY, creatorEngine.getWidth() / 2, creatorEngine.getHeight() / 2);
         initGrids();
 
-        this.uiManager = uiManager;
+        this.uiManager = new UIManager(creatorEngine);
+        creatorEngine.getMouseManager().setUiManager(uiManager);
         initUI();
     }
 
@@ -210,6 +212,7 @@ public class LevelRenderer {
     }
 
     public void tick() {
+        uiManager.tick();
         mouseX = creatorEngine.getMouseManager().getMouseX();
         mouseY = creatorEngine.getMouseManager().getMouseY();
 
@@ -240,8 +243,6 @@ public class LevelRenderer {
     }
 
     public void render(Graphics g) {
-        g.drawImage(Assets.MG_OVERLAY_INNER_MID, 0, 0, creatorEngine.getWidth(), creatorEngine.getHeight(), null);
-
         gridWorldEditorBG.render(g);
         Color tint = new Color(63, 63, 63, 127);
         g.setColor(tint);
@@ -256,6 +257,7 @@ public class LevelRenderer {
         Text.drawString(g, "Zoom: x" + zoomSlider.getValue(), (int) zoomSlider.getX() + zoomSlider.getWidth() + 25, (int) zoomSlider.getY() + Text.getHeight(g, font), false, false, Color.white, font);
 
         Text.drawString(g, "Edit foreground", (int) (fgCheckBox.getX() + fgCheckBox.getWidth() + 5), (int) (fgCheckBox.getY() + fgCheckBox.getHeight() - 5), false, false, Color.white, font);
+        uiManager.render(g);
     }
 
     public static Tile getSelectedTile() {
@@ -264,5 +266,15 @@ public class LevelRenderer {
 
     public static void setSelectedTile(Tile selectedTile) {
         SELECTED_TILE = selectedTile;
+    }
+
+    public void setSize(int xWorldSize, int yWorldSize) {
+        this.xWorldSize = xWorldSize;
+        if (this.xWorldSize < minXWorldSize) this.xWorldSize = minXWorldSize;
+        if (this.xWorldSize > maxXWorldSize) this.xWorldSize = maxXWorldSize;
+
+        this.yWorldSize = yWorldSize;
+        if (this.yWorldSize < minYWorldSize) this.yWorldSize = minYWorldSize;
+        if (this.yWorldSize > maxYWorldSize) this.yWorldSize = maxYWorldSize;
     }
 }
