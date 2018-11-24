@@ -2,7 +2,6 @@ package coffeecatteam.theultimatetile.levelcreator;
 
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.theultimatetile.manager.UIManager;
 
 import java.awt.*;
 

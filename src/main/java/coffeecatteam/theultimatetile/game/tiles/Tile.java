@@ -38,7 +38,9 @@ public class Tile {
     public void tick() {
         updateBounds();
     }
-    public void forcedTick() {}
+
+    public void forcedTick() {
+    }
 
     public void render(Graphics g) {
         g.drawImage(texture, (int) (x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
