@@ -11,22 +11,18 @@ public class MainMenu {
     private CreatorEngine creatorEngine;
     private LevelRenderer levelRenderer;
 
-    private UIManager uiManager;
-
     public MainMenu(CreatorEngine creatorEngine) {
         this.creatorEngine = creatorEngine;
-        uiManager = new UIManager(creatorEngine);
-        levelRenderer = new LevelRenderer(creatorEngine, 20, 20, uiManager);
-        creatorEngine.getMouseManager().setUiManager(uiManager);
+        levelRenderer = new LevelRenderer(creatorEngine, 20, 20);
     }
 
     public void tick() {
-        uiManager.tick();
-
         levelRenderer.tick();
     }
 
     public void render(Graphics g) {
+        g.drawImage(Assets.MG_OVERLAY_INNER_MID, 0, 0, creatorEngine.getWidth(), creatorEngine.getHeight(), null);
+
         levelRenderer.render(g);
 
         g.drawImage(Assets.MG_OVERLAY_OUTER, 0, 0, creatorEngine.getWidth(), creatorEngine.getHeight(), null);
@@ -34,6 +30,5 @@ public class MainMenu {
         Text.drawString(g, "Level Creator", 10, Text.getHeight(g, font) + 6, false, true, Color.white, font);
 
         levelRenderer.postRender(g);
-        uiManager.render(g);
     }
 }
