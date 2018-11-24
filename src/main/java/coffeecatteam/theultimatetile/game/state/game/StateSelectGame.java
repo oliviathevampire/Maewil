@@ -59,23 +59,26 @@ public class StateSelectGame extends StateAbstractMenu {
         }
 
         public WorldButton(float y, int index, String path) {
-            super(State.engine, true, (int) y, "Game " + index, null);
+            super(State.engine, true, (int) y, "New Game", null);
             this.path = savesPath + path;
             this.listener = new ClickListenerWorld(this.path, this.savesPath, index);
             hasTooltip = true;
         }
 
         @Override
-        public UIButton setTooltip(List<String> tooltip) {
-            tooltip.add("Current world: " + ((ClickListenerWorld) this.listener).getText());
-            return this;
+        public void tick() {
+            super.tick();
+            ClickListenerWorld listener = (ClickListenerWorld) this.listener;
+            if (listener.isSaved())
+                this.setText(listener.getText());
         }
     }
 
-    private class ClickListenerWorld implements ClickListener {
+    class ClickListenerWorld implements ClickListener {
 
         private String path, savesPath;
         private int index;
+        private boolean isSaved = false;
 
         private SavedGamesJSONParser gamesJSONParser;
 
@@ -94,9 +97,6 @@ public class StateSelectGame extends StateAbstractMenu {
 
         @Override
         public void onClick() {
-            String[] vals = SavedGamesJSONParser.GAMES.get(index).split(":");
-            boolean isSaved = Boolean.valueOf(vals[0]);
-
             String worldName;
             if (!isSaved) {
                 worldName = getWorldname("New World");
@@ -129,6 +129,8 @@ public class StateSelectGame extends StateAbstractMenu {
 
         @Override
         public void tick() {
+            String[] vals = SavedGamesJSONParser.GAMES.get(index).split(":");
+            isSaved = Boolean.valueOf(vals[0]);
         }
 
         public String getPath() {
@@ -146,6 +148,10 @@ public class StateSelectGame extends StateAbstractMenu {
             if (isSaved)
                 return SavedGamesJSONParser.GAMES.get(index).split(":")[1].replace("_", " ");
             return "";
+        }
+
+        public boolean isSaved() {
+            return isSaved;
         }
     }
 
