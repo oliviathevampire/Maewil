@@ -1,13 +1,13 @@
-package coffeecatteam.theultimatetile.levelcreator;
+package coffeecatteam.theultimatetile.levelcreator.fileFilter;
 
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
 
-public class CustomFileFilter extends FileFilter {
+public class FileFilterExtension extends FileFilter {
 
     private String extension, description;
 
-    public CustomFileFilter(String extension, String description) {
+    public FileFilterExtension(String extension, String description) {
         this.extension = extension;
         this.description = description;
     }

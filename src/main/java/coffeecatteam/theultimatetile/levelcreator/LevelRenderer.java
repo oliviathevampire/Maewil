@@ -10,6 +10,8 @@ import coffeecatteam.theultimatetile.gfx.ui.UICheckBox;
 import coffeecatteam.theultimatetile.gfx.ui.UISlider;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;
+import coffeecatteam.theultimatetile.levelcreator.fileFilter.FileFilterDirectories;
+import coffeecatteam.theultimatetile.levelcreator.fileFilter.FileFilterExtension;
 import coffeecatteam.theultimatetile.levelcreator.grid.Grid;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridTileSelect;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridWorldEditor;
@@ -80,7 +82,7 @@ public class LevelRenderer {
                     exporter.setDialogType(JFileChooser.SAVE_DIALOG);
                     exporter.setMultiSelectionEnabled(true);
 
-                    exporter.addChoosableFileFilter(new CustomFileFilter(".json", "JSON Files (*.json)"));
+                    exporter.addChoosableFileFilter(new FileFilterExtension(".json", "JSON Files (*.json)"));
 
                     if (exporter.showSaveDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
                         String fileName = exporter.getSelectedFile().getName();
@@ -111,7 +113,7 @@ public class LevelRenderer {
                     exporter.setDialogType(JFileChooser.SAVE_DIALOG);
                     exporter.setMultiSelectionEnabled(true);
 
-                    exporter.addChoosableFileFilter(new CustomFileFilter(".json", "JSON Files (*.json)"));
+                    exporter.addChoosableFileFilter(new FileFilterExtension(".json", "JSON Files (*.json)"));
 
                     if (exporter.showSaveDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
                         String fileName = exporter.getSelectedFile().getName();
@@ -139,7 +141,7 @@ public class LevelRenderer {
                     JFileChooser exporter = new JFileChooser();
                     exporter.setDialogTitle("Load World");
                     exporter.setCurrentDirectory(new File("./export"));
-                    exporter.setFileFilter(new DirFilter());
+                    exporter.setFileFilter(new FileFilterDirectories());
                     exporter.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                     exporter.setAcceptAllFileFilterUsed(false);
 
@@ -159,16 +161,6 @@ public class LevelRenderer {
 
             @Override
             public void tick() {
-            }
-
-            class DirFilter extends FileFilter {
-                public boolean accept(File f) {
-                    return (f.isDirectory());
-                }
-
-                public String getDescription() {
-                    return ("Directories");
-                }
             }
         }));
     }
