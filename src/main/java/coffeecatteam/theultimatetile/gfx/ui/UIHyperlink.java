@@ -11,7 +11,8 @@ public class UIHyperlink extends UIObject {
     private ClickListener listener;
 
     private boolean hovering = false;
-    private Color mainColor = Color.white, hoverColor = Color.cyan, c = mainColor;
+    public Color mainColor = Color.white, hoverColor = Color.cyan;
+    private Color c = mainColor;
 
     private String text;
     private boolean underlined;
@@ -58,8 +59,6 @@ public class UIHyperlink extends UIObject {
 
     @Override
     public void onMouseRelease(MouseEvent e) {
-        if (this.hovering && e.getButton() == MouseEvent.BUTTON1)
-            onClick();
     }
 
     @Override

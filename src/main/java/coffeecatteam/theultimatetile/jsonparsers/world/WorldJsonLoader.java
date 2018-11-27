@@ -69,7 +69,9 @@ public class WorldJsonLoader implements IJSONLoader {
 
         bg_tiles = new Tile[width][height];
         fg_tiles = new Tile[width][height];
-        loadTiles(width, height, path + "/" + BASE_FILES.get("tile_bg") + ".json", path + "/" + BASE_FILES.get("tile_fg") + ".json", bg_tiles, fg_tiles);
+        String bgLoadPath = path + "/" + BASE_FILES.get("tile_bg") + ".json";
+        String fgLoadPath = path + "/" + BASE_FILES.get("tile_fg") + ".json";
+        loadTiles(width, height, bgLoadPath, fgLoadPath, bg_tiles, fg_tiles);
         Logger.print("World [" + name + "] tiles loaded!\n");
 
         loadEntities();
