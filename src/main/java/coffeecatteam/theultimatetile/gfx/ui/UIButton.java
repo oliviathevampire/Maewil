@@ -4,7 +4,7 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.theultimatetile.utils.AABB;
+import coffeecatteam.coffeecatutils.position.AABB;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -76,7 +76,7 @@ public class UIButton extends UIObject {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         int textWidth = Text.getWidth(g, text, font);
         int textHeight = Text.getHeight(g, font);
 

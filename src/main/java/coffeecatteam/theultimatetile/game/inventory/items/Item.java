@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.game.inventory.items;
 
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.Slot;
-import coffeecatteam.theultimatetile.utils.AABB;
+import coffeecatteam.coffeecatutils.position.AABB;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -79,13 +79,13 @@ public class Item implements Cloneable {
         this.bounds = new AABB((int) this.x, (int) this.y, WIDTH, HEIGHT);
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         if (this.gameEngine == null)
             return;
         render(g, (int) (this.x - this.gameEngine.getCamera().getxOffset()), (int) (this.y - this.gameEngine.getCamera().getyOffset()));
     }
 
-    public void render(Graphics g, int x, int y) {
+    public void render(Graphics2D g, int x, int y) {
         g.drawImage(this.texture, x, y, WIDTH, HEIGHT, null);
     }
 

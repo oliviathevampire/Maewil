@@ -3,6 +3,8 @@ package coffeecatteam.theultimatetile.utils;
 import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
+import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.coffeecatutils.NumberUtils;
 
 public class DiscordHandler {
 
@@ -49,7 +51,7 @@ public class DiscordHandler {
         presence.state = state;
         presence.largeImageKey = "ultimatebg" + (LEVEL_CREATE ? "_edit" : "");
         if (inGame)
-            presence.smallImageKey = getSmallImage(Utils.getRandomInt(5));
+            presence.smallImageKey = getSmallImage(NumberUtils.getRandomInt(5));
         presence.startTimestamp = timeStamp;
         lib.Discord_UpdatePresence(presence);
     }

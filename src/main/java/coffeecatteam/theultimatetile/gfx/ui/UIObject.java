@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
-import coffeecatteam.theultimatetile.utils.AABB;
+import coffeecatteam.coffeecatutils.position.AABB;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -21,7 +21,7 @@ public abstract class UIObject {
 
     public abstract void tick();
 
-    public abstract void render(Graphics g);
+    public abstract void render(Graphics2D g);
 
     public abstract void onClick();
 

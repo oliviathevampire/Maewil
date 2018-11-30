@@ -6,7 +6,7 @@ import java.text.AttributedString;
 
 public class Text {
 
-    public static void drawString(Graphics g, String text, int xPos, int yPos, boolean centered, boolean underlined, Color c, Font font) {
+    public static void drawString(Graphics2D g, String text, int xPos, int yPos, boolean centered, boolean underlined, Color c, Font font) {
         g.setColor(c);
         AttributedString as = new AttributedString(text);
         as.addAttribute(TextAttribute.FONT, font);
@@ -21,17 +21,17 @@ public class Text {
         g.drawString(as.getIterator(), x, y);
     }
 
-    public static int getWidth(Graphics g, String text, Font font) {
+    public static int getWidth(Graphics2D g, String text, Font font) {
         FontMetrics fm = g.getFontMetrics(font);
         return fm.stringWidth(text);
     }
 
-    public static int getHeight(Graphics g, Font font) {
+    public static int getHeight(Graphics2D g, Font font) {
         FontMetrics fm = g.getFontMetrics(font);
         return fm.getHeight();
     }
 
-    public static int getAscent(Graphics g, Font font) {
+    public static int getAscent(Graphics2D g, Font font) {
         FontMetrics fm = g.getFontMetrics(font);
         return fm.getAscent();
     }

@@ -4,7 +4,7 @@ import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.items.*;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.coffeecatutils.Logger;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -107,7 +107,7 @@ public class ItemManager {
         }
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         for (ItemStack stack : items) {
             stack.getItem().render(g);
             if (stack.getCount() > 1)

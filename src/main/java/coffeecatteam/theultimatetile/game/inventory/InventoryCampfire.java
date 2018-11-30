@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.inventory;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
@@ -35,7 +36,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
             slots.get(slots.size() - 1).setStack(null);
         else {
             Item item = ItemManager.getItemById(itemData[0]);
-            int count = Utils.parseInt(itemData[1]);
+            int count = NumberUtils.parseInt(itemData[1]);
             slots.get(slots.size() - 1).setStack(new ItemStack(item, count));
         }
         super.onOpen();
@@ -68,7 +69,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         if (active) {
             int multiplier = 6;
             int width = 57 * multiplier;
@@ -82,7 +83,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
             int dfHeight = 15;
             int fWidth = dfWidth * multiplier;
             int fHeight = dfHeight * multiplier;
-            int amt = (int) Utils.map(0, 0, 100, 0, dfHeight);
+            int amt = (int) NumberUtils.map(0, 0, 100, 0, dfHeight);
             g.drawImage(flame.getSubimage(0, amt, dfWidth, dfHeight - amt), x + 32 * multiplier, y + 5 * multiplier + amt * multiplier, fWidth, fHeight - amt * multiplier, null);
 
             super.renderInventorySlots(g);

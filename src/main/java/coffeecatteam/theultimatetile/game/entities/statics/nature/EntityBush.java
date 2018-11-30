@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.statics.nature;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
@@ -26,10 +27,10 @@ public class EntityBush extends EntityStatic {
     @Override
     public void die(List<Entity> entities, int index) {
         super.die(entities, index);
-        int amt = Utils.getRandomInt(3);
+        int amt = NumberUtils.getRandomInt(3);
         for (int i = 0; i < amt; i++) {
-            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.LEAF), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
-            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.STICK), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.LEAF), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
+            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.STICK), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
         }
     }
 }

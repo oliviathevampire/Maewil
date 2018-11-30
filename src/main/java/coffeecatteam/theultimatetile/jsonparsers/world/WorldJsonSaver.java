@@ -9,7 +9,7 @@ import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.world.World;
-import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

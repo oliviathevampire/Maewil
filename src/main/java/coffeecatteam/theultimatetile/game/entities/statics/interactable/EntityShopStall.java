@@ -1,13 +1,13 @@
 package coffeecatteam.theultimatetile.game.entities.statics.interactable;
 
+import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.utils.AABB;
-import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 
@@ -25,7 +25,7 @@ public class EntityShopStall extends EntityStatic {
     private Animation pickRoof() {
         int speed = 250;
         Animation anim = new Animation(speed, Assets.SHOP_ROOF_ORANGE);
-        int i = Utils.getRandomInt(3);
+        int i = NumberUtils.getRandomInt(3);
         if (i == 0)
             anim.setFrames(Assets.SHOP_ROOF_ORANGE);
         if (i == 1)
@@ -49,7 +49,7 @@ public class EntityShopStall extends EntityStatic {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         g.drawImage(Assets.SHOP_STALL, this.renderX, this.renderY, width, height, null);
         g.drawImage(ROOF.getCurrentFrame(), this.renderX, this.renderY, width, height / 2, null);
     }

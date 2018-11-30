@@ -19,7 +19,7 @@ public class OverlayPlayerHealth extends Overlay {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         int hWidth = 96;
         int hHeight = 96;
         int hStage = 0;

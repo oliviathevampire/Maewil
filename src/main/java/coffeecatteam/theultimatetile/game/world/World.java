@@ -7,7 +7,7 @@ import coffeecatteam.theultimatetile.game.tiles.TileBreakable;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
-import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.coffeecatutils.Logger;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -67,7 +67,7 @@ public class World {
         overlayManager.tick();
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         int xStart = (int) Math.max(0, ((GameEngine) engine).getCamera().getxOffset() / Tile.TILE_WIDTH);
         int xEnd = (int) Math.min(width, (((GameEngine) engine).getCamera().getxOffset() + engine.getWidth()) / Tile.TILE_WIDTH + 1);
         int yStart = (int) Math.max(0, ((GameEngine) engine).getCamera().getyOffset() / Tile.TILE_HEIGHT);

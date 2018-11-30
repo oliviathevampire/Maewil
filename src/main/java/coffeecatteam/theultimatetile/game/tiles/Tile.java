@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.game.tiles;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
-import coffeecatteam.theultimatetile.utils.AABB;
+import coffeecatteam.coffeecatutils.position.AABB;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -42,7 +42,7 @@ public class Tile {
     public void forcedTick() {
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         g.drawImage(texture, (int) (x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
     }
 

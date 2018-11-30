@@ -134,7 +134,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
     }
 
     // Render inventory slots
-    public void renderInventorySlots(Graphics g) {
+    public void renderInventorySlots(Graphics2D g) {
         for (int i = 0; i < maxSize; i++) {
             getSlot(i).setSelected(i == inventorySelectedIndex);
 
@@ -142,7 +142,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         }
     }
 
-    public void renderHotbar(Graphics g) {
+    public void renderHotbar(Graphics2D g) {
         // Render hotbar backgorund
         int barWidth = 28;
         int barHeight = 10;

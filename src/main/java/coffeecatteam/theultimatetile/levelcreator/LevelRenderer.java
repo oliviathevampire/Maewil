@@ -1,5 +1,7 @@
 package coffeecatteam.theultimatetile.levelcreator;
 
+import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
 import coffeecatteam.theultimatetile.gfx.Assets;
@@ -16,13 +18,10 @@ import coffeecatteam.theultimatetile.levelcreator.grid.Grid;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridTileSelect;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridWorldEditor;
 import coffeecatteam.theultimatetile.manager.UIManager;
-import coffeecatteam.theultimatetile.utils.AABB;
-import coffeecatteam.theultimatetile.utils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -76,17 +75,17 @@ public class LevelRenderer {
             @Override
             public void onClick() {
                 try {
-                    JFileChooser exporter = new JFileChooser();
-                    exporter.setDialogTitle("Save World");
-                    exporter.setCurrentDirectory(new File("./export"));
-                    exporter.setDialogType(JFileChooser.SAVE_DIALOG);
-                    exporter.setMultiSelectionEnabled(true);
+                    JFileChooser chooser = new JFileChooser();
+                    chooser.setDialogTitle("Save World");
+                    chooser.setCurrentDirectory(new File("./export"));
+                    chooser.setDialogType(JFileChooser.SAVE_DIALOG);
+                    chooser.setMultiSelectionEnabled(true);
 
-                    exporter.addChoosableFileFilter(new FileFilterExtension(".json", "JSON Files (*.json)"));
+                    chooser.addChoosableFileFilter(new FileFilterExtension(".json", "JSON Files (*.json)"));
 
-                    if (exporter.showSaveDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
-                        String fileName = exporter.getSelectedFile().getName();
-                        String filePath = exporter.getSelectedFile().getParent();
+                    if (chooser.showSaveDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
+                        String fileName = chooser.getSelectedFile().getName();
+                        String filePath = chooser.getSelectedFile().getParent();
                         String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
 
                         saveWorld(finalPath);
@@ -107,17 +106,17 @@ public class LevelRenderer {
             @Override
             public void onClick() {
                 try {
-                    JFileChooser exporter = new JFileChooser();
-                    exporter.setDialogTitle("Save/Zip World");
-                    exporter.setCurrentDirectory(new File("./export"));
-                    exporter.setDialogType(JFileChooser.SAVE_DIALOG);
-                    exporter.setMultiSelectionEnabled(true);
+                    JFileChooser chooser = new JFileChooser();
+                    chooser.setDialogTitle("Save/Zip World");
+                    chooser.setCurrentDirectory(new File("./export"));
+                    chooser.setDialogType(JFileChooser.SAVE_DIALOG);
+                    chooser.setMultiSelectionEnabled(true);
 
-                    exporter.addChoosableFileFilter(new FileFilterExtension(".json", "JSON Files (*.json)"));
+                    chooser.addChoosableFileFilter(new FileFilterExtension(".json", "JSON Files (*.json)"));
 
-                    if (exporter.showSaveDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
-                        String fileName = exporter.getSelectedFile().getName();
-                        String filePath = exporter.getSelectedFile().getParent();
+                    if (chooser.showSaveDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
+                        String fileName = chooser.getSelectedFile().getName();
+                        String filePath = chooser.getSelectedFile().getParent();
                         String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
 
                         zipWorld(finalPath, fileName);
@@ -138,16 +137,16 @@ public class LevelRenderer {
             @Override
             public void onClick() {
                 try {
-                    JFileChooser exporter = new JFileChooser();
-                    exporter.setDialogTitle("Load World");
-                    exporter.setCurrentDirectory(new File("./export"));
-                    exporter.setFileFilter(new FileFilterDirectories());
-                    exporter.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                    exporter.setAcceptAllFileFilterUsed(false);
+                    JFileChooser chooser = new JFileChooser();
+                    chooser.setDialogTitle("Load World");
+                    chooser.setCurrentDirectory(new File("./export"));
+                    chooser.setFileFilter(new FileFilterDirectories());
+                    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                    chooser.setAcceptAllFileFilterUsed(false);
 
-                    if (exporter.showOpenDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
-                        String fileName = exporter.getSelectedFile().getName();
-                        String filePath = exporter.getSelectedFile().getParent();
+                    if (chooser.showOpenDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
+                        String fileName = chooser.getSelectedFile().getName();
+                        String filePath = chooser.getSelectedFile().getParent();
                         String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
 
                         loadWorld(finalPath);
@@ -166,13 +165,16 @@ public class LevelRenderer {
     }
 
     private void loadWorld(String path) throws IOException, ParseException {
-        WorldJsonLoader loader = new WorldJsonLoader(null, creatorEngine);
-        Tile[][] bgT = new Tile[xWorldSize][yWorldSize];
-        Tile[][] fgT = new Tile[xWorldSize][yWorldSize];
-        loader.loadTiles(xWorldSize, yWorldSize, path + "background.json", path + "foreground.json", bgT, fgT);
+        WorldJsonLoader loader = new WorldJsonLoader(path.substring(0, path.length() - 1), creatorEngine);
+        loader.load();
+//        Tile[][] bgT = new Tile[xWorldSize][yWorldSize];
+//        Tile[][] fgT = new Tile[xWorldSize][yWorldSize];
+//        loader.loadTiles(xWorldSize, yWorldSize, path + "background.json", path + "foreground.json", bgT, fgT);
+        xWorldSize = loader.getWidth();
+        yWorldSize = loader.getHeight();
 
-        gridWorldEditorBG.setGridFromArray(bgT, xWorldSize, yWorldSize);
-        gridWorldEditorFG.setGridFromArray(fgT, xWorldSize, yWorldSize);
+        gridWorldEditorBG.setGridFromArray(loader.getBg_tiles(), xWorldSize, yWorldSize);
+        gridWorldEditorFG.setGridFromArray(loader.getFg_tiles(), xWorldSize, yWorldSize);
         Logger.print("World [" + path + "] loaded!");
     }
 
@@ -234,7 +236,7 @@ public class LevelRenderer {
         grids.forEach(Grid::tick);
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         gridWorldEditorBG.render(g);
         Color tint = new Color(63, 63, 63, 127);
         g.setColor(tint);
@@ -244,7 +246,7 @@ public class LevelRenderer {
         grids.forEach(grid -> grid.render(g));
     }
 
-    public void postRender(Graphics g) {
+    public void postRender(Graphics2D g) {
         Font font = Assets.FONT_20;
         Text.drawString(g, "Zoom: x" + zoomSlider.getValue(), (int) zoomSlider.getX() + zoomSlider.getWidth() + 25, (int) zoomSlider.getY() + Text.getHeight(g, font), false, false, Color.white, font);
 

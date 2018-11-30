@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.overlays;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Assets;
@@ -20,7 +21,7 @@ public class OverlayPlayerSprint extends Overlay {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         int multiplier = 6;
         int sWidth = 32;
         int sHeight = 16;
@@ -36,7 +37,7 @@ public class OverlayPlayerSprint extends Overlay {
         Text.drawString(g, text, engine.getWidth() - Text.getWidth(g, text, font) - 10, engine.getHeight() - height, false, false, Color.white, font);
         g.drawImage(Assets.SPRINT[0], x, y, width, height, null);
 
-        int sprintWidth = (int) Utils.map(sprint - 1, 0, player.getMaxSprintTimer(), 0, sWidth);
+        int sprintWidth = (int) NumberUtils.map(sprint - 1, 0, player.getMaxSprintTimer(), 0, sWidth);
         g.drawImage(Assets.SPRINT[1].getSubimage(0, 0, sWidth - sprintWidth, sHeight), x, y, width - sprintWidth * multiplier, height, null);
     }
 }

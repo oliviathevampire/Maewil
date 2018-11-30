@@ -20,6 +20,8 @@ public class EntityCampfire extends EntityStatic {
         anim = new Animation(135, Assets.CAMPFIRE);
 
         inventoryCampfire = new InventoryCampfire(engine, ((GameEngine) engine).getEntityManager().getPlayer(), TAGS);
+        bounds.y = (int) (position.y + height / 2);
+        bounds.height = height / 2;
     }
 
     @Override
@@ -40,12 +42,13 @@ public class EntityCampfire extends EntityStatic {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         g.drawImage(anim.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
     }
 
     @Override
-    public void postRender(Graphics g) {
+    public void postRender(Graphics2D g) {
+        super.postRender(g);
         inventoryCampfire.render(g);
     }
 }

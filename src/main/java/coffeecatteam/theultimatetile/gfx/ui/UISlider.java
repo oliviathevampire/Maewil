@@ -1,8 +1,9 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.utils.AABB;
+import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -57,7 +58,7 @@ public class UISlider extends UIObject {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         BufferedImage bgSegStart = Assets.SLIDER_BAR.getSubimage(0, 0, 2, 6);
         BufferedImage bgSegMiddle = Assets.SLIDER_BAR.getSubimage(2, 0, 44, 6);
         BufferedImage bgSegEnd = Assets.SLIDER_BAR.getSubimage(46, 0, 2, 6);
@@ -103,11 +104,11 @@ public class UISlider extends UIObject {
     }
 
     private int valueToX(int value) {
-        return (int) Utils.map(value, minValue, maxValue, slMinX, slMaxX);
+        return (int) NumberUtils.map(value, minValue, maxValue, slMinX, slMaxX);
     }
 
     private int xToValue() {
-        return (int) Utils.map(slider.getX(), slMinX, slMaxX, minValue, maxValue);
+        return (int) NumberUtils.map(slider.getX(), slMinX, slMaxX, minValue, maxValue);
     }
 
     class Slider {
@@ -132,7 +133,7 @@ public class UISlider extends UIObject {
             bounds = new AABB(x, y, width, height);
         }
 
-        public void render(Graphics g) {
+        public void render(Graphics2D g) {
             g.drawImage((isMouseHovering() ? Assets.SLIDER_BUTTON[1] : Assets.SLIDER_BUTTON[0]), x, y, width, height, null);
         }
 

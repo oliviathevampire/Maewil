@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.statics.nature;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
@@ -8,7 +9,6 @@ import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
-import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -29,18 +29,18 @@ public class EntityTree extends EntityStatic {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         g.drawImage(type.getTexture(), this.renderX, this.renderY, width, height, null);
     }
 
     @Override
     public void die(List<Entity> entities, int index) {
         super.die(entities, index);
-        for (int i = 0; i < Utils.getRandomInt(1, 3); i++) {
-            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.STICK), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
-            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.LEAF), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+        for (int i = 0; i < NumberUtils.getRandomInt(1, 3); i++) {
+            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.STICK), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
+            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.LEAF), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
         }
-        ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.APPLE), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+        ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.APPLE), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
     }
 
     public enum TreeType {

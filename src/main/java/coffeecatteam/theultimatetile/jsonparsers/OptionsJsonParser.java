@@ -1,9 +1,10 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
+import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
-import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.utils.Utils;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
 import org.json.simple.JSONObject;
@@ -36,12 +37,12 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
     public void load() throws IOException, ParseException {
         Logger.print("\nLoading options!");
         JSONParser parser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path));
+        JSONObject jsonObject = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path));
 
         JSONObject controls = (JSONObject) jsonObject.get("controls");
         for (Object jsonId : controls.keySet()) {
             JSONObject k = (JSONObject) controls.get(jsonId.toString());
-            int key_id = Utils.parseInt(k.get("key_id").toString());
+            int key_id = NumberUtils.parseInt(k.get("key_id").toString());
             String key_char = k.get("key_char").toString();
             CONTROLS.put(jsonId.toString(), new Keybind(key_char, key_id));
         }
@@ -52,11 +53,11 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
         Logger.print("Options [FPS_COUNTER & DEBUG_MODE] loaded!");
 
         JSONObject sounds = (JSONObject) jsonObject.get("sounds");
-        volumeMusic = Utils.parseFloat((String) sounds.get("volumeMusic"));
-        volumePassive = Utils.parseFloat((String) sounds.get("volumePassive"));
-        volumeHostile = Utils.parseFloat((String) sounds.get("volumeHostile"));
-        volumePlayer = Utils.parseFloat((String) sounds.get("volumePlayer"));
-        volumeOther = Utils.parseFloat((String) sounds.get("volumeOther"));
+        volumeMusic = NumberUtils.parseFloat((String) sounds.get("volumeMusic"));
+        volumePassive = NumberUtils.parseFloat((String) sounds.get("volumePassive"));
+        volumeHostile = NumberUtils.parseFloat((String) sounds.get("volumeHostile"));
+        volumePlayer = NumberUtils.parseFloat((String) sounds.get("volumePlayer"));
+        volumeOther = NumberUtils.parseFloat((String) sounds.get("volumeOther"));
         Logger.print("Options [sounds] loaded!");
 
         Logger.print("Options loaded!\n");
@@ -122,7 +123,7 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
     }
 
     public void setVolumeMusic(double volumeMusic) {
-        this.volumeMusic = Utils.parseFloat(volumeFormat.format(volumeMusic));
+        this.volumeMusic = NumberUtils.parseFloat(volumeFormat.format(volumeMusic));
     }
 
     public float getVolumePassive() {
@@ -130,7 +131,7 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
     }
 
     public void setVolumePassive(double volumePassive) {
-        this.volumePassive = Utils.parseFloat(volumeFormat.format(volumePassive));
+        this.volumePassive = NumberUtils.parseFloat(volumeFormat.format(volumePassive));
     }
 
     public float getVolumeHostile() {
@@ -138,7 +139,7 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
     }
 
     public void setVolumeHostile(double volumeHostile) {
-        this.volumeHostile = Utils.parseFloat(volumeFormat.format(volumeHostile));
+        this.volumeHostile = NumberUtils.parseFloat(volumeFormat.format(volumeHostile));
     }
 
     public float getVolumeOther() {
@@ -146,7 +147,7 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
     }
 
     public void setVolumeOther(double volumeOther) {
-        this.volumeOther = Utils.parseFloat(volumeFormat.format(volumeOther));
+        this.volumeOther = NumberUtils.parseFloat(volumeFormat.format(volumeOther));
     }
 
     public float getVolumePlayer() {
@@ -154,6 +155,6 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
     }
 
     public void setVolumePlayer(float volumePlayer) {
-        this.volumePlayer = Utils.parseFloat(volumeFormat.format(volumePlayer));
+        this.volumePlayer = NumberUtils.parseFloat(volumeFormat.format(volumePlayer));
     }
 }

@@ -29,7 +29,7 @@ public class Slot {
         this.scale = scale;
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         g.drawImage(Assets.SLOT, x, y, width, height, null);
         int itemWidth = (int) ((width / 2 + width / 4) * scale);
         int itemHeight = (int) ((height / 2 + height / 4) * scale);

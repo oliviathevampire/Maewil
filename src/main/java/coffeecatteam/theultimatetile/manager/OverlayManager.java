@@ -27,7 +27,7 @@ public class OverlayManager {
         overlays.forEach(overlay -> overlay.tick());
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         overlays.forEach(overlay -> overlay.render(g));
     }
 

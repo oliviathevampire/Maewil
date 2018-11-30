@@ -1,9 +1,9 @@
 package coffeecatteam.theultimatetile.game.entities.ai;
 
+import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
-import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.utils.Utils;
 
 public class AIWander extends AI {
 
@@ -23,10 +23,10 @@ public class AIWander extends AI {
         lastWanderTimer = System.currentTimeMillis();
 
         if (wanderTimer > wanderCooldown) {
-            dir = Utils.getRandomInt(8);
+            dir = NumberUtils.getRandomInt(8);
             if (StateOptions.OPTIONS.debugMode())
                 Logger.print("Wander DIR for entity [" + entity.getId() + "]: " + dir);
-            wanderCooldown = Utils.getRandomBoolean() ? 1600 : 3200;
+            wanderCooldown = NumberUtils.getRandomBoolean() ? 1600 : 3200;
             wanderTimer = 0;
         }
 

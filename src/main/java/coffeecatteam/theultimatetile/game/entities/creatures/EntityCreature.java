@@ -1,5 +1,8 @@
 package coffeecatteam.theultimatetile.game.entities.creatures;
 
+import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
@@ -10,8 +13,6 @@ import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.TileAnimated;
 import coffeecatteam.theultimatetile.gfx.*;
-import coffeecatteam.theultimatetile.utils.Logger;
-import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -80,7 +81,7 @@ public abstract class EntityCreature extends Entity {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         g.drawImage(currentAnim.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
 
         this.renderEffect(g);
@@ -88,7 +89,7 @@ public abstract class EntityCreature extends Entity {
         int barWidth = 16;
         g.drawImage(HEALTH_BAR.crop(0, 9, barWidth, 2), this.renderX, this.renderY - 8, width, 4, null);
 
-        int ht = (int) Utils.map(currentHealth, 0, maxHealth, 0, width); // (currentHealth * 100.0f) / 15
+        int ht = (int) NumberUtils.map(currentHealth, 0, maxHealth, 0, width); // (currentHealth * 100.0f) / 15
         g.drawImage(HEALTH_BAR.crop(0, 5, barWidth, 2), this.renderX, this.renderY - 8, ht, 4, null);
 
         Font font = Assets.FONT_20;
@@ -97,7 +98,7 @@ public abstract class EntityCreature extends Entity {
         Text.drawString(g, textHealth, this.renderX - xOff, this.renderY - Text.getHeight(g, font) / 2, false, false, new Color(0, 255, 0), font);
     }
 
-    public void renderEffect(Graphics g) {
+    public void renderEffect(Graphics2D g) {
         if (inWater())
             g.drawImage(splashEffect.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
     }
@@ -106,15 +107,15 @@ public abstract class EntityCreature extends Entity {
     public void die(List<Entity> entities, int index) {
         super.die(entities, index);
         if (drop != null) {
-            int amt = Utils.getRandomInt(4);
+            int amt = NumberUtils.getRandomInt(4);
             for (int i = 0; i < amt; i++)
-                ((GameEngine) engine).getItemManager().addItem(new ItemStack(drop), x + Utils.getRandomInt(width), y + Utils.getRandomInt(height));
+                ((GameEngine) engine).getItemManager().addItem(new ItemStack(drop), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
         }
     }
 
     public boolean inWater() {
-        float x = (this.x + width / 2) / Tile.TILE_WIDTH;
-        float y = (this.y + height / 2 + height / 4) / Tile.TILE_HEIGHT;
+        float x = (float) ((position.x + width / 2) / Tile.TILE_WIDTH);
+        float y = (float) ((position.y + height / 2 + height / 4) / Tile.TILE_HEIGHT);
         Tile t = ((GameEngine) engine).getWorld().getFGTile((int) x, (int) y);
 
         return t instanceof TileAnimated;
@@ -137,19 +138,19 @@ public abstract class EntityCreature extends Entity {
             xMove *= waterSpeed;
 
         if (xMove > 0) {
-            int tx = (int) (x + xMove + bounds.x + bounds.width) / Tile.TILE_WIDTH;
+            int tx = (int) (position.x + xMove + bounds.x + bounds.width) / Tile.TILE_WIDTH;
 
-            if (!collisionWidthTile(tx, (int) (y + bounds.y) / Tile.TILE_HEIGHT) && !collisionWidthTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILE_HEIGHT))
-                x += xMove;
+            if (!collisionWidthTile(tx, (int) (position.y + bounds.y) / Tile.TILE_HEIGHT) && !collisionWidthTile(tx, (int) (position.y + bounds.y + bounds.height) / Tile.TILE_HEIGHT))
+                position = position.add(new Vector2D(xMove, 0));
             else
-                x = tx * Tile.TILE_WIDTH - bounds.x - bounds.width - 1;
+                position.x = tx * Tile.TILE_WIDTH - bounds.x - bounds.width - 1;
         } else if (xMove < 0) {
-            int tx = (int) (x + xMove + bounds.x) / Tile.TILE_WIDTH;
+            int tx = (int) (position.x + xMove + bounds.x) / Tile.TILE_WIDTH;
 
-            if (!collisionWidthTile(tx, (int) (y + bounds.y) / Tile.TILE_HEIGHT) && !collisionWidthTile(tx, (int) (y + bounds.y + bounds.height) / Tile.TILE_HEIGHT))
-                x += xMove;
+            if (!collisionWidthTile(tx, (int) (position.y + bounds.y) / Tile.TILE_HEIGHT) && !collisionWidthTile(tx, (int) (position.y + bounds.y + bounds.height) / Tile.TILE_HEIGHT))
+                position = position.add(new Vector2D(xMove, 0));
             else
-                x = tx * Tile.TILE_WIDTH + Tile.TILE_WIDTH - bounds.x;
+                position.x = tx * Tile.TILE_WIDTH + Tile.TILE_WIDTH - bounds.x;
         }
     }
 
@@ -158,19 +159,19 @@ public abstract class EntityCreature extends Entity {
             yMove *= waterSpeed;
 
         if (yMove < 0) {
-            int ty = (int) (y + yMove + bounds.y) / Tile.TILE_HEIGHT;
+            int ty = (int) (position.y + yMove + bounds.y) / Tile.TILE_HEIGHT;
 
-            if (!collisionWidthTile((int) (x + bounds.x) / Tile.TILE_WIDTH, ty) && !collisionWidthTile((int) (x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty))
-                y += yMove;
+            if (!collisionWidthTile((int) (position.x + bounds.x) / Tile.TILE_WIDTH, ty) && !collisionWidthTile((int) (position.x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty))
+                position = position.add(new Vector2D(0, yMove));
             else
-                y = ty * Tile.TILE_HEIGHT + Tile.TILE_HEIGHT - bounds.y;
+                position.y = ty * Tile.TILE_HEIGHT + Tile.TILE_HEIGHT - bounds.y;
         } else if (yMove > 0) {
-            int ty = (int) (y + yMove + bounds.y + bounds.height) / Tile.TILE_HEIGHT;
+            int ty = (int) (position.y + yMove + bounds.y + bounds.height) / Tile.TILE_HEIGHT;
 
-            if (!collisionWidthTile((int) (x + bounds.x) / Tile.TILE_WIDTH, ty) && !collisionWidthTile((int) (x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty))
-                y += yMove;
+            if (!collisionWidthTile((int) (position.x + bounds.x) / Tile.TILE_WIDTH, ty) && !collisionWidthTile((int) (position.x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty))
+                position = position.add(new Vector2D(0, yMove));
             else
-                y = ty * Tile.TILE_HEIGHT - bounds.y - bounds.height - 1;
+                position.y = ty * Tile.TILE_HEIGHT - bounds.y - bounds.height - 1;
         }
     }
 

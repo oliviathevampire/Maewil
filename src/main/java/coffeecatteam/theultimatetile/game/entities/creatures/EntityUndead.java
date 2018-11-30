@@ -1,12 +1,12 @@
 package coffeecatteam.theultimatetile.game.entities.creatures;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.ai.AIFollowFlee;
 import coffeecatteam.theultimatetile.game.entities.ai.AIWander;
-import coffeecatteam.theultimatetile.utils.AABB;
-import coffeecatteam.theultimatetile.utils.Utils;
 
 public abstract class EntityUndead extends EntityCreature {
 
@@ -59,7 +59,7 @@ public abstract class EntityUndead extends EntityCreature {
         for (Entity e : ((GameEngine) engine).getEntityManager().getEntities())
             if (e.equals(((GameEngine) engine).getEntityManager().getPlayer()))
                 if (e.getCollisionBounds(0, 0).intersects(ar))
-                    e.hurt(Utils.getRandomInt(1, 3) + dmgModifier);
+                    e.hurt(NumberUtils.getRandomInt(1, 3) + dmgModifier);
     }
 
     protected void setMaxFollowDistance(float distance) {

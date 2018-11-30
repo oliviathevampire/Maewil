@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.manager;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.Inventory;
 import coffeecatteam.theultimatetile.game.inventory.InventoryAbstractPlayer;
-import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.coffeecatutils.Logger;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,7 @@
 package coffeecatteam.theultimatetile.game.state.game;
 
+import coffeecatteam.coffeecatutils.ArgUtils;
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.state.State;
@@ -9,7 +11,7 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
-import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.json.simple.parser.ParseException;
 
@@ -37,7 +39,7 @@ public class StateSelectGame extends StateAbstractMenu {
     private static String getWorldname(String defaultName) {
         String username;
         int nameLength = 16;
-        defaultName += "_" + Utils.getRandomInt(1000);
+        defaultName += "_" + NumberUtils.getRandomInt(1000);
         try {
             username = JOptionPane.showInputDialog("Please enter a world name\nMust be max " + nameLength + " characters", defaultName);
             if (username.length() > nameLength || username.equalsIgnoreCase(""))
@@ -118,7 +120,7 @@ public class StateSelectGame extends StateAbstractMenu {
             State.setState(new StateGame(engine, path, worldName));
 
             if (!isSaved) {
-                String username = engine.hasArgument("-username") ? engine.getArgument("-username") : Utils.getUsername();
+                String username = ArgUtils.hasArgument(engine.getArgs(), "-username") ? ArgUtils.getArgument(engine.getArgs(), "-username") : Utils.getUsername();
                 ((GameEngine) engine).setUsername(username);
                 Logger.print("Set username: " + username);
             }
@@ -155,7 +157,7 @@ public class StateSelectGame extends StateAbstractMenu {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         super.render(g);
 
         int w = 80 * 6;

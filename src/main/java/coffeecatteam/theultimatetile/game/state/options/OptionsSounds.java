@@ -42,7 +42,7 @@ public class OptionsSounds extends StateAbstractOptions {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         super.render(g);
 
         Font font = Assets.FONT_30;

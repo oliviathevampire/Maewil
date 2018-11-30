@@ -23,7 +23,7 @@ public abstract class State {
 
     public abstract void tick();
 
-    public abstract void render(Graphics g);
+    public abstract void render(Graphics2D g);
 
     public static void setState(State state) {
         currentState = state;

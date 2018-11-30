@@ -1,9 +1,9 @@
 package coffeecatteam.theultimatetile.levelcreator.grid;
 
+import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.TileAnimated;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
-import coffeecatteam.theultimatetile.utils.AABB;
 
 import java.awt.*;
 
@@ -30,7 +30,7 @@ public class GridTile {
         }
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         bounds = new AABB(x + xOff, y + yOff, width, height);
 
         if (tile instanceof TileAnimated) {

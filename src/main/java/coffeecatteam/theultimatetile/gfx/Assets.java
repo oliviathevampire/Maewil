@@ -1,6 +1,8 @@
 package coffeecatteam.theultimatetile.gfx;
 
-import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.coffeecatutils.io.FileUtils;
+import coffeecatteam.coffeecatutils.io.FontLoader;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
@@ -126,10 +128,10 @@ public class Assets {
     /* Fonts */
     private static void initFonts() {
         String fontPath = "/assets/fonts/LCD_Solid.ttf";
-        FONT_20 = Utils.loadFont(fontPath, 20);
-        FONT_30 = Utils.loadFont(fontPath, 30);
-        FONT_40 = Utils.loadFont(fontPath, 40);
-        FONT_80 = Utils.loadFont(fontPath, 80);
+        FONT_20 = FontLoader.loadTrueTypeFont(fontPath, 20);
+        FONT_30 = FontLoader.loadTrueTypeFont(fontPath, 30);
+        FONT_40 = FontLoader.loadTrueTypeFont(fontPath, 40);
+        FONT_80 = FontLoader.loadTrueTypeFont(fontPath, 80);
 
         Logger.print("Assets [Fonts] loaded!");
     }

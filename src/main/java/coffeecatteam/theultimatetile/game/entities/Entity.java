@@ -1,10 +1,11 @@
 package coffeecatteam.theultimatetile.game.entities;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.utils.AABB;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.coffeecatutils.position.AABB;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -22,7 +23,7 @@ public abstract class Entity {
 
     private String id;
     protected Engine engine;
-    protected float x, y;
+    protected Vector2D position = new Vector2D();
 
     protected int width, height;
     protected int currentHealth, maxHealth = DEFAULT_HEALTH;
@@ -76,35 +77,35 @@ public abstract class Entity {
     public void tickA() {
         tick();
 
-        this.renderX = (int) (this.x - ((GameEngine) this.engine).getCamera().getxOffset());
-        this.renderY = (int) (this.y - ((GameEngine) this.engine).getCamera().getyOffset());
+        this.renderX = (int) (this.position.x - ((GameEngine) this.engine).getCamera().getxOffset());
+        this.renderY = (int) (this.position.y - ((GameEngine) this.engine).getCamera().getyOffset());
 
         if (this.interacted)
             this.interact();
     }
 
-    public void preRender(Graphics g) {
-        if (showHitbox) {
-            g.setColor(Color.red);
-            g.fillRect((int) (x + bounds.x - ((GameEngine) engine).getCamera().getxOffset()), (int) (y + bounds.y - ((GameEngine) engine).getCamera().getyOffset()), bounds.width, bounds.height);
-        }
+    public void preRender(Graphics2D g) {
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         if (texture != null)
             g.drawImage(texture, this.renderX, this.renderY, width, height, null);
     }
 
-    public void postRender(Graphics g) {
+    public void postRender(Graphics2D g) {
+        if (showHitbox) {
+            g.setColor(Color.red);
+            g.drawRect((int) (position.x + bounds.x - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.y + bounds.y - ((GameEngine) engine).getCamera().getyOffset()), bounds.width, bounds.height);
+        }
     }
 
     public void die(List<Entity> entities, int index) {
         entities.remove(index);
-        ((GameEngine) engine).getEntityManager().getPlayer().setGlubel(((GameEngine) engine).getEntityManager().getPlayer().getGlubel() + Utils.getRandomInt(1, 5));
+        ((GameEngine) engine).getEntityManager().getPlayer().setGlubel(((GameEngine) engine).getEntityManager().getPlayer().getGlubel() + NumberUtils.getRandomInt(1, 5));
     }
 
     public void interact() {
-        this.hurt(Utils.getRandomInt(5, 10) + this.extraDmg);
+        this.hurt(NumberUtils.getRandomInt(5, 10) + this.extraDmg);
         this.interacted = false;
     }
 
@@ -135,7 +136,7 @@ public abstract class Entity {
     }
 
     public AABB getCollisionBounds(float xOffset, float yOffset) {
-        return new AABB((int) (x + bounds.x + xOffset), (int) (y + bounds.y + yOffset), bounds.width, bounds.height);
+        return new AABB((int) (position.x + bounds.x + xOffset), (int) (position.y + bounds.y + yOffset), bounds.width, bounds.height);
     }
 
     public Engine getEngine() {
@@ -151,19 +152,27 @@ public abstract class Entity {
     }
 
     public float getX() {
-        return x;
+        return (float) position.x;
     }
 
     public void setX(float x) {
-        this.x = x;
+        position.x = x;
     }
 
     public float getY() {
-        return y;
+        return (float) position.y;
     }
 
     public void setY(float y) {
-        this.y = y;
+        position.y = y;
+    }
+
+    public Vector2D getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector2D position) {
+        this.position = position;
     }
 
     public int getWidth() {
@@ -228,5 +237,10 @@ public abstract class Entity {
 
     public enum EntityHitType {
         CREATURE, WOOD, STONE, BUSH, NONE
+    }
+
+    public Entity setShowHitbox(boolean showHitbox) {
+        this.showHitbox = showHitbox;
+        return this;
     }
 }

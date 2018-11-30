@@ -58,8 +58,8 @@ public class StateMenu extends State {
 
         Font font = Assets.FONT_20;
         String crText = "Copyright (C) CoffeeCatTeam 2018";
-        int crWidth = Text.getWidth(engine.getGraphics(), crText, font);
-        int crHeight = Text.getHeight(engine.getGraphics(), font);
+        int crWidth = Text.getWidth((Graphics2D) engine.getGraphics(), crText, font);
+        int crHeight = Text.getHeight((Graphics2D) engine.getGraphics(), font);
         int crx = 5;
         int cry = engine.getHeight() - 10;
         uiManager.addObject(new UIHyperlink(crx, cry, crWidth, crHeight, crText, true, font, new ClickListener() {
@@ -86,7 +86,7 @@ public class StateMenu extends State {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         g.drawImage(Assets.BACKGROUND, 0, 0, engine.getWidth(), engine.getHeight(), null);
         uiManager.render(g);
 

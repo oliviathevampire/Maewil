@@ -1,5 +1,7 @@
 package coffeecatteam.theultimatetile.game.entities.creatures;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.inventory.InventoryPlayer;
@@ -16,10 +18,10 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
 import coffeecatteam.theultimatetile.gfx.audio.Sound;
-import coffeecatteam.theultimatetile.utils.AABB;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.List;
 
 public class EntityPlayer extends EntityCreature {
@@ -75,8 +77,8 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void tick() {
-        this.prevX = this.x;
-        this.prevY = this.y;
+        this.prevX = (float) position.x;
+        this.prevY = (float) position.y;
 
         if (isActive()) {
             if (!guiOpen) {
@@ -103,7 +105,7 @@ public class EntityPlayer extends EntityCreature {
                 ((GameEngine) engine).getInventoryManager().closeAllInventories();
 
             ((GameEngine) engine).getCamera().centerOnEntity(this);
-            AudioMaster.setListenerData(this.x, this.y, 0f);
+            AudioMaster.setListenerData((float) position.x, (float) position.y, 0f);
         }
 
         inventoryPlayer.tick();
@@ -118,8 +120,8 @@ public class EntityPlayer extends EntityCreature {
         super.move();
 
         int stepSound = -1;
-        int tileX = (int) (x + 0.5f) / Tile.TILE_WIDTH;
-        int tileY = (int) (y + 0.5f) / Tile.TILE_HEIGHT;
+        int tileX = (int) (position.x + 0.5f) / Tile.TILE_WIDTH;
+        int tileY = (int) (position.y + 0.5f) / Tile.TILE_HEIGHT;
 
         if (((GameEngine) engine).getWorld().getFGTile(tileX, tileY).getTileType() == Tile.TileType.AIR) {
             switch (((GameEngine) engine).getWorld().getBGTile(tileX, tileY).getTileType()) {
@@ -144,7 +146,7 @@ public class EntityPlayer extends EntityCreature {
                 return;
 
             if (stepSound != -1)
-                Sound.play(stepSound, StateOptions.OPTIONS.getVolumeOther(), this.x, this.y, 0f, (canSprint() ? 1.5f : 1f));
+                Sound.play(stepSound, StateOptions.OPTIONS.getVolumeOther(), (float) position.x, (float) position.y, 0f, (canSprint() ? 1.5f : 1f));
 
             walkSoundTimer = 0;
         }
@@ -195,7 +197,7 @@ public class EntityPlayer extends EntityCreature {
                 int hitSound = -1;
                 switch (e.getEntityHitType()) {
                     case CREATURE:
-                        hitSound = (Utils.getRandomInt(10) > 5 ? Sound.PUNCH_LEFT : Sound.PUNCH_RIGHT);
+                        hitSound = (NumberUtils.getRandomInt(10) > 5 ? Sound.PUNCH_LEFT : Sound.PUNCH_RIGHT);
                         break;
                     case WOOD:
                         hitSound = Sound.STEP_WOOD;
@@ -204,11 +206,11 @@ public class EntityPlayer extends EntityCreature {
                         hitSound = Sound.STEP_STONE;
                         break;
                     case BUSH:
-                        hitSound = (Utils.getRandomInt(10) > 5 ? Sound.BUSH_LEFT : Sound.BUSH_RIGHT);
+                        hitSound = (NumberUtils.getRandomInt(10) > 5 ? Sound.BUSH_LEFT : Sound.BUSH_RIGHT);
                         break;
                 }
                 if (hitSound != -1)
-                    Sound.play(hitSound, StateOptions.OPTIONS.getVolumePlayer(), e.getX(), e.getY(), 1f);
+                    Sound.play(hitSound, StateOptions.OPTIONS.getVolumePlayer(), (float) e.getPosition().x, (float) e.getPosition().y, 1f);
                 return;
             }
         }
@@ -241,9 +243,9 @@ public class EntityPlayer extends EntityCreature {
                 if (slot.getStack() != null) {
                     if (slot.getStack().getCount() > 1)
                         for (int i = 0; i < slot.getStack().getCount(); i++)
-                            dropItem(new ItemStack(slot.getStack().getItem(), 1), x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
+                            dropItem(new ItemStack(slot.getStack().getItem(), 1), (float) position.x + NumberUtils.getRandomInt(-width, width * 2), (float) position.y + NumberUtils.getRandomInt(-height, height * 2));
                     else
-                        dropItem(slot.getStack(), x + Utils.getRandomInt(-width, width * 2), y + Utils.getRandomInt(-height, height * 2));
+                        dropItem(slot.getStack(), (float) position.x + NumberUtils.getRandomInt(-width, width * 2), (float) position.y + NumberUtils.getRandomInt(-height, height * 2));
                 }
             }
 
@@ -299,12 +301,12 @@ public class EntityPlayer extends EntityCreature {
     }
 
     private void tileInteract() {
-        int x = (int) this.x / Tile.TILE_WIDTH;
-        int y = (int) this.y / Tile.TILE_HEIGHT;
+        int x = (int) position.x / Tile.TILE_WIDTH;
+        int y = (int) position.y / Tile.TILE_HEIGHT;
         Tile t = ((GameEngine) engine).getWorld().getFGTile(x, y);
         if (t instanceof IDamageableTile) {
             if (isAttacking) {
-                int dmg = Utils.getRandomInt(1, 5);
+                int dmg = NumberUtils.getRandomInt(1, 5);
                 if (equippedItem != null) {
                     if (equippedItem.getItem() instanceof ItemTool) {
                         ItemTool tool = (ItemTool) equippedItem.getItem();
@@ -318,22 +320,32 @@ public class EntityPlayer extends EntityCreature {
     }
 
     @Override
-    public void render(Graphics g) {
-        g.drawImage(currentAnim.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
+    public void render(Graphics2D g) {
+        AffineTransform old = g.getTransform();
+        g.setTransform(AffineTransform.getTranslateInstance(this.renderX, this.renderY));
+        int nx = 0, ny = 0;
+        if (Utils.isDate(4, 1)) {
+            g.rotate(Math.toRadians(180d));
+            nx = -width;
+            ny = -height;
+        }
+        g.drawImage(currentAnim.getCurrentFrame(), nx, ny, width, height, null);
+        g.setTransform(old);
 
         this.renderEffect(g);
     }
 
     @Override
-    public void renderEffect(Graphics g) {
+    public void renderEffect(Graphics2D g) {
         super.renderEffect(g);
 
         if (canSprint())
             g.drawImage(sprintEffect.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
+        super.postRender(g);
     }
 
     @Override
-    public void postRender(Graphics g) {
+    public void postRender(Graphics2D g) {
         Font font = Assets.FONT_20;
         if (username != null) {
             int nameWidth = Text.getWidth(g, username, font);
@@ -410,7 +422,7 @@ public class EntityPlayer extends EntityCreature {
     }
 
     public boolean isMoving() {
-        return (this.xMove != 0 || this.yMove != 0) && (this.prevX != this.x || this.prevY != this.y);
+        return (this.xMove != 0 || this.yMove != 0) && (this.prevX != position.x || this.prevY != position.y);
     }
 
     public void reset() {

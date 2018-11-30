@@ -82,7 +82,7 @@ public abstract class Inventory {
 
     public abstract void tick();
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         slots.forEach(s -> s.render(g));
     }
 

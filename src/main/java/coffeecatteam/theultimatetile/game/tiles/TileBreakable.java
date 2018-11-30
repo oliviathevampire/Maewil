@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.tiles;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
@@ -23,11 +24,11 @@ public class TileBreakable extends Tile implements IDamageableTile {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         super.render(g);
 
         if (isMineable) {
-            int index = (int) Utils.map(this.health, 0, this.maxHealth, 0, Assets.TILE_CRACKING.length - 1);
+            int index = (int) NumberUtils.map(this.health, 0, this.maxHealth, 0, Assets.TILE_CRACKING.length - 1);
             if (index < 0)
                 index = 0;
             BufferedImage currentFrame = Assets.TILE_CRACKING[index];

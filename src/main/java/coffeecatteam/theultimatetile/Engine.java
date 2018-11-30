@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile;
 
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
@@ -10,7 +11,6 @@ import coffeecatteam.theultimatetile.manager.KeyManager;
 import coffeecatteam.theultimatetile.manager.MouseManager;
 import coffeecatteam.theultimatetile.manager.WindowManager;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
-import coffeecatteam.theultimatetile.utils.Logger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +29,7 @@ public abstract class Engine extends Canvas implements Runnable {
     protected Thread thread;
 
     protected BufferStrategy bs;
-    protected Graphics g;
+    protected Graphics2D g;
 
     protected KeyManager keyManager;
     protected MouseManager mouseManager;
@@ -97,7 +97,7 @@ public abstract class Engine extends Canvas implements Runnable {
         keyManager.tick();
     }
 
-    public abstract void render(Graphics g);
+    public abstract void render(Graphics2D g);
 
     private void renderA() {
         bs = this.getBufferStrategy();
@@ -105,7 +105,7 @@ public abstract class Engine extends Canvas implements Runnable {
             this.createBufferStrategy(3);
             return;
         }
-        g = bs.getDrawGraphics();
+        g = (Graphics2D) bs.getDrawGraphics();
         g.clearRect(0, 0, width, height);
 
         render(g);
@@ -167,7 +167,7 @@ public abstract class Engine extends Canvas implements Runnable {
         System.exit(0);
     }
 
-    protected void renderFPSCounter(Graphics g, int fps) {
+    protected void renderFPSCounter(Graphics2D g, int fps) {
         Font font = Assets.FONT_20;
         Text.drawString(g, "FPS: " + fps, 5, 5 + Text.getHeight(g, font), false, false, Color.orange, font);
     }
@@ -194,35 +194,6 @@ public abstract class Engine extends Canvas implements Runnable {
         }
     }
 
-    public boolean hasArgument(String arg) {
-        for (String a : args) {
-            String regex = ":";
-            if (a.contains(regex))
-                a = a.split(regex)[0];
-
-            if (a.equals(arg))
-                return true;
-        }
-        return false;
-    }
-
-    public String getArgument(String arg) {
-        String value = null;
-        for (int i = 0; i < args.length; i++) {
-            if (hasArgument(arg)) {
-                String regex = ":";
-                String argName = args[i].split(regex)[0];
-                String argValue = null;
-                if (args[i].contains(regex))
-                    argValue = args[i].split(regex)[1];
-
-                if (argName.equals(arg))
-                    value = argValue;
-            }
-        }
-        return value;
-    }
-
     public KeyManager getKeyManager() {
         return keyManager;
     }
@@ -245,5 +216,13 @@ public abstract class Engine extends Canvas implements Runnable {
 
     public void setRunning(boolean r) {
         running = r;
+    }
+
+    public Graphics2D newGraphics() {
+        return (Graphics2D) bs.getDrawGraphics();
+    }
+
+    public String[] getArgs() {
+        return args;
     }
 }

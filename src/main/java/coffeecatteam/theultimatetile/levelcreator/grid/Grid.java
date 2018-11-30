@@ -29,7 +29,7 @@ public abstract class Grid {
 
     public abstract void tick();
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         for (int xs = 0; xs < xWorldSize; xs++) {
             for (int ys = 0; ys < yWorldSize; ys++) {
                 int w = (ogX * 2) / gridSize, h = (ogY * 2) / gridSize;

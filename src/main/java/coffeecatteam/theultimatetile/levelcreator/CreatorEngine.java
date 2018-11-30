@@ -30,7 +30,7 @@ public class CreatorEngine extends Engine {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         mainMenu.render(g);
     }
 

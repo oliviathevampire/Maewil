@@ -67,7 +67,7 @@ public class GameEngine extends Engine {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         if (State.getState() != null)
             State.getState().render(g);
         if (StateOptions.OPTIONS.fpsCounter())

@@ -22,7 +22,7 @@ public class UIManager {
             o.tick();
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         for (UIObject o : objects)
             o.render(g);
     }

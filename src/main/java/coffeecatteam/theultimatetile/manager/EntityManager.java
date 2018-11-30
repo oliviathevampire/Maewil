@@ -17,6 +17,7 @@ import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityBush;
 import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityCrop;
 import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityRock;
 import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityTree;
+import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.gfx.Assets;
 
@@ -131,15 +132,17 @@ public class EntityManager {
         entities.sort(renderSorter);
     }
 
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         for (Entity e : entities)
-            e.preRender(g);
+            e.preRender(engine.newGraphics());
+
+        for (Entity e : entities) {
+            e.setShowHitbox(StateOptions.OPTIONS.debugMode());
+            e.render(engine.newGraphics());
+        }
 
         for (Entity e : entities)
-            e.render(g);
-
-        for (Entity e : entities)
-            e.postRender(g);
+            e.postRender(engine.newGraphics());
     }
 
     public void addEntity(Entity e) {

@@ -8,7 +8,7 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.OptionsJsonParser;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
-import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.coffeecatutils.Logger;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -104,7 +104,7 @@ public class StateOptions extends StateAbstractMenu {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         super.render(g);
         g.drawImage(OPTIONS.debugMode() ? Assets.ICON_ON : Assets.ICON_OFF, 15 + 6 * 64, 15, 64, 64, null);
 

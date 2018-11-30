@@ -29,7 +29,7 @@ public class EntityUltimateTile extends EntityStatic {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         g.drawImage(animation.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
     }
 }

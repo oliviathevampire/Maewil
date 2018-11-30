@@ -1,7 +1,8 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
+import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.utils.Logger;
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
@@ -35,7 +36,7 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
     @Override
     public void load() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) parser.parse(Utils.loadFileOutSideJar(path));
+        JSONObject jsonObject = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path));
 
         JSONArray games = (JSONArray) jsonObject.get("games");
         GAMES.set(0, String.valueOf(games.get(0)));
