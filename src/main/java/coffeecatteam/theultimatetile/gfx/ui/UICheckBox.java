@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.gfx.Assets;
 
 import java.awt.*;
@@ -10,20 +11,20 @@ public class UICheckBox extends UIObject {
     private boolean checked;
     private static int size = 30;
 
-    public UICheckBox(float x, float y) {
-        this(x, y, size);
+    public UICheckBox(Vector2D position) {
+        this(position, size);
     }
 
-    public UICheckBox(float x, float y, boolean checked) {
-        this(x, y, size, checked);
+    public UICheckBox(Vector2D position, boolean checked) {
+        this(position, size, checked);
     }
 
-    public UICheckBox(float x, float y, int size) {
-        this(x, y, size, false);
+    public UICheckBox(Vector2D position, int size) {
+        this(position, size, false);
     }
 
-    public UICheckBox(float x, float y, int size, boolean checked) {
-        super(x, y, size, size);
+    public UICheckBox(Vector2D position, int size, boolean checked) {
+        super(position, size, size);
         this.checked = checked;
     }
 
@@ -33,9 +34,9 @@ public class UICheckBox extends UIObject {
 
     @Override
     public void render(Graphics2D g) {
-        g.drawImage(Assets.CHECK_BOX_BG, (int) x, (int) y, width, height, null);
+        g.drawImage(Assets.CHECK_BOX_BG, (int) position.x, (int) position.y, width, height, null);
         if (checked)
-            g.drawImage(Assets.CHECK_BOX_FG, (int) x, (int) y, width, height, null);
+            g.drawImage(Assets.CHECK_BOX_FG, (int) position.x, (int) position.y, width, height, null);
     }
 
     @Override

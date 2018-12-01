@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.state;
 
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.gfx.Assets;
@@ -22,7 +23,7 @@ public class StateAbstractMenu extends State {
         super(engine);
 
         if (initUI) {
-            uiManager.addObject(new UIButton(engine, 15, engine.getHeight() - 95, "Main Menu", new ClickListener() {
+            uiManager.addObject(new UIButton(engine, new Vector2D(15, engine.getHeight() - 95), "Main Menu", new ClickListener() {
                 @Override
                 public void onClick() {
                     initBack();
@@ -42,7 +43,7 @@ public class StateAbstractMenu extends State {
             int crHeight = Text.getHeight((Graphics2D) engine.getGraphics(), font);
             int crx = 5;
             int cry = engine.getHeight() - 10;
-            uiManager.addObject(new UIHyperlink(crx, cry, crWidth, crHeight, crText, true, font, new ClickListener() {
+            uiManager.addObject(new UIHyperlink(new Vector2D(crx, cry), crWidth, crHeight, crText, true, font, new ClickListener() {
                 @Override
                 public void onClick() {
                     try {

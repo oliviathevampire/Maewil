@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.state.options;
 
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.state.State;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
@@ -19,7 +20,7 @@ public abstract class StateAbstractOptions extends State {
     public StateAbstractOptions(GameEngine gameEngineIn) {
         super(gameEngineIn);
 
-        uiManager.addObject(new UIButton(gameEngineIn, 15, engine.getHeight() - 95, "Back", new ClickListener() {
+        uiManager.addObject(new UIButton(gameEngineIn, new Vector2D(15, engine.getHeight() - 95), "Back", new ClickListener() {
             @Override
             public void onClick() {
                 State.setState(engine.stateOptions);
@@ -43,7 +44,7 @@ public abstract class StateAbstractOptions extends State {
         int crHeight = Text.getHeight((Graphics2D) engine.getGraphics(), font);
         int crx = 5;
         int cry = engine.getHeight() - 10;
-        uiManager.addObject(new UIHyperlink(crx, cry, crWidth, crHeight, crText, true, font, new ClickListener() {
+        uiManager.addObject(new UIHyperlink(new Vector2D(crx, cry), crWidth, crHeight, crText, true, font, new ClickListener() {
             @Override
             public void onClick() {
                 try {

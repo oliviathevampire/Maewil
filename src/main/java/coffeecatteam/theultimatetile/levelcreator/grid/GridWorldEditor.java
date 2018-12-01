@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.levelcreator.grid;
 
 import coffeecatteam.coffeecatutils.position.AABB;
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
@@ -17,8 +18,8 @@ public class GridWorldEditor extends Grid {
 
     private boolean beingUsed, showRendered = true;
 
-    public GridWorldEditor(CreatorEngine creatorEngine, int ogX, int ogY, int gridSize, int x, int y, int xWorldSize, int yWorldSize, boolean beingUsed) {
-        super(creatorEngine, ogX, ogY, gridSize, x, y, xWorldSize, yWorldSize);
+    public GridWorldEditor(CreatorEngine creatorEngine, int ogX, int ogY, int gridSize, Vector2D position, int xWorldSize, int yWorldSize, boolean beingUsed) {
+        super(creatorEngine, ogX, ogY, gridSize, position, xWorldSize, yWorldSize);
         initGrid();
 
         this.beingUsed = beingUsed;
@@ -30,7 +31,7 @@ public class GridWorldEditor extends Grid {
         int w = (ogX * 2) / gridSize, h = (ogY * 2) / gridSize;
         for (int gx = 0; gx < xWorldSize; gx++) {
             for (int gy = 0; gy < yWorldSize; gy++) {
-                grid[gx][gy] = new GridTile(ogX + w * gx, ogY + h * gy, w, h);
+                grid[gx][gy] = new GridTile(new Vector2D(ogX + w * gx, ogY + h * gy), w, h);
             }
         }
     }
@@ -59,8 +60,8 @@ public class GridWorldEditor extends Grid {
         for (int x = 0; x < xWorldSize; x++) {
             for (int y = 0; y < yWorldSize; y++) {
                 GridTile tile = grid[x][y];
-                tile.setX(ogX + w * x);
-                tile.setY(ogY + h * y);
+                tile.getPosition().x = ogX + w * x;
+                tile.getPosition().y = ogY + h * y;
                 tile.setWidth(w);
                 tile.setHeight(h);
             }

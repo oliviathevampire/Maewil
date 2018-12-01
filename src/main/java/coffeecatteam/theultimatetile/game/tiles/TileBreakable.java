@@ -32,7 +32,7 @@ public class TileBreakable extends Tile implements IDamageableTile {
             if (index < 0)
                 index = 0;
             BufferedImage currentFrame = Assets.TILE_CRACKING[index];
-            g.drawImage(currentFrame, (int) (x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
+            g.drawImage(currentFrame, (int) (position.x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
         }
     }
 
@@ -41,10 +41,10 @@ public class TileBreakable extends Tile implements IDamageableTile {
         if (isMineable) {
             this.health -= damage;
             if (this.health <= 0) {
-                if (x == 0 || x == ((GameEngine) engine).getWorld().getWidth() || y == 0 || y == ((GameEngine) engine).getWorld().getHeight())
+                if (position.x == 0 || position.x == ((GameEngine) engine).getWorld().getWidth() || position.y == 0 || position.y == ((GameEngine) engine).getWorld().getHeight())
                     return;
-                ((GameEngine) engine).getWorld().setFGTile(x, y, Tiles.AIR);
-                ((GameEngine) engine).getItemManager().addItem(new ItemStack(drop), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
+                ((GameEngine) engine).getWorld().setFGTile((int) position.x, (int) position.y, Tiles.AIR);
+                ((GameEngine) engine).getItemManager().addItem(new ItemStack(drop), (int) position.x * Tile.TILE_WIDTH, (int) (position.y * Tile.TILE_HEIGHT));
                 this.health = this.maxHealth;
             }
         }

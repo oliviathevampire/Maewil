@@ -163,8 +163,8 @@ public class WorldJsonSaver implements IJSONSaver {
             itemObj.put("id", stack.getId());
 
             JSONArray pos = new JSONArray();
-            pos.add(0, String.valueOf(stack.getItem().getX() / Tile.TILE_WIDTH) + "f");
-            pos.add(1, String.valueOf(stack.getItem().getY() / Tile.TILE_HEIGHT) + "f");
+            pos.add(0, String.valueOf(stack.getItem().getPosition().x / Tile.TILE_WIDTH) + "f");
+            pos.add(1, String.valueOf(stack.getItem().getPosition().y / Tile.TILE_HEIGHT) + "f");
             itemObj.put("pos", pos);
 
             if (stack.getCount() > 1) {

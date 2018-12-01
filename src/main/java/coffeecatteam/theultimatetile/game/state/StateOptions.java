@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.state;
 
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.gfx.Assets;
@@ -30,7 +31,7 @@ public class StateOptions extends StateAbstractMenu {
         }
 
         if (initUI) {
-            uiManager.addObject(new UIButton(engine, 15, 15, "Debug Info", new ClickListener() {
+            uiManager.addObject(new UIButton(engine, new Vector2D(15, 15), "Debug Info", new ClickListener() {
                 @Override
                 public void onClick() {
                     OPTIONS.setDebugMode(!OPTIONS.debugMode());
@@ -42,7 +43,7 @@ public class StateOptions extends StateAbstractMenu {
                 }
             }));
 
-            uiManager.addObject(new UIButton(engine, 15, 94, "FPS counter", new ClickListener() {
+            uiManager.addObject(new UIButton(engine, new Vector2D(15, 94), "FPS counter", new ClickListener() {
                 @Override
                 public void onClick() {
                     OPTIONS.setFpsCounter(!OPTIONS.fpsCounter());
@@ -54,7 +55,7 @@ public class StateOptions extends StateAbstractMenu {
                 }
             }));
 
-            uiManager.addObject(new UIButton(engine, 15, 173, "Controls", new ClickListener() {
+            uiManager.addObject(new UIButton(engine, new Vector2D(15, 173), "Controls", new ClickListener() {
                 @Override
                 public void onClick() {
                     State.setState(((GameEngine) engine).optionsControls);
@@ -71,7 +72,7 @@ public class StateOptions extends StateAbstractMenu {
                 }
             }));
 
-            uiManager.addObject(new UIButton(engine, 15, 252, "Sounds", new ClickListener() {
+            uiManager.addObject(new UIButton(engine, new Vector2D(15, 252), "Sounds", new ClickListener() {
                 @Override
                 public void onClick() {
                     State.setState(((GameEngine) engine).optionsSpounds);

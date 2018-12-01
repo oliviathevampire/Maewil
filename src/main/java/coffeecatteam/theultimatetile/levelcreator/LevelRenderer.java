@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.levelcreator;
 
 import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.position.AABB;
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
 import coffeecatteam.theultimatetile.gfx.Assets;
@@ -65,13 +66,13 @@ public class LevelRenderer {
     }
 
     private void initUI() {
-        zoomSlider = new UISlider(creatorEngine, 185, 18, 200, 2);
+        zoomSlider = new UISlider(creatorEngine, new Vector2D(185, 18), 200, 2);
         uiManager.addObject(zoomSlider);
 
-        fgCheckBox = new UICheckBox(10, 50, true);
+        fgCheckBox = new UICheckBox(new Vector2D(10, 50), true);
         uiManager.addObject(fgCheckBox);
 
-        uiManager.addObject(new UIButton(creatorEngine, creatorEngine.getWidth() - 170, 10, "Save World", false, Assets.FONT_20, new ClickListener() {
+        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 170, 10), "Save World", false, Assets.FONT_20, new ClickListener() {
             @Override
             public void onClick() {
                 try {
@@ -102,7 +103,7 @@ public class LevelRenderer {
             }
         }));
 
-        uiManager.addObject(new UIButton(creatorEngine, creatorEngine.getWidth() - 158, 60, "Zip World", false, Assets.FONT_20, new ClickListener() {
+        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 158, 60), "Zip World", false, Assets.FONT_20, new ClickListener() {
             @Override
             public void onClick() {
                 try {
@@ -133,7 +134,7 @@ public class LevelRenderer {
             }
         }));
 
-        uiManager.addObject(new UIButton(creatorEngine, creatorEngine.getWidth() - 170, 110, "Load World", false, Assets.FONT_20, new ClickListener() {
+        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 170, 110), "Load World", false, Assets.FONT_20, new ClickListener() {
             @Override
             public void onClick() {
                 try {
@@ -199,10 +200,10 @@ public class LevelRenderer {
     }
 
     private void initGrids() {
-        gridWorldEditorBG = new GridWorldEditor(creatorEngine, ogX, ogY, worldGridSize, ogX, ogY, xWorldSize, yWorldSize, false);
-        gridWorldEditorFG = new GridWorldEditor(creatorEngine, ogX, ogY, worldGridSize, ogX, ogY, xWorldSize, yWorldSize, true);
+        gridWorldEditorBG = new GridWorldEditor(creatorEngine, ogX, ogY, worldGridSize, new Vector2D(ogX, ogY), xWorldSize, yWorldSize, false);
+        gridWorldEditorFG = new GridWorldEditor(creatorEngine, ogX, ogY, worldGridSize, new Vector2D(ogX, ogY), xWorldSize, yWorldSize, true);
 
-        grids.add(new GridTileSelect(creatorEngine, ogX, ogY, selectGridSize, (int) (ogX + ((ogX * 2) / selectGridSize) * 10.5f), ogY, 4, selectGridSize));
+        grids.add(new GridTileSelect(creatorEngine, ogX, ogY, selectGridSize, new Vector2D((ogX + ((ogX * 2d) / selectGridSize) * 10.5f), ogY), 4, selectGridSize));
     }
 
     public void tick() {
@@ -248,9 +249,9 @@ public class LevelRenderer {
 
     public void postRender(Graphics2D g) {
         Font font = Assets.FONT_20;
-        Text.drawString(g, "Zoom: x" + zoomSlider.getValue(), (int) zoomSlider.getX() + zoomSlider.getWidth() + 25, (int) zoomSlider.getY() + Text.getHeight(g, font), false, false, Color.white, font);
+        Text.drawString(g, "Zoom: x" + zoomSlider.getValue(), (int) zoomSlider.getPosition().x + zoomSlider.getWidth() + 25, (int) zoomSlider.getPosition().y + Text.getHeight(g, font), false, false, Color.white, font);
 
-        Text.drawString(g, "Edit foreground", (int) (fgCheckBox.getX() + fgCheckBox.getWidth() + 5), (int) (fgCheckBox.getY() + fgCheckBox.getHeight() - 5), false, false, Color.white, font);
+        Text.drawString(g, "Edit foreground", (int) (fgCheckBox.getPosition().x + fgCheckBox.getWidth() + 5), (int) (fgCheckBox.getPosition().y + fgCheckBox.getHeight() - 5), false, false, Color.white, font);
         uiManager.render(g);
     }
 

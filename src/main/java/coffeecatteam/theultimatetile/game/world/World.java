@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.world;
 
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
@@ -113,7 +114,7 @@ public class World {
         if (y > height)
             y = height;
 
-        bg_tiles[x][y] = tile.setPos(x, y);
+        bg_tiles[x][y] = tile.setPos(new Vector2D(x, y));
     }
 
     public Tile getFGTile(int x, int y) {
@@ -139,7 +140,7 @@ public class World {
         if (y > height)
             y = height;
 
-        fg_tiles[x][y] = tile.setPos(x, y);
+        fg_tiles[x][y] = tile.setPos(new Vector2D(x, y));
     }
 
     private void loadWorld(String path) throws IOException, ParseException {
@@ -164,7 +165,7 @@ public class World {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                Tile tile = bg_tile_ids[x][y].setPos(x, y).setSolid(false);
+                Tile tile = bg_tile_ids[x][y].setPos(new Vector2D(x, y)).setSolid(false);
                 if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
                     tile.setSolid(true);
                     if (tile instanceof TileBreakable)
@@ -177,7 +178,7 @@ public class World {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                Tile tile = fg_tile_ids[x][y].setPos(x, y);
+                Tile tile = fg_tile_ids[x][y].setPos(new Vector2D(x, y));
                 if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
                     tile.setSolid(true);
                     if (tile instanceof TileBreakable)

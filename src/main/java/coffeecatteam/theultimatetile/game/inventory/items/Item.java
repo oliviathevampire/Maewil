@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.inventory.items;
 
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.Slot;
 import coffeecatteam.coffeecatutils.position.AABB;
@@ -21,7 +22,7 @@ public class Item implements Cloneable {
 
     protected AABB bounds;
 
-    protected float x, y;
+    protected Vector2D position = new Vector2D();
     protected boolean pickedUp = false;
     protected boolean isStackable = true;
 
@@ -29,7 +30,7 @@ public class Item implements Cloneable {
         this.texture = texture;
         this.id = id;
 
-        this.bounds = new AABB((int) this.x, (int) this.y, WIDTH, HEIGHT);
+        this.bounds = new AABB(this.position, WIDTH, HEIGHT);
     }
 
     public void tick(int count) {
@@ -76,13 +77,13 @@ public class Item implements Cloneable {
                 this.gameEngine.getEntityManager().getPlayer().getInventoryPlayer().addStackToHotbar(new ItemStack(this, count));
         }
 
-        this.bounds = new AABB((int) this.x, (int) this.y, WIDTH, HEIGHT);
+        this.bounds = new AABB(this.position, WIDTH, HEIGHT);
     }
 
     public void render(Graphics2D g) {
         if (this.gameEngine == null)
             return;
-        render(g, (int) (this.x - this.gameEngine.getCamera().getxOffset()), (int) (this.y - this.gameEngine.getCamera().getyOffset()));
+        render(g, (int) (this.position.x - this.gameEngine.getCamera().getxOffset()), (int) (this.position.y - this.gameEngine.getCamera().getyOffset()));
     }
 
     public void render(Graphics2D g, int x, int y) {
@@ -90,8 +91,8 @@ public class Item implements Cloneable {
     }
 
     public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
+        this.position.x = x;
+        this.position.y = y;
         this.bounds.x = x;
         this.bounds.y = y;
     }
@@ -120,20 +121,12 @@ public class Item implements Cloneable {
         return bounds;
     }
 
-    public float getX() {
-        return this.x;
+    public Vector2D getPosition() {
+        return position;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return this.y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void setPosition(Vector2D position) {
+        this.position = position;
     }
 
     public boolean isPickedUp() {

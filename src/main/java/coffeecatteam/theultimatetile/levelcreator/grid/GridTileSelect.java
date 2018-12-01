@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.levelcreator.grid;
 
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
@@ -13,8 +14,8 @@ public class GridTileSelect extends Grid {
     private GridTile selected;
     private int mouseX, mouseY;
 
-    public GridTileSelect(CreatorEngine creatorEngine, int ogX, int ogY, int gridSize, int x, int y, int xWorldSize, int yWorldSize) {
-        super(creatorEngine, ogX, ogY, gridSize, x, y, xWorldSize, yWorldSize);
+    public GridTileSelect(CreatorEngine creatorEngine, int ogX, int ogY, int gridSize, Vector2D position, int xWorldSize, int yWorldSize) {
+        super(creatorEngine, ogX, ogY, gridSize, position, xWorldSize, yWorldSize);
         grid = new GridTile[xWorldSize][yWorldSize];
         initGrid();
     }
@@ -24,7 +25,7 @@ public class GridTileSelect extends Grid {
         int w = (ogX * 2) / gridSize, h = (ogY * 2) / gridSize;
         for (int y = 0; y < yWorldSize; y++) {
             for (int x = 0; x < xWorldSize; x++) {
-                grid[x][y] = new GridTile(this.x + w * x, this.y + h * y, w, h).setTile(Tiles.TILES.get(ti));
+                grid[x][y] = new GridTile(new Vector2D(this.position.x + w * x, this.position.y + h * y), w, h).setTile(Tiles.TILES.get(ti));
                 if (ti < Tiles.TILES.size() - 1)
                     ti++;
                 else break;
@@ -64,7 +65,7 @@ public class GridTileSelect extends Grid {
         int w = (ogX * 2) / gridSize, h = (ogY * 2) / gridSize;
         for (int x = 0; x < xWorldSize; x++) {
             for (int y = 0; y < yWorldSize; y++) {
-                int gx = this.x + w * x, gy = this.y + h * y;
+                int gx = (int) (this.position.x + w * x), gy = (int) (this.position.y + h * y);
                 if (grid[x][y] != null) {
                     grid[x][y].render(g);
 

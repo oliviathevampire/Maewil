@@ -46,7 +46,7 @@ public abstract class Entity {
         this.height = height;
         currentHealth = maxHealth;
 
-        bounds = new AABB(0, 0, width, height);
+        bounds = new AABB(this.position, width, height);
 
         entities.put(id, this);
         entities.get(id).setEngine(engine);

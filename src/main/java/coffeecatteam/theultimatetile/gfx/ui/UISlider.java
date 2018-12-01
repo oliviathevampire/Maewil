@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.coffeecatutils.position.AABB;
@@ -19,19 +20,19 @@ public class UISlider extends UIObject {
     private int slMinX, slMaxX;
     private Slider slider;
 
-    public UISlider(Engine engine, float x, float y, int width) {
-        this(engine, x, y, width, 0);
+    public UISlider(Engine engine, Vector2D position, int width) {
+        this(engine, position, width, 0);
     }
 
-    public UISlider(Engine engine, float x, float y, int width, int defaultValue) {
-        super(x, y, width, 20);
+    public UISlider(Engine engine, Vector2D position, int width, int defaultValue) {
+        super(position, width, 20);
         this.engine = engine;
         if (defaultValue < minValue) defaultValue = minValue;
         if (defaultValue > maxValue) defaultValue = maxValue;
         this.value = defaultValue;
 
         segWidth = 10;
-        startX = (int) x + segWidth;
+        startX = (int) this.position.x + segWidth;
         endX = startX + width;
         int slWidth = 20;
         int slHeight = height * 2;
@@ -39,7 +40,7 @@ public class UISlider extends UIObject {
         slMinX = startX - slWidth / 2;
         slMaxX = slMinX + width;
 
-        slider = new Slider(engine, valueToX(defaultValue), (int) (y - slHeight / 4), slWidth, slHeight);
+        slider = new Slider(engine, new Vector2D(valueToX(defaultValue), (int) (this.position.y - slHeight / 4)), slWidth, slHeight);
     }
 
     @Override
@@ -47,10 +48,10 @@ public class UISlider extends UIObject {
         slider.tick();
         if (slider.isMouseHovering()) {
             if (engine.getMouseManager().isLeftDown() || engine.getMouseManager().isLeftPressed()) {
-                slider.setX(engine.getMouseManager().getMouseX() - slider.getWidth() / 2);
+                slider.position.x = engine.getMouseManager().getMouseX() - slider.getWidth() / 2d;
 
-                if (slider.getX() < slMinX) slider.setX(slMinX);
-                if (slider.getX() > slMaxX) slider.setX(slMaxX);
+                if (slider.position.x < slMinX) slider.position.x = slMinX;
+                if (slider.position.x > slMaxX) slider.position.x = slMaxX;
             }
         }
 
@@ -63,9 +64,9 @@ public class UISlider extends UIObject {
         BufferedImage bgSegMiddle = Assets.SLIDER_BAR.getSubimage(2, 0, 44, 6);
         BufferedImage bgSegEnd = Assets.SLIDER_BAR.getSubimage(46, 0, 2, 6);
 
-        g.drawImage(bgSegStart, (int) x, (int) y, segWidth, height, null);
-        g.drawImage(bgSegMiddle, startX, (int) y, width, height, null);
-        g.drawImage(bgSegEnd, endX, (int) y, segWidth, height, null);
+        g.drawImage(bgSegStart, (int) this.position.x, (int) this.position.y, segWidth, height, null);
+        g.drawImage(bgSegMiddle, startX, (int) this.position.y, width, height, null);
+        g.drawImage(bgSegEnd, endX, (int) this.position.y, segWidth, height, null);
 
         slider.render(g);
     }
@@ -100,7 +101,7 @@ public class UISlider extends UIObject {
 
     public void setValue(int value) {
         this.value = value;
-        slider.setX(valueToX(value));
+        slider.position = new Vector2D(valueToX(value), slider.position.y);
     }
 
     private int valueToX(int value) {
@@ -108,53 +109,36 @@ public class UISlider extends UIObject {
     }
 
     private int xToValue() {
-        return (int) NumberUtils.map(slider.getX(), slMinX, slMaxX, minValue, maxValue);
+        return (int) NumberUtils.map((float) slider.position.x, slMinX, slMaxX, minValue, maxValue);
     }
 
     class Slider {
 
         private Engine engine;
-        private int x, y;
+        public Vector2D position;
         private int width, height;
 
         private AABB bounds;
 
-        public Slider(Engine engine, int x, int y, int width, int height) {
+        public Slider(Engine engine, Vector2D position, int width, int height) {
             this.engine = engine;
-            this.x = x;
-            this.y = y;
+            this.position = position;
             this.width = width;
             this.height = height;
 
-            bounds = new AABB(x, y, width, height);
+            bounds = new AABB(this.position, width, height);
         }
 
         public void tick() {
-            bounds = new AABB(x, y, width, height);
+            bounds = new AABB(this.position, width, height);
         }
 
         public void render(Graphics2D g) {
-            g.drawImage((isMouseHovering() ? Assets.SLIDER_BUTTON[1] : Assets.SLIDER_BUTTON[0]), x, y, width, height, null);
+            g.drawImage((isMouseHovering() ? Assets.SLIDER_BUTTON[1] : Assets.SLIDER_BUTTON[0]), (int) this.position.x, (int) this.position.y, width, height, null);
         }
 
         public boolean isMouseHovering() {
             return bounds.contains(engine.getMouseManager().getMouseX(), engine.getMouseManager().getMouseY());
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public void setX(int x) {
-            this.x = x;
-        }
-
-        public int getY() {
-            return y;
-        }
-
-        public void setY(int y) {
-            this.y = y;
         }
 
         public int getWidth() {

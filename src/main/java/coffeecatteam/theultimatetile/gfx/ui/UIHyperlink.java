@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.coffeecatutils.position.AABB;
 
@@ -18,14 +19,14 @@ public class UIHyperlink extends UIObject {
     private boolean underlined;
     private Font font;
 
-    public UIHyperlink(float x, float y, int width, int height, String text, boolean underlined, Font font, ClickListener listener) {
-        super(x, y, width, height);
+    public UIHyperlink(Vector2D position, int width, int height, String text, boolean underlined, Font font, ClickListener listener) {
+        super(position, width, height);
         this.listener = listener;
 
         this.text = text;
         this.underlined = underlined;
         this.font = font;
-        bounds = new AABB((int) x, (int) y - height, width, height);
+        bounds = new AABB((int) this.position.x, (int) this.position.y - height, width, height);
     }
 
     public UIHyperlink setColors(Color mainColor, Color hoverColor) {
@@ -44,7 +45,7 @@ public class UIHyperlink extends UIObject {
 
     @Override
     public void render(Graphics2D g) {
-        Text.drawString(g, text, (int) x, (int) y, false, underlined, c, font);
+        Text.drawString(g, text, (int) this.position.x, (int) this.position.y, false, underlined, c, font);
     }
 
     @Override

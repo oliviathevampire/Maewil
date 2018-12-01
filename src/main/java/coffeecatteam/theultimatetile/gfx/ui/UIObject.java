@@ -1,22 +1,26 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.coffeecatutils.position.AABB;
+import coffeecatteam.coffeecatutils.position.Vector2D;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public abstract class UIObject {
 
-    protected float x, y;
+    protected Vector2D position;
     protected int width, height;
     protected AABB bounds;
 
     public UIObject(float x, float y, int width, int height) {
-        this.x = x;
-        this.y = y;
+        this(new Vector2D(x, y), width, height);
+    }
+
+    public UIObject(Vector2D position, int width, int height) {
+        this.position = position;
         this.width = width;
         this.height = height;
-        bounds = new AABB((int) x, (int) y, width, height);
+        bounds = new AABB(this.position, width, height);
     }
 
     public abstract void tick();
@@ -37,20 +41,12 @@ public abstract class UIObject {
 
     public abstract void onMouseDragged(MouseEvent e);
 
-    public float getX() {
-        return x;
+    public Vector2D getPosition() {
+        return position;
     }
 
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setY(float y) {
-        this.y = y;
+    public void setPosition(Vector2D position) {
+        this.position = position;
     }
 
     public int getWidth() {

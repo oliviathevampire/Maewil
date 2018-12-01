@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.tiles;
 
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.coffeecatutils.position.AABB;
@@ -16,7 +17,7 @@ public class Tile {
     protected final String id;
 
     protected AABB bounds;
-    protected int x, y;
+    protected Vector2D position = new Vector2D();
 
     private boolean isSolid;
     private TileType tileType;
@@ -26,13 +27,13 @@ public class Tile {
         this.texture = texture;
         this.id = id;
 
-        bounds = new AABB(0, 0, TILE_WIDTH, TILE_HEIGHT);
+        bounds = new AABB(this.position, TILE_WIDTH, TILE_HEIGHT);
         this.isSolid = isSolid;
         this.tileType = tileType;
     }
 
     public void updateBounds() {
-        bounds = new AABB((int) (x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
+        bounds = new AABB((int) (position.x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
     }
 
     public void tick() {
@@ -43,12 +44,12 @@ public class Tile {
     }
 
     public void render(Graphics2D g) {
-        g.drawImage(texture, (int) (x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
+        g.drawImage(texture, (int) (position.x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
     }
 
-    public Tile setPos(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Tile setPos(Vector2D position) {
+        this.position.x = position.x;
+        this.position.y = position.y;
         return this;
     }
 
@@ -67,6 +68,10 @@ public class Tile {
 
     public AABB getBounds() {
         return bounds;
+    }
+
+    public Vector2D getPosition() {
+        return position;
     }
 
     public BufferedImage getTexture() {

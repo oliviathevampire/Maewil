@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.levelcreator.grid;
 
 import coffeecatteam.coffeecatutils.position.AABB;
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.TileAnimated;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
@@ -9,19 +10,19 @@ import java.awt.*;
 
 public class GridTile {
 
-    private int x, y, xOff = 0, yOff = 0;
+    private Vector2D position;
+    private int  xOff = 0, yOff = 0;
     private int width, height;
 
     private AABB bounds;
     private Tile tile = Tiles.AIR;
 
-    public GridTile(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
+    public GridTile(Vector2D position, int width, int height) {
+        this.position = position;
         this.width = width;
         this.height = height;
 
-        bounds = new AABB(x, y, width, height);
+        bounds = new AABB(this.position, width, height);
     }
 
     public void tick() {
@@ -31,28 +32,20 @@ public class GridTile {
     }
 
     public void render(Graphics2D g) {
-        bounds = new AABB(x + xOff, y + yOff, width, height);
+        bounds = new AABB((int) this.position.x + xOff, (int) this.position.y + yOff, width, height);
 
         if (tile instanceof TileAnimated) {
-            g.drawImage(((TileAnimated) tile).getAnimation().getCurrentFrame(), x + xOff, y + yOff, width, height, null);
+            g.drawImage(((TileAnimated) tile).getAnimation().getCurrentFrame(), (int) this.position.x + xOff, (int) this.position.y + yOff, width, height, null);
         } else
-            g.drawImage(tile.getTexture(), x + xOff, y + yOff, width, height, null);
+            g.drawImage(tile.getTexture(), (int) this.position.x + xOff, (int) this.position.y + yOff, width, height, null);
     }
 
-    public int getX() {
-        return x;
+    public Vector2D getPosition() {
+        return position;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+    public void setPosition(Vector2D position) {
+        this.position = position;
     }
 
     public int getxOff() {
