@@ -141,14 +141,14 @@ public abstract class EntityCreature extends Entity {
             int tx = (int) (position.x + xMove + bounds.x + bounds.width) / Tile.TILE_WIDTH;
 
             if (!collisionWidthTile(tx, (int) (position.y + bounds.y) / Tile.TILE_HEIGHT) && !collisionWidthTile(tx, (int) (position.y + bounds.y + bounds.height) / Tile.TILE_HEIGHT))
-                position = position.add(new Vector2D(xMove, 0));
+                position.add(new Vector2D(xMove, 0));
             else
                 position.x = tx * Tile.TILE_WIDTH - bounds.x - bounds.width - 1;
         } else if (xMove < 0) {
             int tx = (int) (position.x + xMove + bounds.x) / Tile.TILE_WIDTH;
 
             if (!collisionWidthTile(tx, (int) (position.y + bounds.y) / Tile.TILE_HEIGHT) && !collisionWidthTile(tx, (int) (position.y + bounds.y + bounds.height) / Tile.TILE_HEIGHT))
-                position = position.add(new Vector2D(xMove, 0));
+                position.add(new Vector2D(xMove, 0));
             else
                 position.x = tx * Tile.TILE_WIDTH + Tile.TILE_WIDTH - bounds.x;
         }
@@ -162,14 +162,14 @@ public abstract class EntityCreature extends Entity {
             int ty = (int) (position.y + yMove + bounds.y) / Tile.TILE_HEIGHT;
 
             if (!collisionWidthTile((int) (position.x + bounds.x) / Tile.TILE_WIDTH, ty) && !collisionWidthTile((int) (position.x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty))
-                position = position.add(new Vector2D(0, yMove));
+                position.add(new Vector2D(0, yMove));
             else
                 position.y = ty * Tile.TILE_HEIGHT + Tile.TILE_HEIGHT - bounds.y;
         } else if (yMove > 0) {
             int ty = (int) (position.y + yMove + bounds.y + bounds.height) / Tile.TILE_HEIGHT;
 
             if (!collisionWidthTile((int) (position.x + bounds.x) / Tile.TILE_WIDTH, ty) && !collisionWidthTile((int) (position.x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty))
-                position = position.add(new Vector2D(0, yMove));
+                position.add(new Vector2D(0, yMove));
             else
                 position.y = ty * Tile.TILE_HEIGHT - bounds.y - bounds.height - 1;
         }
