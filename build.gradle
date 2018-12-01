@@ -64,6 +64,7 @@ task copyOptions(type: Copy) {
     copy {
         from "options.json"
         from "LICENSE.md"
+        from "README.txt"
         copy {
             from "saves/saved_games.json"
             into buildPath + "/libs/saves"
