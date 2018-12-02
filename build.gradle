@@ -8,7 +8,7 @@ apply plugin: 'edu.sc.seis.launch4j'
 sourceCompatibility = 1.8
 
 def exeJarName = "TheUltimateTile-" + version
-def buildPath = "build/" + exeJarName
+def buildPath = "build/" + version
 buildDir = file(buildPath)
 
 buildscript {
