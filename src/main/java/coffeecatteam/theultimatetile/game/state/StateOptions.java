@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.state;
 
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
@@ -9,7 +10,6 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.OptionsJsonParser;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
-import coffeecatteam.coffeecatutils.Logger;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -27,7 +27,7 @@ public class StateOptions extends StateAbstractMenu {
         try {
             OPTIONS.load();
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            Logger.print(e);
         }
 
         if (initUI) {
@@ -62,7 +62,7 @@ public class StateOptions extends StateAbstractMenu {
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {
-                        e.printStackTrace();
+                        Logger.print(e);
                     }
                     setPresence("Controls");
                 }
@@ -79,7 +79,7 @@ public class StateOptions extends StateAbstractMenu {
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {
-                        e.printStackTrace();
+                        Logger.print(e);
                     }
                     setPresence("Sounds");
                 }
@@ -100,7 +100,7 @@ public class StateOptions extends StateAbstractMenu {
         try {
             OPTIONS.save();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.print(e);
         }
     }
 

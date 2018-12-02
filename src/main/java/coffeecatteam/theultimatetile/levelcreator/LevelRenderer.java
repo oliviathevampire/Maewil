@@ -94,7 +94,7 @@ public class LevelRenderer {
                         Logger.print("Canceling save...");
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Logger.print(e);
                 }
             }
 
@@ -125,7 +125,7 @@ public class LevelRenderer {
                         Logger.print("Canceling save...");
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Logger.print(e);
                 }
             }
 
@@ -155,7 +155,7 @@ public class LevelRenderer {
                         Logger.print("Canceling load...");
                     }
                 } catch (IOException | ParseException e) {
-                    e.printStackTrace();
+                    Logger.print(e);
                 }
             }
 

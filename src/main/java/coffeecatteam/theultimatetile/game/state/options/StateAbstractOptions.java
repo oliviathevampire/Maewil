@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.state.options;
 
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.state.State;
@@ -27,7 +28,7 @@ public abstract class StateAbstractOptions extends State {
                 try {
                     StateOptions.OPTIONS.save();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Logger.print(e);
                 }
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options");
@@ -52,7 +53,7 @@ public abstract class StateAbstractOptions extends State {
                     URI link = new URI("https://github.com/CoffeeCatRailway/TheUltimateTile/blob/master/LICENSE.md");
                     desktop.browse(link);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Logger.print(e);
                 }
             }
 

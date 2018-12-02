@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.inventory.items;
 
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
@@ -20,7 +21,7 @@ public class ItemStack {
         try {
             this.item = (Item) item.clone();
         } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            Logger.print(e);
             this.item = ItemManager.STICK;
         }
         setCount(count);

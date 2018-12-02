@@ -1,9 +1,7 @@
 package coffeecatteam.theultimatetile.gfx;
 
 import coffeecatteam.coffeecatutils.Logger;
-import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.coffeecatutils.io.FontLoader;
-import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -409,7 +407,7 @@ public class Assets {
             try {
                 frames[index] = sheet.crop(x * width, y * height, width, height);
             } catch (RasterFormatException e) {
-                e.printStackTrace();
+                Logger.print(e);
                 frames[index] = MISSING_TEXTURE;
             }
             index++;
@@ -430,7 +428,7 @@ public class Assets {
         try {
             image = sheet.crop(indexX, indexY, width, height); // Assets.width * indexX, Assets.height * indexY <-- This caused so many problems!
         } catch (RasterFormatException e) {
-            e.printStackTrace();
+            Logger.print(e);
         }
         return image;
     }

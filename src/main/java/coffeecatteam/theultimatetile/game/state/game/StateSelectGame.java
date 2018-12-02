@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.game.state.game;
 
 import coffeecatteam.coffeecatutils.ArgUtils;
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
@@ -11,7 +12,6 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.json.simple.parser.ParseException;
 
@@ -92,7 +92,7 @@ public class StateSelectGame extends StateAbstractMenu {
             try {
                 gamesJSONParser.load();
             } catch (IOException | ParseException e) {
-                e.printStackTrace();
+                Logger.print(e);
             }
         }
 
@@ -111,7 +111,7 @@ public class StateSelectGame extends StateAbstractMenu {
                 try {
                     gamesJSONParser.save();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Logger.print(e);
                 }
             } else {
                 worldName = SavedGamesJSONParser.GAMES.get(index).split(":")[1];

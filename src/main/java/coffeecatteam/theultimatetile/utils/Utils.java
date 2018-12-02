@@ -1,14 +1,15 @@
 package coffeecatteam.theultimatetile.utils;
 
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.GameEngine;
 
 import javax.swing.*;
-import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -91,7 +92,7 @@ public class Utils {
 
             fileOutputStream.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.print(e);
         }
     }
 

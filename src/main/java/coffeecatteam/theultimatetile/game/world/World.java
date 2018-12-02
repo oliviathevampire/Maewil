@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.world;
 
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
@@ -8,7 +9,6 @@ import coffeecatteam.theultimatetile.game.tiles.TileBreakable;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
-import coffeecatteam.coffeecatutils.Logger;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -34,7 +34,7 @@ public class World {
         try {
             loadWorld(path);
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            Logger.print(e);
         }
         ((GameEngine) engine).getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
         ((GameEngine) engine).getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);

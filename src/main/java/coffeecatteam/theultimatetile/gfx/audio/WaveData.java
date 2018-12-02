@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.audio;
 
+import coffeecatteam.coffeecatutils.Logger;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL10;
 
@@ -40,7 +41,7 @@ public class WaveData {
             audioStream.close();
             data.clear();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.print(e);
         }
     }
 
@@ -51,7 +52,7 @@ public class WaveData {
             data.put(dataArray, 0, bytesRead);
             data.flip();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.print(e);
             System.err.println("Couldn't read bytes from audio stream!");
         }
         return data;
@@ -68,7 +69,7 @@ public class WaveData {
         try {
             audioStream = AudioSystem.getAudioInputStream(bufferedInput);
         } catch (UnsupportedAudioFileException | IOException e) {
-            e.printStackTrace();
+            Logger.print(e);
         }
         return new WaveData(audioStream);
     }

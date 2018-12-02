@@ -162,7 +162,6 @@ public abstract class Engine extends Canvas implements Runnable {
         AudioMaster.cleanUp();
 
         stop();
-
         Logger.print("\nExiting [" + title + "]..");
         System.exit(0);
     }
@@ -190,7 +189,7 @@ public abstract class Engine extends Canvas implements Runnable {
         try {
             thread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Logger.print(e);
         }
     }
 
