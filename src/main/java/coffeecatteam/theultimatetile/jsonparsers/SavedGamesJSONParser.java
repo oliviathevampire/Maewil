@@ -1,9 +1,8 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.coffeecatutils.Logger;
-import coffeecatteam.theultimatetile.utils.Utils;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
 import org.json.simple.JSONArray;

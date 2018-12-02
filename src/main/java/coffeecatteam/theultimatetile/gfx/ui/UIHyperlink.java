@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
+import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.coffeecatutils.position.AABB;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

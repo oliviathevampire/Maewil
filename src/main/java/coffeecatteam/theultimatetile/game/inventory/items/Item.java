@@ -1,9 +1,9 @@
 package coffeecatteam.theultimatetile.game.inventory.items;
 
+import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.Slot;
-import coffeecatteam.coffeecatutils.position.AABB;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

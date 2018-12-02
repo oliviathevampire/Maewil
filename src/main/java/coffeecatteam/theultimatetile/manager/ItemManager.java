@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.manager;
 
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.items.*;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.coffeecatutils.Logger;
 
 import java.awt.*;
 import java.util.ArrayList;

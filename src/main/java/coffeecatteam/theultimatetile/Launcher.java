@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile;
 
 import coffeecatteam.coffeecatutils.ArgUtils;
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
-import coffeecatteam.coffeecatutils.Logger;
 
 public class Launcher {
 

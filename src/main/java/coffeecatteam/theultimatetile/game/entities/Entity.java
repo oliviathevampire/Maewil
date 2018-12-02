@@ -1,11 +1,11 @@
 package coffeecatteam.theultimatetile.game.entities;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
-import coffeecatteam.coffeecatutils.position.AABB;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

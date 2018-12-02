@@ -7,7 +7,6 @@ import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.manager.ItemManager;
-import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.image.BufferedImage;
 import java.util.List;

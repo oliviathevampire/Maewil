@@ -9,7 +9,6 @@ import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
-import coffeecatteam.theultimatetile.utils.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

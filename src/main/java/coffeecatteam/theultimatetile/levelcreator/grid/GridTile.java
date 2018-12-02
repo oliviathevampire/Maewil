@@ -11,7 +11,7 @@ import java.awt.*;
 public class GridTile {
 
     private Vector2D position;
-    private int  xOff = 0, yOff = 0;
+    private int xOff = 0, yOff = 0;
     private int width, height;
 
     private AABB bounds;
