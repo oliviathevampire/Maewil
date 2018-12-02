@@ -11,28 +11,35 @@ public class DiscordHandler {
     private static final long timeStamp = System.currentTimeMillis();
     public static final DiscordHandler INSTANCE = new DiscordHandler();
 
-    private DiscordRPC lib;
+    private DiscordRPC rpc;
+    private String userId = "NOT SET";
+
     private boolean LEVEL_CREATE = false;
 
     public void setup() {
-        lib = DiscordRPC.INSTANCE;
-        String appID = "502962688733741056";
-        DiscordEventHandlers handlers = new DiscordEventHandlers();
-        handlers.ready = user -> Logger.print("Connected to discord : " + user.username + "#" + user.discriminator);
-        lib.Discord_Initialize(appID, handlers, true, "");
+        Logger.print("");
+        Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
+        rpc = DiscordRPC.INSTANCE;
 
-        Thread t = new Thread(() -> {
+        DiscordEventHandlers handlers = new DiscordEventHandlers();
+        handlers.ready = user -> {
+            userId = user.username + "#" + user.discriminator;
+            Logger.print("Connected to discord : " + userId);
+            Logger.print("Discord rich presence setup for " + userId);
+        };
+        rpc.Discord_Initialize("502962688733741056", handlers, true, "");
+
+        new Thread(() -> {
+            Logger.print("Started RPC Callback Handler");
             while (!Thread.currentThread().isInterrupted()) {
-                lib.Discord_RunCallbacks();
+                rpc.Discord_RunCallbacks();
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
-                    lib.Discord_Shutdown();
                     break;
                 }
             }
-        }, "RPC-Callback-Handler");
-        t.start();
+        }, "RPC-Callback-Handler").start();
 
         updatePresence((LEVEL_CREATE ? "Level Creator" : "Main Menu"));
     }
@@ -53,7 +60,7 @@ public class DiscordHandler {
         if (inGame)
             presence.smallImageKey = getSmallImage(NumberUtils.getRandomInt(5));
         presence.startTimestamp = timeStamp;
-        lib.Discord_UpdatePresence(presence);
+        rpc.Discord_UpdatePresence(presence);
     }
 
     private String getSmallImage(int id) {
@@ -74,11 +81,15 @@ public class DiscordHandler {
         }
     }
 
-    public boolean LEVEL_CREATE() {
-        return LEVEL_CREATE;
-    }
-
     public void LEVEL_CREATE(boolean LEVEL_CREATE) {
         this.LEVEL_CREATE = LEVEL_CREATE;
+    }
+
+    public void shutdown() {
+        Logger.print("\n" + userId + " is disconnecting!");
+        rpc.Discord_ClearPresence();
+        Logger.print("Cleared rich presence!");
+        rpc.Discord_Shutdown();
+        Logger.print(userId + " hss disconnected!");
     }
 }
