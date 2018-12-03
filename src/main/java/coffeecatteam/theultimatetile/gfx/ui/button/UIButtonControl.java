@@ -1,8 +1,9 @@
-package coffeecatteam.theultimatetile.gfx.ui;
+package coffeecatteam.theultimatetile.gfx.ui.button;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
+import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 
 public class UIButtonControl extends UIButton {
 

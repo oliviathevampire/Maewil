@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.gfx.ui;
+package coffeecatteam.theultimatetile.gfx.ui.button;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
@@ -6,6 +6,8 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
+import coffeecatteam.theultimatetile.gfx.ui.UIObject;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

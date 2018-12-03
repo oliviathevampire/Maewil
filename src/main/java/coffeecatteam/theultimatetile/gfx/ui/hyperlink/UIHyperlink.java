@@ -1,8 +1,10 @@
-package coffeecatteam.theultimatetile.gfx.ui;
+package coffeecatteam.theultimatetile.gfx.ui.hyperlink;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
+import coffeecatteam.theultimatetile.gfx.ui.UIObject;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -19,8 +21,8 @@ public class UIHyperlink extends UIObject {
     private boolean underlined;
     private Font font;
 
-    public UIHyperlink(Vector2D position, int width, int height, String text, boolean underlined, Font font, ClickListener listener) {
-        super(position, width, height);
+    public UIHyperlink(Vector2D position, int height, String text, boolean underlined, Font font, ClickListener listener) {
+        super(position, 0, height);
         this.listener = listener;
 
         this.text = text;
@@ -45,6 +47,8 @@ public class UIHyperlink extends UIObject {
 
     @Override
     public void render(Graphics2D g) {
+        width = Text.getWidth(g, text, font);
+        bounds.width = width;
         Text.drawString(g, text, (int) this.position.x, (int) this.position.y, false, underlined, c, font);
     }
 

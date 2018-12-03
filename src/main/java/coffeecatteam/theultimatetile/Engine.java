@@ -18,6 +18,8 @@ import java.awt.image.BufferStrategy;
 
 public abstract class Engine extends Canvas implements Runnable {
 
+    private static Engine engine;
+
     protected String[] args;
     protected String title;
     protected int width, height;
@@ -49,6 +51,8 @@ public abstract class Engine extends Canvas implements Runnable {
 
         Assets.init();
         createDisplay();
+
+        engine = this;
     }
 
     private void createDisplay() {
@@ -223,5 +227,9 @@ public abstract class Engine extends Canvas implements Runnable {
 
     public String[] getArgs() {
         return args;
+    }
+
+    public static Engine getEngine() {
+        return engine;
     }
 }

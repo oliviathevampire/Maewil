@@ -8,8 +8,8 @@ import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
-import coffeecatteam.theultimatetile.gfx.ui.UIButton;
-import coffeecatteam.theultimatetile.gfx.ui.UIHyperlink;
+import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
+import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlink;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 
 import java.awt.*;
@@ -40,12 +40,10 @@ public abstract class StateAbstractOptions extends State {
         }));
 
         Font font = Assets.FONT_20;
-        String crText = "Copyright (C) CoffeeCatTeam 2018";
-        int crWidth = Text.getWidth((Graphics2D) engine.getGraphics(), crText, font);
         int crHeight = Text.getHeight((Graphics2D) engine.getGraphics(), font);
         int crx = 5;
         int cry = engine.getHeight() - 10;
-        uiManager.addObject(new UIHyperlink(new Vector2D(crx, cry), crWidth, crHeight, crText, true, font, new ClickListener() {
+        uiManager.addObject(new UIHyperlink(new Vector2D(crx, cry), crHeight, "Copyright (C) CoffeeCatTeam 2018", true, font, new ClickListener() {
             @Override
             public void onClick() {
                 try {

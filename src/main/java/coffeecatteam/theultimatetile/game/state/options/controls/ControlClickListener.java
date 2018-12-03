@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.game.state.options.controls;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
-import coffeecatteam.theultimatetile.gfx.ui.UIButtonControl;
+import coffeecatteam.theultimatetile.gfx.ui.button.UIButtonControl;
 import coffeecatteam.theultimatetile.utils.Utils;
 
 import javax.swing.*;

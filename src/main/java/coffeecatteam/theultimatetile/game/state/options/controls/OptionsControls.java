@@ -4,7 +4,7 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.options.StateAbstractOptions;
-import coffeecatteam.theultimatetile.gfx.ui.UIButtonControl;
+import coffeecatteam.theultimatetile.gfx.ui.button.UIButtonControl;
 
 public class OptionsControls extends StateAbstractOptions {
 
