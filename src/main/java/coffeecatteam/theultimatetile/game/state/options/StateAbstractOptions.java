@@ -6,15 +6,13 @@ import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.state.State;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
-import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlink;
+import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 
 import java.awt.*;
 import java.io.IOException;
-import java.net.URI;
 
 public abstract class StateAbstractOptions extends State {
 
@@ -39,26 +37,7 @@ public abstract class StateAbstractOptions extends State {
             }
         }));
 
-        Font font = Assets.FONT_20;
-        int crHeight = Text.getHeight((Graphics2D) engine.getGraphics(), font);
-        int crx = 5;
-        int cry = engine.getHeight() - 10;
-        uiManager.addObject(new UIHyperlink(new Vector2D(crx, cry), crHeight, "Copyright (C) CoffeeCatTeam 2018", true, font, new ClickListener() {
-            @Override
-            public void onClick() {
-                try {
-                    Desktop desktop = Desktop.getDesktop();
-                    URI link = new URI("https://github.com/CoffeeCatRailway/TheUltimateTile/blob/master/LICENSE.md");
-                    desktop.browse(link);
-                } catch (Exception e) {
-                    Logger.print(e);
-                }
-            }
-
-            @Override
-            public void tick() {
-            }
-        }));
+        uiManager.addObject(new UIHyperlinkCopyright(new Vector2D(5, engine.getHeight() - 10), true));
     }
 
     @Override

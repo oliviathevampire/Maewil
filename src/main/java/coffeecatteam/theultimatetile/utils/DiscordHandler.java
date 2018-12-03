@@ -15,6 +15,7 @@ public class DiscordHandler {
     private String userId = "NOT SET";
 
     private boolean LEVEL_CREATE = false;
+    public static boolean READY = false;
 
     public void setup() {
         Logger.print("");
@@ -24,8 +25,10 @@ public class DiscordHandler {
         DiscordEventHandlers handlers = new DiscordEventHandlers();
         handlers.ready = user -> {
             userId = user.username + "#" + user.discriminator;
-            Logger.print("Connected to discord : " + userId);
-            Logger.print("Discord rich presence setup for " + userId);
+            DiscordHandler.READY = true;
+            Logger.print("Connected to discord\n" +
+                    "Discord rich presence setup for " + userId +
+                    "\nReady: " + READY);
         };
         rpc.Discord_Initialize("502962688733741056", handlers, true, "");
 

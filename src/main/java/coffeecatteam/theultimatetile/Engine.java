@@ -19,6 +19,7 @@ import java.awt.image.BufferStrategy;
 public abstract class Engine extends Canvas implements Runnable {
 
     private static Engine engine;
+    private String loadingDotText = ".";
 
     protected String[] args;
     protected String title;
@@ -112,7 +113,12 @@ public abstract class Engine extends Canvas implements Runnable {
         g = (Graphics2D) bs.getDrawGraphics();
         g.clearRect(0, 0, width, height);
 
-        render(g);
+        if (DiscordHandler.READY) {
+            render(g);
+        } else {
+            g.drawImage(Assets.BACKGROUND, 0, 0, width, height, null);
+            Text.drawString(g, "Loading" + loadingDotText, width / 2, height / 2, true, false, Color.BLACK, Assets.FONT_80);
+        }
 
         // End drawing
         bs.show();
@@ -150,6 +156,7 @@ public abstract class Engine extends Canvas implements Runnable {
                     Sound.setVolume(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic());
 
                 renderA();
+
                 ticks++;
                 delta--;
             }
@@ -158,6 +165,11 @@ public abstract class Engine extends Canvas implements Runnable {
                 this.fps = ticks;
                 ticks = 0;
                 timer = 0;
+
+                if (DiscordHandler.READY) {
+                    loadingDotText += ".";
+                    if (loadingDotText.equals("...")) loadingDotText = ".";
+                }
             }
         }
 
