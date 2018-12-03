@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.game;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.game.state.State;
+import coffeecatteam.theultimatetile.game.state.StateCredits;
 import coffeecatteam.theultimatetile.game.state.StateMenu;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.game.StateSelectGame;
@@ -23,6 +24,7 @@ public class GameEngine extends Engine {
     // States
     public StateMenu stateMenu;
     public StateSelectGame stateSelectGame;
+    public StateCredits stateCredits;
 
     // Option states
     public OptionsControls optionsControls;
@@ -47,6 +49,8 @@ public class GameEngine extends Engine {
 
         stateMenu = new StateMenu(this);
         stateSelectGame = new StateSelectGame(this);
+        stateCredits = new StateCredits(this);
+
         optionsControls = new OptionsControls(this);
         optionsSpounds = new OptionsSounds(this);
         State.setState(stateMenu);

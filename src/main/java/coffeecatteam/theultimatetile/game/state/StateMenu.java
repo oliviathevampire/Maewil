@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.game.state;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
@@ -12,7 +12,6 @@ import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 
 import java.awt.*;
-import java.net.URI;
 
 public class StateMenu extends State {
 
@@ -59,7 +58,23 @@ public class StateMenu extends State {
             }
         }));
 
-        uiManager.addObject(new UIHyperlinkCopyright(new Vector2D(5, engine.getHeight() - 10), true));
+        int cy = engine.getHeight() - 10;
+        uiManager.addObject(new UIHyperlinkCopyright(new Vector2D(5, cy), true));
+        Font font = Assets.FONT_20;
+        String text = "Credits";
+        int height = Text.getHeight((Graphics2D) Engine.getEngine().getGraphics(), font);
+        uiManager.addObject(new UIHyperlink(new Vector2D(5, cy - height), height, text, false, font, new ClickListener() {
+            @Override
+            public void onClick() {
+                State.setState(((GameEngine) engine).stateCredits);
+
+                DiscordHandler.INSTANCE.updatePresence("Viewing credits");
+            }
+
+            @Override
+            public void tick() {
+            }
+        }));
     }
 
     @Override
