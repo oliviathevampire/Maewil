@@ -5,6 +5,7 @@ import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
+import coffeecatteam.theultimatetile.game.world.World;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
@@ -180,12 +181,15 @@ public class LevelRenderer {
     }
 
     private void saveWorld(String path) throws IOException {
-        WorldJsonSaver saver = new WorldJsonSaver(null, null, null);
+        World tmpWorld = new World(creatorEngine, "", xWorldSize, yWorldSize, 0, 0, gridWorldEditorBG.convertGridToArray(), gridWorldEditorFG.convertGridToArray());
+        WorldJsonSaver saver = new WorldJsonSaver(path.substring(0, path.length() - 1), tmpWorld, creatorEngine);
         File dir = new File(path);
         if (!dir.mkdirs())
             throw new IOException("Directory [" + dir + "] couldn't be made!");
+        new File(path + "tiles").mkdirs();
 
-        saver.saveTiles(xWorldSize, yWorldSize, gridWorldEditorBG.convertGridToArray(), gridWorldEditorFG.convertGridToArray(), path + "background", path + "foreground");
+//        saver.saveTiles(xWorldSize, yWorldSize, gridWorldEditorBG.convertGridToArray(), gridWorldEditorFG.convertGridToArray(), path + "background", path + "foreground");
+        saver.save();
         Logger.print("World [" + dir + "] saved!");
     }
 

@@ -34,25 +34,30 @@ public class WorldJsonSaver implements IJSONSaver {
     public void save() throws IOException {
         Logger.print("\nSaving current world!");
         saveWorldInfo(world);
-        Logger.print("World [" + world.getName() + "] info saved!\n");
+        Logger.print("World [" + world.getWorldName() + "] info saved!\n");
 
         saveTiles(world.getWidth(), world.getHeight(), world.getBg_tiles(), world.getFg_tiles(), path + "/" + WorldJsonLoader.BASE_FILES.get("tile_bg"), path + "/" + WorldJsonLoader.BASE_FILES.get("tile_fg"));
-        Logger.print("World [" + world.getName() + "] tiles saved!\n");
+        Logger.print("World [" + world.getWorldName() + "] tiles saved!\n");
 
-        saveEntities();
-        Logger.print("World [" + world.getName() + "] entities saved!\n");
+        /*
+         * TEMP!!!
+         */
+        if (engine instanceof GameEngine) {
+            saveEntities();
+            Logger.print("World [" + world.getWorldName() + "] entities saved!\n");
 
-        saveItems();
-        Logger.print("World [" + world.getName() + "] items saved!\n");
+            saveItems();
+            Logger.print("World [" + world.getWorldName() + "] items saved!\n");
 
-        savePlayerInfo();
-        Logger.print("World [" + world.getName() + "] player info saved!\n");
+            savePlayerInfo();
+            Logger.print("World [" + world.getWorldName() + "] player info saved!\n");
+        }
     }
 
     public void saveWorldInfo(World world) throws IOException {
         JSONObject jsonObject = new JSONObject();
 
-        jsonObject.put("name", world.getName());
+        jsonObject.put("name", world.getWorldName());
 
         JSONArray size = new JSONArray();
         size.add(0, world.getWidth());
@@ -60,8 +65,16 @@ public class WorldJsonSaver implements IJSONSaver {
         jsonObject.put("size", size);
 
         JSONArray spawn = new JSONArray();
-        spawn.add(0, String.valueOf(((GameEngine) engine).getEntityManager().getPlayer().getX() / Tile.TILE_WIDTH + "f"));
-        spawn.add(1, String.valueOf(((GameEngine) engine).getEntityManager().getPlayer().getY() / Tile.TILE_HEIGHT + "f"));
+        float spawnX, spawnY;
+        if (engine instanceof GameEngine) {
+            spawnX = ((GameEngine) engine).getEntityManager().getPlayer().getX() / Tile.TILE_WIDTH;
+            spawnY = ((GameEngine) engine).getEntityManager().getPlayer().getY() / Tile.TILE_HEIGHT;
+        } else {
+            spawnX = world.getSpawnX();
+            spawnY = world.getSpawnY();
+        }
+        spawn.add(0, String.valueOf(spawnX + "f"));
+        spawn.add(1, String.valueOf(spawnY + "f"));
         jsonObject.put("spawn", spawn);
 
         saveJSONFileToSave(WorldJsonLoader.BASE_FILES.get("world"), jsonObject);
@@ -78,8 +91,10 @@ public class WorldJsonSaver implements IJSONSaver {
                 saveTile(chunk, bgTiles[x][y], x, y);
             }
             bg_tile.put("chunk" + y, chunk);
+            Logger.print("Saved chunk " + y + " for bg tiles");
         }
         jsonObjectBG.put("bg_tile", bg_tile);
+        Logger.print("Saved bg tiles");
 
         JSONObject fg_tile = new JSONObject();
         for (int y = 0; y < height; y++) {
@@ -88,8 +103,10 @@ public class WorldJsonSaver implements IJSONSaver {
                 saveTile(chunk, fgTiles[x][y], x, y);
             }
             fg_tile.put("chunk" + y, chunk);
+            Logger.print("Saved chunk " + y + " for fg tiles");
         }
         jsonObjectFG.put("fg_tile", fg_tile);
+        Logger.print("Saved fg tiles");
 
         saveJSONFileToPath(bgSavePath, jsonObjectBG);
         saveJSONFileToPath(fgSavePath, jsonObjectFG);

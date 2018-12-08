@@ -17,7 +17,7 @@ import java.io.IOException;
 public class World {
 
     private Engine engine;
-    private String name;
+    private String worldName;
     private int width, height;
     private float spawnX;
     private float spawnY;
@@ -29,6 +29,7 @@ public class World {
 
     public World(Engine engine, String path, String worldName) {
         this.engine = engine;
+        this.worldName = worldName;
         overlayManager = new OverlayManager(engine, ((GameEngine) engine).getEntityManager().getPlayer());
 
         try {
@@ -40,7 +41,18 @@ public class World {
         ((GameEngine) engine).getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
 
         DiscordHandler.INSTANCE.updatePresence("In Game - " + ((GameEngine) engine).getEntityManager().getPlayer().getUsername(),
-                "World: " + name + " - Save: [" + worldName + "]", true);
+                "World: " + this.worldName + " - Save: [" + this.worldName + "]", true);
+    }
+
+    public World(Engine engine, String worldName, int width, int height, int spawnX, int spawnY, Tile[][] bg_tiles, Tile[][] fg_tiles) {
+        this.engine = engine;
+        this.worldName = worldName;
+        this.width = width;
+        this.height = height;
+        this.spawnX = spawnX;
+        this.spawnY = spawnY;
+        this.bg_tiles = bg_tiles;
+        this.fg_tiles = fg_tiles;
     }
 
     public void tick() {
@@ -149,7 +161,7 @@ public class World {
         worldJsonLoader.load();
         Logger.print("Loading world [" + worldJsonLoader.getName() + "]!");
 
-        name = worldJsonLoader.getName();
+        worldName = worldJsonLoader.getName();
 
         width = worldJsonLoader.getWidth();
         height = worldJsonLoader.getHeight();
@@ -190,8 +202,8 @@ public class World {
         Logger.print("Loaded foreground tiles!\n");
     }
 
-    public String getName() {
-        return name;
+    public String getWorldName() {
+        return worldName;
     }
 
     public int getWidth() {

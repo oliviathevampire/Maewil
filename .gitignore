@@ -36,5 +36,4 @@ build
 build.bat
 build_no_exe.bat
 saves/
-export/
 saves/saved_games.json
