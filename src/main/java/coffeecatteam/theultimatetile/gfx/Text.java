@@ -1,10 +1,28 @@
 package coffeecatteam.theultimatetile.gfx;
 
+import coffeecatteam.theultimatetile.Engine;
+
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
 
 public class Text {
+
+    public static void drawStringCenteredX(Graphics2D g, String text, int yPos, boolean underlined, Color c, Font font) {
+        int width = getWidth(g, text, font);
+        drawString(g, text, Engine.getEngine().getWidth() / 2 - width / 2, yPos, false, underlined, c, font);
+    }
+
+    public static void drawStringCenteredY(Graphics2D g, String text, int xPos, boolean underlined, Color c, Font font) {
+        int height = getHeight(g, font);
+        drawString(g, text, xPos, (Engine.getEngine().getHeight() / 2 - height / 2) + getAscent(g, font), false, underlined, c, font);
+    }
+
+    public static void drawStringCentered(Graphics2D g, String text, boolean underlined, Color c, Font font) {
+        int width = getWidth(g, text, font), height = getHeight(g, font);
+        int x = Engine.getEngine().getWidth() / 2 - width / 2, y = (Engine.getEngine().getHeight() / 2 - height / 2) + getAscent(g, font);
+        drawString(g, text, x, y, false, underlined, c, font);
+    }
 
     public static void drawString(Graphics2D g, String text, int xPos, int yPos, boolean centered, boolean underlined, Color c, Font font) {
         g.setColor(c);

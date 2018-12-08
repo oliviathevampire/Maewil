@@ -60,10 +60,11 @@ public class StateMenu extends State {
 
         int cy = engine.getHeight() - 10;
         uiManager.addObject(new UIHyperlinkCopyright(new Vector2D(5, cy), true));
-        Font font = Assets.FONT_20;
+        Font font = Assets.FONT_30;
         String text = "Credits";
-        int height = Text.getHeight((Graphics2D) Engine.getEngine().getGraphics(), font);
-        uiManager.addObject(new UIHyperlink(new Vector2D(5, cy - height), height, text, false, font, new ClickListener() {
+        Graphics2D g = (Graphics2D) Engine.getEngine().getGraphics();
+        int height = Text.getHeight(g, font);
+        uiManager.addObject(new UIHyperlink(new Vector2D(engine.getWidth() - 5 - Text.getWidth(g, text, font), cy), height, text, false, font, new ClickListener() {
             @Override
             public void onClick() {
                 State.setState(((GameEngine) engine).stateCredits);
