@@ -77,9 +77,7 @@ public class LevelRenderer {
             @Override
             public void onClick() {
                 try {
-                    JFileChooser chooser = new JFileChooser();
-                    chooser.setDialogTitle("Save World");
-                    chooser.setCurrentDirectory(new File("./export"));
+                    JFileChooser chooser = getChooser("Save World");
                     chooser.setDialogType(JFileChooser.SAVE_DIALOG);
                     chooser.setMultiSelectionEnabled(true);
 
@@ -108,9 +106,7 @@ public class LevelRenderer {
             @Override
             public void onClick() {
                 try {
-                    JFileChooser chooser = new JFileChooser();
-                    chooser.setDialogTitle("Save/Zip World");
-                    chooser.setCurrentDirectory(new File("./export"));
+                    JFileChooser chooser = getChooser("Save/Zip World");
                     chooser.setDialogType(JFileChooser.SAVE_DIALOG);
                     chooser.setMultiSelectionEnabled(true);
 
@@ -123,7 +119,7 @@ public class LevelRenderer {
 
                         zipWorld(finalPath, fileName);
                     } else {
-                        Logger.print("Canceling save...");
+                        Logger.print("Canceling save/zip...");
                     }
                 } catch (IOException e) {
                     Logger.print(e);
@@ -139,9 +135,7 @@ public class LevelRenderer {
             @Override
             public void onClick() {
                 try {
-                    JFileChooser chooser = new JFileChooser();
-                    chooser.setDialogTitle("Load World");
-                    chooser.setCurrentDirectory(new File("./export"));
+                    JFileChooser chooser = getChooser("Load World");
                     chooser.setFileFilter(new FileFilterDirectories());
                     chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
                     chooser.setAcceptAllFileFilterUsed(false);
@@ -164,6 +158,18 @@ public class LevelRenderer {
             public void tick() {
             }
         }));
+    }
+
+    private JFileChooser getChooser(String title) {
+        try {
+            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | UnsupportedLookAndFeelException | IllegalAccessException | InstantiationException e) {
+            e.printStackTrace();
+        }
+        JFileChooser chooser = new JFileChooser();
+        chooser.setDialogTitle(title);
+        chooser.setCurrentDirectory(new File("./export"));
+        return chooser;
     }
 
     private void loadWorld(String path) throws IOException, ParseException {

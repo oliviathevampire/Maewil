@@ -41,7 +41,7 @@ public class World {
         ((GameEngine) engine).getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
 
         DiscordHandler.INSTANCE.updatePresence("In Game - " + ((GameEngine) engine).getEntityManager().getPlayer().getUsername(),
-                "World: " + this.worldName + " - Save: [" + this.worldName + "]", true);
+                "World: " + this.worldName, true);
     }
 
     public World(Engine engine, String worldName, int width, int height, int spawnX, int spawnY, Tile[][] bg_tiles, Tile[][] fg_tiles) {
