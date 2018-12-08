@@ -70,9 +70,13 @@ task copyOptions(type: Copy) {
             into buildPath + "/libs/saves"
         }
         copy {
-            from "export/example/background.json"
-            from "export/example/foreground.json"
-            into buildPath + "/libs/export/example"
+            from "export/example/tiles/background.json"
+            from "export/example/tiles/foreground.json"
+            into buildPath + "/libs/export/example/tiles"
+            copy {
+                from "export/example/world_info.json"
+                into buildPath + "/libs/export/example"
+            }
         }
         into buildPath + "/libs"
     }
