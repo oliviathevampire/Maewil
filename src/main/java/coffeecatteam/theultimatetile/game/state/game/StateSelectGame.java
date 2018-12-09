@@ -12,6 +12,7 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.json.simple.parser.ParseException;
 
@@ -117,15 +118,27 @@ public class StateSelectGame extends StateAbstractMenu {
                 worldName = SavedGamesJSONParser.GAMES.get(index).split(":")[1];
                 path = savesPath + worldName;
             }
-            State.setState(new StateGame(engine, path, worldName));
 
-            if (!isSaved) {
-                String username = ArgUtils.hasArgument(engine.getArgs(), "-username") ? ArgUtils.getArgument(engine.getArgs(), "-username") : Utils.getUsername();
-                ((GameEngine) engine).setUsername(username);
-                Logger.print("Set username: " + username);
+            String username;
+            if (ArgUtils.hasArgument(engine.getArgs(), "-username")) {
+                username = ArgUtils.getArgument(engine.getArgs(), "-username");
+            } else {
+                if (!isSaved) {
+                    username = Utils.getUsername();
+                } else {
+                    username = "HAKUNA MATATA!";
+                }
             }
+            GameEngine.getGameEngine().setUsername(username);
+            Logger.print("Set username: " + GameEngine.getGameEngine().getUsername());
 
             Logger.print("Loading game [" + path + "]!");
+
+            DiscordHandler.INSTANCE.updatePresence("In Game - " + GameEngine.getGameEngine().getUsername(),
+                    "World: " + worldName, true);
+            StateGame game = new StateGame(engine, path, worldName);
+            game.saveWorld(username);
+            State.setState(game);
         }
 
         @Override

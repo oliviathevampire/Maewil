@@ -29,6 +29,7 @@ public class DiscordHandler {
             Logger.print("Connected to discord\n" +
                     "Discord rich presence setup for " + userId +
                     "\nReady: " + READY);
+            Logger.print();
         };
         rpc.Discord_Initialize("502962688733741056", handlers, true, "");
 

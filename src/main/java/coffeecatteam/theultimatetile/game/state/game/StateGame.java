@@ -58,7 +58,7 @@ public class StateGame extends State {
         UIButton btnMainMenu = new UIButton(engine, true, engine.getHeight() / 2 + yOffset + 10, "Main Menu", new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(((GameEngine) engine).stateMenu);
+                State.setState(GameEngine.getGameEngine().stateMenu);
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu");
                 saveWorld();
@@ -92,27 +92,27 @@ public class StateGame extends State {
     public void init() {
         paused = false;
         engine.getMouseManager().setUiManager(uiManagerPaused);
-        ((GameEngine) engine).getEntityManager().getPlayer().setX(world.getSpawnX() * Tile.TILE_WIDTH);
-        ((GameEngine) engine).getEntityManager().getPlayer().setY(world.getSpawnY() * Tile.TILE_HEIGHT);
+        GameEngine.getGameEngine().getEntityManager().getPlayer().setX(world.getSpawnX() * Tile.TILE_WIDTH);
+        GameEngine.getGameEngine().getEntityManager().getPlayer().setY(world.getSpawnY() * Tile.TILE_HEIGHT);
     }
 
     @Override
     public void tick() {
-        if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !((GameEngine) engine).getEntityManager().getPlayer().isDead) {
-            if (!((GameEngine) engine).getEntityManager().getPlayer().isGuiOpen())
-                paused = !paused && !((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().isActive();
+        if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !GameEngine.getGameEngine().getEntityManager().getPlayer().isDead) {
+            if (!GameEngine.getGameEngine().getEntityManager().getPlayer().isGuiOpen())
+                paused = !paused && !GameEngine.getGameEngine().getEntityManager().getPlayer().getInventoryPlayer().isActive();
             saveWorld();
         }
 
         if (paused)
             engine.getMouseManager().setUiManager(uiManagerPaused);
 
-        if (((GameEngine) engine).getEntityManager().getPlayer().isDead) {
+        if (GameEngine.getGameEngine().getEntityManager().getPlayer().isDead) {
             engine.getMouseManager().setUiManager(uiManagerDead);
             uiManagerDead.tick();
         }
 
-        if (!paused && !((GameEngine) engine).getEntityManager().getPlayer().isDead)
+        if (!paused && !GameEngine.getGameEngine().getEntityManager().getPlayer().isDead)
             engine.getMouseManager().setUiManager(null);
 
         if (!paused)
@@ -125,7 +125,7 @@ public class StateGame extends State {
     public void render(Graphics2D g) {
         world.render(g);
 
-        if (((GameEngine) engine).getEntityManager().getPlayer().isDead) {
+        if (GameEngine.getGameEngine().getEntityManager().getPlayer().isDead) {
             Color tint = new Color(96, 96, 96, 127);
             g.setColor(tint);
             g.fillRect(0, 0, engine.getWidth(), engine.getHeight());
@@ -147,6 +147,16 @@ public class StateGame extends State {
         }
     }
 
+    public void saveWorld(String username) {
+        WorldJsonSaver saver = new WorldJsonSaver("./saves/" + worldName, world, engine);
+        try {
+            saver.save(username);
+        } catch (IOException e) {
+            Logger.print(e);
+        }
+        GameEngine.getGameEngine().setUsername(username);
+    }
+
     public void saveWorld() {
         WorldJsonSaver saver = new WorldJsonSaver("./saves/" + worldName, world, engine);
         try {
@@ -158,14 +168,14 @@ public class StateGame extends State {
 
     public void setWorld(String path) {
         this.world = new World(engine, path, worldName);
-        ((GameEngine) engine).setWorld(world);
+        GameEngine.getGameEngine().setWorld(world);
         init();
     }
 
     public void reset(String world) {
-        ((GameEngine) engine).getEntityManager().reset();
-        ((GameEngine) engine).getEntityManager().getPlayer().reset();
-        ((GameEngine) engine).getItemManager().reset();
+        GameEngine.getGameEngine().getEntityManager().reset();
+        GameEngine.getGameEngine().getEntityManager().getPlayer().reset();
+        GameEngine.getGameEngine().getItemManager().reset();
         setWorld(world);
     }
 }

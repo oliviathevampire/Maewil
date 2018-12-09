@@ -39,9 +39,6 @@ public class World {
         }
         ((GameEngine) engine).getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
         ((GameEngine) engine).getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
-
-        DiscordHandler.INSTANCE.updatePresence("In Game - " + ((GameEngine) engine).getEntityManager().getPlayer().getUsername(),
-                "World: " + this.worldName, true);
     }
 
     public World(Engine engine, String worldName, int width, int height, int spawnX, int spawnY, Tile[][] bg_tiles, Tile[][] fg_tiles) {
@@ -173,7 +170,7 @@ public class World {
         bg_tiles = new Tile[width][height];
         fg_tiles = new Tile[width][height];
 
-        ((GameEngine) engine).getEntityManager().getPlayer().setUsername(worldJsonLoader.getUsername());
+        GameEngine.getGameEngine().setUsername(worldJsonLoader.getUsername());
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
