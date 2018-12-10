@@ -1,9 +1,12 @@
 package coffeecatteam.theultimatetile.game.state;
 
 import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.ui.UITextBox;
 import coffeecatteam.theultimatetile.jsonparsers.JsonParser;
 import org.json.simple.parser.ParseException;
 
@@ -17,6 +20,7 @@ import java.io.IOException;
 public class StateCredits extends StateAbstractMenu {
 
     private String[] devs, helpers;
+    private UITextBox textBoxDev, textBoxHelper;
 
     public StateCredits(Engine engine) {
         super(engine);
@@ -36,6 +40,16 @@ public class StateCredits extends StateAbstractMenu {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+
+        textBoxDev = new UITextBox();
+        textBoxDev.addText("Developers", Assets.FONT_40, true);
+        for (String dev : devs)
+            textBoxDev.addText(dev);
+
+        textBoxHelper = new UITextBox();
+        textBoxHelper.addText("Helpers", Assets.FONT_40, true);
+        for (String helper : helpers)
+            textBoxHelper.addText(helper);
     }
 
     @Override
@@ -46,22 +60,12 @@ public class StateCredits extends StateAbstractMenu {
     @Override
     public void render(Graphics2D g) {
         super.render(g);
-        Font titleFont = Assets.FONT_40;
-        int titleHeight = Text.getHeight(g, titleFont), yPadding = 100, devY = 25 + titleHeight;
-        Text.drawStringCenteredX(g, "Developers", devY + yPadding, true, Color.WHITE, titleFont);
 
-        Font personFont = Assets.FONT_20;
-        int devHeight = Text.getHeight(g, personFont), lastDevY = 0;
-        for (int i  = 0; i < devs.length; i++) {
-            lastDevY = 5 + devY + devHeight * (i + 1);
-            Text.drawStringCenteredX(g, devs[i], lastDevY + yPadding, false, Color.WHITE, personFont);
-        }
+        textBoxDev.setPosition(new Vector2D(engine.getWidth() / 2d - textBoxDev.getWidth() / 2d, 100));
+        int tbDiff = textBoxDev.getWidth() - textBoxHelper.getWidth();
+        textBoxHelper.setPosition(new Vector2D(textBoxDev.getPosition().x + tbDiff / 2d, textBoxDev.getPosition().y + textBoxDev.getHeight() + 10));
 
-        int helperY = 15 + titleHeight + lastDevY;
-        Text.drawStringCenteredX(g, "Helpers", helperY + yPadding, true, Color.WHITE, titleFont);
-
-        int helperHeight = Text.getHeight(g, personFont);
-        for (int i  = 0; i < helpers.length; i++)
-            Text.drawStringCenteredX(g, helpers[i], 5 + helperY + helperHeight * (i + 1) + yPadding, false, Color.WHITE, personFont);
+        textBoxDev.render(g);
+        textBoxHelper.render(g);
     }
 }
