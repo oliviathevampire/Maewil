@@ -46,7 +46,7 @@ public class OptionsSounds extends StateAbstractOptions {
     public void render(Graphics2D g) {
         super.render(g);
 
-        Font font = Assets.FONT_30;
+        Font font = Assets.FONTS.get("30");
         Color c = Color.WHITE;
         int ytOff = 15;
         Text.drawString(g, "Music: " + volMusic.getValue(), (int) volMusic.getPosition().x, (int) volMusic.getPosition().y - ytOff, false, false, c, font);

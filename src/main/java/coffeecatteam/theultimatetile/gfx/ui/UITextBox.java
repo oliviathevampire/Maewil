@@ -27,7 +27,7 @@ public class UITextBox extends UIObject {
     }
 
     public void addText(String text) {
-        addText(text, Assets.FONT_20);
+        addText(text, Assets.FONTS.get("20"));
     }
 
     public void addText(String text, Font font) {

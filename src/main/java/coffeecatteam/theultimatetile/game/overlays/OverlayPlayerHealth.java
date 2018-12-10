@@ -35,7 +35,7 @@ public class OverlayPlayerHealth extends Overlay {
         if (player.getCurrentHealth() <= 0)
             hStage = 4;
 
-        Text.drawString(g, "HP: " + player.getCurrentHealth(), 10, engine.getHeight() - hHeight, false, false, Color.red, Assets.FONT_20);
+        Text.drawString(g, "HP: " + player.getCurrentHealth(), 10, engine.getHeight() - hHeight, false, false, Color.red, Assets.FONTS.get("20"));
 
         g.drawImage(Assets.HEARTS[hStage], 0, engine.getHeight() - hHeight, hWidth, hHeight, null);
     }

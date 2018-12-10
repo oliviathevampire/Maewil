@@ -60,7 +60,7 @@ public class StateMenu extends State {
 
         int cy = engine.getHeight() - 10;
         uiManager.addObject(new UIHyperlinkCopyright(new Vector2D(5, cy), true));
-        Font font = Assets.FONT_30;
+        Font font = Assets.FONTS.get("30");
         String text = "Credits";
         Graphics2D g = (Graphics2D) Engine.getEngine().getGraphics();
         int height = Text.getHeight(g, font);

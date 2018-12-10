@@ -111,7 +111,7 @@ public class ItemManager {
         for (ItemStack stack : items) {
             stack.getItem().render(g);
             if (stack.getCount() > 1)
-                Text.drawString(g, String.valueOf(stack.getCount()), (int) (stack.getItem().getPosition().x - this.gameEngine.getCamera().getxOffset()), (int) (stack.getItem().getPosition().y + 15 - this.gameEngine.getCamera().getyOffset()), false, false, Color.white, Assets.FONT_20);
+                Text.drawString(g, String.valueOf(stack.getCount()), (int) (stack.getItem().getPosition().x - this.gameEngine.getCamera().getxOffset()), (int) (stack.getItem().getPosition().y + 15 - this.gameEngine.getCamera().getyOffset()), false, false, Color.white, Assets.FONTS.get("20"));
         }
     }
 

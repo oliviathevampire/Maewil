@@ -73,7 +73,7 @@ public class LevelRenderer {
         fgCheckBox = new UICheckBox(new Vector2D(10, 50), true);
         uiManager.addObject(fgCheckBox);
 
-        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 170, 10), "Save World", false, Assets.FONT_20, new ClickListener() {
+        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 170, 10), "Save World", false, Assets.FONTS.get("20"), new ClickListener() {
             @Override
             public void onClick() {
                 try {
@@ -102,7 +102,7 @@ public class LevelRenderer {
             }
         }));
 
-        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 158, 60), "Zip World", false, Assets.FONT_20, new ClickListener() {
+        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 158, 60), "Zip World", false, Assets.FONTS.get("20"), new ClickListener() {
             @Override
             public void onClick() {
                 try {
@@ -131,7 +131,7 @@ public class LevelRenderer {
             }
         }));
 
-        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 170, 110), "Load World", false, Assets.FONT_20, new ClickListener() {
+        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 170, 110), "Load World", false, Assets.FONTS.get("20"), new ClickListener() {
             @Override
             public void onClick() {
                 try {
@@ -258,7 +258,7 @@ public class LevelRenderer {
     }
 
     public void postRender(Graphics2D g) {
-        Font font = Assets.FONT_20;
+        Font font = Assets.FONTS.get("20");
         Text.drawString(g, "Zoom: x" + zoomSlider.getValue(), (int) zoomSlider.getPosition().x + zoomSlider.getWidth() + 25, (int) zoomSlider.getPosition().y + Text.getHeight(g, font), false, false, Color.white, font);
 
         Text.drawString(g, "Edit foreground", (int) (fgCheckBox.getPosition().x + fgCheckBox.getWidth() + 5), (int) (fgCheckBox.getPosition().y + fgCheckBox.getHeight() - 5), false, false, Color.white, font);

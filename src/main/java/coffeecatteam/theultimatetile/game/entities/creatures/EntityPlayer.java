@@ -347,7 +347,7 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void postRender(Graphics2D g) {
-        Font font = Assets.FONT_20;
+        Font font = Assets.FONTS.get("20");
         if (username != null) {
             int nameWidth = Text.getWidth(g, username, font);
             int nameHeight = Text.getHeight(g, font);

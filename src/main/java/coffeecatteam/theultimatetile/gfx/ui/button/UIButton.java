@@ -34,22 +34,22 @@ public class UIButton extends UIObject {
     private boolean centeredX, centeredY;
 
     public UIButton(Engine engine, boolean centered, String text, ClickListener listener) {
-        this(engine, new Vector2D(), text, false, Assets.FONT_40, listener);
+        this(engine, new Vector2D(), text, false, Assets.FONTS.get("40"), listener);
         this.centeredX = centeredY = centered;
     }
 
     public UIButton(Engine engine, boolean centeredX, int y, String text, ClickListener listener) {
-        this(engine, new Vector2D(0, y), text, false, Assets.FONT_40, listener);
+        this(engine, new Vector2D(0, y), text, false, Assets.FONTS.get("40"), listener);
         this.centeredX = centeredX;
     }
 
     public UIButton(Engine engine, int x, boolean centeredY, String text, ClickListener listener) {
-        this(engine, new Vector2D(x, 0), text, false, Assets.FONT_40, listener);
+        this(engine, new Vector2D(x, 0), text, false, Assets.FONTS.get("40"), listener);
         this.centeredY = centeredY;
     }
 
     public UIButton(Engine engine, Vector2D position, String text, ClickListener listener) {
-        this(engine, position, text, false, Assets.FONT_40, listener);
+        this(engine, position, text, false, Assets.FONTS.get("40"), listener);
     }
 
     public UIButton(Engine engine, Vector2D position, String text, boolean underlined, Font font, ClickListener listener) {

@@ -42,12 +42,12 @@ public class StateCredits extends StateAbstractMenu {
         }
 
         textBoxDev = new UITextBox();
-        textBoxDev.addText("Developers", Assets.FONT_40, true);
+        textBoxDev.addText("Developers", Assets.FONTS.get("40"), true);
         for (String dev : devs)
             textBoxDev.addText(dev);
 
         textBoxHelper = new UITextBox();
-        textBoxHelper.addText("Helpers", Assets.FONT_40, true);
+        textBoxHelper.addText("Helpers", Assets.FONTS.get("40"), true);
         for (String helper : helpers)
             textBoxHelper.addText(helper);
     }

@@ -117,7 +117,7 @@ public abstract class Engine extends Canvas implements Runnable {
             render(g);
 //        } else {
 //            g.drawImage(Assets.BACKGROUND, 0, 0, width, height, null);
-//            Text.drawString(g, "Loading" + loadingDotText, width / 2, height / 2, true, false, Color.BLACK, Assets.FONT_80);
+//            Text.drawString(g, "Loading" + loadingDotText, width / 2, height / 2, true, false, Color.BLACK, Assets.FONTS.get("80"));
 //        }
 
         // End drawing
@@ -183,7 +183,7 @@ public abstract class Engine extends Canvas implements Runnable {
     }
 
     protected void renderFPSCounter(Graphics2D g, int fps) {
-        Font font = Assets.FONT_20;
+        Font font = Assets.FONTS.get("20");
         Text.drawString(g, "FPS: " + fps, 5, 5 + Text.getHeight(g, font), false, false, Color.orange, font);
     }
 

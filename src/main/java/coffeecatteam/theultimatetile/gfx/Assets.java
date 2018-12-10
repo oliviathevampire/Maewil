@@ -6,6 +6,8 @@ import coffeecatteam.coffeecatutils.io.FontLoader;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Assets {
 
@@ -31,7 +33,7 @@ public class Assets {
     private static SpriteSheet campfireInvSheet;
 
     /* Fonts */
-    public static Font FONT_20, FONT_30, FONT_40, FONT_80;
+    public static Map<String, Font> FONTS = new HashMap<>();
 
     /* Tiles */
     public static BufferedImage GRASS, DIRT, SAND;
@@ -126,10 +128,10 @@ public class Assets {
     /* Fonts */
     private static void initFonts() {
         String fontPath = "/assets/fonts/LCD_Solid.ttf";
-        FONT_20 = FontLoader.loadTrueTypeFont(fontPath, 20);
-        FONT_30 = FontLoader.loadTrueTypeFont(fontPath, 30);
-        FONT_40 = FontLoader.loadTrueTypeFont(fontPath, 40);
-        FONT_80 = FontLoader.loadTrueTypeFont(fontPath, 80);
+        for (int i = 10; i <= 100; i += 10) {
+            FONTS.put(String.valueOf(i), FontLoader.loadTrueTypeFont(fontPath, i));
+            Logger.print("Font size [" + i + "] loaded!");
+        }
 
         Logger.print("Assets [Fonts] loaded!");
     }
