@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Assets;
@@ -41,6 +42,10 @@ public class UITextBox extends UIObject {
     public void addText(String text, Font font, boolean underlined, Color color) {
         TextF textF = new TextF(text, font, underlined, color);
         lines.add(textF);
+    }
+
+    public void clearText() {
+        lines.clear();
     }
 
     private int getLongestString() {

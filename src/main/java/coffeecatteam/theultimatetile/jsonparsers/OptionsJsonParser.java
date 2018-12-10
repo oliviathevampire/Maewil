@@ -44,7 +44,8 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
             JSONObject k = (JSONObject) controls.get(jsonId.toString());
             int key_id = NumberUtils.parseInt(k.get("key_id").toString());
             String key_char = k.get("key_char").toString();
-            CONTROLS.put(jsonId.toString(), new Keybind(key_char, key_id));
+            String description = k.get("description").toString();
+            CONTROLS.put(jsonId.toString(), new Keybind(key_char, key_id, description));
         }
         Logger.print("Options [controls] loaded!");
 
@@ -73,6 +74,7 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
             JSONObject key = new JSONObject();
             key.put("key_id", String.valueOf(CONTROLS.get(jsonId).getKeyCode()));
             key.put("key_char", CONTROLS.get(jsonId).getId());
+            key.put("description", CONTROLS.get(jsonId).getDescription());
             controls.put(jsonId, key);
         }
         jsonObject.put("controls", controls);

@@ -40,7 +40,7 @@ public class ControlClickListener implements ClickListener {
                 button.setText("> " + newId + " <");
             }
             if (button.getText().equals("> " + newId + " <") && !newId.contains("~")) {
-                StateOptions.OPTIONS.controls().replace(jsonId, new Keybind(newId, newKeyCode));
+                StateOptions.OPTIONS.controls().replace(jsonId, new Keybind(newId, newKeyCode, keybind.getDescription()));
                 engine.getKeyManager().setCurrentKeyPressedCode(KeyStroke.getKeyStroke('~').getKeyCode());
                 engine.getKeyManager().setCurrentKeyPressedChar('~');
                 listening = false;

@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIObject;
+import coffeecatteam.theultimatetile.gfx.ui.UITextBox;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -30,6 +31,7 @@ public class UIButton extends UIObject {
 
     private BufferedImage[] currentTexture;
     protected boolean hasTooltip = false, hasCustomWidth = false;
+    protected UITextBox tooltip;
 
     private boolean centeredX, centeredY;
 
@@ -63,6 +65,7 @@ public class UIButton extends UIObject {
         this.currentTexture = Assets.BUTTON_ENABLED;
 
         this.centeredX = centeredY = false;
+        tooltip = new UITextBox(position);
     }
 
     @Override
@@ -113,6 +116,14 @@ public class UIButton extends UIObject {
             this.position.x = engine.getWidth() / 2d - this.width / 2d;
         if (centeredY)
             this.position.y = engine.getHeight() / 2d - this.height / 2d;
+    }
+
+    @Override
+    public void postRender(Graphics2D g) {
+        if (isHovering() && hasTooltip) {
+            tooltip.setPosition(new Vector2D(mouseX, mouseY));
+            tooltip.render(g);
+        }
     }
 
     public UIButton setCustomWidth(int width) {

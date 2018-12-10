@@ -25,6 +25,12 @@ public class UIManager {
     public void render(Graphics2D g) {
         for (UIObject o : objects)
             o.render(g);
+        postRender(g);
+    }
+
+    public void postRender(Graphics2D g) {
+        for (UIObject o : objects)
+            o.postRender(g);
     }
 
     public void onMouseMoved(MouseEvent e) {

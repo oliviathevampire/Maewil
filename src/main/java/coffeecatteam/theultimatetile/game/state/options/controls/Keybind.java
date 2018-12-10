@@ -29,10 +29,12 @@ public class Keybind {
      */
     private String id;
     private int keyCode;
+    private String description;
 
-    public Keybind(String id, int keyCode) {
+    public Keybind(String id, int keyCode, String description) {
         this.id = id;
         this.keyCode = keyCode;
+        this.description = description;
     }
 
     public String getId() {
@@ -41,5 +43,9 @@ public class Keybind {
 
     public int getKeyCode() {
         return keyCode;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
