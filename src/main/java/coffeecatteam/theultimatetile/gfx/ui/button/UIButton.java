@@ -113,31 +113,11 @@ public class UIButton extends UIObject {
             this.position.x = engine.getWidth() / 2d - this.width / 2d;
         if (centeredY)
             this.position.y = engine.getHeight() / 2d - this.height / 2d;
-
-        List<String> tooltip = new ArrayList<>();
-        setTooltip(tooltip);
-        if (tooltip.size() > 0) {
-            if (hasTooltip && this.hovering) {
-                Font font = Assets.FONT_20;
-                int xTOff = 40;
-                int yTOff = 20;
-                g.drawImage(Assets.TOOLTIP_LONG_SMALL, mouseX, mouseY, Text.getWidth(g, tooltip.get(0), font) + xTOff, Text.getHeight(g, font) * tooltip.size() + yTOff, null);
-                int line = 1;
-                for (String tip : tooltip) {
-                    Text.drawString(g, tip, mouseX + xTOff / 2, mouseY + Text.getHeight(g, font) * line + yTOff / 2, false, false, Color.white, font);
-                    line++;
-                }
-            }
-        }
     }
 
     public UIButton setCustomWidth(int width) {
         this.width = width;
         this.hasCustomWidth = true;
-        return this;
-    }
-
-    public UIButton setTooltip(List<String> tooltip) {
         return this;
     }
 

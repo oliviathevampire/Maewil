@@ -25,6 +25,10 @@ public class Text {
     }
 
     public static void drawString(Graphics2D g, String text, int xPos, int yPos, boolean centered, boolean underlined, Color c, Font font) {
+        drawString(g, text, xPos, yPos, centered, centered, underlined, c, font);
+    }
+
+    public static void drawString(Graphics2D g, String text, int xPos, int yPos, boolean centeredX, boolean centeredY, boolean underlined, Color c, Font font) {
         g.setColor(c);
         AttributedString as = new AttributedString(text);
         as.addAttribute(TextAttribute.FONT, font);
@@ -32,8 +36,10 @@ public class Text {
             as.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         int x = xPos;
         int y = yPos;
-        if (centered) {
+        if (centeredX) {
             x = xPos - getWidth(g, text, font) / 2;
+        }
+        if (centeredY) {
             y = (yPos - getHeight(g, font) / 2) + getAscent(g, font);
         }
         g.drawString(as.getIterator(), x, y);

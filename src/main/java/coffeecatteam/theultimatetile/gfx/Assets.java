@@ -110,7 +110,7 @@ public class Assets {
     public static BufferedImage HOTBAR, HOTBAR_SELECTER;
 
     public static BufferedImage ICON_ON, ICON_OFF;
-    public static BufferedImage TOOLTIP_SHORT_SMALL, TOOLTIP_SHORT_LARGE, TOOLTIP_LONG_SMALL, TOOLTIP_LONG_LARGE;
+    public static BufferedImage[] TEXTBOX = new BufferedImage[9];
 
     public static BufferedImage LOGO;
 
@@ -326,10 +326,15 @@ public class Assets {
         ICON_ON = getSpriteInd(menuSheet, 0, 3, width, height);
         ICON_OFF = getSpriteInd(menuSheet, 1, 3, width, height);
 
-        TOOLTIP_SHORT_SMALL = getSpriteInd(menuSheet, 0, 4, width * 2, height);
-        TOOLTIP_SHORT_LARGE = getSpriteInd(menuSheet, 0, 4, width * 2, height * 2);
-        TOOLTIP_LONG_SMALL = getSpriteInd(menuSheet, 2, 4, width * 3, height);
-        TOOLTIP_LONG_LARGE = getSpriteInd(menuSheet, 2, 4, width * 3, height * 2);
+        TEXTBOX[0] = getSpriteInd(menuSheet, 0, 4, width, height);
+        TEXTBOX[1] = getSpriteInd(menuSheet, 1, 4, width, height);
+        TEXTBOX[2] = getSpriteInd(menuSheet, 2, 4, width, height);
+        TEXTBOX[3] = getSpriteInd(menuSheet, 0, 5, width, height);
+        TEXTBOX[4] = getSpriteInd(menuSheet, 1, 5, width, height);
+        TEXTBOX[5] = getSpriteInd(menuSheet, 2, 5, width, height);
+        TEXTBOX[6] = getSpriteInd(menuSheet, 0, 6, width, height);
+        TEXTBOX[7] = getSpriteInd(menuSheet, 1, 6, width, height);
+        TEXTBOX[8] = getSpriteInd(menuSheet, 2, 6, width, height);
 
         LOGO = getSpriteExact("/assets/textures/logo.png", 0, 0, 128, 128);
 
