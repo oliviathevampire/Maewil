@@ -16,18 +16,21 @@ public class Assets {
 
     /* Sprite Sheets */
     private static SpriteSheet terrainSheet;
-    private static SpriteSheet natureSheet;
-    private static SpriteSheet staticSheet;
     private static SpriteSheet effectSheet;
 
     private static SpriteSheet healthSheet;
     private static SpriteSheet glubSheet;
     private static SpriteSheet itemsSheet;
 
-    private static SpriteSheet playerSheet;
-    private static SpriteSheet undeadSheet;
-    private static SpriteSheet passiveSheet;
+    /* Entities */
+    private static SpriteSheet playerSheetIdle, playerSheetMoving, playerSheetDead;
+    private static SpriteSheet zombieSheet, skeletonSheet, slimeSheet, thingSheet;
+    private static SpriteSheet cowSheet, pigSheet, sheepSheet, foxSheet;
 
+    private static SpriteSheet bushSheet, cropsSheet, rockSheet, treeSheet;
+    private static SpriteSheet campfireSheet, extraLifeSheet, shopStallSheet;
+
+    /* GUI */
     private static SpriteSheet menuSheet;
     private static SpriteSheet invSheet;
     private static SpriteSheet campfireInvSheet;
@@ -86,6 +89,7 @@ public class Assets {
     public static BufferedImage[] PIG_IDLE, PIG_UP, PIG_DOWN, PIG_LEFT, PIG_RIGHT;
     public static BufferedImage[] COW_IDLE, COW_UP, COW_DOWN, COW_LEFT, COW_RIGHT;
     public static BufferedImage[] SHEEP_IDLE, SHEEP_UP, SHEEP_DOWN, SHEEP_LEFT, SHEEP_RIGHT;
+    public static BufferedImage[] FOX_IDLE, FOX_UP, FOX_DOWN, FOX_LEFT, FOX_RIGHT;
 
     /* Nature / Statics */
     public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
@@ -225,84 +229,92 @@ public class Assets {
         GLUB_METER = getFrames(glubSheet, 1, 0, 1, width * 4, height);
 
         /* Player Frames */
-        PLAYER_IDLE = getFrames(playerSheet, 0, 0, 7);
-        PLAYER_UP = getFrames(playerSheet, 1, 0, 3);
-        PLAYER_DOWN = getFrames(playerSheet, 1, 4, 7);
-        PLAYER_LEFT = getFrames(playerSheet, 3, 0, 3);
-        PLAYER_RIGHT = getFrames(playerSheet, 2, 0, 7);
-        PLAYER_DEAD = getFrames(playerSheet, 4, 0, 7);
+        PLAYER_IDLE = getFrames(playerSheetIdle, 0, 0, 7);
+        PLAYER_UP = getFrames(playerSheetMoving, 0, 0, 3);
+        PLAYER_DOWN = getFrames(playerSheetMoving, 0, 4, 7);
+        PLAYER_LEFT = getFrames(playerSheetMoving, 2, 0, 3);
+        PLAYER_RIGHT = getFrames(playerSheetMoving, 1, 0, 7);
+        PLAYER_DEAD = getFrames(playerSheetDead, 0, 0, 7);
 
         /* Entities */
         EXTRA_LIFE = getFrames("/assets/textures/entities/extra_life.png", 0, 7);
 
         // Undead
-        ZOMBIE_IDLE = getFrames(undeadSheet, 0, 0, 3);
-        ZOMBIE_UP = getFrames(undeadSheet, 1, 0, 2);
-        ZOMBIE_DOWN = getFrames(undeadSheet, 1, 3, 5);
-        ZOMBIE_LEFT = getFrames(undeadSheet, 2, 4, 7);
-        ZOMBIE_RIGHT = getFrames(undeadSheet, 2, 0, 3);
+        ZOMBIE_IDLE = getFrames(zombieSheet, 0, 0, 3);
+        ZOMBIE_UP = getFrames(zombieSheet, 1, 0, 2);
+        ZOMBIE_DOWN = getFrames(zombieSheet, 1, 3, 5);
+        ZOMBIE_LEFT = getFrames(zombieSheet, 2, 4, 7);
+        ZOMBIE_RIGHT = getFrames(zombieSheet, 2, 0, 3);
 
-        SKELETON_IDLE = getFrames(undeadSheet, 4, 0, 3);
-        SKELETON_UP = getFrames(undeadSheet, 5, 0, 2);
-        SKELETON_DOWN = getFrames(undeadSheet, 5, 3, 5);
-        SKELETON_LEFT = getFrames(undeadSheet, 6, 4, 7);
-        SKELETON_RIGHT = getFrames(undeadSheet, 6, 0, 3);
+        SKELETON_IDLE = getFrames(skeletonSheet, 0, 0, 3);
+        SKELETON_UP = getFrames(skeletonSheet, 1, 0, 2);
+        SKELETON_DOWN = getFrames(skeletonSheet, 1, 3, 5);
+        SKELETON_LEFT = getFrames(skeletonSheet, 2, 4, 7);
+        SKELETON_RIGHT = getFrames(skeletonSheet, 2, 0, 3);
 
-        BOUNCER_IDLE = getFrames(undeadSheet, 0, 8, 15);
-        BOUNCER_UP = getFrames(undeadSheet, 1, 8, 15);
-        BOUNCER_DOWN = getFrames(undeadSheet, 2, 8, 15);
-        BOUNCER_LEFT = getFrames(undeadSheet, 4, 8, 15);
-        BOUNCER_RIGHT = getFrames(undeadSheet, 3, 8, 15);
+        BOUNCER_IDLE = getFrames(slimeSheet, 0, 8, 15);
+        BOUNCER_UP = getFrames(slimeSheet, 1, 8, 15);
+        BOUNCER_DOWN = getFrames(slimeSheet, 2, 8, 15);
+        BOUNCER_LEFT = getFrames(slimeSheet, 4, 8, 15);
+        BOUNCER_RIGHT = getFrames(slimeSheet, 3, 8, 15);
 
-        THING_IDLE = getFrames(undeadSheet, 8, 0, 9);
-        THING_UP = getFrames(undeadSheet, 9, 0, 9);
-        THING_DOWN = getFrames(undeadSheet, 10, 0, 9);
-        THING_LEFT = getFrames(undeadSheet, 11, 0, 9);
-        THING_RIGHT = getFrames(undeadSheet, 12, 0, 9);
+        THING_IDLE = getFrames(thingSheet, 0, 0, 9);
+        THING_UP = getFrames(thingSheet, 1, 0, 9);
+        THING_DOWN = getFrames(thingSheet, 2, 0, 9);
+        THING_LEFT = getFrames(thingSheet, 3, 0, 9);
+        THING_RIGHT = getFrames(thingSheet, 4, 0, 9);
 
         // Passive
-        PIG_IDLE = getFrames(passiveSheet, 0, 0, 7);
-        PIG_UP = getFrames(passiveSheet, 1, 0, 3);
-        PIG_DOWN = getFrames(passiveSheet, 1, 4, 7);
-        PIG_LEFT = getFrames(passiveSheet, 2, 4, 7);
-        PIG_RIGHT = getFrames(passiveSheet, 2, 0, 3);
+        PIG_IDLE = getFrames(pigSheet, 0, 0, 7);
+        PIG_UP = getFrames(pigSheet, 1, 0, 3);
+        PIG_DOWN = getFrames(pigSheet, 1, 4, 7);
+        PIG_LEFT = getFrames(pigSheet, 2, 4, 7);
+        PIG_RIGHT = getFrames(pigSheet, 2, 0, 3);
 
-        COW_IDLE = getFrames(passiveSheet, 3, 0, 7);
-        COW_UP = getFrames(passiveSheet, 4, 0, 3);
-        COW_DOWN = getFrames(passiveSheet, 4, 4, 7);
-        COW_LEFT = getFrames(passiveSheet, 5, 4, 7);
-        COW_RIGHT = getFrames(passiveSheet, 5, 0, 3);
+        COW_IDLE = getFrames(cowSheet, 0, 0, 7);
+        COW_UP = getFrames(cowSheet, 1, 0, 3);
+        COW_DOWN = getFrames(cowSheet, 1, 4, 7);
+        COW_LEFT = getFrames(cowSheet, 2, 4, 7);
+        COW_RIGHT = getFrames(cowSheet, 2, 0, 3);
 
-        SHEEP_IDLE = getFrames(passiveSheet, 0, 8, 15);
-        SHEEP_UP = getFrames(passiveSheet, 1, 8, 11);
-        SHEEP_DOWN = getFrames(passiveSheet, 1, 12, 15);
-        SHEEP_LEFT = getFrames(passiveSheet, 2, 12, 15);
-        SHEEP_RIGHT = getFrames(passiveSheet, 2, 8, 11);
+        SHEEP_IDLE = getFrames(sheepSheet, 0, 0, 7);
+        SHEEP_UP = getFrames(sheepSheet, 1, 0, 3);
+        SHEEP_DOWN = getFrames(sheepSheet, 1, 4, 7);
+        SHEEP_LEFT = getFrames(sheepSheet, 2, 4, 7);
+        SHEEP_RIGHT = getFrames(sheepSheet, 2, 0, 3);
+
+        FOX_IDLE = getFrames(foxSheet, 0, 0, 7);
+        FOX_UP = getFrames(foxSheet, 1, 0, 3);
+        FOX_DOWN = getFrames(foxSheet, 1, 4, 7);
+        FOX_LEFT = getFrames(foxSheet, 2, 4, 7);
+        FOX_RIGHT = getFrames(foxSheet, 2, 0, 3);
 
         /* Nature / Statics */
-        TREE_SMALL = getSpriteInd(natureSheet, 0, 0, width, height * 2);
-        TREE_MEDIUM = getSpriteInd(natureSheet, 0, 2, width * 2, height * 2);
-        TREE_LARGE = getSpriteInd(natureSheet, 0, 4, width * 2, height * 2);
-        ROCK_V1 = getSpriteInd(natureSheet, 1, 0, width, height);
-        ROCK_V2 = getSpriteInd(natureSheet, 1, 1, width, height);
-        BUSH_SMALL = getSpriteInd(natureSheet, 2, 0, width, height);
-        BUSH_LARGE = getSpriteInd(natureSheet, 2, 1, width * 2, height);
+        TREE_SMALL = getSpriteInd(treeSheet, 0, 0, width, height * 2);
+        TREE_MEDIUM = getSpriteInd(treeSheet, 1, 0, width * 2, height * 2);
+        TREE_LARGE = getSpriteInd(treeSheet, 3, 0, width * 2, height * 2);
 
-        CROP_GROUND = getSpriteInd(natureSheet, 6, 0, width, height);
-        CROP_CARROT = getSpriteInd(natureSheet, 7, 0, width, height);
-        CROP_WHEAT = getSpriteInd(natureSheet, 7, 1, width, height);
-        CROP_POTATO = getSpriteInd(natureSheet, 7, 2, width, height);
-        CROP_TOMATO = getSpriteInd(natureSheet, 7, 3, width, height);
-        CROP_CORN = getSpriteInd(natureSheet, 7, 4, width, height);
+        ROCK_V1 = getSpriteInd(rockSheet, 0, 0, width, height);
+        ROCK_V2 = getSpriteInd(rockSheet, 1, 0, width, height);
+
+        BUSH_SMALL = getSpriteInd(bushSheet, 0, 0, width, height);
+        BUSH_LARGE = getSpriteInd(bushSheet, 1, 0, width * 2, height);
+
+        CROP_GROUND = getSpriteInd(cropsSheet, 0, 1, width, height);
+        CROP_CARROT = getSpriteInd(cropsSheet, 0, 0, width, height);
+        CROP_WHEAT = getSpriteInd(cropsSheet, 1, 0, width, height);
+        CROP_POTATO = getSpriteInd(cropsSheet, 2, 0, width, height);
+        CROP_TOMATO = getSpriteInd(cropsSheet, 3, 0, width, height);
+        CROP_CORN = getSpriteInd(cropsSheet, 4, 0, width, height);
 
         int shopRoofLength = 7;
-        SHOP_STALL = getSpriteInd(staticSheet, 0, 4, width * 2, height * 2);
-        SHOP_ROOF_ORANGE = getFrames(staticSheet, 0, 0, shopRoofLength, width * 2, height);
-        SHOP_ROOF_BLUE = getFrames(staticSheet, 1, 0, shopRoofLength, width * 2, height);
-        SHOP_ROOF_RED = getFrames(staticSheet, 2, 0, shopRoofLength, width * 2, height);
-        SHOP_ROOF_GREY = getFrames(staticSheet, 3, 0, shopRoofLength, width * 2, height);
+        SHOP_STALL = getSpriteInd(shopStallSheet, 0, 4, width * 2, height * 2);
+        SHOP_ROOF_ORANGE = getFrames(shopStallSheet, 0, 0, shopRoofLength, width * 2, height);
+        SHOP_ROOF_BLUE = getFrames(shopStallSheet, 1, 0, shopRoofLength, width * 2, height);
+        SHOP_ROOF_RED = getFrames(shopStallSheet, 2, 0, shopRoofLength, width * 2, height);
+        SHOP_ROOF_GREY = getFrames(shopStallSheet, 3, 0, shopRoofLength, width * 2, height);
 
-        CAMPFIRE = getFrames(staticSheet, 7, 0, 9, width, height);
+        CAMPFIRE = getFrames(campfireSheet, 0, 0, 9, width, height);
 
         Logger.print("Assets [Entities] loaded!");
     }
@@ -362,18 +374,37 @@ public class Assets {
     public static void init() {
         /* Sprite Sheets */
         terrainSheet = getSheet("/assets/textures/tiles/terrain.png");
-        natureSheet = getSheet("/assets/textures/entities/nature.png");
-        staticSheet = getSheet("/assets/textures/entities/static.png");
         effectSheet = getSheet("/assets/textures/effect.png");
 
         healthSheet = getSheet("/assets/textures/gui/overlay/health.png");
         glubSheet = getSheet("/assets/textures/glub.png");
         itemsSheet = getSheet("/assets/textures/items.png");
 
-        playerSheet = getSheet("/assets/textures/entities/player.png");
-        undeadSheet = getSheet("/assets/textures/entities/undead.png");
-        passiveSheet = getSheet("/assets/textures/entities/passive.png");
+        /* Entities */
+        playerSheetIdle = getSheet("/assets/textures/entities/living/player/idle.png");
+        playerSheetMoving = getSheet("/assets/textures/entities/living/player/moving.png");
+        playerSheetDead = getSheet("/assets/textures/entities/living/player/dead.png");
 
+        zombieSheet = getSheet("/assets/textures/entities/living/undead/zombie.png");
+        skeletonSheet = getSheet("/assets/textures/entities/living/undead/skeleton.png");
+        slimeSheet = getSheet("/assets/textures/entities/living/undead/slime.png");
+        thingSheet = getSheet("/assets/textures/entities/living/undead/thing.png");
+
+        cowSheet = getSheet("/assets/textures/entities/living/cow.png");
+        pigSheet = getSheet("/assets/textures/entities/living/pig.png");
+        sheepSheet = getSheet("/assets/textures/entities/living/sheep.png");
+        foxSheet = getSheet("/assets/textures/entities/living/fox.png");
+
+        bushSheet = getSheet("/assets/textures/entities/static/nature/bush.png");
+        cropsSheet = getSheet("/assets/textures/entities/static/nature/crops.png");
+        rockSheet = getSheet("/assets/textures/entities/static/nature/rock.png");
+        treeSheet = getSheet("/assets/textures/entities/static/nature/tree.png");
+
+        campfireSheet = getSheet("/assets/textures/entities/static/campfire.png");
+        extraLifeSheet = getSheet("/assets/textures/entities/static/extra_life.png");
+        shopStallSheet = getSheet("/assets/textures/entities/static/shop_stall.png");
+
+        /* GUI */
         menuSheet = getSheet("/assets/textures/gui/menu.png");
         invSheet = getSheet("/assets/textures/gui/inventory/inventory.png");
         campfireInvSheet = getSheet("/assets/textures/gui/inventory/campfire.png");
