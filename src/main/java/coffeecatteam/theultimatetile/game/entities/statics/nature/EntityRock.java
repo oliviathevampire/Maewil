@@ -1,33 +1,22 @@
 package coffeecatteam.theultimatetile.game.entities.statics.nature;
 
-import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
-import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
-import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.game.entities.statics.EntityNature;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
 import java.awt.image.BufferedImage;
-import java.util.List;
 
-public class EntityRock extends EntityStatic {
+public class EntityRock extends EntityNature {
 
     public EntityRock(Engine engine, String id, BufferedImage texture) {
-        super(engine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.STONE);
-        this.texture = texture;
+        super(engine, id, texture, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.STONE);
 
         bounds.x = 0;
-        bounds.y = height / 2 + height / 3;
+        bounds.y = height / 2f + height / 3f;
         bounds.width = width;
         bounds.height = height / 3;
-    }
 
-    @Override
-    public void die(List<Entity> entities, int index) {
-        super.die(entities, index);
-        int amt = NumberUtils.getRandomInt(3);
-        for (int i = 0; i < amt; i++)
-            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.ROCK), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
+        drops.add(ItemManager.ROCK);
     }
 }

@@ -4,6 +4,7 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
+import coffeecatteam.theultimatetile.game.entities.statics.EntityNature;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
@@ -14,32 +15,23 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-public class EntityTree extends EntityStatic {
-
-    private TreeType type;
+public class EntityTree extends EntityNature {
 
     public EntityTree(Engine engine, String id, TreeType type) {
-        super(engine, id, type.getWidth(), type.getHeight(), EntityHitType.WOOD);
-        this.type = type;
+        super(engine, id, type.getTexture(), type.getWidth(), type.getHeight(), EntityHitType.WOOD);
 
         bounds.x = 20 + type.getBoundsOffset();
         bounds.y = 96;
         bounds.width = 28;
         bounds.height = 32;
-    }
 
-    @Override
-    public void render(Graphics2D g) {
-        g.drawImage(type.getTexture(), this.renderX, this.renderY, width, height, null);
+        drops.add(ItemManager.LEAF);
+        drops.add(ItemManager.STICK);
     }
 
     @Override
     public void die(List<Entity> entities, int index) {
         super.die(entities, index);
-        for (int i = 0; i < NumberUtils.getRandomInt(1, 3); i++) {
-            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.STICK), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
-            ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.LEAF), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
-        }
         ((GameEngine) engine).getItemManager().addItem(new ItemStack(ItemManager.APPLE), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
     }
 

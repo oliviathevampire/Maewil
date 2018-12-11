@@ -6,6 +6,10 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.ImageLoader;
+import coffeecatteam.theultimatetile.gfx.SpriteSheet;
+import coffeecatteam.theultimatetile.gfx.Text;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -38,6 +42,7 @@ public abstract class Entity {
 
     protected int renderX, renderY;
     protected BufferedImage texture;
+    private SpriteSheet HEALTH_BAR = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health_bar.png"));
 
     public Entity(Engine engine, String id, int width, int height, EntityHitType entityHitType) {
         this.id = id;
@@ -97,6 +102,20 @@ public abstract class Entity {
             g.setColor(Color.red);
             g.drawRect((int) (position.x + bounds.x - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.y + bounds.y - ((GameEngine) engine).getCamera().getyOffset()), bounds.width, bounds.height);
         }
+    }
+
+    public void renderHealth(Graphics2D g) {
+
+        int barWidth = 16;
+        g.drawImage(HEALTH_BAR.crop(0, 9, barWidth, 2), this.renderX, this.renderY - 8, width, 4, null);
+
+        int ht = (int) NumberUtils.map(currentHealth, 0, maxHealth, 0, width); // (currentHealth * 100.0f) / 15
+        g.drawImage(HEALTH_BAR.crop(0, 5, barWidth, 2), this.renderX, this.renderY - 8, ht, 4, null);
+
+        Font font = Assets.FONTS.get("20");
+        String textHealth = "HP: " + currentHealth;
+        int xOff = Text.getWidth(g, textHealth, font) / 2 - width / 2;
+        Text.drawString(g, textHealth, this.renderX - xOff, this.renderY - Text.getHeight(g, font) / 2, false, false, new Color(0, 255, 0), font);
     }
 
     public void die(List<Entity> entities, int index) {

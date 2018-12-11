@@ -30,7 +30,6 @@ public abstract class EntityCreature extends Entity {
     protected int animSpeed = 135;
     protected int animUpDownSpeed = animSpeed + 115;
 
-    private SpriteSheet HEALTH_BAR = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health_bar.png"));
     private Animation splashEffect;
 
     protected Item drop = null;
@@ -85,17 +84,7 @@ public abstract class EntityCreature extends Entity {
         g.drawImage(currentAnim.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
 
         this.renderEffect(g);
-
-        int barWidth = 16;
-        g.drawImage(HEALTH_BAR.crop(0, 9, barWidth, 2), this.renderX, this.renderY - 8, width, 4, null);
-
-        int ht = (int) NumberUtils.map(currentHealth, 0, maxHealth, 0, width); // (currentHealth * 100.0f) / 15
-        g.drawImage(HEALTH_BAR.crop(0, 5, barWidth, 2), this.renderX, this.renderY - 8, ht, 4, null);
-
-        Font font = Assets.FONTS.get("20");
-        String textHealth = "HP: " + currentHealth;
-        int xOff = Text.getWidth(g, textHealth, font) / 2 - width / 2;
-        Text.drawString(g, textHealth, this.renderX - xOff, this.renderY - Text.getHeight(g, font) / 2, false, false, new Color(0, 255, 0), font);
+        this.renderHealth(g);
     }
 
     public void renderEffect(Graphics2D g) {
