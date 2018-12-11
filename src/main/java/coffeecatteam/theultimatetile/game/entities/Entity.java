@@ -42,7 +42,7 @@ public abstract class Entity {
 
     protected int renderX, renderY;
     protected BufferedImage texture;
-    private SpriteSheet HEALTH_BAR = new SpriteSheet(ImageLoader.loadImage("/assets/textures/gui/overlay/health_bar.png"));
+    private SpriteSheet HEALTH_BAR = new SpriteSheet("/assets/textures/gui/overlay/health_bar.png");
 
     public Entity(Engine engine, String id, int width, int height, EntityHitType entityHitType) {
         this.id = id;
@@ -141,6 +141,10 @@ public abstract class Entity {
         }
     }
 
+    public void heal(int health) {
+        currentHealth += health;
+    }
+
     public boolean checkEntityCollisions(float xOffset, float yOffset) {
         for (Entity e : ((GameEngine) engine).getEntityManager().getEntities()) {
             if (e.equals(this))
@@ -219,10 +223,6 @@ public abstract class Entity {
         return this;
     }
 
-    public void heal(int amt) {
-        currentHealth += amt;
-    }
-
     public boolean isActive() {
         return active;
     }
@@ -261,5 +261,13 @@ public abstract class Entity {
     public Entity setShowHitbox(boolean showHitbox) {
         this.showHitbox = showHitbox;
         return this;
+    }
+
+    public AABB getBounds() {
+        return bounds;
+    }
+
+    public void setBounds(AABB bounds) {
+        this.bounds = bounds;
     }
 }

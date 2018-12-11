@@ -4,10 +4,12 @@ import java.awt.image.BufferedImage;
 
 public class SpriteSheet {
 
+    private String path;
     private BufferedImage sheet;
 
-    public SpriteSheet(BufferedImage sheet) {
-        this.sheet = sheet;
+    public SpriteSheet(String path) {
+        this.path = path;
+        this.sheet = ImageLoader.loadImage(path);
     }
 
     public BufferedImage crop(int x, int y, int width, int height) {
@@ -16,5 +18,9 @@ public class SpriteSheet {
 
     public BufferedImage getSheet() {
         return sheet;
+    }
+
+    public String getPath() {
+        return path;
     }
 }

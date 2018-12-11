@@ -237,7 +237,7 @@ public class Assets {
         PLAYER_DEAD = getFrames(playerSheetDead, 0, 0, 7);
 
         /* Entities */
-        EXTRA_LIFE = getFrames("/assets/textures/entities/extra_life.png", 0, 7);
+        EXTRA_LIFE = getFrames(extraLifeSheet, 0, 7);
 
         // Undead
         ZOMBIE_IDLE = getFrames(zombieSheet, 0, 0, 3);
@@ -252,11 +252,11 @@ public class Assets {
         SKELETON_LEFT = getFrames(skeletonSheet, 2, 4, 7);
         SKELETON_RIGHT = getFrames(skeletonSheet, 2, 0, 3);
 
-        BOUNCER_IDLE = getFrames(slimeSheet, 0, 8, 15);
-        BOUNCER_UP = getFrames(slimeSheet, 1, 8, 15);
-        BOUNCER_DOWN = getFrames(slimeSheet, 2, 8, 15);
-        BOUNCER_LEFT = getFrames(slimeSheet, 4, 8, 15);
-        BOUNCER_RIGHT = getFrames(slimeSheet, 3, 8, 15);
+        BOUNCER_IDLE = getFrames(slimeSheet, 0, 0, 7);
+        BOUNCER_UP = getFrames(slimeSheet, 1, 0, 7);
+        BOUNCER_DOWN = getFrames(slimeSheet, 2, 0, 7);
+        BOUNCER_LEFT = getFrames(slimeSheet, 4, 0, 7);
+        BOUNCER_RIGHT = getFrames(slimeSheet, 3, 0, 7);
 
         THING_IDLE = getFrames(thingSheet, 0, 0, 9);
         THING_UP = getFrames(thingSheet, 1, 0, 9);
@@ -445,7 +445,7 @@ public class Assets {
             try {
                 frames[index] = sheet.crop(x * width, y * height, width, height);
             } catch (RasterFormatException e) {
-                Logger.print(e);
+                Logger.print(e + " - " + sheet.getPath());
                 frames[index] = MISSING_TEXTURE;
             }
             index++;
@@ -466,12 +466,12 @@ public class Assets {
         try {
             image = sheet.crop(indexX, indexY, width, height); // Assets.width * indexX, Assets.height * indexY <-- This caused so many problems!
         } catch (RasterFormatException e) {
-            Logger.print(e);
+            Logger.print(e + " - " + sheet.getPath());
         }
         return image;
     }
 
     public static SpriteSheet getSheet(String path) {
-        return new SpriteSheet(ImageLoader.loadImage(path));
+        return new SpriteSheet(path);
     }
 }
