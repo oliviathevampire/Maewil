@@ -190,6 +190,13 @@
       ]
     },
     {
+      "id": "extra_life",
+      "pos": [
+        "15f",
+        "11f"
+      ]
+    },
+    {
       "id": "crop_carrot",
       "pos": [
         "1f",

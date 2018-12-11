@@ -14,11 +14,6 @@ public class EntityUltimateTile extends EntityStatic {
     public EntityUltimateTile(Engine engine, String id) {
         super(engine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.NONE);
 
-        bounds.x = 0;
-        bounds.y = height / 2;
-        bounds.width = width;
-        bounds.height = height / 2;
-
         animation = new Animation(135, Assets.ULTIMATE_TILE);
         isCollidable = false;
     }

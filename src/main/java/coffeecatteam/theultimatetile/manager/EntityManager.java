@@ -11,6 +11,7 @@ import coffeecatteam.theultimatetile.game.entities.creatures.undead.EntityBounce
 import coffeecatteam.theultimatetile.game.entities.creatures.undead.EntitySkeleton;
 import coffeecatteam.theultimatetile.game.entities.creatures.undead.EntityThing;
 import coffeecatteam.theultimatetile.game.entities.creatures.undead.EntityZombie;
+import coffeecatteam.theultimatetile.game.entities.statics.EntityExtraLife;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityUltimateTile;
 import coffeecatteam.theultimatetile.game.entities.statics.interactable.EntityCampfire;
 import coffeecatteam.theultimatetile.game.entities.statics.interactable.EntityShopStall;
@@ -94,6 +95,8 @@ public class EntityManager {
              */
             case "ultimate":
                 return new EntityUltimateTile(engine, id);
+            case "extra_life":
+                return new EntityExtraLife(engine, id);
 
             case "shop":
                 return new EntityShopStall(engine, id);
