@@ -4,6 +4,7 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.game.entities.creatures.passive.EntityCow;
+import coffeecatteam.theultimatetile.game.entities.creatures.passive.EntityFox;
 import coffeecatteam.theultimatetile.game.entities.creatures.passive.EntityPig;
 import coffeecatteam.theultimatetile.game.entities.creatures.passive.EntitySheep;
 import coffeecatteam.theultimatetile.game.entities.creatures.undead.EntityBouncer;
@@ -85,6 +86,8 @@ public class EntityManager {
                 return new EntityCow(engine, id);
             case "sheep":
                 return new EntitySheep(engine, id);
+            case "fox":
+                return new EntityFox(engine, id);
 
             /*
              * Other

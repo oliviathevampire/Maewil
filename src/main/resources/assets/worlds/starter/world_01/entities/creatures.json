@@ -55,6 +55,13 @@
       "tags": {
         "fleePlayer": "true"
       }
+    },
+    {
+      "id": "fox",
+      "pos": [
+        "8f",
+        "11f"
+      ]
     }
   ]
 }
