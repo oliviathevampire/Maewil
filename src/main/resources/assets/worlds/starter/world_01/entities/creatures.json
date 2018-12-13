@@ -35,7 +35,10 @@
         "7f",
         "10f"
       ],
-      "count": "3"
+      "count": "3",
+      "tags": {
+        "eatCrops": [ "crop_corn", "crop_wheat" ]
+      }
     },
     {
       "id": "cow",

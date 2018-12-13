@@ -42,4 +42,8 @@ public class EntityNature extends EntityStatic {
             }
         }
     }
+
+    public List<Item> getDrops() {
+        return drops;
+    }
 }

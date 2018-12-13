@@ -162,6 +162,10 @@ public abstract class Entity {
         return new AABB((int) (position.x + bounds.x + xOffset), (int) (position.y + bounds.y + yOffset), bounds.width, bounds.height);
     }
 
+    public boolean isTouching(Entity entity) {
+        return this.bounds.contains(entity.getPosition().x + entity.getWidth() / 2d, entity.getPosition().y + entity.getHeight() / 2d);
+    }
+
     public Engine getEngine() {
         return engine;
     }

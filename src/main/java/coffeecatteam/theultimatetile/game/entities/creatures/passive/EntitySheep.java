@@ -25,7 +25,7 @@ public class EntitySheep extends EntityPassive {
 
         // Movement
         if (((GameEngine) engine).getEntityManager().getPlayer().isActive()) {
-            if (Boolean.valueOf(TAGS.get("fleePlayer"))) {
+            if (TAGS.containsKey("fleePlayer") && Boolean.valueOf(TAGS.get("fleePlayer"))) {
                 if (!aiFollowFlee.tick())
                     aiWander.tick();
             } else

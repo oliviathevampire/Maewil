@@ -32,9 +32,7 @@ public class EntityExtraLife extends EntityStatic {
         bounds = new AABB(this.position, width, height);
 
         animation.tick();
-        EntityPlayer player = ((GameEngine)engine).getEntityManager().getPlayer();
-        Vector2D playerPos = player.getPosition();
-        if (this.bounds.contains(playerPos.x + player.getWidth() / 2d, playerPos.y + player.getHeight() / 2d)) {
+        if (this.isTouching(((GameEngine)engine).getEntityManager().getPlayer())) {
             ((GameEngine)engine).getEntityManager().getPlayer().heal(NumberUtils.getRandomInt(DEFAULT_HEALTH / 2, DEFAULT_HEALTH));
             this.hurt(this.currentHealth);
         }

@@ -292,7 +292,16 @@ public class WorldJsonLoader implements IJSONLoader {
         if (entityObj.containsKey("tags")) {
             JSONObject tags = (JSONObject) entityObj.get("tags");
             for (Object key : tags.keySet()) {
-                data.put(String.valueOf(key), (String) tags.get(key));
+                if (tags.get(key) instanceof JSONArray) {
+                    JSONArray tagData = (JSONArray) tags.get(key);
+                    StringBuilder tag = new StringBuilder();
+                    for (int i = 0; i < tagData.size(); i++) {
+                        tag.append(tagData.get(i)).append((i != tagData.size() - 1) ? "," : "");
+                    }
+                    data.put(String.valueOf(key), tag.toString());
+                } else {
+                    data.put(String.valueOf(key), (String) tags.get(key));
+                }
             }
         }
 
