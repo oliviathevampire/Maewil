@@ -5,7 +5,6 @@ import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -20,12 +19,13 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
     private String path = "./saves/saved_games.json";
     protected Engine engine;
 
-    public static List<String> GAMES = new ArrayList<>();
+    public static int SAVE_CAPACITY = 3;
+    public static final String DEFAULT_NAME = "UNSAVED";
+    public static List<String> GAMES = new ArrayList<>(SAVE_CAPACITY);
 
     static {
-        GAMES.add("false");
-        GAMES.add("false");
-        GAMES.add("false");
+        for (int i = 0; i < SAVE_CAPACITY; i++)
+            GAMES.set(i, "false:" + DEFAULT_NAME);
     }
 
     public SavedGamesJSONParser(Engine engine) {
@@ -37,10 +37,14 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path));
 
-        JSONArray games = (JSONArray) jsonObject.get("games");
-        GAMES.set(0, String.valueOf(games.get(0)));
-        GAMES.set(1, String.valueOf(games.get(1)));
-        GAMES.set(2, String.valueOf(games.get(2)));
+        for (int i = 0; i < 3; i++) {
+            String tag = "save_" + i;
+            if (jsonObject.containsKey(tag)) {
+                JSONObject save = (JSONObject) jsonObject.get(tag);
+                String data = String.valueOf(save.get("saved")) + save.get("name");
+                GAMES.set(i, data);
+            }
+        }
 
         Logger.print("Games loaded!");
     }
@@ -49,11 +53,18 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
     public void save() throws IOException {
         JSONObject jsonObject = new JSONObject();
 
-        JSONArray games = new JSONArray();
-        games.add(0, GAMES.get(0));
-        games.add(1, GAMES.get(1));
-        games.add(2, GAMES.get(2));
-        jsonObject.put("games", games);
+        try {
+            for (int i = 0; i < 3; i++) {
+                String tag = "save_" + i;
+                JSONObject save = new JSONObject();
+                String[] data = GAMES.get(i).split(":");
+                save.put("saved", Boolean.valueOf(data[0]));
+                save.put("name", data[1]);
+                jsonObject.put(tag, save);
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Logger.print(e.getMessage());
+        }
 
         FileWriter file = new FileWriter(path);
         file.write(jsonObject.toJSONString());

@@ -27,14 +27,13 @@ public class StateSelectGame extends StateAbstractMenu {
         super(engine);
         init();
 
-        int btnWidth = 5 * 64;
         int btnHeight = 64;
-        int x = engine.getWidth() / 2 - btnWidth / 2;
         int y = engine.getHeight() / 2 - btnHeight / 2 + 25;
         float yOff = 25 * 3f;
-        uiManager.addObject(new WorldButton(y, 1));
-        uiManager.addObject(new WorldButton(y + yOff, 2));
-        uiManager.addObject(new WorldButton(y + yOff * 2, 3));
+
+        for (int i = 0; i < SavedGamesJSONParser.SAVE_CAPACITY; i++) {
+            uiManager.addObject(new WorldButton(y + yOff * i, i));
+        }
     }
 
     private static String getWorldname(String defaultName) {
@@ -86,7 +85,7 @@ public class StateSelectGame extends StateAbstractMenu {
         public ClickListenerWorld(String path, String savesPath, int index) {
             this.path = path;
             this.savesPath = savesPath;
-            this.index = index - 1;
+            this.index = index;
 
             gamesJSONParser = new SavedGamesJSONParser(engine);
             try {
