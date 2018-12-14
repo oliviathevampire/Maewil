@@ -95,7 +95,6 @@ public class WorldJsonSaver implements IJSONSaver {
                 saveTile(chunk, bgTiles[x][y], x, y);
             }
             bg_tile.put("chunk" + y, chunk);
-            Logger.print("Saved chunk " + y + " for bg tiles");
         }
         jsonObjectBG.put("bg_tile", bg_tile);
         Logger.print("Saved bg tiles");
@@ -107,7 +106,6 @@ public class WorldJsonSaver implements IJSONSaver {
                 saveTile(chunk, fgTiles[x][y], x, y);
             }
             fg_tile.put("chunk" + y, chunk);
-            Logger.print("Saved chunk " + y + " for fg tiles");
         }
         jsonObjectFG.put("fg_tile", fg_tile);
         Logger.print("Saved fg tiles");

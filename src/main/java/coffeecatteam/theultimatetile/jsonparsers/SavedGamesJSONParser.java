@@ -21,11 +21,11 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
 
     public static int SAVE_CAPACITY = 3;
     public static final String DEFAULT_NAME = "UNSAVED";
-    public static List<String> GAMES = new ArrayList<>(SAVE_CAPACITY);
+    public static List<String> GAMES = new ArrayList<>();
 
     static {
         for (int i = 0; i < SAVE_CAPACITY; i++)
-            GAMES.set(i, "false:" + DEFAULT_NAME);
+            GAMES.add("false:" + DEFAULT_NAME);
     }
 
     public SavedGamesJSONParser(Engine engine) {
@@ -41,7 +41,7 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
             String tag = "save_" + i;
             if (jsonObject.containsKey(tag)) {
                 JSONObject save = (JSONObject) jsonObject.get(tag);
-                String data = String.valueOf(save.get("saved")) + save.get("name");
+                String data = String.valueOf(save.get("saved")) + ":" + save.get("name");
                 GAMES.set(i, data);
             }
         }
