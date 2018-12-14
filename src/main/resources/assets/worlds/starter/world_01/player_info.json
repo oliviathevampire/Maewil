@@ -1,10 +1,10 @@
 {
-  "health": "100",
-  "glubel": "0",
-  "lvl": "1",
+  "health": 100,
+  "glubel": 0,
+  "lvl": 1,
   "selected_slots": [
-    "0",
-    "0"
+    0,
+    0
   ],
   "inventory": {
     "slot_0": {

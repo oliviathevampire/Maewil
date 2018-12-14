@@ -56,7 +56,6 @@ public class AIEatCrops extends AI {
                 entity.setxMove(x * multiplier);
                 entity.setyMove(y * multiplier);
                 if (closestCrop.isTouching(entity)) {
-                    Logger.print("EATING");
                     closestCrop.hurt(closestCrop.getCurrentHealth());
                 }
             }

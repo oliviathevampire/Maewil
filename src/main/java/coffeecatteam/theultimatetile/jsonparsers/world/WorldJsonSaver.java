@@ -77,8 +77,8 @@ public class WorldJsonSaver implements IJSONSaver {
             spawnX = world.getSpawnX();
             spawnY = world.getSpawnY();
         }
-        spawn.add(0, String.valueOf(spawnX + "f"));
-        spawn.add(1, String.valueOf(spawnY + "f"));
+        spawn.add(0, spawnX);
+        spawn.add(1, spawnY);
         jsonObject.put("spawn", spawn);
 
         saveJSONFileToSave(WorldJsonLoader.BASE_FILES.get("world"), jsonObject);
@@ -117,8 +117,8 @@ public class WorldJsonSaver implements IJSONSaver {
     private void saveTile(JSONArray chunk, Tile tile, int x, int y) {
         JSONObject tileObj = new JSONObject();
         tileObj.put("id", tile.getId());
-        tileObj.put("x", String.valueOf(x));
-        tileObj.put("y", String.valueOf(y));
+        tileObj.put("x", x);
+        tileObj.put("y", y);
         chunk.add(tileObj);
     }
 
@@ -182,12 +182,12 @@ public class WorldJsonSaver implements IJSONSaver {
             itemObj.put("id", stack.getId());
 
             JSONArray pos = new JSONArray();
-            pos.add(0, String.valueOf(stack.getItem().getPosition().x / Tile.TILE_WIDTH) + "f");
-            pos.add(1, String.valueOf(stack.getItem().getPosition().y / Tile.TILE_HEIGHT) + "f");
+            pos.add(0, stack.getItem().getPosition().x / Tile.TILE_WIDTH);
+            pos.add(1, stack.getItem().getPosition().y / Tile.TILE_HEIGHT);
             itemObj.put("pos", pos);
 
             if (stack.getCount() > 1) {
-                itemObj.put("count", String.valueOf(stack.getCount()));
+                itemObj.put("count", stack.getCount());
             }
             items.add(itemObj);
         }
@@ -202,9 +202,9 @@ public class WorldJsonSaver implements IJSONSaver {
 
         jsonObject.put("username", username);
         Logger.print("Player username saved [" + GameEngine.getGameEngine().getUsername() + "]");
-        jsonObject.put("health", String.valueOf(GameEngine.getGameEngine().getEntityManager().getPlayer().getCurrentHealth()));
-        jsonObject.put("glubel", String.valueOf(GameEngine.getGameEngine().getEntityManager().getPlayer().getGlubel()));
-        jsonObject.put("lvl", String.valueOf(GameEngine.getGameEngine().getEntityManager().getPlayer().getLvl()));
+        jsonObject.put("health", GameEngine.getGameEngine().getEntityManager().getPlayer().getCurrentHealth());
+        jsonObject.put("glubel", GameEngine.getGameEngine().getEntityManager().getPlayer().getGlubel());
+        jsonObject.put("lvl", GameEngine.getGameEngine().getEntityManager().getPlayer().getLvl());
 
         JSONArray selected_slots = new JSONArray();
         selected_slots.add(0, GameEngine.getGameEngine().getEntityManager().getPlayer().getInventoryPlayer().getInventorySelectedIndex());
@@ -249,19 +249,19 @@ public class WorldJsonSaver implements IJSONSaver {
         entityObj.put("id", entity.getId());
 
         JSONArray pos = new JSONArray();
-        pos.add(0, String.valueOf(entity.getX() / Tile.TILE_WIDTH) + "f");
-        pos.add(1, String.valueOf(entity.getY() / Tile.TILE_HEIGHT) + "f");
+        pos.add(0, entity.getX() / Tile.TILE_WIDTH);
+        pos.add(1, entity.getY() / Tile.TILE_HEIGHT);
         entityObj.put("pos", pos);
 
         Map<String, String> tags = entity.saveTags();
         JSONObject tagsObj = new JSONObject(tags);
-        for (Object key : tags.keySet()) {
-            tagsObj.put(String.valueOf(key), tags.get(String.valueOf(key)));
+        for (String key : tags.keySet()) {
+            tagsObj.put(key, tags.get(key));
         }
         entityObj.put("tags", tagsObj);
 
         if (entity.getCurrentHealth() < entity.getMaxHealth())
-            entityObj.put("health", String.valueOf(entity.getCurrentHealth()));
+            entityObj.put("health", entity.getCurrentHealth());
 
         entitiesArray.add(entityObj);
     }

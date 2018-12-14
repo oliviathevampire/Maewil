@@ -3,58 +3,64 @@
     {
       "id": "zombie",
       "pos": [
-        "2f",
-        "1f"
+        2,
+        1
       ],
-      "count": "2"
+      "count": 2
     },
     {
       "id": "skeleton",
       "pos": [
-        "4f",
-        "3f"
+        4,
+        3
       ]
     },
     {
       "id": "bouncer",
       "pos": [
-        "17f",
-        "3f"
+        17,
+        3
       ]
     },
     {
       "id": "thing",
       "pos": [
-        "18f",
-        "4f"
+        18,
+        4
       ]
     },
     {
       "id": "pig",
       "pos": [
-        "7f",
-        "10f"
+        7,
+        10
       ],
-      "count": "3",
+      "count": 3,
       "tags": {
-        "eatCrops": [ "crop_corn", "crop_wheat", "crop_potato", "crop_carrot", "crop_tomato" ]
+        "eatCrops": [
+          "crop_corn",
+          "crop_wheat",
+          "crop_potato",
+          "crop_carrot",
+          "crop_tomato"
+        ]
       }
     },
     {
       "id": "cow",
       "pos": [
-        "8f",
-        "7f"
+        8,
+        7
       ],
-      "count": "2"
+      "count": 2
     },
     {
       "id": "sheep",
       "pos": [
-        "8f",
-        "12f"
+        8,
+        12
       ],
-      "count": "2",
+      "count": 2,
       "tags": {
         "fleePlayer": "true"
       }
@@ -62,8 +68,8 @@
     {
       "id": "fox",
       "pos": [
-        "8f",
-        "11f"
+        8,
+        11
       ]
     }
   ]

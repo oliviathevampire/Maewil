@@ -98,13 +98,13 @@ public class WorldJsonLoader implements IJSONLoader {
         Logger.print("Loaded world name");
 
         JSONArray size = (JSONArray) jsonObject.get("size");
-        width = NumberUtils.parseInt(size.get(0).toString());
-        height = NumberUtils.parseInt(size.get(1).toString());
+        width = NumberUtils.parseInt(size.get(0));
+        height = NumberUtils.parseInt(size.get(1));
         Logger.print("Loaded world size");
 
         JSONArray spawn = (JSONArray) jsonObject.get("spawn");
-        spawnX = NumberUtils.parseFloat(spawn.get(0).toString());
-        spawnY = NumberUtils.parseFloat(spawn.get(1).toString());
+        spawnX = NumberUtils.parseFloat(spawn.get(0));
+        spawnY = NumberUtils.parseFloat(spawn.get(1));
         Logger.print("Loaded world player spawn");
     }
 
@@ -135,8 +135,8 @@ public class WorldJsonLoader implements IJSONLoader {
     private void loadTile(JSONArray chunk, boolean bg, int x, Tile[][] bg_tiles, Tile[][] fg_tiles) {
         JSONObject tileObj = (JSONObject) chunk.get(x);
         Tile tile = Tiles.getTile(engine, (String) tileObj.get("id"));
-        int tx = NumberUtils.parseInt((String) tileObj.get("x"));
-        int ty = NumberUtils.parseInt((String) tileObj.get("y"));
+        int tx = NumberUtils.parseInt(tileObj.get("x"));
+        int ty = NumberUtils.parseInt(tileObj.get("y"));
 
         if (bg)
             bg_tiles[tx][ty] = tile;
@@ -181,11 +181,11 @@ public class WorldJsonLoader implements IJSONLoader {
                 JSONObject itemObj = (JSONObject) item1;
                 String id = (String) itemObj.get("id");
                 JSONArray pos = (JSONArray) itemObj.get("pos");
-                float x = NumberUtils.parseFloat(pos.get(0).toString());
-                float y = NumberUtils.parseFloat(pos.get(1).toString());
+                float x = NumberUtils.parseFloat(pos.get(0));
+                float y = NumberUtils.parseFloat(pos.get(1));
                 int count = 1;
                 if (itemObj.containsKey("count"))
-                    count = NumberUtils.parseInt(itemObj.get("count").toString());
+                    count = NumberUtils.parseInt(itemObj.get("count"));
                 Item item = Item.items.get(id);
                 if (!item.isStackable())
                     count = 1;
@@ -206,22 +206,22 @@ public class WorldJsonLoader implements IJSONLoader {
             Logger.print("loaded player username!");
         }
 
-        health = NumberUtils.parseInt(jsonObject.get("health").toString());
+        health = NumberUtils.parseInt(jsonObject.get("health"));
         ((GameEngine) engine).getEntityManager().getPlayer().setCurrentHealth(health);
         Logger.print("loaded player health!");
 
-        glubel = NumberUtils.parseInt(jsonObject.get("glubel").toString());
+        glubel = NumberUtils.parseInt(jsonObject.get("glubel"));
         ((GameEngine) engine).getEntityManager().getPlayer().setGlubel(glubel);
         Logger.print("loaded player glubel!");
 
-        lvl = NumberUtils.parseInt(jsonObject.get("lvl").toString());
+        lvl = NumberUtils.parseInt(jsonObject.get("lvl"));
         ((GameEngine) engine).getEntityManager().getPlayer().setLvl(lvl);
         Logger.print("loaded player lvl!");
 
         selected_slots = new int[2];
         JSONArray selected_slotsJ = (JSONArray) jsonObject.get("selected_slots");
-        selected_slots[0] = NumberUtils.parseInt(selected_slotsJ.get(0).toString());
-        selected_slots[1] = NumberUtils.parseInt(selected_slotsJ.get(1).toString());
+        selected_slots[0] = NumberUtils.parseInt(selected_slotsJ.get(0));
+        selected_slots[1] = NumberUtils.parseInt(selected_slotsJ.get(1));
         ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().setInventorySelectedIndex(selected_slots[0]);
         ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().setHotbarSelectedIndex(selected_slots[1]);
 
@@ -235,7 +235,7 @@ public class WorldJsonLoader implements IJSONLoader {
             else {
                 int count = 1;
                 if (slot.containsKey("count")) {
-                    count = NumberUtils.parseInt(slot.get("count").toString());
+                    count = NumberUtils.parseInt(slot.get("count"));
                 }
                 Item item = Item.items.get(id);
                 if (!item.isStackable())
@@ -255,7 +255,7 @@ public class WorldJsonLoader implements IJSONLoader {
             else {
                 int count = 1;
                 if (slot.containsKey("count")) {
-                    count = NumberUtils.parseInt(slot.get("count").toString());
+                    count = NumberUtils.parseInt(slot.get("count"));
                 }
                 Item item = Item.items.get(id);
                 if (!item.isStackable())
@@ -306,12 +306,12 @@ public class WorldJsonLoader implements IJSONLoader {
         }
 
         JSONArray pos = (JSONArray) entityObj.get("pos");
-        float x = NumberUtils.parseFloat(pos.get(0).toString());
-        float y = NumberUtils.parseFloat(pos.get(1).toString());
+        float x = NumberUtils.parseFloat(pos.get(0));
+        float y = NumberUtils.parseFloat(pos.get(1));
 
         int health = EntityManager.loadEntity(engine, id).getMaxHealth();
         if (entityObj.containsKey("health")) {
-            int healthJ = NumberUtils.parseInt(entityObj.get("health").toString());
+            int healthJ = NumberUtils.parseInt(entityObj.get("health"));
             if (healthJ < 0)
                 healthJ = 0;
             if (healthJ > health)
@@ -321,7 +321,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
         int count = 1;
         if (entityObj.containsKey("count")) {
-            int countJ = NumberUtils.parseInt(entityObj.get("count").toString());
+            int countJ = NumberUtils.parseInt(entityObj.get("count"));
             if (countJ > 9)
                 countJ = 9;
             if (countJ < 1)
@@ -332,7 +332,7 @@ public class WorldJsonLoader implements IJSONLoader {
     }
 
     private void loadEntity(String id, float x, float y, int count, JSONArray pos, int health, Map<String, String> tags) {
-        float ogX = NumberUtils.parseFloat(pos.get(0).toString());
+        float ogX = NumberUtils.parseFloat(pos.get(0));
         for (int i = 0; i < count; i++) {
             ((GameEngine) engine).getEntityManager().addEntity(EntityManager.loadEntity(engine, id).loadTags(tags).setCurrentHealth(health), x, y, true);
             x++;

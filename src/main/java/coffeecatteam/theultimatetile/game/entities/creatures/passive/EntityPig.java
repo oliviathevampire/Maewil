@@ -30,7 +30,6 @@ public class EntityPig extends EntityPassive {
             String[] ids = TAGS.get("eatCrops").split(",");
             if (!aiEatCrops.getCropIds().equals(Arrays.asList(ids))) {
                 aiEatCrops.setCropIds(ids);
-                Logger.print(TAGS.get("eatCrops"));
             }
         }
 

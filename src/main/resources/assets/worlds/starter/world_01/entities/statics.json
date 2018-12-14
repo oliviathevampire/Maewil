@@ -3,255 +3,255 @@
     {
       "id": "tree_small",
       "pos": [
-        "2f",
-        "8f"
+        2,
+        8
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "3f",
-        "8f"
+        3,
+        8
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "4f",
-        "10f"
+        4,
+        10
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "5f",
-        "10f"
+        5,
+        10
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "1f",
-        "11f"
+        1,
+        11
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "2f",
-        "11f"
+        2,
+        11
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "6f",
-        "12f"
+        6,
+        12
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "7f",
-        "12f"
+        7,
+        12
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "10f",
-        "8f"
+        10,
+        8
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "12f",
-        "8f"
+        12,
+        8
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "14f",
-        "8f"
+        14,
+        8
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "15f",
-        "8f"
+        15,
+        8
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "16f",
-        "8f"
+        16,
+        8
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "10f",
-        "9f"
+        10,
+        9
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "11f",
-        "9f"
+        11,
+        9
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "13f",
-        "9f"
+        13,
+        9
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "14f",
-        "9f"
+        14,
+        9
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "11f",
-        "10f"
+        11,
+        10
       ]
     },
     {
       "id": "tree_small",
       "pos": [
-        "12f",
-        "10f"
+        12,
+        10
       ]
     },
     {
       "id": "tree_medium",
       "pos": [
-        "1f",
-        "9f"
+        1,
+        9
       ]
     },
     {
       "id": "tree_medium",
       "pos": [
-        "4f",
-        "11f"
+        4,
+        11
       ]
     },
     {
       "id": "tree_medium",
       "pos": [
-        "17f",
-        "9f"
+        17,
+        9
       ]
     },
     {
       "id": "tree_large",
       "pos": [
-        "1f",
-        "13f"
+        1,
+        13
       ]
     },
     {
       "id": "tree_large",
       "pos": [
-        "5f",
-        "15f"
+        5,
+        15
       ]
     },
     {
       "id": "rock_small",
       "pos": [
-        "6f",
-        "9f"
+        6,
+        9
       ]
     },
     {
       "id": "rock_medium",
       "pos": [
-        "3f",
-        "12f"
+        3,
+        12
       ]
     },
     {
       "id": "rock_medium",
       "pos": [
-        "15f",
-        "10f"
+        15,
+        10
       ]
     },
     {
       "id": "extra_life",
       "pos": [
-        "15f",
-        "11f"
+        15,
+        11
       ],
-      "count": "3"
+      "count": 3
     },
     {
       "id": "crop_carrot",
       "pos": [
-        "1f",
-        "7f"
+        1,
+        7
       ]
     },
     {
       "id": "crop_wheat",
       "pos": [
-        "2f",
-        "7f"
+        2,
+        7
       ]
     },
     {
       "id": "crop_potato",
       "pos": [
-        "1f",
-        "8f"
+        1,
+        8
       ]
     },
     {
       "id": "crop_tomato",
       "pos": [
-        "2f",
-        "8f"
+        2,
+        8
       ]
     },
     {
       "id": "crop_corn",
       "pos": [
-        "3f",
-        "8f"
+        3,
+        8
       ],
-      "count": "3"
+      "count": 3
     },
     {
       "id": "shop",
       "pos": [
-        "16.7f",
-        "11f"
+        16.7,
+        11
       ]
     },
     {
       "id": "shop",
       "pos": [
-        "14f",
-        "11.5f"
+        14,
+        11.5
       ]
     },
     {
       "id": "campfire",
       "pos": [
-        "18f",
-        "17f"
+        18,
+        17
       ],
       "tags": {
         "item": "raw_pork:1"
