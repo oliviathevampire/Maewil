@@ -37,6 +37,10 @@ public class AIEatCrops extends AI {
         this.cropIds = cropIds;
     }
 
+    public List<String> getCropIds() {
+        return cropIds;
+    }
+
     @Override
     public boolean tick() {
         EntityCrop closestCrop = getClosestCrop();
@@ -63,7 +67,7 @@ public class AIEatCrops extends AI {
 
     private EntityCrop getClosestCrop() {
         EntityCrop closest = null;
-        float lastDistance = Float.MAX_VALUE;
+        float lastDistance = maxDistance;
 
         for (Entity entity : GameEngine.getGameEngine().getEntityManager().getEntities()) {
             if (entity instanceof EntityCrop) {

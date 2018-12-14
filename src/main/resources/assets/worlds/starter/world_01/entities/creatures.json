@@ -37,7 +37,7 @@
       ],
       "count": "3",
       "tags": {
-        "eatCrops": [ "crop_corn", "crop_wheat" ]
+        "eatCrops": [ "crop_corn", "crop_wheat", "crop_potato", "crop_carrot", "crop_tomato" ]
       }
     },
     {

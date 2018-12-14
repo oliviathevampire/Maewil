@@ -9,6 +9,8 @@ import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
+import java.util.Arrays;
+
 public class EntityPig extends EntityPassive {
 
     private AIEatCrops aiEatCrops;
@@ -23,6 +25,14 @@ public class EntityPig extends EntityPassive {
     public void tick() {
         xMove = 0;
         yMove = 0;
+
+        if (TAGS.containsKey("eatCrops")) {
+            String[] ids = TAGS.get("eatCrops").split(",");
+            if (!aiEatCrops.getCropIds().equals(Arrays.asList(ids))) {
+                aiEatCrops.setCropIds(ids);
+                Logger.print(TAGS.get("eatCrops"));
+            }
+        }
 
         // Movement
         if (((GameEngine) engine).getPlayer().isActive())
@@ -43,9 +53,5 @@ public class EntityPig extends EntityPassive {
         animDown = new Animation(animUpDownSpeed, Assets.PIG_DOWN);
         animLeft = new Animation(animSpeed, Assets.PIG_LEFT);
         animRight = new Animation(animSpeed, Assets.PIG_RIGHT);
-
-        if (TAGS.containsKey("eatCrops"))
-            aiEatCrops.setCropIds(TAGS.get("eatCrops").split(","));
-        Logger.print(TAGS.get("eatCrops"));
     }
 }
