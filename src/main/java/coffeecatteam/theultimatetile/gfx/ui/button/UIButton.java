@@ -121,7 +121,13 @@ public class UIButton extends UIObject {
     @Override
     public void postRender(Graphics2D g) {
         if (isHovering() && hasTooltip) {
-            tooltip.setPosition(new Vector2D(mouseX, mouseY));
+            int x = mouseX, x1 = x + this.tooltip.getWidth(), xDiff = 0;
+            int y = mouseY, y1 = y + this.tooltip.getHeight(), yDiff = 0;
+
+            if (x1 > engine.getWidth()) xDiff = x1 - engine.getWidth();
+            if (y1 > engine.getHeight()) yDiff = y1 - engine.getHeight();
+
+            tooltip.setPosition(new Vector2D(x - xDiff, y - yDiff));
             tooltip.render(g);
         }
     }
