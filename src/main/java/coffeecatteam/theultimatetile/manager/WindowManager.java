@@ -1,7 +1,10 @@
 package coffeecatteam.theultimatetile.manager;
 
+import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.game.state.State;
+import coffeecatteam.theultimatetile.game.state.game.StateGame;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
 
 import java.awt.event.WindowEvent;
@@ -19,10 +22,19 @@ public class WindowManager implements WindowListener {
 
     @Override
     public void windowClosing(WindowEvent e) {
-        if (GameEngine.getGameEngine() != null)
+        if (GameEngine.getGameEngine() != null) {
+            Logger.print("Shutting down game engine!");
             GameEngine.getGameEngine().setRunning(false);
-        if (CreatorEngine.getCreatorEngine() != null)
+            if (State.getState() instanceof StateGame) {
+                Logger.print("Saving world!");
+                ((StateGame) State.getState()).saveWorld();
+                Logger.print("World saved!");
+            }
+        }
+        if (CreatorEngine.getCreatorEngine() != null) {
+            Logger.print("Shutting down creator engine!");
             CreatorEngine.getCreatorEngine().setRunning(false);
+        }
     }
 
     @Override
