@@ -74,6 +74,13 @@ public class TagCompound extends TagBase {
     }
 
     /**
+     * Stores a new TagStringArray with the given array as data into the map with the given string key.
+     */
+    public void setStringArray(String key, String[] value) {
+        this.tagMap.put(key, new TagStringArray(value));
+    }
+
+    /**
      * Stores a new TagIntArray with the given array as data into the map with the given string key.
      */
     public void setIntArray(String key, int[] value) {
@@ -202,6 +209,22 @@ public class TagCompound extends TagBase {
         }
 
         return "";
+    }
+
+    /**
+     * Retrieves an string array using the specified key, or a zero-length array if no such key was stored.
+     */
+    public String[] getStringArray(String key) {
+        try {
+            if (this.hasKey(key, TagBase.TAG_IDS.get("STRING_ARRAY"))) {
+                return ((TagStringArray) this.tagMap.get(key)).getStringArray();
+            }
+        } catch (ClassCastException classcastexception) {
+            Logger.print(classcastexception);
+            throw classcastexception;
+        }
+
+        return new String[0];
     }
 
     /**
