@@ -125,7 +125,7 @@ public class ItemManager {
     }
 
     public void addItem(ItemStack stack) {
-        stack.setTheUltimateTile(gameEngine);
+        stack.setGameEngine(gameEngine);
         items.add(stack);
     }
 

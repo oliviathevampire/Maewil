@@ -119,4 +119,20 @@ public class Utils {
 
         return (curentMonth == month && inRange);
     }
+
+    /**
+     * Returns the greatest integer less than or equal to the float argument
+     */
+    public static int floor(float value) {
+        int i = (int) value;
+        return value < (float) i ? i - 1 : i;
+    }
+
+    /**
+     * Returns the greatest integer less than or equal to the double argument
+     */
+    public static int floor(double value) {
+        int i = (int) value;
+        return value < (double) i ? i - 1 : i;
+    }
 }

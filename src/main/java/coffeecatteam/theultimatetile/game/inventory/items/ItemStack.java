@@ -1,7 +1,10 @@
 package coffeecatteam.theultimatetile.game.inventory.items;
 
 import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.game.tags.TagCompound;
+import coffeecatteam.theultimatetile.game.tags.TagUtils;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
 import java.awt.image.BufferedImage;
@@ -12,6 +15,12 @@ public class ItemStack {
 
     private Item item;
     private int count;
+
+    public ItemStack(TagCompound compound) {
+        this(ItemManager.getItemById(compound.getString("id")), compound.getInteger("count"));
+        if (compound.hasKey("pos"))
+            setPosition(TagUtils.getPosFromTag(compound.getCompoundTag("pos")));
+    }
 
     public ItemStack(Item item) {
         this(item, 1);
@@ -27,8 +36,22 @@ public class ItemStack {
         setCount(count);
     }
 
+    public void saveToTagCompound(TagCompound compound) {
+        compound.setString("id", this.getId());
+        compound.setInteger("count", this.getCount());
+        compound.setTag("pos", TagUtils.createPosTag(this.getPosition()));
+    }
+
+    public Vector2D getPosition() {
+        return this.item.getPosition();
+    }
+
     public ItemStack setPosition(int x, int y) {
-        this.item.setPosition(x, y);
+        return setPosition(new Vector2D(x, y));
+    }
+
+    public ItemStack setPosition(Vector2D pos) {
+        this.item.setPosition(pos);
         return new ItemStack(this.item, this.count);
     }
 
@@ -67,8 +90,12 @@ public class ItemStack {
             this.count = MAX_STACK_COUNT;
     }
 
-    public void setTheUltimateTile(GameEngine gameEngine) {
+    public void setGameEngine(GameEngine gameEngine) {
         this.item.setGameEngine(gameEngine);
+    }
+
+    public boolean isPickedUp() {
+        return this.item.isPickedUp();
     }
 
     public void setPickedUp(boolean pickedUp) {
