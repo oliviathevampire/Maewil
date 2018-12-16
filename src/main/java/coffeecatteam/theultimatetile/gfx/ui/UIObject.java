@@ -26,7 +26,9 @@ public abstract class UIObject {
     public abstract void tick();
 
     public abstract void render(Graphics2D g);
-    public void postRender(Graphics2D g) {}
+
+    public void postRender(Graphics2D g) {
+    }
 
     public abstract void onClick();
 

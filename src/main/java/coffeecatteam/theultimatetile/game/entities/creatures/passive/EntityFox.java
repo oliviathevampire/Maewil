@@ -1,12 +1,9 @@
 package coffeecatteam.theultimatetile.game.entities.creatures.passive;
 
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.GameEngine;
-import coffeecatteam.theultimatetile.game.entities.ai.AIFollowFlee;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPassive;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.manager.ItemManager;
 
 public class EntityFox extends EntityPassive {
 

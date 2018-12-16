@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Assets;

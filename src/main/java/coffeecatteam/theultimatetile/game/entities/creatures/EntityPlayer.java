@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.game.entities.creatures;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.game.GameEngine;

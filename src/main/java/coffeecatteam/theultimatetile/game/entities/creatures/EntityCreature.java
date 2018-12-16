@@ -12,7 +12,8 @@ import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.TileAnimated;
-import coffeecatteam.theultimatetile.gfx.*;
+import coffeecatteam.theultimatetile.gfx.Animation;
+import coffeecatteam.theultimatetile.gfx.Assets;
 
 import java.awt.*;
 import java.util.ArrayList;

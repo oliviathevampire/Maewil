@@ -5,7 +5,6 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.tags.TagCompound;
 import coffeecatteam.theultimatetile.game.tags.TagIntArray;
-import coffeecatteam.theultimatetile.game.tags.TagList;
 import coffeecatteam.theultimatetile.game.tags.TagStringArray;
 
 import java.util.HashMap;

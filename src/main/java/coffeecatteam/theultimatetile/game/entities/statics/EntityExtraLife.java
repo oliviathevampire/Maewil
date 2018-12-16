@@ -2,11 +2,9 @@ package coffeecatteam.theultimatetile.game.entities.statics;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
-import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 
@@ -32,8 +30,8 @@ public class EntityExtraLife extends EntityStatic {
         bounds = new AABB(this.position, width, height);
 
         animation.tick();
-        if (this.isTouching(((GameEngine)engine).getEntityManager().getPlayer())) {
-            ((GameEngine)engine).getEntityManager().getPlayer().heal(NumberUtils.getRandomInt(DEFAULT_HEALTH / 2, DEFAULT_HEALTH));
+        if (this.isTouching(((GameEngine) engine).getEntityManager().getPlayer())) {
+            ((GameEngine) engine).getEntityManager().getPlayer().heal(NumberUtils.getRandomInt(DEFAULT_HEALTH / 2, DEFAULT_HEALTH));
             this.hurt(this.currentHealth);
         }
     }

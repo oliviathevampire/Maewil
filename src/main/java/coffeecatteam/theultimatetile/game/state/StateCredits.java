@@ -1,11 +1,8 @@
 package coffeecatteam.theultimatetile.game.state;
 
-import coffeecatteam.coffeecatutils.Logger;
-import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.UITextBox;
 import coffeecatteam.theultimatetile.jsonparsers.JsonParser;
 import org.json.simple.parser.ParseException;
@@ -30,12 +27,12 @@ public class StateCredits extends StateAbstractMenu {
             JsonParser jsonParser = new JsonParser("/assets/credits.json", true);
             Object[] devs = jsonParser.getArray("devs").toArray();
             this.devs = new String[devs.length];
-            for (int i  = 0; i < devs.length; i++)
+            for (int i = 0; i < devs.length; i++)
                 this.devs[i] = (String) devs[i];
 
             Object[] helpers = jsonParser.getArray("helpers").toArray();
             this.helpers = new String[helpers.length];
-            for (int i  = 0; i < helpers.length; i++)
+            for (int i = 0; i < helpers.length; i++)
                 this.helpers[i] = (String) helpers[i];
         } catch (IOException | ParseException e) {
             e.printStackTrace();

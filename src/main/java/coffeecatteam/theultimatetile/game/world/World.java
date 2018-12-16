@@ -8,7 +8,6 @@ import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.TileBreakable;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
-import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;

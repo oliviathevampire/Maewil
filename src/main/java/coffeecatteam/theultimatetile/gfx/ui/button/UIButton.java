@@ -13,8 +13,6 @@ import coffeecatteam.theultimatetile.gfx.ui.UITextBox;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UIButton extends UIObject {
 
