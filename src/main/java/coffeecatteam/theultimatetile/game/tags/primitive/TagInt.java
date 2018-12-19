@@ -42,11 +42,6 @@ public class TagInt extends TagPrimitive {
     }
 
     @Override
-    public byte getByte() {
-        return (byte) (this.data & 255);
-    }
-
-    @Override
     public int getInt() {
         return this.data;
     }

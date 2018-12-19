@@ -6,8 +6,8 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.game.tags.TagCompound;
 import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.gfx.ImageLoader;
 import coffeecatteam.theultimatetile.gfx.SpriteSheet;
 import coffeecatteam.theultimatetile.gfx.Text;
 
@@ -37,7 +37,7 @@ public abstract class Entity {
     protected boolean showHitbox = false, isCollidable = true, interacted = false;
     private int extraDmg = 0;
 
-    protected Map<String, String> TAGS = new HashMap<>();
+    protected TagCompound TAGS = new TagCompound();
     private EntityHitType entityHitType;
 
     protected int renderX, renderY;
@@ -58,22 +58,13 @@ public abstract class Entity {
         this.entityHitType = entityHitType;
     }
 
-    public Entity loadTags(Map<String, String> tags) {
-        this.TAGS = tags;
+    public Entity setTags(TagCompound tags) {
+        this.TAGS = tags.copy();
         return this;
     }
 
-    public Map<String, String> saveTags() {
+    public TagCompound getTags() {
         return TAGS;
-    }
-
-    public boolean hasTag(String tag) {
-        if (TAGS == null)
-            return false;
-        for (String key : TAGS.keySet())
-            if (key.equals(tag))
-                return true;
-        return false;
     }
 
     public void tick() {

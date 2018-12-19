@@ -13,17 +13,9 @@ import java.io.IOException;
  * @author CoffeeCatRailway
  * Created: 6/12/2018
  */
-public class JsonParser {
+public class JsonUtils {
 
-    private String path;
-    private boolean inJar;
-
-    public JsonParser(String path, boolean inJar) {
-        this.path = path;
-        this.inJar = inJar;
-    }
-
-    public Object getValue(String key) throws IOException, ParseException {
+    public static Object getValue(String key, String path, boolean inJar) throws IOException, ParseException {
         Logger.print("\nLoading json value [" + key + "]");
         JSONParser parser = new JSONParser();
         JSONObject jsonObject;
@@ -32,7 +24,7 @@ public class JsonParser {
         return jsonObject.get(key).toString();
     }
 
-    public JSONArray getArray(String key) throws IOException, ParseException {
+    public static JSONArray getArray(String key, String path, boolean inJar) throws IOException, ParseException {
         Logger.print("\nLoading json array [" + key + "]");
         JSONParser parser = new JSONParser();
         JSONObject jsonObject;

@@ -6,8 +6,6 @@ package coffeecatteam.theultimatetile.game.tags.supers;
  */
 public abstract class TagPrimitive extends TagBase {
 
-    public abstract byte getByte();
-
     public abstract int getInt();
 
     public abstract double getDouble();

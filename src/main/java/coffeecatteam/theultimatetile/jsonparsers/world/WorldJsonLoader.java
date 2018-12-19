@@ -5,9 +5,14 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.state.game.StateSelectGame;
+import coffeecatteam.theultimatetile.game.tags.JsonToTag;
+import coffeecatteam.theultimatetile.game.tags.TagCompound;
+import coffeecatteam.theultimatetile.game.tags.TagException;
+import coffeecatteam.theultimatetile.game.tags.supers.TagBase;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
 import coffeecatteam.theultimatetile.manager.EntityManager;
@@ -288,20 +293,20 @@ public class WorldJsonLoader implements IJSONLoader {
     private void loadEntityObj(JSONObject entityObj) {
         String id = (String) entityObj.get("id");
 
-        Map<String, String> data = new HashMap<>();
+        TagCompound data = new TagCompound();
         if (entityObj.containsKey("tags")) {
             JSONObject tags = (JSONObject) entityObj.get("tags");
-            for (Object key : tags.keySet()) {
-                if (tags.get(key) instanceof JSONArray) {
-                    JSONArray tagData = (JSONArray) tags.get(key);
-                    StringBuilder tag = new StringBuilder();
-                    for (int i = 0; i < tagData.size(); i++) {
-                        tag.append(tagData.get(i)).append((i != tagData.size() - 1) ? "," : "");
-                    }
-                    data.put(String.valueOf(key), tag.toString());
-                } else {
-                    data.put(String.valueOf(key), (String) tags.get(key));
-                }
+            try {
+                data = JsonToTag.getTagFromJson(tags.toJSONString());
+                Logger.print(tags.toJSONString());
+                Logger.print(data.getString());
+                Logger.print(data.toString());
+                Logger.print(data.hasNoTags());
+//                Logger.print(data.getTagList("eatCrops").size());
+                Logger.print(data.getSize());
+//                Logger.print(data.getTag("eatCrops").getId());
+            } catch (TagException e) {
+                e.printStackTrace();
             }
         }
 
@@ -331,10 +336,13 @@ public class WorldJsonLoader implements IJSONLoader {
         loadEntity(id, x, y, count, pos, health, data);
     }
 
-    private void loadEntity(String id, float x, float y, int count, JSONArray pos, int health, Map<String, String> tags) {
+    private void loadEntity(String id, float x, float y, int count, JSONArray pos, int health, TagCompound tags) {
         float ogX = NumberUtils.parseFloat(pos.get(0));
         for (int i = 0; i < count; i++) {
-            ((GameEngine) engine).getEntityManager().addEntity(EntityManager.loadEntity(engine, id).loadTags(tags).setCurrentHealth(health), x, y, true);
+            Entity entity = EntityManager.loadEntity(engine, id);
+            entity.setTags(tags);
+            entity.setCurrentHealth(health);
+            ((GameEngine) engine).getEntityManager().addEntity(entity, x, y, true);
             x++;
             if (x > ogX + 2) {
                 x = ogX;

@@ -25,6 +25,14 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
      */
     private int tagType = 0;
 
+    public TagList() {
+    }
+
+    public TagList(List<TagBase> tagList) {
+        for (int i = 0; i < tagList.size(); i++)
+            this.tagList.add(tagList.get(i).copy());
+    }
+
     @Override
     public int getId() {
         return TagBase.TAG_IDS.get("LIST");
@@ -49,36 +57,36 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
      * Adds the provided tag to the end of the list. There is no check to verify this tag is of the same type as any
      * previous tag.
      */
-    public void appendTag(TagBase nbt) {
-        if (nbt.getId() == 0) {
+    public void appendTag(TagBase tag) {
+        if (tag.getId() == 0) {
             Logger.print("Invalid TagEnd added to ListTag");
         } else {
             if (this.tagType == 0) {
-                this.tagType = nbt.getId();
-            } else if (this.tagType != nbt.getId()) {
+                this.tagType = tag.getId();
+            } else if (this.tagType != tag.getId()) {
                 Logger.print("Adding mismatching tag types to tag list");
                 return;
             }
 
-            this.tagList.add(nbt);
+            this.tagList.add(tag);
         }
     }
 
     /**
      * Set the given index to the given tag
      */
-    public void set(int idx, TagBase nbt) {
-        if (nbt.getId() == 0) {
+    public void set(int idx, TagBase tag) {
+        if (tag.getId() == 0) {
             Logger.print("Invalid TagEnd added to ListTag");
         } else if (idx >= 0 && idx < this.tagList.size()) {
             if (this.tagType == 0) {
-                this.tagType = nbt.getId();
-            } else if (this.tagType != nbt.getId()) {
+                this.tagType = tag.getId();
+            } else if (this.tagType != tag.getId()) {
                 Logger.print("Adding mismatching tag types to tag list");
                 return;
             }
 
-            this.tagList.set(idx, nbt);
+            this.tagList.set(idx, tag);
         } else {
             Logger.print("index out of bounds to set tag in tag list");
         }
@@ -103,10 +111,10 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
      */
     public TagCompound getCompoundTagAt(int i) {
         if (i >= 0 && i < this.tagList.size()) {
-            TagBase nbtbase = this.tagList.get(i);
+            TagBase base = this.tagList.get(i);
 
-            if (nbtbase.getId() == 10) {
-                return (TagCompound) nbtbase;
+            if (base.getId() == 10) {
+                return (TagCompound) base;
             }
         }
 
@@ -115,10 +123,10 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
 
     public int getIntAt(int p_186858_1_) {
         if (p_186858_1_ >= 0 && p_186858_1_ < this.tagList.size()) {
-            TagBase nbtbase = this.tagList.get(p_186858_1_);
+            TagBase base = this.tagList.get(p_186858_1_);
 
-            if (nbtbase.getId() == 3) {
-                return ((TagInt) nbtbase).getInt();
+            if (base.getId() == 3) {
+                return ((TagInt) base).getInt();
             }
         }
 
@@ -127,10 +135,10 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
 
     public int[] getIntArrayAt(int i) {
         if (i >= 0 && i < this.tagList.size()) {
-            TagBase nbtbase = this.tagList.get(i);
+            TagBase base = this.tagList.get(i);
 
-            if (nbtbase.getId() == 11) {
-                return ((TagIntArray) nbtbase).getIntArray();
+            if (base.getId() == 11) {
+                return ((TagIntArray) base).getIntArray();
             }
         }
 
@@ -139,10 +147,10 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
 
     public double getDoubleAt(int i) {
         if (i >= 0 && i < this.tagList.size()) {
-            TagBase nbtbase = this.tagList.get(i);
+            TagBase base = this.tagList.get(i);
 
-            if (nbtbase.getId() == 6) {
-                return ((TagDouble) nbtbase).getDouble();
+            if (base.getId() == 6) {
+                return ((TagDouble) base).getDouble();
             }
         }
 
@@ -151,10 +159,10 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
 
     public float getFloatAt(int i) {
         if (i >= 0 && i < this.tagList.size()) {
-            TagBase nbtbase = this.tagList.get(i);
+            TagBase base = this.tagList.get(i);
 
-            if (nbtbase.getId() == 5) {
-                return ((TagFloat) nbtbase).getFloat();
+            if (base.getId() == 5) {
+                return ((TagFloat) base).getFloat();
             }
         }
 
@@ -166,8 +174,8 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
      */
     public String getStringTagAt(int i) {
         if (i >= 0 && i < this.tagList.size()) {
-            TagBase nbtbase = this.tagList.get(i);
-            return nbtbase.getId() == 8 ? nbtbase.getString() : nbtbase.toString();
+            TagBase base = this.tagList.get(i);
+            return base.getId() == 8 ? base.getString() : base.toString();
         } else {
             return "";
         }
@@ -177,13 +185,13 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
      * Get the tag at the given position
      */
     public TagBase get(int idx) {
-        return (TagBase) (idx >= 0 && idx < this.tagList.size() ? (TagBase) this.tagList.get(idx) : new TagEnd());
+        return (idx >= 0 && idx < this.tagList.size() ? this.tagList.get(idx) : new TagEnd());
     }
 
     /**
      * Returns the number of tags in the list.
      */
-    public int tagCount() {
+    public int size() {
         return this.tagList.size();
     }
 
@@ -195,9 +203,9 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
         TagList tagList = new TagList();
         tagList.tagType = this.tagType;
 
-        for (TagBase nbtbase : this.tagList) {
-            TagBase nbtbase1 = nbtbase.copy();
-            tagList.tagList.add(nbtbase1);
+        for (TagBase base : this.tagList) {
+            TagBase base1 = base.copy();
+            tagList.tagList.add(base1);
         }
 
         return tagList;
@@ -208,8 +216,8 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
         if (!super.equals(obj)) {
             return false;
         } else {
-            TagList nbttaglist = (TagList) obj;
-            return this.tagType == nbttaglist.tagType && Objects.equals(this.tagList, nbttaglist.tagList);
+            TagList taglist = (TagList) obj;
+            return this.tagType == taglist.tagType && Objects.equals(this.tagList, taglist.tagList);
         }
     }
 

@@ -29,7 +29,7 @@ public class TagDouble extends TagPrimitive {
 
     @Override
     public String toString() {
-        return this.data + "d";
+        return String.valueOf(this.data);
     }
 
     /**
@@ -41,13 +41,8 @@ public class TagDouble extends TagPrimitive {
     }
 
     @Override
-    public boolean equals(Object p_equals_1_) {
-        return super.equals(p_equals_1_) && this.data == ((TagDouble) p_equals_1_).data;
-    }
-
-    @Override
-    public byte getByte() {
-        return (byte) (Utils.floor(this.data) & 255);
+    public boolean equals(Object obj) {
+        return super.equals(obj) && this.data == ((TagDouble) obj).data;
     }
 
     @Override

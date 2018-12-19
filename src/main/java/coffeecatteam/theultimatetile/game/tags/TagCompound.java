@@ -74,13 +74,6 @@ public class TagCompound extends TagBase {
     }
 
     /**
-     * Stores a new TagStringArray with the given array as data into the map with the given string key.
-     */
-    public void setStringArray(String key, String[] value) {
-        this.tagMap.put(key, new TagStringArray(value));
-    }
-
-    /**
      * Stores a new TagIntArray with the given array as data into the map with the given string key.
      */
     public void setIntArray(String key, int[] value) {
@@ -212,22 +205,6 @@ public class TagCompound extends TagBase {
     }
 
     /**
-     * Retrieves an string array using the specified key, or a zero-length array if no such key was stored.
-     */
-    public String[] getStringArray(String key) {
-        try {
-            if (this.hasKey(key, TagBase.TAG_IDS.get("STRING_ARRAY"))) {
-                return ((TagStringArray) this.tagMap.get(key)).getStringArray();
-            }
-        } catch (ClassCastException classcastexception) {
-            Logger.print(classcastexception);
-            throw classcastexception;
-        }
-
-        return new String[0];
-    }
-
-    /**
      * Retrieves an int array using the specified key, or a zero-length array if no such key was stored.
      */
     public int[] getIntArray(String key) {
@@ -295,16 +272,17 @@ public class TagCompound extends TagBase {
     /**
      * Gets the TagList object with the given name.
      */
-    public TagList getTagList(String key, int type) {
+    public TagList getTagList(String key) {
         try {
             if (this.getTagId(key) == TagBase.TAG_IDS.get("LIST")) {
-                TagList nbttaglist = (TagList) this.tagMap.get(key);
+                TagList tagList = (TagList) this.tagMap.get(key);
 
-                if (!nbttaglist.hasNoTags() && nbttaglist.getTagType() != type) {
+                if (tagList.hasNoTags()) {
+                    Logger.print("FUCK");
                     return new TagList();
                 }
 
-                return nbttaglist;
+                return tagList;
             }
         } catch (ClassCastException classcastexception) {
             Logger.print(classcastexception);

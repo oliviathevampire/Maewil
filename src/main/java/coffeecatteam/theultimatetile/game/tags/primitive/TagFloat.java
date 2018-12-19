@@ -29,7 +29,7 @@ public class TagFloat extends TagPrimitive {
 
     @Override
     public String toString() {
-        return this.data + "f";
+        return String.valueOf(this.data);
     }
 
     /**
@@ -43,11 +43,6 @@ public class TagFloat extends TagPrimitive {
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj) && this.data == ((TagFloat) obj).data;
-    }
-
-    @Override
-    public byte getByte() {
-        return (byte) (Utils.floor(this.data) & 255);
     }
 
     @Override

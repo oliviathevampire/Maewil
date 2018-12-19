@@ -8,15 +8,17 @@ import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.game.tags.supers.TagBase;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.world.World;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
 
 public class WorldJsonSaver implements IJSONSaver {
 
@@ -253,12 +255,15 @@ public class WorldJsonSaver implements IJSONSaver {
         pos.add(1, entity.getY() / Tile.TILE_HEIGHT);
         entityObj.put("pos", pos);
 
-        Map<String, String> tags = entity.saveTags();
-        JSONObject tagsObj = new JSONObject(tags);
-        for (String key : tags.keySet()) {
-            tagsObj.put(key, tags.get(key));
+        try {
+            JSONParser parser = new JSONParser();
+            if (!entity.getTags().hasNoTags()) {
+                Logger.print(entity.getTags().getTagList("eatCrops"));
+                entityObj.put("tags", parser.parse(entity.getTags().toString()));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        entityObj.put("tags", tagsObj);
 
         if (entity.getCurrentHealth() < entity.getMaxHealth())
             entityObj.put("health", entity.getCurrentHealth());

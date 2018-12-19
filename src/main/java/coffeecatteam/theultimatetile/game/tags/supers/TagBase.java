@@ -5,9 +5,12 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.tags.TagCompound;
 import coffeecatteam.theultimatetile.game.tags.TagIntArray;
-import coffeecatteam.theultimatetile.game.tags.TagStringArray;
+import coffeecatteam.theultimatetile.game.tags.TagList;
+import coffeecatteam.theultimatetile.game.tags.TagString;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,12 +28,42 @@ public abstract class TagBase {
         TAG_IDS.put("INT", 3);
         TAG_IDS.put("FLOAT", 4);
         TAG_IDS.put("DOUBLE", 5);
-        TAG_IDS.put("STRING_ARRAY", 6);
-        TAG_IDS.put("INT_ARRAY", 7);
-        TAG_IDS.put("FLOAT_ARRAY", 8);
-        TAG_IDS.put("DOUBLE_ARRAY", 9);
-        TAG_IDS.put("LIST", 10);
-        TAG_IDS.put("BOOLEAN", 11);
+        TAG_IDS.put("INT_ARRAY", 6);
+        TAG_IDS.put("FLOAT_ARRAY", 7);
+        TAG_IDS.put("DOUBLE_ARRAY", 8);
+        TAG_IDS.put("LIST", 9);
+        TAG_IDS.put("BOOLEAN", 10);
+    }
+
+    public static String getTagTypeName(int id) {
+        switch (id) {
+            case 0:
+                return "TAG_" + TAG_IDS.keySet().toArray()[id];
+            case 1:
+                return "TAG_" + TAG_IDS.keySet().toArray()[id];
+            case 2:
+                return "TAG_" + TAG_IDS.keySet().toArray()[id];
+            case 3:
+                return "TAG_" + TAG_IDS.keySet().toArray()[id];
+            case 4:
+                return "TAG_" + TAG_IDS.keySet().toArray()[id];
+            case 5:
+                return "TAG_" + TAG_IDS.keySet().toArray()[id];
+            case 6:
+                return "TAG_" + TAG_IDS.keySet().toArray()[id];
+            case 7:
+                return "TAG_" + TAG_IDS.keySet().toArray()[id];
+            case 8:
+                return "TAG_" + TAG_IDS.keySet().toArray()[id];
+            case 9:
+                return "TAG_" + TAG_IDS.keySet().toArray()[id];
+            case 10:
+                return "TAG_" + TAG_IDS.keySet().toArray()[id];
+            case 99:
+                return "Any Numeric Tag";
+            default:
+                return "UNKNOWN";
+        }
     }
 
     /**
@@ -49,7 +82,13 @@ public abstract class TagBase {
 
         TagCompound tags = new TagCompound();
 
-        TagStringArray eatCrops = new TagStringArray(new String[]{"crop_corn", "crop_wheat", "crop_potato", "crop_carrot", "crop_tomato"});
+        List<TagBase> crops = new ArrayList<>();
+        crops.add(new TagString("crop_corn"));
+        crops.add(new TagString("crop_wheat"));
+        crops.add(new TagString("crop_potato"));
+        crops.add(new TagString("crop_carrot"));
+        crops.add(new TagString("crop_tomato"));
+        TagList eatCrops = new TagList(crops);
         tags.setTag("eatCrops", eatCrops);
 
         tags.setBoolean("fleePlayer", true);
@@ -58,7 +97,6 @@ public abstract class TagBase {
         baseCompound.setTag("entity", entity);
 
         Logger.print(baseCompound.toString());
-        GameEngine.getGameEngine().setRunning(false);
         Engine.getEngine().setRunning(false);
     }
 

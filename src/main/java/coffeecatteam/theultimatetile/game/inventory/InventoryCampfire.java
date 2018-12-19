@@ -7,19 +7,19 @@ import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
+import coffeecatteam.theultimatetile.game.tags.TagCompound;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Map;
 
 public class InventoryCampfire extends InventoryAbstractPlayer {
 
     private BufferedImage flame = Assets.getSpriteExact("/assets/textures/gui/inventory/campfire.png", 57, 0, 16, 15);
-    private Map<String, String> TAGS;
+    private TagCompound TAGS;
 
-    public InventoryCampfire(Engine engine, EntityPlayer player, Map<String, String> TAGS) {
+    public InventoryCampfire(Engine engine, EntityPlayer player, TagCompound TAGS) {
         super(engine, player, "Campfire", 190, 370);
         this.TAGS = TAGS;
 
@@ -29,7 +29,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
 
     @Override
     public void onOpen() {
-        String tagItem = TAGS.get("item");
+        String tagItem = TAGS.getString("item");
         String[] itemData = tagItem.split(":");
         if (itemData[0].equals("null"))
             slots.get(slots.size() - 1).setStack(null);
@@ -44,12 +44,12 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
     @Override
     public void onClose() {
         if (slots.get(slots.size() - 1).getStack() == null)
-            TAGS.replace("item", "null:0");
+            TAGS.setString("item", "null:0");
         else {
             ItemStack stack = slots.get(slots.size() - 1).getStack();
             String id = stack.getId();
             String amt = String.valueOf(stack.getCount());
-            TAGS.replace("item", id + ":" + amt);
+            TAGS.setString("item", id + ":" + amt);
         }
         super.onClose();
     }
@@ -91,7 +91,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
         }
     }
 
-    public void setTAGS(Map<String, String> TAGS) {
+    public void setTAGS(TagCompound TAGS) {
         this.TAGS = TAGS;
     }
 }
