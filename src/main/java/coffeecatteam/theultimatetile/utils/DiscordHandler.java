@@ -3,8 +3,10 @@ package coffeecatteam.theultimatetile.utils;
 import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
+import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.theultimatetile.Engine;
 
 public class DiscordHandler {
 
@@ -18,34 +20,36 @@ public class DiscordHandler {
     public static boolean READY = false;
 
     public void setup() {
-        Logger.print("");
-        Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
-        rpc = DiscordRPC.INSTANCE;
-
-        DiscordEventHandlers handlers = new DiscordEventHandlers();
-        handlers.ready = user -> {
-            userId = user.username + "#" + user.discriminator;
-            DiscordHandler.READY = true;
-            Logger.print("Connected to discord\n" +
-                    "Discord rich presence setup for " + userId +
-                    "\nReady: " + READY);
+        if (!ArgUtils.hasArgument(Engine.getEngine().getArgs(), "-disableDiscordRP")) {
             Logger.print();
-        };
-        rpc.Discord_Initialize("502962688733741056", handlers, true, "");
+            Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
+            rpc = DiscordRPC.INSTANCE;
 
-        new Thread(() -> {
-            Logger.print("Started RPC Callback Handler");
-            while (!Thread.currentThread().isInterrupted()) {
-                rpc.Discord_RunCallbacks();
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    break;
+            DiscordEventHandlers handlers = new DiscordEventHandlers();
+            handlers.ready = user -> {
+                userId = user.username + "#" + user.discriminator;
+                DiscordHandler.READY = true;
+                Logger.print("Connected to discord\n" +
+                        "Discord rich presence setup for " + userId +
+                        "\nReady: " + READY);
+                Logger.print();
+            };
+            rpc.Discord_Initialize("502962688733741056", handlers, true, "");
+
+            new Thread(() -> {
+                Logger.print("Started RPC Callback Handler");
+                while (!Thread.currentThread().isInterrupted()) {
+                    rpc.Discord_RunCallbacks();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        break;
+                    }
                 }
-            }
-        }, "RPC-Callback-Handler").start();
+            }, "RPC-Callback-Handler").start();
 
-        updatePresence((LEVEL_CREATE ? "Level Creator" : "Main Menu"));
+            updatePresence((LEVEL_CREATE ? "Level Creator" : "Main Menu"));
+        }
     }
 
     public void updatePresence(String details) {
@@ -57,14 +61,16 @@ public class DiscordHandler {
     }
 
     public void updatePresence(String details, String state, boolean inGame) {
-        DiscordRichPresence presence = new DiscordRichPresence();
-        presence.details = details;
-        presence.state = state;
-        presence.largeImageKey = "ultimatebg" + (LEVEL_CREATE ? "_edit" : "");
-        if (inGame)
-            presence.smallImageKey = getSmallImage(NumberUtils.getRandomInt(5));
-        presence.startTimestamp = timeStamp;
-        rpc.Discord_UpdatePresence(presence);
+        if (!ArgUtils.hasArgument(Engine.getEngine().getArgs(), "-disableDiscordRP")) {
+            DiscordRichPresence presence = new DiscordRichPresence();
+            presence.details = details;
+            presence.state = state;
+            presence.largeImageKey = "ultimatebg" + (LEVEL_CREATE ? "_edit" : "");
+            if (inGame)
+                presence.smallImageKey = getSmallImage(NumberUtils.getRandomInt(5));
+            presence.startTimestamp = timeStamp;
+            rpc.Discord_UpdatePresence(presence);
+        }
     }
 
     private String getSmallImage(int id) {
@@ -90,10 +96,12 @@ public class DiscordHandler {
     }
 
     public void shutdown() {
-        Logger.print("\n" + userId + " is disconnecting!");
-        rpc.Discord_ClearPresence();
-        Logger.print("Cleared rich presence!");
-        rpc.Discord_Shutdown();
-        Logger.print(userId + " hss disconnected!");
+        if (!ArgUtils.hasArgument(Engine.getEngine().getArgs(), "-disableDiscordRP")) {
+            Logger.print("\n" + userId + " is disconnecting!");
+            rpc.Discord_ClearPresence();
+            Logger.print("Cleared rich presence!");
+            rpc.Discord_Shutdown();
+            Logger.print(userId + " hss disconnected!");
+        }
     }
 }
