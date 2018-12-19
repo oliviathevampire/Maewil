@@ -5,6 +5,9 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.ai.AIEatCrops;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPassive;
+import coffeecatteam.theultimatetile.game.tags.TagCompound;
+import coffeecatteam.theultimatetile.game.tags.TagList;
+import coffeecatteam.theultimatetile.game.tags.supers.TagBase;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
@@ -26,11 +29,8 @@ public class EntityPig extends EntityPassive {
         xMove = 0;
         yMove = 0;
 
-        if (TAGS.containsKey("eatCrops")) {
-            String[] ids = TAGS.get("eatCrops").split(",");
-            if (!aiEatCrops.getCropIds().equals(Arrays.asList(ids))) {
-                aiEatCrops.setCropIds(ids);
-            }
+        if (TAGS.hasKey("eatCrops")) {
+            aiEatCrops.setCropIds(TAGS.getTagList("eatCrops"));
         }
 
         // Movement

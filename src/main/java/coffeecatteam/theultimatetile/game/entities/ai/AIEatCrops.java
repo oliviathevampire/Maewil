@@ -1,9 +1,11 @@
 package coffeecatteam.theultimatetile.game.entities.ai;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityCrop;
+import coffeecatteam.theultimatetile.game.tags.TagList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,16 +30,22 @@ public class AIEatCrops extends AI {
         this.speed = speed;
     }
 
-    public void setCropIds(String[] cropIds) {
-        this.cropIds.addAll(Arrays.asList(cropIds));
-    }
-
-    public void setCropIds(List<String> cropIds) {
-        this.cropIds = cropIds;
-    }
-
     public List<String> getCropIds() {
         return cropIds;
+    }
+
+    public void setCropIds(String[] cropIdsIn) {
+        cropIds.addAll(Arrays.asList(cropIdsIn));
+    }
+
+    public void setCropIds(TagList cropIdsIn) {
+        cropIdsIn.forEach(tag -> {
+            cropIds.add(tag.getString());
+        });
+    }
+
+    public void setCropIds(List<String> cropIdsIn) {
+        cropIds = cropIdsIn;
     }
 
     @Override
@@ -50,12 +58,12 @@ public class AIEatCrops extends AI {
             float distance = getDistance(entity, closestCrop);
             float multiplier = speed / distance;
 
-            boolean inRange = (distance > 10f) && (distance < maxDistance);
+            boolean inRange = (distance > 20f) && (distance < maxDistance) && canTrigger();
             if (inRange) {
                 entity.setxMove(x * multiplier);
                 entity.setyMove(y * multiplier);
                 if (closestCrop.isTouching(entity)) {
-                    closestCrop.hurt(closestCrop.getCurrentHealth());
+                    closestCrop.hurt(NumberUtils.getRandomInt(closestCrop.getMaxHealth() / 4));
                 }
             }
             return inRange;
@@ -63,13 +71,21 @@ public class AIEatCrops extends AI {
         return false;
     }
 
+    private boolean trigger = false;
+    private boolean canTrigger() {
+        float percentage = trigger ? 20.0f : 1000.0f;
+        if (NumberUtils.getRandomFloat(percentage) < 1.0f)
+            trigger = !trigger;
+        return trigger;
+    }
+
     private EntityCrop getClosestCrop() {
         EntityCrop closest = null;
         float lastDistance = maxDistance;
 
-        for (Entity entity : GameEngine.getGameEngine().getEntityManager().getEntities()) {
-            if (entity instanceof EntityCrop) {
-                EntityCrop crop = (EntityCrop) entity;
+        for (Entity e : GameEngine.getGameEngine().getEntityManager().getEntities()) {
+            if (e instanceof EntityCrop) {
+                EntityCrop crop = (EntityCrop) e;
                 float dist = getDistance(entity, crop);
                 if (dist < lastDistance) {
                     lastDistance = dist;
