@@ -4,7 +4,7 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.UITextBox;
-import coffeecatteam.theultimatetile.jsonparsers.JsonParser;
+import coffeecatteam.theultimatetile.jsonparsers.JsonUtils;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -24,13 +24,12 @@ public class StateCredits extends StateAbstractMenu {
         init();
 
         try {
-            JsonParser jsonParser = new JsonParser("/assets/credits.json", true);
-            Object[] devs = jsonParser.getArray("devs").toArray();
+            Object[] devs = JsonUtils.getArray("devs", "/assets/credits.json", true).toArray();
             this.devs = new String[devs.length];
             for (int i = 0; i < devs.length; i++)
                 this.devs[i] = (String) devs[i];
 
-            Object[] helpers = jsonParser.getArray("helpers").toArray();
+            Object[] helpers = JsonUtils.getArray("helpers", "/assets/credits.json", true).toArray();
             this.helpers = new String[helpers.length];
             for (int i = 0; i < helpers.length; i++)
                 this.helpers[i] = (String) helpers[i];
