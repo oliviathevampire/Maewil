@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.jsonparsers.world;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
@@ -8,7 +7,6 @@ import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.game.tags.supers.TagBase;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.world.World;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
@@ -33,25 +31,25 @@ public class WorldJsonSaver implements IJSONSaver {
     }
 
     public void save(String username) throws IOException {
-        Logger.print("\nSaving current world!");
+        engine.getLogger().print("Saving current world!");
         saveWorldInfo(world);
-        Logger.print("World [" + world.getWorldName() + "] info saved!\n");
+        engine.getLogger().print("World [" + world.getWorldName() + "] info saved!");
 
         saveTiles(world.getWidth(), world.getHeight(), world.getBg_tiles(), world.getFg_tiles(), path + "/" + WorldJsonLoader.BASE_FILES.get("tile_bg"), path + "/" + WorldJsonLoader.BASE_FILES.get("tile_fg"));
-        Logger.print("World [" + world.getWorldName() + "] tiles saved!\n");
+        engine.getLogger().print("World [" + world.getWorldName() + "] tiles saved!");
 
         /*
          * TEMP!!!
          */
         if (engine instanceof GameEngine) {
             saveEntities();
-            Logger.print("World [" + world.getWorldName() + "] entities saved!\n");
+            engine.getLogger().print("World [" + world.getWorldName() + "] entities saved!");
 
             saveItems();
-            Logger.print("World [" + world.getWorldName() + "] items saved!\n");
+            engine.getLogger().print("World [" + world.getWorldName() + "] items saved!");
 
             savePlayerInfo(username);
-            Logger.print("World [" + world.getWorldName() + "] player info saved!\n");
+            engine.getLogger().print("World [" + world.getWorldName() + "] player info saved!");
         }
     }
 
@@ -99,7 +97,7 @@ public class WorldJsonSaver implements IJSONSaver {
             bg_tile.put("chunk" + y, chunk);
         }
         jsonObjectBG.put("bg_tile", bg_tile);
-        Logger.print("Saved bg tiles");
+        engine.getLogger().print("Saved bg tiles");
 
         JSONObject fg_tile = new JSONObject();
         for (int y = 0; y < height; y++) {
@@ -110,7 +108,7 @@ public class WorldJsonSaver implements IJSONSaver {
             fg_tile.put("chunk" + y, chunk);
         }
         jsonObjectFG.put("fg_tile", fg_tile);
-        Logger.print("Saved fg tiles");
+        engine.getLogger().print("Saved fg tiles");
 
         saveJSONFileToPath(bgSavePath, jsonObjectBG);
         saveJSONFileToPath(fgSavePath, jsonObjectFG);
@@ -154,7 +152,7 @@ public class WorldJsonSaver implements IJSONSaver {
                         if (entity instanceof EntityStatic)
                             saveEntityObj(entity, statics);
                 jsonObjectStatic.put("statics", statics);
-                Logger.print("World [" + path + "] static entities saved!");
+                engine.getLogger().print("World [" + path + "] static entities saved!");
             }
 
             // Creature
@@ -166,10 +164,10 @@ public class WorldJsonSaver implements IJSONSaver {
                         if (entity instanceof EntityCreature)
                             saveEntityObj(entity, creatures);
                 jsonObjectCreature.put("creatures", creatures);
-                Logger.print("World [" + path + "] creature entities saved!");
+                engine.getLogger().print("World [" + path + "] creature entities saved!");
             }
         }
-        Logger.print("World [" + path + "] entities saved!");
+        engine.getLogger().print("World [" + path + "] entities saved!");
 
         saveJSONFileToSave(WorldJsonLoader.BASE_FILES.get("entity_s"), jsonObjectStatic);
         saveJSONFileToSave(WorldJsonLoader.BASE_FILES.get("entity_c"), jsonObjectCreature);
@@ -194,7 +192,7 @@ public class WorldJsonSaver implements IJSONSaver {
             items.add(itemObj);
         }
         jsonObject.put("items", items);
-        Logger.print("World [" + path + "] items saved!");
+        engine.getLogger().print("World [" + path + "] items saved!");
 
         saveJSONFileToSave(WorldJsonLoader.BASE_FILES.get("items"), jsonObject);
     }
@@ -203,7 +201,7 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("username", username);
-        Logger.print("Player username saved [" + GameEngine.getGameEngine().getUsername() + "]");
+        engine.getLogger().print("Player username saved [" + GameEngine.getGameEngine().getUsername() + "]");
         jsonObject.put("health", GameEngine.getGameEngine().getEntityManager().getPlayer().getCurrentHealth());
         jsonObject.put("glubel", GameEngine.getGameEngine().getEntityManager().getPlayer().getGlubel());
         jsonObject.put("lvl", GameEngine.getGameEngine().getEntityManager().getPlayer().getLvl());
@@ -258,7 +256,7 @@ public class WorldJsonSaver implements IJSONSaver {
         try {
             JSONParser parser = new JSONParser();
             if (!entity.getTags().hasNoTags()) {
-                Logger.print(entity.getTags().getTagList("eatCrops"));
+                engine.getLogger().print(entity.getTags().getTagList("eatCrops"));
                 entityObj.put("tags", parser.parse(entity.getTags().toString()));
             }
         } catch (ParseException e) {

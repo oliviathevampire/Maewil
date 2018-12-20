@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.game.state;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
@@ -27,7 +26,7 @@ public class StateOptions extends StateAbstractMenu {
         try {
             OPTIONS.load();
         } catch (IOException | ParseException e) {
-            Logger.print(e);
+            engine.getLogger().print(e);
         }
 
         if (initUI) {
@@ -35,7 +34,7 @@ public class StateOptions extends StateAbstractMenu {
                 @Override
                 public void onClick() {
                     OPTIONS.setDebugMode(!OPTIONS.debugMode());
-                    Logger.print("Degbug info mode " + (OPTIONS.debugMode() ? "enabled" : "disabled"));
+                    logger.print("Degbug info mode " + (OPTIONS.debugMode() ? "enabled" : "disabled"));
                 }
 
                 @Override
@@ -47,7 +46,7 @@ public class StateOptions extends StateAbstractMenu {
                 @Override
                 public void onClick() {
                     OPTIONS.setFpsCounter(!OPTIONS.fpsCounter());
-                    Logger.print("FPS counter " + (OPTIONS.fpsCounter() ? "enabled" : "disabled"));
+                    logger.print("FPS counter " + (OPTIONS.fpsCounter() ? "enabled" : "disabled"));
                 }
 
                 @Override
@@ -62,7 +61,7 @@ public class StateOptions extends StateAbstractMenu {
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {
-                        Logger.print(e);
+                        logger.print(e);
                     }
                     setPresence("Controls");
                 }
@@ -79,7 +78,7 @@ public class StateOptions extends StateAbstractMenu {
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {
-                        Logger.print(e);
+                        logger.print(e);
                     }
                     setPresence("Sounds");
                 }
@@ -100,7 +99,7 @@ public class StateOptions extends StateAbstractMenu {
         try {
             OPTIONS.save();
         } catch (IOException e) {
-            Logger.print(e);
+            logger.print(e);
         }
     }
 

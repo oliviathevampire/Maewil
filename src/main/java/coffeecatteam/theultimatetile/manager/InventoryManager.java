@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.Inventory;
 import coffeecatteam.theultimatetile.game.inventory.InventoryAbstractPlayer;
@@ -20,7 +19,7 @@ public class InventoryManager {
 
     public boolean openInventory(InventoryAbstractPlayer inventory) {
         if (!gameEngine.getEntityManager().getPlayer().isGuiOpen()) {
-            Logger.print(gameEngine.getEntityManager().getPlayer().getUsername() + ": Opening inventory " + inventory.getInvName());
+            gameEngine.getLogger().print(gameEngine.getEntityManager().getPlayer().getUsername() + ": Opening inventory " + inventory.getInvName());
             inventory.setActive(true);
             gameEngine.getEntityManager().getPlayer().setGuiOpen(true);
             return true;
@@ -30,14 +29,14 @@ public class InventoryManager {
 
     public void closeAllInventories() {
         INVENTORIES.forEach(inventory -> {
-            Logger.print(gameEngine.getEntityManager().getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
+            gameEngine.getLogger().print(gameEngine.getEntityManager().getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
             inventory.setActive(false);
             gameEngine.getEntityManager().getPlayer().setGuiOpen(false);
         });
     }
 
     public void closeInventory(InventoryAbstractPlayer inventory) {
-        Logger.print(gameEngine.getEntityManager().getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
+        gameEngine.getLogger().print(gameEngine.getEntityManager().getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
         inventory.setActive(false);
         gameEngine.getEntityManager().getPlayer().setGuiOpen(false);
     }

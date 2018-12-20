@@ -1,18 +1,12 @@
 package coffeecatteam.theultimatetile.game.entities.creatures.passive;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.ai.AIEatCrops;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPassive;
-import coffeecatteam.theultimatetile.game.tags.TagCompound;
-import coffeecatteam.theultimatetile.game.tags.TagList;
-import coffeecatteam.theultimatetile.game.tags.supers.TagBase;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
-
-import java.util.Arrays;
 
 public class EntityPig extends EntityPassive {
 
@@ -21,7 +15,7 @@ public class EntityPig extends EntityPassive {
     public EntityPig(Engine engine, String id) {
         super(engine, id);
         this.drop = ItemManager.RAW_PORK;
-        aiEatCrops = new AIEatCrops(this);
+        aiEatCrops = new AIEatCrops(engine, this);
     }
 
     @Override

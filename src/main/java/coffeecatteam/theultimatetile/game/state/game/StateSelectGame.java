@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.game.state.game;
 
 import coffeecatteam.coffeecatutils.ArgUtils;
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
@@ -91,7 +90,7 @@ public class StateSelectGame extends StateAbstractMenu {
             try {
                 gamesJSONParser.load();
             } catch (IOException | ParseException e) {
-                Logger.print(e);
+                logger.print(e);
             }
         }
 
@@ -110,7 +109,7 @@ public class StateSelectGame extends StateAbstractMenu {
                 try {
                     gamesJSONParser.save();
                 } catch (IOException e) {
-                    Logger.print(e);
+                    logger.print(e);
                 }
             } else {
                 worldName = SavedGamesJSONParser.GAMES.get(index).split(":")[1];
@@ -128,9 +127,9 @@ public class StateSelectGame extends StateAbstractMenu {
                 }
             }
             GameEngine.getGameEngine().setUsername(username);
-            Logger.print("Set username: " + GameEngine.getGameEngine().getUsername());
+            logger.print("Set username: " + GameEngine.getGameEngine().getUsername());
 
-            Logger.print("Loading game [" + path + "]!");
+            logger.print("Loading game [" + path + "]!");
 
             DiscordHandler.INSTANCE.updatePresence("In Game - " + GameEngine.getGameEngine().getUsername(),
                     "World: " + worldName, true);

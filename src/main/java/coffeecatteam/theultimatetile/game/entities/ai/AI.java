@@ -1,13 +1,16 @@
 package coffeecatteam.theultimatetile.game.entities.ai;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
 
 public abstract class AI {
 
     protected EntityCreature entity;
+    protected Engine engine;
 
-    public AI(EntityCreature entity) {
+    public AI(Engine engine, EntityCreature entity) {
+        this.engine = engine;
         this.entity = entity;
     }
 

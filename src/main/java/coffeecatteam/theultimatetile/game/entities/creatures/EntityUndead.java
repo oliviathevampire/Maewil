@@ -19,8 +19,8 @@ public abstract class EntityUndead extends EntityCreature {
 
     public EntityUndead(Engine engine, String id) {
         super(engine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
-        aiWander = new AIWander(this, 1.5f);
-        aiFollowFlee = new AIFollowFlee(this, ((GameEngine) engine).getEntityManager().getPlayer());
+        aiWander = new AIWander(engine, this, 1.5f);
+        aiFollowFlee = new AIFollowFlee(engine, this, ((GameEngine) engine).getEntityManager().getPlayer());
     }
 
     @Override

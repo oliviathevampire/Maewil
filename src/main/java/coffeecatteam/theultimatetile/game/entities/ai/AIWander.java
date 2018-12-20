@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.game.entities.ai;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 
@@ -11,8 +11,8 @@ public class AIWander extends AI {
     private float speed;
     private int dir;
 
-    public AIWander(EntityCreature entity, float speed) {
-        super(entity);
+    public AIWander(Engine engine, EntityCreature entity, float speed) {
+        super(engine, entity);
         this.speed = speed;
         dir = 0;
     }
@@ -25,7 +25,7 @@ public class AIWander extends AI {
         if (wanderTimer > wanderCooldown) {
             dir = NumberUtils.getRandomInt(8);
             if (StateOptions.OPTIONS.debugMode())
-                Logger.print("Wander DIR for entity [" + entity.getId() + "]: " + dir);
+                engine.getLogger().print("Wander DIR for entity [" + entity.getId() + "]: " + dir);
             wanderCooldown = NumberUtils.getRandomBoolean() ? 1600 : 3200;
             wanderTimer = 0;
         }

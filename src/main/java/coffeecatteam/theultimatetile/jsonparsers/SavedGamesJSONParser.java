@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
@@ -46,7 +45,7 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
             }
         }
 
-        Logger.print("Games loaded!");
+        engine.getLogger().print("Games loaded!");
     }
 
     @Override
@@ -63,13 +62,13 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
                 jsonObject.put(tag, save);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            Logger.print(e.getMessage());
+            engine.getLogger().print(e.getMessage());
         }
 
         FileWriter file = new FileWriter(path);
         file.write(jsonObject.toJSONString());
         file.flush();
 
-        Logger.print("Games saved!");
+        engine.getLogger().print("Games saved!");
     }
 }

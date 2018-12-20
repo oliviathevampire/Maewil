@@ -1,11 +1,14 @@
 package coffeecatteam.theultimatetile.game.state;
 
+import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.manager.UIManager;
 
 import java.awt.*;
 
 public abstract class State {
+
+    protected CatLogger logger;
 
     private static State currentState = null;
 
@@ -14,6 +17,7 @@ public abstract class State {
 
     public State(Engine engine) {
         State.engine = engine;
+        this.logger = engine.getLogger();
         uiManager = new UIManager(engine);
     }
 

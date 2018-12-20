@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.game.entities.creatures;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
@@ -167,8 +166,8 @@ public abstract class EntityCreature extends Entity {
 
     protected boolean collisionWidthTile(int x, int y) {
         if (this.getId().equals("player") && StateOptions.OPTIONS.debugMode()) {
-            Logger.print("X: " + x + " Y: " + y);
-            Logger.print(((GameEngine) engine).getWorld().getFGTile(x, y).getId() + " - " + ((GameEngine) engine).getWorld().getFGTile(x, y).isSolid());
+            engine.getLogger().print("X: " + x + " Y: " + y);
+            engine.getLogger().print(((GameEngine) engine).getWorld().getFGTile(x, y).getId() + " - " + ((GameEngine) engine).getWorld().getFGTile(x, y).isSolid());
         }
         return ((GameEngine) engine).getWorld().getFGTile(x, y).isSolid();
     }

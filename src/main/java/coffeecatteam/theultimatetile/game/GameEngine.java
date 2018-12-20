@@ -9,7 +9,6 @@ import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.game.state.options.OptionsSounds;
 import coffeecatteam.theultimatetile.game.state.options.controls.OptionsControls;
-import coffeecatteam.theultimatetile.game.tags.supers.TagBase;
 import coffeecatteam.theultimatetile.game.world.World;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.manager.EntityManager;

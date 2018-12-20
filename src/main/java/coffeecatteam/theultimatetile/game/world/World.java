@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.game.world;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
@@ -34,7 +33,7 @@ public class World {
         try {
             loadWorld(path);
         } catch (IOException | ParseException e) {
-            Logger.print(e);
+            engine.getLogger().print(e);
         }
         ((GameEngine) engine).getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
         ((GameEngine) engine).getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
@@ -155,7 +154,7 @@ public class World {
         WorldJsonLoader worldJsonLoader = new WorldJsonLoader(path, engine); // "/assets/worlds/dev_tests/json_format"
 
         worldJsonLoader.load();
-        Logger.print("Loading world [" + worldJsonLoader.getName() + "]!");
+        engine.getLogger().print("Loading world [" + worldJsonLoader.getName() + "]!");
 
         worldName = worldJsonLoader.getName();
 
@@ -182,7 +181,7 @@ public class World {
                 bg_tiles[x][y] = tile;
             }
         }
-        Logger.print("Loaded background tiles!");
+        engine.getLogger().print("Loaded background tiles!");
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -195,7 +194,7 @@ public class World {
                 fg_tiles[x][y] = tile;
             }
         }
-        Logger.print("Loaded foreground tiles!\n");
+        engine.getLogger().print("Loaded foreground tiles!");
     }
 
     public String getWorldName() {

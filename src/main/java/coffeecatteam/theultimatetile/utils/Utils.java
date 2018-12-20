@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.utils;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.Engine;
 
 import javax.swing.*;
@@ -28,7 +27,7 @@ public class Utils {
         String username;
         int nameLength = 16;
         try {
-            username = JOptionPane.showInputDialog("Please enter a username\nMust be max " + nameLength + " characters", defaultName);
+            username = JOptionPane.showInputDialog("Please enter a usernameMust be max " + nameLength + " characters", defaultName);
             if (username.length() > nameLength || username.equalsIgnoreCase(""))
                 username = getUsername(username);
             //username = username.substring(0, nameLength);
@@ -92,7 +91,7 @@ public class Utils {
 
             fileOutputStream.close();
         } catch (IOException e) {
-            Logger.print(e);
+            Engine.getEngine().getLogger().print(e);
         }
     }
 

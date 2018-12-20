@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.levelcreator;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
@@ -90,10 +89,10 @@ public class LevelRenderer {
 
                         saveWorld(finalPath);
                     } else {
-                        Logger.print("Canceling save...");
+                        creatorEngine.getLogger().print("Canceling save...");
                     }
                 } catch (IOException e) {
-                    Logger.print(e);
+                    creatorEngine.getLogger().print(e);
                 }
             }
 
@@ -119,10 +118,10 @@ public class LevelRenderer {
 
                         zipWorld(finalPath, fileName);
                     } else {
-                        Logger.print("Canceling save/zip...");
+                        creatorEngine.getLogger().print("Canceling save/zip...");
                     }
                 } catch (IOException e) {
-                    Logger.print(e);
+                    creatorEngine.getLogger().print(e);
                 }
             }
 
@@ -147,10 +146,10 @@ public class LevelRenderer {
 
                         loadWorld(finalPath);
                     } else {
-                        Logger.print("Canceling load...");
+                        creatorEngine.getLogger().print("Canceling load...");
                     }
                 } catch (IOException | ParseException e) {
-                    Logger.print(e);
+                    creatorEngine.getLogger().print(e);
                 }
             }
 
@@ -183,7 +182,7 @@ public class LevelRenderer {
 
         gridWorldEditorBG.setGridFromArray(loader.getBg_tiles(), xWorldSize, yWorldSize);
         gridWorldEditorFG.setGridFromArray(loader.getFg_tiles(), xWorldSize, yWorldSize);
-        Logger.print("World [" + path + "] loaded!");
+        creatorEngine.getLogger().print("World [" + path + "] loaded!");
     }
 
     private void saveWorld(String path) throws IOException {
@@ -196,7 +195,7 @@ public class LevelRenderer {
 
 //        saver.saveTiles(xWorldSize, yWorldSize, gridWorldEditorBG.convertGridToArray(), gridWorldEditorFG.convertGridToArray(), path + "background", path + "foreground");
         saver.save();
-        Logger.print("World [" + dir + "] saved!");
+        creatorEngine.getLogger().print("World [" + dir + "] saved!");
     }
 
     private void zipWorld(String path, String fileName) throws IOException {
@@ -206,7 +205,7 @@ public class LevelRenderer {
 
         String zipPath = path + fileName + ".zip";
         Utils.zipFiles(new File[]{bg, fg}, zipPath);
-        Logger.print("World [" + zipPath + "] zipped!");
+        creatorEngine.getLogger().print("World [" + zipPath + "] zipped!");
     }
 
     private void initGrids() {

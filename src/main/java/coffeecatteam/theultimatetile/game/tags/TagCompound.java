@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.game.tags;
 
-import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.tags.primitive.TagDouble;
 import coffeecatteam.theultimatetile.game.tags.primitive.TagFloat;
 import coffeecatteam.theultimatetile.game.tags.primitive.TagInt;
@@ -149,7 +149,7 @@ public class TagCompound extends TagBase {
                 return ((TagPrimitive) this.tagMap.get(key)).getInt();
             }
         } catch (ClassCastException classcastexception) {
-            Logger.print(classcastexception);
+            Engine.getEngine().getLogger().print(classcastexception);
             throw classcastexception;
         }
 
@@ -165,7 +165,7 @@ public class TagCompound extends TagBase {
                 return ((TagPrimitive) this.tagMap.get(key)).getFloat();
             }
         } catch (ClassCastException classcastexception) {
-            Logger.print(classcastexception);
+            Engine.getEngine().getLogger().print(classcastexception);
             throw classcastexception;
         }
 
@@ -181,7 +181,7 @@ public class TagCompound extends TagBase {
                 return ((TagPrimitive) this.tagMap.get(key)).getDouble();
             }
         } catch (ClassCastException classcastexception) {
-            Logger.print(classcastexception);
+            Engine.getEngine().getLogger().print(classcastexception);
             throw classcastexception;
         }
 
@@ -197,7 +197,7 @@ public class TagCompound extends TagBase {
                 return this.tagMap.get(key).getString();
             }
         } catch (ClassCastException classcastexception) {
-            Logger.print(classcastexception);
+            Engine.getEngine().getLogger().print(classcastexception);
             throw classcastexception;
         }
 
@@ -213,7 +213,7 @@ public class TagCompound extends TagBase {
                 return ((TagIntArray) this.tagMap.get(key)).getIntArray();
             }
         } catch (ClassCastException classcastexception) {
-            Logger.print(classcastexception);
+            Engine.getEngine().getLogger().print(classcastexception);
             throw classcastexception;
         }
 
@@ -229,7 +229,7 @@ public class TagCompound extends TagBase {
                 return ((TagFloatArray) this.tagMap.get(key)).getFloatArray();
             }
         } catch (ClassCastException classcastexception) {
-            Logger.print(classcastexception);
+            Engine.getEngine().getLogger().print(classcastexception);
             throw classcastexception;
         }
 
@@ -245,7 +245,7 @@ public class TagCompound extends TagBase {
                 return ((TagDoubleArray) this.tagMap.get(key)).getDoubleArray();
             }
         } catch (ClassCastException classcastexception) {
-            Logger.print(classcastexception);
+            Engine.getEngine().getLogger().print(classcastexception);
             throw classcastexception;
         }
 
@@ -262,7 +262,7 @@ public class TagCompound extends TagBase {
                 return (TagCompound) this.tagMap.get(key);
             }
         } catch (ClassCastException classcastexception) {
-            Logger.print(classcastexception);
+            Engine.getEngine().getLogger().print(classcastexception);
             throw classcastexception;
         }
 
@@ -278,14 +278,14 @@ public class TagCompound extends TagBase {
                 TagList tagList = (TagList) this.tagMap.get(key);
 
                 if (tagList.hasNoTags()) {
-                    Logger.print("FUCK");
+                    Engine.getEngine().getLogger().print("FUCK");
                     return new TagList();
                 }
 
                 return tagList;
             }
         } catch (ClassCastException classcastexception) {
-            Logger.print(classcastexception);
+            Engine.getEngine().getLogger().print(classcastexception);
             throw classcastexception;
         }
 
@@ -302,7 +302,7 @@ public class TagCompound extends TagBase {
                 return ((TagBoolean) this.tagMap.get(key)).isData();
             }
         } catch (ClassCastException classcastexception) {
-            Logger.print(classcastexception);
+            Engine.getEngine().getLogger().print(classcastexception);
             throw classcastexception;
         }
 

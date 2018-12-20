@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.game.state.game;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.state.State;
@@ -152,7 +151,7 @@ public class StateGame extends State {
         try {
             saver.save(username);
         } catch (IOException e) {
-            Logger.print(e);
+            logger.print(e);
         }
         GameEngine.getGameEngine().setUsername(username);
     }
@@ -162,7 +161,7 @@ public class StateGame extends State {
         try {
             saver.save();
         } catch (IOException e) {
-            Logger.print(e);
+            logger.print(e);
         }
     }
 

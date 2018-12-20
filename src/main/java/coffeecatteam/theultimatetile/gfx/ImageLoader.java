@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx;
 
-import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.theultimatetile.Engine;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -16,7 +16,7 @@ public class ImageLoader {
                 file = ImageLoader.class.getResource("/assets/textures/missing.png");
             return ImageIO.read(file);
         } catch (IOException e) {
-            Logger.print(e);
+            Engine.getEngine().getLogger().print(e);
         }
         return null;
     }

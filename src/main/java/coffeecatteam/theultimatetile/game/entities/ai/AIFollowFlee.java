@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.entities.ai;
 
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
 
 public class AIFollowFlee extends AI {
@@ -8,12 +9,12 @@ public class AIFollowFlee extends AI {
     private float maxDistance, speed;
     private boolean flee = false;
 
-    public AIFollowFlee(EntityCreature entity, EntityCreature target) {
-        this(entity, target, 200f, 2.0f);
+    public AIFollowFlee(Engine engine, EntityCreature entity, EntityCreature target) {
+        this(engine, entity, target, 200f, 2.0f);
     }
 
-    public AIFollowFlee(EntityCreature entity, EntityCreature target, float maxDistance, float speed) {
-        super(entity);
+    public AIFollowFlee(Engine engine, EntityCreature entity, EntityCreature target, float maxDistance, float speed) {
+        super(engine, entity);
         this.target = target;
         this.maxDistance = maxDistance;
         this.speed = speed;

@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.gfx;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.io.FontLoader;
+import coffeecatteam.coffeecatutils.logger.CatLogger;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Assets {
+
+    private static CatLogger logger;
 
     private static final int width = 16, height = 16;
     private static final BufferedImage MISSING_TEXTURE = ImageLoader.loadImage("/assets/textures/missing.png");
@@ -134,10 +136,10 @@ public class Assets {
         String fontPath = "/assets/fonts/LCD_Solid.ttf";
         for (int i = 10; i <= 100; i += 10) {
             FONTS.put(String.valueOf(i), FontLoader.loadTrueTypeFont(fontPath, i));
-            Logger.print("Font size [" + i + "] loaded!");
+            logger.print("Font size [" + i + "] loaded!");
         }
 
-        Logger.print("Assets [Fonts] loaded!");
+        logger.print("Assets [Fonts] loaded!");
     }
 
     /* Tiles */
@@ -173,7 +175,7 @@ public class Assets {
 
         ULTIMATE_TILE = getFrames("/assets/textures/tiles/ultimate.png", 0, 0, 6, width * 2, height * 2);
 
-        Logger.print("Assets [Tiles] loaded!");
+        logger.print("Assets [Tiles] loaded!");
     }
 
     /* Items */
@@ -216,7 +218,7 @@ public class Assets {
         ITEM_COIN_IRON = getSpriteInd(itemsSheet, 5, 1, width, height);
         ITEM_COIN_GOLD = getSpriteInd(itemsSheet, 5, 2, width, height);
 
-        Logger.print("Assets [Items] loaded!");
+        logger.print("Assets [Items] loaded!");
     }
 
     /* Entities */
@@ -316,7 +318,7 @@ public class Assets {
 
         CAMPFIRE = getFrames(campfireSheet, 0, 0, 9, width, height);
 
-        Logger.print("Assets [Entities] loaded!");
+        logger.print("Assets [Entities] loaded!");
     }
 
     /* GUI */
@@ -368,10 +370,12 @@ public class Assets {
         EDIT_GRID_TILE = getSpriteExact("/assets/textures/gui/level_creator/edit_grid_tile.png", 0, 0, 32, 32);
         SELECTED_TILE = getSpriteExact("/assets/textures/gui/level_creator/selected_tile.png", 0, 0, 64, 64);
 
-        Logger.print("Assets [GUI] loaded!");
+        logger.print("Assets [GUI] loaded!");
     }
 
-    public static void init() {
+    public static void init(CatLogger loggerIn) {
+        logger = loggerIn;
+
         /* Sprite Sheets */
         terrainSheet = getSheet("/assets/textures/tiles/terrain.png");
         effectSheet = getSheet("/assets/textures/effect.png");
@@ -415,7 +419,7 @@ public class Assets {
         initEntities();
         initGui();
 
-        Logger.print("Assets loaded!");
+        logger.print("Assets loaded!");
     }
 
     public static BufferedImage[] getFrames(String sheet, int xStart, int xEnd) {
@@ -445,7 +449,7 @@ public class Assets {
             try {
                 frames[index] = sheet.crop(x * width, y * height, width, height);
             } catch (RasterFormatException e) {
-                Logger.print(e + " - " + sheet.getPath());
+                logger.print(e + " - " + sheet.getPath());
                 frames[index] = MISSING_TEXTURE;
             }
             index++;
@@ -466,7 +470,7 @@ public class Assets {
         try {
             image = sheet.crop(indexX, indexY, width, height); // Assets.width * indexX, Assets.height * indexY <-- This caused so many problems!
         } catch (RasterFormatException e) {
-            Logger.print(e + " - " + sheet.getPath());
+            logger.print(e + " - " + sheet.getPath());
         }
         return image;
     }

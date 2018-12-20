@@ -15,7 +15,7 @@ public class EntitySheep extends EntityPassive {
     public EntitySheep(Engine engine, String id) {
         super(engine, id);
         this.drop = ItemManager.WOOL_BUNDLE;
-        aiFollowFlee = new AIFollowFlee(this, ((GameEngine) engine).getEntityManager().getPlayer(), 100f, 3.5f).setFlee();
+        aiFollowFlee = new AIFollowFlee(engine, this, ((GameEngine) engine).getEntityManager().getPlayer(), 100f, 3.5f).setFlee();
     }
 
     @Override

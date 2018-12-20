@@ -12,7 +12,7 @@ public abstract class EntityPassive extends EntityCreature {
 
     public EntityPassive(Engine engine, String id) {
         super(engine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
-        aiWander = new AIWander(this, 1.5f);
+        aiWander = new AIWander(engine, this, 1.5f);
     }
 
     @Override

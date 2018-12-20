@@ -1,8 +1,6 @@
 package coffeecatteam.theultimatetile.game.tags.supers;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.tags.TagCompound;
 import coffeecatteam.theultimatetile.game.tags.TagIntArray;
 import coffeecatteam.theultimatetile.game.tags.TagList;
@@ -96,7 +94,7 @@ public abstract class TagBase {
         entity.setTag("tags", tags);
         baseCompound.setTag("entity", entity);
 
-        Logger.print(baseCompound.toString());
+        Engine.getEngine().getLogger().print(baseCompound.toString());
         Engine.getEngine().setRunning(false);
     }
 

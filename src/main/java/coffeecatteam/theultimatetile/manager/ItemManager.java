@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.items.*;
 import coffeecatteam.theultimatetile.gfx.Assets;
@@ -72,7 +72,7 @@ public class ItemManager {
 
         registerItem(COIN_PENNY, COIN_IRON, COIN_GOLD);
 
-        Logger.print("Items registered!");
+        Engine.getEngine().getLogger().print("Items registered!");
     }
 
     private static void registerItem(Item... items) {

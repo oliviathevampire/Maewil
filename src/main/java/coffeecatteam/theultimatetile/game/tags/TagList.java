@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.game.tags;
 
-import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.tags.primitive.TagDouble;
 import coffeecatteam.theultimatetile.game.tags.primitive.TagFloat;
 import coffeecatteam.theultimatetile.game.tags.primitive.TagInt;
@@ -59,12 +59,12 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
      */
     public void appendTag(TagBase tag) {
         if (tag.getId() == 0) {
-            Logger.print("Invalid TagEnd added to ListTag");
+            Engine.getEngine().getLogger().print("Invalid TagEnd added to ListTag");
         } else {
             if (this.tagType == 0) {
                 this.tagType = tag.getId();
             } else if (this.tagType != tag.getId()) {
-                Logger.print("Adding mismatching tag types to tag list");
+                Engine.getEngine().getLogger().print("Adding mismatching tag types to tag list");
                 return;
             }
 
@@ -77,18 +77,18 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
      */
     public void set(int idx, TagBase tag) {
         if (tag.getId() == 0) {
-            Logger.print("Invalid TagEnd added to ListTag");
+            Engine.getEngine().getLogger().print("Invalid TagEnd added to ListTag");
         } else if (idx >= 0 && idx < this.tagList.size()) {
             if (this.tagType == 0) {
                 this.tagType = tag.getId();
             } else if (this.tagType != tag.getId()) {
-                Logger.print("Adding mismatching tag types to tag list");
+                Engine.getEngine().getLogger().print("Adding mismatching tag types to tag list");
                 return;
             }
 
             this.tagList.set(idx, tag);
         } else {
-            Logger.print("index out of bounds to set tag in tag list");
+            Engine.getEngine().getLogger().print("index out of bounds to set tag in tag list");
         }
     }
 

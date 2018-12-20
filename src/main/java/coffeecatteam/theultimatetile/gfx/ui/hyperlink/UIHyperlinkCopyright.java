@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.gfx.ui.hyperlink;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Assets;
@@ -28,7 +27,7 @@ public class UIHyperlinkCopyright extends UIHyperlink {
                     URI link = new URI("https://github.com/CoffeeCatRailway/TheUltimateTile/blob/master/LICENSE.md");
                     desktop.browse(link);
                 } catch (Exception e) {
-                    Logger.print(e);
+                    Engine.getEngine().getLogger().print(e);
                 }
             }
 

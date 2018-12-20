@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.Engine;
@@ -35,7 +34,7 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
 
     @Override
     public void load() throws IOException, ParseException {
-        Logger.print("\nLoading options!");
+        this.engine.getLogger().print("Loading options!");
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path));
 
@@ -47,26 +46,26 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
             String description = k.get("description").toString();
             CONTROLS.put(jsonId.toString(), new Keybind(key_char, key_id, description));
         }
-        Logger.print("Options [controls] loaded!");
+        this.engine.getLogger().print("Options [controls] loaded!");
 
         DEBUG_MODE = Boolean.valueOf(jsonObject.get("DEBUG_MODE").toString());
         FPS_COUNTER = Boolean.valueOf(jsonObject.get("FPS_COUNTER").toString());
-        Logger.print("Options [FPS_COUNTER & DEBUG_MODE] loaded!");
+        this.engine.getLogger().print("Options [FPS_COUNTER & DEBUG_MODE] loaded!");
 
         JSONObject sounds = (JSONObject) jsonObject.get("sounds");
-        volumeMusic = NumberUtils.parseFloat((String) sounds.get("volumeMusic"));
-        volumePassive = NumberUtils.parseFloat((String) sounds.get("volumePassive"));
-        volumeHostile = NumberUtils.parseFloat((String) sounds.get("volumeHostile"));
-        volumePlayer = NumberUtils.parseFloat((String) sounds.get("volumePlayer"));
-        volumeOther = NumberUtils.parseFloat((String) sounds.get("volumeOther"));
-        Logger.print("Options [sounds] loaded!");
+        volumeMusic = NumberUtils.parseFloat(sounds.get("volumeMusic"));
+        volumePassive = NumberUtils.parseFloat(sounds.get("volumePassive"));
+        volumeHostile = NumberUtils.parseFloat(sounds.get("volumeHostile"));
+        volumePlayer = NumberUtils.parseFloat(sounds.get("volumePlayer"));
+        volumeOther = NumberUtils.parseFloat(sounds.get("volumeOther"));
+        this.engine.getLogger().print("Options [sounds] loaded!");
 
-        Logger.print("Options loaded!\n");
+        this.engine.getLogger().print("Options loaded!");
     }
 
     @Override
     public void save() throws IOException {
-        Logger.print("\nSaving options!");
+        this.engine.getLogger().print("Saving options!");
         JSONObject jsonObject = new JSONObject();
 
         JSONObject controls = new JSONObject();
@@ -78,11 +77,11 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
             controls.put(jsonId, key);
         }
         jsonObject.put("controls", controls);
-        Logger.print("Options [controls] saved!");
+        this.engine.getLogger().print("Options [controls] saved!");
 
         jsonObject.put("DEBUG_MODE", DEBUG_MODE);
         jsonObject.put("FPS_COUNTER", FPS_COUNTER);
-        Logger.print("Options [FPS_COUNTER & DEBUG_MODE] saved!");
+        this.engine.getLogger().print("Options [FPS_COUNTER & DEBUG_MODE] saved!");
 
         JSONObject sounds = new JSONObject();
         sounds.put("volumeMusic", String.valueOf(volumeMusic));
@@ -91,13 +90,13 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
         sounds.put("volumePlayer", String.valueOf(volumePlayer));
         sounds.put("volumeOther", String.valueOf(volumeOther));
         jsonObject.put("sounds", sounds);
-        Logger.print("Options [sounds] saved!");
+        this.engine.getLogger().print("Options [sounds] saved!");
 
         FileWriter file = new FileWriter(path);
         file.write(jsonObject.toJSONString());
         file.flush();
 
-        Logger.print("Options saved!");
+        this.engine.getLogger().print("Options saved!");
     }
 
     public Map<String, Keybind> controls() {

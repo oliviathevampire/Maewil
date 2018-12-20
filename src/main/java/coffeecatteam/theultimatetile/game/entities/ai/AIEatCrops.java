@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.game.entities.ai;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
@@ -20,12 +21,12 @@ public class AIEatCrops extends AI {
     private float maxDistance, speed;
     private List<String> cropIds = new ArrayList<>();
 
-    public AIEatCrops(EntityCreature entity) {
-        this(entity, 300f, 2.0f);
+    public AIEatCrops(Engine engine, EntityCreature entity) {
+        this(engine, entity, 300f, 2.0f);
     }
 
-    public AIEatCrops(EntityCreature entity, float maxDistance, float speed) {
-        super(entity);
+    public AIEatCrops(Engine engine, EntityCreature entity, float maxDistance, float speed) {
+        super(engine, entity);
         this.maxDistance = maxDistance;
         this.speed = speed;
     }
@@ -72,6 +73,7 @@ public class AIEatCrops extends AI {
     }
 
     private boolean trigger = false;
+
     private boolean canTrigger() {
         float percentage = trigger ? 20.0f : 1000.0f;
         if (NumberUtils.getRandomFloat(percentage) < 1.0f)

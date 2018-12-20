@@ -4,7 +4,6 @@ import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
 import coffeecatteam.coffeecatutils.ArgUtils;
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 
@@ -21,7 +20,7 @@ public class DiscordHandler {
 
     public void setup() {
         if (!ArgUtils.hasArgument(Engine.getEngine().getArgs(), "-disableDiscordRP")) {
-            Logger.print();
+            Engine.getEngine().getLogger().print();
             Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
             rpc = DiscordRPC.INSTANCE;
 
@@ -29,15 +28,15 @@ public class DiscordHandler {
             handlers.ready = user -> {
                 userId = user.username + "#" + user.discriminator;
                 DiscordHandler.READY = true;
-                Logger.print("Connected to discord\n" +
-                        "Discord rich presence setup for " + userId +
-                        "\nReady: " + READY);
-                Logger.print();
+                Engine.getEngine().getLogger().print("Connected to discord");
+                Engine.getEngine().getLogger().print("Discord rich presence setup for " + userId);
+                Engine.getEngine().getLogger().print("Ready: " + READY);
+                Engine.getEngine().getLogger().print();
             };
             rpc.Discord_Initialize("502962688733741056", handlers, true, "");
 
             new Thread(() -> {
-                Logger.print("Started RPC Callback Handler");
+                Engine.getEngine().getLogger().print("Started RPC Callback Handler");
                 while (!Thread.currentThread().isInterrupted()) {
                     rpc.Discord_RunCallbacks();
                     try {
@@ -97,11 +96,11 @@ public class DiscordHandler {
 
     public void shutdown() {
         if (!ArgUtils.hasArgument(Engine.getEngine().getArgs(), "-disableDiscordRP")) {
-            Logger.print("\n" + userId + " is disconnecting!");
+            Engine.getEngine().getLogger().print("" + userId + " is disconnecting!");
             rpc.Discord_ClearPresence();
-            Logger.print("Cleared rich presence!");
+            Engine.getEngine().getLogger().print("Cleared rich presence!");
             rpc.Discord_Shutdown();
-            Logger.print(userId + " hss disconnected!");
+            Engine.getEngine().getLogger().print(userId + " hss disconnected!");
         }
     }
 }

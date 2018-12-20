@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.jsonparsers.world;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.Engine;
@@ -12,7 +11,6 @@ import coffeecatteam.theultimatetile.game.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.game.tags.JsonToTag;
 import coffeecatteam.theultimatetile.game.tags.TagCompound;
 import coffeecatteam.theultimatetile.game.tags.TagException;
-import coffeecatteam.theultimatetile.game.tags.supers.TagBase;
 import coffeecatteam.theultimatetile.game.tiles.Tile;
 import coffeecatteam.theultimatetile.game.tiles.Tiles;
 import coffeecatteam.theultimatetile.manager.EntityManager;
@@ -46,7 +44,7 @@ public class WorldJsonLoader implements IJSONLoader {
     }
 
     private String path;
-    private Engine engine;
+    private static Engine engine;
 
     // World
     private String name;
@@ -71,27 +69,27 @@ public class WorldJsonLoader implements IJSONLoader {
     @Override
     public void load() throws IOException, ParseException {
         loadWorldInfo();
-        Logger.print("World [" + name + "] info loaded!\n");
+        engine.getLogger().print("World [" + name + "] info loaded!");
 
         bg_tiles = new Tile[width][height];
         fg_tiles = new Tile[width][height];
         String bgLoadPath = path + "/" + BASE_FILES.get("tile_bg") + ".json";
         String fgLoadPath = path + "/" + BASE_FILES.get("tile_fg") + ".json";
         loadTiles(width, height, bgLoadPath, fgLoadPath, bg_tiles, fg_tiles);
-        Logger.print("World [" + name + "] tiles loaded!\n");
+        engine.getLogger().print("World [" + name + "] tiles loaded!");
 
         /*
          * TEMP!!!
          */
         if (engine instanceof GameEngine) {
             loadEntities();
-            Logger.print("World [" + name + "] entities loaded!\n");
+            engine.getLogger().print("World [" + name + "] entities loaded!");
 
             loadItems();
-            Logger.print("World [" + name + "] items loaded!\n");
+            engine.getLogger().print("World [" + name + "] items loaded!");
 
             loadPlayerInfo();
-            Logger.print("World [" + name + "] player info loaded!\n");
+            engine.getLogger().print("World [" + name + "] player info loaded!");
         }
     }
 
@@ -100,17 +98,17 @@ public class WorldJsonLoader implements IJSONLoader {
         JSONObject jsonObject = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path + "/" + BASE_FILES.get("world") + ".json"));
 
         name = (String) jsonObject.get("name");
-        Logger.print("Loaded world name");
+        engine.getLogger().print("Loaded world name");
 
         JSONArray size = (JSONArray) jsonObject.get("size");
         width = NumberUtils.parseInt(size.get(0));
         height = NumberUtils.parseInt(size.get(1));
-        Logger.print("Loaded world size");
+        engine.getLogger().print("Loaded world size");
 
         JSONArray spawn = (JSONArray) jsonObject.get("spawn");
         spawnX = NumberUtils.parseFloat(spawn.get(0));
         spawnY = NumberUtils.parseFloat(spawn.get(1));
-        Logger.print("Loaded world player spawn");
+        engine.getLogger().print("Loaded world player spawn");
     }
 
     public void loadTiles(int width, int height, String bgLoadPath, String fgLoadPath, Tile[][] bg_tiles, Tile[][] fg_tiles) throws IOException, ParseException {
@@ -125,7 +123,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 loadTile(chunk, true, x, bg_tiles, fg_tiles);
             }
         }
-        Logger.print("Loaded world background tiles");
+        engine.getLogger().print("Loaded world background tiles");
 
         JSONObject fgTiles = (JSONObject) jsonObjectFG.get("fg_tile");
         for (int y = 0; y < height; y++) {
@@ -134,7 +132,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 loadTile(chunk, false, x, bg_tiles, fg_tiles);
             }
         }
-        Logger.print("Loaded world foreground tiles");
+        engine.getLogger().print("Loaded world foreground tiles");
     }
 
     private void loadTile(JSONArray chunk, boolean bg, int x, Tile[][] bg_tiles, Tile[][] fg_tiles) {
@@ -161,7 +159,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 JSONObject entity = (JSONObject) aStatic;
                 loadEntityObj(entity);
             }
-            Logger.print("Loaded world static entities");
+            engine.getLogger().print("Loaded world static entities");
         }
 
         // Creatures
@@ -171,9 +169,9 @@ public class WorldJsonLoader implements IJSONLoader {
                 JSONObject entity = (JSONObject) creature;
                 loadEntityObj(entity);
             }
-            Logger.print("Loaded world creature entities");
+            engine.getLogger().print("Loaded world creature entities");
         }
-        Logger.print("Loaded world entities");
+        engine.getLogger().print("Loaded world entities");
     }
 
     public void loadItems() throws IOException, ParseException {
@@ -197,7 +195,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
                 ((GameEngine) engine).getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
             }
-            Logger.print("Loaded world items");
+            engine.getLogger().print("Loaded world items");
         }
     }
 
@@ -208,20 +206,20 @@ public class WorldJsonLoader implements IJSONLoader {
         if (jsonObject.containsKey("username")) {
             username = (String) jsonObject.get("username");
             ((GameEngine) engine).getEntityManager().getPlayer().setUsername(username);
-            Logger.print("loaded player username!");
+            engine.getLogger().print("loaded player username!");
         }
 
         health = NumberUtils.parseInt(jsonObject.get("health"));
         ((GameEngine) engine).getEntityManager().getPlayer().setCurrentHealth(health);
-        Logger.print("loaded player health!");
+        engine.getLogger().print("loaded player health!");
 
         glubel = NumberUtils.parseInt(jsonObject.get("glubel"));
         ((GameEngine) engine).getEntityManager().getPlayer().setGlubel(glubel);
-        Logger.print("loaded player glubel!");
+        engine.getLogger().print("loaded player glubel!");
 
         lvl = NumberUtils.parseInt(jsonObject.get("lvl"));
         ((GameEngine) engine).getEntityManager().getPlayer().setLvl(lvl);
-        Logger.print("loaded player lvl!");
+        engine.getLogger().print("loaded player lvl!");
 
         selected_slots = new int[2];
         JSONArray selected_slotsJ = (JSONArray) jsonObject.get("selected_slots");
@@ -248,7 +246,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 inventory[i] = new ItemStack(item, count);
             }
         }
-        Logger.print("loaded player inventory!");
+        engine.getLogger().print("loaded player inventory!");
 
         hotbar = new ItemStack[3];
         JSONObject hotbarJ = (JSONObject) jsonObject.get("hotbar");
@@ -268,7 +266,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 hotbar[i - 12] = new ItemStack(item, count);
             }
         }
-        Logger.print("loaded player hotbar!");
+        engine.getLogger().print("loaded player hotbar!");
 
         int invIndex = 0;
         for (int i = 0; i < inventory.length; i++) {
@@ -298,13 +296,13 @@ public class WorldJsonLoader implements IJSONLoader {
             JSONObject tags = (JSONObject) entityObj.get("tags");
             try {
                 data = JsonToTag.getTagFromJson(tags.toJSONString());
-                Logger.print(tags.toJSONString());
-                Logger.print(data.getString());
-                Logger.print(data.toString());
-                Logger.print(data.hasNoTags());
-//                Logger.print(data.getTagList("eatCrops").size());
-                Logger.print(data.getSize());
-//                Logger.print(data.getTag("eatCrops").getId());
+                engine.getLogger().print(tags.toJSONString());
+                engine.getLogger().print(data.getString());
+                engine.getLogger().print(data.toString());
+                engine.getLogger().print(data.hasNoTags());
+//                engine.getLogger().print(data.getTagList("eatCrops").size());
+                engine.getLogger().print(data.getSize());
+//                engine.getLogger().print(data.getTag("eatCrops").getId());
             } catch (TagException e) {
                 e.printStackTrace();
             }
@@ -360,7 +358,7 @@ public class WorldJsonLoader implements IJSONLoader {
     public static boolean copy(InputStream source, String destination) {
         boolean success = true;
 
-        Logger.print("Copying ->" + source + "\n\tto ->" + destination);
+        engine.getLogger().print("Copying ->" + source + "\tto ->" + destination);
 
         try {
             if (!new File(destination).exists())

@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.game.entities.statics.interactable;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.Engine;
@@ -44,7 +43,7 @@ public class EntityShopStall extends EntityStatic {
 
     @Override
     public void interact() {
-        Logger.print("Shop shop, shoppy time!");
+        engine.getLogger().print("Shop shop, shoppy time!");
         this.interacted = false;
     }
 

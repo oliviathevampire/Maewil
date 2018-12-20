@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile;
 
-import coffeecatteam.coffeecatutils.Logger;
+import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
@@ -17,6 +17,8 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 public abstract class Engine extends Canvas implements Runnable {
+
+    protected CatLogger logger;
 
     private static Engine engine;
     private String loadingDotText = ".";
@@ -46,11 +48,12 @@ public abstract class Engine extends Canvas implements Runnable {
         this.title = title;
         this.width = width;
         this.height = height;
+        this.logger = new CatLogger(this.title);
 
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
 
-        Assets.init();
+        Assets.init(logger);
         createDisplay();
 
         engine = this;
@@ -178,7 +181,7 @@ public abstract class Engine extends Canvas implements Runnable {
         AudioMaster.cleanUp();
 
         stop();
-        Logger.print("\nExiting [" + title + "]..");
+        logger.print("Exiting [" + title + "]..");
         System.exit(0);
     }
 
@@ -205,7 +208,7 @@ public abstract class Engine extends Canvas implements Runnable {
         try {
             thread.join();
         } catch (InterruptedException e) {
-            Logger.print(e);
+            logger.print(e);
         }
     }
 
@@ -243,5 +246,9 @@ public abstract class Engine extends Canvas implements Runnable {
 
     public static Engine getEngine() {
         return engine;
+    }
+
+    public CatLogger getLogger() {
+        return logger;
     }
 }

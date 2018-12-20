@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.game.inventory.items;
 
-import coffeecatteam.coffeecatutils.Logger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.tags.TagCompound;
 import coffeecatteam.theultimatetile.game.tags.TagUtils;
@@ -30,7 +30,7 @@ public class ItemStack {
         try {
             this.item = (Item) item.clone();
         } catch (CloneNotSupportedException e) {
-            Logger.print(e);
+            Engine.getEngine().getLogger().print(e);
             this.item = ItemManager.STICK;
         }
         setCount(count);
