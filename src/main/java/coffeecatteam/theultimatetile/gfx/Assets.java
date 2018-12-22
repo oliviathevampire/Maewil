@@ -17,7 +17,7 @@ public class Assets {
     private static final BufferedImage MISSING_TEXTURE = ImageLoader.loadImage("/assets/textures/missing.png");
 
     /* Sprite Sheets */
-    private static SpriteSheet terrainSheet;
+    private static SpriteSheet terrainSheet, grassSheet;
     private static SpriteSheet effectSheet;
 
     private static SpriteSheet healthSheet;
@@ -41,7 +41,8 @@ public class Assets {
     public static Map<String, Font> FONTS = new HashMap<>();
 
     /* Tiles */
-    public static BufferedImage GRASS, DIRT, SAND;
+    public static BufferedImage[] GRASS;
+    public static BufferedImage DIRT, SAND;
     public static BufferedImage STONE, ANDESITE, DIORITE, COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE, OBSIDIAN, BROKEN_STONE;
     public static BufferedImage PLANKS, BOOKSHELF, CHEST;
     public static BufferedImage[] TILE_CRACKING;
@@ -144,7 +145,11 @@ public class Assets {
 
     /* Tiles */
     private static void initTiles() {
-        GRASS = getSpriteInd(terrainSheet, 0, 0, width, height);
+        GRASS = new BufferedImage[16];
+        GRASS[0] = getSpriteInd(terrainSheet, 0, 0, width, height);
+        GRASS[1] = getSpriteInd(grassSheet, 3, 2, width, height);
+        GRASS[2] = getSpriteInd(grassSheet, 4, 2, width, height);
+
         DIRT = getSpriteInd(terrainSheet, 1, 0, width, height);
         STONE = getSpriteInd(terrainSheet, 2, 0, width, height);
         SAND = getSpriteInd(terrainSheet, 3, 0, width, height);
@@ -378,6 +383,7 @@ public class Assets {
 
         /* Sprite Sheets */
         terrainSheet = getSheet("/assets/textures/tiles/terrain.png");
+        grassSheet = getSheet("/assets/textures/tiles/grass.png");
         effectSheet = getSheet("/assets/textures/effect.png");
 
         healthSheet = getSheet("/assets/textures/gui/overlay/health.png");

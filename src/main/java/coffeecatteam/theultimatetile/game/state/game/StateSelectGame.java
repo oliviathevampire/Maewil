@@ -103,7 +103,7 @@ public class StateSelectGame extends StateAbstractMenu {
                 new File(path).mkdir();
 
                 String ogWorld = "/assets/worlds/starter/world_01";
-                WorldJsonLoader.copyFiles(ogWorld, path);
+                WorldJsonLoader.copyFiles(engine, ogWorld, path);
                 SavedGamesJSONParser.GAMES.set(index, "true:" + worldName);
 
                 try {

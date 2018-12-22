@@ -296,13 +296,6 @@ public class WorldJsonLoader implements IJSONLoader {
             JSONObject tags = (JSONObject) entityObj.get("tags");
             try {
                 data = JsonToTag.getTagFromJson(tags.toJSONString());
-                engine.getLogger().print(tags.toJSONString());
-                engine.getLogger().print(data.getString());
-                engine.getLogger().print(data.toString());
-                engine.getLogger().print(data.hasNoTags());
-//                engine.getLogger().print(data.getTagList("eatCrops").size());
-                engine.getLogger().print(data.getSize());
-//                engine.getLogger().print(data.getTag("eatCrops").getId());
             } catch (TagException e) {
                 e.printStackTrace();
             }
@@ -349,13 +342,13 @@ public class WorldJsonLoader implements IJSONLoader {
         }
     }
 
-    public static void copyFiles(String from, String dest) {
+    public static void copyFiles(Engine engine, String from, String dest) {
         for (String file : BASE_FILES.values())
-            copy(StateSelectGame.class.getResourceAsStream(from + "/" + file + ".json"), dest + "/" + file + ".json");
+            copy(engine, StateSelectGame.class.getResourceAsStream(from + "/" + file + ".json"), dest + "/" + file + ".json");
     }
 
 
-    public static boolean copy(InputStream source, String destination) {
+    public static boolean copy(Engine engine, InputStream source, String destination) {
         boolean success = true;
 
         engine.getLogger().print("Copying ->" + source + "\tto ->" + destination);

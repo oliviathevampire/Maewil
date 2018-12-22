@@ -278,7 +278,6 @@ public class TagCompound extends TagBase {
                 TagList tagList = (TagList) this.tagMap.get(key);
 
                 if (tagList.hasNoTags()) {
-                    Engine.getEngine().getLogger().print("FUCK");
                     return new TagList();
                 }
 

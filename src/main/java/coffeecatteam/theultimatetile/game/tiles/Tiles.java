@@ -12,22 +12,18 @@ public class Tiles {
 
     public static final List<Tile> TILES = new ArrayList<>();
 
-    public static Tile GRASS;
+    public static TileGrass GRASS;
     public static Tile DIRT;
-    public static Tile STONE;
+    public static TileBreakable STONE;
     public static Tile SAND;
     public static Tile ANDESITE;
     public static Tile DIORITE;
 
-    public static Tile COAL_ORE;
-    public static Tile IRON_ORE;
-    public static Tile GOLD_ORE;
-    public static Tile DIAMOND_ORE;
+    public static TileBreakable COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE;
 
     public static Tile OBSIDIAN;
 
-    public static Tile WATER;
-    public static Tile LAVA;
+    public static TileAnimated WATER, LAVA;
 
     public static Tile PLANKS;
     public static Tile BROKEN_STONE;
@@ -37,22 +33,22 @@ public class Tiles {
     public static Tile BOOKSHELF;
 
     public static void init(Engine engine) {
-        register(GRASS = getTile(engine, "grass"));
+        register(GRASS = (TileGrass) getTile(engine, "grass"));
         register(DIRT = getTile(engine, "dirt"));
-        register(STONE = getTile(engine, "stone"));
+        register(STONE = (TileBreakable) getTile(engine, "stone"));
         register(SAND = getTile(engine, "sand"));
         register(ANDESITE = getTile(engine, "andesite"));
         register(DIORITE = getTile(engine, "diorite"));
 
-        register(COAL_ORE = getTile(engine, "coal_ore"));
-        register(IRON_ORE = getTile(engine, "iron_ore"));
-        register(GOLD_ORE = getTile(engine, "gold_ore"));
-        register(DIAMOND_ORE = getTile(engine, "diamond_ore"));
+        register(COAL_ORE = (TileBreakable) getTile(engine, "coal_ore"));
+        register(IRON_ORE = (TileBreakable) getTile(engine, "iron_ore"));
+        register(GOLD_ORE = (TileBreakable) getTile(engine, "gold_ore"));
+        register(DIAMOND_ORE = (TileBreakable) getTile(engine, "diamond_ore"));
 
         register(OBSIDIAN = getTile(engine, "obsidian"));
 
-        register(WATER = getTile(engine, "water"));
-        register(LAVA = getTile(engine, "lava"));
+        register(WATER = (TileAnimated) getTile(engine, "water"));
+        register(LAVA = (TileAnimated) getTile(engine, "lava"));
 
         register(PLANKS = getTile(engine, "planks"));
         register(BROKEN_STONE = getTile(engine, "broken_stone"));
@@ -69,7 +65,7 @@ public class Tiles {
     public static Tile getTile(Engine engine, String id) {
         switch (id) {
             case "grass":
-                return new Tile(engine, Assets.GRASS, id, false, Tile.TileType.GROUND);
+                return new TileGrass(engine, id);
             case "dirt":
                 return new Tile(engine, Assets.DIRT, id, false, Tile.TileType.GROUND);
             case "stone":

@@ -256,7 +256,6 @@ public class WorldJsonSaver implements IJSONSaver {
         try {
             JSONParser parser = new JSONParser();
             if (!entity.getTags().hasNoTags()) {
-                engine.getLogger().print(entity.getTags().getTagList("eatCrops"));
                 entityObj.put("tags", parser.parse(entity.getTags().toString()));
             }
         } catch (ParseException e) {
