@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.game.entities.statics.nature;
 
-import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityNature;
@@ -17,11 +16,6 @@ public class EntityCrop extends EntityNature {
         isCollidable = false;
 
         drops.add(drop);
-    }
-
-    @Override
-    public void tick() {
-        bounds = new AABB(this.position, width, height);
     }
 
     @Override

@@ -28,7 +28,7 @@ public class OverlayPlayerSprint extends Overlay {
         int height = sHeight * multiplier;
 
         int sprint = (int) player.getSprintTimer();
-        String text = "Sprint moveLeft: " + sprint;
+        String text = "Sprint left: " + sprint;
         Font font = Assets.FONTS.get("20");
         int x = engine.getWidth() - width;
         int y = engine.getHeight() - height;

@@ -20,7 +20,7 @@ import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityCrop;
 import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityRock;
 import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityTree;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
-import coffeecatteam.theultimatetile.game.tiles.Tile;
+import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.Assets;
 
 import java.awt.*;

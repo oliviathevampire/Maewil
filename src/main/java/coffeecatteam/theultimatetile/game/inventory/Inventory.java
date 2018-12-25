@@ -4,7 +4,7 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.game.tiles.Tile;
+import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.manager.InventoryManager;
 
 import java.awt.*;

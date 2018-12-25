@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.gfx;
 
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
-import coffeecatteam.theultimatetile.game.tiles.Tile;
+import coffeecatteam.theultimatetile.game.tile.Tile;
 
 public class Camera {
 

@@ -2,9 +2,9 @@ package coffeecatteam.theultimatetile.levelcreator.grid;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.game.tiles.Tile;
-import coffeecatteam.theultimatetile.game.tiles.TileAnimated;
-import coffeecatteam.theultimatetile.game.tiles.Tiles;
+import coffeecatteam.theultimatetile.game.tile.Tile;
+import coffeecatteam.theultimatetile.game.tile.tiles.TileAnimated;
+import coffeecatteam.theultimatetile.game.tile.Tiles;
 
 import java.awt.*;
 

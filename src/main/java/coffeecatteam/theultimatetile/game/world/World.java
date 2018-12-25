@@ -3,10 +3,12 @@ package coffeecatteam.theultimatetile.game.world;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
-import coffeecatteam.theultimatetile.game.tiles.Tile;
-import coffeecatteam.theultimatetile.game.tiles.TileBreakable;
+import coffeecatteam.theultimatetile.game.tile.Tile;
+import coffeecatteam.theultimatetile.game.tile.TilePos;
+import coffeecatteam.theultimatetile.game.tile.tiles.TileBreakable;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
+import coffeecatteam.theultimatetile.utils.PositionOutOfBoundsException;
 import org.json.simple.parser.ParseException;
 
 import java.awt.*;
@@ -66,7 +68,9 @@ public class World {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 getBGTile(x, y).forcedTick();
+                getBGTile(x, y).setWorldLayer(bg_tiles);
                 getFGTile(x, y).forcedTick();
+                getFGTile(x, y).setWorldLayer(fg_tiles);
             }
         }
 
@@ -99,55 +103,61 @@ public class World {
     }
 
     public Tile getBGTile(int x, int y) {
-        if (x < 0)
-            x = 0;
-        if (y < 0)
-            y = 0;
-        if (x >= width)
-            x = width - 1;
-        if (y >= height)
-            y = height - 1;
+        return getBGTile(new TilePos(x, y));
+    }
 
-        return bg_tiles[x][y];
+    public Tile getBGTile(TilePos pos) {
+        checkTilePos(pos, false);
+
+        return bg_tiles[pos.getX()][pos.getY()];
     }
 
     public void setBGTile(int x, int y, Tile tile) {
-        if (x < 0)
-            x = 0;
-        if (y < 0)
-            y = 0;
-        if (x > width)
-            x = width;
-        if (y > height)
-            y = height;
+        setBGTile(new TilePos(x, y), tile);
+    }
 
-        bg_tiles[x][y] = tile.setPos(new Vector2D(x, y));
+    public void setBGTile(TilePos pos, Tile tile) {
+        checkTilePos(pos, true);
+
+        bg_tiles[pos.getX()][pos.getY()] = tile.setPos(pos);
     }
 
     public Tile getFGTile(int x, int y) {
-        if (x < 0)
-            x = 0;
-        if (y < 0)
-            y = 0;
-        if (x >= width)
-            x = width - 1;
-        if (y >= height)
-            y = height - 1;
+        return getFGTile(new TilePos(x, y));
+    }
 
-        return fg_tiles[x][y];
+    public Tile getFGTile(TilePos pos) {
+        checkTilePos(pos, false);
+
+        return fg_tiles[pos.getX()][pos.getY()];
     }
 
     public void setFGTile(int x, int y, Tile tile) {
-        if (x < 0)
-            x = 0;
-        if (y < 0)
-            y = 0;
-        if (x > width)
-            x = width;
-        if (y > height)
-            y = height;
+        setFGTile(new TilePos(x, y), tile);
+    }
 
-        fg_tiles[x][y] = tile.setPos(new Vector2D(x, y));
+    public void setFGTile(TilePos pos, Tile tile) {
+        checkTilePos(pos, true);
+
+        fg_tiles[pos.getX()][pos.getY()] = tile.setPos(pos);
+    }
+
+    private void checkTilePos(TilePos pos, boolean wh_exact) {
+        try {
+            if (pos.getX() < 0 || pos.getY() < 0)
+                throw new PositionOutOfBoundsException(pos.toVector2D());
+            else
+                if (wh_exact) {
+                    if (pos.getX() >= width || pos.getY() >= height)
+                        throw new PositionOutOfBoundsException(pos.toVector2D());
+                } else {
+                    if (pos.getX() > width || pos.getY() > height)
+                        throw new PositionOutOfBoundsException(pos.toVector2D());
+                }
+        } catch (PositionOutOfBoundsException e) {
+            engine.getLogger().print(e);
+            engine.setRunning(false);
+        }
     }
 
     private void loadWorld(String path) throws IOException, ParseException {
@@ -172,7 +182,7 @@ public class World {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                Tile tile = bg_tile_ids[x][y].setPos(new Vector2D(x, y)).setSolid(false);
+                Tile tile = bg_tile_ids[x][y].setPos(new TilePos(x, y)).setSolid(false);
                 if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
                     tile.setSolid(true);
                     if (tile instanceof TileBreakable)
@@ -185,7 +195,7 @@ public class World {
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                Tile tile = fg_tile_ids[x][y].setPos(new Vector2D(x, y));
+                Tile tile = fg_tile_ids[x][y].setPos(new TilePos(x, y));
                 if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
                     tile.setSolid(true);
                     if (tile instanceof TileBreakable)

@@ -9,8 +9,8 @@ import coffeecatteam.theultimatetile.game.entities.ai.AI;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
-import coffeecatteam.theultimatetile.game.tiles.Tile;
-import coffeecatteam.theultimatetile.game.tiles.TileAnimated;
+import coffeecatteam.theultimatetile.game.tile.Tile;
+import coffeecatteam.theultimatetile.game.tile.tiles.TileAnimated;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 

@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.game.tiles;
+package coffeecatteam.theultimatetile.game.tile;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
@@ -17,7 +17,8 @@ public class Tile {
     protected final String id;
 
     protected AABB bounds;
-    protected Vector2D position = new Vector2D();
+    protected TilePos position = new TilePos();
+    protected Tile[][] worldLayer;
 
     private boolean isSolid;
     private TileType tileType;
@@ -27,13 +28,21 @@ public class Tile {
         this.texture = texture;
         this.id = id;
 
-        bounds = new AABB(this.position, TILE_WIDTH, TILE_HEIGHT);
+        bounds = new AABB(this.position.toVector2D(), TILE_WIDTH, TILE_HEIGHT);
         this.isSolid = isSolid;
         this.tileType = tileType;
     }
 
     public void updateBounds() {
-        bounds = new AABB((int) (position.x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
+        bounds = new AABB((int) (position.getX() * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
+    }
+
+    protected Tile getTileAt(TilePos pos) {
+        if (pos.getX() < 0) pos.setX(0);
+        if (pos.getY() < 0) pos.setY(0);
+        if (pos.getX() > worldLayer.length - 1) pos.setX(worldLayer.length - 1);
+        if (pos.getY() > worldLayer[0].length - 1) pos.setY(worldLayer[0].length - 1);
+        return worldLayer[pos.getX()][pos.getY()];
     }
 
     public void tick() {
@@ -44,13 +53,21 @@ public class Tile {
     }
 
     public void render(Graphics2D g) {
-        g.drawImage(texture, (int) (position.x * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.y * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
+        g.drawImage(texture, (int) (position.getX() * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
     }
 
-    public Tile setPos(Vector2D position) {
-        this.position.x = position.x;
-        this.position.y = position.y;
+    public Tile setPos(TilePos position) {
+        this.position.setX(position.getX());
+        this.position.setY(position.getY());
         return this;
+    }
+
+    public Tile[][] getWorldLayer() {
+        return worldLayer;
+    }
+
+    public void setWorldLayer(Tile[][] worldLayer) {
+        this.worldLayer = worldLayer;
     }
 
     public boolean isSolid() {
@@ -70,12 +87,16 @@ public class Tile {
         return bounds;
     }
 
-    public Vector2D getPosition() {
+    public TilePos getPosition() {
         return position;
     }
 
     public BufferedImage getTexture() {
         return texture;
+    }
+
+    public void setTexture(BufferedImage texture) {
+        this.texture = texture;
     }
 
     public TileType getTileType() {

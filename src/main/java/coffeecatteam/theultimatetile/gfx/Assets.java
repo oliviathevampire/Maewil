@@ -41,6 +41,7 @@ public class Assets {
     public static Map<String, Font> FONTS = new HashMap<>();
 
     /* Tiles */
+    public static int GRASS_OVERLAY_INDEX;
     public static BufferedImage[] GRASS;
     public static BufferedImage DIRT, SAND;
     public static BufferedImage STONE, ANDESITE, DIORITE, COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE, OBSIDIAN, BROKEN_STONE;
@@ -145,10 +146,68 @@ public class Assets {
 
     /* Tiles */
     private static void initTiles() {
-        GRASS = new BufferedImage[16];
+        GRASS = new BufferedImage[52];
+        // Grass alts
         GRASS[0] = getSpriteInd(terrainSheet, 0, 0, width, height);
-        GRASS[1] = getSpriteInd(grassSheet, 3, 2, width, height);
-        GRASS[2] = getSpriteInd(grassSheet, 4, 2, width, height);
+        GRASS_OVERLAY_INDEX = 4;
+        for (int i = 0; i < GRASS_OVERLAY_INDEX - 1; i++)
+            GRASS[i + 1] = getSpriteInd(grassSheet, i, 3, width, height);
+
+        // Grass overlay
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 3; x++) {
+                int index = (x * 3) + y;
+                GRASS[index + GRASS_OVERLAY_INDEX] = getSpriteInd(grassSheet, x, y, width, height);
+            }
+        }
+        for (int y = 0; y < 2; y++) {
+            for (int x = 0; x < 2; x++) {
+                int index = (x * 2) + y;
+                GRASS[index + GRASS_OVERLAY_INDEX + 9] = getSpriteInd(grassSheet, x + 3, y, width, height);
+            }
+        }
+        for (int y = 0; y < 2; y++) {
+            for (int x = 0; x < 2; x++) {
+                int index = (x * 2) + y;
+                GRASS[index + GRASS_OVERLAY_INDEX + 13] = getSpriteInd(grassSheet, x + 9, y, width, height);
+            }
+        }
+        for (int y = 0; y < 2; y++) {
+            for (int x = 0; x < 2; x++) {
+                int index = (x * 2) + y;
+                GRASS[index + GRASS_OVERLAY_INDEX + 17] = getSpriteInd(grassSheet, x + 6, y + 1, width, height);
+            }
+        }
+        GRASS[GRASS_OVERLAY_INDEX + 21] = getSpriteInd(grassSheet, 8, 1, width, height);
+        for (int i = 0; i < 3; i++) {
+            GRASS[i + GRASS_OVERLAY_INDEX + 22] = getSpriteInd(grassSheet, 5, i, width, height);
+        }
+        for (int i = 0; i < 3; i++) {
+            GRASS[i + GRASS_OVERLAY_INDEX + 25] = getSpriteInd(grassSheet, i + 6, 0, width, height);
+        }
+        GRASS[GRASS_OVERLAY_INDEX + 28] = getSpriteInd(grassSheet, 8, 2, width, height);
+        for (int i = 0; i < 2; i++) {
+            GRASS[i + GRASS_OVERLAY_INDEX + 29] = getSpriteInd(grassSheet, i + 3, 2, width, height);
+        }
+        for (int i = 0; i < 3; i++) {
+            GRASS[i + GRASS_OVERLAY_INDEX + 31] = getSpriteInd(grassSheet, 11, i, width, height);
+        }
+        for (int i = 0; i < 3; i++) {
+            GRASS[i + GRASS_OVERLAY_INDEX + 34] = getSpriteInd(grassSheet, 12, i, width, height);
+        }
+        for (int i = 0; i < 3; i++) {
+            GRASS[i + GRASS_OVERLAY_INDEX + 37] = getSpriteInd(grassSheet, 13, i, width, height);
+        }
+        for (int i = 0; i < 3; i++) {
+            GRASS[i + GRASS_OVERLAY_INDEX + 40] = getSpriteInd(grassSheet, 14, i, width, height);
+        }
+        for (int y = 0; y < 2; y++) {
+            for (int x = 0; x < 2; x++) {
+                int index = (x * 2) + y;
+                GRASS[index + GRASS_OVERLAY_INDEX + 43] = getSpriteInd(grassSheet, x + 15, y, width, height);
+            }
+        }
+        GRASS[GRASS_OVERLAY_INDEX + 47] = getSpriteInd(grassSheet, 8, 2, width, height);
 
         DIRT = getSpriteInd(terrainSheet, 1, 0, width, height);
         STONE = getSpriteInd(terrainSheet, 2, 0, width, height);

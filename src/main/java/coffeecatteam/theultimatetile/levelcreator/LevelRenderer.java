@@ -2,8 +2,8 @@ package coffeecatteam.theultimatetile.levelcreator;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.game.tiles.Tile;
-import coffeecatteam.theultimatetile.game.tiles.Tiles;
+import coffeecatteam.theultimatetile.game.tile.Tile;
+import coffeecatteam.theultimatetile.game.tile.Tiles;
 import coffeecatteam.theultimatetile.game.world.World;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
@@ -194,7 +194,7 @@ public class LevelRenderer {
         new File(path + "tiles").mkdirs();
 
 //        saver.saveTiles(xWorldSize, yWorldSize, gridWorldEditorBG.convertGridToArray(), gridWorldEditorFG.convertGridToArray(), path + "background", path + "foreground");
-        saver.save();
+        saver.save("");
         creatorEngine.getLogger().print("World [" + dir + "] saved!");
     }
 

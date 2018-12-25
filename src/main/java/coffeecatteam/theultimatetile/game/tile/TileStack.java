@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.game.tiles;
+package coffeecatteam.theultimatetile.game.tile;
 
 public class TileStack {
 

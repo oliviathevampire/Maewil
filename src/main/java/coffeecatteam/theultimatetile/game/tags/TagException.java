@@ -1,13 +1,14 @@
 package coffeecatteam.theultimatetile.game.tags;
 
 public class TagException extends Exception {
-    public TagException(String message, String json, int p_i47523_3_) {
-        super(message + " at: " + slice(json, p_i47523_3_));
+
+    public TagException(String message, String json, int index) {
+        super(message + " at: " + slice(json, index));
     }
 
-    private static String slice(String json, int p_193592_1_) {
+    private static String slice(String json, int index) {
         StringBuilder stringbuilder = new StringBuilder();
-        int i = Math.min(json.length(), p_193592_1_);
+        int i = Math.min(json.length(), index);
 
         if (i > 35) {
             stringbuilder.append("...");

@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.game.tiles;
+package coffeecatteam.theultimatetile.game.tile.tiles;
 
 public interface IDamageableTile {
 

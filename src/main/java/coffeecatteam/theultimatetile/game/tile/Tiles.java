@@ -1,6 +1,7 @@
-package coffeecatteam.theultimatetile.game.tiles;
+package coffeecatteam.theultimatetile.game.tile;
 
 import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.game.tile.tiles.*;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
@@ -13,13 +14,13 @@ public class Tiles {
     public static final List<Tile> TILES = new ArrayList<>();
 
     public static TileGrass GRASS;
-    public static Tile DIRT;
-    public static TileBreakable STONE;
-    public static Tile SAND;
+    public static TileDirt DIRT;
+    public static TileStone STONE;
+    public static TileSand SAND;
     public static Tile ANDESITE;
     public static Tile DIORITE;
 
-    public static TileBreakable COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE;
+    public static TileStone COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE;
 
     public static Tile OBSIDIAN;
 
@@ -28,22 +29,22 @@ public class Tiles {
     public static Tile PLANKS;
     public static Tile BROKEN_STONE;
 
-    public static Tile AIR; // USES EMPTY SPACE IN TILES SHEET
+    public static TileAir AIR; // USES EMPTY SPACE IN TILES SHEET
 
     public static Tile BOOKSHELF;
 
     public static void init(Engine engine) {
         register(GRASS = (TileGrass) getTile(engine, "grass"));
-        register(DIRT = getTile(engine, "dirt"));
-        register(STONE = (TileBreakable) getTile(engine, "stone"));
-        register(SAND = getTile(engine, "sand"));
+        register(DIRT = (TileDirt) getTile(engine, "dirt"));
+        register(STONE = (TileStone) getTile(engine, "stone"));
+        register(SAND = (TileSand) getTile(engine, "sand"));
         register(ANDESITE = getTile(engine, "andesite"));
         register(DIORITE = getTile(engine, "diorite"));
 
-        register(COAL_ORE = (TileBreakable) getTile(engine, "coal_ore"));
-        register(IRON_ORE = (TileBreakable) getTile(engine, "iron_ore"));
-        register(GOLD_ORE = (TileBreakable) getTile(engine, "gold_ore"));
-        register(DIAMOND_ORE = (TileBreakable) getTile(engine, "diamond_ore"));
+        register(COAL_ORE = (TileStone) getTile(engine, "coal_ore"));
+        register(IRON_ORE = (TileStone) getTile(engine, "iron_ore"));
+        register(GOLD_ORE = (TileStone) getTile(engine, "gold_ore"));
+        register(DIAMOND_ORE = (TileStone) getTile(engine, "diamond_ore"));
 
         register(OBSIDIAN = getTile(engine, "obsidian"));
 
@@ -53,7 +54,7 @@ public class Tiles {
         register(PLANKS = getTile(engine, "planks"));
         register(BROKEN_STONE = getTile(engine, "broken_stone"));
 
-        AIR = getTile(engine, "air");
+        AIR = (TileAir) getTile(engine, "air");
 
         register(BOOKSHELF = getTile(engine, "bookshelf"));
     }
@@ -67,24 +68,24 @@ public class Tiles {
             case "grass":
                 return new TileGrass(engine, id);
             case "dirt":
-                return new Tile(engine, Assets.DIRT, id, false, Tile.TileType.GROUND);
+                return new TileDirt(engine, Assets.DIRT, id, false, Tile.TileType.GROUND);
             case "stone":
-                return new TileBreakable(engine, Assets.STONE, id, ItemManager.ROCK, Tile.TileType.STONE);
+                return new TileStone(engine, Assets.STONE, id, ItemManager.ROCK, Tile.TileType.STONE);
             case "sand":
-                return new Tile(engine, Assets.SAND, id, false, Tile.TileType.GROUND);
+                return new TileSand(engine, Assets.SAND, id, false, Tile.TileType.GROUND);
             case "andesite":
                 return new Tile(engine, Assets.ANDESITE, id, true, Tile.TileType.STONE);
             case "diorite":
                 return new Tile(engine, Assets.DIORITE, id, true, Tile.TileType.STONE);
 
             case "coal_ore":
-                return new TileBreakable(engine, Assets.COAL_ORE, id, ItemManager.COAL, Tile.TileType.STONE);
+                return new TileStone(engine, Assets.COAL_ORE, id, ItemManager.COAL, Tile.TileType.STONE);
             case "iron_ore":
-                return new TileBreakable(engine, Assets.IRON_ORE, id, ItemManager.IRON_INGOT, Tile.TileType.STONE);
+                return new TileStone(engine, Assets.IRON_ORE, id, ItemManager.IRON_INGOT, Tile.TileType.STONE);
             case "gold_ore":
-                return new TileBreakable(engine, Assets.GOLD_ORE, id, ItemManager.GOLD_INGOT, Tile.TileType.STONE);
+                return new TileStone(engine, Assets.GOLD_ORE, id, ItemManager.GOLD_INGOT, Tile.TileType.STONE);
             case "diamond_ore":
-                return new TileBreakable(engine, Assets.DIAMOND_ORE, id, ItemManager.DIAMOND, Tile.TileType.STONE);
+                return new TileStone(engine, Assets.DIAMOND_ORE, id, ItemManager.DIAMOND, Tile.TileType.STONE);
 
             case "obsidian":
                 return new Tile(engine, Assets.OBSIDIAN, id, true, Tile.TileType.STONE);
@@ -100,7 +101,7 @@ public class Tiles {
                 return new Tile(engine, Assets.BROKEN_STONE, id, true, Tile.TileType.STONE);
 
             case "air":
-                return new Tile(engine, Assets.AIR, id, false, Tile.TileType.AIR);
+                return new TileAir(engine, Assets.AIR, id, false, Tile.TileType.AIR);
 
             case "bookshelf":
                 return new Tile(engine, Assets.BOOKSHELF, id, true, Tile.TileType.WOOD);
