@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.game.tile;
 
 import coffeecatteam.coffeecatutils.position.AABB;
-import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 

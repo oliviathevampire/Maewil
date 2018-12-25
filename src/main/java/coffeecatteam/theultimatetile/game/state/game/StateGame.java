@@ -8,7 +8,7 @@ import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.game.tile.Tiles;
 import coffeecatteam.theultimatetile.game.world.World;
-import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;

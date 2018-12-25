@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.game.tile;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.tile.tiles.*;
 import coffeecatteam.theultimatetile.gfx.Animation;
-import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
 import java.util.ArrayList;
@@ -24,7 +24,8 @@ public class Tiles {
 
     public static Tile OBSIDIAN;
 
-    public static TileAnimated WATER, LAVA;
+    public static TileWater WATER;
+    private static TileAnimated LAVA;
 
     public static Tile PLANKS;
     public static Tile BROKEN_STONE;
@@ -48,7 +49,7 @@ public class Tiles {
 
         register(OBSIDIAN = getTile(engine, "obsidian"));
 
-        register(WATER = (TileAnimated) getTile(engine, "water"));
+        register(WATER = (TileWater) getTile(engine, "water"));
         register(LAVA = (TileAnimated) getTile(engine, "lava"));
 
         register(PLANKS = getTile(engine, "planks"));
@@ -68,11 +69,11 @@ public class Tiles {
             case "grass":
                 return new TileGrass(engine, id);
             case "dirt":
-                return new TileDirt(engine, Assets.DIRT, id, false, Tile.TileType.GROUND);
+                return new TileDirt(engine, id, false, Tile.TileType.GROUND);
             case "stone":
                 return new TileStone(engine, Assets.STONE, id, ItemManager.ROCK, Tile.TileType.STONE);
             case "sand":
-                return new TileSand(engine, Assets.SAND, id, false, Tile.TileType.GROUND);
+                return new TileSand(engine, id);
             case "andesite":
                 return new Tile(engine, Assets.ANDESITE, id, true, Tile.TileType.STONE);
             case "diorite":
@@ -91,7 +92,7 @@ public class Tiles {
                 return new Tile(engine, Assets.OBSIDIAN, id, true, Tile.TileType.STONE);
 
             case "water":
-                return new TileAnimated(engine, new Animation(50, Assets.WATER), id, false, Tile.TileType.FLUID);
+                return new TileWater(engine, id, false, Tile.TileType.FLUID);
             case "lava":
                 return new TileAnimated(engine, new Animation(50, Assets.LAVA), id, false, Tile.TileType.FLUID);
 

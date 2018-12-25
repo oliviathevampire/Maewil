@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.gfx;
+package coffeecatteam.theultimatetile.gfx.image;
 
 import java.awt.image.BufferedImage;
 

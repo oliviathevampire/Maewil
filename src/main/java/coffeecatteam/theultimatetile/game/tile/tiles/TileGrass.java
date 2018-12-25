@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.game.tile.tiles;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.tile.Tile;
-import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 /**
  * @author CoffeeCatRailway
@@ -19,6 +19,6 @@ public class TileGrass extends Tile {
         if (i < chance)
             this.texture = Assets.GRASS[0];
         else
-            this.texture = Assets.GRASS[(int) NumberUtils.map(i, chance, max, 1, Assets.GRASS_OVERLAY_INDEX)];
+            this.texture = Assets.GRASS[(int) NumberUtils.map(i, chance, max, 1, Assets.GRASS_ALTS)];
     }
 }

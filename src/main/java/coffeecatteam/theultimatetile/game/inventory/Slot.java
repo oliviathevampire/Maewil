@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.game.inventory;
 
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

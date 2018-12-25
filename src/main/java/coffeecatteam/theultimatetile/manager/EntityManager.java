@@ -21,7 +21,7 @@ import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityRock;
 import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityTree;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.tile.Tile;
-import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 import java.awt.*;
 import java.util.ArrayList;

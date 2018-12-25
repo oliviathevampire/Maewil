@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.game.world;
 
-import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.tile.Tile;
@@ -146,14 +145,13 @@ public class World {
         try {
             if (pos.getX() < 0 || pos.getY() < 0)
                 throw new PositionOutOfBoundsException(pos.toVector2D());
-            else
-                if (wh_exact) {
-                    if (pos.getX() >= width || pos.getY() >= height)
-                        throw new PositionOutOfBoundsException(pos.toVector2D());
-                } else {
-                    if (pos.getX() > width || pos.getY() > height)
-                        throw new PositionOutOfBoundsException(pos.toVector2D());
-                }
+            else if (wh_exact) {
+                if (pos.getX() >= width || pos.getY() >= height)
+                    throw new PositionOutOfBoundsException(pos.toVector2D());
+            } else {
+                if (pos.getX() > width || pos.getY() > height)
+                    throw new PositionOutOfBoundsException(pos.toVector2D());
+            }
         } catch (PositionOutOfBoundsException e) {
             engine.getLogger().print(e);
             engine.setRunning(false);

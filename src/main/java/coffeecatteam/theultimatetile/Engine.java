@@ -2,8 +2,8 @@ package coffeecatteam.theultimatetile;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
-import coffeecatteam.theultimatetile.gfx.Assets;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
 import coffeecatteam.theultimatetile.gfx.audio.Sound;
 import coffeecatteam.theultimatetile.manager.ItemManager;

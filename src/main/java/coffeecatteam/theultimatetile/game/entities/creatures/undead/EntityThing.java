@@ -4,7 +4,7 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.gfx.Animation;
-import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 public class EntityThing extends EntityUndead {
 

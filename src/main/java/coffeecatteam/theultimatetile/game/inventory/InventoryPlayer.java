@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.game.inventory;
 
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 import java.awt.*;
 

@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.game.entities.creatures.undead;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.gfx.Animation;
-import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
 public class EntityZombie extends EntityUndead {

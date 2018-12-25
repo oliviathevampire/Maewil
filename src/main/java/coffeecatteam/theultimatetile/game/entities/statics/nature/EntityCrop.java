@@ -4,7 +4,7 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityNature;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
-import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

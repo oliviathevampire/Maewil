@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.ai.AIEatCrops;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPassive;
 import coffeecatteam.theultimatetile.gfx.Animation;
-import coffeecatteam.theultimatetile.gfx.Assets;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
 public class EntityPig extends EntityPassive {

@@ -7,9 +7,9 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.game.tags.TagCompound;
-import coffeecatteam.theultimatetile.gfx.Assets;
-import coffeecatteam.theultimatetile.gfx.SpriteSheet;
 import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.gfx;
+package coffeecatteam.theultimatetile.gfx.image;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,7 +15,15 @@ public class ColorGrayscaleImage {
         for (int x = 0; x < img.getWidth(); x++) {
             for (int y = 0; y < img.getHeight(); y++) {
                 Color imgColor = new Color(img.getRGB(x, y));
-                newImg.setRGB(x, y, blend(imgColor.getRGB(), color.getRGB(), 0.5f));
+                int c0 = ((imgColor.getAlpha() * 255 & 0xFF) << 24) |
+                        ((imgColor.getRed() * 255 & 0xFF) << 16) |
+                        ((imgColor.getGreen() * 255 & 0xFF) << 8) |
+                        ((imgColor.getBlue() * 255 & 0xFF));
+                int c1 = ((color.getAlpha() * 255 & 0xFF) << 24) |
+                        ((color.getRed() * 255 & 0xFF) << 16) |
+                        ((color.getGreen() * 255 & 0xFF) << 8) |
+                        ((color.getBlue() * 255 & 0xFF));
+                newImg.setRGB(x, y, blend(c0, c1, 0.5f));
             }
         }
 
