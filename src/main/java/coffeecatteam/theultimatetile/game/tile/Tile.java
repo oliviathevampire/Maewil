@@ -1,13 +1,17 @@
 package coffeecatteam.theultimatetile.game.tile;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.game.inventory.items.Item;
+import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Tile {
+public abstract class Tile {
 
     public static final int TILE_WIDTH = 64, TILE_HEIGHT = 64;
 
@@ -19,8 +23,11 @@ public class Tile {
     protected TilePos position = new TilePos();
     protected Tile[][] worldLayer;
 
-    private boolean isSolid;
-    private TileType tileType;
+    protected boolean isSolid, unbreakable = false;
+    protected TileType tileType;
+
+    protected Item drop;
+    protected int health, maxHealth = 300;
 
     public Tile(Engine engine, BufferedImage texture, String id, boolean isSolid, TileType tileType) {
         this.engine = engine;
@@ -30,6 +37,8 @@ public class Tile {
         bounds = new AABB(this.position.toVector2D(), TILE_WIDTH, TILE_HEIGHT);
         this.isSolid = isSolid;
         this.tileType = tileType;
+
+        this.health = this.maxHealth;
     }
 
     public void updateBounds() {
@@ -52,7 +61,70 @@ public class Tile {
     }
 
     public void render(Graphics2D g) {
-        g.drawImage(texture, (int) (position.getX() * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
+        render(g, (int) (position.getX() * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
+    }
+
+    public void render(Graphics2D g, int x, int y, int width, int height) {
+        g.drawImage(texture, x, y, width, height, null);
+
+        if (drop != null) {
+            if (isSolid && !unbreakable) {
+                int index = (int) NumberUtils.map(this.health, 0, this.maxHealth, 0, Assets.TILE_CRACKING.length - 1);
+                if (index < 0)
+                    index = 0;
+                BufferedImage currentFrame = Assets.TILE_CRACKING[index];
+                g.drawImage(currentFrame, x, y, width, height, null);
+            }
+        }
+    }
+
+    public void damage(int damage) {
+        if (drop != null) {
+            if (isSolid && !unbreakable) {
+                this.health -= damage;
+                if (this.health <= 0) {
+                    if (position.getX() == 0 || position.getX() == ((GameEngine) engine).getWorld().getWidth() || position.getY() == 0 || position.getY() == ((GameEngine) engine).getWorld().getHeight())
+                        return;
+                    ((GameEngine) engine).getWorld().setFGTile(position.getX(), position.getY(), Tiles.AIR);
+                    ((GameEngine) engine).getItemManager().addItem(new ItemStack(drop), position.getX() * Tile.TILE_WIDTH, (position.getY() * Tile.TILE_HEIGHT));
+                    this.health = this.maxHealth;
+                }
+            }
+        }
+    }
+
+    public abstract <T extends Tile> T copy();
+
+    public Item getDrop() {
+        return drop;
+    }
+
+    public void setDrop(Item drop) {
+        this.drop = drop;
+    }
+
+    public boolean isUnbreakable() {
+        return unbreakable;
+    }
+
+    public void setUnbreakable(boolean unbreakable) {
+        this.unbreakable = unbreakable;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
     }
 
     public Tile setPos(TilePos position) {

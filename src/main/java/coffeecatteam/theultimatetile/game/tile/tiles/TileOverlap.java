@@ -15,7 +15,7 @@ import java.util.List;
  * @author CoffeeCatRailway
  * Created: 26/12/2018
  */
-public class TileOverlap extends Tile {
+public abstract class TileOverlap extends Tile {
 
     private BufferedImage[] overlap;
     private List<Class<? extends Tile>> connect;
@@ -37,8 +37,8 @@ public class TileOverlap extends Tile {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        super.render(g);
+    public void render(Graphics2D g, int x, int y, int width, int height) {
+        super.render(g, x, y, width, height);
 
         BufferedImage overlay = Assets.DEAD_OVERLAY;
         if (topLeftCorner())
@@ -153,7 +153,7 @@ public class TileOverlap extends Tile {
 
         if (allCorners())
             overlay = getOverlay(47);
-        g.drawImage(overlay, (int) (position.getX() * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
+        g.drawImage(overlay, x, y, width, height, null);
     }
 
     private BufferedImage getOverlay(int index) {

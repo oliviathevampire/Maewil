@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.game.tile.tiles;
 
 import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 /**
@@ -13,5 +14,10 @@ public class TileSand extends TileOverlap {
         super(engine, Assets.SAND[0], Assets.GRASS, id, false, TileType.GROUND, Assets.GRASS_ALTS);
         this.setConnect(TileGrass.class);
         this.setIgnore(TileSand.class);
+    }
+
+    @Override
+    public TileSand copy() {
+        return new TileSand(engine, id);
     }
 }

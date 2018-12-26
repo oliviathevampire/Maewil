@@ -31,9 +31,9 @@ public class TileWater extends TileOverlap {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        g.drawImage(animation.getCurrentFrame(), (int) (position.getX() * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT, null);
-        super.render(g);
+    public void render(Graphics2D g, int x, int y, int width, int height) {
+        g.drawImage(animation.getCurrentFrame(), x, y, width, height, null);
+        super.render(g, x, y, width, height);
     }
 
     @Override
@@ -43,5 +43,10 @@ public class TileWater extends TileOverlap {
 
     public Animation getAnimation() {
         return animation;
+    }
+
+    @Override
+    public TileWater copy() {
+        return new TileWater(engine, id, isSolid, tileType);
     }
 }

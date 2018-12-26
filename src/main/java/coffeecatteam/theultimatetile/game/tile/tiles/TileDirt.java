@@ -14,4 +14,9 @@ public class TileDirt extends TileOverlap {
         this.setConnect(TileGrass.class);
         this.setIgnore(TileDirt.class);
     }
+
+    @Override
+    public TileDirt copy() {
+        return new TileDirt(engine, id, isSolid, tileType);
+    }
 }

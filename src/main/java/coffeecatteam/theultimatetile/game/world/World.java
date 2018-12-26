@@ -4,7 +4,6 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.game.tile.TilePos;
-import coffeecatteam.theultimatetile.game.tile.tiles.TileBreakable;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.utils.PositionOutOfBoundsException;
@@ -183,8 +182,7 @@ public class World {
                 Tile tile = bg_tile_ids[x][y].setPos(new TilePos(x, y)).setSolid(false);
                 if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
                     tile.setSolid(true);
-                    if (tile instanceof TileBreakable)
-                        ((TileBreakable) tile).setMineable(false);
+                    tile.setUnbreakable(true);
                 }
                 bg_tiles[x][y] = tile;
             }
@@ -196,8 +194,7 @@ public class World {
                 Tile tile = fg_tile_ids[x][y].setPos(new TilePos(x, y));
                 if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
                     tile.setSolid(true);
-                    if (tile instanceof TileBreakable)
-                        ((TileBreakable) tile).setMineable(false);
+                    tile.setUnbreakable(true);
                 }
                 fg_tiles[x][y] = tile;
             }

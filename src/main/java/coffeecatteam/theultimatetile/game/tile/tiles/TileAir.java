@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.game.tile.tiles;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.tile.Tile;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 import java.awt.image.BufferedImage;
 
@@ -11,7 +12,12 @@ import java.awt.image.BufferedImage;
  */
 public class TileAir extends Tile {
 
-    public TileAir(Engine engine, BufferedImage texture, String id, boolean isSolid, TileType tileType) {
-        super(engine, texture, id, isSolid, tileType);
+    public TileAir(Engine engine) {
+        super(engine, Assets.AIR, "air", false, Tile.TileType.AIR);
+    }
+
+    @Override
+    public TileAir copy() {
+        return new TileAir(engine);
     }
 }

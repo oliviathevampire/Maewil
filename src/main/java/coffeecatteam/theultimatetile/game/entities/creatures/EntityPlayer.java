@@ -12,7 +12,6 @@ import coffeecatteam.theultimatetile.game.inventory.items.ItemTool;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.game.tile.Tile;
-import coffeecatteam.theultimatetile.game.tile.tiles.IDamageableTile;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
@@ -304,18 +303,16 @@ public class EntityPlayer extends EntityCreature {
         int x = (int) position.x / Tile.TILE_WIDTH;
         int y = (int) position.y / Tile.TILE_HEIGHT;
         Tile t = ((GameEngine) engine).getWorld().getFGTile(x, y);
-        if (t instanceof IDamageableTile) {
-            if (isAttacking) {
-                int dmg = NumberUtils.getRandomInt(1, 5);
-                if (equippedItem != null) {
-                    if (equippedItem.getItem() instanceof ItemTool) {
-                        ItemTool tool = (ItemTool) equippedItem.getItem();
-                        if (tool.getToolType() == ItemTool.ToolType.PICKAXE)
-                            dmg += extraDmg;
-                    }
+        if (isAttacking) {
+            int dmg = NumberUtils.getRandomInt(1, 5);
+            if (equippedItem != null) {
+                if (equippedItem.getItem() instanceof ItemTool) {
+                    ItemTool tool = (ItemTool) equippedItem.getItem();
+                    if (tool.getToolType() == ItemTool.ToolType.PICKAXE)
+                        dmg += extraDmg;
                 }
-                ((IDamageableTile) t).damage(dmg);
             }
+            t.damage(dmg);
         }
     }
 

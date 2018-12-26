@@ -154,27 +154,26 @@ public class Assets {
         SAND_ALTS = 3;
         SAND = TileTextureAlts.getTextureAlts(SAND_ALTS, 47, sandSheet, width, height);
 
-        DIRT = getSpriteInd(terrainSheet, 1, 0, width, height);
-        STONE = getSpriteInd(terrainSheet, 2, 0, width, height);
-//        SAND = getSpriteInd(terrainSheet, 3, 0, width, height);
-        ANDESITE = getSpriteInd(terrainSheet, 4, 0, width, height);
-        DIORITE = getSpriteInd(terrainSheet, 5, 0, width, height);
-        COAL_ORE = getSpriteInd(terrainSheet, 6, 0, width, height);
-        IRON_ORE = getSpriteInd(terrainSheet, 7, 0, width, height);
-        GOLD_ORE = getSpriteInd(terrainSheet, 8, 0, width, height);
-        DIAMOND_ORE = getSpriteInd(terrainSheet, 9, 0, width, height);
-        OBSIDIAN = getSpriteInd(terrainSheet, 10, 0, width, height);
+        DIRT = getSpriteInd(terrainSheet, 0, 0, width, height);
+        STONE = getSpriteInd(terrainSheet, 1, 0, width, height);
+        ANDESITE = getSpriteInd(terrainSheet, 2, 0, width, height);
+        DIORITE = getSpriteInd(terrainSheet, 3, 0, width, height);
+        COAL_ORE = getSpriteInd(terrainSheet, 4, 0, width, height);
+        IRON_ORE = getSpriteInd(terrainSheet, 5, 0, width, height);
+        GOLD_ORE = getSpriteInd(terrainSheet, 6, 0, width, height);
+        DIAMOND_ORE = getSpriteInd(terrainSheet, 7, 0, width, height);
+        OBSIDIAN = getSpriteInd(terrainSheet, 8, 0, width, height);
 
-        PLANKS = getSpriteInd(terrainSheet, 11, 0, width, height);
-        BROKEN_STONE = getSpriteInd(terrainSheet, 12, 0, width, height);
+        PLANKS = getSpriteInd(terrainSheet, 9, 0, width, height);
+        BROKEN_STONE = getSpriteInd(terrainSheet, 10, 0, width, height);
 
         WATER = getFrames(terrainSheet, 6, 0, 15);
         LAVA = getFrames(terrainSheet, 7, 0, 15);
 
-        AIR = getSpriteInd(terrainSheet, 13, 0, width, height);
+        AIR = getSpriteInd(terrainSheet, 11, 0, width, height);
 
-        BOOKSHELF = getSpriteInd(terrainSheet, 14, 0, width, height);
-        CHEST = getSpriteInd(terrainSheet, 15, 0, width, height);
+        BOOKSHELF = getSpriteInd(terrainSheet, 12, 0, width, height);
+        CHEST = getSpriteInd(terrainSheet, 13, 0, width, height);
 
         TILE_CRACKING = getFrames("/assets/textures/tiles/tile_cracking.png", 0, 8);
 

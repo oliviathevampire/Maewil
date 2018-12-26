@@ -19,6 +19,11 @@ public class TileGrass extends Tile {
         if (i < chance)
             this.texture = Assets.GRASS[0];
         else
-            this.texture = Assets.GRASS[(int) NumberUtils.map(i, chance, max, 1, Assets.GRASS_ALTS)];
+            this.texture = Assets.GRASS[(int) NumberUtils.map(i, chance, max, 1, Assets.GRASS_ALTS - 1)];
+    }
+
+    @Override
+    public TileGrass copy() {
+        return new TileGrass(engine, id);
     }
 }
