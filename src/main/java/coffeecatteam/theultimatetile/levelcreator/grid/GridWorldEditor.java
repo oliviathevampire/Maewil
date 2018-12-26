@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.levelcreator.grid;
 
+import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.tile.Tile;
@@ -34,6 +35,17 @@ public class GridWorldEditor extends Grid {
                 grid[gx][gy] = new GridTile(new Vector2D(ogX + w * gx, ogY + h * gy), w, h);
             }
         }
+        startWorldLayerUpdate();
+    }
+
+    public synchronized void startWorldLayerUpdate() {
+        Thread wlu = new Thread(() -> {
+            for (int x = 0; x < xWorldSize; x++)
+                for (int y = 0; y < yWorldSize; y++)
+                    grid[x][y].setWorldLayer(grid, xWorldSize, yWorldSize);
+        }, "World Layer Updater");
+        wlu.start();
+        new CatLogger(wlu).print("'World Layer Updater' started!");
     }
 
     public void updateVars(AABB gridBounds, int mouseX, int mouseY, Tile SELECTED_TILE) {
@@ -64,25 +76,28 @@ public class GridWorldEditor extends Grid {
                 tile.getPosition().y = ogY + h * y;
                 tile.setWidth(w);
                 tile.setHeight(h);
-            }
-        }
 
-        if (beingUsed) {
-            for (int x = 0; x < xWorldSize; x++) {
-                for (int y = 0; y < yWorldSize; y++) {
-                    GridTile tile = grid[x][y];
+                if (beingUsed) {
                     tile.tick();
 
                     if (tile.getBounds().contains(mouseX, mouseY)) {
                         if (gridBounds.contains(mouseX, mouseY)) {
                             if (creatorEngine.getMouseManager().isLeftDown() || creatorEngine.getMouseManager().isLeftPressed()) {
                                 if (tile.getTile() != SELECTED_TILE)
-                                    tile.setTile(LevelRenderer.getSelectedTile());
+                                    tile.setTile(LevelRenderer.getSelectedTile().copy());
                             } else if (creatorEngine.getMouseManager().isRightDown() || creatorEngine.getMouseManager().isRightPressed())
                                 tile.setTile(Tiles.AIR);
                         }
                     }
                 }
+            }
+        }
+    }
+
+    public void updateWorldLayer() {
+        for (int x = 0; x < xWorldSize; x++) {
+            for (int y = 0; y < yWorldSize; y++) {
+                grid[x][y].setWorldLayer(grid, xWorldSize, yWorldSize);
             }
         }
     }
@@ -94,7 +109,6 @@ public class GridWorldEditor extends Grid {
             for (int x = 0; x < xWorldSize; x++) {
                 for (int y = 0; y < yWorldSize; y++) {
                     GridTile tile = grid[x][y];
-
                     tile.render(g);
                 }
             }
@@ -150,18 +164,6 @@ public class GridWorldEditor extends Grid {
         this.showRendered = showRendered;
     }
 
-    public Tile[][] convertGridToArray() {
-        Tile[][] tiles = new Tile[xWorldSize][yWorldSize];
-
-        for (int x = 0; x < xWorldSize; x++) {
-            for (int y = 0; y < yWorldSize; y++) {
-                tiles[x][y] = grid[x][y].getTile();
-            }
-        }
-
-        return tiles.clone();
-    }
-
     public void setGridFromArray(Tile[][] tilesArray, int xWorldSize, int yWorldSize) {
         this.setSize(xWorldSize, yWorldSize);
         initGrid();
@@ -171,5 +173,9 @@ public class GridWorldEditor extends Grid {
                 grid[x][y].setTile(tilesArray[x][y]);
             }
         }
+    }
+
+    public GridTile[][] getGrid() {
+        return grid;
     }
 }

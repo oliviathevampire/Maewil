@@ -1,6 +1,8 @@
 package coffeecatteam.theultimatetile.levelcreator.grid;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
+import coffeecatteam.theultimatetile.game.tile.Tile;
+import coffeecatteam.theultimatetile.game.tile.Tiles;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
 
@@ -58,5 +60,21 @@ public abstract class Grid {
     public void setSize(int xWorldSize, int yWorldSize) {
         this.xWorldSize = xWorldSize;
         this.yWorldSize = yWorldSize;
+    }
+
+    public static Tile[][] convertGridToArray(GridTile[][] grid, int xWorldSize, int yWorldSize) {
+        Tile[][] tiles = new Tile[xWorldSize][yWorldSize];
+
+        for (int x = 0; x < xWorldSize; x++) {
+            for (int y = 0; y < yWorldSize; y++) {
+                Tile t = grid[x][y].getTile();
+                if (t == null)
+                    tiles[x][y] = Tiles.AIR.copy();
+                else
+                    tiles[x][y] = t.copy();
+            }
+        }
+
+        return tiles;
     }
 }

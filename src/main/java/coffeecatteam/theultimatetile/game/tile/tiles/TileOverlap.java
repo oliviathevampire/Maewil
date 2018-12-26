@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.game.tile.tiles;
 
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.game.tile.TilePos;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
@@ -40,120 +39,122 @@ public abstract class TileOverlap extends Tile {
     public void render(Graphics2D g, int x, int y, int width, int height) {
         super.render(g, x, y, width, height);
 
-        BufferedImage overlay = Assets.DEAD_OVERLAY;
-        if (topLeftCorner())
-            overlay = getOverlay(0);
-        if (leftSide())
-            overlay = getOverlay(1);
-        if (bottomLeftCorner())
-            overlay = getOverlay(2);
+        if (worldLayer != null) {
+            BufferedImage overlay = Assets.DEAD_OVERLAY;
+            if (topLeftCorner())
+                overlay = getOverlay(0);
+            if (leftSide())
+                overlay = getOverlay(1);
+            if (bottomLeftCorner())
+                overlay = getOverlay(2);
 
-        if (topSide())
-            overlay = getOverlay(3);
-        if (none())
-            overlay = getOverlay(4);
-        if (bottomSide())
-            overlay = getOverlay(5);
+            if (topSide())
+                overlay = getOverlay(3);
+            if (none())
+                overlay = getOverlay(4);
+            if (bottomSide())
+                overlay = getOverlay(5);
 
-        if (topRightCorner())
-            overlay = getOverlay(6);
-        if (rightSide())
-            overlay = getOverlay(7);
-        if (bottomRightCorner())
-            overlay = getOverlay(8);
+            if (topRightCorner())
+                overlay = getOverlay(6);
+            if (rightSide())
+                overlay = getOverlay(7);
+            if (bottomRightCorner())
+                overlay = getOverlay(8);
 
-        if (topLeftCornerSmall())
-            overlay = getOverlay(9);
-        if (bottomLeftCornerSmall())
-            overlay = getOverlay(10);
-        if (topRightCornerSmall())
-            overlay = getOverlay(11);
-        if (bottomRightCornerSmall())
-            overlay = getOverlay(12);
+            if (topLeftCornerSmall())
+                overlay = getOverlay(9);
+            if (bottomLeftCornerSmall())
+                overlay = getOverlay(10);
+            if (topRightCornerSmall())
+                overlay = getOverlay(11);
+            if (bottomRightCornerSmall())
+                overlay = getOverlay(12);
 
-        if (topBottomRight())
-            overlay = getOverlay(13);
-        if (bottomLeftRight())
-            overlay = getOverlay(14);
-        if (topBottomLeft())
-            overlay = getOverlay(15);
-        if (topLeftRight())
-            overlay = getOverlay(16);
+            if (topBottomRight())
+                overlay = getOverlay(13);
+            if (bottomLeftRight())
+                overlay = getOverlay(14);
+            if (topBottomLeft())
+                overlay = getOverlay(15);
+            if (topLeftRight())
+                overlay = getOverlay(16);
 
-        if (topLeftCornerInner())
-            overlay = getOverlay(17);
-        if (bottomLeftCornerInner())
-            overlay = getOverlay(18);
-        if (topRightCornerInner())
-            overlay = getOverlay(19);
-        if (bottomRightCornerInner())
-            overlay = getOverlay(20);
+            if (topLeftCornerInner())
+                overlay = getOverlay(17);
+            if (bottomLeftCornerInner())
+                overlay = getOverlay(18);
+            if (topRightCornerInner())
+                overlay = getOverlay(19);
+            if (bottomRightCornerInner())
+                overlay = getOverlay(20);
 
-        if (allSides())
-            overlay = getOverlay(21);
+            if (allSides())
+                overlay = getOverlay(21);
 
-        if (endUp())
-            overlay = getOverlay(22);
-        if (straightUpDown())
-            overlay = getOverlay(23);
-        if (endDown())
-            overlay = getOverlay(24);
+            if (endUp())
+                overlay = getOverlay(22);
+            if (straightUpDown())
+                overlay = getOverlay(23);
+            if (endDown())
+                overlay = getOverlay(24);
 
-        if (endLeft())
-            overlay = getOverlay(25);
-        if (straightLeftRight())
-            overlay = getOverlay(26);
-        if (endRight())
-            overlay = getOverlay(27);
+            if (endLeft())
+                overlay = getOverlay(25);
+            if (straightLeftRight())
+                overlay = getOverlay(26);
+            if (endRight())
+                overlay = getOverlay(27);
 
-        if (allCorners())
-            overlay = getOverlay(28);
+            if (allCorners())
+                overlay = getOverlay(28);
 
-        if (downLeftUpRightCorners())
-            overlay = getOverlay(29);
-        if (upLeftDownRightCorners())
-            overlay = getOverlay(30);
+            if (downLeftUpRightCorners())
+                overlay = getOverlay(29);
+            if (upLeftDownRightCorners())
+                overlay = getOverlay(30);
 
-        if (leftUpRightDownRight())
-            overlay = getOverlay(31);
-        if (leftDownRight())
-            overlay = getOverlay(32);
-        if (leftUpRight())
-            overlay = getOverlay(33);
+            if (leftUpRightDownRight())
+                overlay = getOverlay(31);
+            if (leftDownRight())
+                overlay = getOverlay(32);
+            if (leftUpRight())
+                overlay = getOverlay(33);
 
-        if (rightUpLeftDownLeft())
-            overlay = getOverlay(34);
-        if (rightDownLeft())
-            overlay = getOverlay(35);
-        if (rightUpLeft())
-            overlay = getOverlay(36);
+            if (rightUpLeftDownLeft())
+                overlay = getOverlay(34);
+            if (rightDownLeft())
+                overlay = getOverlay(35);
+            if (rightUpLeft())
+                overlay = getOverlay(36);
 
-        if (upDownLeftDownRight())
-            overlay = getOverlay(37);
-        if (upDownRight())
-            overlay = getOverlay(38);
-        if (upDownLeft())
-            overlay = getOverlay(39);
+            if (upDownLeftDownRight())
+                overlay = getOverlay(37);
+            if (upDownRight())
+                overlay = getOverlay(38);
+            if (upDownLeft())
+                overlay = getOverlay(39);
 
-        if (downUpLeftUpRight())
-            overlay = getOverlay(40);
-        if (downUpLeft())
-            overlay = getOverlay(41);
-        if (downUpRight())
-            overlay = getOverlay(42);
+            if (downUpLeftUpRight())
+                overlay = getOverlay(40);
+            if (downUpLeft())
+                overlay = getOverlay(41);
+            if (downUpRight())
+                overlay = getOverlay(42);
 
-        if (downLeftUpRightDownRightCorners())
-            overlay = getOverlay(43);
-        if (upLeftUpRightDownRightCorners())
-            overlay = getOverlay(44);
-        if (upLeftDownLeftDownRightCorners())
-            overlay = getOverlay(45);
-        if (upLeftDownLeftUpRightCorners())
-            overlay = getOverlay(46);
+            if (downLeftUpRightDownRightCorners())
+                overlay = getOverlay(43);
+            if (upLeftUpRightDownRightCorners())
+                overlay = getOverlay(44);
+            if (upLeftDownLeftDownRightCorners())
+                overlay = getOverlay(45);
+            if (upLeftDownLeftUpRightCorners())
+                overlay = getOverlay(46);
 
-        if (allCorners())
-            overlay = getOverlay(47);
-        g.drawImage(overlay, x, y, width, height, null);
+            if (allCorners())
+                overlay = getOverlay(47);
+            g.drawImage(overlay, x, y, width, height, null);
+        }
     }
 
     private BufferedImage getOverlay(int index) {

@@ -4,7 +4,7 @@ import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.game.tile.Tiles;
-import coffeecatteam.theultimatetile.game.tile.tiles.TileAnimated;
+import coffeecatteam.theultimatetile.game.tile.tiles.TileLava;
 
 import java.awt.*;
 
@@ -15,7 +15,7 @@ public class GridTile {
     private int width, height;
 
     private AABB bounds;
-    private Tile tile = Tiles.AIR;
+    private Tile tile = Tiles.AIR.copy();
 
     public GridTile(Vector2D position, int width, int height) {
         this.position = position;
@@ -26,18 +26,18 @@ public class GridTile {
     }
 
     public void tick() {
-        if (tile instanceof TileAnimated) {
-            ((TileAnimated) tile).getAnimation().tick();
-        }
+        tile.tick();
+        tile.forcedTick();
     }
 
     public void render(Graphics2D g) {
         bounds = new AABB((int) this.position.x + xOff, (int) this.position.y + yOff, width, height);
 
-        if (tile instanceof TileAnimated) {
-            g.drawImage(((TileAnimated) tile).getAnimation().getCurrentFrame(), (int) this.position.x + xOff, (int) this.position.y + yOff, width, height, null);
-        } else
-            g.drawImage(tile.getTexture(), (int) this.position.x + xOff, (int) this.position.y + yOff, width, height, null);
+        tile.render(g, (int) this.position.x + xOff, (int) this.position.y + yOff, width, height);
+    }
+
+    public void setWorldLayer(GridTile[][] worldLayer, int xWorldSize, int yWorldSize) {
+        this.tile.setWorldLayer(Grid.convertGridToArray(worldLayer, xWorldSize, yWorldSize));
     }
 
     public Vector2D getPosition() {
@@ -91,5 +91,9 @@ public class GridTile {
     public GridTile setTile(Tile tile) {
         this.tile = tile;
         return this;
+    }
+
+    public GridTile copy() {
+        return new GridTile(position, width, height).setTile(this.tile.copy());
     }
 }

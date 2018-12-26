@@ -40,7 +40,6 @@ public class GridTileSelect extends Grid {
         mouseX = creatorEngine.getMouseManager().getMouseX();
         mouseY = creatorEngine.getMouseManager().getMouseY();
 
-        int w = (ogX * 2) / gridSize, h = (ogY * 2) / gridSize;
         for (int x = 0; x < xWorldSize; x++) {
             for (int y = 0; y < yWorldSize; y++) {
                 if (grid[x][y] != null) {

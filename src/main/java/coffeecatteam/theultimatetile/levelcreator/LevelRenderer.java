@@ -174,19 +174,20 @@ public class LevelRenderer {
     private void loadWorld(String path) throws IOException, ParseException {
         WorldJsonLoader loader = new WorldJsonLoader(path.substring(0, path.length() - 1), creatorEngine);
         loader.load();
-//        Tile[][] bgT = new Tile[xWorldSize][yWorldSize];
-//        Tile[][] fgT = new Tile[xWorldSize][yWorldSize];
-//        loader.loadTiles(xWorldSize, yWorldSize, path + "background.json", path + "foreground.json", bgT, fgT);
         xWorldSize = loader.getWidth();
         yWorldSize = loader.getHeight();
 
         gridWorldEditorBG.setGridFromArray(loader.getBg_tiles(), xWorldSize, yWorldSize);
+        gridWorldEditorBG.updateWorldLayer();
         gridWorldEditorFG.setGridFromArray(loader.getFg_tiles(), xWorldSize, yWorldSize);
+        gridWorldEditorFG.updateWorldLayer();
         creatorEngine.getLogger().print("World [" + path + "] loaded!");
     }
 
     private void saveWorld(String path) throws IOException {
-        World tmpWorld = new World(creatorEngine, "", xWorldSize, yWorldSize, 0, 0, gridWorldEditorBG.convertGridToArray(), gridWorldEditorFG.convertGridToArray());
+        Tile[][] fg = Grid.convertGridToArray(gridWorldEditorBG.getGrid(), xWorldSize, yWorldSize);
+        Tile[][] bg = Grid.convertGridToArray(gridWorldEditorFG.getGrid(), xWorldSize, yWorldSize);
+        World tmpWorld = new World(creatorEngine, "", xWorldSize, yWorldSize, 0, 0, fg, bg);
         WorldJsonSaver saver = new WorldJsonSaver(path.substring(0, path.length() - 1), tmpWorld, creatorEngine);
         File dir = new File(path);
         if (!dir.mkdirs())

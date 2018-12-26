@@ -27,6 +27,7 @@ public class MainMenu {
         g.drawImage(Assets.MG_OVERLAY_OUTER, 0, 0, creatorEngine.getWidth(), creatorEngine.getHeight(), null);
         Font font = Assets.FONTS.get("20");
         Text.drawString(g, "Level Creator", 10, Text.getHeight(g, font) + 6, false, true, Color.white, font);
+        Text.drawString(g, "FPS: " + creatorEngine.getFps(), 10, 100 + Text.getHeight(g, font), false, false, Color.white, font);
 
         levelRenderer.postRender(g);
     }

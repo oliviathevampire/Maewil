@@ -251,4 +251,8 @@ public abstract class Engine extends Canvas implements Runnable {
     public CatLogger getLogger() {
         return logger;
     }
+
+    public int getFps() {
+        return fps;
+    }
 }
