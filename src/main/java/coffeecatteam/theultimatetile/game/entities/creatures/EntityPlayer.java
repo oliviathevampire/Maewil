@@ -262,7 +262,7 @@ public class EntityPlayer extends EntityCreature {
         xMove = 0;
         yMove = 0;
 
-        if (!inWater()) {
+        if (!this.inWater() || !this.inLava()) {
             if (sprintTimer <= 0)
                 sprintStartOver -= 0.25f;
             if (sprintStartOver <= 0) {

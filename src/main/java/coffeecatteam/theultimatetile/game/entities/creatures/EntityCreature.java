@@ -10,6 +10,7 @@ import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.tile.Tile;
+import coffeecatteam.theultimatetile.game.tile.tiles.TileLava;
 import coffeecatteam.theultimatetile.game.tile.tiles.TileWater;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
@@ -20,6 +21,7 @@ import java.util.List;
 
 public abstract class EntityCreature extends Entity {
 
+    private long lastLavaTimer, lavaCooldown = 800, lavaTimer = lavaCooldown;
     public static final float DEFAULT_SPEED = 3.0f;
     public static final float DEFAULT_WATER_SPEED = 1f, DEFAULT_IN_WATER_SPEED = 0.6f;
     protected float waterSpeed = DEFAULT_WATER_SPEED;
@@ -62,6 +64,14 @@ public abstract class EntityCreature extends Entity {
         currentAnim.tick();
         splashEffect.tick();
         updateAnim();
+
+        if (this.inLava()) {
+            lavaTimer += System.currentTimeMillis() - lastLavaTimer;
+            lastLavaTimer = System.currentTimeMillis();
+            if (lavaTimer < lavaCooldown)
+                return;
+            this.hurt(1);
+        }
     }
 
     private void updateAnim() {
@@ -110,8 +120,16 @@ public abstract class EntityCreature extends Entity {
         return t instanceof TileWater;
     }
 
+    public boolean inLava() {
+        float x = (float) ((position.x + width / 2) / Tile.TILE_WIDTH);
+        float y = (float) ((position.y + height / 2f + height / 4f) / Tile.TILE_HEIGHT);
+        Tile t = ((GameEngine) engine).getWorld().getFGTile((int) x, (int) y);
+
+        return t instanceof TileLava;
+    }
+
     public void move() {
-        if (this.inWater())
+        if (this.inWater() || this.inLava())
             waterSpeed = DEFAULT_IN_WATER_SPEED;
         else
             waterSpeed = DEFAULT_WATER_SPEED;
