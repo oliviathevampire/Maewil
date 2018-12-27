@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.game.tile.tiles;
 
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 
 import java.awt.image.BufferedImage;

@@ -232,6 +232,10 @@ public abstract class Engine extends Canvas implements Runnable {
         return frame;
     }
 
+    public boolean isRunning() {
+        return running;
+    }
+
     public void setRunning(boolean r) {
         running = r;
     }

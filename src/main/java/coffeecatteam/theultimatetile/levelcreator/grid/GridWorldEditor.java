@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.game.tile.Tiles;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
 import coffeecatteam.theultimatetile.levelcreator.LevelRenderer;
+import coffeecatteam.theultimatetile.levelcreator.WorldLayerUpdater;
 
 import java.awt.*;
 
@@ -35,15 +36,12 @@ public class GridWorldEditor extends Grid {
                 grid[gx][gy] = new GridTile(new Vector2D(ogX + w * gx, ogY + h * gy), w, h);
             }
         }
-        startWorldLayerUpdate();
+//        startWorldLayerUpdate();
     }
 
     public synchronized void startWorldLayerUpdate() {
-        Thread wlu = new Thread(() -> {
-            for (int x = 0; x < xWorldSize; x++)
-                for (int y = 0; y < yWorldSize; y++)
-                    grid[x][y].setWorldLayer(grid, xWorldSize, yWorldSize);
-        }, "World Layer Updater");
+        WorldLayerUpdater updater = new WorldLayerUpdater(creatorEngine, this);
+        Thread wlu = new Thread(updater, "World Layer Updater");
         wlu.start();
         new CatLogger(wlu).print("'World Layer Updater' started!");
     }

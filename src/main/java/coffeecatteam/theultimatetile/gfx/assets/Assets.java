@@ -478,9 +478,9 @@ public class Assets {
     public static BufferedImage getSpriteExact(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
         BufferedImage image = MISSING_TEXTURE;
         try {
-            image = sheet.crop(indexX, indexY, width, height); // Assets.width * indexX, Assets.height * indexY <-- This caused so many problems!
+            image = sheet.crop(indexX, indexY, width, height); /* Assets.width * indexX, Assets.height * indexY <-- This caused so many problems! */
         } catch (RasterFormatException e) {
-            logger.print(e + " - " + sheet.getPath());
+            logger.print(e + " - " + sheet.getPath() + " X: [" + indexX + "] Y: [" + indexY + "]");
         }
         return image;
     }

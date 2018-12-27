@@ -62,6 +62,14 @@ public abstract class Grid {
         this.yWorldSize = yWorldSize;
     }
 
+    public int getxWorldSize() {
+        return xWorldSize;
+    }
+
+    public int getyWorldSize() {
+        return yWorldSize;
+    }
+
     public static Tile[][] convertGridToArray(GridTile[][] grid, int xWorldSize, int yWorldSize) {
         Tile[][] tiles = new Tile[xWorldSize][yWorldSize];
 

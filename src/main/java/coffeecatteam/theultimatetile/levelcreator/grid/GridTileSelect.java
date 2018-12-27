@@ -66,7 +66,7 @@ public class GridTileSelect extends Grid {
             for (int y = 0; y < yWorldSize; y++) {
                 int gx = (int) (this.position.x + w * x), gy = (int) (this.position.y + h * y);
                 if (grid[x][y] != null) {
-                    grid[x][y].render(g);
+                    g.drawImage(grid[x][y].getTile().getTexture(), gx, gy, w, h, null);
 
                     if (selected == grid[x][y])
                         g.drawImage(Assets.SELECTED_TILE, gx, gy, w, h, null);
