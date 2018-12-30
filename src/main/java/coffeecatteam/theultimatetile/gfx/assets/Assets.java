@@ -16,7 +16,7 @@ public class Assets {
     private static CatLogger logger;
 
     private static final int width = 16, height = 16;
-    private static final BufferedImage MISSING_TEXTURE = ImageLoader.loadImage("/assets/textures/missing.png");
+    public static final BufferedImage MISSING_TEXTURE = ImageLoader.loadImage("/assets/textures/missing.png");
 
     /* Sprite Sheets */
     private static SpriteSheet terrainSheet, grassSheet, sandSheet;

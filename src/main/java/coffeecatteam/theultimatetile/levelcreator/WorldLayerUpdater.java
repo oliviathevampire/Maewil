@@ -33,12 +33,22 @@ public class WorldLayerUpdater implements Runnable {
             lastTime = now;
 
             if (delta >= 1) {
-                for (int x = 0; x < xWorldSize; x++)
-                    for (int y = 0; y < yWorldSize; y++)
+                for (int x = 0; x < xWorldSize; x++) {
+                    for (int y = 0; y < yWorldSize; y++) {
                         gridWorldEditor.getGrid()[x][y].setWorldLayer(gridWorldEditor.getGrid(), xWorldSize, yWorldSize);
+                    }
+                }
 
                 delta--;
             }
         }
+    }
+
+    public void setxWorldSize(int xWorldSize) {
+        this.xWorldSize = xWorldSize;
+    }
+
+    public void setyWorldSize(int yWorldSize) {
+        this.yWorldSize = yWorldSize;
     }
 }

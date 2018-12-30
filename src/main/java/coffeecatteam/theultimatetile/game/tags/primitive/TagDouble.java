@@ -47,7 +47,7 @@ public class TagDouble extends TagPrimitive {
 
     @Override
     public int getInt() {
-        return Utils.floor(this.data);
+        return Utils.floorD(this.data);
     }
 
     @Override

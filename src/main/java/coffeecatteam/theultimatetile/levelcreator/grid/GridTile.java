@@ -36,7 +36,11 @@ public class GridTile {
     }
 
     public void setWorldLayer(GridTile[][] worldLayer, int xWorldSize, int yWorldSize) {
-        this.tile.setWorldLayer(Grid.convertGridToArray(worldLayer, xWorldSize, yWorldSize));
+        setWorldLayer(Grid.convertGridToArray(worldLayer, xWorldSize, yWorldSize));
+    }
+
+    public void setWorldLayer(Tile[][] grid) {
+        this.tile.setWorldLayer(grid);
     }
 
     public Vector2D getPosition() {

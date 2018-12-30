@@ -62,7 +62,7 @@ public class DiscordHandler {
     public void updatePresence(String details, String state, boolean inGame) {
         if (!ArgUtils.hasArgument(Engine.getEngine().getArgs(), "-disableDiscordRP")) {
             DiscordRichPresence presence = new DiscordRichPresence();
-            presence.details = details;
+            presence.details = (Utils.runningFromIntelliJ() ? "Developing TUT - " : "") + details;
             presence.state = state;
             presence.largeImageKey = "ultimatebg" + (LEVEL_CREATE ? "_edit" : "");
             if (inGame)

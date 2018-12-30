@@ -122,7 +122,7 @@ public class Utils {
     /**
      * Returns the greatest integer less than or equal to the float argument
      */
-    public static int floor(float value) {
+    public static int floorF(float value) {
         int i = (int) value;
         return value < (float) i ? i - 1 : i;
     }
@@ -130,8 +130,13 @@ public class Utils {
     /**
      * Returns the greatest integer less than or equal to the double argument
      */
-    public static int floor(double value) {
+    public static int floorD(double value) {
         int i = (int) value;
         return value < (double) i ? i - 1 : i;
+    }
+
+    public static boolean runningFromIntelliJ() {
+        String classPath = System.getProperty("java.class.path");
+        return classPath.contains("idea_rt.jar");
     }
 }

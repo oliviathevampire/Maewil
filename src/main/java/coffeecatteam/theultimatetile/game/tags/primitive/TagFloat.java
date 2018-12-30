@@ -47,7 +47,7 @@ public class TagFloat extends TagPrimitive {
 
     @Override
     public int getInt() {
-        return Utils.floor(this.data);
+        return Utils.floorF(this.data);
     }
 
     @Override

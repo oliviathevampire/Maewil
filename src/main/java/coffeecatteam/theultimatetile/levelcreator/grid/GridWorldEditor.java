@@ -5,6 +5,7 @@ import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.game.tile.Tiles;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
 import coffeecatteam.theultimatetile.levelcreator.LevelRenderer;
 import coffeecatteam.theultimatetile.levelcreator.WorldLayerUpdater;
@@ -15,10 +16,11 @@ public class GridWorldEditor extends Grid {
 
     private GridTile[][] grid;
     private AABB gridBounds;
-    private int mouseX, mouseY;
+    private int mouseX, mouseY, tileWidth, tileHeight;
     private Tile SELECTED_TILE;
 
     private boolean beingUsed, showRendered = true;
+    private WorldLayerUpdater updater;
 
     public GridWorldEditor(CreatorEngine creatorEngine, int ogX, int ogY, int gridSize, Vector2D position, int xWorldSize, int yWorldSize, boolean beingUsed) {
         super(creatorEngine, ogX, ogY, gridSize, position, xWorldSize, yWorldSize);
@@ -36,11 +38,11 @@ public class GridWorldEditor extends Grid {
                 grid[gx][gy] = new GridTile(new Vector2D(ogX + w * gx, ogY + h * gy), w, h);
             }
         }
-//        startWorldLayerUpdate();
+        startWorldLayerUpdate();
     }
 
     public synchronized void startWorldLayerUpdate() {
-        WorldLayerUpdater updater = new WorldLayerUpdater(creatorEngine, this);
+        updater = new WorldLayerUpdater(creatorEngine, this);
         Thread wlu = new Thread(updater, "World Layer Updater");
         wlu.start();
         new CatLogger(wlu).print("'World Layer Updater' started!");
@@ -66,14 +68,15 @@ public class GridWorldEditor extends Grid {
             updateXOffset(-offAmt);
         updateSizePosCheck();
 
-        int w = (ogX * 2) / gridSize, h = (ogY * 2) / gridSize;
+        tileWidth = (ogX * 2) / gridSize;
+        tileHeight = (ogY * 2) / gridSize;
         for (int x = 0; x < xWorldSize; x++) {
             for (int y = 0; y < yWorldSize; y++) {
                 GridTile tile = grid[x][y];
-                tile.getPosition().x = ogX + w * x;
-                tile.getPosition().y = ogY + h * y;
-                tile.setWidth(w);
-                tile.setHeight(h);
+                tile.getPosition().x = ogX + tileWidth * x;
+                tile.getPosition().y = ogY + tileHeight * y;
+                tile.setWidth(tileWidth);
+                tile.setHeight(tileHeight);
 
                 if (beingUsed) {
                     tile.tick();
@@ -90,6 +93,9 @@ public class GridWorldEditor extends Grid {
                 }
             }
         }
+
+        updater.setxWorldSize(xWorldSize);
+        updater.setyWorldSize(yWorldSize);
     }
 
     public void updateWorldLayer() {
@@ -107,7 +113,10 @@ public class GridWorldEditor extends Grid {
             for (int x = 0; x < xWorldSize; x++) {
                 for (int y = 0; y < yWorldSize; y++) {
                     GridTile tile = grid[x][y];
-                    tile.render(g);
+                    if (tile != null)
+                        tile.render(g);
+                    else
+                        g.drawImage(Assets.MISSING_TEXTURE, (int) this.position.x + tileWidth * x + xOff, (int) this.position.y + tileHeight * y + yOff, tileWidth, tileHeight, null);
                 }
             }
         }
@@ -121,8 +130,7 @@ public class GridWorldEditor extends Grid {
     private void updateXOffset(int amt) {
         xOff += amt;
         int maxX = 32;
-        int w = (ogX * 2) / gridSize;
-        int minX = -((w * xWorldSize) - creatorEngine.getWidth() / 2 + maxX);
+        int minX = -((tileWidth * xWorldSize) - creatorEngine.getWidth() / 2 + maxX);
 
         if (xOff > maxX)
             xOff = maxX;
@@ -139,8 +147,7 @@ public class GridWorldEditor extends Grid {
     private void updateYOffset(int amt) {
         yOff += amt;
         int maxY = 32;
-        int h = (ogY * 2) / gridSize;
-        int minY = -((h * yWorldSize) - creatorEngine.getHeight() / 2 + maxY);
+        int minY = -((tileHeight * yWorldSize) - creatorEngine.getHeight() / 2 + maxY);
 
         if (yOff > maxY)
             yOff = maxY;
