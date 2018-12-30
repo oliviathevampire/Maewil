@@ -46,14 +46,14 @@ dependencies {
     compile 'club.minnced:java-discord-rpc:2.0.1'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
 
-    compile fileTree(dir: "libs", include: "*.jar")
-    compile fileTree(dir: "libs/lwjgl", include: "*.jar")
+    compile fileTree(dir: "libs/jars", include: "*.jar")
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 jar {
     from configurations.compile.collect { zipTree it }
+    fileTree(dir: "libs/natives", include: "*.dll")
     manifest {
         attributes 'Main-Class': 'coffeecatteam.theultimatetile.Launcher'
     }

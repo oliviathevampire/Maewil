@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.game.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.gfx.audio.Sound;
+import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
 public class EntityBouncer extends EntityUndead {
@@ -44,7 +44,7 @@ public class EntityBouncer extends EntityUndead {
             return;
 
         if (this.xMove != 0 || this.yMove != 0)
-            Sound.play(Sound.BOUNCE, StateOptions.OPTIONS.getVolumeHostile(), 0, 0, 1f);
+            Sounds.play(Sounds.BOUNCE, StateOptions.OPTIONS.getVolumeHostile(), 0, 0, 1f);
 
         soundTimer = 0;
     }

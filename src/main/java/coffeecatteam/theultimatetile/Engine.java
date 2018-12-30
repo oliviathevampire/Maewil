@@ -4,13 +4,13 @@ import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
-import coffeecatteam.theultimatetile.gfx.audio.Sound;
+import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 import coffeecatteam.theultimatetile.manager.KeyManager;
 import coffeecatteam.theultimatetile.manager.MouseManager;
 import coffeecatteam.theultimatetile.manager.WindowManager;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
+import org.newdawn.slick.SlickException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -94,11 +94,11 @@ public abstract class Engine extends Canvas implements Runnable {
 
         ItemManager.init();
 
-        // Audio/sound initialized
-        AudioMaster.init();
-        AudioMaster.setListenerData(0f, 0f, 0f);
-
-        Sound.init();
+        try {
+            Sounds.init();
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
     }
 
     public void tick() {
@@ -116,12 +116,7 @@ public abstract class Engine extends Canvas implements Runnable {
         g = (Graphics2D) bs.getDrawGraphics();
         g.clearRect(0, 0, width, height);
 
-//        if (DiscordHandler.READY) {
         render(g);
-//        } else {
-//            g.drawImage(Assets.BACKGROUND, 0, 0, width, height, null);
-//            Text.drawString(g, "Loading" + loadingDotText, width / 2, height / 2, true, false, Color.BLACK, Assets.FONTS.get("80"));
-//        }
 
         // End drawing
         bs.show();
@@ -133,12 +128,8 @@ public abstract class Engine extends Canvas implements Runnable {
         init();
         DiscordHandler.INSTANCE.setup();
 
-        // Background music
-        if (playBGMusic)
-            Sound.play(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic(), 0f, 0f, 0f, 1f, true);
-
         int fps = 60;
-        double timePerTick = 1000000000 / fps;
+        double timePerTick = 1000000000d / fps;
         double delta = 0;
         long now;
         long lastTime = System.nanoTime();
@@ -154,9 +145,9 @@ public abstract class Engine extends Canvas implements Runnable {
             if (delta >= 1) {
                 tick();
 
-                // Background music volume update
+                // Background music
                 if (playBGMusic)
-                    Sound.setVolume(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic());
+                    Sounds.play(Sounds.BG_MUSIC, 0f, 0f, 0f, StateOptions.OPTIONS.getVolumeMusic(), true);
 
                 renderA();
 
@@ -175,10 +166,6 @@ public abstract class Engine extends Canvas implements Runnable {
                 }
             }
         }
-
-        // Cleanup sounds
-        Sound.delete();
-        AudioMaster.cleanUp();
 
         stop();
         logger.print("Exiting [" + title + "]..");
