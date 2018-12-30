@@ -116,12 +116,7 @@ public abstract class Engine extends Canvas implements Runnable {
         g = (Graphics2D) bs.getDrawGraphics();
         g.clearRect(0, 0, width, height);
 
-//        if (DiscordHandler.READY) {
         render(g);
-//        } else {
-//            g.drawImage(Assets.BACKGROUND, 0, 0, width, height, null);
-//            Text.drawString(g, "Loading" + loadingDotText, width / 2, height / 2, true, false, Color.BLACK, Assets.FONTS.get("80"));
-//        }
 
         // End drawing
         bs.show();
