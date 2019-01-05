@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.game.entities.ai;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
+import org.newdawn.slick.GameContainer;
 
 public abstract class AI {
 
@@ -14,7 +15,7 @@ public abstract class AI {
         this.entity = entity;
     }
 
-    public abstract boolean tick();
+    public abstract boolean update(GameContainer container, int delta);
 
     public EntityCreature getEntity() {
         return entity;

@@ -3,7 +3,8 @@ package coffeecatteam.theultimatetile.gfx.ui;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.awt.event.MouseEvent;
 
 public class UICheckBox extends UIObject {
@@ -29,31 +30,15 @@ public class UICheckBox extends UIObject {
     }
 
     @Override
-    public void tick() {
-    }
-
-    @Override
-    public void render(Graphics2D g) {
-        g.drawImage(Assets.CHECK_BOX_BG, (int) position.x, (int) position.y, width, height, null);
+    public void render(Graphics g) {
+        Assets.CHECK_BOX_BG.draw((int) position.x, (int) position.y, width, height);
         if (checked)
-            g.drawImage(Assets.CHECK_BOX_FG, (int) position.x, (int) position.y, width, height, null);
+            Assets.CHECK_BOX_FG.draw((int) position.x, (int) position.y, width, height);
     }
 
     @Override
     public void onClick() {
         checked = !checked;
-    }
-
-    @Override
-    public void onMouseMoved(MouseEvent e) {
-    }
-
-    @Override
-    public void onMouseRelease(MouseEvent e) {
-    }
-
-    @Override
-    public void onMouseDragged(MouseEvent e) {
     }
 
     public boolean isChecked() {

@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.gfx.assets;
 
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
 
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Image;
 
 /**
  * @author CoffeeCatRailway
@@ -10,8 +10,8 @@ import java.awt.image.BufferedImage;
  */
 public class TileTextureAlts {
 
-    public static BufferedImage[] getTextureAlts(int tileAlts, int tileOverlaps, SpriteSheet sheet, int tileWidth, int tileHeight) {
-        BufferedImage[] textures = new BufferedImage[tileAlts + tileOverlaps + 1];
+    public static Image[] getTextureAlts(int tileAlts, int tileOverlaps, SpriteSheet sheet, int tileWidth, int tileHeight) {
+        Image[] textures = new Image[tileAlts + tileOverlaps + 1];
 
         for (int i = 0; i < tileAlts; i++)
             textures[i] = Assets.getSpriteInd(sheet, i, 3, tileWidth, tileHeight);

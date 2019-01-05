@@ -1,17 +1,17 @@
 package coffeecatteam.theultimatetile.game.inventory.items;
 
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Image;
 
 public class ItemTool extends Item {
 
     private int damage;
     private ToolType toolType;
 
-    public ItemTool(BufferedImage texture, String id, int damage, ToolType toolType) {
+    public ItemTool(Image texture, String id, int damage, ToolType toolType) {
         this(texture, id, damage, toolType, false);
     }
 
-    public ItemTool(BufferedImage texture, String id, int damage, ToolType toolType, boolean isStackable) {
+    public ItemTool(Image texture, String id, int damage, ToolType toolType, boolean isStackable) {
         super(texture, id);
         this.damage = damage;
         this.isStackable = isStackable;

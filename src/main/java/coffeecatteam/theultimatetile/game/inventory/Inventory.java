@@ -7,7 +7,8 @@ import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.manager.InventoryManager;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,9 +81,9 @@ public abstract class Inventory {
         return slots.get(slots.size() - 1);
     }
 
-    public abstract void tick();
+    public abstract void update(GameContainer container, int delta);
 
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         slots.forEach(s -> s.render(g));
     }
 

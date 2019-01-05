@@ -4,8 +4,9 @@ import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 public class Slot {
 
@@ -14,7 +15,7 @@ public class Slot {
     private float scale;
 
     private boolean isSelected = false;
-    private BufferedImage selector = Assets.SLOT_SELECTER;
+    private Image selector = Assets.SLOT_SELECTER;
 
     public Slot(int index, int x, int y, int width, int height) {
         this(index, x, y, width, height, 1f);
@@ -29,22 +30,22 @@ public class Slot {
         this.scale = scale;
     }
 
-    public void render(Graphics2D g) {
-        g.drawImage(Assets.SLOT, x, y, width, height, null);
+    public void render(Graphics g) {
+        Assets.SLOT.draw(x, y, width, height);
         int itemWidth = (int) ((width / 2 + width / 4) * scale);
         int itemHeight = (int) ((height / 2 + height / 4) * scale);
         int xPos = x + itemWidth / 4;
         int yPos = y + itemHeight / 4;
 
         if (stack != null) {
-            g.drawImage(stack.getTexture(), xPos, yPos, itemWidth, itemHeight, null);
+            stack.getTexture().draw(xPos, yPos, itemWidth, itemHeight);
             if (stack.getCount() > 1)
                 Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos + 15, false, false, Color.white, Assets.FONTS.get("20"));
         }
 
         if (isSelected) {
             int off = 12;
-            g.drawImage(selector, x - off / 2, y - off / 2, width + off, height + off, null);
+            selector.draw(x - off / 2, y - off / 2, width + off, height + off);
         }
     }
 
@@ -53,7 +54,7 @@ public class Slot {
         return this;
     }
 
-    public Slot setSelector(BufferedImage selector) {
+    public Slot setSelector(Image selector) {
         this.selector = selector;
         return this;
     }

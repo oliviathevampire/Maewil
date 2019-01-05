@@ -5,11 +5,11 @@ import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityNature;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Image;
 
 public class EntityBush extends EntityNature {
 
-    public EntityBush(Engine engine, String id, BufferedImage texture, int width) {
+    public EntityBush(Engine engine, String id, Image texture, int width) {
         super(engine, id, texture, width, Entity.DEFAULT_HEIGHT, EntityHitType.BUSH);
 
         bounds.x = this.width / 4f - (this.width / 4f) / 2;

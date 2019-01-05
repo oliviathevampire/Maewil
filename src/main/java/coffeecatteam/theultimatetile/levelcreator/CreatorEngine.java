@@ -2,7 +2,9 @@ package coffeecatteam.theultimatetile.levelcreator;
 
 import coffeecatteam.theultimatetile.Engine;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 public class CreatorEngine extends Engine {
 
@@ -18,19 +20,19 @@ public class CreatorEngine extends Engine {
     }
 
     @Override
-    public void init() {
-        super.init();
+    public void init(GameContainer container) throws SlickException {
+        super.init(container);
         mainMenu = new MainMenu(this);
     }
 
     @Override
-    public void tick() {
-        super.tick();
-        mainMenu.tick();
+    public void update(GameContainer container, int delta) throws SlickException {
+        super.update(container, delta);
+        mainMenu.update(container, delta);
     }
 
     @Override
-    public void render(Graphics2D g) {
+    public void rendera(GameContainer container, Graphics g) throws SlickException {
         mainMenu.render(g);
     }
 

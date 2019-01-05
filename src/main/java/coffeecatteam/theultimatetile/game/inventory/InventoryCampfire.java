@@ -11,12 +11,13 @@ import coffeecatteam.theultimatetile.game.tags.TagCompound;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 public class InventoryCampfire extends InventoryAbstractPlayer {
 
-    private BufferedImage flame = Assets.getSpriteExact("/assets/textures/gui/inventory/campfire.png", 57, 0, 16, 15);
+    private Image flame = Assets.getSpriteExact("/assets/textures/gui/inventory/campfire.png", 57, 0, 16, 15);
     private TagCompound TAGS;
 
     public InventoryCampfire(Engine engine, EntityPlayer player, TagCompound TAGS) {
@@ -55,8 +56,8 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void update(GameContainer container, int delta) {
+        super.update(container, delta);
 
         if (active) {
             if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.X).getKeyCode())) {
@@ -68,7 +69,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
     }
 
     @Override
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         if (active) {
             int multiplier = 6;
             int width = 57 * multiplier;
@@ -76,14 +77,14 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
             int x = engine.getWidth() / 2 - width / 2;
             int y = engine.getHeight() / 2 - height / 2;
 
-            g.drawImage(Assets.CAMPFIRE_INVENTORY, x, y, width, height, null);
+            Assets.CAMPFIRE_INVENTORY.draw(x, y, width, height);
 
             int dfWidth = 16;
             int dfHeight = 15;
             int fWidth = dfWidth * multiplier;
             int fHeight = dfHeight * multiplier;
             int amt = (int) NumberUtils.map(0, 0, 100, 0, dfHeight);
-            g.drawImage(flame.getSubimage(0, amt, dfWidth, dfHeight - amt), x + 32 * multiplier, y + 5 * multiplier + amt * multiplier, fWidth, fHeight - amt * multiplier, null);
+            flame.getSubImage(0, amt, dfWidth, dfHeight - amt).draw(x + 32 * multiplier, y + 5 * multiplier + amt * multiplier, fWidth, fHeight - amt * multiplier);
 
             super.renderInventorySlots(g);
 

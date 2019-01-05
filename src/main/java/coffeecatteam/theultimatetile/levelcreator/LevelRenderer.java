@@ -7,14 +7,10 @@ import coffeecatteam.theultimatetile.game.tile.Tiles;
 import coffeecatteam.theultimatetile.game.world.World;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UICheckBox;
 import coffeecatteam.theultimatetile.gfx.ui.UISlider;
-import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;
-import coffeecatteam.theultimatetile.levelcreator.fileFilter.FileFilterDirectories;
-import coffeecatteam.theultimatetile.levelcreator.fileFilter.FileFilterExtension;
 import coffeecatteam.theultimatetile.levelcreator.grid.Grid;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridTileSelect;
 import coffeecatteam.theultimatetile.levelcreator.grid.GridWorldEditor;
@@ -23,7 +19,11 @@ import coffeecatteam.theultimatetile.utils.Utils;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
-import java.awt.*;
+
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,7 +61,6 @@ public class LevelRenderer {
         initGrids();
 
         this.uiManager = new UIManager(creatorEngine);
-        creatorEngine.getMouseManager().setUiManager(uiManager);
         initUI();
     }
 
@@ -72,91 +71,91 @@ public class LevelRenderer {
         fgCheckBox = new UICheckBox(new Vector2D(10, 50), true);
         uiManager.addObject(fgCheckBox);
 
-        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 170, 10), "Save World", false, Assets.FONTS.get("20"), new ClickListener() {
-            @Override
-            public void onClick() {
-                try {
-                    JFileChooser chooser = getChooser("Save World");
-                    chooser.setDialogType(JFileChooser.SAVE_DIALOG);
-                    chooser.setMultiSelectionEnabled(true);
-
-                    chooser.addChoosableFileFilter(new FileFilterExtension(".json", "JSON Files (*.json)"));
-
-                    if (chooser.showSaveDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
-                        String fileName = chooser.getSelectedFile().getName();
-                        String filePath = chooser.getSelectedFile().getParent();
-                        String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
-
-                        saveWorld(finalPath);
-                    } else {
-                        creatorEngine.getLogger().print("Canceling save...");
-                    }
-                } catch (IOException e) {
-                    creatorEngine.getLogger().print(e);
-                }
-            }
-
-            @Override
-            public void tick() {
-            }
-        }));
-
-        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 158, 60), "Zip World", false, Assets.FONTS.get("20"), new ClickListener() {
-            @Override
-            public void onClick() {
-                try {
-                    JFileChooser chooser = getChooser("Save/Zip World");
-                    chooser.setDialogType(JFileChooser.SAVE_DIALOG);
-                    chooser.setMultiSelectionEnabled(true);
-
-                    chooser.addChoosableFileFilter(new FileFilterExtension(".json", "JSON Files (*.json)"));
-
-                    if (chooser.showSaveDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
-                        String fileName = chooser.getSelectedFile().getName();
-                        String filePath = chooser.getSelectedFile().getParent();
-                        String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
-
-                        zipWorld(finalPath, fileName);
-                    } else {
-                        creatorEngine.getLogger().print("Canceling save/zip...");
-                    }
-                } catch (IOException e) {
-                    creatorEngine.getLogger().print(e);
-                }
-            }
-
-            @Override
-            public void tick() {
-            }
-        }));
-
-        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 170, 110), "Load World", false, Assets.FONTS.get("20"), new ClickListener() {
-            @Override
-            public void onClick() {
-                try {
-                    JFileChooser chooser = getChooser("Load World");
-                    chooser.setFileFilter(new FileFilterDirectories());
-                    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                    chooser.setAcceptAllFileFilterUsed(false);
-
-                    if (chooser.showOpenDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
-                        String fileName = chooser.getSelectedFile().getName();
-                        String filePath = chooser.getSelectedFile().getParent();
-                        String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
-
-                        loadWorld(finalPath);
-                    } else {
-                        creatorEngine.getLogger().print("Canceling load...");
-                    }
-                } catch (IOException | ParseException e) {
-                    creatorEngine.getLogger().print(e);
-                }
-            }
-
-            @Override
-            public void tick() {
-            }
-        }));
+//        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 170, 10), "Save World", false, Assets.FONTS.get("20"), new ClickListener() {
+//            @Override
+//            public void onClick() {
+//                try {
+//                    JFileChooser chooser = getChooser("Save World");
+//                    chooser.setDialogType(JFileChooser.SAVE_DIALOG);
+//                    chooser.setMultiSelectionEnabled(true);
+//
+//                    chooser.addChoosableFileFilter(new FileFilterExtension(".json", "JSON Files (*.json)"));
+//
+//                    if (chooser.showSaveDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
+//                        String fileName = chooser.getSelectedFile().getName();
+//                        String filePath = chooser.getSelectedFile().getParent();
+//                        String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
+//
+//                        saveWorld(finalPath);
+//                    } else {
+//                        creatorEngine.getLogger().print("Canceling save...");
+//                    }
+//                } catch (IOException e) {
+//                    creatorEngine.getLogger().print(e);
+//                }
+//            }
+//
+//            @Override
+//            public void update() {
+//            }
+//        }));
+//
+//        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 158, 60), "Zip World", false, Assets.FONTS.get("20"), new ClickListener() {
+//            @Override
+//            public void onClick() {
+//                try {
+//                    JFileChooser chooser = getChooser("Save/Zip World");
+//                    chooser.setDialogType(JFileChooser.SAVE_DIALOG);
+//                    chooser.setMultiSelectionEnabled(true);
+//
+//                    chooser.addChoosableFileFilter(new FileFilterExtension(".json", "JSON Files (*.json)"));
+//
+//                    if (chooser.showSaveDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
+//                        String fileName = chooser.getSelectedFile().getName();
+//                        String filePath = chooser.getSelectedFile().getParent();
+//                        String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
+//
+//                        zipWorld(finalPath, fileName);
+//                    } else {
+//                        creatorEngine.getLogger().print("Canceling save/zip...");
+//                    }
+//                } catch (IOException e) {
+//                    creatorEngine.getLogger().print(e);
+//                }
+//            }
+//
+//            @Override
+//            public void update() {
+//            }
+//        }));
+//
+//        uiManager.addObject(new UIButton(creatorEngine, new Vector2D(creatorEngine.getWidth() - 170, 110), "Load World", false, Assets.FONTS.get("20"), new ClickListener() {
+//            @Override
+//            public void onClick() {
+//                try {
+//                    JFileChooser chooser = getChooser("Load World");
+//                    chooser.setFileFilter(new FileFilterDirectories());
+//                    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//                    chooser.setAcceptAllFileFilterUsed(false);
+//
+//                    if (chooser.showOpenDialog(creatorEngine.getFrame()) == JFileChooser.APPROVE_OPTION) {
+//                        String fileName = chooser.getSelectedFile().getName();
+//                        String filePath = chooser.getSelectedFile().getParent();
+//                        String finalPath = (filePath + "/" + fileName + "/").replace(".json", "");
+//
+//                        loadWorld(finalPath);
+//                    } else {
+//                        creatorEngine.getLogger().print("Canceling load...");
+//                    }
+//                } catch (IOException | ParseException e) {
+//                    creatorEngine.getLogger().print(e);
+//                }
+//            }
+//
+//            @Override
+//            public void update() {
+//            }
+//        }));
     }
 
     private JFileChooser getChooser(String title) {
@@ -216,13 +215,13 @@ public class LevelRenderer {
         grids.add(new GridTileSelect(creatorEngine, ogX, ogY, selectGridSize, new Vector2D((ogX + ((ogX * 2d) / selectGridSize) * 10.5f), ogY), 4, selectGridSize));
     }
 
-    public void tick() {
-        uiManager.tick();
-        mouseX = creatorEngine.getMouseManager().getMouseX();
-        mouseY = creatorEngine.getMouseManager().getMouseY();
+    public void update(GameContainer container, int delta) {
+        uiManager.update(container, delta);
+        mouseX = creatorEngine.getMouseX();
+        mouseY = creatorEngine.getMouseY();
 
         gridWorldEditorBG.updateVars(gridBounds, mouseX, mouseY, SELECTED_TILE);
-        worldGridSize = ogWorldGridSize + zoomSlider.getValue();
+        worldGridSize = (int) (ogWorldGridSize + zoomSlider.getValue());
         gridWorldEditorBG.setGridSize(worldGridSize);
 
         gridWorldEditorFG.updateVars(gridBounds, mouseX, mouseY, SELECTED_TILE);
@@ -241,13 +240,13 @@ public class LevelRenderer {
             gridWorldEditorFG.setBeingUsed(false);
             gridWorldEditorFG.setShowRendered(false);
         }
-        gridWorldEditorBG.tick();
-        gridWorldEditorFG.tick();
+        gridWorldEditorBG.update(container, delta);
+        gridWorldEditorFG.update(container, delta);
 
-        grids.forEach(Grid::tick);
+        grids.forEach(g -> g.update(container, delta));
     }
 
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         gridWorldEditorBG.render(g);
         Color tint = new Color(63, 63, 63, 127);
         g.setColor(tint);
@@ -257,9 +256,10 @@ public class LevelRenderer {
         grids.forEach(grid -> grid.render(g));
     }
 
-    public void postRender(Graphics2D g) {
+    public void postRender(Graphics g) {
         Font font = Assets.FONTS.get("20");
-        Text.drawString(g, "Zoom: x" + zoomSlider.getValue(), (int) zoomSlider.getPosition().x + zoomSlider.getWidth() + 25, (int) zoomSlider.getPosition().y + Text.getHeight(g, font), false, false, Color.white, font);
+        String zText = "Zoom: x" + zoomSlider.getValue();
+        Text.drawString(g, zText, (int) zoomSlider.getPosition().x + zoomSlider.getWidth() + 25, (int) zoomSlider.getPosition().y + Text.getHeight(zText, font), false, false, Color.white, font);
 
         Text.drawString(g, "Edit foreground", (int) (fgCheckBox.getPosition().x + fgCheckBox.getWidth() + 5), (int) (fgCheckBox.getPosition().y + fgCheckBox.getHeight() - 5), false, false, Color.white, font);
         uiManager.render(g);

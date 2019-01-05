@@ -27,20 +27,18 @@ public class WorldLayerUpdater implements Runnable {
         long now;
         long lastTime = System.nanoTime();
 
-        while (creatorEngine.isRunning()) {
-            now = System.nanoTime();
-            delta += (now - lastTime) / timePerTick;
-            lastTime = now;
+        now = System.nanoTime();
+        delta += (now - lastTime) / timePerTick;
+        lastTime = now;
 
-            if (delta >= 1) {
-                for (int x = 0; x < xWorldSize; x++) {
-                    for (int y = 0; y < yWorldSize; y++) {
-                        gridWorldEditor.getGrid()[x][y].setWorldLayer(gridWorldEditor.getGrid(), xWorldSize, yWorldSize);
-                    }
+        if (delta >= 1) {
+            for (int x = 0; x < xWorldSize; x++) {
+                for (int y = 0; y < yWorldSize; y++) {
+                    gridWorldEditor.getGrid()[x][y].setWorldLayer(gridWorldEditor.getGrid(), xWorldSize, yWorldSize);
                 }
-
-                delta--;
             }
+
+            delta--;
         }
     }
 

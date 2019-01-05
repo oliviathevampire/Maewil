@@ -7,8 +7,8 @@ import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,13 +20,13 @@ public class EntityNature extends EntityStatic {
 
     protected List<Item> drops = new ArrayList<>();
 
-    public EntityNature(Engine engine, String id, BufferedImage texture, int width, int height, EntityHitType entityHitType) {
+    public EntityNature(Engine engine, String id, Image texture, int width, int height, EntityHitType entityHitType) {
         super(engine, id, width, height, entityHitType);
         this.texture = texture;
     }
 
     @Override
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         super.render(g);
         if (this.currentHealth != this.maxHealth)
             this.renderHealth(g);

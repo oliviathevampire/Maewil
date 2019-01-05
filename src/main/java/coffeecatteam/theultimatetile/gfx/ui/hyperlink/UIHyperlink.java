@@ -2,11 +2,15 @@ package coffeecatteam.theultimatetile.gfx.ui.hyperlink;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
+import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIObject;
 
-import java.awt.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.awt.event.MouseEvent;
 
 public class UIHyperlink extends UIObject {
@@ -18,17 +22,15 @@ public class UIHyperlink extends UIObject {
     private Color c = mainColor;
 
     private String text;
-    private boolean underlined;
     private Font font;
 
-    public UIHyperlink(Vector2D position, int height, String text, boolean underlined, Font font, ClickListener listener) {
+    public UIHyperlink(Vector2D position, int height, String text, Font font, ClickListener listener) {
         super(position, 0, height);
         this.listener = listener;
 
         this.text = text;
-        this.underlined = underlined;
         this.font = font;
-        bounds = new AABB((int) this.position.x, (int) this.position.y - height, width, height);
+        bounds = new AABB((int) this.position.x, (int) this.position.y, width, height);
     }
 
     public UIHyperlink setColors(Color mainColor, Color hoverColor) {
@@ -38,7 +40,10 @@ public class UIHyperlink extends UIObject {
     }
 
     @Override
-    public void tick() {
+    public void update(GameContainer container, int delta) {
+        super.update(container, delta);
+        this.hovering = this.bounds.contains(Engine.getEngine().getMouseX(), Engine.getEngine().getMouseY());
+
         if (this.hovering)
             this.c = hoverColor;
         else
@@ -46,27 +51,14 @@ public class UIHyperlink extends UIObject {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        width = Text.getWidth(g, text, font);
+    public void render(Graphics g) {
+        width = Text.getWidth(text, font);
         bounds.width = width;
-        Text.drawString(g, text, (int) this.position.x, (int) this.position.y, false, underlined, c, font);
+        Text.drawString(g, text, (int) this.position.x, (int) this.position.y, false, this.c, font);
     }
 
     @Override
     public void onClick() {
         this.listener.onClick();
-    }
-
-    @Override
-    public void onMouseMoved(MouseEvent e) {
-        this.hovering = this.bounds.contains(e.getX(), e.getY());
-    }
-
-    @Override
-    public void onMouseRelease(MouseEvent e) {
-    }
-
-    @Override
-    public void onMouseDragged(MouseEvent e) {
     }
 }

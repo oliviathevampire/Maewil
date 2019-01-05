@@ -9,7 +9,9 @@ import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.utils.PositionOutOfBoundsException;
 import org.json.simple.parser.ParseException;
 
-import java.awt.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.io.IOException;
 
 public class World {
@@ -50,7 +52,7 @@ public class World {
         this.fg_tiles = fg_tiles;
     }
 
-    public void tick() {
+    public void update(GameContainer container, int delta) {
         int xStart = (int) Math.max(0, ((GameEngine) engine).getCamera().getxOffset() / Tile.TILE_WIDTH);
         int xEnd = (int) Math.min(width, (((GameEngine) engine).getCamera().getxOffset() + engine.getWidth()) / Tile.TILE_WIDTH + 1);
         int yStart = (int) Math.max(0, ((GameEngine) engine).getCamera().getyOffset() / Tile.TILE_HEIGHT);
@@ -59,25 +61,25 @@ public class World {
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
                 getBGTile(x, y).updateBounds();
-                getFGTile(x, y).tick();
+                getFGTile(x, y).update(container, delta);
             }
         }
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                getBGTile(x, y).forcedTick();
+                getBGTile(x, y).forcedUpdate(container, delta);
                 getBGTile(x, y).setWorldLayer(bg_tiles);
-                getFGTile(x, y).forcedTick();
+                getFGTile(x, y).forcedUpdate(container, delta);
                 getFGTile(x, y).setWorldLayer(fg_tiles);
             }
         }
 
-        ((GameEngine) engine).getItemManager().tick();
-        ((GameEngine) engine).getEntityManager().tick();
-        overlayManager.tick();
+        ((GameEngine) engine).getItemManager().update(container, delta);
+        ((GameEngine) engine).getEntityManager().update(container, delta);
+        overlayManager.update(container, delta);
     }
 
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         int xStart = (int) Math.max(0, ((GameEngine) engine).getCamera().getxOffset() / Tile.TILE_WIDTH);
         int xEnd = (int) Math.min(width, (((GameEngine) engine).getCamera().getxOffset() + engine.getWidth()) / Tile.TILE_WIDTH + 1);
         int yStart = (int) Math.max(0, ((GameEngine) engine).getCamera().getyOffset() / Tile.TILE_HEIGHT);
@@ -153,7 +155,7 @@ public class World {
             }
         } catch (PositionOutOfBoundsException e) {
             engine.getLogger().print(e);
-            engine.setRunning(false);
+            engine.close();
         }
     }
 

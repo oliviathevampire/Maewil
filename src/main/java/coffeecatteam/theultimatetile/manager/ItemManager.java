@@ -6,7 +6,9 @@ import coffeecatteam.theultimatetile.game.inventory.items.*;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -97,7 +99,7 @@ public class ItemManager {
         items = new ArrayList<>();
     }
 
-    public void tick() {
+    public void update(GameContainer container, int delta) {
         Iterator<ItemStack> it = items.iterator();
         while (it.hasNext()) {
             ItemStack stack = it.next();
@@ -107,7 +109,7 @@ public class ItemManager {
         }
     }
 
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         for (ItemStack stack : items) {
             stack.getItem().render(g);
             if (stack.getCount() > 1)

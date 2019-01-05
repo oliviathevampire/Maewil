@@ -8,7 +8,8 @@ import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 /**
  * @author CoffeeCatRailway
@@ -26,10 +27,10 @@ public class EntityExtraLife extends EntityStatic {
     }
 
     @Override
-    public void tick() {
+    public void update(GameContainer container, int delta) {
         bounds = new AABB(this.position, width, height);
 
-        animation.tick();
+        animation.update(container, delta);
         if (this.isTouching(((GameEngine) engine).getEntityManager().getPlayer())) {
             ((GameEngine) engine).getEntityManager().getPlayer().heal(NumberUtils.getRandomInt(DEFAULT_HEALTH / 2, DEFAULT_HEALTH));
             this.hurt(this.currentHealth);
@@ -37,7 +38,7 @@ public class EntityExtraLife extends EntityStatic {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        g.drawImage(animation.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
+    public void render(Graphics g) {
+        animation.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
     }
 }

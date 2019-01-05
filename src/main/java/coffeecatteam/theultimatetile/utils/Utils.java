@@ -134,9 +134,4 @@ public class Utils {
         int i = (int) value;
         return value < (double) i ? i - 1 : i;
     }
-
-    public static boolean runningFromIntelliJ() {
-        String classPath = System.getProperty("java.class.path");
-        return classPath.contains("idea_rt.jar");
-    }
 }

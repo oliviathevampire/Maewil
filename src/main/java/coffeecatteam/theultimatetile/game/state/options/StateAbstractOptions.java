@@ -10,7 +10,8 @@ import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.io.IOException;
 
 public abstract class StateAbstractOptions extends State {
@@ -32,21 +33,21 @@ public abstract class StateAbstractOptions extends State {
             }
 
             @Override
-            public void tick() {
+            public void update(GameContainer container, int delta) {
             }
         }));
 
-        uiManager.addObject(new UIHyperlinkCopyright(new Vector2D(5, engine.getHeight() - 10), true));
+        uiManager.addObject(new UIHyperlinkCopyright(new Vector2D(5, engine.getHeight() - 10)));
     }
 
     @Override
-    public void tick() {
-        uiManager.tick();
+    public void update(GameContainer container, int delta) {
+        uiManager.update(container, delta);
     }
 
     @Override
-    public void render(Graphics2D g) {
-        g.drawImage(Assets.BACKGROUND, 0, 0, engine.getWidth(), engine.getHeight(), null);
+    public void render(Graphics g) {
+        Assets.BACKGROUND.draw(0, 0, engine.getWidth(), engine.getHeight());
         uiManager.render(g);
     }
 }

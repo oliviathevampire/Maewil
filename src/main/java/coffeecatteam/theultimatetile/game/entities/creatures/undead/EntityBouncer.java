@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.manager.ItemManager;
+import org.newdawn.slick.GameContainer;
 
 public class EntityBouncer extends EntityUndead {
 
@@ -32,8 +33,8 @@ public class EntityBouncer extends EntityUndead {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void update(GameContainer container, int delta) {
+        super.update(container, delta);
         moveSound();
     }
 

@@ -5,8 +5,8 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.Slot;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +17,7 @@ public class Item implements Cloneable {
     public static final int WIDTH = 32, HEIGHT = 32;
 
     protected GameEngine gameEngine;
-    protected BufferedImage texture;
+    protected Image texture;
     protected final String id;
 
     protected AABB bounds;
@@ -26,7 +26,7 @@ public class Item implements Cloneable {
     protected boolean pickedUp = false;
     protected boolean isStackable = true;
 
-    public Item(BufferedImage texture, String id) {
+    public Item(Image texture, String id) {
         this.texture = texture;
         this.id = id;
 
@@ -80,14 +80,14 @@ public class Item implements Cloneable {
         this.bounds = new AABB(this.position, WIDTH, HEIGHT);
     }
 
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         if (this.gameEngine == null)
             return;
         render(g, (int) (this.position.x - this.gameEngine.getCamera().getxOffset()), (int) (this.position.y - this.gameEngine.getCamera().getyOffset()));
     }
 
-    public void render(Graphics2D g, int x, int y) {
-        g.drawImage(this.texture, x, y, WIDTH, HEIGHT, null);
+    public void render(Graphics g, int x, int y) {
+        this.texture.draw(x, y, WIDTH, HEIGHT);
     }
 
     public void setPosition(int x, int y) {
@@ -105,11 +105,11 @@ public class Item implements Cloneable {
         this.gameEngine = gameEngine;
     }
 
-    public BufferedImage getTexture() {
+    public Image getTexture() {
         return this.texture;
     }
 
-    public void setTexture(BufferedImage texture) {
+    public void setTexture(Image texture) {
         this.texture = texture;
     }
 

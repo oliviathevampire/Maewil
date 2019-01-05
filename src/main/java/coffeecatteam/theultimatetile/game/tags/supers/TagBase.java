@@ -95,7 +95,7 @@ public abstract class TagBase {
         baseCompound.setTag("entity", entity);
 
         Engine.getEngine().getLogger().print(baseCompound.toString());
-        Engine.getEngine().setRunning(false);
+        System.exit(0);
     }
 
     public abstract String toString();

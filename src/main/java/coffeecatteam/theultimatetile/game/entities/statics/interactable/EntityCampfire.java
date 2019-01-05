@@ -8,7 +8,8 @@ import coffeecatteam.theultimatetile.game.inventory.InventoryCampfire;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 public class EntityCampfire extends EntityStatic {
 
@@ -25,11 +26,11 @@ public class EntityCampfire extends EntityStatic {
     }
 
     @Override
-    public void tick() {
-        anim.tick();
+    public void update(GameContainer container, int delta) {
+        anim.update(container, delta);
 
         inventoryCampfire.setTAGS(TAGS);
-        inventoryCampfire.tick();
+        inventoryCampfire.update(container, delta);
     }
 
     @Override
@@ -42,12 +43,12 @@ public class EntityCampfire extends EntityStatic {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        g.drawImage(anim.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
+    public void render(Graphics g) {
+        anim.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
     }
 
     @Override
-    public void postRender(Graphics2D g) {
+    public void postRender(Graphics g) {
         super.postRender(g);
         inventoryCampfire.render(g);
     }

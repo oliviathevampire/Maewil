@@ -23,7 +23,8 @@ import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -125,10 +126,10 @@ public class EntityManager {
         addEntity(this.player);
     }
 
-    public void tick() {
+    public void update(GameContainer container, int delta) {
         for (int i = 0; i < entities.size(); i++) {
             Entity e = entities.get(i);
-            e.tickA();
+            e.updateA(container, delta);
             if (!e.isActive()) {
                 e.die(entities, i);
                 if (!(e instanceof EntityPlayer))
@@ -138,17 +139,17 @@ public class EntityManager {
         entities.sort(renderSorter);
     }
 
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         for (Entity e : entities)
-            e.preRender(engine.newGraphics());
+            e.preRender(g);
 
         for (Entity e : entities) {
             e.setShowHitbox(StateOptions.OPTIONS.debugMode());
-            e.render(engine.newGraphics());
+            e.render(g);
         }
 
         for (Entity e : entities)
-            e.postRender(engine.newGraphics());
+            e.postRender(g);
     }
 
     public void addEntity(Entity e) {

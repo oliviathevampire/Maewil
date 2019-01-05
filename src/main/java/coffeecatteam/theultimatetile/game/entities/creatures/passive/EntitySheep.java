@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.game.entities.creatures.EntityPassive;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
+import org.newdawn.slick.GameContainer;
 
 public class EntitySheep extends EntityPassive {
 
@@ -19,17 +20,17 @@ public class EntitySheep extends EntityPassive {
     }
 
     @Override
-    public void tick() {
+    public void update(GameContainer container, int delta) {
         xMove = 0;
         yMove = 0;
 
         // Movement
         if (((GameEngine) engine).getEntityManager().getPlayer().isActive()) {
             if (TAGS.hasKey("fleePlayer") && TAGS.getBoolean("fleePlayer")) {
-                if (!aiFollowFlee.tick())
-                    aiWander.tick();
+                if (!aiFollowFlee.update(container, delta))
+                    aiWander.update(container, delta);
             } else
-                aiWander.tick();
+                aiWander.update(container, delta);
         }
         move();
     }

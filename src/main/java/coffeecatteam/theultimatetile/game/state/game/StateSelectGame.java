@@ -16,7 +16,9 @@ import coffeecatteam.theultimatetile.utils.Utils;
 import org.json.simple.parser.ParseException;
 
 import javax.swing.*;
-import java.awt.*;
+
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.io.File;
 import java.io.IOException;
 
@@ -65,8 +67,8 @@ public class StateSelectGame extends StateAbstractMenu {
         }
 
         @Override
-        public void tick() {
-            super.tick();
+        public void update(GameContainer container, int delta) {
+            super.update(container, delta);
             ClickListenerWorld listener = (ClickListenerWorld) this.listener;
             if (listener.isSaved())
                 this.setText(listener.getText());
@@ -139,7 +141,7 @@ public class StateSelectGame extends StateAbstractMenu {
         }
 
         @Override
-        public void tick() {
+        public void update(GameContainer container, int delta) {
             String[] vals = SavedGamesJSONParser.GAMES.get(index).split(":");
             isSaved = Boolean.valueOf(vals[0]);
         }
@@ -167,11 +169,11 @@ public class StateSelectGame extends StateAbstractMenu {
     }
 
     @Override
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         super.render(g);
 
         int w = 80 * 6;
         int h = 48 * 6;
-        g.drawImage(Assets.TITLE, engine.getWidth() / 2 - w / 2, 20, w, h, null);
+        Assets.TITLE.draw(engine.getWidth() / 2f - w / 2f, 20, w, h);
     }
 }

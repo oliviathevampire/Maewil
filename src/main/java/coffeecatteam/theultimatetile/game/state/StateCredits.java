@@ -7,7 +7,8 @@ import coffeecatteam.theultimatetile.gfx.ui.UITextBox;
 import coffeecatteam.theultimatetile.jsonparsers.JsonUtils;
 import org.json.simple.parser.ParseException;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.io.IOException;
 
 /**
@@ -38,23 +39,23 @@ public class StateCredits extends StateAbstractMenu {
         }
 
         textBoxDev = new UITextBox();
-        textBoxDev.addText("Developers", Assets.FONTS.get("40"), true);
+        textBoxDev.addText("Developers", Assets.FONTS.get("40"));
         for (String dev : devs)
             textBoxDev.addText(dev);
 
         textBoxHelper = new UITextBox();
-        textBoxHelper.addText("Helpers", Assets.FONTS.get("40"), true);
+        textBoxHelper.addText("Helpers", Assets.FONTS.get("40"));
         for (String helper : helpers)
             textBoxHelper.addText(helper);
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void update(GameContainer container, int delta) {
+        super.update(container, delta);
     }
 
     @Override
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         super.render(g);
 
         textBoxDev.setPosition(new Vector2D(engine.getWidth() / 2d - textBoxDev.getWidth() / 2d, 100));

@@ -7,7 +7,7 @@ import coffeecatteam.theultimatetile.game.tags.TagCompound;
 import coffeecatteam.theultimatetile.game.tags.TagUtils;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Image;
 
 public class ItemStack {
 
@@ -68,11 +68,11 @@ public class ItemStack {
         this.item = item;
     }
 
-    public BufferedImage getTexture() {
+    public Image getTexture() {
         return this.item.getTexture();
     }
 
-    public void setTexture(BufferedImage texture) {
+    public void setTexture(Image texture) {
         this.item.setTexture(texture);
     }
 

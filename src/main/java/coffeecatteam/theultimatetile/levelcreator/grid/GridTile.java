@@ -5,7 +5,8 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.game.tile.Tiles;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 public class GridTile {
 
@@ -24,12 +25,12 @@ public class GridTile {
         bounds = new AABB(this.position, width, height);
     }
 
-    public void tick() {
-        tile.tick();
-        tile.forcedTick();
+    public void update(GameContainer container, int delta) {
+        tile.update(container, delta);
+        tile.forcedUpdate(container, delta);
     }
 
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         bounds = new AABB((int) this.position.x + xOff, (int) this.position.y + yOff, width, height);
 
         tile.render(g, (int) this.position.x + xOff, (int) this.position.y + yOff, width, height);

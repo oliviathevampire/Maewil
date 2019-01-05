@@ -3,13 +3,13 @@ package coffeecatteam.theultimatetile.game.inventory.items;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Image;
 
 public class ItemFood extends Item implements IInteractable {
 
     private int healAmt;
 
-    public ItemFood(BufferedImage texture, String id, int healAmt) {
+    public ItemFood(Image texture, String id, int healAmt) {
         super(texture, id);
         this.healAmt = healAmt;
     }

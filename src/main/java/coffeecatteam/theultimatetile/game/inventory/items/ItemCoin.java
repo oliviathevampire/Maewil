@@ -1,16 +1,16 @@
 package coffeecatteam.theultimatetile.game.inventory.items;
 
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Image;
 
 public class ItemCoin extends Item {
 
     private float worth;
 
-    public ItemCoin(BufferedImage texture, String id) {
+    public ItemCoin(Image texture, String id) {
         this(texture, id, 0.00f);
     }
 
-    public ItemCoin(BufferedImage texture, String id, float worth) {
+    public ItemCoin(Image texture, String id, float worth) {
         super(texture, id);
         this.worth = worth;
     }

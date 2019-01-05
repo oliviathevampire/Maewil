@@ -3,7 +3,8 @@ package coffeecatteam.theultimatetile.game.overlays;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 public abstract class Overlay {
 
@@ -15,7 +16,7 @@ public abstract class Overlay {
         this.player = player;
     }
 
-    public abstract void tick();
+    public abstract void update(GameContainer container, int delta);
 
-    public abstract void render(Graphics2D g);
+    public abstract void render(Graphics g);
 }

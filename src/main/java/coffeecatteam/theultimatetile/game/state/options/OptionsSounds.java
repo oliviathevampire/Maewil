@@ -7,7 +7,10 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.UISlider;
 
-import java.awt.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 public class OptionsSounds extends StateAbstractOptions {
 
@@ -32,8 +35,8 @@ public class OptionsSounds extends StateAbstractOptions {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void update(GameContainer container, int delta) {
+        super.update(container, delta);
 
         StateOptions.OPTIONS.setVolumeMusic(volMusic.getValue() / 10f);
         StateOptions.OPTIONS.setVolumePassive(volPassive.getValue() / 10f);
@@ -43,11 +46,11 @@ public class OptionsSounds extends StateAbstractOptions {
     }
 
     @Override
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         super.render(g);
 
         Font font = Assets.FONTS.get("30");
-        Color c = Color.WHITE;
+        Color c = Color.white;
         int ytOff = 15;
         Text.drawString(g, "Music: " + volMusic.getValue(), (int) volMusic.getPosition().x, (int) volMusic.getPosition().y - ytOff, false, false, c, font);
         Text.drawString(g, "Passive: " + volPassive.getValue(), (int) volPassive.getPosition().x, (int) volPassive.getPosition().y - ytOff, false, false, c, font);

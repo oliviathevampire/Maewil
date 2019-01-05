@@ -4,7 +4,8 @@ import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.manager.UIManager;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 public abstract class State {
 
@@ -22,16 +23,14 @@ public abstract class State {
     }
 
     public void init() {
-        engine.getMouseManager().setUiManager(uiManager);
     }
 
-    public abstract void tick();
+    public abstract void update(GameContainer container, int delta);
 
-    public abstract void render(Graphics2D g);
+    public abstract void render(Graphics g);
 
     public static void setState(State state) {
         currentState = state;
-        engine.getMouseManager().setUiManager(null);
         currentState.init();
     }
 

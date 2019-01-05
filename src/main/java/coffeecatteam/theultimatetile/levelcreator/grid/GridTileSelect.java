@@ -6,7 +6,8 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
 import coffeecatteam.theultimatetile.levelcreator.LevelRenderer;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 public class GridTileSelect extends Grid {
 
@@ -36,17 +37,17 @@ public class GridTileSelect extends Grid {
     }
 
     @Override
-    public void tick() {
-        mouseX = creatorEngine.getMouseManager().getMouseX();
-        mouseY = creatorEngine.getMouseManager().getMouseY();
+    public void update(GameContainer container, int delta) {
+        mouseX = creatorEngine.getMouseX();
+        mouseY = creatorEngine.getMouseY();
 
         for (int x = 0; x < xWorldSize; x++) {
             for (int y = 0; y < yWorldSize; y++) {
                 if (grid[x][y] != null) {
-                    grid[x][y].tick();
+                    grid[x][y].update(container, delta);
 
                     if (grid[x][y].getBounds().contains(mouseX, mouseY)) {
-                        if (creatorEngine.getMouseManager().isLeftPressed()) {
+                        if (creatorEngine.isLeftPressed()) {
                             selected = grid[x][y];
                             LevelRenderer.setSelectedTile(selected.getTile());
                         }
@@ -57,8 +58,8 @@ public class GridTileSelect extends Grid {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        g.drawImage(Assets.MG_OVERLAY_INNER_MID_RIGHT, 0, 0, creatorEngine.getWidth(), creatorEngine.getHeight(), null);
+    public void render(Graphics g) {
+        Assets.MG_OVERLAY_INNER_MID_RIGHT.draw(0, 0, creatorEngine.getWidth(), creatorEngine.getHeight());
         super.render(g);
 
         int w = (ogX * 2) / gridSize, h = (ogY * 2) / gridSize;
@@ -66,12 +67,12 @@ public class GridTileSelect extends Grid {
             for (int y = 0; y < yWorldSize; y++) {
                 int gx = (int) (this.position.x + w * x), gy = (int) (this.position.y + h * y);
                 if (grid[x][y] != null) {
-                    g.drawImage(grid[x][y].getTile().getTexture(), gx, gy, w, h, null);
+                    grid[x][y].getTile().getTexture().draw(gx, gy, w, h);
 
                     if (selected == grid[x][y])
-                        g.drawImage(Assets.SELECTED_TILE, gx, gy, w, h, null);
+                        Assets.SELECTED_TILE.draw(gx, gy, w, h);
                     if (grid[x][y].getBounds().contains(mouseX, mouseY))
-                        g.drawImage(Assets.SELECTED_TILE, gx, gy, w, h, null);
+                        Assets.SELECTED_TILE.draw(gx, gy, w, h);
                 }
             }
         }
