@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.game.state;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;

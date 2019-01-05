@@ -87,19 +87,19 @@ public class UITextBox extends UIObject {
         Assets.TEXTBOX[7].draw((int) position.x + segWidth, (int) position.y + segHeight + getHeightOFStrings(), getLongestString(), segHeight);
         Assets.TEXTBOX[8].draw((int) position.x + segWidth + getLongestString(), (int) position.y + segHeight + getHeightOFStrings(), segWidth, segHeight);
 
+        int y = (int) position.y + segHeight;
         for (int i = 0; i < lines.size(); i++) {
             TextF textF = lines.get(i);
 
-            int y = (int) position.y + segHeight;
             if (i > 0)
-                y += lines.get(i - 1).getHeight() * i;
+                y += lines.get(i - 1).getHeight();
             Text.drawString(g, textF.getText(), (int) position.x + segWidth + getLongestString() / 2, y, true, false, textF.getColor(), textF.getFont());
         }
 
         /* FOR DEBUGGING */
-        g.setLineWidth(5f);
-        g.setColor(Color.red);
-        g.drawLine((int) position.x, (int) position.y + segHeight, (int) position.x + segWidth * 2 + getLongestString(), (int) position.y + segHeight);
+//        g.setLineWidth(5f);
+//        g.setColor(Color.red);
+//        g.drawLine((int) position.x, (int) position.y + segHeight, (int) position.x + segWidth * 2 + getLongestString(), (int) position.y + segHeight);
     }
 
     @Override
