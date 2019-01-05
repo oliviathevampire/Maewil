@@ -37,7 +37,7 @@ public abstract class StateAbstractOptions extends State {
             }
         }));
 
-        uiManager.addObject(new UIHyperlinkCopyright(new Vector2D(5, engine.getHeight() - 10)));
+        uiManager.addObject(new UIHyperlinkCopyright(new Vector2D(5, engine.getHeight() - 20)));
     }
 
     @Override
