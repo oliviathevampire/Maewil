@@ -26,7 +26,7 @@ public abstract class UIObject {
     }
 
     public void update(GameContainer container, int delta) {
-        if (this.bounds.contains(Engine.getEngine().getMouseX(), Engine.getEngine().getMouseY()) && Engine.getEngine().isLeftDown())
+        if (this.bounds.contains(Engine.getEngine().getMouseX(), Engine.getEngine().getMouseY()) && Engine.getEngine().isLeftPressed())
             onClick();
     }
 
