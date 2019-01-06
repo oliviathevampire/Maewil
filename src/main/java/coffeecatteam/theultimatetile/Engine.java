@@ -19,7 +19,6 @@ public abstract class Engine extends BasicGame {
     private static Engine engine;
 
     protected String[] args;
-    protected String title;
     protected int width, height, fps;
 
     /*
@@ -105,15 +104,14 @@ public abstract class Engine extends BasicGame {
     public boolean closeRequested() {
         if (playBGMusic && Sounds.BG_MUSIC.playing())
             Sounds.BG_MUSIC.stop();
-        logger.print("Shutting down [" + title + "] engine!");
+        logger.print("Shutting down [" + this.getTitle() + "] engine!");
         if (State.getState() instanceof StateGame) {
             logger.print("Saving world!");
             ((StateGame) State.getState()).saveWorld();
             logger.print("World saved!");
         }
 
-        logger.print("Exiting [" + title + "]..");
-        System.exit(0);
+        logger.print("Exiting [" + this.getTitle() + "]..");
         return true;
     }
 

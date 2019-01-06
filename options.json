@@ -1,1 +1,91 @@
-{"controls":{"A":{"key_char":"A","key_id":"65","description":"Move right"},"D":{"key_char":"D","key_id":"68","description":"Move left"},"E":{"key_char":"E","key_id":"69","description":"Open\/close inventory"},"ESCAPE":{"key_char":"ESCAPE","key_id":"27","description":"Pause"},"SPACE":{"key_char":"SPACE","key_id":"32","description":"Attack enemy\/tile or interact"},"Q":{"key_char":"Q","key_id":"81","description":"Drop selected item in inventory\/hotbar"},"1":{"key_char":"1","key_id":"49","description":"Hotbar slot 1"},"R":{"key_char":"R","key_id":"82","description":"Use selected item in inventory\/hotbar"},"2":{"key_char":"2","key_id":"50","description":"Hotbar slot 2"},"S":{"key_char":"S","key_id":"83","description":"Move backward"},"3":{"key_char":"3","key_id":"51","description":"Hotbar slot 3"},"W":{"key_char":"W","key_id":"87","description":"Move forward"},"X":{"key_char":"X","key_id":"88","description":"UNFINISHED"},"Z":{"key_char":"Z","key_id":"90","description":"Swap selected hotbar & inventory slots"},"CONTROL":{"key_char":"CONTROL","key_id":"17","description":"Hold to sprint"}},"sounds":{"volumeMusic":"0.1","volumeHostile":"1.0","volumePassive":"1.0","volumePlayer":"0.1","volumeOther":"1.0"},"DEBUG_MODE":false,"FPS_COUNTER":true}
+{
+  "controls": {
+    "Z": {
+      "key_char": "Z",
+      "key_id": "44",
+      "description": "Swap selected hotbar & inventory slots"
+    },
+    "R": {
+      "key_char": "R",
+      "key_id": "19",
+      "description": "Use selected item in inventory\/hotbar"
+    },
+    "E": {
+      "key_char": "E",
+      "key_id": "18",
+      "description": "Open\/close inventory"
+    },
+    "Q": {
+      "key_char": "Q",
+      "key_id": "16",
+      "description": "Drop selected item in inventory\/hotbar"
+    },
+    "X": {
+      "key_char": "X",
+      "key_id": "45",
+      "description": "UNFINISHED"
+    },
+
+    "W": {
+      "key_char": "W",
+      "key_id": "17",
+      "description": "Move forward"
+    },
+    "S": {
+      "key_char": "S",
+      "key_id": "31",
+      "description": "Move backward"
+    },
+    "A": {
+      "key_char": "A",
+      "key_id": "30",
+      "description": "Move right"
+    },
+    "D": {
+      "key_char": "D",
+      "key_id": "32",
+      "description": "Move left"
+    },
+
+    "1": {
+      "key_char": "1",
+      "key_id": "2",
+      "description": "Hotbar slot 1"
+    },
+    "2": {
+      "key_char": "2",
+      "key_id": "3",
+      "description": "Hotbar slot 2"
+    },
+    "3": {
+      "key_char": "3",
+      "key_id": "4",
+      "description": "Hotbar slot 3"
+    },
+
+    "CONTROL": {
+      "key_char": "LCONTROL",
+      "key_id": "29",
+      "description": "Hold to sprint"
+    },
+    "SPACE": {
+      "key_char": "SPACE",
+      "key_id": "57",
+      "description": "Attack enemy\/tile or interact"
+    },
+    "ESCAPE": {
+      "key_char": "ESCAPE",
+      "key_id": "1",
+      "description": "Pause"
+    }
+  },
+  "sounds": {
+    "volumeMusic": "0.1",
+    "volumeHostile": "1.0",
+    "volumePassive": "1.0",
+    "volumePlayer": "0.1",
+    "volumeOther": "1.0"
+  },
+  "DEBUG_MODE": false,
+  "FPS_COUNTER": true
+}

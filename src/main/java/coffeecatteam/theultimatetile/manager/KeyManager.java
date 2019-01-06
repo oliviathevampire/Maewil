@@ -33,12 +33,12 @@ public class KeyManager {
                 justPressed[i] = true;
         }
 
-        moveUp = keys[StateOptions.OPTIONS.controls().get(Keybind.W).getKeyCode()];
-        moveDown = keys[StateOptions.OPTIONS.controls().get(Keybind.S).getKeyCode()];
-        moveLeft = keys[StateOptions.OPTIONS.controls().get(Keybind.A).getKeyCode()];
-        moveRight = keys[StateOptions.OPTIONS.controls().get(Keybind.D).getKeyCode()];
-        useSprint = keys[StateOptions.OPTIONS.controls().get(Keybind.CONTROL).getKeyCode()];
-        useAttack = keys[StateOptions.OPTIONS.controls().get(Keybind.SPACE).getKeyCode()];
+        moveUp = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.W).getKeyCode());
+        moveDown = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.S).getKeyCode());
+        moveLeft = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.A).getKeyCode());
+        moveRight = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.D).getKeyCode());
+        useSprint = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.CONTROL).getKeyCode());
+        useAttack = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.SPACE).getKeyCode());
     }
 
     public boolean keyJustPressed(int key) {

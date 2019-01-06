@@ -297,7 +297,7 @@ public class EntityPlayer extends EntityCreature {
                 sprintTimer = maxSprintTimer;
         }
 
-        if (container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.W).getKeyCode())) { // engine.getKeyManager().moveUp
+        if (engine.getKeyManager().moveUp) {
             yMove = -speed;
             currentAnim = animUp;
         }
