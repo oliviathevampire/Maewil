@@ -517,8 +517,8 @@ public abstract class TileOverlap extends Tile {
                 notConnected(position.left()) &&
                 notConnected(position.right()) &&
                 isConnected(position.down()) &&
-                notConnected(position.upLeft()) &&
-                isConnected(position.upRight());
+                isConnected(position.upLeft()) &&
+                notConnected(position.upRight());
     }
 
     private boolean downUpRight() {
