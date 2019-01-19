@@ -6,7 +6,6 @@ import coffeecatteam.theultimatetile.game.state.State;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.game.tile.Tile;
-import coffeecatteam.theultimatetile.game.tile.Tiles;
 import coffeecatteam.theultimatetile.game.world.World;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
@@ -31,13 +30,12 @@ public class StateGame extends State {
     private UIManager uiManagerDead;
 
     public StateGame(Engine engine) {
-        this(engine, "/assets/worlds/starter/world_01", null);
+        this(engine, "/assets/exclude/starter/world_01", null);
     }
 
     public StateGame(Engine engine, String world, String worldName) {
         super(engine);
         this.worldName = worldName;
-        Tiles.init(engine);
 
         uiManagerPaused = new UIManager(engine);
         uiManagerDead = new UIManager(engine);

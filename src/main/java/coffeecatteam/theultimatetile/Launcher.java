@@ -24,8 +24,8 @@ public class Launcher {
         }
 
         /* Width, height & title */
-        int width = 700;
-        int height = 700;
+        int width = 850;
+        int height = 800;
         String title = "The Ultimate Tile";
 
         /* Initialize logger */
@@ -48,7 +48,7 @@ public class Launcher {
             AppGameContainer app = new AppGameContainer(engine);
             app.setDisplayMode(width, height, false);
             app.setIcons(new String[] { "icons/32.png", "icons/64.png" });
-            app.setTargetFrameRate(60);
+            app.setTargetFrameRate(100);
             app.setUpdateOnlyWhenVisible(false);
             app.setAlwaysRender(true);
             app.setVSync(true);

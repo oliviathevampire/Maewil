@@ -114,7 +114,7 @@ public class Assets {
     public static Image[] CAMPFIRE;
 
     /* GUI */
-    public static Image BACKGROUND;
+    public static Image MENU_BG;
     public static Image TITLE;
     public static Image DEAD_OVERLAY;
 
@@ -134,7 +134,8 @@ public class Assets {
 
     public static Image CHECK_BOX_BG, CHECK_BOX_FG;
 
-    public static Image CURSOR;
+    public static Image CURSOR, MAP_BORDER;
+    public static Image[] MAP_CURSOR;
 
     // Level Creator
     public static Image MG_OVERLAY_OUTER, MG_OVERLAY_INNER_MID, MG_OVERLAY_INNER_MID_RIGHT;
@@ -353,7 +354,7 @@ public class Assets {
 
     /* GUI */
     private static void initGui() {
-        BACKGROUND = getSpriteExact("/assets/textures/gui/bg.png", 0, 0, 320, 320);
+        MENU_BG = getSpriteExact("/assets/textures/gui/menu_bg.png", 0, 0, 320, 320);
         TITLE = getSpriteInd(menuSheet, 3, 0, 80, 48);
         DEAD_OVERLAY = getSpriteExact("/assets/textures/gui/dead_overlay.png", 0, 0, 512, 512);
 
@@ -391,6 +392,14 @@ public class Assets {
         CHECK_BOX_FG = getSpriteInd(menuSheet, 3, 3, width, height);
 
         CURSOR = getSpriteExact("/assets/textures/cursor.png", 0, 0, 32, 32);
+        MAP_BORDER = getSpriteExact("/assets/textures/gui/map/border.png", 0, 0, 64, 64);
+        MAP_CURSOR = new Image[8];
+        for (int y = 0; y < 2; y++) {
+            for (int x = 0; x < 4; x++) {
+                int index = x + (4 * y);
+                MAP_CURSOR[index] = getSpriteInd(new SpriteSheet("/assets/textures/gui/map/cursor.png"), x, y, 16, 16);
+            }
+        }
 
         // Level Creator
         MG_OVERLAY_OUTER = getSpriteExact("/assets/textures/gui/level_creator/mg_overlay_outer.png", 0, 0, 700, 700);
@@ -409,43 +418,43 @@ public class Assets {
         MISSING_TEXTURE = ImageLoader.loadImage("/assets/textures/missing.png");
 
         /* Sprite Sheets */
-        terrainSheet = getSheet("/assets/textures/tiles/terrain.png");
-        grassSheet = getSheet("/assets/textures/tiles/grass.png");
-        sandSheet = getSheet("/assets/textures/tiles/sand.png");
-        effectSheet = getSheet("/assets/textures/effect.png");
+        terrainSheet = new SpriteSheet("/assets/textures/tiles/terrain.png");
+        grassSheet = new SpriteSheet("/assets/textures/tiles/grass.png");
+        sandSheet = new SpriteSheet("/assets/textures/tiles/sand.png");
+        effectSheet = new SpriteSheet("/assets/textures/effect.png");
 
-        healthSheet = getSheet("/assets/textures/gui/overlay/health.png");
-        glubSheet = getSheet("/assets/textures/glub.png");
-        itemsSheet = getSheet("/assets/textures/items.png");
+        healthSheet = new SpriteSheet("/assets/textures/gui/overlay/health.png");
+        glubSheet = new SpriteSheet("/assets/textures/glub.png");
+        itemsSheet = new SpriteSheet("/assets/textures/items.png");
 
         /* Entities */
-        playerSheetIdle = getSheet("/assets/textures/entities/living/player/idle.png");
-        playerSheetMoving = getSheet("/assets/textures/entities/living/player/moving.png");
-        playerSheetDead = getSheet("/assets/textures/entities/living/player/dead.png");
+        playerSheetIdle = new SpriteSheet("/assets/textures/entities/living/player/idle.png");
+        playerSheetMoving = new SpriteSheet("/assets/textures/entities/living/player/moving.png");
+        playerSheetDead = new SpriteSheet("/assets/textures/entities/living/player/dead.png");
 
-        zombieSheet = getSheet("/assets/textures/entities/living/undead/zombie.png");
-        skeletonSheet = getSheet("/assets/textures/entities/living/undead/skeleton.png");
-        slimeSheet = getSheet("/assets/textures/entities/living/undead/slime.png");
-        thingSheet = getSheet("/assets/textures/entities/living/undead/thing.png");
+        zombieSheet = new SpriteSheet("/assets/textures/entities/living/undead/zombie.png");
+        skeletonSheet = new SpriteSheet("/assets/textures/entities/living/undead/skeleton.png");
+        slimeSheet = new SpriteSheet("/assets/textures/entities/living/undead/slime.png");
+        thingSheet = new SpriteSheet("/assets/textures/entities/living/undead/thing.png");
 
-        cowSheet = getSheet("/assets/textures/entities/living/cow.png");
-        pigSheet = getSheet("/assets/textures/entities/living/pig.png");
-        sheepSheet = getSheet("/assets/textures/entities/living/sheep.png");
-        foxSheet = getSheet("/assets/textures/entities/living/fox.png");
+        cowSheet = new SpriteSheet("/assets/textures/entities/living/cow.png");
+        pigSheet = new SpriteSheet("/assets/textures/entities/living/pig.png");
+        sheepSheet = new SpriteSheet("/assets/textures/entities/living/sheep.png");
+        foxSheet = new SpriteSheet("/assets/textures/entities/living/fox.png");
 
-        bushSheet = getSheet("/assets/textures/entities/static/nature/bush.png");
-        cropsSheet = getSheet("/assets/textures/entities/static/nature/crops.png");
-        rockSheet = getSheet("/assets/textures/entities/static/nature/rock.png");
-        treeSheet = getSheet("/assets/textures/entities/static/nature/tree.png");
+        bushSheet = new SpriteSheet("/assets/textures/entities/static/nature/bush.png");
+        cropsSheet = new SpriteSheet("/assets/textures/entities/static/nature/crops.png");
+        rockSheet = new SpriteSheet("/assets/textures/entities/static/nature/rock.png");
+        treeSheet = new SpriteSheet("/assets/textures/entities/static/nature/tree.png");
 
-        campfireSheet = getSheet("/assets/textures/entities/static/campfire.png");
-        extraLifeSheet = getSheet("/assets/textures/entities/static/extra_life.png");
-        shopStallSheet = getSheet("/assets/textures/entities/static/shop_stall.png");
+        campfireSheet = new SpriteSheet("/assets/textures/entities/static/campfire.png");
+        extraLifeSheet = new SpriteSheet("/assets/textures/entities/static/extra_life.png");
+        shopStallSheet = new SpriteSheet("/assets/textures/entities/static/shop_stall.png");
 
         /* GUI */
-        menuSheet = getSheet("/assets/textures/gui/menu.png");
-        invSheet = getSheet("/assets/textures/gui/inventory/inventory.png");
-        campfireInvSheet = getSheet("/assets/textures/gui/inventory/campfire.png");
+        menuSheet = new SpriteSheet("/assets/textures/gui/menu.png");
+        invSheet = new SpriteSheet("/assets/textures/gui/inventory/inventory.png");
+        campfireInvSheet = new SpriteSheet("/assets/textures/gui/inventory/campfire.png");
 
         initFonts();
         initTiles();
@@ -461,11 +470,11 @@ public class Assets {
     }
 
     public static Image[] getFrames(String sheet, int y, int xStart, int xEnd) {
-        return getFrames(getSheet(sheet), y, xStart, xEnd, width, height);
+        return getFrames(new SpriteSheet(sheet), y, xStart, xEnd, width, height);
     }
 
     public static Image[] getFrames(String sheet, int y, int xStart, int xEnd, int width, int height) {
-        return getFrames(getSheet(sheet), y, xStart, xEnd, width, height);
+        return getFrames(new SpriteSheet(sheet), y, xStart, xEnd, width, height);
     }
 
     public static Image[] getFrames(SpriteSheet sheet, int xStart, int xEnd) {
@@ -492,7 +501,7 @@ public class Assets {
     }
 
     public static Image getSpriteExact(String sheet, int indexX, int indexY, int width, int height) {
-        return getSpriteExact(getSheet(sheet), indexX, indexY, width, height);
+        return getSpriteExact(new SpriteSheet(sheet), indexX, indexY, width, height);
     }
 
     public static Image getSpriteInd(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
@@ -507,9 +516,5 @@ public class Assets {
             logger.print(e + " - " + sheet.getPath() + " X: [" + indexX + "] Y: [" + indexY + "]");
         }
         return image;
-    }
-
-    public static SpriteSheet getSheet(String path) {
-        return new SpriteSheet(path);
     }
 }

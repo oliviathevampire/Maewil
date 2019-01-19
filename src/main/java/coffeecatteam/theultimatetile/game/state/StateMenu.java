@@ -25,7 +25,8 @@ public class StateMenu extends State {
         uiManager.addObject(new UIButton(gameEngineIn, true, engine.getHeight() / 2 - yOff, "Select Game", new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(((GameEngine) engine).stateSelectGame);
+//                State.setState(((GameEngine) engine).stateSelectGame);
+                State.setState(new StateCreateWorld(engine));
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu", "Selecting A Game");
             }
@@ -85,7 +86,7 @@ public class StateMenu extends State {
 
     @Override
     public void render(Graphics g) {
-        Assets.BACKGROUND.draw(0, 0, engine.getWidth(), engine.getHeight());
+        Assets.MENU_BG.draw(0, 0, engine.getWidth(), engine.getHeight());
         uiManager.render(g);
 
         int w = 80 * 6;

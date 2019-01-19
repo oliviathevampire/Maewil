@@ -34,7 +34,6 @@ public abstract class Engine extends BasicGame {
 
     public StateOptions stateOptions;
 
-
     public Engine(String[] args, String title, int width, int height) {
         super(title);
         this.args = args;

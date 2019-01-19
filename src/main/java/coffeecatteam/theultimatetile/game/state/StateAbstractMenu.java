@@ -50,7 +50,7 @@ public class StateAbstractMenu extends State {
 
     @Override
     public void render(Graphics g) {
-        Assets.BACKGROUND.draw(0, 0, engine.getWidth(), engine.getHeight());
+        Assets.MENU_BG.draw(0, 0, engine.getWidth(), engine.getHeight());
         uiManager.render(g);
     }
 }

@@ -24,6 +24,7 @@ public class Sounds {
 
     public static void init() throws SlickException {
         BG_MUSIC = loadMusic("bg_music");
+
         BOUNCE = loadSound("bounce");
 
         PUNCH = loadSound("punch");
