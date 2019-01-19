@@ -5,7 +5,8 @@ import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 public class EntityUltimateTile extends EntityStatic {
 
@@ -19,12 +20,12 @@ public class EntityUltimateTile extends EntityStatic {
     }
 
     @Override
-    public void tick() {
-        animation.tick();
+    public void update(GameContainer container, int delta) {
+        animation.update(container, delta);
     }
 
     @Override
-    public void render(Graphics2D g) {
-        g.drawImage(animation.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
+    public void render(Graphics g) {
+        animation.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
     }
 }

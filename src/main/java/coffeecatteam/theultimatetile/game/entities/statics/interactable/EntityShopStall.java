@@ -8,7 +8,8 @@ import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 public class EntityShopStall extends EntityStatic {
 
@@ -37,8 +38,8 @@ public class EntityShopStall extends EntityStatic {
     }
 
     @Override
-    public void tick() {
-        ROOF.tick();
+    public void update(GameContainer container, int delta) {
+        ROOF.update(container, delta);
     }
 
     @Override
@@ -48,8 +49,8 @@ public class EntityShopStall extends EntityStatic {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        g.drawImage(Assets.SHOP_STALL, this.renderX, this.renderY, width, height, null);
-        g.drawImage(ROOF.getCurrentFrame(), this.renderX, this.renderY, width, height / 2, null);
+    public void render(Graphics g) {
+        Assets.SHOP_STALL.draw(this.renderX, this.renderY, width, height);
+        ROOF.getCurrentFrame().draw(this.renderX, this.renderY, width, height / 2f);
     }
 }

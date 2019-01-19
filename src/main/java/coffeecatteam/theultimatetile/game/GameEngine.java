@@ -15,7 +15,9 @@ import coffeecatteam.theultimatetile.manager.EntityManager;
 import coffeecatteam.theultimatetile.manager.InventoryManager;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 public class GameEngine extends Engine {
 
@@ -43,8 +45,8 @@ public class GameEngine extends Engine {
     }
 
     @Override
-    protected void init() {
-        super.init();
+    public void init(GameContainer container) throws SlickException {
+        super.init(container);
         camera = new Camera(this, 0, 0);
 
         stateMenu = new StateMenu(this);
@@ -63,20 +65,20 @@ public class GameEngine extends Engine {
     }
 
     @Override
-    public void tick() {
+    public void update(GameContainer container, int delta) throws SlickException {
 //        TagBase.TEST();
-        super.tick();
+        super.update(container, delta);
 
         if (State.getState() != null)
-            State.getState().tick();
+            State.getState().update(container, delta);
     }
 
     @Override
-    public void render(Graphics2D g) {
+    public void rendera(GameContainer container, Graphics g) throws SlickException {
         if (State.getState() != null)
             State.getState().render(g);
         if (StateOptions.OPTIONS.fpsCounter())
-            renderFPSCounter(g, fps);
+            renderFPSCounter(g);
     }
 
     public Camera getCamera() {

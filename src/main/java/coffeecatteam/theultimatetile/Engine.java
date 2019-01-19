@@ -1,218 +1,133 @@
 package coffeecatteam.theultimatetile;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
+import coffeecatteam.theultimatetile.game.state.State;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
+import coffeecatteam.theultimatetile.game.state.game.StateGame;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
-import coffeecatteam.theultimatetile.gfx.audio.Sound;
+import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 import coffeecatteam.theultimatetile.manager.KeyManager;
-import coffeecatteam.theultimatetile.manager.MouseManager;
-import coffeecatteam.theultimatetile.manager.WindowManager;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
+import org.newdawn.slick.*;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferStrategy;
-
-public abstract class Engine extends Canvas implements Runnable {
+public abstract class Engine extends BasicGame {
 
     protected CatLogger logger;
 
     private static Engine engine;
-    private String loadingDotText = ".";
 
     protected String[] args;
-    protected String title;
-    protected int width, height;
-    protected JFrame frame;
+    protected int width, height, fps;
 
-    protected int fps = 0;
-
-    protected boolean running = false, initOptionsUI = true, playBGMusic = true;
-    protected Thread thread;
-
-    protected BufferStrategy bs;
-    protected Graphics2D g;
+    /*
+     * Mouse & keyboard values
+     */
+    protected int mouseX, mouseY;
+    protected boolean leftPressed, rightPressed;
+    protected boolean leftDown, rightDown;
 
     protected KeyManager keyManager;
-    protected MouseManager mouseManager;
 
-    protected WindowManager windowManager;
+    protected boolean initOptionsUI = true, playBGMusic = true, close = false;
 
     public StateOptions stateOptions;
 
     public Engine(String[] args, String title, int width, int height) {
+        super(title);
         this.args = args;
-        this.title = title;
         this.width = width;
         this.height = height;
-        this.logger = new CatLogger(this.title);
-
-        keyManager = new KeyManager();
-        mouseManager = new MouseManager();
-
-        Assets.init(logger);
-        createDisplay();
-
+        this.logger = new CatLogger(title);
         engine = this;
     }
 
-    private void createDisplay() {
-        Dimension size = new Dimension(width, height);
+    @Override
+    public void init(GameContainer container) throws SlickException {
+        Assets.init(logger);
+        container.setShowFPS(false);
+        container.setDefaultFont(Assets.FONTS.get("10"));
+        container.setMouseCursor(Assets.CURSOR, 0, 0);
 
-        frame = new JFrame(title);
-        frame.setSize(size);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
-        frame.setIconImage(Assets.LOGO);
-
-        this.setPreferredSize(size);
-        this.setMaximumSize(size);
-        this.setMinimumSize(size);
-        this.setFocusable(false);
-
-        frame.add(this);
-        frame.pack();
-    }
-
-    protected void init() {
-        frame.addKeyListener(keyManager);
-        frame.addMouseListener(mouseManager);
-        frame.addMouseMotionListener(mouseManager);
-        this.addMouseListener(mouseManager);
-        this.addMouseMotionListener(mouseManager);
-        frame.addWindowListener(windowManager);
-
-        windowManager = new WindowManager(this);
-
+        keyManager = new KeyManager();
         stateOptions = new StateOptions(this, initOptionsUI);
 
         ItemManager.init();
+        Sounds.init();
 
-        // Audio/sound initialized
-        AudioMaster.init();
-        AudioMaster.setListenerData(0f, 0f, 0f);
-
-        Sound.init();
-    }
-
-    public void tick() {
-        keyManager.tick();
-    }
-
-    public abstract void render(Graphics2D g);
-
-    private void renderA() {
-        bs = this.getBufferStrategy();
-        if (bs == null) {
-            this.createBufferStrategy(3);
-            return;
-        }
-        g = (Graphics2D) bs.getDrawGraphics();
-        g.clearRect(0, 0, width, height);
-
-        render(g);
-
-        // End drawing
-        bs.show();
-        g.dispose();
+        DiscordHandler.INSTANCE.setup();
     }
 
     @Override
-    public void run() {
-        init();
-        DiscordHandler.INSTANCE.setup();
+    public void update(GameContainer container, int delta) throws SlickException {
+        if (close) container.exit();
+        keyManager.update(container, delta);
+
+        /*
+         * Mouse values
+         */
+        this.mouseX = container.getInput().getMouseX();
+        this.mouseY = container.getInput().getMouseY();
+        this.leftPressed = container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON);
+        this.rightPressed = container.getInput().isMousePressed(Input.MOUSE_RIGHT_BUTTON);
+        this.leftDown = container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
+        this.rightDown = container.getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON);
+
+        this.fps = container.getFPS();
 
         // Background music
-        if (playBGMusic)
-            Sound.play(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic(), 0f, 0f, 0f, 1f, true);
-
-        int fps = 60;
-        double timePerTick = 1000000000 / fps;
-        double delta = 0;
-        long now;
-        long lastTime = System.nanoTime();
-        long timer = 0;
-        int ticks = 0;
-
-        while (running) {
-            now = System.nanoTime();
-            delta += (now - lastTime) / timePerTick;
-            timer += now - lastTime;
-            lastTime = now;
-
-            if (delta >= 1) {
-                tick();
-
-                // Background music volume update
-                if (playBGMusic)
-                    Sound.setVolume(Sound.BG_MUSIC, StateOptions.OPTIONS.getVolumeMusic());
-
-                renderA();
-
-                ticks++;
-                delta--;
-            }
-
-            if (timer >= 1000000000) {
-                this.fps = ticks;
-                ticks = 0;
-                timer = 0;
-
-                if (DiscordHandler.READY) {
-                    loadingDotText += ".";
-                    if (loadingDotText.equals("...")) loadingDotText = ".";
-                }
+        if (playBGMusic) {
+            if (Sounds.BG_MUSIC.playing())
+                Sounds.BG_MUSIC.setVolume(StateOptions.OPTIONS.getVolumeMusic());
+            else {
+                Sounds.BG_MUSIC.loop();
+                Sounds.BG_MUSIC.play();
             }
         }
-
-        // Cleanup sounds
-        Sound.delete();
-        AudioMaster.cleanUp();
-
-        stop();
-        logger.print("Exiting [" + title + "]..");
-        System.exit(0);
     }
 
-    protected void renderFPSCounter(Graphics2D g, int fps) {
+    public abstract void rendera(GameContainer container, Graphics g) throws SlickException;
+
+    @Override
+    public void render(GameContainer container, Graphics g) throws SlickException {
+        g.clear();
+        rendera(container, g);
+    }
+
+    @Override
+    public boolean closeRequested() {
+        if (playBGMusic && Sounds.BG_MUSIC.playing())
+            Sounds.BG_MUSIC.stop();
+        logger.print("Shutting down [" + this.getTitle() + "] engine!");
+        if (State.getState() instanceof StateGame) {
+            logger.print("Saving world!");
+            ((StateGame) State.getState()).saveWorld();
+            logger.print("World saved!");
+        }
+
+        logger.print("Exiting [" + this.getTitle() + "]..");
+        return true;
+    }
+
+    @Override
+    public void keyPressed(int key, char c) {
+        keyManager.keyPressed(key, c);
+    }
+
+    public boolean keyJustPressed(int key) {
+        return keyManager.keyJustPressed(key);
+    }
+
+    @Override
+    public void keyReleased(int key, char c) {
+        keyManager.keyReleased(key, c);
+    }
+
+    protected void renderFPSCounter(Graphics g) {
         Font font = Assets.FONTS.get("20");
-        Text.drawString(g, "FPS: " + fps, 5, 5 + Text.getHeight(g, font), false, false, Color.orange, font);
-    }
-
-    public synchronized void start() {
-        if (running)
-            return;
-        running = true;
-
-        thread = new Thread(this);
-        thread.setName("Thread-" + title.replace(" ", "_"));
-        thread.start();
-    }
-
-    public synchronized void stop() {
-        if (!running)
-            return;
-        running = false;
-
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            logger.print(e);
-        }
-    }
-
-    public KeyManager getKeyManager() {
-        return keyManager;
-    }
-
-    public MouseManager getMouseManager() {
-        return mouseManager;
+        String t = "FPS: " + this.fps;
+        Text.drawString(g, t, 5, 5 + Text.getHeight(t, font), false, false, Color.orange, font);
     }
 
     public int getWidth() {
@@ -221,22 +136,6 @@ public abstract class Engine extends Canvas implements Runnable {
 
     public int getHeight() {
         return height;
-    }
-
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    public boolean isRunning() {
-        return running;
-    }
-
-    public void setRunning(boolean r) {
-        running = r;
-    }
-
-    public Graphics2D newGraphics() {
-        return (Graphics2D) bs.getDrawGraphics();
     }
 
     public String[] getArgs() {
@@ -253,5 +152,37 @@ public abstract class Engine extends Canvas implements Runnable {
 
     public int getFps() {
         return fps;
+    }
+
+    public void close() {
+        this.close = true;
+    }
+
+    public int getMouseX() {
+        return mouseX;
+    }
+
+    public int getMouseY() {
+        return mouseY;
+    }
+
+    public boolean isLeftPressed() {
+        return leftPressed;
+    }
+
+    public boolean isRightPressed() {
+        return rightPressed;
+    }
+
+    public boolean isLeftDown() {
+        return leftDown;
+    }
+
+    public boolean isRightDown() {
+        return rightDown;
+    }
+
+    public KeyManager getKeyManager() {
+        return keyManager;
     }
 }

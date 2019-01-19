@@ -3,7 +3,9 @@ package coffeecatteam.theultimatetile.gfx.ui;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 
-import java.awt.*;
+import coffeecatteam.theultimatetile.Engine;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.awt.event.MouseEvent;
 
 public abstract class UIObject {
@@ -23,26 +25,17 @@ public abstract class UIObject {
         bounds = new AABB(this.position, width, height);
     }
 
-    public abstract void tick();
-
-    public abstract void render(Graphics2D g);
-
-    public void postRender(Graphics2D g) {
-    }
-
-    public abstract void onClick();
-
-    public abstract void onMouseMoved(MouseEvent e);
-
-    public abstract void onMouseRelease(MouseEvent e);
-
-    public void onMouseReleaseA(MouseEvent e) {
-        onMouseRelease(e);
-        if (this.bounds.contains(e.getPoint()) && e.getButton() == MouseEvent.BUTTON1)
+    public void update(GameContainer container, int delta) {
+        if (this.bounds.contains(Engine.getEngine().getMouseX(), Engine.getEngine().getMouseY()) && Engine.getEngine().isLeftPressed())
             onClick();
     }
 
-    public abstract void onMouseDragged(MouseEvent e);
+    public abstract void render(Graphics g);
+
+    public void postRender(Graphics g) {
+    }
+
+    public abstract void onClick();
 
     public Vector2D getPosition() {
         return position;

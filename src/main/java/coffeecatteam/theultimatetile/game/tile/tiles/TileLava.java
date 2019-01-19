@@ -5,8 +5,9 @@ import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 public class TileLava extends Tile {
 
@@ -18,17 +19,17 @@ public class TileLava extends Tile {
     }
 
     @Override
-    public void forcedTick() {
-        animation.tick();
+    public void forcedUpdate(GameContainer container, int delta) {
+        animation.update(container, delta);
     }
 
     @Override
-    public void render(Graphics2D g, int x, int y, int width, int height) {
-        g.drawImage(animation.getCurrentFrame(), x, y, width, height, null);
+    public void render(Graphics g, int x, int y, int width, int height) {
+        animation.getCurrentFrame().draw(x, y, width, height);
     }
 
     @Override
-    public BufferedImage getTexture() {
+    public Image getTexture() {
         return animation.getFrames()[0];
     }
 

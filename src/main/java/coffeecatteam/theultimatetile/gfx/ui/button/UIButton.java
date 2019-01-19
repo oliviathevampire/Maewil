@@ -10,9 +10,9 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIObject;
 import coffeecatteam.theultimatetile.gfx.ui.UITextBox;
 
-import java.awt.*;
+import org.newdawn.slick.*;
+
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
 public class UIButton extends UIObject {
 
@@ -27,7 +27,7 @@ public class UIButton extends UIObject {
     private boolean underlined;
     private Font font;
 
-    private BufferedImage[] currentTexture;
+    private Image[] currentTexture;
     protected boolean hasTooltip = false, hasCustomWidth = false;
     protected UITextBox tooltip;
 
@@ -67,7 +67,10 @@ public class UIButton extends UIObject {
     }
 
     @Override
-    public void tick() {
+    public void update(GameContainer container, int delta) {
+        super.update(container, delta);
+        this.hovering = this.bounds.contains(engine.getMouseX(), engine.getMouseY()) && !this.disabled;
+
         if (this.hovering)
             this.currentTexture = Assets.BUTTON_HOVER;
         else
@@ -75,33 +78,33 @@ public class UIButton extends UIObject {
         if (this.disabled)
             this.currentTexture = Assets.BUTTON_DISABLED;
 
-        listener.tick();
+        listener.update(container, delta);
         bounds = new AABB(position, width, height);
     }
 
     @Override
-    public void render(Graphics2D g) {
-        int textWidth = Text.getWidth(g, text, font);
-        int textHeight = Text.getHeight(g, font);
+    public void render(Graphics g) {
+        int textWidth = Text.getWidth(text, font);
+        int textHeight = Text.getHeight(text, font);
 
         int pWidth = 64;
         int pHeight = textHeight + 16;
 
         int textX = (int) this.position.x + pWidth / 4;
-        int textY = (int) this.position.y + textHeight + 8;
+        int textY = (int) this.position.y + 8;
 
-        g.drawImage(this.currentTexture[0], (int) this.position.x, (int) this.position.y, pWidth, pHeight, null);
+        this.currentTexture[0].draw((int) this.position.x, (int) this.position.y, pWidth, pHeight);
 
-        g.drawImage(this.currentTexture[1], textX, (int) this.position.y, (hasCustomWidth ? width : textWidth), pHeight, null);
+        this.currentTexture[1].draw(textX, (int) this.position.y, (hasCustomWidth ? width : textWidth), pHeight);
 
-        g.drawImage(this.currentTexture[2], textX + ((hasCustomWidth ? width : textWidth) - (pWidth / 2 + pWidth / 4)), (int) this.position.y, pWidth, pHeight, null);
+        this.currentTexture[2].draw(textX + ((hasCustomWidth ? width : textWidth) - (pWidth / 2f + pWidth / 4f)), (int) this.position.y, pWidth, pHeight);
 
         if (!hasCustomWidth)
             this.width = textWidth + pWidth / 2;
         this.height = pHeight;
 
         if (StateOptions.OPTIONS.debugMode()) {
-            g.setColor(Color.RED);
+            g.setColor(Color.red);
             g.drawRect((int) position.x, (int) position.y, width, height);
         }
 
@@ -117,7 +120,7 @@ public class UIButton extends UIObject {
     }
 
     @Override
-    public void postRender(Graphics2D g) {
+    public void postRender(Graphics g) {
         if (isHovering() && hasTooltip) {
             int x = mouseX, x1 = x + this.tooltip.getWidth(), xDiff = 0;
             int y = mouseY, y1 = y + this.tooltip.getHeight(), yDiff = 0;
@@ -140,21 +143,6 @@ public class UIButton extends UIObject {
     public void onClick() {
         if (!disabled)
             this.listener.onClick();
-    }
-
-    @Override
-    public void onMouseMoved(MouseEvent e) {
-        mouseX = e.getX();
-        mouseY = e.getY();
-        this.hovering = this.bounds.contains(mouseX, mouseY) && !this.disabled;
-    }
-
-    @Override
-    public void onMouseRelease(MouseEvent e) {
-    }
-
-    @Override
-    public void onMouseDragged(MouseEvent e) {
     }
 
     public void setListener(ClickListener listener) {

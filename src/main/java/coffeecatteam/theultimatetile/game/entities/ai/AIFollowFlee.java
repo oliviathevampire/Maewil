@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.game.entities.ai;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
+import org.newdawn.slick.GameContainer;
 
 public class AIFollowFlee extends AI {
 
@@ -21,7 +22,7 @@ public class AIFollowFlee extends AI {
     }
 
     @Override
-    public boolean tick() {
+    public boolean update(GameContainer container, int delta) {
         float x = target.getX() - entity.getX();
         float y = target.getY() - entity.getY();
 

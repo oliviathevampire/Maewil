@@ -6,12 +6,12 @@ import coffeecatteam.theultimatetile.game.entities.statics.EntityNature;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 public class EntityCrop extends EntityNature {
 
-    public EntityCrop(Engine engine, String id, BufferedImage texture, Item drop) {
+    public EntityCrop(Engine engine, String id, Image texture, Item drop) {
         super(engine, id, texture, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.BUSH);
         isCollidable = false;
 
@@ -19,8 +19,8 @@ public class EntityCrop extends EntityNature {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        g.drawImage(Assets.CROP_GROUND, this.renderX, this.renderY, width, height, null);
+    public void render(Graphics g) {
+        Assets.CROP_GROUND.draw(this.renderX, this.renderY, width, height);
         super.render(g);
     }
 }

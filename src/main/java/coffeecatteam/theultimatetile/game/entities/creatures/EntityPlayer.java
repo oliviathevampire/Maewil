@@ -15,11 +15,10 @@ import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.gfx.audio.AudioMaster;
-import coffeecatteam.theultimatetile.gfx.audio.Sound;
+import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.utils.Utils;
+import org.newdawn.slick.*;
 
-import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.util.List;
 
@@ -75,14 +74,14 @@ public class EntityPlayer extends EntityCreature {
     }
 
     @Override
-    public void tick() {
+    public void update(GameContainer container, int delta) {
         this.prevX = (float) position.x;
         this.prevY = (float) position.y;
 
         if (isActive()) {
             if (!guiOpen) {
                 // Movement
-                getInput();
+                getInput(container, delta);
                 move();
 
                 // Interact
@@ -94,48 +93,68 @@ public class EntityPlayer extends EntityCreature {
             checkAttacks();
 
             // Open/close inventory
-            if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode())) {
+            if (engine.keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode())) {
                 if (guiOpen && !inventoryPlayer.isActive())
                     ((GameEngine) engine).getInventoryManager().closeAllInventories();
                 else
                     ((GameEngine) engine).getInventoryManager().openCloseInventory(inventoryPlayer);
             }
-            if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && inventoryPlayer.isActive())
+            if (engine.keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && inventoryPlayer.isActive())
                 ((GameEngine) engine).getInventoryManager().closeAllInventories();
 
             ((GameEngine) engine).getCamera().centerOnEntity(this);
-            AudioMaster.setListenerData((float) position.x, (float) position.y, 0f);
         }
 
-        inventoryPlayer.tick();
+        inventoryPlayer.update(container, delta);
 
         // Animation
-        currentAnim.tick();
-        sprintEffect.tick();
+        currentAnim.update(container, delta);
+        sprintEffect.update(container, delta);
     }
 
     @Override
     public void move() {
         super.move();
 
-        int stepSound = -1;
+        Sound stepSound = null;
         int tileX = (int) (position.x + 0.5f) / Tile.TILE_WIDTH;
         int tileY = (int) (position.y + 0.5f) / Tile.TILE_HEIGHT;
 
-        if (((GameEngine) engine).getWorld().getFGTile(tileX, tileY).getTileType() == Tile.TileType.AIR) {
-            switch (((GameEngine) engine).getWorld().getBGTile(tileX, tileY).getTileType()) {
+        Tile bgTile = ((GameEngine) engine).getWorld().getBGTile(tileX, tileY);
+        Tile fgTile = ((GameEngine) engine).getWorld().getFGTile(tileX, tileY);
+        if (fgTile.getTileType() == Tile.TileType.AIR) {
+            switch (bgTile.getTileType()) {
+                default:
                 case GROUND:
-                    stepSound = Sound.STEP_GROUND;
+                    stepSound = Sounds.STEP_GROUND;
                     break;
                 case STONE:
-                    stepSound = Sound.STEP_STONE;
+                    stepSound = Sounds.STEP_STONE;
                     break;
                 case WOOD:
-                    stepSound = Sound.STEP_WOOD;
+                    stepSound = Sounds.STEP_WOOD;
+                    break;
+                case FLUID:
+                    stepSound = Sounds.SPLASH;
                     break;
             }
-        } else if (((GameEngine) engine).getWorld().getFGTile(tileX, tileY).getTileType() == Tile.TileType.FLUID) {
-            stepSound = Sound.SPLASH;
+        }
+        if (bgTile.getTileType() == Tile.TileType.AIR) {
+            switch (fgTile.getTileType()) {
+                default:
+                case GROUND:
+                    stepSound = Sounds.STEP_GROUND;
+                    break;
+                case STONE:
+                    stepSound = Sounds.STEP_STONE;
+                    break;
+                case WOOD:
+                    stepSound = Sounds.STEP_WOOD;
+                    break;
+                case FLUID:
+                    stepSound = Sounds.SPLASH;
+                    break;
+            }
         }
 
         if (isMoving()) {
@@ -144,8 +163,7 @@ public class EntityPlayer extends EntityCreature {
             if (walkSoundTimer < walkSoundCooldown)
                 return;
 
-            if (stepSound != -1)
-                Sound.play(stepSound, StateOptions.OPTIONS.getVolumeOther(), (float) position.x, (float) position.y, 0f, (canSprint() ? 1.5f : 1f));
+            Sounds.play(stepSound, (float) position.x, (float) position.y, canSprint() ? 1.5f : 1f, StateOptions.OPTIONS.getVolumeOther());
 
             walkSoundTimer = 0;
         }
@@ -165,20 +183,20 @@ public class EntityPlayer extends EntityCreature {
 
         if (engine.getKeyManager().moveUp && engine.getKeyManager().useAttack) {
             isAttacking = true;
-            ar.x = cb.x + cb.width / 2 - arSize / 2;
+            ar.x = cb.x + cb.width / 2f - arSize / 2f;
             ar.y = cb.y - arSize;
         } else if (engine.getKeyManager().moveDown && engine.getKeyManager().useAttack) {
             isAttacking = true;
-            ar.x = cb.x + cb.width / 2 - arSize / 2;
+            ar.x = cb.x + cb.width / 2f - arSize / 2f;
             ar.y = cb.y + cb.height;
         } else if (engine.getKeyManager().moveLeft && engine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x - arSize;
-            ar.y = cb.y + cb.height / 2 - arSize / 2;
+            ar.y = cb.y + cb.height / 2f - arSize / 2f;
         } else if (engine.getKeyManager().moveRight && engine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x + cb.width;
-            ar.y = cb.y + cb.height / 2 - arSize / 2;
+            ar.y = cb.y + cb.height / 2f - arSize / 2f;
         } else {
             isAttacking = false;
             return;
@@ -193,23 +211,23 @@ public class EntityPlayer extends EntityCreature {
 
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
                 e.isInteracted(extraDmg);
-                int hitSound = -1;
+                Sound hitSound;
                 switch (e.getEntityHitType()) {
+                    default:
                     case CREATURE:
-                        hitSound = (NumberUtils.getRandomInt(10) > 5 ? Sound.PUNCH_LEFT : Sound.PUNCH_RIGHT);
+                        hitSound = Sounds.PUNCH;
                         break;
                     case WOOD:
-                        hitSound = Sound.STEP_WOOD;
+                        hitSound = Sounds.STEP_WOOD;
                         break;
                     case STONE:
-                        hitSound = Sound.STEP_STONE;
+                        hitSound = Sounds.STEP_STONE;
                         break;
                     case BUSH:
-                        hitSound = (NumberUtils.getRandomInt(10) > 5 ? Sound.BUSH_LEFT : Sound.BUSH_RIGHT);
+                        hitSound = Sounds.BUSH;
                         break;
                 }
-                if (hitSound != -1)
-                    Sound.play(hitSound, StateOptions.OPTIONS.getVolumePlayer(), (float) e.getPosition().x, (float) e.getPosition().y, 1f);
+                Sounds.play(hitSound, StateOptions.OPTIONS.getVolumePlayer(), (float) e.getPosition().x, (float) e.getPosition().y, 1f);
                 return;
             }
         }
@@ -258,7 +276,7 @@ public class EntityPlayer extends EntityCreature {
         ((GameEngine) engine).getItemManager().addItem(stack, x, y);
     }
 
-    private void getInput() {
+    private void getInput(GameContainer container, int delta) {
         xMove = 0;
         yMove = 0;
 
@@ -317,36 +335,29 @@ public class EntityPlayer extends EntityCreature {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        AffineTransform old = g.getTransform();
-        g.setTransform(AffineTransform.getTranslateInstance(this.renderX, this.renderY));
-        int nx = 0, ny = 0;
-        if (Utils.isDate(4, 1)) {
-            g.rotate(Math.toRadians(180d));
-            nx = -width;
-            ny = -height;
-        }
-        g.drawImage(currentAnim.getCurrentFrame(), nx, ny, width, height, null);
-        g.setTransform(old);
+    public void render(Graphics g) {
+        if (Utils.isDate(4, 1))
+            currentAnim.getCurrentFrame().rotate((float) Math.toRadians(180d));
+        currentAnim.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
 
         this.renderEffect(g);
     }
 
     @Override
-    public void renderEffect(Graphics2D g) {
+    public void renderEffect(Graphics g) {
         super.renderEffect(g);
 
         if (canSprint())
-            g.drawImage(sprintEffect.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
+            sprintEffect.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
         super.postRender(g);
     }
 
     @Override
-    public void postRender(Graphics2D g) {
+    public void postRender(Graphics g) {
         Font font = Assets.FONTS.get("20");
         if (username != null) {
-            int nameWidth = Text.getWidth(g, username, font);
-            int nameHeight = Text.getHeight(g, font);
+            int nameWidth = Text.getWidth(username, font);
+            int nameHeight = Text.getHeight(username, font);
             int add = 6;
             Color tint = new Color(96, 96, 96, 127);
             g.setColor(tint);
@@ -355,7 +366,7 @@ public class EntityPlayer extends EntityCreature {
             int yOff = height / 2;
 
             g.fillRect(this.renderX - xOff - add / 2, this.renderY - yOff - add / 2, nameWidth + add, nameHeight + add);
-            Text.drawString(g, username, this.renderX - xOff, this.renderY - yOff + nameHeight - add / 2, false, false, Color.white, font);
+            Text.drawString(g, username, this.renderX - xOff, this.renderY - yOff - add / 2, false, false, Color.white, font);
         }
 
         inventoryPlayer.render(g);

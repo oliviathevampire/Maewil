@@ -1,13 +1,18 @@
 package coffeecatteam.theultimatetile.gfx.assets;
 
-import coffeecatteam.coffeecatutils.io.FontLoader;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.gfx.image.ImageLoader;
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
 
+import org.newdawn.slick.Font;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.UnicodeFont;
+import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.Image;
+
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.awt.image.RasterFormatException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +21,7 @@ public class Assets {
     private static CatLogger logger;
 
     private static final int width = 16, height = 16;
-    public static final BufferedImage MISSING_TEXTURE = ImageLoader.loadImage("/assets/textures/missing.png");
+    public static Image MISSING_TEXTURE;
 
     /* Sprite Sheets */
     private static SpriteSheet terrainSheet, grassSheet, sandSheet;
@@ -44,106 +49,124 @@ public class Assets {
 
     /* Tiles */
     public static int GRASS_ALTS, SAND_ALTS;
-    public static BufferedImage[] GRASS, SAND;
-    public static BufferedImage DIRT;
-    public static BufferedImage STONE, ANDESITE, DIORITE, COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE, OBSIDIAN, BROKEN_STONE;
-    public static BufferedImage PLANKS, BOOKSHELF, CHEST;
-    public static BufferedImage[] TILE_CRACKING;
+    public static Image[] GRASS, SAND;
+    public static Image DIRT;
+    public static Image STONE, ANDESITE, DIORITE, COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE, OBSIDIAN, BROKEN_STONE;
+    public static Image PLANKS, BOOKSHELF, CHEST;
+    public static Image[] TILE_CRACKING;
 
-    public static BufferedImage[] WATER, LAVA;
+    public static Image[] WATER, LAVA;
 
-    public static BufferedImage AIR;
+    public static Image AIR;
 
     /* Special Tiles */
-    public static BufferedImage[] SPLASH_EFFECT, SPRINT_EFFECT;
-    public static BufferedImage[] ULTIMATE_TILE;
+    public static Image[] SPLASH_EFFECT, SPRINT_EFFECT;
+    public static Image[] ULTIMATE_TILE;
 
     /* Items */
-    public static BufferedImage ITEM_STICK, ITEM_LEAF, ITEM_ROCK;
-    public static BufferedImage ITEM_ROTTEN_FLESH, ITEM_BONE, ITEM_BOUNCY_BALL;
+    public static Image ITEM_STICK, ITEM_LEAF, ITEM_ROCK;
+    public static Image ITEM_ROTTEN_FLESH, ITEM_BONE, ITEM_BOUNCY_BALL;
 
-    public static BufferedImage ITEM_WOODEN_SWORD, ITEM_WOODEN_PICK, ITEM_WOODEN_HOE;
-    public static BufferedImage ITEM_STONE_SWORD, ITEM_STONE_PICK, ITEM_STONE_HOE;
+    public static Image ITEM_WOODEN_SWORD, ITEM_WOODEN_PICK, ITEM_WOODEN_HOE;
+    public static Image ITEM_STONE_SWORD, ITEM_STONE_PICK, ITEM_STONE_HOE;
 
-    public static BufferedImage ITEM_COAL, ITEM_IRON_INGOT, ITEM_GOLD_INGOT, ITEM_DIAMOND;
+    public static Image ITEM_COAL, ITEM_IRON_INGOT, ITEM_GOLD_INGOT, ITEM_DIAMOND;
 
-    public static BufferedImage ITEM_CARROT, ITEM_APPLE, ITEM_RAW_PORK, ITEM_COOKED_PORK, ITEM_BREAD, ITEM_WHEAT, ITEM_RAW_STEAK, ITEM_COOKED_STEAK, ITEM_WOOL_BUNDLE, ITEM_POTATO, ITEM_TOMATO, ITEM_CORN;
+    public static Image ITEM_CARROT, ITEM_APPLE, ITEM_RAW_PORK, ITEM_COOKED_PORK, ITEM_BREAD, ITEM_WHEAT, ITEM_RAW_STEAK, ITEM_COOKED_STEAK, ITEM_WOOL_BUNDLE, ITEM_POTATO, ITEM_TOMATO, ITEM_CORN;
 
-    public static BufferedImage ITEM_COIN_PENNY, ITEM_COIN_IRON, ITEM_COIN_GOLD;
+    public static Image ITEM_COIN_PENNY, ITEM_COIN_IRON, ITEM_COIN_GOLD;
 
     /* Player */
-    public static BufferedImage[] HEARTS;
-    public static BufferedImage[] ARMOR;
-    public static BufferedImage[] SPRINT;
+    public static Image[] HEARTS;
+    public static Image[] ARMOR;
+    public static Image[] SPRINT;
 
-    public static BufferedImage[] GLUB_ORB;
-    public static BufferedImage[] GLUB_METER;
+    public static Image[] GLUB_ORB;
+    public static Image[] GLUB_METER;
 
     /* Player Frames */
-    public static BufferedImage[] PLAYER_IDLE, PLAYER_UP, PLAYER_DOWN, PLAYER_LEFT, PLAYER_RIGHT, PLAYER_DEAD;
+    public static Image[] PLAYER_IDLE, PLAYER_UP, PLAYER_DOWN, PLAYER_LEFT, PLAYER_RIGHT, PLAYER_DEAD;
 
     /* Entities */
-    public static BufferedImage[] EXTRA_LIFE;
+    public static Image[] EXTRA_LIFE;
 
     // Undead
-    public static BufferedImage[] ZOMBIE_IDLE, ZOMBIE_UP, ZOMBIE_DOWN, ZOMBIE_LEFT, ZOMBIE_RIGHT;
-    public static BufferedImage[] SKELETON_IDLE, SKELETON_UP, SKELETON_DOWN, SKELETON_LEFT, SKELETON_RIGHT;
-    public static BufferedImage[] BOUNCER_IDLE, BOUNCER_UP, BOUNCER_DOWN, BOUNCER_LEFT, BOUNCER_RIGHT;
-    public static BufferedImage[] THING_IDLE, THING_UP, THING_DOWN, THING_LEFT, THING_RIGHT;
+    public static Image[] ZOMBIE_IDLE, ZOMBIE_UP, ZOMBIE_DOWN, ZOMBIE_LEFT, ZOMBIE_RIGHT;
+    public static Image[] SKELETON_IDLE, SKELETON_UP, SKELETON_DOWN, SKELETON_LEFT, SKELETON_RIGHT;
+    public static Image[] BOUNCER_IDLE, BOUNCER_UP, BOUNCER_DOWN, BOUNCER_LEFT, BOUNCER_RIGHT;
+    public static Image[] THING_IDLE, THING_UP, THING_DOWN, THING_LEFT, THING_RIGHT;
 
     // Passive
-    public static BufferedImage[] PIG_IDLE, PIG_UP, PIG_DOWN, PIG_LEFT, PIG_RIGHT;
-    public static BufferedImage[] COW_IDLE, COW_UP, COW_DOWN, COW_LEFT, COW_RIGHT;
-    public static BufferedImage[] SHEEP_IDLE, SHEEP_UP, SHEEP_DOWN, SHEEP_LEFT, SHEEP_RIGHT;
-    public static BufferedImage[] FOX_IDLE, FOX_UP, FOX_DOWN, FOX_LEFT, FOX_RIGHT;
+    public static Image[] PIG_IDLE, PIG_UP, PIG_DOWN, PIG_LEFT, PIG_RIGHT;
+    public static Image[] COW_IDLE, COW_UP, COW_DOWN, COW_LEFT, COW_RIGHT;
+    public static Image[] SHEEP_IDLE, SHEEP_UP, SHEEP_DOWN, SHEEP_LEFT, SHEEP_RIGHT;
+    public static Image[] FOX_IDLE, FOX_UP, FOX_DOWN, FOX_LEFT, FOX_RIGHT;
 
     /* Nature / Statics */
-    public static BufferedImage TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
-    public static BufferedImage ROCK_V1, ROCK_V2;
-    public static BufferedImage BUSH_SMALL, BUSH_LARGE;
-    public static BufferedImage CROP_GROUND, CROP_CARROT, CROP_WHEAT, CROP_POTATO, CROP_TOMATO, CROP_CORN;
+    public static Image TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
+    public static Image ROCK_V1, ROCK_V2;
+    public static Image BUSH_SMALL, BUSH_LARGE;
+    public static Image CROP_GROUND, CROP_CARROT, CROP_WHEAT, CROP_POTATO, CROP_TOMATO, CROP_CORN;
 
-    public static BufferedImage SHOP_STALL;
-    public static BufferedImage[] SHOP_ROOF_ORANGE, SHOP_ROOF_BLUE, SHOP_ROOF_RED, SHOP_ROOF_GREY;
+    public static Image SHOP_STALL;
+    public static Image[] SHOP_ROOF_ORANGE, SHOP_ROOF_BLUE, SHOP_ROOF_RED, SHOP_ROOF_GREY;
 
-    public static BufferedImage[] CAMPFIRE;
+    public static Image[] CAMPFIRE;
 
     /* GUI */
-    public static BufferedImage BACKGROUND;
-    public static BufferedImage TITLE;
-    public static BufferedImage DEAD_OVERLAY;
+    public static Image MENU_BG;
+    public static Image TITLE;
+    public static Image DEAD_OVERLAY;
 
-    public static BufferedImage[] BUTTON_ENABLED = new BufferedImage[3];
-    public static BufferedImage[] BUTTON_HOVER = new BufferedImage[3];
-    public static BufferedImage[] BUTTON_DISABLED = new BufferedImage[3];
+    public static Image[] BUTTON_ENABLED = new Image[3];
+    public static Image[] BUTTON_HOVER = new Image[3];
+    public static Image[] BUTTON_DISABLED = new Image[3];
 
-    public static BufferedImage INVENTORY, CAMPFIRE_INVENTORY;
-    public static BufferedImage SLOT, SLOT_SELECTER;
-    public static BufferedImage HOTBAR, HOTBAR_SELECTER;
+    public static Image INVENTORY, CAMPFIRE_INVENTORY;
+    public static Image SLOT, SLOT_SELECTER;
+    public static Image HOTBAR, HOTBAR_SELECTER;
 
-    public static BufferedImage ICON_ON, ICON_OFF;
-    public static BufferedImage[] TEXTBOX = new BufferedImage[9];
+    public static Image ICON_ON, ICON_OFF;
+    public static Image[] TEXTBOX = new Image[9];
 
-    public static BufferedImage LOGO;
+    public static Image[] SLIDER_BUTTON;
+    public static Image SLIDER_BAR;
 
-    public static BufferedImage[] SLIDER_BUTTON;
-    public static BufferedImage SLIDER_BAR;
+    public static Image CHECK_BOX_BG, CHECK_BOX_FG;
 
-    public static BufferedImage CHECK_BOX_BG, CHECK_BOX_FG;
+    public static Image CURSOR, MAP_BORDER;
+    public static Image[] MAP_CURSOR;
 
     // Level Creator
-    public static BufferedImage MG_OVERLAY_OUTER, MG_OVERLAY_INNER_MID, MG_OVERLAY_INNER_MID_RIGHT;
-    public static BufferedImage EDIT_GRID_TILE, SELECTED_TILE;
+    public static Image MG_OVERLAY_OUTER, MG_OVERLAY_INNER_MID, MG_OVERLAY_INNER_MID_RIGHT;
+    public static Image EDIT_GRID_TILE, SELECTED_TILE;
 
     /* Fonts */
     private static void initFonts() {
         String fontPath = "/assets/fonts/LCD_Solid.ttf";
         for (int i = 10; i <= 100; i += 10) {
-            FONTS.put(String.valueOf(i), FontLoader.loadTrueTypeFont(fontPath, i));
+            FONTS.put(String.valueOf(i), loadTrueTypeFont(fontPath, i));
             logger.print("Font size [" + i + "] loaded!");
         }
 
         logger.print("Assets [Fonts] loaded!");
+    }
+
+    private static Font loadTrueTypeFont(String path, float size) {
+        try {
+            java.awt.Font awtFont = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, Assets.class.getResourceAsStream(path)).deriveFont(java.awt.Font.PLAIN, size);
+
+            UnicodeFont font = new org.newdawn.slick.UnicodeFont(awtFont);
+            font.addAsciiGlyphs();
+            font.getEffects().add(new ColorEffect(java.awt.Color.white));
+            font.addAsciiGlyphs();
+            font.loadGlyphs();
+
+            return font;
+        } catch (IOException | FontFormatException | SlickException var3) {
+            var3.printStackTrace();
+            return null;
+        }
     }
 
     /* Tiles */
@@ -331,7 +354,7 @@ public class Assets {
 
     /* GUI */
     private static void initGui() {
-        BACKGROUND = getSpriteExact("/assets/textures/gui/bg.png", 0, 0, 320, 320);
+        MENU_BG = getSpriteExact("/assets/textures/gui/menu_bg.png", 0, 0, 320, 320);
         TITLE = getSpriteInd(menuSheet, 3, 0, 80, 48);
         DEAD_OVERLAY = getSpriteExact("/assets/textures/gui/dead_overlay.png", 0, 0, 512, 512);
 
@@ -360,15 +383,23 @@ public class Assets {
         TEXTBOX[7] = getSpriteInd(menuSheet, 1, 6, width, height);
         TEXTBOX[8] = getSpriteInd(menuSheet, 2, 6, width, height);
 
-        LOGO = getSpriteExact("/assets/textures/logo.png", 0, 0, 128, 128);
-
-        SLIDER_BUTTON = new BufferedImage[2];
+        SLIDER_BUTTON = new Image[2];
         SLIDER_BUTTON[0] = getSpriteExact(menuSheet, 0, 120, 4, 8);
         SLIDER_BUTTON[1] = getSpriteExact(menuSheet, 4, 120, 4, 8);
         SLIDER_BAR = getSpriteExact(menuSheet, 0, 112, 48, 6);
 
         CHECK_BOX_BG = getSpriteInd(menuSheet, 2, 3, width, height);
         CHECK_BOX_FG = getSpriteInd(menuSheet, 3, 3, width, height);
+
+        CURSOR = getSpriteExact("/assets/textures/cursor.png", 0, 0, 32, 32);
+        MAP_BORDER = getSpriteExact("/assets/textures/gui/map/border.png", 0, 0, 64, 64);
+        MAP_CURSOR = new Image[8];
+        for (int y = 0; y < 2; y++) {
+            for (int x = 0; x < 4; x++) {
+                int index = x + (4 * y);
+                MAP_CURSOR[index] = getSpriteInd(new SpriteSheet("/assets/textures/gui/map/cursor.png"), x, y, 16, 16);
+            }
+        }
 
         // Level Creator
         MG_OVERLAY_OUTER = getSpriteExact("/assets/textures/gui/level_creator/mg_overlay_outer.png", 0, 0, 700, 700);
@@ -384,44 +415,46 @@ public class Assets {
     public static void init(CatLogger loggerIn) {
         logger = loggerIn;
 
-        /* Sprite Sheets */
-        terrainSheet = getSheet("/assets/textures/tiles/terrain.png");
-        grassSheet = getSheet("/assets/textures/tiles/grass.png");
-        sandSheet = getSheet("/assets/textures/tiles/sand.png");
-        effectSheet = getSheet("/assets/textures/effect.png");
+        MISSING_TEXTURE = ImageLoader.loadImage("/assets/textures/missing.png");
 
-        healthSheet = getSheet("/assets/textures/gui/overlay/health.png");
-        glubSheet = getSheet("/assets/textures/glub.png");
-        itemsSheet = getSheet("/assets/textures/items.png");
+        /* Sprite Sheets */
+        terrainSheet = new SpriteSheet("/assets/textures/tiles/terrain.png");
+        grassSheet = new SpriteSheet("/assets/textures/tiles/grass.png");
+        sandSheet = new SpriteSheet("/assets/textures/tiles/sand.png");
+        effectSheet = new SpriteSheet("/assets/textures/effect.png");
+
+        healthSheet = new SpriteSheet("/assets/textures/gui/overlay/health.png");
+        glubSheet = new SpriteSheet("/assets/textures/glub.png");
+        itemsSheet = new SpriteSheet("/assets/textures/items.png");
 
         /* Entities */
-        playerSheetIdle = getSheet("/assets/textures/entities/living/player/idle.png");
-        playerSheetMoving = getSheet("/assets/textures/entities/living/player/moving.png");
-        playerSheetDead = getSheet("/assets/textures/entities/living/player/dead.png");
+        playerSheetIdle = new SpriteSheet("/assets/textures/entities/living/player/idle.png");
+        playerSheetMoving = new SpriteSheet("/assets/textures/entities/living/player/moving.png");
+        playerSheetDead = new SpriteSheet("/assets/textures/entities/living/player/dead.png");
 
-        zombieSheet = getSheet("/assets/textures/entities/living/undead/zombie.png");
-        skeletonSheet = getSheet("/assets/textures/entities/living/undead/skeleton.png");
-        slimeSheet = getSheet("/assets/textures/entities/living/undead/slime.png");
-        thingSheet = getSheet("/assets/textures/entities/living/undead/thing.png");
+        zombieSheet = new SpriteSheet("/assets/textures/entities/living/undead/zombie.png");
+        skeletonSheet = new SpriteSheet("/assets/textures/entities/living/undead/skeleton.png");
+        slimeSheet = new SpriteSheet("/assets/textures/entities/living/undead/slime.png");
+        thingSheet = new SpriteSheet("/assets/textures/entities/living/undead/thing.png");
 
-        cowSheet = getSheet("/assets/textures/entities/living/cow.png");
-        pigSheet = getSheet("/assets/textures/entities/living/pig.png");
-        sheepSheet = getSheet("/assets/textures/entities/living/sheep.png");
-        foxSheet = getSheet("/assets/textures/entities/living/fox.png");
+        cowSheet = new SpriteSheet("/assets/textures/entities/living/cow.png");
+        pigSheet = new SpriteSheet("/assets/textures/entities/living/pig.png");
+        sheepSheet = new SpriteSheet("/assets/textures/entities/living/sheep.png");
+        foxSheet = new SpriteSheet("/assets/textures/entities/living/fox.png");
 
-        bushSheet = getSheet("/assets/textures/entities/static/nature/bush.png");
-        cropsSheet = getSheet("/assets/textures/entities/static/nature/crops.png");
-        rockSheet = getSheet("/assets/textures/entities/static/nature/rock.png");
-        treeSheet = getSheet("/assets/textures/entities/static/nature/tree.png");
+        bushSheet = new SpriteSheet("/assets/textures/entities/static/nature/bush.png");
+        cropsSheet = new SpriteSheet("/assets/textures/entities/static/nature/crops.png");
+        rockSheet = new SpriteSheet("/assets/textures/entities/static/nature/rock.png");
+        treeSheet = new SpriteSheet("/assets/textures/entities/static/nature/tree.png");
 
-        campfireSheet = getSheet("/assets/textures/entities/static/campfire.png");
-        extraLifeSheet = getSheet("/assets/textures/entities/static/extra_life.png");
-        shopStallSheet = getSheet("/assets/textures/entities/static/shop_stall.png");
+        campfireSheet = new SpriteSheet("/assets/textures/entities/static/campfire.png");
+        extraLifeSheet = new SpriteSheet("/assets/textures/entities/static/extra_life.png");
+        shopStallSheet = new SpriteSheet("/assets/textures/entities/static/shop_stall.png");
 
         /* GUI */
-        menuSheet = getSheet("/assets/textures/gui/menu.png");
-        invSheet = getSheet("/assets/textures/gui/inventory/inventory.png");
-        campfireInvSheet = getSheet("/assets/textures/gui/inventory/campfire.png");
+        menuSheet = new SpriteSheet("/assets/textures/gui/menu.png");
+        invSheet = new SpriteSheet("/assets/textures/gui/inventory/inventory.png");
+        campfireInvSheet = new SpriteSheet("/assets/textures/gui/inventory/campfire.png");
 
         initFonts();
         initTiles();
@@ -432,28 +465,28 @@ public class Assets {
         logger.print("Assets loaded!");
     }
 
-    public static BufferedImage[] getFrames(String sheet, int xStart, int xEnd) {
+    public static Image[] getFrames(String sheet, int xStart, int xEnd) {
         return getFrames(sheet, 0, xStart, xEnd);
     }
 
-    public static BufferedImage[] getFrames(String sheet, int y, int xStart, int xEnd) {
-        return getFrames(getSheet(sheet), y, xStart, xEnd, width, height);
+    public static Image[] getFrames(String sheet, int y, int xStart, int xEnd) {
+        return getFrames(new SpriteSheet(sheet), y, xStart, xEnd, width, height);
     }
 
-    public static BufferedImage[] getFrames(String sheet, int y, int xStart, int xEnd, int width, int height) {
-        return getFrames(getSheet(sheet), y, xStart, xEnd, width, height);
+    public static Image[] getFrames(String sheet, int y, int xStart, int xEnd, int width, int height) {
+        return getFrames(new SpriteSheet(sheet), y, xStart, xEnd, width, height);
     }
 
-    public static BufferedImage[] getFrames(SpriteSheet sheet, int xStart, int xEnd) {
+    public static Image[] getFrames(SpriteSheet sheet, int xStart, int xEnd) {
         return getFrames(sheet, 0, xStart, xEnd);
     }
 
-    public static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd) {
+    public static Image[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd) {
         return getFrames(sheet, y, xStart, xEnd, width, height);
     }
 
-    public static BufferedImage[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd, int width, int height) {
-        BufferedImage[] frames = new BufferedImage[(xEnd - xStart) + 1];
+    public static Image[] getFrames(SpriteSheet sheet, int y, int xStart, int xEnd, int width, int height) {
+        Image[] frames = new Image[(xEnd - xStart) + 1];
         int index = 0;
         for (int x = xStart; x < xEnd + 1; x++) {
             try {
@@ -467,25 +500,21 @@ public class Assets {
         return frames;
     }
 
-    public static BufferedImage getSpriteExact(String sheet, int indexX, int indexY, int width, int height) {
-        return getSpriteExact(getSheet(sheet), indexX, indexY, width, height);
+    public static Image getSpriteExact(String sheet, int indexX, int indexY, int width, int height) {
+        return getSpriteExact(new SpriteSheet(sheet), indexX, indexY, width, height);
     }
 
-    public static BufferedImage getSpriteInd(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
+    public static Image getSpriteInd(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
         return getSpriteExact(sheet, Assets.width * indexX, Assets.height * indexY, width, height);
     }
 
-    public static BufferedImage getSpriteExact(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
-        BufferedImage image = MISSING_TEXTURE;
+    public static Image getSpriteExact(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
+        Image image = MISSING_TEXTURE;
         try {
             image = sheet.crop(indexX, indexY, width, height); /* Assets.width * indexX, Assets.height * indexY <-- This caused so many problems! */
         } catch (RasterFormatException e) {
             logger.print(e + " - " + sheet.getPath() + " X: [" + indexX + "] Y: [" + indexY + "]");
         }
         return image;
-    }
-
-    public static SpriteSheet getSheet(String path) {
-        return new SpriteSheet(path);
     }
 }

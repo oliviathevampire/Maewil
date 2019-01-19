@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.game.tile.tiles;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Image;
 
 /**
  * @author CoffeeCatRailway
@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  */
 public class TileWood extends Tile {
 
-    public TileWood(Engine engine, BufferedImage texture, String id) {
+    public TileWood(Engine engine, Image texture, String id) {
         super(engine, texture, id, true, TileType.WOOD);
     }
 

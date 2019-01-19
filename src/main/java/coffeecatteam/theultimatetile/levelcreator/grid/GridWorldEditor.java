@@ -10,7 +10,8 @@ import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
 import coffeecatteam.theultimatetile.levelcreator.LevelRenderer;
 import coffeecatteam.theultimatetile.levelcreator.WorldLayerUpdater;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 public class GridWorldEditor extends Grid {
 
@@ -56,7 +57,7 @@ public class GridWorldEditor extends Grid {
     }
 
     @Override
-    public void tick() {
+    public void update(GameContainer container, int delta) {
         int offAmt = 3;
         if (creatorEngine.getKeyManager().moveUp)
             updateYOffset(offAmt);
@@ -79,14 +80,14 @@ public class GridWorldEditor extends Grid {
                 tile.setHeight(tileHeight);
 
                 if (beingUsed) {
-                    tile.tick();
+                    tile.update(container, delta);
 
                     if (tile.getBounds().contains(mouseX, mouseY)) {
                         if (gridBounds.contains(mouseX, mouseY)) {
-                            if (creatorEngine.getMouseManager().isLeftDown() || creatorEngine.getMouseManager().isLeftPressed()) {
+                            if (creatorEngine.isLeftDown() || creatorEngine.isLeftPressed()) {
                                 if (tile.getTile() != SELECTED_TILE)
                                     tile.setTile(LevelRenderer.getSelectedTile().copy());
-                            } else if (creatorEngine.getMouseManager().isRightDown() || creatorEngine.getMouseManager().isRightPressed())
+                            } else if (creatorEngine.isRightDown() || creatorEngine.isRightPressed())
                                 tile.setTile(Tiles.AIR);
                         }
                     }
@@ -107,7 +108,7 @@ public class GridWorldEditor extends Grid {
     }
 
     @Override
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         if (showRendered) {
             super.render(g);
             for (int x = 0; x < xWorldSize; x++) {
@@ -116,7 +117,7 @@ public class GridWorldEditor extends Grid {
                     if (tile != null)
                         tile.render(g);
                     else
-                        g.drawImage(Assets.MISSING_TEXTURE, (int) this.position.x + tileWidth * x + xOff, (int) this.position.y + tileHeight * y + yOff, tileWidth, tileHeight, null);
+                        Assets.MISSING_TEXTURE.draw((int) this.position.x + tileWidth * x + xOff, (int) this.position.y + tileHeight * y + yOff, tileWidth, tileHeight);
                 }
             }
         }

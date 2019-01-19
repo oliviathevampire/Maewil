@@ -1,22 +1,22 @@
 package coffeecatteam.theultimatetile.gfx.image;
 
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Image;
 
 public class SpriteSheet {
 
     private String path;
-    private BufferedImage sheet;
+    private Image sheet;
 
     public SpriteSheet(String path) {
         this.path = path;
         this.sheet = ImageLoader.loadImage(path);
     }
 
-    public BufferedImage crop(int x, int y, int width, int height) {
-        return sheet.getSubimage(x, y, width, height);
+    public Image crop(int x, int y, int width, int height) {
+        return sheet.getSubImage(x, y, width, height);
     }
 
-    public BufferedImage getSheet() {
+    public Image getSheet() {
         return sheet;
     }
 

@@ -11,7 +11,11 @@ import coffeecatteam.theultimatetile.jsonparsers.OptionsJsonParser;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.json.simple.parser.ParseException;
 
-import java.awt.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+
 import java.io.IOException;
 
 public class StateOptions extends StateAbstractMenu {
@@ -38,7 +42,7 @@ public class StateOptions extends StateAbstractMenu {
                 }
 
                 @Override
-                public void tick() {
+                public void update(GameContainer container, int delta) {
                 }
             }));
 
@@ -50,7 +54,7 @@ public class StateOptions extends StateAbstractMenu {
                 }
 
                 @Override
-                public void tick() {
+                public void update(GameContainer container, int delta) {
                 }
             }));
 
@@ -67,7 +71,7 @@ public class StateOptions extends StateAbstractMenu {
                 }
 
                 @Override
-                public void tick() {
+                public void update(GameContainer container, int delta) {
                 }
             }));
 
@@ -84,7 +88,7 @@ public class StateOptions extends StateAbstractMenu {
                 }
 
                 @Override
-                public void tick() {
+                public void update(GameContainer container, int delta) {
                 }
             }));
         }
@@ -104,9 +108,10 @@ public class StateOptions extends StateAbstractMenu {
     }
 
     @Override
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         super.render(g);
-        g.drawImage(OPTIONS.debugMode() ? Assets.ICON_ON : Assets.ICON_OFF, 15 + 6 * 64, 15, 64, 64, null);
+        Image ico = OPTIONS.debugMode() ? Assets.ICON_ON : Assets.ICON_OFF;
+        ico.draw(15 + 6 * 64, 15, 64, 64);
 
         Text.drawString(g, "EXPERIMENTAL!", engine.getWidth() / 2, engine.getHeight() / 2, true, true, Color.red, Assets.FONTS.get("80"));
     }

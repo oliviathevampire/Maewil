@@ -2,11 +2,12 @@ package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
+import org.newdawn.slick.GameContainer;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class KeyManager implements KeyListener {
+public class KeyManager {
 
     private boolean[] keys, justPressed, cantPress;
     public boolean moveUp, moveDown, moveLeft, moveRight, useSprint, useAttack;
@@ -20,7 +21,7 @@ public class KeyManager implements KeyListener {
         cantPress = new boolean[keys.length];
     }
 
-    public void tick() {
+    public void update(GameContainer container, int delta) {
         for (int i = 0; i < keys.length; i++) {
             if (cantPress[i] && !keys[i])
                 cantPress[i] = false;
@@ -32,41 +33,35 @@ public class KeyManager implements KeyListener {
                 justPressed[i] = true;
         }
 
-        moveUp = keys[StateOptions.OPTIONS.controls().get(Keybind.W).getKeyCode()];
-        moveDown = keys[StateOptions.OPTIONS.controls().get(Keybind.S).getKeyCode()];
-        moveLeft = keys[StateOptions.OPTIONS.controls().get(Keybind.A).getKeyCode()];
-        moveRight = keys[StateOptions.OPTIONS.controls().get(Keybind.D).getKeyCode()];
-        useSprint = keys[StateOptions.OPTIONS.controls().get(Keybind.CONTROL).getKeyCode()];
-        useAttack = keys[StateOptions.OPTIONS.controls().get(Keybind.SPACE).getKeyCode()];
+        moveUp = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.W).getKeyCode());
+        moveDown = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.S).getKeyCode());
+        moveLeft = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.A).getKeyCode());
+        moveRight = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.D).getKeyCode());
+        useSprint = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.CONTROL).getKeyCode());
+        useAttack = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.SPACE).getKeyCode());
     }
 
-    public boolean keyJustPressed(int keyCode) {
-        if (keyCode < 0 || keyCode >= keys.length)
+    public boolean keyJustPressed(int key) {
+        if (key < 0 || key >= keys.length)
             return false;
-        return justPressed[keyCode];
+        return justPressed[key];
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
+    public void keyPressed(int key, char c) {
+        if (key < 0 || key >= keys.length)
             return;
-        keys[e.getKeyCode()] = true;
+        keys[key] = true;
 
-        if (e.getKeyCode() != KeyEvent.VK_ENTER) {
-            currentKeyPressedCode = e.getKeyCode();
-            currentKeyPressedChar = e.getKeyChar();
+        if (key != KeyEvent.VK_ENTER) {
+            currentKeyPressedCode = key;
+            currentKeyPressedChar = c;
         }
     }
 
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
+    public void keyReleased(int key, char c) {
+        if (key < 0 || key >= keys.length)
             return;
-        keys[e.getKeyCode()] = false;
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
+        keys[key] = false;
     }
 
     public int getCurrentKeyPressedCode() {

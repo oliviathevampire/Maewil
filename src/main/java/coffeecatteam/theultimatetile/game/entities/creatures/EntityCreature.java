@@ -15,7 +15,8 @@ import coffeecatteam.theultimatetile.game.tile.tiles.TileWater;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,14 +56,14 @@ public abstract class EntityCreature extends Entity {
     protected abstract void init();
 
     @Override
-    public void tickA() {
-        super.tickA();
+    public void updateA(GameContainer container, int delta) {
+        super.updateA(container, delta);
 
-        ais.forEach(AI::tick);
+        ais.forEach(ai -> ai.update(container, delta));
 
         // Animation
-        currentAnim.tick();
-        splashEffect.tick();
+        currentAnim.update(container, delta);
+        splashEffect.update(container, delta);
         updateAnim();
 
         if (this.inLava()) {
@@ -90,16 +91,16 @@ public abstract class EntityCreature extends Entity {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        g.drawImage(currentAnim.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
+    public void render(Graphics g) {
+        currentAnim.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
 
         this.renderEffect(g);
         this.renderHealth(g);
     }
 
-    public void renderEffect(Graphics2D g) {
+    public void renderEffect(Graphics g) {
         if (inWater())
-            g.drawImage(splashEffect.getCurrentFrame(), this.renderX, this.renderY, width, height, null);
+            splashEffect.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
     }
 
     @Override

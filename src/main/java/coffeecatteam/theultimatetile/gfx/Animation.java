@@ -1,14 +1,15 @@
 package coffeecatteam.theultimatetile.gfx;
 
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Image;
 
 public class Animation {
 
     private int speed, index;
     private long lastTime, timer;
-    private BufferedImage[] frames;
+    private Image[] frames;
 
-    public Animation(int speed, BufferedImage[] frames) {
+    public Animation(int speed, Image[] frames) {
         this.speed = speed;
         this.frames = frames;
         index = 0;
@@ -16,15 +17,15 @@ public class Animation {
         lastTime = System.currentTimeMillis();
     }
 
-    public void setFrames(BufferedImage[] frames) {
+    public void setFrames(Image[] frames) {
         this.frames = frames;
     }
 
-    public BufferedImage[] getFrames() {
+    public Image[] getFrames() {
         return frames;
     }
 
-    public void tick() {
+    public void update(GameContainer container, int delta) {
         timer += System.currentTimeMillis() - lastTime;
         lastTime = System.currentTimeMillis();
 
@@ -36,7 +37,7 @@ public class Animation {
         }
     }
 
-    public BufferedImage getCurrentFrame() {
+    public Image getCurrentFrame() {
         return frames[index];
     }
 }

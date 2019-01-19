@@ -5,8 +5,8 @@ import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.game.tile.TilePos;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,12 +16,12 @@ import java.util.List;
  */
 public abstract class TileOverlap extends Tile {
 
-    private BufferedImage[] overlap;
+    private Image[] overlap;
     private List<Class<? extends Tile>> connect;
     private Class<? extends Tile> ignore;
     private int alts;
 
-    public TileOverlap(Engine engine, BufferedImage texture, BufferedImage[] overlap, String id, boolean isSolid, TileType tileType, int alts) {
+    public TileOverlap(Engine engine, Image texture, Image[] overlap, String id, boolean isSolid, TileType tileType, int alts) {
         super(engine, texture, id, isSolid, tileType);
         this.overlap = overlap;
         this.alts = alts;
@@ -36,11 +36,11 @@ public abstract class TileOverlap extends Tile {
     }
 
     @Override
-    public void render(Graphics2D g, int x, int y, int width, int height) {
+    public void render(Graphics g, int x, int y, int width, int height) {
         super.render(g, x, y, width, height);
 
         if (worldLayer != null) {
-            BufferedImage overlay = Assets.DEAD_OVERLAY;
+            Image overlay = Assets.DEAD_OVERLAY;
             if (topLeftCorner())
                 overlay = getOverlay(0);
             if (leftSide())
@@ -153,11 +153,11 @@ public abstract class TileOverlap extends Tile {
 
             if (allCorners())
                 overlay = getOverlay(47);
-            g.drawImage(overlay, x, y, width, height, null);
+            overlay.draw(x, y, width, height);
         }
     }
 
-    private BufferedImage getOverlay(int index) {
+    private Image getOverlay(int index) {
         return overlap[alts + index];
     }
 
@@ -517,8 +517,8 @@ public abstract class TileOverlap extends Tile {
                 notConnected(position.left()) &&
                 notConnected(position.right()) &&
                 isConnected(position.down()) &&
-                notConnected(position.upLeft()) &&
-                isConnected(position.upRight());
+                isConnected(position.upLeft()) &&
+                notConnected(position.upRight());
     }
 
     private boolean downUpRight() {

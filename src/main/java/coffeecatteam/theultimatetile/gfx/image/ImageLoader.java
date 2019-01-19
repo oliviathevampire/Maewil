@@ -1,21 +1,23 @@
 package coffeecatteam.theultimatetile.gfx.image;
 
 import coffeecatteam.theultimatetile.Engine;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 
 public class ImageLoader {
 
-    public static BufferedImage loadImage(String path) {
+    public static Image loadImage(String path) {
         try {
-            URL file = ImageLoader.class.getResource(path);
+            InputStream file = ImageLoader.class.getResourceAsStream(path);
             if (file == null)
-                file = ImageLoader.class.getResource("/assets/textures/missing.png");
-            return ImageIO.read(file);
-        } catch (IOException e) {
+                file = ImageLoader.class.getResourceAsStream("/assets/textures/missing.png");
+
+            Image image = new Image(file, path, false);
+            image.setFilter(Image.FILTER_NEAREST);
+            return image;
+        } catch (SlickException e) {
             Engine.getEngine().getLogger().print(e);
         }
         return null;

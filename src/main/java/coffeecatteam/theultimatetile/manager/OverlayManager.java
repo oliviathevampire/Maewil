@@ -7,7 +7,8 @@ import coffeecatteam.theultimatetile.game.overlays.OverlayGlub;
 import coffeecatteam.theultimatetile.game.overlays.OverlayPlayerHealth;
 import coffeecatteam.theultimatetile.game.overlays.OverlayPlayerSprint;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,11 +24,11 @@ public class OverlayManager {
         addOverlay(new OverlayGlub(engine, player));
     }
 
-    public void tick() {
-        overlays.forEach(overlay -> overlay.tick());
+    public void update(GameContainer container, int delta) {
+        overlays.forEach(overlay -> overlay.update(container, delta));
     }
 
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         overlays.forEach(overlay -> overlay.render(g));
     }
 

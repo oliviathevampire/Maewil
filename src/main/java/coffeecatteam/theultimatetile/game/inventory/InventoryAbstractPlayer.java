@@ -10,7 +10,8 @@ import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 public abstract class InventoryAbstractPlayer extends Inventory {
 
@@ -66,7 +67,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
     }
 
     @Override
-    public void tick() {
+    public void update(GameContainer container, int delta) {
 //        if (!isDefault)
 //            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode() | StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()))
 //                player.openCloseInventory(this);
@@ -134,7 +135,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
     }
 
     // Render inventory slots
-    public void renderInventorySlots(Graphics2D g) {
+    public void renderInventorySlots(Graphics g) {
         for (int i = 0; i < maxSize; i++) {
             getSlot(i).setSelected(i == inventorySelectedIndex);
 
@@ -142,7 +143,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         }
     }
 
-    public void renderHotbar(Graphics2D g) {
+    public void renderHotbar(Graphics g) {
         // Render hotbar backgorund
         int barWidth = 28;
         int barHeight = 10;
@@ -152,7 +153,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         int height = barHeight * multiplier;
         int y = engine.getHeight() - height - 5;
 
-        g.drawImage(Assets.HOTBAR, engine.getWidth() / 2 - width / 2, y, width, height, null);
+        Assets.HOTBAR.draw(engine.getWidth() / 2f - width / 2f, y, width, height);
 
         // Render hotbar slots
         for (int i = maxSize; i < maxSize + maxHotbarSize; i++) {
@@ -165,8 +166,8 @@ public abstract class InventoryAbstractPlayer extends Inventory {
     }
 
     public void dropItem(boolean active, int inventorySelectedIndex, int hotbarSelectedIndex) {
-        float xOff = Tile.TILE_WIDTH / 4;
-        float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4;
+        float xOff = Tile.TILE_WIDTH / 4f;
+        float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4f;
         if (getSlot(inventorySelectedIndex).getStack() != null) {
             if (active) {
                 getSlot(inventorySelectedIndex).getStack().getItem().setPickedUp(false);

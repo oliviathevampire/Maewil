@@ -8,15 +8,16 @@ import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 public abstract class Tile {
 
     public static final int TILE_WIDTH = 64, TILE_HEIGHT = 64;
 
     protected Engine engine;
-    protected BufferedImage texture;
+    protected Image texture;
     protected final String id;
 
     protected AABB bounds;
@@ -29,7 +30,7 @@ public abstract class Tile {
     protected Item drop;
     protected int health, maxHealth = 300;
 
-    public Tile(Engine engine, BufferedImage texture, String id, boolean isSolid, TileType tileType) {
+    public Tile(Engine engine, Image texture, String id, boolean isSolid, TileType tileType) {
         this.engine = engine;
         this.texture = texture;
         this.id = id;
@@ -54,27 +55,28 @@ public abstract class Tile {
         return worldLayer[pos.getX()][pos.getY()];
     }
 
-    public void tick() {
+    public void update(GameContainer container, int delta) {
         updateBounds();
     }
 
-    public void forcedTick() {
+    public void forcedUpdate(GameContainer container, int delta) {
     }
 
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         render(g, (int) (position.getX() * Tile.TILE_WIDTH - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_HEIGHT - ((GameEngine) engine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
     }
 
-    public void render(Graphics2D g, int x, int y, int width, int height) {
-        g.drawImage(texture, x, y, width, height, null);
+    public void render(Graphics g, int x, int y, int width, int height) {
+        if (texture != null)
+            texture.draw(x, y, width, height);
 
         if (drop != null) {
             if (isSolid && !unbreakable) {
                 int index = (int) NumberUtils.map(this.health, 0, this.maxHealth, 0, Assets.TILE_CRACKING.length - 1);
                 if (index < 0)
                     index = 0;
-                BufferedImage currentFrame = Assets.TILE_CRACKING[index];
-                g.drawImage(currentFrame, x, y, width, height, null);
+                Image currentFrame = Assets.TILE_CRACKING[index];
+                currentFrame.draw(x, y, width, height);
             }
         }
     }
@@ -163,11 +165,11 @@ public abstract class Tile {
         return position;
     }
 
-    public BufferedImage getTexture() {
+    public Image getTexture() {
         return texture;
     }
 
-    public void setTexture(BufferedImage texture) {
+    public void setTexture(Image texture) {
         this.texture = texture;
     }
 

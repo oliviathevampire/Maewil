@@ -6,7 +6,10 @@ import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 public class OverlayPlayerSprint extends Overlay {
 
@@ -15,12 +18,12 @@ public class OverlayPlayerSprint extends Overlay {
     }
 
     @Override
-    public void tick() {
+    public void update(GameContainer container, int delta) {
 
     }
 
     @Override
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         int multiplier = 6;
         int sWidth = 32;
         int sHeight = 16;
@@ -33,10 +36,10 @@ public class OverlayPlayerSprint extends Overlay {
         int x = engine.getWidth() - width;
         int y = engine.getHeight() - height;
 
-        Text.drawString(g, text, engine.getWidth() - Text.getWidth(g, text, font) - 10, engine.getHeight() - height, false, false, Color.white, font);
-        g.drawImage(Assets.SPRINT[0], x, y, width, height, null);
+        Text.drawString(g, text, engine.getWidth() - Text.getWidth(text, font) - 10, engine.getHeight() - height, false, false, Color.white, font);
+        Assets.SPRINT[0].draw(x, y, width, height);
 
         int sprintWidth = (int) NumberUtils.map(sprint - 1, 0, player.getMaxSprintTimer(), 0, sWidth);
-        g.drawImage(Assets.SPRINT[1].getSubimage(0, 0, sWidth - sprintWidth, sHeight), x, y, width - sprintWidth * multiplier, height, null);
+        Assets.SPRINT[1].getSubImage(0, 0, sWidth - sprintWidth, sHeight).draw(x, y, width - sprintWidth * multiplier, height);
     }
 }

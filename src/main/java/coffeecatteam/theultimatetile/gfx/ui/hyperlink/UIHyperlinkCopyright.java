@@ -6,6 +6,10 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 
+import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+
 import java.awt.*;
 import java.net.URI;
 
@@ -18,8 +22,8 @@ public class UIHyperlinkCopyright extends UIHyperlink {
     private static String text = "Copyright (C) CoffeeCatTeam 2018";
     private static Font font = Assets.FONTS.get("20");
 
-    public UIHyperlinkCopyright(Vector2D position, boolean underlined) {
-        super(position, Text.getHeight((Graphics2D) Engine.getEngine().getGraphics(), font), text, underlined, font, new ClickListener() {
+    public UIHyperlinkCopyright(Vector2D position) {
+        super(position, Text.getHeight(text, font), text, font, new ClickListener() {
             @Override
             public void onClick() {
                 try {
@@ -32,7 +36,7 @@ public class UIHyperlinkCopyright extends UIHyperlink {
             }
 
             @Override
-            public void tick() {
+            public void update(GameContainer container, int delta) {
             }
         });
     }

@@ -6,7 +6,9 @@ import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 public class OverlayPlayerHealth extends Overlay {
 
@@ -15,11 +17,11 @@ public class OverlayPlayerHealth extends Overlay {
     }
 
     @Override
-    public void tick() {
+    public void update(GameContainer container, int delta) {
     }
 
     @Override
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         int hWidth = 96;
         int hHeight = 96;
         int hStage = 0;
@@ -37,6 +39,6 @@ public class OverlayPlayerHealth extends Overlay {
 
         Text.drawString(g, "HP: " + player.getCurrentHealth(), 10, engine.getHeight() - hHeight, false, false, Color.red, Assets.FONTS.get("20"));
 
-        g.drawImage(Assets.HEARTS[hStage], 0, engine.getHeight() - hHeight, hWidth, hHeight, null);
+        Assets.HEARTS[hStage].draw(0, engine.getHeight() - hHeight, hWidth, hHeight);
     }
 }

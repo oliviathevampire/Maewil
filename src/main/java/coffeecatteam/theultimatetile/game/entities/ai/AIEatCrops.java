@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityCrop;
 import coffeecatteam.theultimatetile.game.tags.TagList;
+import org.newdawn.slick.GameContainer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +51,7 @@ public class AIEatCrops extends AI {
     }
 
     @Override
-    public boolean tick() {
+    public boolean update(GameContainer container, int delta) {
         EntityCrop closestCrop = getClosestCrop();
         if (closestCrop != null) {
             float x = closestCrop.getX() - entity.getX();

@@ -10,7 +10,7 @@ import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Image;
 import java.util.List;
 
 public class EntityTree extends EntityNature {
@@ -39,17 +39,17 @@ public class EntityTree extends EntityNature {
         MEDIUM(Assets.TREE_MEDIUM, Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2, 32),
         LARGE(Assets.TREE_LARGE, Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2, 32);
 
-        private BufferedImage texture;
+        private Image texture;
         private int width, height, boundsOffset;
 
-        TreeType(BufferedImage texture, int width, int height, int boundsOffset) {
+        TreeType(Image texture, int width, int height, int boundsOffset) {
             this.texture = texture;
             this.width = width;
             this.height = height;
             this.boundsOffset = boundsOffset;
         }
 
-        public BufferedImage getTexture() {
+        public Image getTexture() {
             return texture;
         }
 

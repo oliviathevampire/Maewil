@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.game.entities.creatures.EntityPassive;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
+import org.newdawn.slick.GameContainer;
 
 public class EntityPig extends EntityPassive {
 
@@ -19,7 +20,7 @@ public class EntityPig extends EntityPassive {
     }
 
     @Override
-    public void tick() {
+    public void update(GameContainer container, int delta) {
         xMove = 0;
         yMove = 0;
 
@@ -29,8 +30,8 @@ public class EntityPig extends EntityPassive {
 
         // Movement
         if (((GameEngine) engine).getPlayer().isActive())
-            if (!aiEatCrops.tick())
-                aiWander.tick();
+            if (!aiEatCrops.update(container, delta))
+                aiWander.update(container, delta);
         move();
     }
 

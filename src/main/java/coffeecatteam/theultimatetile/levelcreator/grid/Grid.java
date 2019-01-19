@@ -6,7 +6,8 @@ import coffeecatteam.theultimatetile.game.tile.Tiles;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 
 public abstract class Grid {
 
@@ -30,13 +31,13 @@ public abstract class Grid {
         this.gridSize = gridSize;
     }
 
-    public abstract void tick();
+    public abstract void update(GameContainer container, int delta);
 
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         for (int xs = 0; xs < xWorldSize; xs++) {
             for (int ys = 0; ys < yWorldSize; ys++) {
                 int w = (ogX * 2) / gridSize, h = (ogY * 2) / gridSize;
-                g.drawImage(Assets.EDIT_GRID_TILE, ((int) position.x + xOff) + w * xs, ((int) position.y + yOff) + h * ys, w, h, null);
+                Assets.EDIT_GRID_TILE.draw(((int) position.x + xOff) + w * xs, ((int) position.y + yOff) + h * ys, w, h);
             }
         }
     }

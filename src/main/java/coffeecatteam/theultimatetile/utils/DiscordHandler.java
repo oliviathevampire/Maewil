@@ -4,6 +4,7 @@ import club.minnced.discord.rpc.DiscordEventHandlers;
 import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
 import coffeecatteam.coffeecatutils.ArgUtils;
+import coffeecatteam.coffeecatutils.DevEnvUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 
@@ -62,7 +63,7 @@ public class DiscordHandler {
     public void updatePresence(String details, String state, boolean inGame) {
         if (!ArgUtils.hasArgument(Engine.getEngine().getArgs(), "-disableDiscordRP")) {
             DiscordRichPresence presence = new DiscordRichPresence();
-            presence.details = (Utils.runningFromIntelliJ() ? "Developing TUT - " : "") + details;
+            presence.details = (DevEnvUtils.isRunningFromDevEnviroment() ? "Developing TUT - " : "") + details;
             presence.state = state;
             presence.largeImageKey = "ultimatebg" + (LEVEL_CREATE ? "_edit" : "");
             if (inGame)

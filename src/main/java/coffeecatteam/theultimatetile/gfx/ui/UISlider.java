@@ -6,9 +6,10 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
-import java.awt.*;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.Image;
 
 public class UISlider extends UIObject {
 
@@ -43,11 +44,12 @@ public class UISlider extends UIObject {
     }
 
     @Override
-    public void tick() {
-        slider.tick();
+    public void update(GameContainer container, int delta) {
+        super.update(container, delta);
+        slider.update(container, delta);
         if (slider.isMouseHovering()) {
-            if (engine.getMouseManager().isLeftDown() || engine.getMouseManager().isLeftPressed()) {
-                slider.position.x = engine.getMouseManager().getMouseX() - slider.getWidth() / 2d;
+            if (engine.isLeftDown() || engine.isLeftPressed()) {
+                slider.position.x = engine.getMouseX() - slider.getWidth() / 2d;
 
                 if (slider.position.x < slMinX) slider.position.x = slMinX;
                 if (slider.position.x > slMaxX) slider.position.x = slMaxX;
@@ -58,32 +60,20 @@ public class UISlider extends UIObject {
     }
 
     @Override
-    public void render(Graphics2D g) {
-        BufferedImage bgSegStart = Assets.SLIDER_BAR.getSubimage(0, 0, 2, 6);
-        BufferedImage bgSegMiddle = Assets.SLIDER_BAR.getSubimage(2, 0, 44, 6);
-        BufferedImage bgSegEnd = Assets.SLIDER_BAR.getSubimage(46, 0, 2, 6);
+    public void render(Graphics g) {
+        Image bgSegStart = Assets.SLIDER_BAR.getSubImage(0, 0, 2, 6);
+        Image bgSegMiddle = Assets.SLIDER_BAR.getSubImage(2, 0, 44, 6);
+        Image bgSegEnd = Assets.SLIDER_BAR.getSubImage(46, 0, 2, 6);
 
-        g.drawImage(bgSegStart, (int) this.position.x, (int) this.position.y, segWidth, height, null);
-        g.drawImage(bgSegMiddle, startX, (int) this.position.y, width, height, null);
-        g.drawImage(bgSegEnd, endX, (int) this.position.y, segWidth, height, null);
+        bgSegStart.draw((int) this.position.x, (int) this.position.y, segWidth, height);
+        bgSegMiddle.draw(startX, (int) this.position.y, width, height);
+        bgSegEnd.draw(endX, (int) this.position.y, segWidth, height);
 
         slider.render(g);
     }
 
     @Override
     public void onClick() {
-    }
-
-    @Override
-    public void onMouseMoved(MouseEvent e) {
-    }
-
-    @Override
-    public void onMouseRelease(MouseEvent e) {
-    }
-
-    @Override
-    public void onMouseDragged(MouseEvent e) {
     }
 
     protected void setMinValue(int minValue) {
@@ -128,16 +118,17 @@ public class UISlider extends UIObject {
             bounds = new AABB(this.position, width, height);
         }
 
-        public void tick() {
+        public void update(GameContainer container, int delta) {
             bounds = new AABB(this.position, width, height);
         }
 
-        public void render(Graphics2D g) {
-            g.drawImage((isMouseHovering() ? Assets.SLIDER_BUTTON[1] : Assets.SLIDER_BUTTON[0]), (int) this.position.x, (int) this.position.y, width, height, null);
+        public void render(Graphics g) {
+            Image sbtn = (isMouseHovering() ? Assets.SLIDER_BUTTON[1] : Assets.SLIDER_BUTTON[0]);
+            sbtn.draw((int) this.position.x, (int) this.position.y, width, height);
         }
 
         public boolean isMouseHovering() {
-            return bounds.contains(engine.getMouseManager().getMouseX(), engine.getMouseManager().getMouseY());
+            return bounds.contains(engine.getMouseX(), engine.getMouseY());
         }
 
         public int getWidth() {

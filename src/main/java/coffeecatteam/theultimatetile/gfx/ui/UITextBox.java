@@ -1,12 +1,12 @@
 package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.Graphics;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,15 +31,11 @@ public class UITextBox extends UIObject {
     }
 
     public void addText(String text, Font font) {
-        addText(text, font, false);
+        addText(text, font, Color.white);
     }
 
-    public void addText(String text, Font font, boolean underlined) {
-        addText(text, font, underlined, Color.WHITE);
-    }
-
-    public void addText(String text, Font font, boolean underlined, Color color) {
-        TextF textF = new TextF(text, font, underlined, color);
+    public void addText(String text, Font font, Color color) {
+        TextF textF = new TextF(text, font, color);
         lines.add(textF);
     }
 
@@ -67,10 +63,6 @@ public class UITextBox extends UIObject {
     }
 
     @Override
-    public void tick() {
-    }
-
-    @Override
     public int getWidth() {
         return 64 + getLongestString();
     }
@@ -81,35 +73,32 @@ public class UITextBox extends UIObject {
     }
 
     @Override
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         int segWidth = 32, segHeight = 32;
-        g.drawImage(Assets.TEXTBOX[0], (int) position.x, (int) position.y, segWidth, segHeight, null);
-        g.drawImage(Assets.TEXTBOX[1], (int) position.x + segWidth, (int) position.y, getLongestString(), segHeight, null);
-        g.drawImage(Assets.TEXTBOX[2], (int) position.x + segWidth + getLongestString(), (int) position.y, segWidth, segHeight, null);
+        Assets.TEXTBOX[0].draw((int) position.x, (int) position.y, segWidth, segHeight);
+        Assets.TEXTBOX[1].draw((int) position.x + segWidth, (int) position.y, getLongestString(), segHeight);
+        Assets.TEXTBOX[2].draw((int) position.x + segWidth + getLongestString(), (int) position.y, segWidth, segHeight);
 
-        g.drawImage(Assets.TEXTBOX[3], (int) position.x, (int) position.y + segHeight, segWidth, getHeightOFStrings(), null);
-        g.drawImage(Assets.TEXTBOX[4], (int) position.x + segWidth, (int) position.y + segHeight, getLongestString(), getHeightOFStrings(), null);
-        g.drawImage(Assets.TEXTBOX[5], (int) position.x + segWidth + getLongestString(), (int) position.y + segHeight, segWidth, getHeightOFStrings(), null);
+        Assets.TEXTBOX[3].draw((int) position.x, (int) position.y + segHeight, segWidth, getHeightOFStrings());
+        Assets.TEXTBOX[4].draw((int) position.x + segWidth, (int) position.y + segHeight, getLongestString(), getHeightOFStrings());
+        Assets.TEXTBOX[5].draw((int) position.x + segWidth + getLongestString(), (int) position.y + segHeight, segWidth, getHeightOFStrings());
 
-        g.drawImage(Assets.TEXTBOX[6], (int) position.x, (int) position.y + segHeight + getHeightOFStrings(), segWidth, segHeight, null);
-        g.drawImage(Assets.TEXTBOX[7], (int) position.x + segWidth, (int) position.y + segHeight + getHeightOFStrings(), getLongestString(), segHeight, null);
-        g.drawImage(Assets.TEXTBOX[8], (int) position.x + segWidth + getLongestString(), (int) position.y + segHeight + getHeightOFStrings(), segWidth, segHeight, null);
+        Assets.TEXTBOX[6].draw((int) position.x, (int) position.y + segHeight + getHeightOFStrings(), segWidth, segHeight);
+        Assets.TEXTBOX[7].draw((int) position.x + segWidth, (int) position.y + segHeight + getHeightOFStrings(), getLongestString(), segHeight);
+        Assets.TEXTBOX[8].draw((int) position.x + segWidth + getLongestString(), (int) position.y + segHeight + getHeightOFStrings(), segWidth, segHeight);
 
+        int y = (int) position.y + segHeight;
         for (int i = 0; i < lines.size(); i++) {
             TextF textF = lines.get(i);
 
-            String text = textF.getText();
-            Font font = textF.getFont();
-            int height = textF.getHeight();
-            boolean underlined = textF.isUnderlined();
-            Color color = textF.getColor();
-
-            int y = (int) position.y + segHeight + lines.get(0).getHeight();
-            if (i > 0) y += height * i;
-            Text.drawString(g, text, (int) position.x + segWidth + getLongestString() / 2, y, true, false, underlined, color, font);
+            if (i > 0)
+                y += lines.get(i - 1).getHeight();
+            Text.drawString(g, textF.getText(), (int) position.x + segWidth + getLongestString() / 2, y, true, false, textF.getColor(), textF.getFont());
         }
 
         /* FOR DEBUGGING */
+//        g.setLineWidth(5f);
+//        g.setColor(Color.red);
 //        g.drawLine((int) position.x, (int) position.y + segHeight, (int) position.x + segWidth * 2 + getLongestString(), (int) position.y + segHeight);
     }
 
@@ -117,29 +106,15 @@ public class UITextBox extends UIObject {
     public void onClick() {
     }
 
-    @Override
-    public void onMouseMoved(MouseEvent e) {
-    }
-
-    @Override
-    public void onMouseRelease(MouseEvent e) {
-    }
-
-    @Override
-    public void onMouseDragged(MouseEvent e) {
-    }
-
     class TextF {
 
         private String text;
         private Font font;
-        private boolean underlined;
         private Color color;
 
-        public TextF(String text, Font font, boolean underlined, Color color) {
+        public TextF(String text, Font font, Color color) {
             this.text = text;
             this.font = font;
-            this.underlined = underlined;
             this.color = color;
         }
 
@@ -151,20 +126,16 @@ public class UITextBox extends UIObject {
             return font;
         }
 
-        public boolean isUnderlined() {
-            return underlined;
-        }
-
         public Color getColor() {
             return color;
         }
 
         public int getWidth() {
-            return Text.getWidth(Engine.getEngine().newGraphics(), text, font);
+            return Text.getWidth(text, font);
         }
 
         public int getHeight() {
-            return Text.getHeight(Engine.getEngine().newGraphics(), font);
+            return Text.getHeight(text, font);
         }
     }
 }

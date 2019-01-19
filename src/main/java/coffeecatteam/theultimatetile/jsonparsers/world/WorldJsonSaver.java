@@ -15,8 +15,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class WorldJsonSaver implements IJSONSaver {
 
@@ -35,7 +39,7 @@ public class WorldJsonSaver implements IJSONSaver {
         saveWorldInfo(world);
         engine.getLogger().print("World [" + world.getWorldName() + "] info saved!");
 
-        saveTiles(world.getWidth(), world.getHeight(), world.getBg_tiles(), world.getFg_tiles(), path + "/" + WorldJsonLoader.BASE_FILES.get("tile_bg"), path + "/" + WorldJsonLoader.BASE_FILES.get("tile_fg"));
+        saveTiles(world.getWidth(), world.getHeight(), world.getBg_tiles(), world.getFg_tiles(), path, WorldJsonLoader.BASE_FILES.get("tile_bg"), WorldJsonLoader.BASE_FILES.get("tile_fg"));
         engine.getLogger().print("World [" + world.getWorldName() + "] tiles saved!");
 
         /*
@@ -81,10 +85,10 @@ public class WorldJsonSaver implements IJSONSaver {
         spawn.add(1, spawnY);
         jsonObject.put("spawn", spawn);
 
-        saveJSONFileToSave(WorldJsonLoader.BASE_FILES.get("world"), jsonObject);
+        saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("world"), jsonObject);
     }
 
-    public void saveTiles(int width, int height, Tile[][] bgTiles, Tile[][] fgTiles, String bgSavePath, String fgSavePath) throws IOException {
+    public void saveTiles(int width, int height, Tile[][] bgTiles, Tile[][] fgTiles, String savePath, String bgFileName, String fgFileName) throws IOException {
         JSONObject jsonObjectBG = new JSONObject();
         JSONObject jsonObjectFG = new JSONObject();
 
@@ -110,8 +114,8 @@ public class WorldJsonSaver implements IJSONSaver {
         jsonObjectFG.put("fg_tile", fg_tile);
         engine.getLogger().print("Saved fg tiles");
 
-        saveJSONFileToPath(bgSavePath, jsonObjectBG);
-        saveJSONFileToPath(fgSavePath, jsonObjectFG);
+        saveJSONFileToPath(savePath, bgFileName, jsonObjectBG);
+        saveJSONFileToPath(savePath, fgFileName, jsonObjectFG);
     }
 
     private void saveTile(JSONArray chunk, Tile tile, int x, int y) {
@@ -145,32 +149,32 @@ public class WorldJsonSaver implements IJSONSaver {
             }
 
             // Static
+            JSONArray statics = new JSONArray();
             if (staticAmt > 0) {
-                JSONArray statics = new JSONArray();
                 for (Entity entity : GameEngine.getGameEngine().getEntityManager().getEntities())
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityStatic)
                             saveEntityObj(entity, statics);
-                jsonObjectStatic.put("statics", statics);
                 engine.getLogger().print("World [" + path + "] static entities saved!");
             }
+            jsonObjectStatic.put("statics", statics);
 
             // Creature
+            JSONArray creatures = new JSONArray();
             if (creatureAmt > 0) {
-                JSONArray creatures = new JSONArray();
 
                 for (Entity entity : GameEngine.getGameEngine().getEntityManager().getEntities())
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityCreature)
                             saveEntityObj(entity, creatures);
-                jsonObjectCreature.put("creatures", creatures);
                 engine.getLogger().print("World [" + path + "] creature entities saved!");
             }
+            jsonObjectCreature.put("creatures", creatures);
         }
         engine.getLogger().print("World [" + path + "] entities saved!");
 
-        saveJSONFileToSave(WorldJsonLoader.BASE_FILES.get("entity_s"), jsonObjectStatic);
-        saveJSONFileToSave(WorldJsonLoader.BASE_FILES.get("entity_c"), jsonObjectCreature);
+        saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("entity_s"), jsonObjectStatic);
+        saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("entity_c"), jsonObjectCreature);
     }
 
     public void saveItems() throws IOException {
@@ -194,7 +198,7 @@ public class WorldJsonSaver implements IJSONSaver {
         jsonObject.put("items", items);
         engine.getLogger().print("World [" + path + "] items saved!");
 
-        saveJSONFileToSave(WorldJsonLoader.BASE_FILES.get("items"), jsonObject);
+        saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("items"), jsonObject);
     }
 
     public void savePlayerInfo(String username) throws IOException {
@@ -241,7 +245,7 @@ public class WorldJsonSaver implements IJSONSaver {
         }
         jsonObject.put("hotbar", hotbar);
 
-        saveJSONFileToSave(WorldJsonLoader.BASE_FILES.get("player"), jsonObject);
+        saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("player"), jsonObject);
     }
 
     private void saveEntityObj(Entity entity, JSONArray entitiesArray) {
@@ -268,13 +272,14 @@ public class WorldJsonSaver implements IJSONSaver {
         entitiesArray.add(entityObj);
     }
 
-    private void saveJSONFileToSave(String name, JSONObject data) throws IOException {
-        saveJSONFileToPath(path + "/" + name, data);
+    private void saveJSONFileToSave(String path, String fileName, JSONObject data) throws IOException {
+        saveJSONFileToPath(path, fileName, data);
     }
 
-    private void saveJSONFileToPath(String path, JSONObject data) throws IOException {
-        FileWriter file = new FileWriter(path + ".json");
-        file.write(data.toJSONString());
-        file.flush();
+    private void saveJSONFileToPath(String path, String fileName, JSONObject data) throws IOException {
+        String trueFilePath = path + "/" + fileName + ".json";
+        FileWriter writer = new FileWriter(trueFilePath);
+        writer.write(data.toJSONString());
+        writer.flush();
     }
 }

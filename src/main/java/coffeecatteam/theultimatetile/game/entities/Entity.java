@@ -11,8 +11,8 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import org.newdawn.slick.*;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +41,7 @@ public abstract class Entity {
     private EntityHitType entityHitType;
 
     protected int renderX, renderY;
-    protected BufferedImage texture;
+    protected Image texture;
     private SpriteSheet HEALTH_BAR = new SpriteSheet("/assets/textures/gui/overlay/health_bar.png");
 
     public Entity(Engine engine, String id, int width, int height, EntityHitType entityHitType) {
@@ -67,11 +67,11 @@ public abstract class Entity {
         return TAGS;
     }
 
-    public void tick() {
+    public void update(GameContainer container, int delta) {
     }
 
-    public void tickA() {
-        tick();
+    public void updateA(GameContainer container, int delta) {
+        update(container, delta);
 
         this.renderX = (int) (this.position.x - ((GameEngine) this.engine).getCamera().getxOffset());
         this.renderY = (int) (this.position.y - ((GameEngine) this.engine).getCamera().getyOffset());
@@ -80,33 +80,33 @@ public abstract class Entity {
             this.interact();
     }
 
-    public void preRender(Graphics2D g) {
+    public void preRender(Graphics g) {
     }
 
-    public void render(Graphics2D g) {
+    public void render(Graphics g) {
         if (texture != null)
-            g.drawImage(texture, this.renderX, this.renderY, width, height, null);
+            texture.draw(this.renderX, this.renderY, width, height);
     }
 
-    public void postRender(Graphics2D g) {
+    public void postRender(Graphics g) {
         if (showHitbox) {
             g.setColor(Color.red);
             g.drawRect((int) (position.x + bounds.x - ((GameEngine) engine).getCamera().getxOffset()), (int) (position.y + bounds.y - ((GameEngine) engine).getCamera().getyOffset()), bounds.width, bounds.height);
         }
     }
 
-    public void renderHealth(Graphics2D g) {
+    public void renderHealth(Graphics g) {
 
         int barWidth = 16;
-        g.drawImage(HEALTH_BAR.crop(0, 9, barWidth, 2), this.renderX, this.renderY - 8, width, 4, null);
+        HEALTH_BAR.crop(0, 9, barWidth, 2).draw(this.renderX, this.renderY - 8, width, 4);
 
         int ht = (int) NumberUtils.map(currentHealth, 0, maxHealth, 0, width); // (currentHealth * 100.0f) / 15
-        g.drawImage(HEALTH_BAR.crop(0, 5, barWidth, 2), this.renderX, this.renderY - 8, ht, 4, null);
+        HEALTH_BAR.crop(0, 5, barWidth, 2).draw(this.renderX, this.renderY - 8, ht, 4);
 
         Font font = Assets.FONTS.get("20");
         String textHealth = "HP: " + currentHealth;
-        int xOff = Text.getWidth(g, textHealth, font) / 2 - width / 2;
-        Text.drawString(g, textHealth, this.renderX - xOff, this.renderY - Text.getHeight(g, font) / 2, false, false, new Color(0, 255, 0), font);
+        int xOff = Text.getWidth(textHealth, font) / 2 - width / 2;
+        Text.drawString(g, textHealth, this.renderX - xOff, this.renderY - Text.getHeight(textHealth, font) / 2, false, false, new Color(0, 255, 0), font);
     }
 
     public void die(List<Entity> entities, int index) {

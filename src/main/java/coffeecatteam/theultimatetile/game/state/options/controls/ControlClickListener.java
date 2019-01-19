@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButtonControl;
 import coffeecatteam.theultimatetile.utils.Utils;
+import org.newdawn.slick.GameContainer;
 
 import javax.swing.*;
 
@@ -28,7 +29,7 @@ public class ControlClickListener implements ClickListener {
     }
 
     @Override
-    public void tick() {
+    public void update(GameContainer container, int delta) {
         int newKeyCode = engine.getKeyManager().getCurrentKeyPressedCode();
         String newId = Utils.getKeyPressed(engine);
         Keybind keybind = StateOptions.OPTIONS.controls().get(jsonId);
