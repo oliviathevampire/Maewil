@@ -111,7 +111,7 @@ public class UIButton extends UIObject {
         if (hasCustomWidth) {
             textX = (int) this.position.x + pWidth / 4 + (width / 2 - textWidth / 2);
         }
-        Text.drawString(g, this.text, textX, textY, false, underlined, Color.gray, font);
+        Text.drawString(g, this.text, textX, textY + textHeight, false, underlined, Color.gray, font);
 
         if (centeredX)
             this.position.x = engine.getWidth() / 2d - this.width / 2d;

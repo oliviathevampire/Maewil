@@ -93,7 +93,7 @@ public class UITextBox extends UIObject {
 
             if (i > 0)
                 y += lines.get(i - 1).getHeight();
-            Text.drawString(g, textF.getText(), (int) position.x + segWidth + getLongestString() / 2, y, true, false, textF.getColor(), textF.getFont());
+            Text.drawString(g, textF.getText(), (int) position.x + segWidth + getLongestString() / 2, y + textF.getHeight(), true, false, textF.getColor(), textF.getFont());
         }
 
         /* FOR DEBUGGING */

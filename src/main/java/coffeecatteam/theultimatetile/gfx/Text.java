@@ -33,7 +33,7 @@ public class Text {
         g.setColor(c);
         g.setFont(font);
         int x = xPos;
-        int y = yPos;
+        int y = yPos - getHeight(text, font);
         if (centeredX)
             x = xPos - getWidth(text, font) / 2;
         if (centeredY)

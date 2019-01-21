@@ -54,7 +54,7 @@ public class UIHyperlink extends UIObject {
     public void render(Graphics g) {
         width = Text.getWidth(text, font);
         bounds.width = width;
-        Text.drawString(g, text, (int) this.position.x, (int) this.position.y, false, this.c, font);
+        Text.drawString(g, text, (int) this.position.x, (int) this.position.y + Text.getHeight(text, font), false, this.c, font);
     }
 
     @Override

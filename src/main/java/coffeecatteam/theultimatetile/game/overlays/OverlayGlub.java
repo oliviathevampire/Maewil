@@ -36,7 +36,7 @@ public class OverlayGlub extends Overlay {
         Font font = Assets.FONTS.get("20");
         int x = engine.getWidth() / 2 - width / 2;
 
-        Text.drawString(g, text, engine.getWidth() / 2, height + Text.getHeight(text, font) / 2, true, false, new Color(4, 79, 163), font);
+        Text.drawString(g, text, engine.getWidth() / 2, (int) (height + Text.getHeight(text, font) * 1.5f), true, false, new Color(4, 79, 163), font);
         Assets.GLUB_METER[0].draw(x, 0, width, height);
 
         int glubWidth = (int) NumberUtils.map(glub - 1, 0, player.getMaxGludel(), 0, sWidth);
