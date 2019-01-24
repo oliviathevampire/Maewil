@@ -15,11 +15,6 @@ public class EntityZombie extends EntityUndead {
 
     @Override
     protected void init() {
-        bounds.x = 13;
-        bounds.y = 28;
-        bounds.width = 34;
-        bounds.height = 35;
-
         animIdle = new Animation(animSpeed, Assets.ZOMBIE_IDLE);
         animUp = new Animation(animUpDownSpeed, Assets.ZOMBIE_UP);
         animDown = new Animation(animUpDownSpeed, Assets.ZOMBIE_DOWN);

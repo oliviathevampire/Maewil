@@ -20,11 +20,6 @@ public class EntityBouncer extends EntityUndead {
 
     @Override
     protected void init() {
-        bounds.x = 13;
-        bounds.y = 28;
-        bounds.width = 34;
-        bounds.height = 35;
-
         animIdle = new Animation(animSpeed, Assets.BOUNCER_IDLE);
         animUp = new Animation(animUpDownSpeed, Assets.BOUNCER_UP);
         animDown = new Animation(animUpDownSpeed, Assets.BOUNCER_DOWN);

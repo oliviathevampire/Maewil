@@ -53,10 +53,10 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     protected void init() {
-        bounds.x = 13;
-        bounds.y = 34;
-        bounds.width = 34;
-        bounds.height = 28;
+        bounds.x = width / 4f;
+        bounds.y = height - height / 2f;
+        bounds.width = width / 2;
+        bounds.height = height / 2;
 
         // Animations - 500 = 0.5 second
         int speed = 135;

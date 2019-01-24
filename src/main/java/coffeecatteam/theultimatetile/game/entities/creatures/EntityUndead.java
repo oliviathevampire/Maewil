@@ -22,6 +22,11 @@ public abstract class EntityUndead extends EntityCreature {
         super(engine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         aiWander = new AIWander(engine, this, 1.5f);
         aiFollowFlee = new AIFollowFlee(engine, this, ((GameEngine) engine).getEntityManager().getPlayer());
+
+        bounds.x = width / 4f;
+        bounds.y = height - height / 2f;
+        bounds.width = width / 2;
+        bounds.height = height / 2;
     }
 
     @Override

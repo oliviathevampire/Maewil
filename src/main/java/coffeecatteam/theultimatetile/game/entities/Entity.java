@@ -22,8 +22,7 @@ public abstract class Entity {
     public static Map<String, Entity> entities = new HashMap<>();
 
     public static final int DEFAULT_HEALTH = 100;
-    public static final int DEFAULT_WIDTH = 64;
-    public static final int DEFAULT_HEIGHT = 64;
+    public static final int DEFAULT_WIDTH = 48, DEFAULT_HEIGHT = 48;
 
     private String id;
     protected Engine engine;

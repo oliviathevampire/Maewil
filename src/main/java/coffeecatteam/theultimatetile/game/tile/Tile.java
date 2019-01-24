@@ -14,7 +14,7 @@ import org.newdawn.slick.Image;
 
 public abstract class Tile {
 
-    public static final int TILE_WIDTH = 64, TILE_HEIGHT = 64;
+    public static final int TILE_WIDTH = 48, TILE_HEIGHT = 48;
 
     protected Engine engine;
     protected Image texture;
@@ -96,7 +96,7 @@ public abstract class Tile {
         }
     }
 
-    public abstract <T extends Tile> T copy();
+    public abstract <T extends Tile> T newTile();
 
     public Item getDrop() {
         return drop;
@@ -110,8 +110,9 @@ public abstract class Tile {
         return unbreakable;
     }
 
-    public void setUnbreakable(boolean unbreakable) {
+    public Tile setUnbreakable(boolean unbreakable) {
         this.unbreakable = unbreakable;
+        return this;
     }
 
     public int getHealth() {

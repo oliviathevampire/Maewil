@@ -18,10 +18,10 @@ public class EntityTree extends EntityNature {
     public EntityTree(Engine engine, String id, TreeType type) {
         super(engine, id, type.getTexture(), type.getWidth(), type.getHeight(), EntityHitType.WOOD);
 
-        bounds.x = 20 + type.getBoundsOffset();
-        bounds.y = 96;
-        bounds.width = 28;
-        bounds.height = 32;
+        bounds.x = width / 4f;
+        bounds.y = height - height / 4f;
+        bounds.width = width / 2;
+        bounds.height = height / 4;
 
         drops.add(ItemManager.LEAF);
         drops.add(ItemManager.STICK);
