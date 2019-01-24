@@ -16,7 +16,7 @@ public class TileDirt extends TileOverlap {
     }
 
     @Override
-    public TileDirt copy() {
+    public TileDirt newTile() {
         return new TileDirt(engine, id, isSolid, tileType);
     }
 }

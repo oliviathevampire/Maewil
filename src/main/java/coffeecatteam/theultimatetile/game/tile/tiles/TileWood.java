@@ -16,7 +16,7 @@ public class TileWood extends Tile {
     }
 
     @Override
-    public TileWood copy() {
+    public TileWood newTile() {
         return new TileWood(engine, texture, id);
     }
 }

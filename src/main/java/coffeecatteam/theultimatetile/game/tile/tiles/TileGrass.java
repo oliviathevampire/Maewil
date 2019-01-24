@@ -23,7 +23,7 @@ public class TileGrass extends Tile {
     }
 
     @Override
-    public TileGrass copy() {
+    public TileGrass newTile() {
         return new TileGrass(engine, id);
     }
 }

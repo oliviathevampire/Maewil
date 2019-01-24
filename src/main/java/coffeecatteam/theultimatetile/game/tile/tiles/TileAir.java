@@ -15,7 +15,7 @@ public class TileAir extends Tile {
     }
 
     @Override
-    public TileAir copy() {
+    public TileAir newTile() {
         return new TileAir(engine);
     }
 }

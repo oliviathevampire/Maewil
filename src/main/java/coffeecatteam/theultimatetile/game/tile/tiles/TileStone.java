@@ -22,7 +22,7 @@ public class TileStone extends Tile {
     }
 
     @Override
-    public TileStone copy() {
+    public TileStone newTile() {
         return new TileStone(engine, texture, id, drop);
     }
 }

@@ -38,7 +38,7 @@ public class TileLava extends Tile {
     }
 
     @Override
-    public TileLava copy() {
+    public TileLava newTile() {
         return new TileLava(engine, animation, id);
     }
 }

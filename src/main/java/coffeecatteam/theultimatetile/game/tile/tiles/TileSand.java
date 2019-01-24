@@ -16,7 +16,7 @@ public class TileSand extends TileOverlap {
     }
 
     @Override
-    public TileSand copy() {
+    public TileSand newTile() {
         return new TileSand(engine, id);
     }
 }
