@@ -92,6 +92,7 @@ public abstract class Engine extends BasicGame {
     @Override
     public void render(GameContainer container, Graphics g) throws SlickException {
         g.clear();
+        Assets.MISSING_TEXTURE.draw(0, 0, width, height);
         rendera(container, g);
     }
 
