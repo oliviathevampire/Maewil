@@ -78,9 +78,9 @@ public abstract class Grid {
             for (int y = 0; y < yWorldSize; y++) {
                 Tile t = grid[x][y].getTile();
                 if (t == null)
-                    tiles[x][y] = Tiles.AIR.copy();
+                    tiles[x][y] = Tiles.AIR.newTile();
                 else
-                    tiles[x][y] = t.copy();
+                    tiles[x][y] = t.newTile();
             }
         }
 

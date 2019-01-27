@@ -15,7 +15,7 @@ public class GridTile {
     private int width, height;
 
     private AABB bounds;
-    private Tile tile = Tiles.AIR.copy();
+    private Tile tile = Tiles.AIR.newTile();
 
     public GridTile(Vector2D position, int width, int height) {
         this.position = position;
@@ -98,6 +98,6 @@ public class GridTile {
     }
 
     public GridTile copy() {
-        return new GridTile(position, width, height).setTile(this.tile.copy());
+        return new GridTile(position, width, height).setTile(this.tile.newTile());
     }
 }

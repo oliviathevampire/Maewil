@@ -86,7 +86,7 @@ public class GridWorldEditor extends Grid {
                         if (gridBounds.contains(mouseX, mouseY)) {
                             if (creatorEngine.isLeftDown() || creatorEngine.isLeftPressed()) {
                                 if (tile.getTile() != SELECTED_TILE)
-                                    tile.setTile(LevelRenderer.getSelectedTile().copy());
+                                    tile.setTile(LevelRenderer.getSelectedTile().newTile());
                             } else if (creatorEngine.isRightDown() || creatorEngine.isRightPressed())
                                 tile.setTile(Tiles.AIR);
                         }

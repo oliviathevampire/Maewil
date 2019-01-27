@@ -28,8 +28,8 @@ public class Camera {
     }
 
     public void centerOnEntity(Entity e) {
-        xOffset = e.getX() - gameEngine.getWidth() / 2 + e.getWidth() / 2;
-        yOffset = e.getY() - gameEngine.getHeight() / 2 + e.getHeight() / 2;
+        xOffset = e.getX() - gameEngine.getWidth() / 2f + e.getWidth() / 2f;
+        yOffset = e.getY() - gameEngine.getHeight() / 2f + e.getHeight() / 2f;
         checkBlankSpace();
     }
 
