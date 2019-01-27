@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile.utils.noise;
+package coffeecatteam.theultimatetile.game.world.noise;
 
 /*
  * OpenSimplex Noise in Java.
