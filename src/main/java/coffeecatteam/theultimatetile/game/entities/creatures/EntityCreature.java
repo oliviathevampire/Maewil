@@ -113,20 +113,19 @@ public abstract class EntityCreature extends Entity {
         }
     }
 
-    public boolean inWater() {
+    public Tile getTileAtMid() {
         float x = (float) ((position.x + width / 2) / Tile.TILE_WIDTH);
         float y = (float) ((position.y + height / 2f + height / 4f) / Tile.TILE_HEIGHT);
         Tile t = ((GameEngine) engine).getWorld().getFGTile((int) x, (int) y);
+        return t;
+    }
 
-        return t instanceof TileWater;
+    public boolean inWater() {
+        return getTileAtMid() instanceof TileWater;
     }
 
     public boolean inLava() {
-        float x = (float) ((position.x + width / 2) / Tile.TILE_WIDTH);
-        float y = (float) ((position.y + height / 2f + height / 4f) / Tile.TILE_HEIGHT);
-        Tile t = ((GameEngine) engine).getWorld().getFGTile((int) x, (int) y);
-
-        return t instanceof TileLava;
+        return getTileAtMid() instanceof TileLava;
     }
 
     public void move() {
