@@ -358,7 +358,7 @@ public class EntityPlayer extends EntityCreature {
         if (username != null) {
             int nameWidth = Text.getWidth(username, font);
             int nameHeight = Text.getHeight(username, font);
-            int add = 6;
+            int add = 8;
             Color tint = new Color(96, 96, 96, 127);
             g.setColor(tint);
 
@@ -366,7 +366,7 @@ public class EntityPlayer extends EntityCreature {
             int yOff = height / 2;
 
             g.fillRect(this.renderX - xOff - add / 2, this.renderY - yOff - add / 2, nameWidth + add, nameHeight + add);
-            Text.drawString(g, username, this.renderX - xOff, this.renderY - yOff - add / 2, false, false, Color.white, font);
+            Text.drawString(g, username, this.renderX - xOff + nameWidth / 2, this.renderY - yOff - nameHeight / 2 - add / 2, true, Color.white, font);
         }
 
         inventoryPlayer.render(g);
