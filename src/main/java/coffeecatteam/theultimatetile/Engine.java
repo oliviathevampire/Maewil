@@ -39,7 +39,7 @@ public abstract class Engine extends BasicGame {
         this.args = args;
         this.width = width;
         this.height = height;
-        this.logger = new CatLogger(title);
+        this.logger = new CatLogger("Client-Thread");
         engine = this;
     }
 
