@@ -46,6 +46,6 @@ public class TileWater extends TileOverlap {
 
     @Override
     public TileWater newTile() {
-        return new TileWater(engine, id, isSolid, tileType);
+        return (TileWater) new TileWater(engine, id, isSolid, tileType).setMapColor(mapColor);
     }
 }

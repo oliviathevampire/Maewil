@@ -23,6 +23,6 @@ public class TileStone extends Tile {
 
     @Override
     public TileStone newTile() {
-        return new TileStone(engine, texture, id, drop);
+        return (TileStone) new TileStone(engine, texture, id, drop).setMapColor(mapColor);
     }
 }

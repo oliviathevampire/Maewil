@@ -17,6 +17,6 @@ public class TileDirt extends TileOverlap {
 
     @Override
     public TileDirt newTile() {
-        return new TileDirt(engine, id, isSolid, tileType);
+        return (TileDirt) new TileDirt(engine, id, isSolid, tileType).setMapColor(mapColor);
     }
 }

@@ -39,6 +39,6 @@ public class TileLava extends Tile {
 
     @Override
     public TileLava newTile() {
-        return new TileLava(engine, animation, id);
+        return (TileLava) new TileLava(engine, animation, id).setMapColor(mapColor);
     }
 }

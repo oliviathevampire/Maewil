@@ -17,6 +17,6 @@ public class TileSand extends TileOverlap {
 
     @Override
     public TileSand newTile() {
-        return new TileSand(engine, id);
+        return (TileSand) new TileSand(engine, id).setMapColor(mapColor);
     }
 }

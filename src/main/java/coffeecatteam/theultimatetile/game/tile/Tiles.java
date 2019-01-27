@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.game.tile;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.tile.tiles.*;
+import coffeecatteam.theultimatetile.game.world.colormap.WorldColors;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
@@ -35,29 +36,29 @@ public class Tiles {
     public static TileWood BOOKSHELF;
 
     public static void init(Engine engine) {
-        register(GRASS = (TileGrass) getTile(engine, "grass"));
-        register(DIRT = (TileDirt) getTile(engine, "dirt"));
-        register(STONE = (TileStone) getTile(engine, "stone"));
-        register(SAND = (TileSand) getTile(engine, "sand"));
-        register(ANDESITE = (TileStone) getTile(engine, "andesite"));
-        register(DIORITE = (TileStone) getTile(engine, "diorite"));
+        register(GRASS = (TileGrass) getTile(engine, "grass").setMapColor(WorldColors.GRASS));
+        register(DIRT = (TileDirt) getTile(engine, "dirt").setMapColor(WorldColors.DIRT));
+        register(STONE = (TileStone) getTile(engine, "stone").setMapColor(WorldColors.STONE));
+        register(SAND = (TileSand) getTile(engine, "sand").setMapColor(WorldColors.SAND));
+        register(ANDESITE = (TileStone) getTile(engine, "andesite").setMapColor(WorldColors.STONE));
+        register(DIORITE = (TileStone) getTile(engine, "diorite").setMapColor(WorldColors.STONE));
 
-        register(COAL_ORE = (TileStone) getTile(engine, "coal_ore"));
-        register(IRON_ORE = (TileStone) getTile(engine, "iron_ore"));
-        register(GOLD_ORE = (TileStone) getTile(engine, "gold_ore"));
-        register(DIAMOND_ORE = (TileStone) getTile(engine, "diamond_ore"));
+        register(COAL_ORE = (TileStone) getTile(engine, "coal_ore").setMapColor(WorldColors.STONE));
+        register(IRON_ORE = (TileStone) getTile(engine, "iron_ore").setMapColor(WorldColors.STONE));
+        register(GOLD_ORE = (TileStone) getTile(engine, "gold_ore").setMapColor(WorldColors.STONE));
+        register(DIAMOND_ORE = (TileStone) getTile(engine, "diamond_ore").setMapColor(WorldColors.STONE));
 
-        register(OBSIDIAN = (TileStone) getTile(engine, "obsidian"));
+        register(OBSIDIAN = (TileStone) getTile(engine, "obsidian").setMapColor(WorldColors.STONE));
 
-        register(WATER = (TileWater) getTile(engine, "water"));
-        register(LAVA = (TileLava) getTile(engine, "lava"));
+        register(WATER = (TileWater) getTile(engine, "water").setMapColor(WorldColors.OCEAN));
+        register(LAVA = (TileLava) getTile(engine, "lava").setMapColor(WorldColors.LAVA));
 
-        register(PLANKS = (TileWood) getTile(engine, "planks"));
-        register(BROKEN_STONE = (TileStone) getTile(engine, "broken_stone"));
+        register(PLANKS = (TileWood) getTile(engine, "planks").setMapColor(WorldColors.WOOD));
+        register(BROKEN_STONE = (TileStone) getTile(engine, "broken_stone").setMapColor(WorldColors.STONE));
 
-        AIR = (TileAir) getTile(engine, "air");
+        AIR = (TileAir) getTile(engine, "air").setMapColor(WorldColors.AIR);
 
-        register(BOOKSHELF = (TileWood) getTile(engine, "bookshelf"));
+        register(BOOKSHELF = (TileWood) getTile(engine, "bookshelf").setMapColor(WorldColors.WOOD));
     }
 
     private static void register(Tile tile) {

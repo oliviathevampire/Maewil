@@ -1,14 +1,17 @@
 package coffeecatteam.theultimatetile.game.world;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.logger.CatLogger;
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.game.tile.TilePos;
+import coffeecatteam.theultimatetile.game.world.colormap.WorldMapGenerator;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
-import coffeecatteam.theultimatetile.utils.PositionOutOfBoundsException;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -16,6 +19,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.util.BufferedImageUtil;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class World {
@@ -30,9 +34,12 @@ public class World {
     private Tile[][] fg_tiles;
 
     private OverlayManager overlayManager;
-    private WorldGenerator worldGenerator;
 
-    private Image mapCursor = Assets.MAP_CURSOR[0], landMap, pathMap;
+    private Image mapCursor = Assets.MAP_CURSOR[0];
+    private Color halfTransparent = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+
+    private boolean isForcedUpdate = false;
+    private Thread forcedUpdateThread;
 
     public World(Engine engine, String path, String worldName) {
         this.engine = engine;
@@ -48,6 +55,10 @@ public class World {
         ((GameEngine) engine).getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
     }
 
+    public World(Engine engine, String worldName, int width, int height, Vector2D spawn, Tile[][] bg_tiles, Tile[][] fg_tiles) {
+        this(engine, worldName, width, height, (int) spawn.x, (int) spawn.y, bg_tiles, fg_tiles);
+    }
+
     public World(Engine engine, String worldName, int width, int height, int spawnX, int spawnY, Tile[][] bg_tiles, Tile[][] fg_tiles) {
         this.engine = engine;
         this.worldName = worldName;
@@ -57,6 +68,29 @@ public class World {
         this.spawnY = spawnY;
         this.bg_tiles = bg_tiles;
         this.fg_tiles = fg_tiles;
+
+        overlayManager = new OverlayManager(engine, ((GameEngine) engine).getEntityManager().getPlayer());
+    }
+
+    private void forcedUpdateInit(GameContainer container, int delta) {
+        if (!isForcedUpdate) {
+            isForcedUpdate = true;
+
+            forcedUpdateThread = new Thread(() -> {
+                CatLogger logger = new CatLogger();
+                logger.print("Forced update initialized");
+
+                while (isForcedUpdate) for (int y = 0; y < height; y++)
+                    for (int x = 0; x < width; x++) {
+                        getBGTile(x, y).forcedUpdate(container, delta);
+                        getFGTile(x, y).forcedUpdate(container, delta);
+                    }
+
+                logger.print(new Exception("Something is wrong with the world!"));
+            }, "WorldForcedUpdate-Thread");
+
+            forcedUpdateThread.start();
+        }
     }
 
     public void update(GameContainer container, int delta) {
@@ -75,12 +109,7 @@ public class World {
             }
         }
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                getBGTile(x, y).forcedUpdate(container, delta);
-                getFGTile(x, y).forcedUpdate(container, delta);
-            }
-        }
+        forcedUpdateInit(container, delta);
 
         ((GameEngine) engine).getItemManager().update(container, delta);
         ((GameEngine) engine).getEntityManager().update(container, delta);
@@ -109,19 +138,93 @@ public class World {
         ((GameEngine) engine).getEntityManager().render(g);
         overlayManager.render(g);
 
+        /*
+         * Mini Map
+         */
         float padding = 10;
-        float x = padding, y = padding, w = 180, h = 180;
+        float x = padding, y = padding, mapSize = 180;
         g.setColor(Color.white);
-        landMap.draw(x, y, w, h);
-        pathMap.draw(x, y, w, h);
 
-        float px = NumberUtils.map(((GameEngine) engine).getPlayer().getX(), 0, width * Tile.TILE_WIDTH, 0, w);
-        float py = NumberUtils.map(((GameEngine) engine).getPlayer().getY(), 0, height * Tile.TILE_HEIGHT, 0, h);
-        float s = 25;
+        int viewSize = 100;
+        BufferedImage map = new BufferedImage(viewSize, viewSize, BufferedImage.TYPE_INT_ARGB);
+        int pwx = (int) (((GameEngine) engine).getPlayer().getPosition().x / Tile.TILE_WIDTH);
+        int pwy = (int) (((GameEngine) engine).getPlayer().getPosition().y / Tile.TILE_HEIGHT);
+
+        /*
+         * Get world viewing coords
+         */
+        int mxStart = pwx - viewSize / 2;
+        int mxEnd = pwx + viewSize / 2;
+        int myStart = pwy - viewSize / 2;
+        int myEnd = pwy + viewSize / 2;
+
+        if (mxStart < 0) {
+            mxStart = 0;
+            mxEnd = viewSize;
+        }
+        if (mxEnd > width - 1) {
+            mxStart = width - 1 - viewSize;
+            mxEnd = width - 1;
+        }
+        if (myStart < 0) {
+            myStart = 0;
+            myEnd = viewSize;
+        }
+        if (myEnd > height - 1) {
+            myStart = height - 1 - viewSize;
+            myEnd = height - 1;
+        }
+
+        /*
+         * Generate map image
+         */
+        for (int my = myStart; my < myEnd; my++) {
+            for (int mx = mxStart; mx < mxEnd; mx++) {
+                int c = WorldMapGenerator.getRGBA(getFGTile(mx, my).getMapColor().getRGB());
+                int pixelX = (int) NumberUtils.map(mx, mxStart, mxEnd, 0, viewSize - 1);
+                int pixelY = (int) NumberUtils.map(my, myStart, myEnd, 0, viewSize - 1);
+                map.setRGB(pixelX, pixelY, c);
+            }
+        }
+
+        int mapSizeOff = 14;
+        float mapBorderSize = mapSize + padding;
+        EntityPlayer player = GameEngine.getGameEngine().getPlayer();
+        Color trans = ((player.getPosition().x + player.getWidth() / 2f < mapBorderSize && player.getPosition().y + player.getHeight() / 2f < mapBorderSize) ? halfTransparent : Color.white);
+        try {
+            Image mapDraw = new Image(BufferedImageUtil.getTexture("", map));
+            mapDraw.setFilter(Image.FILTER_NEAREST);
+            mapDraw.draw(x + mapSizeOff / 2f, y + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2, trans);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*
+         * Convert player world coords to map coords
+         */
+        float cursorSize = 20f;
+        float pxd = x + mapSize / 2f - cursorSize / 2f;
+        float pyd = y + mapSize / 2f - cursorSize / 2f;
+
+        float px = pxd;
+        float py = pyd;
+
+        if (mxStart <= 0)
+            px = NumberUtils.map((float) ((GameEngine) engine).getPlayer().getPosition().x, 0, (viewSize + cursorSize) * Tile.TILE_WIDTH, x, x + mapSize);
+        if (mxEnd >= width - 1)
+            px = NumberUtils.map((float) ((GameEngine) engine).getPlayer().getPosition().x, (width - (viewSize - cursorSize / 2)) * Tile.TILE_WIDTH, width * Tile.TILE_WIDTH, x, x + mapSize - cursorSize / 2);
+        if (myStart <= 0)
+            py = NumberUtils.map((float) ((GameEngine) engine).getPlayer().getPosition().y, 0, (viewSize + cursorSize) * Tile.TILE_HEIGHT, y, y + mapSize);
+        if (myEnd >= height - 1)
+            py = NumberUtils.map((float) ((GameEngine) engine).getPlayer().getPosition().y, (height - (viewSize - cursorSize / 2)) * Tile.TILE_HEIGHT, height * Tile.TILE_HEIGHT, y, y + mapSize - cursorSize / 2);
+
+        /*
+         * Draw cursor (arrow) and border
+         */
         updateMapCursor();
-        mapCursor.draw(px + x - s / 2, py + y - s / 2, s, s);
+        mapCursor.draw(px, py, cursorSize, cursorSize);
 
-        Assets.MAP_BORDER.draw(x - padding / 2, y - padding / 2, w + padding, h + padding);
+        Assets.MAP_BORDER.draw(x - padding / 2, y - padding / 2, mapBorderSize, mapBorderSize, trans);
     }
 
     private void updateMapCursor() {
@@ -185,19 +288,21 @@ public class World {
     }
 
     private void checkTilePos(TilePos pos, boolean wh_exact) {
-        try {
-            if (pos.getX() < 0 || pos.getY() < 0)
-                throw new PositionOutOfBoundsException(pos.toVector2D());
-            else if (wh_exact) {
-                if (pos.getX() >= width || pos.getY() >= height)
-                    throw new PositionOutOfBoundsException(pos.toVector2D());
-            } else {
-                if (pos.getX() > width || pos.getY() > height)
-                    throw new PositionOutOfBoundsException(pos.toVector2D());
-            }
-        } catch (PositionOutOfBoundsException e) {
-            engine.getLogger().print(e);
-            engine.close();
+        if (pos.getX() < 0)
+            pos.setX(0);
+        if (pos.getY() < 0)
+            pos.setY(0);
+
+        if (wh_exact) {
+            if (pos.getX() >= width)
+                pos.setX(width);
+            if (pos.getY() >= height)
+                pos.setY(height);
+        } else {
+            if (pos.getX() > width)
+                pos.setX(width);
+            if (pos.getY() > height)
+                pos.setY(height);
         }
     }
 
@@ -214,14 +319,8 @@ public class World {
         spawnX = worldJsonLoader.getSpawnX();
         spawnY = worldJsonLoader.getSpawnY();
 
-        worldGenerator = new WorldGenerator(width, height);
-        landMap = new Image(BufferedImageUtil.getTexture("", worldGenerator.getLandMap()));
-        pathMap = new Image(BufferedImageUtil.getTexture("", worldGenerator.getPathMap()));
-
         Tile[][] bg_tile_ids = worldJsonLoader.getBg_tiles().clone();
         Tile[][] fg_tile_ids = worldJsonLoader.getFg_tiles().clone();
-//        Tile[][] bg_tile_ids = worldGenerator.getBg_tiles();
-//        Tile[][] fg_tile_ids = worldGenerator.getFg_tiles();
 
         bg_tiles = new Tile[width][height];
         fg_tiles = new Tile[width][height];

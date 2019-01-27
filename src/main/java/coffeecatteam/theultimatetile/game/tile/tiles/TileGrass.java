@@ -24,6 +24,6 @@ public class TileGrass extends Tile {
 
     @Override
     public TileGrass newTile() {
-        return new TileGrass(engine, id);
+        return (TileGrass) new TileGrass(engine, id).setMapColor(mapColor);
     }
 }

@@ -6,11 +6,14 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.game.world.colormap.WorldColors;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+
+import java.awt.*;
 
 public abstract class Tile {
 
@@ -19,6 +22,7 @@ public abstract class Tile {
     protected Engine engine;
     protected Image texture;
     protected final String id;
+    protected Color mapColor = WorldColors.STONE;
 
     protected AABB bounds;
     protected TilePos position = new TilePos();
@@ -112,6 +116,15 @@ public abstract class Tile {
 
     public Tile setUnbreakable(boolean unbreakable) {
         this.unbreakable = unbreakable;
+        return this;
+    }
+
+    public Color getMapColor() {
+        return mapColor;
+    }
+
+    public Tile setMapColor(Color mapColor) {
+        this.mapColor = mapColor;
         return this;
     }
 
