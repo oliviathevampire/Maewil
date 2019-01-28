@@ -36,3 +36,4 @@ build.bat
 build_no_exe.bat
 saves/
 saves/saved_games.json
+*.tutlog
