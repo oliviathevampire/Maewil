@@ -6,7 +6,6 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.state.State;
 import coffeecatteam.theultimatetile.game.state.game.StateGame;
-import coffeecatteam.theultimatetile.game.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.game.tile.Tiles;
 import coffeecatteam.theultimatetile.game.world.World;
 import coffeecatteam.theultimatetile.game.world.WorldGenerator;
@@ -53,61 +52,61 @@ public class ClickListenerWorld implements ClickListener {
 
     @Override
     public void onClick() {
-        String worldName;
-        Tiles.init(engine);
-        if (!isSaved) {
-            worldName = getWorldname("New World");
-            path = savesPath + worldName;
-            new File(path).mkdir();
-
-            String ogWorld = "/assets/world";
-            WorldJsonLoader.copyFiles(engine, ogWorld, path);
-
-            int wSizeType = NumberUtils.getRandomInt(1, 3);
-            int wSize;
-            if (wSizeType == 1) wSize = 100;
-            else if (wSizeType == 2) wSize = 120;
-            else wSize = 200;
-            WorldGenerator worldGenerator = new WorldGenerator(wSize, wSize);
-            World w = new World(engine, worldName, wSize, wSize, wSize / 2, wSize / 2, worldGenerator.getBg_tiles(), worldGenerator.getFg_tiles());
-            WorldJsonSaver saver = new WorldJsonSaver(path, w, engine);
-            try {
-                saver.save("");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            SavedGamesJSONParser.GAMES.set(index, "true:" + worldName);
-
-            try {
-                gamesJSONParser.save();
-            } catch (IOException e) {
-                engine.getLogger().print(e);
-            }
-        } else {
-            worldName = SavedGamesJSONParser.GAMES.get(index).split(":")[1];
-            path = savesPath + worldName;
-        }
-
-        String username;
-        if (ArgUtils.hasArgument(engine.getArgs(), "-username")) {
-            username = ArgUtils.getArgument(engine.getArgs(), "-username");
-        } else {
-            if (!isSaved) {
-                username = Utils.getUsername();
-            } else {
-                username = "HAKUNA MATATA!";
-            }
-        }
-        GameEngine.getGameEngine().setUsername(username);
-        engine.getLogger().print("Set username: " + GameEngine.getGameEngine().getUsername());
-
-        engine.getLogger().print("Loading game [" + path + "]!");
-
-        DiscordHandler.INSTANCE.updatePresence("In Game - " + GameEngine.getGameEngine().getUsername(), "World: " + worldName, true);
-        StateGame game = new StateGame(engine, path, worldName);
-        game.saveWorld(username);
-        State.setState(game);
+//        String worldName;
+//        Tiles.init(engine);
+//        if (!isSaved) {
+//            worldName = getWorldname("New World");
+//            path = savesPath + worldName;
+//            new File(path).mkdir();
+//
+//            String ogWorld = "/assets/world";
+//            WorldJsonLoader.copyFiles(engine, ogWorld, path);
+//
+//            int wSizeType = NumberUtils.getRandomInt(1, 3);
+//            int wSize;
+//            if (wSizeType == 1) wSize = 100;
+//            else if (wSizeType == 2) wSize = 120;
+//            else wSize = 200;
+//            WorldGenerator worldGenerator = new WorldGenerator(wSize, wSize);
+//            World w = new World(engine, worldName, wSize, wSize, wSize / 2, wSize / 2, worldGenerator.getBg_tiles(), worldGenerator.getFg_tiles());
+//            WorldJsonSaver saver = new WorldJsonSaver(path, w, engine);
+//            try {
+//                saver.save("");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            SavedGamesJSONParser.GAMES.set(index, "true:" + worldName);
+//
+//            try {
+//                gamesJSONParser.save();
+//            } catch (IOException e) {
+//                engine.getLogger().print(e);
+//            }
+//        } else {
+//            worldName = SavedGamesJSONParser.GAMES.get(index).split(":")[1];
+//            path = savesPath + worldName;
+//        }
+//
+//        String username;
+//        if (ArgUtils.hasArgument(engine.getArgs(), "-username")) {
+//            username = ArgUtils.getArgument(engine.getArgs(), "-username");
+//        } else {
+//            if (!isSaved) {
+//                username = Utils.getUsername();
+//            } else {
+//                username = "HAKUNA MATATA!";
+//            }
+//        }
+//        GameEngine.getGameEngine().setUsername(username);
+//        engine.getLogger().print("Set username: " + GameEngine.getGameEngine().getUsername());
+//
+//        engine.getLogger().print("Loading game [" + path + "]!");
+//
+//        DiscordHandler.INSTANCE.updatePresence("In Game - " + GameEngine.getGameEngine().getUsername(), "World: " + worldName, true);
+//        StateGame game = new StateGame(engine, path, worldName);
+//        game.saveWorld(username);
+//        State.setState(game);
     }
 
     @Override

@@ -80,13 +80,21 @@ public class World {
                 CatLogger logger = new CatLogger();
                 logger.print("Forced update initialized");
 
-                while (isForcedUpdate) for (int y = 0; y < height; y++)
-                    for (int x = 0; x < width; x++) {
-                        getBGTile(x, y).forcedUpdate(container, delta);
-                        getFGTile(x, y).forcedUpdate(container, delta);
+                while (isForcedUpdate) {
+                    for (int y = 0; y < height; y++) {
+                        for (int x = 0; x < width; x++) {
+                            getBGTile(x, y).forcedUpdate(container, delta);
+                            getFGTile(x, y).forcedUpdate(container, delta);
+                        }
                     }
+                }
 
-                logger.print(new Exception("Something is wrong with the world!"));
+                logger.print("Stopping force update thread...");
+                try {
+                    forcedUpdateThread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }, "WorldForcedUpdate-Thread");
 
             forcedUpdateThread.start();
@@ -378,5 +386,9 @@ public class World {
 
     public Tile[][] getFg_tiles() {
         return fg_tiles;
+    }
+
+    public void stopForcedUpdateThread() {
+        this.isForcedUpdate = false;
     }
 }

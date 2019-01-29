@@ -1,12 +1,15 @@
 package coffeecatteam.theultimatetile.game.world;
 
-import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.game.tile.Tile;
+import coffeecatteam.theultimatetile.game.tile.TilePos;
 import coffeecatteam.theultimatetile.game.tile.Tiles;
-import coffeecatteam.theultimatetile.utils.noise.NoiseMapGenerator;
+import coffeecatteam.theultimatetile.game.tile.tiles.TileStone;
+import coffeecatteam.theultimatetile.game.world.colormap.WorldColors;
+import coffeecatteam.theultimatetile.game.world.colormap.WorldMapGenerator;
+import coffeecatteam.theultimatetile.game.world.noise.OpenSimplexNoise;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 /**
  * @author CoffeeCatRailway
@@ -14,103 +17,138 @@ import java.io.IOException;
  */
 public class WorldGenerator {
 
-    private int width, height;
-    private BufferedImage landMap, pathMap;
-    private double blendSize = 25d;
+    private int worldSize;
+    private BufferedImage landMap, pathMap, biomeMap;
 
-    private Tile[][] fg_tiles, bg_tiles;
+    private long seed;
+    private long seedOreOffInc = seed / 4, seedOreOff = seedOreOffInc;
 
-    public WorldGenerator(int width, int height) {
-        this((long) (Math.random() * 1000000000), width, height);
+    private double blendSize = 25.0d;
+
+    private Tile[][] bgTiles, fgTiles;
+
+    public WorldGenerator(long seed, int worldSize) {
+        this.seed = seed;
+        this.worldSize = worldSize;
     }
 
-    public WorldGenerator(long seed, int width, int height) {
-        this.width = width;
-        this.height = height;
+    public void generate() {
+        bgTiles = new Tile[worldSize][worldSize];
+        fgTiles = new Tile[worldSize][worldSize];
 
-        try {
-            landMap = NoiseMapGenerator.generateLand(seed, this.width, this.height, blendSize);
-            pathMap = NoiseMapGenerator.generatePaths(seed, this.width, this.height, blendSize - NumberUtils.getRandomInt(2, 5), landMap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        WorldMapGenerator mapGenerator = new WorldMapGenerator(seed, worldSize, worldSize, blendSize);
 
-        this.fg_tiles = generateTiles(landMap, pathMap, false);
-        this.bg_tiles = generateTiles(landMap, pathMap, true);
+        landMap = mapGenerator.generateLand(0, 0, true);
+        pathMap = mapGenerator.generatePaths(0, 0, landMap);
+        biomeMap = mapGenerator.generateBiomes(0, 0, landMap, pathMap);
     }
 
-    public Tile[][] generateTiles(BufferedImage landMap, BufferedImage pathMap, boolean bg) {
-        Tile[][] out = new Tile[width][height];
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                int pColor = landMap.getRGB(x, y);
-                Tile t = Tiles.AIR.copy();
-                if (pColor == NoiseMapGenerator.DEAP_OCEAN.getRGB() || pColor == NoiseMapGenerator.OCEAN.getRGB()) {
-                    if (bg) {
-                        if (pColor == NoiseMapGenerator.DEAP_OCEAN.getRGB()) {
-                            t = Tiles.DIRT.copy();
-                        }
-                        if (pColor == NoiseMapGenerator.OCEAN.getRGB()) {
-                            t = Tiles.SAND.copy();
-                        }
-                    } else {
-                        t = Tiles.WATER.copy();
-                    }
-                }
-                if (pColor == NoiseMapGenerator.SAND.getRGB()) {
-                    t = Tiles.SAND.copy();
-                }
-                if (pColor == NoiseMapGenerator.GRASS.getRGB()) {
-                    if (bg) {
-                        t = Tiles.DIRT.copy();
-                    } else {
-                        t = Tiles.GRASS.copy();
-                    }
-                }
-                if (pColor == NoiseMapGenerator.STONE.getRGB()) {
-                    if (bg) {
-                        t = Tiles.DIRT.copy();
-                    } else {
-                        t = Tiles.STONE.setSolid(true).copy();
-                    }
-                }
-                if (pColor == NoiseMapGenerator.DIRT.getRGB()) {
-                    t = Tiles.DIRT.copy();
-                }
-                out[x][y] = t.copy();
+    public BufferedImage getBiomeMap() {
+        return biomeMap;
+    }
+
+    public Tile[][] getBGTiles() {
+        for (int y = 0; y < worldSize; y++) {
+            for (int x = 0; x < worldSize; x++) {
+                Color lc = new Color(WorldMapGenerator.getRGBA(landMap.getRGB(x, y)));
+                Color pc = new Color(WorldMapGenerator.getRGBA(pathMap.getRGB(x, y)));
+                Tile tile = Tiles.AIR.newTile();
+
+                if (lc.getRGB() == WorldColors.DIRT.getRGB()
+                        || pc.getRGB() == WorldColors.DIRT.getRGB()
+                        || lc.getRGB() == WorldColors.GRASS.getRGB()
+                        || lc.getRGB() == WorldColors.DEAP_OCEAN.getRGB())
+                    tile = Tiles.DIRT.newTile();
+
+                if (lc.getRGB() == WorldColors.SAND.getRGB() || lc.getRGB() == WorldColors.OCEAN.getRGB())
+                    tile = Tiles.SAND.newTile();
+
+                if (lc.getRGB() == WorldColors.STONE.getRGB())
+                    tile = Tiles.STONE.newTile();
+
+                checkBorderTilePos(tile, x, y, true);
+                bgTiles[x][y] = tile.setPos(new TilePos(x, y));
             }
         }
+        return generateOres(bgTiles, true);
+    }
+
+    public Tile[][] getFGTiles() {
+        for (int y = 0; y < worldSize; y++) {
+            for (int x = 0; x < worldSize; x++) {
+                Color lc = new Color(WorldMapGenerator.getRGBA(landMap.getRGB(x, y)));
+                Color pc = new Color(WorldMapGenerator.getRGBA(pathMap.getRGB(x, y)));
+                Tile tile = Tiles.AIR.newTile();
+
+                if (lc.getRGB() == WorldColors.GRASS.getRGB())
+                    tile = Tiles.GRASS.newTile();
+
+                if (lc.getRGB() == WorldColors.DEAP_OCEAN.getRGB() || lc.getRGB() == WorldColors.OCEAN.getRGB())
+                    tile = Tiles.WATER.newTile();
+
+                if (lc.getRGB() == WorldColors.SAND.getRGB())
+                    tile = Tiles.SAND.newTile();
+
+                if (lc.getRGB() == WorldColors.STONE.getRGB())
+                    tile = Tiles.STONE.newTile();
+
+                if (lc.getRGB() == WorldColors.DIRT.getRGB() || pc.getRGB() == WorldColors.DIRT.getRGB())
+                    tile = Tiles.DIRT.newTile();
+
+                checkBorderTilePos(tile, x, y, false);
+                fgTiles[x][y] = tile.setPos(new TilePos(x, y));
+            }
+        }
+        return generateOres(fgTiles, false);
+    }
+
+    private Tile[][] generateOres(Tile[][] tiles, boolean bg) {
+        double oreSize = 1.0d;
+        double stoneSize = 10.0d;
+
+        addOre(tiles, Tiles.COAL_ORE, -0.05d, 0.05d, oreSize, bg);
+        addOre(tiles, Tiles.IRON_ORE, -0.05d, 0.05d, oreSize, bg);
+        addOre(tiles, Tiles.GOLD_ORE, -0.02d, 0.02d, oreSize, bg);
+        addOre(tiles, Tiles.DIAMOND_ORE, -0.02d, 0.02d, oreSize, bg);
+
+        addOre(tiles, Tiles.ANDESITE, 0.7d, 1.0d, stoneSize, bg);
+        addOre(tiles, Tiles.DIORITE, 0.7d, 1.0d, stoneSize, bg);
+
+        return tiles.clone();
+    }
+
+    private void addOre(Tile[][] tiles, TileStone ore, double minThreshold, double maxThreshold, double blendSize, boolean bg) {
+        OpenSimplexNoise noise = new OpenSimplexNoise(seed + seedOreOff);
+        seedOreOff += seedOreOffInc;
+
+        for (int y = 0; y < worldSize; y++) {
+            for (int x = 0; x < worldSize; x++) {
+                double value = noise.eval((float) (x / blendSize), (float) (y / blendSize));
+                if (tiles[x][y] instanceof TileStone) {
+                    Tile tile = tiles[x][y];
+
+                    if (value > minThreshold && value < maxThreshold) {
+                        tile = ore.newTile();
+                    }
+
+                    checkBorderTilePos(tile, x, y, bg);
+                    tiles[x][y] = tile.setPos(new TilePos(x, y));
+                }
+            }
+        }
+    }
+
+    private void checkBorderTilePos(Tile tile, int x, int y, boolean bg) {
         if (bg)
-            return out;
-        else
-            return generatePaths(pathMap, out);
-    }
-
-    public Tile[][] generatePaths(BufferedImage map, Tile[][] tileSet) {
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                int pColor = map.getRGB(x, y);
-                if (pColor == NoiseMapGenerator.DIRT.getRGB()) {
-                    tileSet[x][y] = Tiles.DIRT.copy();
-                }
-            }
+            tile.setSolid(false);
+        if (x == 0 || y == 0 || x >= worldSize - 1 || y >= worldSize - 1) {
+            tile.setSolid(true);
+            tile.setUnbreakable(true);
         }
-        return tileSet;
     }
 
-    public Tile[][] getFg_tiles() {
-        return fg_tiles;
-    }
-
-    public Tile[][] getBg_tiles() {
-        return bg_tiles;
-    }
-
-    public BufferedImage getLandMap() {
-        return landMap;
-    }
-
-    public BufferedImage getPathMap() {
-        return pathMap;
+    public WorldGenerator setBlendSize(double blendSize) {
+        this.blendSize = blendSize;
+        return this;
     }
 }

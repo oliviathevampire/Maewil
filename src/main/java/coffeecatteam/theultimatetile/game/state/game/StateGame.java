@@ -29,17 +29,17 @@ public class StateGame extends State {
     private UIManager uiManagerPaused;
     private UIManager uiManagerDead;
 
-    public StateGame(Engine engine) {
-        this(engine, "/assets/exclude/starter/world_01", null);
+    public StateGame(Engine engine, String world, String worldName) {
+        this(engine, world, worldName, null);
     }
 
-    public StateGame(Engine engine, String world, String worldName) {
+    public StateGame(Engine engine, String worldS, String worldName, World wWorld) {
         super(engine);
         this.worldName = worldName;
 
         uiManagerPaused = new UIManager(engine);
         uiManagerDead = new UIManager(engine);
-        reset(world);
+        reset(worldS, wWorld);
         init();
 
         int yOffset = 30;
@@ -60,7 +60,7 @@ public class StateGame extends State {
                 State.setState(GameEngine.getGameEngine().stateMenu);
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu");
-                saveWorld();
+                saveWorld(true);
             }
 
             @Override
@@ -70,7 +70,7 @@ public class StateGame extends State {
         UIButton btnQuit = new UIButton(engine, true, engine.getHeight() / 2 + yOffset * 3 + 20, "Quit", new ClickListener() {
             @Override
             public void onClick() {
-                saveWorld();
+                saveWorld(true);
                 engine.close();
             }
 
@@ -99,7 +99,7 @@ public class StateGame extends State {
         if (engine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !GameEngine.getGameEngine().getEntityManager().getPlayer().isDead) {
             if (!GameEngine.getGameEngine().getEntityManager().getPlayer().isGuiOpen())
                 paused = !paused && !GameEngine.getGameEngine().getEntityManager().getPlayer().getInventoryPlayer().isActive();
-            saveWorld();
+            saveWorld(false);
         }
 
         if (!paused)
@@ -144,7 +144,10 @@ public class StateGame extends State {
         GameEngine.getGameEngine().setUsername(username);
     }
 
-    public void saveWorld() {
+    public void saveWorld(boolean stopWorldFU) {
+        if (stopWorldFU)
+            world.stopForcedUpdateThread();
+
         WorldJsonSaver saver = new WorldJsonSaver("./saves/" + worldName, world, engine);
         try {
             saver.save();
@@ -153,16 +156,23 @@ public class StateGame extends State {
         }
     }
 
-    public void setWorld(String path) {
-        this.world = new World(engine, path, worldName);
+    public void setWorld(World world) {
+        this.world = world;
         GameEngine.getGameEngine().setWorld(world);
         init();
     }
 
-    public void reset(String world) {
+    public void setWorld(String path) {
+        setWorld(new World(engine, path, worldName));
+    }
+
+    public void reset(String world, World wWorld) {
         GameEngine.getGameEngine().getEntityManager().reset();
         GameEngine.getGameEngine().getEntityManager().getPlayer().reset();
         GameEngine.getGameEngine().getItemManager().reset();
-        setWorld(world);
+        if (wWorld == null)
+            setWorld(world);
+        else
+            setWorld(wWorld);
     }
 }

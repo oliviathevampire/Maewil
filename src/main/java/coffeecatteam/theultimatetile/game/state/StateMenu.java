@@ -10,6 +10,7 @@ import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlink;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -27,6 +28,7 @@ public class StateMenu extends State {
             public void onClick() {
 //                State.setState(((GameEngine) engine).stateSelectGame);
                 State.setState(new StateCreateWorld(engine));
+//                State.setState(new StateGame(engine, "./saves/Test_World", "Test World"));
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu", "Selecting A Game");
             }
