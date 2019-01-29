@@ -29,7 +29,7 @@ public class EntityPlayer extends EntityCreature {
     private Animation sprintEffect;
 
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
-    private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer;
+    private float maxSprintTimer = 100f, sprintTimer = maxSprintTimer, sprintStartOver = maxSprintTimer, sprintDecent = 0.15f;
     private long lastWalkSoundTimer, walkSoundCooldown = 1100, walkSoundTimer = walkSoundCooldown;
     private boolean isAttacking = false;
 
@@ -282,14 +282,14 @@ public class EntityPlayer extends EntityCreature {
 
         if (!this.inWater() || !this.inLava()) {
             if (sprintTimer <= 0)
-                sprintStartOver -= 0.25f;
+                sprintStartOver -= sprintDecent;
             if (sprintStartOver <= 0) {
                 sprintTimer = maxSprintTimer;
                 sprintStartOver = maxSprintTimer;
             }
             if (canSprint()) {
                 speed = EntityCreature.DEFAULT_SPEED * 2f;
-                sprintTimer -= 0.25f;
+                sprintTimer -= sprintDecent;
             } else {
                 speed = EntityCreature.DEFAULT_SPEED;
             }
