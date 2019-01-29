@@ -77,4 +77,8 @@ public class TilePos {
     public Vector2D toVector2D() {
         return pos;
     }
+
+    public String toString() {
+        return "TilePos(" + pos.x + ", " + pos.y + ")";
+    }
 }
