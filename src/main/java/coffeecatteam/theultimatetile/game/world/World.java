@@ -29,6 +29,7 @@ public class World {
     private int width, height;
     private float spawnX;
     private float spawnY;
+    private long seed = 0;
 
     private Tile[][] bg_tiles;
     private Tile[][] fg_tiles;
@@ -134,8 +135,8 @@ public class World {
             for (int x = xStart; x < xEnd; x++)
                 getBGTile(x, y).render(g);
 
-
-        g.setColor(new Color(63, 63, 63, 127));
+        Color tint = new Color(63, 63, 63, 127);
+        g.setColor(tint);
         g.fillRect(0, 0, engine.getWidth(), engine.getHeight());
 
         for (int y = yStart; y < yEnd; y++)
@@ -154,7 +155,8 @@ public class World {
         g.setColor(Color.white);
 
         int viewSize = 100;
-        BufferedImage map = new BufferedImage(viewSize, viewSize, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage mapbg = new BufferedImage(viewSize, viewSize, BufferedImage.TYPE_INT_ARGB); /* BG */
+        BufferedImage mapfg = new BufferedImage(viewSize, viewSize, BufferedImage.TYPE_INT_ARGB); /* FG */
         int pwx = (int) (((GameEngine) engine).getPlayer().getPosition().x / Tile.TILE_WIDTH);
         int pwy = (int) (((GameEngine) engine).getPlayer().getPosition().y / Tile.TILE_HEIGHT);
 
@@ -188,10 +190,17 @@ public class World {
          */
         for (int my = myStart; my < myEnd; my++) {
             for (int mx = mxStart; mx < mxEnd; mx++) {
-                int c = WorldMapGenerator.getRGBA(getFGTile(mx, my).getMapColor().getRGB());
-                int pixelX = (int) NumberUtils.map(mx, mxStart, mxEnd, 0, viewSize - 1);
-                int pixelY = (int) NumberUtils.map(my, myStart, myEnd, 0, viewSize - 1);
-                map.setRGB(pixelX, pixelY, c);
+                /* BG */
+                int cbg = WorldMapGenerator.getRGBA(getBGTile(mx, my).getMapColor().getRGB());
+                int pixelXbg = (int) NumberUtils.map(mx, mxStart, mxEnd, 0, viewSize - 1);
+                int pixelYbg = (int) NumberUtils.map(my, myStart, myEnd, 0, viewSize - 1);
+                mapbg.setRGB(pixelXbg, pixelYbg, cbg);
+
+                /* FG */
+                int cfg = WorldMapGenerator.getRGBA(getFGTile(mx, my).getMapColor().getRGB());
+                int pixelXfg = (int) NumberUtils.map(mx, mxStart, mxEnd, 0, viewSize - 1);
+                int pixelYfg = (int) NumberUtils.map(my, myStart, myEnd, 0, viewSize - 1);
+                mapfg.setRGB(pixelXfg, pixelYfg, cfg);
             }
         }
 
@@ -200,9 +209,19 @@ public class World {
         EntityPlayer player = GameEngine.getGameEngine().getPlayer();
         Color trans = ((player.getPosition().x + player.getWidth() / 2f < mapBorderSize && player.getPosition().y + player.getHeight() / 2f < mapBorderSize) ? halfTransparent : Color.white);
         try {
-            Image mapDraw = new Image(BufferedImageUtil.getTexture("", map));
-            mapDraw.setFilter(Image.FILTER_NEAREST);
-            mapDraw.draw(x + mapSizeOff / 2f, y + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2, trans);
+            /* BG */
+            Image mapDrawbg = new Image(BufferedImageUtil.getTexture("mapbg", mapbg));
+            mapDrawbg.setFilter(Image.FILTER_NEAREST);
+            mapDrawbg.draw(x + mapSizeOff / 2f, y + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2, trans);
+
+            tint.a = trans.a;
+            g.setColor(tint);
+            g.fillRect(x + mapSizeOff / 2f, y + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2);
+
+            /* FG */
+            Image mapDrawfg = new Image(BufferedImageUtil.getTexture("mapfg", mapfg));
+            mapDrawfg.setFilter(Image.FILTER_NEAREST);
+            mapDrawfg.draw(x + mapSizeOff / 2f, y + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2, trans);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -390,5 +409,14 @@ public class World {
 
     public void stopForcedUpdateThread() {
         this.isForcedUpdate = false;
+    }
+
+    public long getSeed() {
+        return seed;
+    }
+
+    public World setSeed(long seed) {
+        this.seed = seed;
+        return this;
     }
 }
