@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.game.world;
 
-import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.game.tile.TilePos;

@@ -3,7 +3,6 @@ package coffeecatteam.theultimatetile.game.inventory;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;

@@ -10,7 +10,6 @@ import coffeecatteam.theultimatetile.game.tags.TagCompound;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
-
 import org.newdawn.slick.*;
 
 import java.util.HashMap;

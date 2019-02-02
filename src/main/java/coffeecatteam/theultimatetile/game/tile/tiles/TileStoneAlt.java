@@ -2,8 +2,6 @@ package coffeecatteam.theultimatetile.game.tile.tiles;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.manager.ItemManager;
-import org.newdawn.slick.Image;
 
 /**
  * @author CoffeeCatRailway

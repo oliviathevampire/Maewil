@@ -19,7 +19,6 @@ import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.newdawn.slick.*;
 
-import java.awt.geom.AffineTransform;
 import java.util.List;
 
 public class EntityPlayer extends EntityCreature {

@@ -3,7 +3,6 @@ package coffeecatteam.theultimatetile.game.tile.tiles;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 

@@ -4,9 +4,9 @@ import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.Slot;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+
 import java.util.HashMap;
 import java.util.Map;
 

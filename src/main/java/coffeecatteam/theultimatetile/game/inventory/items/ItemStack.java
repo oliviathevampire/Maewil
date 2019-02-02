@@ -6,7 +6,6 @@ import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.tags.TagCompound;
 import coffeecatteam.theultimatetile.game.tags.TagUtils;
 import coffeecatteam.theultimatetile.manager.ItemManager;
-
 import org.newdawn.slick.Image;
 
 public class ItemStack {

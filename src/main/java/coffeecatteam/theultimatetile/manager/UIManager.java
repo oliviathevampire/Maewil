@@ -5,7 +5,6 @@ import coffeecatteam.theultimatetile.gfx.ui.UIObject;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class UIManager {

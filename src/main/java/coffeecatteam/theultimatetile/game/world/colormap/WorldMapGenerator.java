@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.game.world.colormap;
 
-import coffeecatteam.theultimatetile.game.world.noise.OpenSimplexNoise;
 import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.theultimatetile.game.world.noise.OpenSimplexNoise;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

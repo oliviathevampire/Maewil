@@ -4,7 +4,6 @@ import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.game.tile.Tiles;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 

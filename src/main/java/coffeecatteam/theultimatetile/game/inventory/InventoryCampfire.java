@@ -10,7 +10,6 @@ import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.game.tags.TagCompound;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;

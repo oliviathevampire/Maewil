@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.assets;
 
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
-
 import org.newdawn.slick.Image;
 
 /**

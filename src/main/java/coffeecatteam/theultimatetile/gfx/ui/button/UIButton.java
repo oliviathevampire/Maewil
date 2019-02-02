@@ -9,10 +9,7 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIObject;
 import coffeecatteam.theultimatetile.gfx.ui.UITextBox;
-
 import org.newdawn.slick.*;
-
-import java.awt.event.MouseEvent;
 
 public class UIButton extends UIObject {
 

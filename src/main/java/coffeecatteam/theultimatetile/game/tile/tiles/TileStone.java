@@ -1,12 +1,9 @@
 package coffeecatteam.theultimatetile.game.tile.tiles;
 
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 import org.newdawn.slick.Image;
-
-import java.util.Arrays;
 
 /**
  * @author CoffeeCatRailway

@@ -5,7 +5,6 @@ import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
 import org.newdawn.slick.GameContainer;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class KeyManager {
 

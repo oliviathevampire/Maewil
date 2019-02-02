@@ -2,11 +2,9 @@ package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-
 import coffeecatteam.theultimatetile.Engine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import java.awt.event.MouseEvent;
 
 public abstract class UIObject {
 

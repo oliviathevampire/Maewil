@@ -7,16 +7,13 @@ import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.world.colormap.WorldColors;
-import coffeecatteam.theultimatetile.game.world.noise.OpenSimplexNoise;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Tile {
 
@@ -122,6 +119,7 @@ public abstract class Tile {
     }
 
     public abstract <T extends Tile> T newTile();
+
     protected Tile newTile(Tile tile) {
         return tile.setMapColor(mapColor).setPos(position).setSolid(isSolid).setUnbreakable(unbreakable);
     }

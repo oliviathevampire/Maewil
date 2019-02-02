@@ -6,9 +6,9 @@ import coffeecatteam.theultimatetile.game.overlays.Overlay;
 import coffeecatteam.theultimatetile.game.overlays.OverlayGlub;
 import coffeecatteam.theultimatetile.game.overlays.OverlayPlayerHealth;
 import coffeecatteam.theultimatetile.game.overlays.OverlayPlayerSprint;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+
 import java.util.ArrayList;
 import java.util.List;
 

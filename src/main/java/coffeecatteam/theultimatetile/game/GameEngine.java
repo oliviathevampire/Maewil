@@ -14,7 +14,6 @@ import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.manager.EntityManager;
 import coffeecatteam.theultimatetile.manager.InventoryManager;
 import coffeecatteam.theultimatetile.manager.ItemManager;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;

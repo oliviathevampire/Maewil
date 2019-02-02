@@ -4,7 +4,6 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityNature;
 import coffeecatteam.theultimatetile.manager.ItemManager;
-
 import org.newdawn.slick.Image;
 
 public class EntityRock extends EntityNature {

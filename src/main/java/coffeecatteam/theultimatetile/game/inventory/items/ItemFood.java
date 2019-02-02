@@ -2,7 +2,6 @@ package coffeecatteam.theultimatetile.game.inventory.items;
 
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
-
 import org.newdawn.slick.Image;
 
 public class ItemFood extends Item implements IInteractable {

@@ -2,10 +2,7 @@ package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import java.awt.event.MouseEvent;
 
 public class UICheckBox extends UIObject {
 

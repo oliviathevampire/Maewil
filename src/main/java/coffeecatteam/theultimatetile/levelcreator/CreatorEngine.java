@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.levelcreator;
 
 import coffeecatteam.theultimatetile.Engine;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;

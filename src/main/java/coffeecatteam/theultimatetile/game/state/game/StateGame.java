@@ -13,10 +13,10 @@ import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;
 import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+
 import java.io.IOException;
 
 public class StateGame extends State {

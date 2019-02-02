@@ -3,7 +3,6 @@ package coffeecatteam.theultimatetile.game.inventory;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
 import org.newdawn.slick.Graphics;
 
 public class InventoryPlayer extends InventoryAbstractPlayer {

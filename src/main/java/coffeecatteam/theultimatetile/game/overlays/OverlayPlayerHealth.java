@@ -5,7 +5,6 @@ import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

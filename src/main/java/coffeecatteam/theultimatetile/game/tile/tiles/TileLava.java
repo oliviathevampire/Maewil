@@ -4,9 +4,7 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 public class TileLava extends Tile {

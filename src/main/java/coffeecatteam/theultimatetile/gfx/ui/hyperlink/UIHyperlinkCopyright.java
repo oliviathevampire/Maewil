@@ -5,10 +5,8 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
-
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 
 import java.awt.*;
 import java.net.URI;

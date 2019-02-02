@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.gfx;
 
 import coffeecatteam.theultimatetile.Engine;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;

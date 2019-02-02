@@ -6,9 +6,9 @@ import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+
 import java.util.ArrayList;
 import java.util.List;
 

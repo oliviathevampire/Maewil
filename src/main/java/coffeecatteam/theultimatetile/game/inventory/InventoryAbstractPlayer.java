@@ -9,7 +9,6 @@ import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 

@@ -5,10 +5,8 @@ import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import java.awt.event.MouseEvent;
 import org.newdawn.slick.Image;
 
 public class UISlider extends UIObject {

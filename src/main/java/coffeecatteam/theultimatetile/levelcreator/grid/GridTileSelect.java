@@ -5,7 +5,6 @@ import coffeecatteam.theultimatetile.game.tile.Tiles;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
 import coffeecatteam.theultimatetile.levelcreator.LevelRenderer;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 

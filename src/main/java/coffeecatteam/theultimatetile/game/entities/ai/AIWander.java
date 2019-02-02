@@ -2,10 +2,8 @@ package coffeecatteam.theultimatetile.game.entities.ai;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
-import coffeecatteam.theultimatetile.game.tile.TilePos;
 import org.newdawn.slick.GameContainer;
 
 public class AIWander extends AI {

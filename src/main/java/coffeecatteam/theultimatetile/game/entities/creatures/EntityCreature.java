@@ -14,9 +14,9 @@ import coffeecatteam.theultimatetile.game.tile.tiles.TileLava;
 import coffeecatteam.theultimatetile.game.tile.tiles.TileWater;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+
 import java.util.ArrayList;
 import java.util.List;
 

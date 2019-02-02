@@ -6,7 +6,6 @@ import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.UISlider;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;

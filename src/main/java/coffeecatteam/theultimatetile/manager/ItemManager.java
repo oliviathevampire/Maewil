@@ -5,10 +5,10 @@ import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.items.*;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 

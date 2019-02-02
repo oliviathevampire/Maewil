@@ -6,10 +6,8 @@ import coffeecatteam.coffeecatutils.logger.CatLoggerUtils;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
-import coffeecatteam.theultimatetile.utils.Utils;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.openal.SoundStore;
 
 import java.io.File;
 
@@ -47,7 +45,7 @@ public class Launcher {
         try {
             AppGameContainer app = new AppGameContainer(engine);
             app.setDisplayMode(width, height, false);
-            app.setIcons(new String[] { "icons/32.png", "icons/64.png" });
+            app.setIcons(new String[]{"icons/32.png", "icons/64.png"});
             app.setTargetFrameRate(100);
             app.setUpdateOnlyWhenVisible(false);
             app.setAlwaysRender(true);

@@ -22,9 +22,9 @@ import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityTree;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 

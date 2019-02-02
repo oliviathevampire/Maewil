@@ -3,7 +3,6 @@ package coffeecatteam.theultimatetile.game.tile;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.tile.tiles.*;
 import coffeecatteam.theultimatetile.game.world.colormap.WorldColors;
-import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 

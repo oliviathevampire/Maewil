@@ -61,7 +61,7 @@ public class Sounds {
     public static void play(Sound sound, float x, float y) {
         play(sound, x, y, 1f, 1f);
     }
-    
+
     public static void play(Sound sound, float x, float y, float pitch, float volume) {
         play(sound, x, y, 1f, 1f, false);
     }

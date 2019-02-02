@@ -7,7 +7,6 @@ import coffeecatteam.theultimatetile.game.entities.Entity;
 import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 

@@ -9,8 +9,8 @@ import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
-
 import org.newdawn.slick.Image;
+
 import java.util.List;
 
 public class EntityTree extends EntityNature {
