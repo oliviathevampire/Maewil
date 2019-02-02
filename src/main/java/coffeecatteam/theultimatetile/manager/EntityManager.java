@@ -44,6 +44,8 @@ public class EntityManager {
                 return new EntityTree(engine, id, EntityTree.TreeType.MEDIUM);
             case "tree_large":
                 return new EntityTree(engine, id, EntityTree.TreeType.LARGE);
+            case "tree_extra_large":
+                return new EntityTree(engine, id, EntityTree.TreeType.EXTRA_LARGE);
             case "rock_medium":
                 return new EntityRock(engine, id, Assets.ROCK_V1);
             case "rock_small":

@@ -35,18 +35,18 @@ public class EntityTree extends EntityNature {
 
     public enum TreeType {
 
-        SMALL(Assets.TREE_SMALL, Tile.TILE_WIDTH, Tile.TILE_HEIGHT * 2, 0),
-        MEDIUM(Assets.TREE_MEDIUM, Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2, 32),
-        LARGE(Assets.TREE_LARGE, Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2, 32);
+        SMALL(Assets.TREE_SMALL, Tile.TILE_WIDTH, Tile.TILE_HEIGHT * 2),
+        MEDIUM(Assets.TREE_MEDIUM, Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2),
+        LARGE(Assets.TREE_LARGE, Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2),
+        EXTRA_LARGE(Assets.TREE_EXTRA_LARGE, Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 4);
 
         private Image texture;
-        private int width, height, boundsOffset;
+        private int width, height;
 
-        TreeType(Image texture, int width, int height, int boundsOffset) {
+        TreeType(Image texture, int width, int height) {
             this.texture = texture;
             this.width = width;
             this.height = height;
-            this.boundsOffset = boundsOffset;
         }
 
         public Image getTexture() {
@@ -59,10 +59,6 @@ public class EntityTree extends EntityNature {
 
         public int getHeight() {
             return height;
-        }
-
-        public int getBoundsOffset() {
-            return boundsOffset;
         }
     }
 }
