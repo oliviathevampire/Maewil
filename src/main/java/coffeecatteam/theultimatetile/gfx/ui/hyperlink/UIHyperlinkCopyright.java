@@ -19,7 +19,7 @@ import java.net.URI;
  */
 public class UIHyperlinkCopyright extends UIHyperlink {
 
-    private static String text = "Copyright (C) CoffeeCatTeam 2018";
+    private static String text = "Copyright (C) CoffeeCatTeam 2019";
     private static Font font = Assets.FONTS.get("20");
 
     public UIHyperlinkCopyright(Vector2D position) {
