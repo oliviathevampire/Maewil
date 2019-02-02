@@ -4,6 +4,7 @@ import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.game.state.State;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.game.StateGame;
+import coffeecatteam.theultimatetile.game.tile.Tiles;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.assets.Sounds;
@@ -29,6 +30,7 @@ public abstract class Engine extends BasicGame {
     protected boolean leftDown, rightDown;
 
     protected KeyManager keyManager;
+    private char keyJustPressed = Character.UNASSIGNED;
 
     protected boolean initOptionsUI = true, playBGMusic = true, close = false;
 
@@ -45,16 +47,18 @@ public abstract class Engine extends BasicGame {
 
     @Override
     public void init(GameContainer container) throws SlickException {
-        Assets.init(logger);
+        Assets.init();
         container.setShowFPS(false);
         container.setDefaultFont(Assets.FONTS.get("10"));
         container.setMouseCursor(Assets.CURSOR, 0, 0);
 
-        keyManager = new KeyManager();
-        stateOptions = new StateOptions(this, initOptionsUI);
-
         ItemManager.init();
         Sounds.init();
+
+        Tiles.init(this);
+
+        keyManager = new KeyManager();
+        stateOptions = new StateOptions(this, initOptionsUI);
 
         DiscordHandler.INSTANCE.setup();
     }
@@ -103,7 +107,7 @@ public abstract class Engine extends BasicGame {
         logger.print("Shutting down [" + this.getTitle() + "] engine!");
         if (State.getState() instanceof StateGame) {
             logger.print("Saving world!");
-            ((StateGame) State.getState()).saveWorld();
+            ((StateGame) State.getState()).saveWorld(true);
             logger.print("World saved!");
         }
 
@@ -113,6 +117,7 @@ public abstract class Engine extends BasicGame {
 
     @Override
     public void keyPressed(int key, char c) {
+        this.keyJustPressed = c;
         keyManager.keyPressed(key, c);
     }
 
@@ -129,6 +134,16 @@ public abstract class Engine extends BasicGame {
         Font font = Assets.FONTS.get("20");
         String t = "FPS: " + this.fps;
         Text.drawString(g, t, 5, 5 + Text.getHeight(t, font), false, false, Color.orange, font);
+    }
+
+    public String getKeyJustPressed() {
+        if (keyJustPressed == Character.UNASSIGNED)
+            return "";
+        else {
+            String c = String.valueOf(this.keyJustPressed);
+            this.keyJustPressed = Character.UNASSIGNED;
+            return c;
+        }
     }
 
     public int getWidth() {
