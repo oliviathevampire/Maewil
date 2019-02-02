@@ -34,6 +34,7 @@ public class Tiles {
     public static TileAir AIR; // USES EMPTY SPACE IN TILES SHEET
 
     public static TileWood BOOKSHELF;
+    public static TileGlitch GLITCH;
 
     public static void init(Engine engine) {
         register(GRASS = (TileGrass) getTile(engine, "grass").setMapColor(WorldColors.GRASS));
@@ -59,6 +60,7 @@ public class Tiles {
         register(AIR = (TileAir) getTile(engine, "air").setMapColor(WorldColors.AIR));
 
         register(BOOKSHELF = (TileWood) getTile(engine, "bookshelf").setMapColor(WorldColors.WOOD));
+        register(GLITCH = (TileGlitch) getTile(engine, "glitch").setMapColor(WorldColors.GRASS));
     }
 
     private static void register(Tile tile) {
@@ -109,6 +111,8 @@ public class Tiles {
 
             case "bookshelf":
                 return new TileWood(engine, Assets.BOOKSHELF, id);
+            case "glitch":
+                return new TileGlitch(engine, id);
         }
     }
 }
