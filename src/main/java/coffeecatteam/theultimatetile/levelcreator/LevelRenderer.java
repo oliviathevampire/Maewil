@@ -17,13 +17,12 @@ import coffeecatteam.theultimatetile.levelcreator.grid.GridWorldEditor;
 import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.json.simple.parser.ParseException;
-
-import javax.swing.*;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,7 +51,6 @@ public class LevelRenderer {
         this.creatorEngine = creatorEngine;
         setSize(xWorldSize, yWorldSize);
 
-        Tiles.init(creatorEngine);
         SELECTED_TILE = Tiles.GRASS;
 
         ogX = creatorEngine.getWidth() / 4;
