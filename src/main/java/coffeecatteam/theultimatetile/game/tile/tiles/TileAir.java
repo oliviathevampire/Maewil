@@ -16,6 +16,6 @@ public class TileAir extends Tile {
 
     @Override
     public TileAir newTile() {
-        return (TileAir) new TileAir(engine).setMapColor(mapColor);
+        return (TileAir) super.newTile(new TileAir(engine));
     }
 }

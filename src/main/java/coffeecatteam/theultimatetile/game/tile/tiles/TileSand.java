@@ -10,13 +10,21 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
 public class TileSand extends TileOverlap {
 
     public TileSand(Engine engine, String id) {
-        super(engine, Assets.SAND[0], Assets.GRASS, id, false, TileType.GROUND, Assets.GRASS_ALTS);
+        super(engine, null, Assets.GRASS, id, false, TileType.GROUND, Assets.GRASS_ALTS);
         this.setConnect(TileGrass.class);
         this.setIgnore(TileSand.class);
     }
 
     @Override
+    public void init() {
+        this.setHasAlts(true);
+        this.addTextureAlts(Assets.SAND, Assets.SAND_ALTS);
+
+        super.init();
+    }
+
+    @Override
     public TileSand newTile() {
-        return (TileSand) new TileSand(engine, id).setMapColor(mapColor);
+        return (TileSand) super.newTile(new TileSand(engine, id));
     }
 }

@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.game.tile.tiles;
 
-import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
@@ -13,17 +12,18 @@ public class TileGrass extends Tile {
 
     public TileGrass(Engine engine, String id) {
         super(engine, null, id, false, Tile.TileType.GROUND);
+    }
 
-        int max = 1000, chance = 850;
-        int i = NumberUtils.getRandomInt(max);
-        if (i < chance)
-            this.texture = Assets.GRASS[0];
-        else
-            this.texture = Assets.GRASS[(int) NumberUtils.map(i, chance, max, 1, Assets.GRASS_ALTS - 1)];
+    @Override
+    public void init() {
+        this.setHasAlts(true);
+        this.addTextureAlts(Assets.GRASS, Assets.GRASS_ALTS);
+
+        super.init();
     }
 
     @Override
     public TileGrass newTile() {
-        return (TileGrass) new TileGrass(engine, id).setMapColor(mapColor);
+        return (TileGrass) super.newTile(new TileGrass(engine, id));
     }
 }

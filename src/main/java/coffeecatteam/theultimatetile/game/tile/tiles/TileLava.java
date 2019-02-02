@@ -13,9 +13,9 @@ public class TileLava extends Tile {
 
     private Animation animation;
 
-    public TileLava(Engine engine, Animation animation, String id) {
+    public TileLava(Engine engine, String id) {
         super(engine, Assets.LAVA[0], id, false, Tile.TileType.FLUID);
-        this.animation = animation;
+        this.animation = new Animation(50, Assets.LAVA);
     }
 
     @Override
@@ -24,13 +24,8 @@ public class TileLava extends Tile {
     }
 
     @Override
-    public void render(Graphics g, int x, int y, int width, int height) {
-        animation.getCurrentFrame().draw(x, y, width, height);
-    }
-
-    @Override
     public Image getTexture() {
-        return animation.getFrames()[0];
+        return animation.getCurrentFrame();
     }
 
     public Animation getAnimation() {
@@ -39,6 +34,6 @@ public class TileLava extends Tile {
 
     @Override
     public TileLava newTile() {
-        return (TileLava) new TileLava(engine, animation, id).setMapColor(mapColor);
+        return (TileLava) super.newTile(new TileLava(engine, id));
     }
 }

@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.inventory.items.Item;
 import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.game.world.colormap.WorldColors;
+import coffeecatteam.theultimatetile.game.world.noise.OpenSimplexNoise;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 import org.newdawn.slick.GameContainer;
@@ -14,13 +15,21 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Tile {
 
     public static final int TILE_WIDTH = 48, TILE_HEIGHT = 48;
 
     protected Engine engine;
+
     protected Image texture;
+    protected ArrayList<Image> textureAlts = new ArrayList<>();
+    private int altAmt;
+    private boolean hasAlts = false;
+    private int altChance = 850;
+
     protected final String id;
     protected Color mapColor = WorldColors.STONE;
 
@@ -44,6 +53,18 @@ public abstract class Tile {
         this.tileType = tileType;
 
         this.health = this.maxHealth;
+        init();
+    }
+
+    public void init() {
+        if (hasAlts) {
+            int max = 1000;
+            int i = NumberUtils.getRandomInt(max);
+            if (i < altChance)
+                this.texture = textureAlts.get(0);
+            else
+                this.texture = textureAlts.get((int) NumberUtils.map(i, altChance, max, 1, altAmt - 1));
+        }
     }
 
     public void updateBounds() {
@@ -71,8 +92,8 @@ public abstract class Tile {
     }
 
     public void render(Graphics g, int x, int y, int width, int height) {
-        if (texture != null)
-            texture.draw(x, y, width, height);
+        if (getTexture() != null)
+            getTexture().draw(x, y, width, height);
 
         if (drop != null) {
             if (isSolid && !unbreakable) {
@@ -101,6 +122,9 @@ public abstract class Tile {
     }
 
     public abstract <T extends Tile> T newTile();
+    protected Tile newTile(Tile tile) {
+        return tile.setMapColor(mapColor).setPos(position).setSolid(isSolid).setUnbreakable(unbreakable);
+    }
 
     public Item getDrop() {
         return drop;
@@ -185,6 +209,28 @@ public abstract class Tile {
 
     public void setTexture(Image texture) {
         this.texture = texture;
+    }
+
+    public boolean hasAlts() {
+        return hasAlts;
+    }
+
+    public void setHasAlts(boolean hasAlts) {
+        this.hasAlts = hasAlts;
+    }
+
+    protected void addTextureAlts(Image[] alts) {
+        addTextureAlts(alts, alts.length);
+    }
+
+    protected void addTextureAlts(Image[] alts, int altAmt) {
+        for (int i = 0; i < altAmt; i++)
+            this.textureAlts.add(alts[i]);
+        this.altAmt = altAmt;
+    }
+
+    public void setAltChance(int altChance) {
+        this.altChance = altChance;
     }
 
     public TileType getTileType() {

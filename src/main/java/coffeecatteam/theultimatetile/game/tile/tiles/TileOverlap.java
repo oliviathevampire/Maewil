@@ -4,9 +4,9 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.game.tile.TilePos;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,10 +16,9 @@ import java.util.List;
  */
 public abstract class TileOverlap extends Tile {
 
-    private Image[] overlap;
-    private List<Class<? extends Tile>> connect;
-    private Class<? extends Tile> ignore;
-    private int alts;
+    protected Image[] overlap;
+    private List<Class<? extends Tile>> connect, ignore;
+    protected int alts;
 
     public TileOverlap(Engine engine, Image texture, Image[] overlap, String id, boolean isSolid, TileType tileType, int alts) {
         super(engine, texture, id, isSolid, tileType);
@@ -31,8 +30,8 @@ public abstract class TileOverlap extends Tile {
         this.connect = Arrays.asList(connect);
     }
 
-    protected void setIgnore(Class<? extends Tile> ignore) {
-        this.ignore = ignore;
+    protected void setIgnore(Class<? extends Tile>... ignore) {
+        this.ignore = Arrays.asList(ignore);
     }
 
     @Override
@@ -166,7 +165,7 @@ public abstract class TileOverlap extends Tile {
     }
 
     private boolean notConnected(TilePos pos) {
-        return getTileAt(pos).getClass().equals(ignore) || !connect.contains(getTileAt(pos).getClass());
+        return ignore.contains(getTileAt(pos).getClass()) || !connect.contains(getTileAt(pos).getClass());
     }
 
     private boolean topLeftCorner() {

@@ -17,6 +17,6 @@ public class TileWood extends Tile {
 
     @Override
     public TileWood newTile() {
-        return (TileWood) new TileWood(engine, texture, id).setMapColor(mapColor);
+        return (TileWood) super.newTile(new TileWood(engine, texture, id));
     }
 }

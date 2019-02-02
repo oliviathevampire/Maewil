@@ -5,7 +5,6 @@ import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 /**
@@ -16,8 +15,8 @@ public class TileWater extends TileOverlap {
 
     private Animation animation;
 
-    public TileWater(Engine engine, String id, boolean isSolid, TileType tileType) {
-        super(engine, null, Assets.SAND, id, isSolid, tileType, Assets.SAND_ALTS);
+    public TileWater(Engine engine, String id) {
+        super(engine, null, Assets.SAND, id, false, TileType.FLUID, Assets.SAND_ALTS);
         this.setConnect(TileSand.class, TileGrass.class);
         this.setIgnore(TileWater.class);
 
@@ -30,14 +29,8 @@ public class TileWater extends TileOverlap {
     }
 
     @Override
-    public void render(Graphics g, int x, int y, int width, int height) {
-        animation.getCurrentFrame().draw(x, y, width, height);
-        super.render(g, x, y, width, height);
-    }
-
-    @Override
     public Image getTexture() {
-        return animation.getFrames()[0];
+        return animation.getCurrentFrame();
     }
 
     public Animation getAnimation() {
@@ -46,6 +39,6 @@ public class TileWater extends TileOverlap {
 
     @Override
     public TileWater newTile() {
-        return (TileWater) new TileWater(engine, id, isSolid, tileType).setMapColor(mapColor);
+        return (TileWater) super.newTile(new TileWater(engine, id));
     }
 }

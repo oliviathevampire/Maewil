@@ -1,5 +1,7 @@
 package coffeecatteam.theultimatetile.game.world;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.game.tile.TilePos;
 import coffeecatteam.theultimatetile.game.tile.Tiles;
@@ -26,6 +28,10 @@ public class WorldGenerator {
     private double blendSize = 25.0d;
 
     private Tile[][] bgTiles, fgTiles;
+    private CatLogger logger;
+
+    private boolean imageMapsGenerated = false, bgTilesGenerated = false, fgTilesGenerated = false;
+    private Thread generatorThread;
 
     public WorldGenerator(long seed, int worldSize) {
         this.seed = seed;
@@ -33,21 +39,25 @@ public class WorldGenerator {
     }
 
     public void generate() {
-        bgTiles = new Tile[worldSize][worldSize];
-        fgTiles = new Tile[worldSize][worldSize];
+        generatorThread = new Thread(() -> {
+            logger = new CatLogger();
+            WorldMapGenerator mapGenerator = new WorldMapGenerator(seed, worldSize, worldSize, blendSize);
 
-        WorldMapGenerator mapGenerator = new WorldMapGenerator(seed, worldSize, worldSize, blendSize);
+            landMap = mapGenerator.generateLand(0, 0, true);
+            pathMap = mapGenerator.generatePaths(0, 0, landMap);
+            biomeMap = mapGenerator.generateBiomes(0, 0, landMap, pathMap);
+            imageMapsGenerated = true;
+            logger.print("World image maps generated");
 
-        landMap = mapGenerator.generateLand(0, 0, true);
-        pathMap = mapGenerator.generatePaths(0, 0, landMap);
-        biomeMap = mapGenerator.generateBiomes(0, 0, landMap, pathMap);
+            bgTiles = generateBGTiles();
+            fgTiles = generateFGTiles();
+            logger.print("Tiles generated");
+        }, "WorldGenerator-Thread");
+        generatorThread.start();
     }
 
-    public BufferedImage getBiomeMap() {
-        return biomeMap;
-    }
-
-    public Tile[][] getBGTiles() {
+    private Tile[][] generateBGTiles() {
+        Tile[][] tiles = new Tile[worldSize][worldSize];
         for (int y = 0; y < worldSize; y++) {
             for (int x = 0; x < worldSize; x++) {
                 Color lc = new Color(WorldMapGenerator.getRGBA(landMap.getRGB(x, y)));
@@ -67,13 +77,17 @@ public class WorldGenerator {
                     tile = Tiles.STONE.newTile();
 
                 checkBorderTilePos(tile, x, y, true);
-                bgTiles[x][y] = tile.setPos(new TilePos(x, y));
+                tiles[x][y] = tile.setPos(new TilePos(x, y));
             }
         }
-        return generateOres(bgTiles, true);
+        tiles = generateOres(tiles, true);
+        bgTilesGenerated = true;
+        logger.print("Background tiles generated");
+        return tiles;
     }
 
-    public Tile[][] getFGTiles() {
+    private Tile[][] generateFGTiles() {
+        Tile[][] tiles = new Tile[worldSize][worldSize];
         for (int y = 0; y < worldSize; y++) {
             for (int x = 0; x < worldSize; x++) {
                 Color lc = new Color(WorldMapGenerator.getRGBA(landMap.getRGB(x, y)));
@@ -96,10 +110,13 @@ public class WorldGenerator {
                     tile = Tiles.DIRT.newTile();
 
                 checkBorderTilePos(tile, x, y, false);
-                fgTiles[x][y] = tile.setPos(new TilePos(x, y));
+                tiles[x][y] = tile.setPos(new TilePos(x, y));
             }
         }
-        return generateOres(fgTiles, false);
+        tiles = generateOres(tiles, false);
+        fgTilesGenerated = true;
+        logger.print("Foreground tiles generated");
+        return tiles;
     }
 
     private Tile[][] generateOres(Tile[][] tiles, boolean bg) {
@@ -114,10 +131,12 @@ public class WorldGenerator {
         addOre(tiles, Tiles.ANDESITE, 0.7d, 1.0d, stoneSize, bg);
         addOre(tiles, Tiles.DIORITE, 0.7d, 1.0d, stoneSize, bg);
 
+        addOre(tiles, Tiles.BROKEN_STONE, -0.15d, 0.15d, stoneSize, bg);
+
         return tiles.clone();
     }
 
-    private void addOre(Tile[][] tiles, TileStone ore, double minThreshold, double maxThreshold, double blendSize, boolean bg) {
+    private void addOre(Tile[][] tiles, Tile ore, double minThreshold, double maxThreshold, double blendSize, boolean bg) {
         OpenSimplexNoise noise = new OpenSimplexNoise(seed + seedOreOff);
         seedOreOff += seedOreOffInc;
 
@@ -147,8 +166,28 @@ public class WorldGenerator {
         }
     }
 
-    public WorldGenerator setBlendSize(double blendSize) {
+    public void setBlendSize(double blendSize) {
         this.blendSize = blendSize;
-        return this;
+    }
+
+    public Tile[][] getBgTiles() {
+        return bgTiles;
+    }
+
+    public Tile[][] getFgTiles() {
+        return fgTiles;
+    }
+
+    public BufferedImage getBiomeMap() {
+        return biomeMap;
+    }
+
+    public boolean isGenerated() {
+        return imageMapsGenerated && bgTilesGenerated && fgTilesGenerated;
+    }
+
+    public boolean isGenerating() {
+        if (generatorThread == null) return false;
+        return generatorThread.isAlive();
     }
 }
