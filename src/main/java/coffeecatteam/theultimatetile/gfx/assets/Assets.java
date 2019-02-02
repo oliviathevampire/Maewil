@@ -3,12 +3,11 @@ package coffeecatteam.theultimatetile.gfx.assets;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.gfx.image.ImageLoader;
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
-
 import org.newdawn.slick.Font;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.Image;
 
 import java.awt.*;
 import java.awt.image.RasterFormatException;
@@ -24,7 +23,7 @@ public class Assets {
     public static Image MISSING_TEXTURE;
 
     /* Sprite Sheets */
-    private static SpriteSheet terrainSheet, grassSheet, sandSheet;
+    private static SpriteSheet terrainSheet, grassSheet, sandSheet, brokenStoneSheet;
     private static SpriteSheet effectSheet;
 
     private static SpriteSheet healthSheet;
@@ -48,12 +47,12 @@ public class Assets {
     public static Map<String, Font> FONTS = new HashMap<>();
 
     /* Tiles */
-    public static int GRASS_ALTS, SAND_ALTS;
-    public static Image[] GRASS, SAND;
+    public static int GRASS_ALTS, SAND_ALTS, BROKEN_STONE_ALTS;
+    public static Image[] GRASS, SAND, BROKEN_STONE;
     public static Image DIRT;
-    public static Image STONE, ANDESITE, DIORITE, COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE, OBSIDIAN, BROKEN_STONE;
+    public static Image ANDESITE, DIORITE, COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE, OBSIDIAN;
     public static Image PLANKS, BOOKSHELF, CHEST;
-    public static Image[] TILE_CRACKING;
+    public static Image[] STONE, TILE_CRACKING;
 
     public static Image[] WATER, LAVA;
 
@@ -61,7 +60,7 @@ public class Assets {
 
     /* Special Tiles */
     public static Image[] SPLASH_EFFECT, SPRINT_EFFECT;
-    public static Image[] ULTIMATE_TILE;
+    public static Image[] ULTIMATE_TILE, BINARY;
 
     /* Items */
     public static Image ITEM_STICK, ITEM_LEAF, ITEM_ROCK;
@@ -103,7 +102,7 @@ public class Assets {
     public static Image[] FOX_IDLE, FOX_UP, FOX_DOWN, FOX_LEFT, FOX_RIGHT;
 
     /* Nature / Statics */
-    public static Image TREE_SMALL, TREE_MEDIUM, TREE_LARGE;
+    public static Image TREE_SMALL, TREE_MEDIUM, TREE_LARGE, TREE_EXTRA_LARGE;
     public static Image ROCK_V1, ROCK_V2;
     public static Image BUSH_SMALL, BUSH_LARGE;
     public static Image CROP_GROUND, CROP_CARROT, CROP_WHEAT, CROP_POTATO, CROP_TOMATO, CROP_CORN;
@@ -114,7 +113,6 @@ public class Assets {
     public static Image[] CAMPFIRE;
 
     /* GUI */
-    public static Image MENU_BG;
     public static Image TITLE;
     public static Image DEAD_OVERLAY;
 
@@ -144,17 +142,30 @@ public class Assets {
     /* Fonts */
     private static void initFonts() {
         String fontPath = "/assets/fonts/LCD_Solid.ttf";
-        for (int i = 10; i <= 100; i += 10) {
-            FONTS.put(String.valueOf(i), loadTrueTypeFont(fontPath, i));
-            logger.print("Font size [" + i + "] loaded!");
+
+        for (int i = 5; i <= 100; i += 5) {
+            /* PLAIN */
+            String pIndex = String.valueOf(i);
+            FONTS.put(pIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.PLAIN));
+            logger.print("Font size [" + pIndex + "] loaded!");
+
+            /* BOLD */
+            String bIndex = String.valueOf(i) + "-bold";
+            FONTS.put(bIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.BOLD));
+            logger.print("Font size [" + bIndex + "] loaded!");
+
+            /* ITALIC */
+            String iIndex = String.valueOf(i) + "-italic";
+            FONTS.put(iIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.ITALIC));
+            logger.print("Font size [" + iIndex + "] loaded!");
         }
 
         logger.print("Assets [Fonts] loaded!");
     }
 
-    private static Font loadTrueTypeFont(String path, float size) {
+    private static Font loadTrueTypeFont(String path, float size, final int style) {
         try {
-            java.awt.Font awtFont = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, Assets.class.getResourceAsStream(path)).deriveFont(java.awt.Font.PLAIN, size);
+            java.awt.Font awtFont = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, Assets.class.getResourceAsStream(path)).deriveFont(style, size);
 
             UnicodeFont font = new org.newdawn.slick.UnicodeFont(awtFont);
             font.addAsciiGlyphs();
@@ -172,39 +183,43 @@ public class Assets {
     /* Tiles */
     private static void initTiles() {
         // Grass
-        GRASS_ALTS = 5;
+        GRASS_ALTS = 7;
         GRASS = TileTextureAlts.getTextureAlts(GRASS_ALTS, 47, grassSheet, width, height);
-        SAND_ALTS = 3;
+        SAND_ALTS = 4;
         SAND = TileTextureAlts.getTextureAlts(SAND_ALTS, 47, sandSheet, width, height);
+        BROKEN_STONE_ALTS = 2;
+        BROKEN_STONE = TileTextureAlts.getTextureAlts(BROKEN_STONE_ALTS, 47, brokenStoneSheet, width, height);
 
         DIRT = getSpriteInd(terrainSheet, 0, 0, width, height);
-        STONE = getSpriteInd(terrainSheet, 1, 0, width, height);
-        ANDESITE = getSpriteInd(terrainSheet, 2, 0, width, height);
-        DIORITE = getSpriteInd(terrainSheet, 3, 0, width, height);
-        COAL_ORE = getSpriteInd(terrainSheet, 4, 0, width, height);
-        IRON_ORE = getSpriteInd(terrainSheet, 5, 0, width, height);
-        GOLD_ORE = getSpriteInd(terrainSheet, 6, 0, width, height);
-        DIAMOND_ORE = getSpriteInd(terrainSheet, 7, 0, width, height);
-        OBSIDIAN = getSpriteInd(terrainSheet, 8, 0, width, height);
+        ANDESITE = getSpriteInd(terrainSheet, 1, 0, width, height);
+        DIORITE = getSpriteInd(terrainSheet, 2, 0, width, height);
+        COAL_ORE = getSpriteInd(terrainSheet, 3, 0, width, height);
+        IRON_ORE = getSpriteInd(terrainSheet, 4, 0, width, height);
+        GOLD_ORE = getSpriteInd(terrainSheet, 5, 0, width, height);
+        DIAMOND_ORE = getSpriteInd(terrainSheet, 6, 0, width, height);
+        OBSIDIAN = getSpriteInd(terrainSheet, 7, 0, width, height);
 
-        PLANKS = getSpriteInd(terrainSheet, 9, 0, width, height);
-        BROKEN_STONE = getSpriteInd(terrainSheet, 10, 0, width, height);
+        PLANKS = getSpriteInd(terrainSheet, 8, 0, width, height);
+
+        AIR = getSpriteInd(terrainSheet, 9, 0, width, height);
+
+        BOOKSHELF = getSpriteInd(terrainSheet, 10, 0, width, height);
+        CHEST = getSpriteInd(terrainSheet, 11, 0, width, height);
+
+        STONE = getFrames(terrainSheet, 1, 0, 4);
+
+        TILE_CRACKING = getFrames("/assets/textures/tiles/tile_cracking.png", 0, 8);
 
         WATER = getFrames(terrainSheet, 6, 0, 15);
         LAVA = getFrames(terrainSheet, 7, 0, 15);
-
-        AIR = getSpriteInd(terrainSheet, 11, 0, width, height);
-
-        BOOKSHELF = getSpriteInd(terrainSheet, 12, 0, width, height);
-        CHEST = getSpriteInd(terrainSheet, 13, 0, width, height);
-
-        TILE_CRACKING = getFrames("/assets/textures/tiles/tile_cracking.png", 0, 8);
 
         /* Special Tiles */
         SPLASH_EFFECT = getFrames(effectSheet, 0, 0, 15);
         SPRINT_EFFECT = getFrames(effectSheet, 1, 0, 15);
 
         ULTIMATE_TILE = getFrames("/assets/textures/tiles/ultimate.png", 0, 0, 6, width * 2, height * 2);
+
+        BINARY = getFrames("/assets/textures/tiles/binary.png", 0, 15);
 
         logger.print("Assets [Tiles] loaded!");
     }
@@ -326,6 +341,7 @@ public class Assets {
         TREE_SMALL = getSpriteInd(treeSheet, 0, 0, width, height * 2);
         TREE_MEDIUM = getSpriteInd(treeSheet, 1, 0, width * 2, height * 2);
         TREE_LARGE = getSpriteInd(treeSheet, 3, 0, width * 2, height * 2);
+        TREE_EXTRA_LARGE = getSpriteInd(treeSheet, 4, 0, width * 2, height * 4);
 
         ROCK_V1 = getSpriteInd(rockSheet, 0, 0, width, height);
         ROCK_V2 = getSpriteInd(rockSheet, 1, 0, width, height);
@@ -354,7 +370,6 @@ public class Assets {
 
     /* GUI */
     private static void initGui() {
-        MENU_BG = getSpriteExact("/assets/textures/gui/menu_bg.png", 0, 0, 320, 320);
         TITLE = getSpriteInd(menuSheet, 3, 0, 80, 48);
         DEAD_OVERLAY = getSpriteExact("/assets/textures/gui/dead_overlay.png", 0, 0, 512, 512);
 
@@ -412,15 +427,19 @@ public class Assets {
         logger.print("Assets [GUI] loaded!");
     }
 
-    public static void init(CatLogger loggerIn) {
-        logger = loggerIn;
+    public static void init() {
+        logger = new CatLogger("TUT-Assets");
 
         MISSING_TEXTURE = ImageLoader.loadImage("/assets/textures/missing.png");
 
         /* Sprite Sheets */
         terrainSheet = new SpriteSheet("/assets/textures/tiles/terrain.png");
-        grassSheet = new SpriteSheet("/assets/textures/tiles/grass.png");
-        sandSheet = new SpriteSheet("/assets/textures/tiles/sand.png");
+
+        String overlapPath = "/assets/textures/tiles/overlap/";
+        grassSheet = new SpriteSheet(overlapPath + "grass.png");
+        sandSheet = new SpriteSheet(overlapPath + "sand.png");
+        brokenStoneSheet = new SpriteSheet(overlapPath + "broken_stone.png");
+
         effectSheet = new SpriteSheet("/assets/textures/effect.png");
 
         healthSheet = new SpriteSheet("/assets/textures/gui/overlay/health.png");
