@@ -13,7 +13,7 @@ public class TileGlitch extends Tile {
 
     public TileGlitch(Engine engine, String id) {
         super(engine, Assets.BINARY[0], id, false, TileType.GROUND);
-        this.animation = new Animation(50, Assets.BINARY);
+        this.animation = new Animation(75, Assets.BINARY);
     }
 
     @Override

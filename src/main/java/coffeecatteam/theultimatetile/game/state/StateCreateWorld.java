@@ -6,9 +6,10 @@ import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.state.game.StateGame;
 import coffeecatteam.theultimatetile.game.tile.Tile;
-import coffeecatteam.theultimatetile.game.tile.Tiles;
-import coffeecatteam.theultimatetile.game.tile.tiles.TileLava;
-import coffeecatteam.theultimatetile.game.tile.tiles.TileWater;
+import coffeecatteam.theultimatetile.game.tile.tiles.TileAir;
+import coffeecatteam.theultimatetile.game.tile.tiles.TileDirt;
+import coffeecatteam.theultimatetile.game.tile.tiles.TileGrass;
+import coffeecatteam.theultimatetile.game.tile.tiles.TileSand;
 import coffeecatteam.theultimatetile.game.world.World;
 import coffeecatteam.theultimatetile.game.world.WorldGenerator;
 import coffeecatteam.theultimatetile.gfx.Text;
@@ -32,16 +33,21 @@ public class StateCreateWorld extends StateAbstractMenu {
     private long seed;
     private float sizeMod;
     private int minWorldSize = 400, worldSize;
+
     private Tile[][] bgTiles, fgTiles;
+    private boolean generating = false;
 
     public StateCreateWorld(Engine engine) {
-        super(engine);
+        super(engine, DEFAULT_CENTRE);
 
         worldName = "Test World";
         long range = 1000000000L;
         seed = generateSeed(-range, range);
         sizeMod = NumberUtils.getRandomFloat(0.0f, 50.0f);
-        worldSize = minWorldSize + NumberUtils.getRandomInt((int) -(sizeMod * 2), (int) (sizeMod * 2));
+
+        int sizeMin = Math.min((int) -(sizeMod * 2), (int) (sizeMod * 2));
+        int sizeMax = Math.max((int) -(sizeMod * 2), (int) (sizeMod * 2));
+        worldSize = minWorldSize + NumberUtils.getRandomInt(sizeMin, sizeMax);
 
         uiManager.addObject(new UIButton(engine, true, "Create World", new ClickListener() {
             @Override
@@ -71,40 +77,59 @@ public class StateCreateWorld extends StateAbstractMenu {
 
     @Override
     public void render(Graphics g) {
-        super.render(g);
         Color c = Color.white;
         Font f = Assets.FONTS.get("40");
 
-        Text.drawStringCenteredX(g, worldName, engine.getHeight() / 2 - Text.getHeight(worldName, f) / 2 - 90, c, f);
+        if (generating) {
+            this.renderBG(g);
+            Text.drawStringCentered(g, "Generating world...", c, f);
+        } else {
+            super.render(g);
+            Text.drawStringCenteredX(g, worldName, engine.getHeight() / 2 - Text.getHeight(worldName, f) / 2 - 90, c, f);
 
-        String seedS = "Seed: " + String.valueOf(seed);
-        Text.drawStringCenteredX(g, seedS, engine.getHeight() / 2 - Text.getHeight(seedS, f) / 2 - 55, c, f);
+            String seedS = "Seed: " + String.valueOf(seed);
+            Text.drawStringCenteredX(g, seedS, engine.getHeight() / 2 - Text.getHeight(seedS, f) / 2 - 55, c, f);
 
-        String worldSizeS = "Size: " + String.valueOf(worldSize);
-        Text.drawStringCenteredX(g, worldSizeS, engine.getHeight() / 2 - Text.getHeight(worldSizeS, f) / 2 - 20, c, f);
+            String worldSizeS = "Size: " + String.valueOf(worldSize);
+            Text.drawStringCenteredX(g, worldSizeS, engine.getHeight() / 2 - Text.getHeight(worldSizeS, f) / 2 - 20, c, f);
+        }
     }
 
     private void generateWorld() {
+        logger.print("Generating world...");
+//        Tiles.init(engine);
+
         double blendSize = 25.0d + sizeMod;
-        WorldGenerator generator = new WorldGenerator(seed, worldSize).setBlendSize(blendSize);
+        WorldGenerator generator = new WorldGenerator(seed, worldSize);
+        generator.setBlendSize(blendSize);
         generator.generate();
 
-        Tiles.init(engine);
-        bgTiles = generator.getBGTiles();
-        fgTiles = generator.getFGTiles();
+        generating = true;
+        while (generator.isGenerating()) {
+            if (generator.isGenerated()) {
+                bgTiles = generator.getBgTiles();
+                fgTiles = generator.getFgTiles();
+            }
+        }
 
-        World world = new World(engine, worldName, worldSize, worldSize, getPlayerSpawn(), bgTiles, fgTiles);
+        World world = new World(engine, worldName, worldSize, worldSize, getPlayerSpawn(), bgTiles, fgTiles).setSeed(seed);
         State.setState(new StateGame(engine, "./saves/Test_World", worldName, world));
         ((GameEngine) engine).setUsername("TEST");
+
+        generating = false;
     }
 
     private Vector2D getPlayerSpawn() {
-        int x = NumberUtils.getRandomInt(1, worldSize - 3);
-        int y = NumberUtils.getRandomInt(1, worldSize - 3);
+        int x = NumberUtils.getRandomInt(worldSize - 1);
+        int y = NumberUtils.getRandomInt(worldSize - 1);
 
-        if (fgTiles[x][y].isSolid() || fgTiles[x][y] instanceof TileWater || fgTiles[x][y] instanceof TileLava)
+        if (fgTiles[x][y].isSolid() || fgTiles[x][y].isUnbreakable())
             return getPlayerSpawn();
-        else
-            return new Vector2D(x, y);
+        else {
+            if (fgTiles[x][y] instanceof TileSand || fgTiles[x][y] instanceof TileGrass || fgTiles[x][y] instanceof TileDirt || fgTiles[x][y] instanceof TileAir)
+                return new Vector2D(x, y);
+            else
+                return getPlayerSpawn();
+        }
     }
 }

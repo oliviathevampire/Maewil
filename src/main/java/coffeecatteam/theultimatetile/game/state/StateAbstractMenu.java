@@ -3,23 +3,22 @@ package coffeecatteam.theultimatetile.game.state;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.game.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 public class StateAbstractMenu extends State {
 
-    public StateAbstractMenu(Engine engine) {
-        this(engine, true);
+    public StateAbstractMenu(Engine engine, Tile[] centre) {
+        this(engine, centre, true);
     }
 
-    public StateAbstractMenu(Engine engine, boolean initUI) {
-        super(engine);
+    public StateAbstractMenu(Engine engine, Tile[] centre, boolean initUI) {
+        super(engine, centre);
 
         if (initUI) {
             uiManager.addObject(new UIButton(engine, new Vector2D(15, engine.getHeight() - 95), "Main Menu", new ClickListener() {
@@ -50,7 +49,7 @@ public class StateAbstractMenu extends State {
 
     @Override
     public void render(Graphics g) {
-        Assets.MENU_BG.draw(0, 0, engine.getWidth(), engine.getHeight());
+        this.renderBG(g);
         uiManager.render(g);
     }
 }

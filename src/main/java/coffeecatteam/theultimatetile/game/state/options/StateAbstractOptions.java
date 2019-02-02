@@ -4,20 +4,19 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.state.State;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
-
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+
 import java.io.IOException;
 
 public abstract class StateAbstractOptions extends State {
 
     public StateAbstractOptions(GameEngine gameEngineIn) {
-        super(gameEngineIn);
+        super(gameEngineIn, StateOptions.BG);
 
         uiManager.addObject(new UIButton(gameEngineIn, new Vector2D(15, engine.getHeight() - 95), "Back", new ClickListener() {
             @Override
@@ -47,7 +46,7 @@ public abstract class StateAbstractOptions extends State {
 
     @Override
     public void render(Graphics g) {
-        Assets.MENU_BG.draw(0, 0, engine.getWidth(), engine.getHeight());
+        this.renderBG(g);
         uiManager.render(g);
     }
 }

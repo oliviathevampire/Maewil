@@ -3,6 +3,8 @@ package coffeecatteam.theultimatetile.game.state;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.game.tile.Tile;
+import coffeecatteam.theultimatetile.game.tile.Tiles;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
@@ -10,7 +12,6 @@ import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.OptionsJsonParser;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.json.simple.parser.ParseException;
-
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -21,9 +22,10 @@ import java.io.IOException;
 public class StateOptions extends StateAbstractMenu {
 
     public static OptionsJsonParser OPTIONS;
+    public static final Tile[] BG = new Tile[]{Tiles.STONE, Tiles.GLITCH};
 
     public StateOptions(Engine engine, boolean initUI) {
-        super(engine, initUI);
+        super(engine, BG, initUI);
         init();
 
         OPTIONS = new OptionsJsonParser("./options.json", engine);

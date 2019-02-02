@@ -9,8 +9,6 @@ import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlink;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
-
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -18,7 +16,7 @@ import org.newdawn.slick.Graphics;
 public class StateMenu extends State {
 
     public StateMenu(GameEngine gameEngineIn) {
-        super(gameEngineIn);
+        super(gameEngineIn, DEFAULT_CENTRE);
         init();
 
         int yOff = 20;
@@ -88,7 +86,7 @@ public class StateMenu extends State {
 
     @Override
     public void render(Graphics g) {
-        Assets.MENU_BG.draw(0, 0, engine.getWidth(), engine.getHeight());
+        this.renderBG(g);
         uiManager.render(g);
 
         int w = 80 * 6;
