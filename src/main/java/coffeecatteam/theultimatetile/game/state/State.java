@@ -10,23 +10,21 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public abstract class State {
 
     protected CatLogger logger;
 
-    private static State currentState = null;
-
     protected UIManager uiManager;
-    protected static Engine engine;
+    protected Engine engine;
 
-    private List<Tile> tiles;
+    private int bgWidth, bgHeight;
+    private Tile[][] bgTiles;
     protected static final Tile[] DEFAULT_CENTRE = new Tile[]{Tiles.GRASS}, DEFAULT_BORDER = new Tile[]{Tiles.STONE, Tiles.BROKEN_STONE};
 
     public State(Engine engine) {
-        this(engine, DEFAULT_CENTRE, DEFAULT_BORDER);
+        this(engine, DEFAULT_CENTRE);
     }
 
     public State(Engine engine, Tile[] centre) {
@@ -34,27 +32,28 @@ public abstract class State {
     }
 
     public State(Engine engine, Tile[] centre, Tile[] border) {
-        State.engine = engine;
+        this.engine = engine;
         this.logger = engine.getLogger();
-        uiManager = new UIManager(engine);
+        this.uiManager = new UIManager(engine);
 
-        int width = engine.getWidth() / Tile.TILE_WIDTH + 1;
-        int height = engine.getHeight() / Tile.TILE_HEIGHT + 1;
-        tiles = new ArrayList<>(width * height);
-        Tile[][] wl = new Tile[width][height];
+        this.bgWidth = engine.getWidth() / Tile.TILE_WIDTH + 1;
+        this.bgHeight = engine.getHeight() / Tile.TILE_HEIGHT + 1;
+        this.bgTiles = new Tile[this.bgWidth][this.bgHeight];
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
+        for (int y = 0; y < this.bgHeight; y++) {
+            for (int x = 0; x < this.bgWidth; x++) {
                 Tile tile = centre[new Random().nextInt(centre.length)];
-                if (x == 0 || y == 0 || x >= width - 1 || y >= height - 1)
+                if (x == 0 || y == 0 || x >= this.bgWidth - 1 || y >= this.bgHeight - 1)
                     tile = border[new Random().nextInt(border.length)];
+
                 tile = tile.newTile().setPos(new TilePos(x, y));
-                tiles.add(tile);
-                wl[x][y] = tile;
+                this.bgTiles[x][y] = tile;
             }
         }
 
-        tiles.forEach(t -> t.setWorldLayer(wl));
+        for (int y = 0; y < this.bgHeight; y++)
+            for (int x = 0; x < this.bgWidth; x++)
+                this.bgTiles[x][y].setWorldLayer(this.bgTiles);
     }
 
     public void init() {
@@ -64,19 +63,16 @@ public abstract class State {
 
     public abstract void render(Graphics g);
 
+    public void postRender(Graphics g) {
+        uiManager.postRender(g);
+    }
+
     protected void renderBG(Graphics g) {
-        tiles.forEach(t -> {
-            t.forcedUpdate(null, 0);
-            t.render(g);
-        });
-    }
-
-    public static void setState(State state) {
-        currentState = state;
-        currentState.init();
-    }
-
-    public static State getState() {
-        return currentState;
+        for (int y = 0; y < bgHeight; y++) {
+            for (int x = 0; x < bgWidth; x++) {
+                bgTiles[x][y].forcedUpdate(null, 0);
+                bgTiles[x][y].render(g);
+            }
+        }
     }
 }

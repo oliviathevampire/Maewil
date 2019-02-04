@@ -25,6 +25,11 @@ public class UIManager {
     public void render(Graphics g) {
         for (UIObject obj : objects) {
             obj.render(g);
+        }
+    }
+
+    public void postRender(Graphics g) {
+        for (UIObject obj : objects) {
             obj.postRender(g);
         }
     }

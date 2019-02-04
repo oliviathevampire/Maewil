@@ -2,10 +2,7 @@ package coffeecatteam.theultimatetile.game;
 
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.game.state.State;
-import coffeecatteam.theultimatetile.game.state.StateCredits;
-import coffeecatteam.theultimatetile.game.state.StateMenu;
-import coffeecatteam.theultimatetile.game.state.StateOptions;
+import coffeecatteam.theultimatetile.game.state.*;
 import coffeecatteam.theultimatetile.game.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.game.state.options.OptionsSounds;
 import coffeecatteam.theultimatetile.game.state.options.controls.OptionsControls;
@@ -54,7 +51,7 @@ public class GameEngine extends Engine {
 
         optionsControls = new OptionsControls(this);
         optionsSpounds = new OptionsSounds(this);
-        State.setState(stateMenu);
+        StateManager.setCurrentState(stateMenu);
 
         entityManager = new EntityManager(this, new EntityPlayer(this, ""));
 
@@ -68,14 +65,16 @@ public class GameEngine extends Engine {
 //        TagBase.TEST();
         super.update(container, delta);
 
-        if (State.getState() != null)
-            State.getState().update(container, delta);
+        if (StateManager.getCurrentState() != null)
+            StateManager.getCurrentState().update(container, delta);
     }
 
     @Override
     public void rendera(GameContainer container, Graphics g) throws SlickException {
-        if (State.getState() != null)
-            State.getState().render(g);
+        if (StateManager.getCurrentState() != null) {
+            StateManager.getCurrentState().render(g);
+            StateManager.getCurrentState().postRender(g);
+        }
         if (StateOptions.OPTIONS.fpsCounter())
             renderFPSCounter(g);
     }
