@@ -18,7 +18,6 @@ public class UIButton extends UIObject {
 
     private boolean disabled = false;
     private boolean hovering = false;
-    private int mouseX = 0, mouseY = 0;
 
     private String text;
     private boolean underlined;
@@ -119,8 +118,8 @@ public class UIButton extends UIObject {
     @Override
     public void postRender(Graphics g) {
         if (isHovering() && hasTooltip) {
-            int x = mouseX, x1 = x + this.tooltip.getWidth(), xDiff = 0;
-            int y = mouseY, y1 = y + this.tooltip.getHeight(), yDiff = 0;
+            int x = engine.getMouseX(), x1 = x + this.tooltip.getWidth(), xDiff = 0;
+            int y = engine.getMouseY(), y1 = y + this.tooltip.getHeight(), yDiff = 0;
 
             if (x1 > engine.getWidth()) xDiff = x1 - engine.getWidth();
             if (y1 > engine.getHeight()) yDiff = y1 - engine.getHeight();
