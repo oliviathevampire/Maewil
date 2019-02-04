@@ -17,7 +17,6 @@ public class StateMenu extends State {
 
     public StateMenu(GameEngine gameEngineIn) {
         super(gameEngineIn, DEFAULT_CENTRE);
-        init();
 
         int yOff = 20;
 
@@ -25,7 +24,7 @@ public class StateMenu extends State {
             @Override
             public void onClick() {
 //                State.setState(((GameEngine) engine).stateSelectGame);
-                State.setState(new StateCreateWorld(engine));
+                StateManager.setCurrentState(new StateCreateWorld(engine));
 //                State.setState(new StateGame(engine, "./saves/Test_World", "Test World"));
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu", "Selecting A Game");
@@ -39,7 +38,7 @@ public class StateMenu extends State {
         uiManager.addObject(new UIButton(gameEngineIn, true, engine.getHeight() / 2 - yOff + 80, "Options", new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(engine.stateOptions);
+                StateManager.setCurrentState(engine.stateOptions);
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options");
             }
@@ -68,7 +67,7 @@ public class StateMenu extends State {
         uiManager.addObject(new UIHyperlink(new Vector2D(engine.getWidth() - 5 - Text.getWidth(text, font), cy - 10), height, text, font, new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(((GameEngine) engine).stateCredits);
+                StateManager.setCurrentState(((GameEngine) engine).stateCredits);
 
                 DiscordHandler.INSTANCE.updatePresence("Viewing credits");
             }

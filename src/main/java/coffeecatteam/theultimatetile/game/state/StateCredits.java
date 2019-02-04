@@ -22,7 +22,6 @@ public class StateCredits extends StateAbstractMenu {
 
     public StateCredits(Engine engine) {
         super(engine, DEFAULT_CENTRE);
-        init();
 
         try {
             Object[] devs = JsonUtils.getArray("devs", "/assets/credits.json", true).toArray();

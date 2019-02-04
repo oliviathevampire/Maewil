@@ -113,7 +113,7 @@ public class StateCreateWorld extends StateAbstractMenu {
         }
 
         World world = new World(engine, worldName, worldSize, worldSize, getPlayerSpawn(), bgTiles, fgTiles).setSeed(seed);
-        State.setState(new StateGame(engine, "./saves/Test_World", worldName, world));
+        StateManager.setCurrentState(new StateGame(engine, "./saves/Test_World", worldName, world));
         ((GameEngine) engine).setUsername("TEST");
 
         generating = false;

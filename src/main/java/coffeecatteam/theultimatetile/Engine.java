@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.game.state.State;
+import coffeecatteam.theultimatetile.game.state.StateManager;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.game.StateGame;
 import coffeecatteam.theultimatetile.game.tile.Tiles;
@@ -105,9 +106,9 @@ public abstract class Engine extends BasicGame {
         if (playBGMusic && Sounds.BG_MUSIC.playing())
             Sounds.BG_MUSIC.stop();
         logger.print("Shutting down [" + this.getTitle() + "] engine!");
-        if (State.getState() instanceof StateGame) {
+        if (StateManager.getCurrentState() instanceof StateGame) {
             logger.print("Saving world!");
-            ((StateGame) State.getState()).saveWorld(true);
+            ((StateGame) StateManager.getCurrentState()).saveWorld(true);
             logger.print("World saved!");
         }
 
@@ -131,7 +132,7 @@ public abstract class Engine extends BasicGame {
     }
 
     protected void renderFPSCounter(Graphics g) {
-        Font font = Assets.FONTS.get("20");
+        Font font = Assets.FONTS.get("25-bold");
         String t = "FPS: " + this.fps;
         Text.drawString(g, t, 5, 5 + Text.getHeight(t, font), false, false, Color.orange, font);
     }

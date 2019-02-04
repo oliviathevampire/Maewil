@@ -26,7 +26,6 @@ public class StateOptions extends StateAbstractMenu {
 
     public StateOptions(Engine engine, boolean initUI) {
         super(engine, BG, initUI);
-        init();
 
         OPTIONS = new OptionsJsonParser("./options.json", engine);
         try {
@@ -63,7 +62,7 @@ public class StateOptions extends StateAbstractMenu {
             uiManager.addObject(new UIButton(engine, new Vector2D(15, 173), "Controls", new ClickListener() {
                 @Override
                 public void onClick() {
-                    State.setState(((GameEngine) engine).optionsControls);
+                    StateManager.setCurrentState(((GameEngine) engine).optionsControls);
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {
@@ -80,7 +79,7 @@ public class StateOptions extends StateAbstractMenu {
             uiManager.addObject(new UIButton(engine, new Vector2D(15, 252), "Sounds", new ClickListener() {
                 @Override
                 public void onClick() {
-                    State.setState(((GameEngine) engine).optionsSpounds);
+                    StateManager.setCurrentState(((GameEngine) engine).optionsSpounds);
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {

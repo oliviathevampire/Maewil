@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.game.state.game;
 import coffeecatteam.theultimatetile.Engine;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.state.State;
+import coffeecatteam.theultimatetile.game.state.StateManager;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.game.tile.Tile;
@@ -57,7 +58,7 @@ public class StateGame extends State {
         UIButton btnMainMenu = new UIButton(engine, true, engine.getHeight() / 2 + yOffset + 10, "Main Menu", new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(GameEngine.getGameEngine().stateMenu);
+                StateManager.setCurrentState(GameEngine.getGameEngine().stateMenu);
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu");
                 saveWorld(true);

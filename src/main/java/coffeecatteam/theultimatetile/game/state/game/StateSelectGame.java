@@ -11,7 +11,6 @@ public class StateSelectGame extends StateAbstractMenu {
 
     public StateSelectGame(Engine engine) {
         super(engine, DEFAULT_CENTRE);
-        init();
 
         int btnHeight = 64;
         int y = engine.getHeight() / 2 - btnHeight / 2 + 25;

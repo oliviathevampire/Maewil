@@ -17,7 +17,6 @@ public class OptionsSounds extends StateAbstractOptions {
 
     public OptionsSounds(GameEngine gameEngineIn) {
         super(gameEngineIn);
-        init();
         int width = 200;
         int x = 80, xOff = width + 120;
         int y = 100, yOff = 130;

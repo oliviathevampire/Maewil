@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.game.state.options;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.game.state.State;
+import coffeecatteam.theultimatetile.game.state.StateManager;
 import coffeecatteam.theultimatetile.game.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
@@ -21,7 +22,7 @@ public abstract class StateAbstractOptions extends State {
         uiManager.addObject(new UIButton(gameEngineIn, new Vector2D(15, engine.getHeight() - 95), "Back", new ClickListener() {
             @Override
             public void onClick() {
-                State.setState(engine.stateOptions);
+                StateManager.setCurrentState(engine.stateOptions);
                 try {
                     StateOptions.OPTIONS.save();
                 } catch (IOException e) {
