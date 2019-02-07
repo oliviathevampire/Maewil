@@ -9,7 +9,6 @@ import coffeecatteam.theultimatetile.manager.UIManager;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class State {
@@ -21,14 +20,14 @@ public abstract class State {
 
     private int bgWidth, bgHeight;
     private Tile[][] bgTiles;
-    protected static final Tile[] DEFAULT_CENTRE = new Tile[]{Tiles.GRASS}, DEFAULT_BORDER = new Tile[]{Tiles.STONE, Tiles.BROKEN_STONE};
+    protected static final Tile[] CENTRE_GRASS = new Tile[]{Tiles.GRASS}, BORDER_STONE_BROKEN = new Tile[]{Tiles.STONE, Tiles.BROKEN_STONE};
 
     public State(Engine engine) {
-        this(engine, DEFAULT_CENTRE);
+        this(engine, CENTRE_GRASS);
     }
 
     public State(Engine engine, Tile[] centre) {
-        this(engine, centre, DEFAULT_BORDER);
+        this(engine, centre, BORDER_STONE_BROKEN);
     }
 
     public State(Engine engine, Tile[] centre, Tile[] border) {

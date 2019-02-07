@@ -38,7 +38,7 @@ public class StateCreateWorld extends StateAbstractMenu {
     private boolean generating = false;
 
     public StateCreateWorld(Engine engine) {
-        super(engine, DEFAULT_CENTRE);
+        super(engine, CENTRE_GRASS);
 
         worldName = "Test World";
         long range = 1000000000L;

@@ -21,7 +21,7 @@ public class StateCredits extends StateAbstractMenu {
     private UITextBox textBoxDev, textBoxHelper;
 
     public StateCredits(Engine engine) {
-        super(engine, DEFAULT_CENTRE);
+        super(engine, CENTRE_GRASS);
 
         try {
             Object[] devs = JsonUtils.getArray("devs", "/assets/credits.json", true).toArray();

@@ -10,7 +10,7 @@ import org.newdawn.slick.Graphics;
 public class StateSelectGame extends StateAbstractMenu {
 
     public StateSelectGame(Engine engine) {
-        super(engine, DEFAULT_CENTRE);
+        super(engine, CENTRE_GRASS);
 
         int btnHeight = 64;
         int y = engine.getHeight() / 2 - btnHeight / 2 + 25;

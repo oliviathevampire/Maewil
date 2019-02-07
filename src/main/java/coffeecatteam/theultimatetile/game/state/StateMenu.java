@@ -16,7 +16,7 @@ import org.newdawn.slick.Graphics;
 public class StateMenu extends State {
 
     public StateMenu(GameEngine gameEngineIn) {
-        super(gameEngineIn, DEFAULT_CENTRE);
+        super(gameEngineIn, CENTRE_GRASS);
 
         int yOff = 20;
 
