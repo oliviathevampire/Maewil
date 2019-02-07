@@ -213,13 +213,13 @@ public class Assets {
         WATER = getFrames(terrainSheet, 6, 0, 15);
         LAVA = getFrames(terrainSheet, 7, 0, 15);
 
-        /* Special Tiles */
-        SPLASH_EFFECT = getFrames(effectSheet, 0, 0, 15);
-        SPRINT_EFFECT = getFrames(effectSheet, 1, 0, 15);
-
         ULTIMATE_TILE = getFrames("/assets/textures/tiles/ultimate.png", 0, 0, 6, width * 2, height * 2);
 
         BINARY = getFrames("/assets/textures/tiles/binary.png", 0, 15);
+
+        /* Effects */
+        SPLASH_EFFECT = getFrames(effectSheet, 0, 0, 15);
+        SPRINT_EFFECT = getFrames(effectSheet, 1, 0, 15);
 
         logger.print("Assets [Tiles] loaded!");
     }
