@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
 import coffeecatteam.coffeecatutils.io.FileUtils;
-import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
 import org.json.simple.JSONObject;
@@ -16,7 +16,7 @@ import java.util.List;
 public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
 
     private String path = "./saves/saved_games.json";
-    protected Engine engine;
+    protected TutEngine tutEngine;
 
     public static int SAVE_CAPACITY = 3;
     public static final String DEFAULT_NAME = "UNSAVED";
@@ -27,8 +27,8 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
             GAMES.add("false:" + DEFAULT_NAME);
     }
 
-    public SavedGamesJSONParser(Engine engine) {
-        this.engine = engine;
+    public SavedGamesJSONParser(TutEngine tutEngine) {
+        this.tutEngine = tutEngine;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
             }
         }
 
-        engine.getLogger().print("Games loaded!");
+        tutEngine.getLogger().print("Games loaded!");
     }
 
     @Override
@@ -62,13 +62,13 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
                 jsonObject.put(tag, save);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            engine.getLogger().print(e.getMessage());
+            tutEngine.getLogger().print(e.getMessage());
         }
 
         FileWriter file = new FileWriter(path);
         file.write(jsonObject.toJSONString());
         file.flush();
 
-        engine.getLogger().print("Games saved!");
+        tutEngine.getLogger().print("Games saved!");
     }
 }

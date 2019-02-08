@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.ui.UIObject;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -9,11 +9,11 @@ import java.util.ArrayList;
 
 public class UIManager {
 
-    private Engine engine;
+    private TutEngine tutEngine;
     private ArrayList<UIObject> objects;
 
-    public UIManager(Engine engine) {
-        this.engine = engine;
+    public UIManager(TutEngine tutEngine) {
+        this.tutEngine = tutEngine;
         objects = new ArrayList<>();
     }
 

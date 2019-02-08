@@ -2,17 +2,16 @@ package coffeecatteam.theultimatetile.jsonparsers.world;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
-import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.GameEngine;
+import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.game.entities.Entity;
-import coffeecatteam.theultimatetile.game.inventory.items.Item;
-import coffeecatteam.theultimatetile.game.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.game.state.game.StateSelectGame;
-import coffeecatteam.theultimatetile.game.tags.JsonToTag;
-import coffeecatteam.theultimatetile.game.tags.TagCompound;
-import coffeecatteam.theultimatetile.game.tags.TagException;
-import coffeecatteam.theultimatetile.game.tile.Tile;
-import coffeecatteam.theultimatetile.game.tile.Tiles;
+import coffeecatteam.theultimatetile.inventory.items.Item;
+import coffeecatteam.theultimatetile.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.state.game.StateSelectGame;
+import coffeecatteam.theultimatetile.tags.JsonToTag;
+import coffeecatteam.theultimatetile.tags.TagCompound;
+import coffeecatteam.theultimatetile.tags.TagException;
+import coffeecatteam.theultimatetile.tile.Tile;
+import coffeecatteam.theultimatetile.tile.Tiles;
 import coffeecatteam.theultimatetile.manager.EntityManager;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
 import org.json.simple.JSONArray;
@@ -44,7 +43,7 @@ public class WorldJsonLoader implements IJSONLoader {
     }
 
     private String path;
-    private static Engine engine;
+    private static TutEngine tutEngine;
 
     // World
     private String name;
@@ -61,35 +60,35 @@ public class WorldJsonLoader implements IJSONLoader {
     private int[] selected_slots;
     private ItemStack[] inventory, hotbar;
 
-    public WorldJsonLoader(String path, Engine engine) {
+    public WorldJsonLoader(String path, TutEngine tutEngine) {
         this.path = path;
-        this.engine = engine;
+        this.tutEngine = tutEngine;
     }
 
     @Override
     public void load() throws IOException, ParseException {
         loadWorldInfo();
-        engine.getLogger().print("World [" + name + "] info loaded!");
+        tutEngine.getLogger().print("World [" + name + "] info loaded!");
 
         bg_tiles = new Tile[width][height];
         fg_tiles = new Tile[width][height];
         String bgLoadPath = path + "/" + BASE_FILES.get("tile_bg") + ".json";
         String fgLoadPath = path + "/" + BASE_FILES.get("tile_fg") + ".json";
         loadTiles(width, height, bgLoadPath, fgLoadPath, bg_tiles, fg_tiles);
-        engine.getLogger().print("World [" + name + "] tiles loaded!");
+        tutEngine.getLogger().print("World [" + name + "] tiles loaded!");
 
         /*
          * TEMP!!!
          */
-        if (engine instanceof GameEngine) {
+        if (tutEngine instanceof TutEngine) {
             loadEntities();
-            engine.getLogger().print("World [" + name + "] entities loaded!");
+            tutEngine.getLogger().print("World [" + name + "] entities loaded!");
 
             loadItems();
-            engine.getLogger().print("World [" + name + "] items loaded!");
+            tutEngine.getLogger().print("World [" + name + "] items loaded!");
 
             loadPlayerInfo();
-            engine.getLogger().print("World [" + name + "] player info loaded!");
+            tutEngine.getLogger().print("World [" + name + "] player info loaded!");
         }
     }
 
@@ -98,17 +97,17 @@ public class WorldJsonLoader implements IJSONLoader {
         JSONObject jsonObject = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path + "/" + BASE_FILES.get("world") + ".json"));
 
         name = (String) jsonObject.get("name");
-        engine.getLogger().print("Loaded world name");
+        tutEngine.getLogger().print("Loaded world name");
 
         JSONArray size = (JSONArray) jsonObject.get("size");
         width = NumberUtils.parseInt(size.get(0));
         height = NumberUtils.parseInt(size.get(1));
-        engine.getLogger().print("Loaded world size");
+        tutEngine.getLogger().print("Loaded world size");
 
         JSONArray spawn = (JSONArray) jsonObject.get("spawn");
         spawnX = NumberUtils.parseFloat(spawn.get(0));
         spawnY = NumberUtils.parseFloat(spawn.get(1));
-        engine.getLogger().print("Loaded world player spawn");
+        tutEngine.getLogger().print("Loaded world player spawn");
     }
 
     public void loadTiles(int width, int height, String bgLoadPath, String fgLoadPath, Tile[][] bg_tiles, Tile[][] fg_tiles) throws IOException, ParseException {
@@ -123,7 +122,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 loadTile(chunk, true, x, bg_tiles, fg_tiles);
             }
         }
-        engine.getLogger().print("Loaded world background tiles");
+        tutEngine.getLogger().print("Loaded world background tiles");
 
         JSONObject fgTiles = (JSONObject) jsonObjectFG.get("fg_tile");
         for (int y = 0; y < height; y++) {
@@ -132,12 +131,12 @@ public class WorldJsonLoader implements IJSONLoader {
                 loadTile(chunk, false, x, bg_tiles, fg_tiles);
             }
         }
-        engine.getLogger().print("Loaded world foreground tiles");
+        tutEngine.getLogger().print("Loaded world foreground tiles");
     }
 
     private void loadTile(JSONArray chunk, boolean bg, int x, Tile[][] bg_tiles, Tile[][] fg_tiles) {
         JSONObject tileObj = (JSONObject) chunk.get(x);
-        Tile tile = Tiles.getTile(engine, (String) tileObj.get("id"));
+        Tile tile = Tiles.getTile(tutEngine, (String) tileObj.get("id"));
         int tx = NumberUtils.parseInt(tileObj.get("x"));
         int ty = NumberUtils.parseInt(tileObj.get("y"));
 
@@ -159,7 +158,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 JSONObject entity = (JSONObject) aStatic;
                 loadEntityObj(entity);
             }
-            engine.getLogger().print("Loaded world static entities");
+            tutEngine.getLogger().print("Loaded world static entities");
         }
 
         // Creatures
@@ -169,9 +168,9 @@ public class WorldJsonLoader implements IJSONLoader {
                 JSONObject entity = (JSONObject) creature;
                 loadEntityObj(entity);
             }
-            engine.getLogger().print("Loaded world creature entities");
+            tutEngine.getLogger().print("Loaded world creature entities");
         }
-        engine.getLogger().print("Loaded world entities");
+        tutEngine.getLogger().print("Loaded world entities");
     }
 
     public void loadItems() throws IOException, ParseException {
@@ -193,9 +192,9 @@ public class WorldJsonLoader implements IJSONLoader {
                 if (!item.isStackable())
                     count = 1;
 
-                ((GameEngine) engine).getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
+                ((TutEngine) tutEngine).getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
             }
-            engine.getLogger().print("Loaded world items");
+            tutEngine.getLogger().print("Loaded world items");
         }
     }
 
@@ -205,28 +204,28 @@ public class WorldJsonLoader implements IJSONLoader {
 
         if (jsonObject.containsKey("username")) {
             username = (String) jsonObject.get("username");
-            ((GameEngine) engine).getEntityManager().getPlayer().setUsername(username);
-            engine.getLogger().print("loaded player username!");
+            ((TutEngine) tutEngine).getEntityManager().getPlayer().setUsername(username);
+            tutEngine.getLogger().print("loaded player username!");
         }
 
         health = NumberUtils.parseInt(jsonObject.get("health"));
-        ((GameEngine) engine).getEntityManager().getPlayer().setCurrentHealth(health);
-        engine.getLogger().print("loaded player health!");
+        ((TutEngine) tutEngine).getEntityManager().getPlayer().setCurrentHealth(health);
+        tutEngine.getLogger().print("loaded player health!");
 
         glubel = NumberUtils.parseInt(jsonObject.get("glubel"));
-        ((GameEngine) engine).getEntityManager().getPlayer().setGlubel(glubel);
-        engine.getLogger().print("loaded player glubel!");
+        ((TutEngine) tutEngine).getEntityManager().getPlayer().setGlubel(glubel);
+        tutEngine.getLogger().print("loaded player glubel!");
 
         lvl = NumberUtils.parseInt(jsonObject.get("lvl"));
-        ((GameEngine) engine).getEntityManager().getPlayer().setLvl(lvl);
-        engine.getLogger().print("loaded player lvl!");
+        ((TutEngine) tutEngine).getEntityManager().getPlayer().setLvl(lvl);
+        tutEngine.getLogger().print("loaded player lvl!");
 
         selected_slots = new int[2];
         JSONArray selected_slotsJ = (JSONArray) jsonObject.get("selected_slots");
         selected_slots[0] = NumberUtils.parseInt(selected_slotsJ.get(0));
         selected_slots[1] = NumberUtils.parseInt(selected_slotsJ.get(1));
-        ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().setInventorySelectedIndex(selected_slots[0]);
-        ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().setHotbarSelectedIndex(selected_slots[1]);
+        ((TutEngine) tutEngine).getEntityManager().getPlayer().getInventoryPlayer().setInventorySelectedIndex(selected_slots[0]);
+        ((TutEngine) tutEngine).getEntityManager().getPlayer().getInventoryPlayer().setHotbarSelectedIndex(selected_slots[1]);
 
         inventory = new ItemStack[12];
         JSONObject inventoryJ = (JSONObject) jsonObject.get("inventory");
@@ -246,7 +245,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 inventory[i] = new ItemStack(item, count);
             }
         }
-        engine.getLogger().print("loaded player inventory!");
+        tutEngine.getLogger().print("loaded player inventory!");
 
         hotbar = new ItemStack[3];
         JSONObject hotbarJ = (JSONObject) jsonObject.get("hotbar");
@@ -266,11 +265,11 @@ public class WorldJsonLoader implements IJSONLoader {
                 hotbar[i - 12] = new ItemStack(item, count);
             }
         }
-        engine.getLogger().print("loaded player hotbar!");
+        tutEngine.getLogger().print("loaded player hotbar!");
 
         int invIndex = 0;
         for (int i = 0; i < inventory.length; i++) {
-            ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(invIndex).setStack(inventory[invIndex]);
+            ((TutEngine) tutEngine).getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(invIndex).setStack(inventory[invIndex]);
             invIndex++;
             if (invIndex >= inventory.length)
                 break;
@@ -278,7 +277,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
         int hotbarIndex = 12;
         for (int i = 0; i < hotbar.length; i++) {
-            ((GameEngine) engine).getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(hotbarIndex).setStack(hotbar[hotbarIndex - 12]);
+            ((TutEngine) tutEngine).getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(hotbarIndex).setStack(hotbar[hotbarIndex - 12]);
             hotbarIndex++;
             if (hotbarIndex >= hotbar.length + 12)
                 break;
@@ -305,7 +304,7 @@ public class WorldJsonLoader implements IJSONLoader {
         float x = NumberUtils.parseFloat(pos.get(0));
         float y = NumberUtils.parseFloat(pos.get(1));
 
-        int health = EntityManager.loadEntity(engine, id).getMaxHealth();
+        int health = EntityManager.loadEntity(tutEngine, id).getMaxHealth();
         if (entityObj.containsKey("health")) {
             int healthJ = NumberUtils.parseInt(entityObj.get("health"));
             if (healthJ < 0)
@@ -330,10 +329,10 @@ public class WorldJsonLoader implements IJSONLoader {
     private void loadEntity(String id, float x, float y, int count, JSONArray pos, int health, TagCompound tags) {
         float ogX = NumberUtils.parseFloat(pos.get(0));
         for (int i = 0; i < count; i++) {
-            Entity entity = EntityManager.loadEntity(engine, id);
+            Entity entity = EntityManager.loadEntity(tutEngine, id);
             entity.setTags(tags);
             entity.setCurrentHealth(health);
-            ((GameEngine) engine).getEntityManager().addEntity(entity, x, y, true);
+            ((TutEngine) tutEngine).getEntityManager().addEntity(entity, x, y, true);
             x++;
             if (x > ogX + 2) {
                 x = ogX;
@@ -342,16 +341,16 @@ public class WorldJsonLoader implements IJSONLoader {
         }
     }
 
-    public static void copyFiles(Engine engine, String from, String dest) {
+    public static void copyFiles(TutEngine tutEngine, String from, String dest) {
         for (String file : BASE_FILES.values())
-            copy(engine, StateSelectGame.class.getResourceAsStream(from + "/" + file + ".json"), dest + "/" + file + ".json");
+            copy(tutEngine, StateSelectGame.class.getResourceAsStream(from + "/" + file + ".json"), dest + "/" + file + ".json");
     }
 
 
-    public static boolean copy(Engine engine, InputStream source, String destination) {
+    public static boolean copy(TutEngine tutEngine, InputStream source, String destination) {
         boolean success = true;
 
-        engine.getLogger().print("Copying ->" + source + "\tto ->" + destination);
+        tutEngine.getLogger().print("Copying ->" + source + "\tto ->" + destination);
 
         try {
             if (!new File(destination).exists())

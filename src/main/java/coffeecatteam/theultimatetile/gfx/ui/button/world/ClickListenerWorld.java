@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.gfx.ui.button.world;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
 import org.json.simple.parser.ParseException;
@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class ClickListenerWorld implements ClickListener {
 
-    private Engine engine;
+    private TutEngine tutEngine;
 
     private String path, savesPath;
     private int index;
@@ -24,17 +24,17 @@ public class ClickListenerWorld implements ClickListener {
 
     private SavedGamesJSONParser gamesJSONParser;
 
-    public ClickListenerWorld(Engine engine, String path, String savesPath, int index) {
-        this.engine = engine;
+    public ClickListenerWorld(TutEngine tutEngine, String path, String savesPath, int index) {
+        this.tutEngine = tutEngine;
         this.path = path;
         this.savesPath = savesPath;
         this.index = index;
 
-        gamesJSONParser = new SavedGamesJSONParser(engine);
+        gamesJSONParser = new SavedGamesJSONParser(tutEngine);
         try {
             gamesJSONParser.load();
         } catch (IOException | ParseException e) {
-            engine.getLogger().print(e);
+            tutEngine.getLogger().print(e);
         }
     }
 
@@ -86,12 +86,12 @@ public class ClickListenerWorld implements ClickListener {
 //                username = "HAKUNA MATATA!";
 //            }
 //        }
-//        GameEngine.getGameEngine().setUsername(username);
-//        engine.getLogger().print("Set username: " + GameEngine.getGameEngine().getUsername());
+//        tutEngine.getTutEngine().setUsername(username);
+//        engine.getLogger().print("Set username: " + tutEngine.getTutEngine().getUsername());
 //
 //        engine.getLogger().print("Loading game [" + path + "]!");
 //
-//        DiscordHandler.INSTANCE.updatePresence("In Game - " + GameEngine.getGameEngine().getUsername(), "World: " + worldName, true);
+//        DiscordHandler.INSTANCE.updatePresence("In Game - " + tutEngine.getTutEngine().getUsername(), "World: " + worldName, true);
 //        StateGame game = new StateGame(engine, path, worldName);
 //        game.saveWorld(username);
 //        State.setState(game);

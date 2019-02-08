@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx;
 
-import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.TutEngine;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
@@ -9,17 +9,17 @@ public class Text {
 
     public static void drawStringCenteredX(Graphics g, String text, int yPos, Color c, Font font) {
         int width = getWidth(text, font);
-        drawString(g, text, Engine.getEngine().getWidth() / 2 - width / 2, yPos, false, c, font);
+        drawString(g, text, TutEngine.getTutEngine().getWidth() / 2 - width / 2, yPos, false, c, font);
     }
 
     public static void drawStringCenteredY(Graphics g, String text, int xPos, Color c, Font font) {
         int height = getHeight(text, font);
-        drawString(g, text, xPos, (Engine.getEngine().getHeight() / 2 - height / 2) + getAscent(font), false, c, font);
+        drawString(g, text, xPos, (TutEngine.getTutEngine().getHeight() / 2 - height / 2) + getAscent(font), false, c, font);
     }
 
     public static void drawStringCentered(Graphics g, String text, Color c, Font font) {
         int width = getWidth(text, font), height = getHeight(text, font);
-        int x = Engine.getEngine().getWidth() / 2 - width / 2, y = (Engine.getEngine().getHeight() / 2 - height / 2) + getAscent(font);
+        int x = TutEngine.getTutEngine().getWidth() / 2 - width / 2, y = (TutEngine.getTutEngine().getHeight() / 2 - height / 2) + getAscent(font);
         drawString(g, text, x, y, false, c, font);
     }
 

@@ -135,10 +135,6 @@ public class Assets {
     public static Image CURSOR, MAP_BORDER;
     public static Image[] MAP_CURSOR;
 
-    // Level Creator
-    public static Image MG_OVERLAY_OUTER, MG_OVERLAY_INNER_MID, MG_OVERLAY_INNER_MID_RIGHT;
-    public static Image EDIT_GRID_TILE, SELECTED_TILE;
-
     /* Fonts */
     private static void initFonts() {
         String fontPath = "/assets/fonts/LCD_Solid.ttf";
@@ -415,14 +411,6 @@ public class Assets {
                 MAP_CURSOR[index] = getSpriteInd(new SpriteSheet("/assets/textures/gui/map/cursor.png"), x, y, 16, 16);
             }
         }
-
-        // Level Creator
-        MG_OVERLAY_OUTER = getSpriteExact("/assets/textures/gui/level_creator/mg_overlay_outer.png", 0, 0, 700, 700);
-        MG_OVERLAY_INNER_MID = getSpriteExact("/assets/textures/gui/level_creator/mg_overlay_inner_mid.png", 0, 0, 700, 700);
-        MG_OVERLAY_INNER_MID_RIGHT = getSpriteExact("/assets/textures/gui/level_creator/mg_overlay_inner_mid_right.png", 0, 0, 700, 700);
-
-        EDIT_GRID_TILE = getSpriteExact("/assets/textures/gui/level_creator/edit_grid_tile.png", 0, 0, 32, 32);
-        SELECTED_TILE = getSpriteExact("/assets/textures/gui/level_creator/selected_tile.png", 0, 0, 64, 64);
 
         logger.print("Assets [GUI] loaded!");
     }

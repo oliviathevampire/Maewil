@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.assets;
 
-import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.TutEngine;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -36,7 +36,7 @@ public class Sounds {
         BUSH = loadSound("bush");
 
         SPLASH = loadSound("splash");
-        Engine.getEngine().getLogger().print("Sounds loaded!");
+        TutEngine.getTutEngine().getLogger().print("Sounds loaded!");
     }
 
     public static Sound loadSound(String name) throws SlickException {

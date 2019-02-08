@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.ui.button.world;
 
-import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import org.newdawn.slick.GameContainer;
 
@@ -10,15 +10,15 @@ import org.newdawn.slick.GameContainer;
  */
 public class UIButtonWorld extends UIButton {
 
-    public UIButtonWorld(Engine engine, float y, int index) {
-        this(engine, y, index, "");
+    public UIButtonWorld(TutEngine tutEngine, float y, int index) {
+        this(tutEngine, y, index, "");
     }
 
-    public UIButtonWorld(Engine engine, float y, int index, String path) {
-        super(engine, true, (int) y, "New Game", null);
+    public UIButtonWorld(TutEngine tutEngine, float y, int index, String path) {
+        super(tutEngine, true, (int) y, "New Game", null);
         String savesPath = "./saves/";
         String path1 = savesPath + path;
-        this.listener = new ClickListenerWorld(engine, path1, savesPath, index);
+        this.listener = new ClickListenerWorld(tutEngine, path1, savesPath, index);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.image;
 
-import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.TutEngine;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -18,7 +18,7 @@ public class ImageLoader {
             image.setFilter(Image.FILTER_NEAREST);
             return image;
         } catch (SlickException e) {
-            Engine.getEngine().getLogger().print(e);
+            TutEngine.getTutEngine().getLogger().print(e);
         }
         return null;
     }

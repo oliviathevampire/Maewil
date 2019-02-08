@@ -3,7 +3,6 @@ package coffeecatteam.theultimatetile;
 import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.DevEnvUtils;
 import coffeecatteam.coffeecatutils.logger.CatLoggerUtils;
-import coffeecatteam.theultimatetile.game.GameEngine;
 import coffeecatteam.theultimatetile.levelcreator.CreatorEngine;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.newdawn.slick.AppGameContainer;
@@ -34,16 +33,16 @@ public class Launcher {
         /* Check if your using the level creator */
         boolean LEVEL_CREATE = ArgUtils.hasArgument(args, "-startLevelCreator");
         DiscordHandler.INSTANCE.LEVEL_CREATE(LEVEL_CREATE);
-        Engine engine;
+        TutEngine tutEngine;
 
         if (LEVEL_CREATE)
-            engine = new CreatorEngine(args, title + " - Level Creator", width, height);
+            tutEngine = new CreatorEngine(args, title + " - Level Creator", width, height);
         else
-            engine = new GameEngine(args, title, width, height);
+            tutEngine = new TutEngine(args, title, width, height);
 
         /* Start game */
         try {
-            AppGameContainer app = new AppGameContainer(engine);
+            AppGameContainer app = new AppGameContainer(tutEngine);
             app.setDisplayMode(width, height, false);
             app.setIcons(new String[]{"icons/32.png", "icons/64.png"});
             app.setTargetFrameRate(100);

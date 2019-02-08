@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.gfx.ui.hyperlink;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIObject;
@@ -40,7 +40,7 @@ public class UIHyperlink extends UIObject {
     @Override
     public void update(GameContainer container, int delta) {
         super.update(container, delta);
-        this.hovering = this.bounds.contains(Engine.getEngine().getMouseX(), Engine.getEngine().getMouseY());
+        this.hovering = this.bounds.contains(TutEngine.getTutEngine().getMouseX(), TutEngine.getTutEngine().getMouseY());
 
         if (this.hovering)
             this.c = hoverColor;

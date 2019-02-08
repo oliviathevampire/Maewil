@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.utils;
 
-import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.TutEngine;
 
 import javax.swing.*;
 import java.io.File;
@@ -37,8 +37,8 @@ public class Utils {
         return username.replaceAll(" ", "_").replaceAll("[^a-zA-Z0-9_]+", ""); // I'ma Cat
     }
 
-    public static String getKeyPressed(Engine engine) {
-        switch (engine.getKeyManager().getCurrentKeyPressedCode()) {
+    public static String getKeyPressed(TutEngine tutEngine) {
+        switch (tutEngine.getKeyManager().getCurrentKeyPressedCode()) {
             case 8:
                 return "BACKSPACE";
             case 9:
@@ -56,7 +56,7 @@ public class Utils {
             case 32:
                 return "SPACE";
             default:
-                return String.valueOf(engine.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
+                return String.valueOf(tutEngine.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
         }
     }
 
@@ -91,7 +91,7 @@ public class Utils {
 
             fileOutputStream.close();
         } catch (IOException e) {
-            Engine.getEngine().getLogger().print(e);
+            TutEngine.getTutEngine().getLogger().print(e);
         }
     }
 

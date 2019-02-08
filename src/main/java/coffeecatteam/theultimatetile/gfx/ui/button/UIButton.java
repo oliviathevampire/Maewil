@@ -2,8 +2,8 @@ package coffeecatteam.theultimatetile.gfx.ui.button;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.state.StateOptions;
+import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
@@ -13,7 +13,7 @@ import org.newdawn.slick.*;
 
 public class UIButton extends UIObject {
 
-    protected Engine engine;
+    protected TutEngine tutEngine;
     protected ClickListener listener;
 
     private boolean disabled = false;
@@ -29,28 +29,28 @@ public class UIButton extends UIObject {
 
     private boolean centeredX, centeredY;
 
-    public UIButton(Engine engine, boolean centered, String text, ClickListener listener) {
-        this(engine, new Vector2D(), text, false, Assets.FONTS.get("40"), listener);
+    public UIButton(TutEngine tutEngine, boolean centered, String text, ClickListener listener) {
+        this(tutEngine, new Vector2D(), text, false, Assets.FONTS.get("40"), listener);
         this.centeredX = centeredY = centered;
     }
 
-    public UIButton(Engine engine, boolean centeredX, int y, String text, ClickListener listener) {
-        this(engine, new Vector2D(0, y), text, false, Assets.FONTS.get("40"), listener);
+    public UIButton(TutEngine tutEngine, boolean centeredX, int y, String text, ClickListener listener) {
+        this(tutEngine, new Vector2D(0, y), text, false, Assets.FONTS.get("40"), listener);
         this.centeredX = centeredX;
     }
 
-    public UIButton(Engine engine, int x, boolean centeredY, String text, ClickListener listener) {
-        this(engine, new Vector2D(x, 0), text, false, Assets.FONTS.get("40"), listener);
+    public UIButton(TutEngine tutEngine, int x, boolean centeredY, String text, ClickListener listener) {
+        this(tutEngine, new Vector2D(x, 0), text, false, Assets.FONTS.get("40"), listener);
         this.centeredY = centeredY;
     }
 
-    public UIButton(Engine engine, Vector2D position, String text, ClickListener listener) {
-        this(engine, position, text, false, Assets.FONTS.get("40"), listener);
+    public UIButton(TutEngine tutEngine, Vector2D position, String text, ClickListener listener) {
+        this(tutEngine, position, text, false, Assets.FONTS.get("40"), listener);
     }
 
-    public UIButton(Engine engine, Vector2D position, String text, boolean underlined, Font font, ClickListener listener) {
+    public UIButton(TutEngine tutEngine, Vector2D position, String text, boolean underlined, Font font, ClickListener listener) {
         super(position, 0, 0);
-        this.engine = engine;
+        this.tutEngine = tutEngine;
         this.listener = listener;
 
         this.text = text;
@@ -65,7 +65,7 @@ public class UIButton extends UIObject {
     @Override
     public void update(GameContainer container, int delta) {
         super.update(container, delta);
-        this.hovering = this.bounds.contains(engine.getMouseX(), engine.getMouseY()) && !this.disabled;
+        this.hovering = this.bounds.contains(tutEngine.getMouseX(), tutEngine.getMouseY()) && !this.disabled;
 
         if (this.hovering)
             this.currentTexture = Assets.BUTTON_HOVER;
@@ -110,19 +110,19 @@ public class UIButton extends UIObject {
         Text.drawString(g, this.text, textX, textY + textHeight, false, underlined, Color.gray, font);
 
         if (centeredX)
-            this.position.x = engine.getWidth() / 2d - this.width / 2d;
+            this.position.x = tutEngine.getWidth() / 2d - this.width / 2d;
         if (centeredY)
-            this.position.y = engine.getHeight() / 2d - this.height / 2d;
+            this.position.y = tutEngine.getHeight() / 2d - this.height / 2d;
     }
 
     @Override
     public void postRender(Graphics g) {
         if (isHovering() && hasTooltip) {
-            int x = engine.getMouseX(), x1 = x + this.tooltip.getWidth(), xDiff = 0;
-            int y = engine.getMouseY(), y1 = y + this.tooltip.getHeight(), yDiff = 0;
+            int x = tutEngine.getMouseX(), x1 = x + this.tooltip.getWidth(), xDiff = 0;
+            int y = tutEngine.getMouseY(), y1 = y + this.tooltip.getHeight(), yDiff = 0;
 
-            if (x1 > engine.getWidth()) xDiff = x1 - engine.getWidth();
-            if (y1 > engine.getHeight()) yDiff = y1 - engine.getHeight();
+            if (x1 > tutEngine.getWidth()) xDiff = x1 - tutEngine.getWidth();
+            if (y1 > tutEngine.getHeight()) yDiff = y1 - tutEngine.getHeight();
 
             tooltip.setPosition(new Vector2D(x - xDiff, y - yDiff));
             tooltip.render(g);

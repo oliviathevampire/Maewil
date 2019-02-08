@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.gfx.ui;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -11,20 +11,20 @@ import org.newdawn.slick.Image;
 
 public class UISlider extends UIObject {
 
-    private Engine engine;
+    private TutEngine tutEngine;
     private int minValue = 0, maxValue = 10, value;
 
     private int segWidth, startX, endX;
     private int slMinX, slMaxX;
     private Slider slider;
 
-    public UISlider(Engine engine, Vector2D position, int width) {
-        this(engine, position, width, 0);
+    public UISlider(TutEngine tutEngine, Vector2D position, int width) {
+        this(tutEngine, position, width, 0);
     }
 
-    public UISlider(Engine engine, Vector2D position, int width, int defaultValue) {
+    public UISlider(TutEngine tutEngine, Vector2D position, int width, int defaultValue) {
         super(position, width, 20);
-        this.engine = engine;
+        this.tutEngine = tutEngine;
         if (defaultValue < minValue) defaultValue = minValue;
         if (defaultValue > maxValue) defaultValue = maxValue;
         this.value = defaultValue;
@@ -38,7 +38,7 @@ public class UISlider extends UIObject {
         slMinX = startX - slWidth / 2;
         slMaxX = slMinX + width;
 
-        slider = new Slider(engine, new Vector2D(valueToX(defaultValue), (int) (this.position.y - slHeight / 4)), slWidth, slHeight);
+        slider = new Slider(tutEngine, new Vector2D(valueToX(defaultValue), (int) (this.position.y - slHeight / 4)), slWidth, slHeight);
     }
 
     @Override
@@ -46,8 +46,8 @@ public class UISlider extends UIObject {
         super.update(container, delta);
         slider.update(container, delta);
         if (slider.isMouseHovering()) {
-            if (engine.isLeftDown() || engine.isLeftPressed()) {
-                slider.position.x = engine.getMouseX() - slider.getWidth() / 2d;
+            if (tutEngine.isLeftDown() || tutEngine.isLeftPressed()) {
+                slider.position.x = tutEngine.getMouseX() - slider.getWidth() / 2d;
 
                 if (slider.position.x < slMinX) slider.position.x = slMinX;
                 if (slider.position.x > slMaxX) slider.position.x = slMaxX;
@@ -101,14 +101,14 @@ public class UISlider extends UIObject {
 
     class Slider {
 
-        private Engine engine;
+        private TutEngine tutEngine;
         public Vector2D position;
         private int width, height;
 
         private AABB bounds;
 
-        public Slider(Engine engine, Vector2D position, int width, int height) {
-            this.engine = engine;
+        public Slider(TutEngine tutEngine, Vector2D position, int width, int height) {
+            this.tutEngine = tutEngine;
             this.position = position;
             this.width = width;
             this.height = height;
@@ -126,7 +126,7 @@ public class UISlider extends UIObject {
         }
 
         public boolean isMouseHovering() {
-            return bounds.contains(engine.getMouseX(), engine.getMouseY());
+            return bounds.contains(tutEngine.getMouseX(), tutEngine.getMouseY());
         }
 
         public int getWidth() {

@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.Engine;
+import coffeecatteam.theultimatetile.TutEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -24,7 +24,7 @@ public abstract class UIObject {
     }
 
     public void update(GameContainer container, int delta) {
-        if (this.bounds.contains(Engine.getEngine().getMouseX(), Engine.getEngine().getMouseY()) && Engine.getEngine().isLeftPressed())
+        if (this.bounds.contains(TutEngine.getTutEngine().getMouseX(), TutEngine.getTutEngine().getMouseY()) && TutEngine.getTutEngine().isLeftPressed())
             onClick();
     }
 

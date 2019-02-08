@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.game.GameEngine;
-import coffeecatteam.theultimatetile.game.inventory.Inventory;
-import coffeecatteam.theultimatetile.game.inventory.InventoryAbstractPlayer;
+import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.inventory.Inventory;
+import coffeecatteam.theultimatetile.inventory.InventoryAbstractPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +11,17 @@ public class InventoryManager {
 
     public static final List<Inventory> INVENTORIES = new ArrayList<>();
 
-    private GameEngine gameEngine;
+    private TutEngine tutEngine;
 
-    public InventoryManager(GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
+    public InventoryManager(TutEngine tutEngine) {
+        this.tutEngine = tutEngine;
     }
 
     public boolean openInventory(InventoryAbstractPlayer inventory) {
-        if (!gameEngine.getEntityManager().getPlayer().isGuiOpen()) {
-            gameEngine.getLogger().print(gameEngine.getEntityManager().getPlayer().getUsername() + ": Opening inventory " + inventory.getInvName());
+        if (!tutEngine.getEntityManager().getPlayer().isGuiOpen()) {
+            tutEngine.getLogger().print(tutEngine.getEntityManager().getPlayer().getUsername() + ": Opening inventory " + inventory.getInvName());
             inventory.setActive(true);
-            gameEngine.getEntityManager().getPlayer().setGuiOpen(true);
+            tutEngine.getEntityManager().getPlayer().setGuiOpen(true);
             return true;
         }
         return false;
@@ -29,16 +29,16 @@ public class InventoryManager {
 
     public void closeAllInventories() {
         INVENTORIES.forEach(inventory -> {
-            gameEngine.getLogger().print(gameEngine.getEntityManager().getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
+            tutEngine.getLogger().print(tutEngine.getEntityManager().getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
             inventory.setActive(false);
-            gameEngine.getEntityManager().getPlayer().setGuiOpen(false);
+            tutEngine.getEntityManager().getPlayer().setGuiOpen(false);
         });
     }
 
     public void closeInventory(InventoryAbstractPlayer inventory) {
-        gameEngine.getLogger().print(gameEngine.getEntityManager().getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
+        tutEngine.getLogger().print(tutEngine.getEntityManager().getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
         inventory.setActive(false);
-        gameEngine.getEntityManager().getPlayer().setGuiOpen(false);
+        tutEngine.getEntityManager().getPlayer().setGuiOpen(false);
     }
 
     public void openCloseInventory(InventoryAbstractPlayer inventory) {

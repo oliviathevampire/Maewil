@@ -1,8 +1,7 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.GameEngine;
-import coffeecatteam.theultimatetile.game.inventory.items.*;
+import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.inventory.items.*;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.Color;
@@ -74,7 +73,7 @@ public class ItemManager {
 
         registerItem(COIN_PENNY, COIN_IRON, COIN_GOLD);
 
-        Engine.getEngine().getLogger().print("Items registered!");
+        TutEngine.getTutEngine().getLogger().print("Items registered!");
     }
 
     private static void registerItem(Item... items) {
@@ -91,11 +90,11 @@ public class ItemManager {
     }
 
     // Item Manager
-    private GameEngine gameEngine;
+    private TutEngine tutEngine;
     private ArrayList<ItemStack> items;
 
-    public ItemManager(GameEngine gameEngine) {
-        this.gameEngine = gameEngine;
+    public ItemManager(TutEngine tutEngine) {
+        this.tutEngine = tutEngine;
         items = new ArrayList<>();
     }
 
@@ -113,7 +112,7 @@ public class ItemManager {
         for (ItemStack stack : items) {
             stack.getItem().render(g);
             if (stack.getCount() > 1)
-                Text.drawString(g, String.valueOf(stack.getCount()), (int) (stack.getItem().getPosition().x - this.gameEngine.getCamera().getxOffset()), (int) (stack.getItem().getPosition().y + 15 - this.gameEngine.getCamera().getyOffset()), false, false, Color.white, Assets.FONTS.get("20"));
+                Text.drawString(g, String.valueOf(stack.getCount()), (int) (stack.getItem().getPosition().x - this.tutEngine.getCamera().getxOffset()), (int) (stack.getItem().getPosition().y + 15 - this.tutEngine.getCamera().getyOffset()), false, false, Color.white, Assets.FONTS.get("20"));
         }
     }
 
@@ -127,7 +126,7 @@ public class ItemManager {
     }
 
     public void addItem(ItemStack stack) {
-        stack.setGameEngine(gameEngine);
+        stack.settutEngine(tutEngine);
         items.add(stack);
     }
 

@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.gfx.ui.button;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.Engine;
-import coffeecatteam.theultimatetile.game.state.options.controls.Keybind;
+import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 
 public class UIButtonControl extends UIButton {
@@ -10,8 +10,8 @@ public class UIButtonControl extends UIButton {
     private Keybind keybind;
     private String description;
 
-    public UIButtonControl(Engine engine, Vector2D position, Keybind keybind, ClickListener listener) {
-        super(engine, position, keybind.getId(), listener);
+    public UIButtonControl(TutEngine tutEngine, Vector2D position, Keybind keybind, ClickListener listener) {
+        super(tutEngine, position, keybind.getId(), listener);
         this.keybind = keybind;
         this.description = keybind.getDescription();
 

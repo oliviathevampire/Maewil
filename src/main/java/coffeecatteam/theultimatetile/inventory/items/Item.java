@@ -1,0 +1,151 @@
+package coffeecatteam.theultimatetile.inventory.items;
+
+import coffeecatteam.coffeecatutils.position.AABB;
+import coffeecatteam.coffeecatutils.position.Vector2D;
+import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.inventory.Slot;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Item implements Cloneable {
+
+    public static Map<String, Item> items = new HashMap<>();
+
+    public static final int WIDTH = 32, HEIGHT = 32;
+
+    protected TutEngine tutEngine;
+    protected Image texture;
+    protected final String id;
+
+    protected AABB bounds;
+
+    protected Vector2D position = new Vector2D();
+    protected boolean pickedUp = false;
+    protected boolean isStackable = true;
+
+    public Item(Image texture, String id) {
+        this.texture = texture;
+        this.id = id;
+
+        this.bounds = new AABB(this.position, WIDTH, HEIGHT);
+    }
+
+    public void tick(int count) {
+        if (this.tutEngine.getEntityManager().getPlayer().isActive()) {
+            if (this.tutEngine.getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
+                if (!this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().isFull()) {
+                    this.pickedUp = true;
+                } else {
+                    int hotbar = 0;
+                    for (Slot slot : this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlots()) {
+                        if (slot.getStack() != null) {
+                            if (slot.getStack().getId().equals(this.id)) {
+                                if (slot.getStack().getItem().isStackable()) {
+                                    this.pickedUp = true;
+                                }
+                            } else {
+                                hotbar++;
+                            }
+                        }
+                    }
+
+                    if (hotbar >= this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().size()) {
+                        if (!this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().isHotbarFull()) {
+                            this.pickedUp = true;
+                        } else {
+                            for (Slot slot : this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlots()) {
+                                if (slot.getStack() != null) {
+                                    if (slot.getStack().getId().equals(this.id)) {
+                                        if (slot.getStack().getItem().isStackable()) {
+                                            this.pickedUp = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (this.pickedUp) {
+            if (!this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().isFull())
+                this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().addItem(new ItemStack(this, count));
+            else
+                this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().addStackToHotbar(new ItemStack(this, count));
+        }
+
+        this.bounds = new AABB(this.position, WIDTH, HEIGHT);
+    }
+
+    public void render(Graphics g) {
+        if (this.tutEngine == null)
+            return;
+        render(g, (int) (this.position.x - this.tutEngine.getCamera().getxOffset()), (int) (this.position.y - this.tutEngine.getCamera().getyOffset()));
+    }
+
+    public void render(Graphics g, int x, int y) {
+        this.texture.draw(x, y, WIDTH, HEIGHT);
+    }
+
+    public void setPosition(int x, int y) {
+        this.position.x = x;
+        this.position.y = y;
+        this.bounds.x = x;
+        this.bounds.y = y;
+    }
+
+    public TutEngine gettutEngine() {
+        return this.tutEngine;
+    }
+
+    public void settutEngine(TutEngine tutEngine) {
+        this.tutEngine = tutEngine;
+    }
+
+    public Image getTexture() {
+        return this.texture;
+    }
+
+    public void setTexture(Image texture) {
+        this.texture = texture;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public AABB getBounds() {
+        return bounds;
+    }
+
+    public Vector2D getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector2D position) {
+        this.position = position;
+    }
+
+    public boolean isPickedUp() {
+        return this.pickedUp;
+    }
+
+    public void setPickedUp(boolean pickedUp) {
+        this.pickedUp = pickedUp;
+    }
+
+    public boolean isStackable() {
+        return isStackable;
+    }
+
+    public void setStackable(boolean stackable) {
+        isStackable = stackable;
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+}
