@@ -1,0 +1,9 @@
+{
+  "type": "alts",
+  "texture": "tiles/bookshelf.png",
+  "textures": [
+    0,
+    1
+  ],
+  "size": 16
+}

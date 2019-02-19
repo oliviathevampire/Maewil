@@ -41,7 +41,7 @@ public class ClickListenerWorld implements ClickListener {
     @Override
     public void onClick() {
 //        String worldName;
-//        Tiles.init(engine);
+//        Tiles.chooseAltTexture(engine);
 //        if (!isSaved) {
 //            worldName = getWorldname("New World");
 //            path = savesPath + worldName;
@@ -86,12 +86,12 @@ public class ClickListenerWorld implements ClickListener {
 //                username = "HAKUNA MATATA!";
 //            }
 //        }
-//        tutEngine.getTutEngine().setUsername(username);
-//        engine.getLogger().print("Set username: " + tutEngine.getTutEngine().getUsername());
+//        tutEngine.setUsername(username);
+//        engine.getLogger().print("Set username: " + tutEngine.getUsername());
 //
 //        engine.getLogger().print("Loading game [" + path + "]!");
 //
-//        DiscordHandler.INSTANCE.updatePresence("In Game - " + tutEngine.getTutEngine().getUsername(), "World: " + worldName, true);
+//        DiscordHandler.INSTANCE.updatePresence("In Game - " + tutEngine.getUsername(), "World: " + worldName, true);
 //        StateGame game = new StateGame(engine, path, worldName);
 //        game.saveWorld(username);
 //        State.setState(game);

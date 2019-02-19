@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.overlays.Overlay;
 import coffeecatteam.theultimatetile.overlays.OverlayGlub;
 import coffeecatteam.theultimatetile.overlays.OverlayPlayerHealth;

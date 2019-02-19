@@ -1,8 +1,8 @@
-package coffeecatteam.theultimatetile.game.entities.creatures.passive;
+package coffeecatteam.theultimatetile.entities.creatures.passive;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.ai.AIEatCrops;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityPassive;
+import coffeecatteam.theultimatetile.entities.ai.AIEatCrops;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPassive;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
@@ -28,7 +28,7 @@ public class EntityPig extends EntityPassive {
         }
 
         // Movement
-        if (((TutEngine) TutEngine).getPlayer().isActive())
+        if (tutEngine.getPlayer().isActive())
             if (!aiEatCrops.update(container, delta))
                 aiWander.update(container, delta);
         move();

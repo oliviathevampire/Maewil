@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.tile.Tile;
 import coffeecatteam.theultimatetile.manager.InventoryManager;
@@ -44,7 +44,7 @@ public abstract class Inventory {
         if (getSlot(selectedIndex).getStack() != null) {
             if (active) {
                 getSlot(selectedIndex).getStack().getItem().setPickedUp(false);
-                ((TutEngine) tutEngine).getItemManager().addItem(getSlot(selectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
+                tutEngine.getItemManager().addItem(getSlot(selectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
             }
         }
     }

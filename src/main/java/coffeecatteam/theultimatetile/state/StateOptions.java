@@ -61,7 +61,7 @@ public class StateOptions extends StateAbstractMenu {
             uiManager.addObject(new UIButton(tutEngine, new Vector2D(15, 173), "Controls", new ClickListener() {
                 @Override
                 public void onClick() {
-                    StateManager.setCurrentState(((TutEngine) tutEngine).optionsControls);
+                    StateManager.setCurrentState(tutEngine.optionsControls);
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {
@@ -78,7 +78,7 @@ public class StateOptions extends StateAbstractMenu {
             uiManager.addObject(new UIButton(tutEngine, new Vector2D(15, 252), "Sounds", new ClickListener() {
                 @Override
                 public void onClick() {
-                    StateManager.setCurrentState(((TutEngine) tutEngine).optionsSpounds);
+                    StateManager.setCurrentState(tutEngine.optionsSpounds);
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {

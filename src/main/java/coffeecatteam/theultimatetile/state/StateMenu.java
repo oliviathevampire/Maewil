@@ -8,6 +8,8 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlink;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
+import coffeecatteam.theultimatetile.tile.Tile;
+import coffeecatteam.theultimatetile.tile.Tiles;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -16,7 +18,7 @@ import org.newdawn.slick.Graphics;
 public class StateMenu extends State {
 
     public StateMenu(TutEngine tutEngineIn) {
-        super(tutEngineIn, CENTRE_GRASS);
+        super(tutEngineIn, new Tile[]{Tiles.BOOKSHELF, Tiles.COAL_ORE, Tiles.PLANKS});
 
         int yOff = 20;
 
@@ -67,7 +69,7 @@ public class StateMenu extends State {
         uiManager.addObject(new UIHyperlink(new Vector2D(tutEngine.getWidth() - 5 - Text.getWidth(text, font), cy - 10), height, text, font, new ClickListener() {
             @Override
             public void onClick() {
-                StateManager.setCurrentState(((TutEngine) tutEngine).stateCredits);
+                StateManager.setCurrentState(tutEngine.stateCredits);
 
                 DiscordHandler.INSTANCE.updatePresence("Viewing credits");
             }

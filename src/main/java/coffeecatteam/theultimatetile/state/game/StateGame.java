@@ -57,7 +57,7 @@ public class StateGame extends State {
         UIButton btnMainMenu = new UIButton(tutEngine, true, tutEngine.getHeight() / 2 + yOffset + 10, "Main Menu", new ClickListener() {
             @Override
             public void onClick() {
-                StateManager.setCurrentState(tutEngine.getTutEngine().stateMenu);
+                StateManager.setCurrentState(tutEngine.stateMenu);
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu");
                 saveWorld(true);
@@ -90,15 +90,15 @@ public class StateGame extends State {
     @Override
     public void init() {
         paused = false;
-        tutEngine.getTutEngine().getEntityManager().getPlayer().setX(world.getSpawnX() * Tile.TILE_WIDTH);
-        tutEngine.getTutEngine().getEntityManager().getPlayer().setY(world.getSpawnY() * Tile.TILE_HEIGHT);
+        tutEngine.getEntityManager().getPlayer().setX(world.getSpawnX() * Tile.TILE_WIDTH);
+        tutEngine.getEntityManager().getPlayer().setY(world.getSpawnY() * Tile.TILE_HEIGHT);
     }
 
     @Override
     public void update(GameContainer container, int delta) {
-        if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !tutEngine.getTutEngine().getEntityManager().getPlayer().isDead) {
-            if (!tutEngine.getTutEngine().getEntityManager().getPlayer().isGuiOpen())
-                paused = !paused && !tutEngine.getTutEngine().getEntityManager().getPlayer().getInventoryPlayer().isActive();
+        if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !tutEngine.getEntityManager().getPlayer().isDead) {
+            if (!tutEngine.getEntityManager().getPlayer().isGuiOpen())
+                paused = !paused && !tutEngine.getEntityManager().getPlayer().getInventoryPlayer().isActive();
             saveWorld(false);
         }
 
@@ -112,7 +112,7 @@ public class StateGame extends State {
     public void render(Graphics g) {
         world.render(g);
 
-        if (tutEngine.getTutEngine().getEntityManager().getPlayer().isDead) {
+        if (tutEngine.getEntityManager().getPlayer().isDead) {
             Color tint = new Color(96, 96, 96, 127);
             g.setColor(tint);
             g.fillRect(0, 0, tutEngine.getWidth(), tutEngine.getHeight());
@@ -141,7 +141,7 @@ public class StateGame extends State {
         } catch (IOException e) {
             logger.print(e);
         }
-        tutEngine.getTutEngine().setUsername(username);
+        tutEngine.setUsername(username);
     }
 
     public void saveWorld(boolean stopWorldFU) {
@@ -158,7 +158,7 @@ public class StateGame extends State {
 
     public void setWorld(World world) {
         this.world = world;
-        tutEngine.getTutEngine().setWorld(world);
+        tutEngine.setWorld(world);
         init();
     }
 
@@ -167,9 +167,9 @@ public class StateGame extends State {
     }
 
     public void reset(String world, World wWorld) {
-        tutEngine.getTutEngine().getEntityManager().reset();
-        tutEngine.getTutEngine().getEntityManager().getPlayer().reset();
-        tutEngine.getTutEngine().getItemManager().reset();
+        tutEngine.getEntityManager().reset();
+        tutEngine.getEntityManager().getPlayer().reset();
+        tutEngine.getItemManager().reset();
         if (wWorld == null)
             setWorld(world);
         else

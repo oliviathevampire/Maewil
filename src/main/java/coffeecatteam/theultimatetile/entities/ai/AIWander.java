@@ -1,8 +1,8 @@
-package coffeecatteam.theultimatetile.game.entities.ai;
+package coffeecatteam.theultimatetile.entities.ai;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
+import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import org.newdawn.slick.GameContainer;
 
@@ -26,7 +26,7 @@ public class AIWander extends AI {
         if (wanderTimer > wanderCooldown) {
             direction = MoveDirection.random();
             if (StateOptions.OPTIONS.debugMode())
-                TutEngine.getLogger().print("Wander DIR for entity [" + entity.getId() + "]: " + direction);
+                tutEngine.getLogger().print("Wander DIR for entity [" + entity.getId() + "]: " + direction);
             wanderCooldown = NumberUtils.getRandomBoolean() ? 1600 : 3200;
             wanderTimer = 0;
         }

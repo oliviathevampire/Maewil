@@ -1,10 +1,10 @@
-package coffeecatteam.theultimatetile.game.entities.statics.interactable;
+package coffeecatteam.theultimatetile.entities.statics.interactable;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.Entity;
-import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
+import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.GameContainer;

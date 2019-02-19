@@ -45,8 +45,8 @@ public abstract class State {
                 if (x == 0 || y == 0 || x >= this.bgWidth - 1 || y >= this.bgHeight - 1)
                     tile = border[new Random().nextInt(border.length)];
 
-                tile = tile.newTile().setPos(new TilePos(x, y));
-                this.bgTiles[x][y] = tile;
+//                tile = Tiles.getTile(tile.getId()).setPos(new TilePos(x, y));
+                    this.bgTiles[x][y] = tile.newTile().setPos(new TilePos(x, y));
             }
         }
 

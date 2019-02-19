@@ -1,0 +1,13 @@
+{
+  "type": "normal",
+  "texture": "tiles/dirt.png",
+  "size": 16,
+  "overlap": {
+    "connect": [
+      "grass"
+    ],
+    "ignore": [
+      "dirt"
+    ]
+  }
+}

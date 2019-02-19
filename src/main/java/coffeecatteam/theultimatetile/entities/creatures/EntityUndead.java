@@ -1,11 +1,11 @@
-package coffeecatteam.theultimatetile.game.entities.creatures;
+package coffeecatteam.theultimatetile.entities.creatures;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.Entity;
-import coffeecatteam.theultimatetile.game.entities.ai.AIFollowFlee;
-import coffeecatteam.theultimatetile.game.entities.ai.AIWander;
+import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.ai.AIFollowFlee;
+import coffeecatteam.theultimatetile.entities.ai.AIWander;
 import org.newdawn.slick.GameContainer;
 
 public abstract class EntityUndead extends EntityCreature {
@@ -20,7 +20,7 @@ public abstract class EntityUndead extends EntityCreature {
     public EntityUndead(TutEngine tutEngine, String id) {
         super(tutEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         aiWander = new AIWander(tutEngine, this, 1.5f);
-        aiFollowFlee = new AIFollowFlee(tutEngine, this, ((TutEngine) tutEngine).getEntityManager().getPlayer());
+        aiFollowFlee = new AIFollowFlee(tutEngine, this, tutEngine.getEntityManager().getPlayer());
 
         bounds.x = width / 4f;
         bounds.y = height - height / 2f;
@@ -34,7 +34,7 @@ public abstract class EntityUndead extends EntityCreature {
         yMove = 0;
 
         // Movement
-        if (((TutEngine) TutEngine).getEntityManager().getPlayer().isActive()) {
+        if (tutEngine.getEntityManager().getPlayer().isActive()) {
             if (!aiFollowFlee.update(container, delta)) {
                 aiWander.update(container, delta);
             }
@@ -61,8 +61,8 @@ public abstract class EntityUndead extends EntityCreature {
 
         attackTimer = 0;
 
-        for (Entity e : ((TutEngine) TutEngine).getEntityManager().getEntities())
-            if (e.equals(((TutEngine) TutEngine).getEntityManager().getPlayer()))
+        for (Entity e : tutEngine.getEntityManager().getEntities())
+            if (e.equals(tutEngine.getEntityManager().getPlayer()))
                 if (e.getCollisionBounds(0, 0).intersects(ar))
                     e.hurt(NumberUtils.getRandomInt(1, 3) + dmgModifier);
     }

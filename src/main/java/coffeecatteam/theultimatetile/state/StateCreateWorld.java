@@ -96,7 +96,7 @@ public class StateCreateWorld extends StateAbstractMenu {
 
     private void generateWorld() {
         logger.print("Generating world...");
-//        Tiles.init(engine);
+//        Tiles.chooseAltTexture(engine);
 
         double blendSize = 25.0d + sizeMod;
         WorldGenerator generator = new WorldGenerator(seed, worldSize);
@@ -113,7 +113,7 @@ public class StateCreateWorld extends StateAbstractMenu {
 
         World world = new World(tutEngine, worldName, worldSize, worldSize, getPlayerSpawn(), bgTiles, fgTiles).setSeed(seed);
         StateManager.setCurrentState(new StateGame(tutEngine, "./saves/Test_World", worldName, world));
-        ((TutEngine) tutEngine).setUsername("TEST");
+        tutEngine.setUsername("TEST");
 
         generating = false;
     }

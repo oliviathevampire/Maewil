@@ -1,7 +1,7 @@
-package coffeecatteam.theultimatetile.game.entities.creatures.passive;
+package coffeecatteam.theultimatetile.entities.creatures.passive;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityPassive;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPassive;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 

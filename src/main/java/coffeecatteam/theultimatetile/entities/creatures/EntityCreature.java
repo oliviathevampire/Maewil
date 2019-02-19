@@ -1,10 +1,10 @@
-package coffeecatteam.theultimatetile.game.entities.creatures;
+package coffeecatteam.theultimatetile.entities.creatures;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.Entity;
-import coffeecatteam.theultimatetile.game.entities.ai.AI;
+import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.ai.AI;
 import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.state.StateOptions;
@@ -108,14 +108,14 @@ public abstract class EntityCreature extends Entity {
         if (drop != null) {
             int amt = NumberUtils.getRandomInt(4);
             for (int i = 0; i < amt; i++)
-                ((TutEngine) tutEngine).getItemManager().addItem(new ItemStack(drop), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
+                tutEngine.getItemManager().addItem(new ItemStack(drop), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
         }
     }
 
     public Tile getTileAtMid() {
         float x = (float) ((position.x + width / 2) / Tile.TILE_WIDTH);
         float y = (float) ((position.y + height / 2f + height / 4f) / Tile.TILE_HEIGHT);
-        Tile t = ((TutEngine) tutEngine).getWorld().getFGTile((int) x, (int) y);
+        Tile t = tutEngine.getWorld().getFGTile((int) x, (int) y);
         return t;
     }
 
@@ -184,9 +184,9 @@ public abstract class EntityCreature extends Entity {
     protected boolean collisionWidthTile(int x, int y) {
         if (this.getId().equals("player") && StateOptions.OPTIONS.debugMode()) {
             tutEngine.getLogger().print("X: " + x + " Y: " + y);
-            tutEngine.getLogger().print(((TutEngine) tutEngine).getWorld().getFGTile(x, y).getId() + " - " + ((TutEngine) tutEngine).getWorld().getFGTile(x, y).isSolid());
+            tutEngine.getLogger().print(tutEngine.getWorld().getFGTile(x, y).getId() + " - " + tutEngine.getWorld().getFGTile(x, y).isSolid());
         }
-        return ((TutEngine) tutEngine).getWorld().getFGTile(x, y).isSolid();
+        return tutEngine.getWorld().getFGTile(x, y).isSolid();
     }
 
     public float getSpeed() {

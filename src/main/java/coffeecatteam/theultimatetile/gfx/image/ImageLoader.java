@@ -11,8 +11,10 @@ public class ImageLoader {
     public static Image loadImage(String path) {
         try {
             InputStream file = ImageLoader.class.getResourceAsStream(path);
-            if (file == null)
+            if (file == null) {
                 file = ImageLoader.class.getResourceAsStream("/assets/textures/missing.png");
+                TutEngine.getTutEngine().getLogger().print(new Exception("Can't find texture: " + path));
+            }
 
             Image image = new Image(file, path, false);
             image.setFilter(Image.FILTER_NEAREST);

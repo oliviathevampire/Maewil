@@ -1,8 +1,8 @@
-package coffeecatteam.theultimatetile.game.entities.statics.nature;
+package coffeecatteam.theultimatetile.entities.statics.nature;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.Entity;
-import coffeecatteam.theultimatetile.game.entities.statics.EntityNature;
+import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.statics.EntityNature;
 import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.Graphics;

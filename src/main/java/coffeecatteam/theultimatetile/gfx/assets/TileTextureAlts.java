@@ -9,11 +9,13 @@ import org.newdawn.slick.Image;
  */
 public class TileTextureAlts {
 
-    public static Image[] getTextureAlts(int tileAlts, int tileOverlaps, SpriteSheet sheet, int tileWidth, int tileHeight) {
+    public static Image[] getTextureAlts(int tileAlts, int tileOverlaps, String id, int tileWidth, int tileHeight) {
         Image[] textures = new Image[tileAlts + tileOverlaps + 1];
 
+        SpriteSheet sheet = new SpriteSheet("/assets/textures/tiles/overlap/" + id + ".png");
+
         for (int i = 0; i < tileAlts; i++)
-            textures[i] = Assets.getSpriteInd(sheet, i, 3, tileWidth, tileHeight);
+            textures[i] = Assets.getTileTexture(id, i);
 
         // Grass overlay
         for (int y = 0; y < 3; y++) {

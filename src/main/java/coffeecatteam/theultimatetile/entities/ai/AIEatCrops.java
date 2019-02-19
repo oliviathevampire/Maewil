@@ -1,10 +1,10 @@
-package coffeecatteam.theultimatetile.game.entities.ai;
+package coffeecatteam.theultimatetile.entities.ai;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.Entity;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
-import coffeecatteam.theultimatetile.game.entities.statics.nature.EntityCrop;
+import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
+import coffeecatteam.theultimatetile.entities.statics.nature.EntityCrop;
 import coffeecatteam.theultimatetile.tags.TagList;
 import org.newdawn.slick.GameContainer;
 
@@ -85,7 +85,7 @@ public class AIEatCrops extends AI {
         EntityCrop closest = null;
         float lastDistance = maxDistance;
 
-        for (Entity e : TutEngine.getTutEngine().getEntityManager().getEntities()) {
+        for (Entity e : tutEngine.getEntityManager().getEntities()) {
             if (e instanceof EntityCrop) {
                 EntityCrop crop = (EntityCrop) e;
                 float dist = getDistance(entity, crop);

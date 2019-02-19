@@ -1,9 +1,9 @@
-package coffeecatteam.theultimatetile.game.entities.statics.nature;
+package coffeecatteam.theultimatetile.entities.statics.nature;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.Entity;
-import coffeecatteam.theultimatetile.game.entities.statics.EntityNature;
+import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.statics.EntityNature;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
@@ -29,7 +29,7 @@ public class EntityTree extends EntityNature {
     @Override
     public void die(List<Entity> entities, int index) {
         super.die(entities, index);
-        ((TutEngine) TutEngine).getItemManager().addItem(new ItemStack(ItemManager.APPLE), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
+        tutEngine.getItemManager().addItem(new ItemStack(ItemManager.APPLE), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
     }
 
     public enum TreeType {

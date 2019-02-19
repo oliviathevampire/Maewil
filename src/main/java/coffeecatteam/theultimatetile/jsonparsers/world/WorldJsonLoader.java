@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.jsonparsers.world;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.Entity;
+import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.state.game.StateSelectGame;
@@ -136,7 +136,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
     private void loadTile(JSONArray chunk, boolean bg, int x, Tile[][] bg_tiles, Tile[][] fg_tiles) {
         JSONObject tileObj = (JSONObject) chunk.get(x);
-        Tile tile = Tiles.getTile(tutEngine, (String) tileObj.get("id"));
+        Tile tile = Tiles.getTile((String) tileObj.get("id"));
         int tx = NumberUtils.parseInt(tileObj.get("x"));
         int ty = NumberUtils.parseInt(tileObj.get("y"));
 
@@ -192,7 +192,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 if (!item.isStackable())
                     count = 1;
 
-                ((TutEngine) tutEngine).getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
+                tutEngine.getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
             }
             tutEngine.getLogger().print("Loaded world items");
         }
@@ -204,28 +204,28 @@ public class WorldJsonLoader implements IJSONLoader {
 
         if (jsonObject.containsKey("username")) {
             username = (String) jsonObject.get("username");
-            ((TutEngine) tutEngine).getEntityManager().getPlayer().setUsername(username);
+            tutEngine.getEntityManager().getPlayer().setUsername(username);
             tutEngine.getLogger().print("loaded player username!");
         }
 
         health = NumberUtils.parseInt(jsonObject.get("health"));
-        ((TutEngine) tutEngine).getEntityManager().getPlayer().setCurrentHealth(health);
+        tutEngine.getEntityManager().getPlayer().setCurrentHealth(health);
         tutEngine.getLogger().print("loaded player health!");
 
         glubel = NumberUtils.parseInt(jsonObject.get("glubel"));
-        ((TutEngine) tutEngine).getEntityManager().getPlayer().setGlubel(glubel);
+        tutEngine.getEntityManager().getPlayer().setGlubel(glubel);
         tutEngine.getLogger().print("loaded player glubel!");
 
         lvl = NumberUtils.parseInt(jsonObject.get("lvl"));
-        ((TutEngine) tutEngine).getEntityManager().getPlayer().setLvl(lvl);
+        tutEngine.getEntityManager().getPlayer().setLvl(lvl);
         tutEngine.getLogger().print("loaded player lvl!");
 
         selected_slots = new int[2];
         JSONArray selected_slotsJ = (JSONArray) jsonObject.get("selected_slots");
         selected_slots[0] = NumberUtils.parseInt(selected_slotsJ.get(0));
         selected_slots[1] = NumberUtils.parseInt(selected_slotsJ.get(1));
-        ((TutEngine) tutEngine).getEntityManager().getPlayer().getInventoryPlayer().setInventorySelectedIndex(selected_slots[0]);
-        ((TutEngine) tutEngine).getEntityManager().getPlayer().getInventoryPlayer().setHotbarSelectedIndex(selected_slots[1]);
+        tutEngine.getEntityManager().getPlayer().getInventoryPlayer().setInventorySelectedIndex(selected_slots[0]);
+        tutEngine.getEntityManager().getPlayer().getInventoryPlayer().setHotbarSelectedIndex(selected_slots[1]);
 
         inventory = new ItemStack[12];
         JSONObject inventoryJ = (JSONObject) jsonObject.get("inventory");
@@ -269,7 +269,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
         int invIndex = 0;
         for (int i = 0; i < inventory.length; i++) {
-            ((TutEngine) tutEngine).getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(invIndex).setStack(inventory[invIndex]);
+            tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(invIndex).setStack(inventory[invIndex]);
             invIndex++;
             if (invIndex >= inventory.length)
                 break;
@@ -277,7 +277,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
         int hotbarIndex = 12;
         for (int i = 0; i < hotbar.length; i++) {
-            ((TutEngine) tutEngine).getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(hotbarIndex).setStack(hotbar[hotbarIndex - 12]);
+            tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlots().get(hotbarIndex).setStack(hotbar[hotbarIndex - 12]);
             hotbarIndex++;
             if (hotbarIndex >= hotbar.length + 12)
                 break;
@@ -332,7 +332,7 @@ public class WorldJsonLoader implements IJSONLoader {
             Entity entity = EntityManager.loadEntity(tutEngine, id);
             entity.setTags(tags);
             entity.setCurrentHealth(health);
-            ((TutEngine) tutEngine).getEntityManager().addEntity(entity, x, y, true);
+            tutEngine.getEntityManager().addEntity(entity, x, y, true);
             x++;
             if (x > ogX + 2) {
                 x = ogX;

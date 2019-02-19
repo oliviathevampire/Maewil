@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.inventory.items;
 
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 
 public interface IInteractable {
 

@@ -1,10 +1,10 @@
-package coffeecatteam.theultimatetile.game.entities;
+package coffeecatteam.theultimatetile.entities;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.tags.TagCompound;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
@@ -88,7 +88,7 @@ public abstract class Entity {
     public void postRender(Graphics g) {
         if (showHitbox) {
             g.setColor(Color.red);
-            g.drawRect((int) (position.x + bounds.x - ((TutEngine) tutEngine).getCamera().getxOffset()), (int) (position.y + bounds.y - ((TutEngine) tutEngine).getCamera().getyOffset()), bounds.width, bounds.height);
+            g.drawRect((int) (position.x + bounds.x - tutEngine.getCamera().getxOffset()), (int) (position.y + bounds.y - tutEngine.getCamera().getyOffset()), bounds.width, bounds.height);
         }
     }
 
@@ -108,7 +108,7 @@ public abstract class Entity {
 
     public void die(List<Entity> entities, int index) {
         entities.remove(index);
-        ((TutEngine) tutEngine).getEntityManager().getPlayer().setGlubel(((TutEngine) tutEngine).getEntityManager().getPlayer().getGlubel() + NumberUtils.getRandomInt(1, 5));
+        tutEngine.getEntityManager().getPlayer().setGlubel(tutEngine.getEntityManager().getPlayer().getGlubel() + NumberUtils.getRandomInt(1, 5));
     }
 
     public void interact() {
@@ -134,7 +134,7 @@ public abstract class Entity {
     }
 
     public boolean checkEntityCollisions(float xOffset, float yOffset) {
-        for (Entity e : ((TutEngine) tutEngine).getEntityManager().getEntities()) {
+        for (Entity e : tutEngine.getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
             if (e instanceof EntityPlayer && this instanceof EntityPlayer)

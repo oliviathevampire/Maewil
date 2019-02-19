@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.overlays;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 

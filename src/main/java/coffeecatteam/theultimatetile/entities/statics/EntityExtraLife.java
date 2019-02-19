@@ -1,9 +1,9 @@
-package coffeecatteam.theultimatetile.game.entities.statics;
+package coffeecatteam.theultimatetile.entities.statics;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.Entity;
+import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.GameContainer;
@@ -29,8 +29,8 @@ public class EntityExtraLife extends EntityStatic {
         bounds = new AABB(this.position, width, height);
 
         animation.update(container, delta);
-        if (this.isTouching(((TutEngine) TutEngine).getEntityManager().getPlayer())) {
-            ((TutEngine) TutEngine).getEntityManager().getPlayer().heal(NumberUtils.getRandomInt(DEFAULT_HEALTH / 2, DEFAULT_HEALTH));
+        if (this.isTouching(tutEngine.getEntityManager().getPlayer())) {
+            tutEngine.getEntityManager().getPlayer().heal(NumberUtils.getRandomInt(DEFAULT_HEALTH / 2, DEFAULT_HEALTH));
             this.hurt(this.currentHealth);
         }
     }

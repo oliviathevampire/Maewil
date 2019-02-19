@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.state.StateOptions;
@@ -169,10 +169,10 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         if (getSlot(inventorySelectedIndex).getStack() != null) {
             if (active) {
                 getSlot(inventorySelectedIndex).getStack().getItem().setPickedUp(false);
-                ((TutEngine) tutEngine).getItemManager().addItem(getSlot(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
+                tutEngine.getItemManager().addItem(getSlot(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
             } else {
                 getSlot(hotbarSelectedIndex + maxHotbarSize).getStack().getItem().setPickedUp(false);
-                ((TutEngine) tutEngine).getItemManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), player.getX() + xOff, player.getY() + yOff);
+                tutEngine.getItemManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), player.getX() + xOff, player.getY() + yOff);
             }
         }
     }
@@ -287,11 +287,11 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
     @Override
     public void onOpen() {
-        copyItems(((TutEngine) tutEngine).getEntityManager().getPlayer().getInventoryPlayer(), this, false);
+        copyItems(tutEngine.getEntityManager().getPlayer().getInventoryPlayer(), this, false);
     }
 
     @Override
     public void onClose() {
-        copyItems(this, ((TutEngine) tutEngine).getEntityManager().getPlayer().getInventoryPlayer(), false);
+        copyItems(this, tutEngine.getEntityManager().getPlayer().getInventoryPlayer(), false);
     }
 }

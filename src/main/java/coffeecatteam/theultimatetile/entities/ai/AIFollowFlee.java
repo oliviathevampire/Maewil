@@ -1,7 +1,7 @@
-package coffeecatteam.theultimatetile.game.entities.ai;
+package coffeecatteam.theultimatetile.entities.ai;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
+import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
 import org.newdawn.slick.GameContainer;
 
 public class AIFollowFlee extends AI {

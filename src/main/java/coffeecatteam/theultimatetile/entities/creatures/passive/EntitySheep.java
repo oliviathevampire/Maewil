@@ -1,8 +1,8 @@
-package coffeecatteam.theultimatetile.game.entities.creatures.passive;
+package coffeecatteam.theultimatetile.entities.creatures.passive;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.ai.AIFollowFlee;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityPassive;
+import coffeecatteam.theultimatetile.entities.ai.AIFollowFlee;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPassive;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.manager.ItemManager;
@@ -15,7 +15,7 @@ public class EntitySheep extends EntityPassive {
     public EntitySheep(TutEngine tutEngine, String id) {
         super(tutEngine, id);
         this.drop = ItemManager.WOOL_BUNDLE;
-        aiFollowFlee = new AIFollowFlee(tutEngine, this, ((TutEngine) tutEngine).getEntityManager().getPlayer(), 100f, 3.5f).setFlee();
+        aiFollowFlee = new AIFollowFlee(tutEngine, this, tutEngine.getEntityManager().getPlayer(), 100f, 3.5f).setFlee();
     }
 
     @Override
@@ -24,7 +24,7 @@ public class EntitySheep extends EntityPassive {
         yMove = 0;
 
         // Movement
-        if (((TutEngine) TutEngine).getEntityManager().getPlayer().isActive()) {
+        if (tutEngine.getEntityManager().getPlayer().isActive()) {
             if (TAGS.hasKey("fleePlayer") && TAGS.getBoolean("fleePlayer")) {
                 if (!aiFollowFlee.update(container, delta))
                     aiWander.update(container, delta);

@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.jsonparsers.world;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.Entity;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityCreature;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.game.entities.statics.EntityStatic;
+import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
+import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.tile.Tile;
 import coffeecatteam.theultimatetile.world.World;
@@ -54,7 +54,7 @@ public class WorldJsonSaver implements IJSONSaver {
 
     @Override
     public void save() throws IOException {
-        save(tutEngine.getTutEngine().getUsername());
+        save(tutEngine.getUsername());
     }
 
     public void saveWorldInfo(World world) throws IOException {
@@ -70,8 +70,8 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONArray spawn = new JSONArray();
         float spawnX, spawnY;
         if (tutEngine instanceof TutEngine) {
-            spawnX = tutEngine.getTutEngine().getEntityManager().getPlayer().getX() / Tile.TILE_WIDTH;
-            spawnY = tutEngine.getTutEngine().getEntityManager().getPlayer().getY() / Tile.TILE_HEIGHT;
+            spawnX = tutEngine.getEntityManager().getPlayer().getX() / Tile.TILE_WIDTH;
+            spawnY = tutEngine.getEntityManager().getPlayer().getY() / Tile.TILE_HEIGHT;
         } else {
             spawnX = world.getSpawnX();
             spawnY = world.getSpawnY();
@@ -126,13 +126,13 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject jsonObjectCreature = new JSONObject();
 
         int entAmt = 0;
-        for (Entity entity : tutEngine.getTutEngine().getEntityManager().getEntities())
+        for (Entity entity : tutEngine.getEntityManager().getEntities())
             if (!(entity instanceof EntityPlayer))
                 entAmt++;
         if (entAmt > 0) {
             int staticAmt = 0;
             int creatureAmt = 0;
-            for (Entity entity : tutEngine.getTutEngine().getEntityManager().getEntities()) {
+            for (Entity entity : tutEngine.getEntityManager().getEntities()) {
                 if (!(entity instanceof EntityPlayer)) {
                     if (entity instanceof EntityStatic) {
                         staticAmt++;
@@ -146,7 +146,7 @@ public class WorldJsonSaver implements IJSONSaver {
             // Static
             JSONArray statics = new JSONArray();
             if (staticAmt > 0) {
-                for (Entity entity : tutEngine.getTutEngine().getEntityManager().getEntities())
+                for (Entity entity : tutEngine.getEntityManager().getEntities())
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityStatic)
                             saveEntityObj(entity, statics);
@@ -158,7 +158,7 @@ public class WorldJsonSaver implements IJSONSaver {
             JSONArray creatures = new JSONArray();
             if (creatureAmt > 0) {
 
-                for (Entity entity : tutEngine.getTutEngine().getEntityManager().getEntities())
+                for (Entity entity : tutEngine.getEntityManager().getEntities())
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityCreature)
                             saveEntityObj(entity, creatures);
@@ -176,7 +176,7 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject jsonObject = new JSONObject();
 
         JSONArray items = new JSONArray();
-        for (ItemStack stack : tutEngine.getTutEngine().getItemManager().getItems()) {
+        for (ItemStack stack : tutEngine.getItemManager().getItems()) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("id", stack.getId());
 
@@ -200,20 +200,20 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("username", username);
-        tutEngine.getLogger().print("Player username saved [" + tutEngine.getTutEngine().getUsername() + "]");
-        jsonObject.put("health", tutEngine.getTutEngine().getEntityManager().getPlayer().getCurrentHealth());
-        jsonObject.put("glubel", tutEngine.getTutEngine().getEntityManager().getPlayer().getGlubel());
-        jsonObject.put("lvl", tutEngine.getTutEngine().getEntityManager().getPlayer().getLvl());
+        tutEngine.getLogger().print("Player username saved [" + tutEngine.getUsername() + "]");
+        jsonObject.put("health", tutEngine.getEntityManager().getPlayer().getCurrentHealth());
+        jsonObject.put("glubel", tutEngine.getEntityManager().getPlayer().getGlubel());
+        jsonObject.put("lvl", tutEngine.getEntityManager().getPlayer().getLvl());
 
         JSONArray selected_slots = new JSONArray();
-        selected_slots.add(0, tutEngine.getTutEngine().getEntityManager().getPlayer().getInventoryPlayer().getInventorySelectedIndex());
-        selected_slots.add(1, tutEngine.getTutEngine().getEntityManager().getPlayer().getInventoryPlayer().getHotbarSelectedIndex());
+        selected_slots.add(0, tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getInventorySelectedIndex());
+        selected_slots.add(1, tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getHotbarSelectedIndex());
         jsonObject.put("selected_slots", selected_slots);
 
         JSONObject inventory = new JSONObject();
         for (int i = 0; i < 12; i++) {
             JSONObject slot = new JSONObject();
-            ItemStack stack = tutEngine.getTutEngine().getEntityManager().getPlayer().getInventoryPlayer().getSlot(i).getStack();
+            ItemStack stack = tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlot(i).getStack();
             if (stack == null)
                 slot.put("id", "null");
             else {
@@ -228,7 +228,7 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject hotbar = new JSONObject();
         for (int i = 12; i < 15; i++) {
             JSONObject slot = new JSONObject();
-            ItemStack stack = tutEngine.getTutEngine().getEntityManager().getPlayer().getInventoryPlayer().getSlot(i).getStack();
+            ItemStack stack = tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlot(i).getStack();
             if (stack == null)
                 slot.put("id", "null");
             else {

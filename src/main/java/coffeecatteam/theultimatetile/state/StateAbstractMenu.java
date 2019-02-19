@@ -24,7 +24,7 @@ public class StateAbstractMenu extends State {
                 @Override
                 public void onClick() {
                     initBack();
-                    StateManager.setCurrentState(((TutEngine) tutEngine).stateMenu);
+                    StateManager.setCurrentState(tutEngine.stateMenu);
 
                     DiscordHandler.INSTANCE.updatePresence("Main Menu");
                 }

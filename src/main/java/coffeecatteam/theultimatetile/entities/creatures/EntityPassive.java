@@ -1,8 +1,8 @@
-package coffeecatteam.theultimatetile.game.entities.creatures;
+package coffeecatteam.theultimatetile.entities.creatures;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.Entity;
-import coffeecatteam.theultimatetile.game.entities.ai.AIWander;
+import coffeecatteam.theultimatetile.entities.Entity;
+import coffeecatteam.theultimatetile.entities.ai.AIWander;
 import org.newdawn.slick.GameContainer;
 
 public abstract class EntityPassive extends EntityCreature {
@@ -25,7 +25,7 @@ public abstract class EntityPassive extends EntityCreature {
         yMove = 0;
 
         // Movement
-        if (((TutEngine) TutEngine).getEntityManager().getPlayer().isActive()) {
+        if (tutEngine.getEntityManager().getPlayer().isActive()) {
             aiWander.update(container, delta);
         }
         move();

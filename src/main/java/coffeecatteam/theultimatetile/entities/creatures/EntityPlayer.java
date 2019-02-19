@@ -1,9 +1,9 @@
-package coffeecatteam.theultimatetile.game.entities.creatures;
+package coffeecatteam.theultimatetile.entities.creatures;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.Entity;
+import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.inventory.InventoryPlayer;
 import coffeecatteam.theultimatetile.inventory.Slot;
 import coffeecatteam.theultimatetile.inventory.items.IInteractable;
@@ -92,16 +92,16 @@ public class EntityPlayer extends EntityCreature {
             checkAttacks();
 
             // Open/close inventory
-            if (TutEngine.keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode())) {
+            if (tutEngine.keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode())) {
                 if (guiOpen && !inventoryPlayer.isActive())
-                    ((TutEngine) TutEngine).getInventoryManager().closeAllInventories();
+                    tutEngine.getInventoryManager().closeAllInventories();
                 else
-                    ((TutEngine) TutEngine).getInventoryManager().openCloseInventory(inventoryPlayer);
+                    tutEngine.getInventoryManager().openCloseInventory(inventoryPlayer);
             }
-            if (TutEngine.keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && inventoryPlayer.isActive())
-                ((TutEngine) TutEngine).getInventoryManager().closeAllInventories();
+            if (tutEngine.keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && inventoryPlayer.isActive())
+                tutEngine.getInventoryManager().closeAllInventories();
 
-            ((TutEngine) TutEngine).getCamera().centerOnEntity(this);
+            tutEngine.getCamera().centerOnEntity(this);
         }
 
         inventoryPlayer.update(container, delta);
@@ -119,8 +119,8 @@ public class EntityPlayer extends EntityCreature {
         int tileX = (int) (position.x + 0.5f) / Tile.TILE_WIDTH;
         int tileY = (int) (position.y + 0.5f) / Tile.TILE_HEIGHT;
 
-        Tile bgTile = ((TutEngine) TutEngine).getWorld().getBGTile(tileX, tileY);
-        Tile fgTile = ((TutEngine) TutEngine).getWorld().getFGTile(tileX, tileY);
+        Tile bgTile = tutEngine.getWorld().getBGTile(tileX, tileY);
+        Tile fgTile = tutEngine.getWorld().getFGTile(tileX, tileY);
         if (fgTile.getTileType() == Tile.TileType.AIR) {
             switch (bgTile.getTileType()) {
                 default:
@@ -180,19 +180,19 @@ public class EntityPlayer extends EntityCreature {
         ar.width = arSize;
         ar.height = arSize;
 
-        if (TutEngine.getKeyManager().moveUp && TutEngine.getKeyManager().useAttack) {
+        if (tutEngine.getKeyManager().moveUp && tutEngine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x + cb.width / 2f - arSize / 2f;
             ar.y = cb.y - arSize;
-        } else if (TutEngine.getKeyManager().moveDown && TutEngine.getKeyManager().useAttack) {
+        } else if (tutEngine.getKeyManager().moveDown && tutEngine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x + cb.width / 2f - arSize / 2f;
             ar.y = cb.y + cb.height;
-        } else if (TutEngine.getKeyManager().moveLeft && TutEngine.getKeyManager().useAttack) {
+        } else if (tutEngine.getKeyManager().moveLeft && tutEngine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x - arSize;
             ar.y = cb.y + cb.height / 2f - arSize / 2f;
-        } else if (TutEngine.getKeyManager().moveRight && TutEngine.getKeyManager().useAttack) {
+        } else if (tutEngine.getKeyManager().moveRight && tutEngine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x + cb.width;
             ar.y = cb.y + cb.height / 2f - arSize / 2f;
@@ -203,7 +203,7 @@ public class EntityPlayer extends EntityCreature {
 
         attackTimer = 0;
 
-        for (Entity e : ((TutEngine) TutEngine).getEntityManager().getEntities()) {
+        for (Entity e : tutEngine.getEntityManager().getEntities()) {
             if (e.equals(this)) {
                 continue;
             }
@@ -239,7 +239,7 @@ public class EntityPlayer extends EntityCreature {
                     extraDmg = ((ItemTool) equippedItem.getItem()).getDamage();
                 else
                     extraDmg = 0;
-                if (TutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.R).getKeyCode()))
+                if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.R).getKeyCode()))
                     if (equippedItem.getItem() instanceof IInteractable)
                         if (((IInteractable) equippedItem.getItem()).onInteracted(this))
                             equippedItem.setCount(equippedItem.getCount() - 1);
@@ -272,7 +272,7 @@ public class EntityPlayer extends EntityCreature {
 
     private void dropItem(ItemStack stack, float x, float y) {
         stack.setPickedUp(false);
-        ((TutEngine) TutEngine).getItemManager().addItem(stack, x, y);
+        tutEngine.getItemManager().addItem(stack, x, y);
     }
 
     private void getInput(GameContainer container, int delta) {
@@ -292,23 +292,23 @@ public class EntityPlayer extends EntityCreature {
             } else {
                 speed = EntityCreature.DEFAULT_SPEED;
             }
-            if (!TutEngine.getKeyManager().useSprint)
+            if (!tutEngine.getKeyManager().useSprint)
                 sprintTimer = maxSprintTimer;
         }
 
-        if (TutEngine.getKeyManager().moveUp) {
+        if (tutEngine.getKeyManager().moveUp) {
             yMove = -speed;
             currentAnim = animUp;
         }
-        if (TutEngine.getKeyManager().moveDown) {
+        if (tutEngine.getKeyManager().moveDown) {
             yMove = speed;
             currentAnim = animDown;
         }
-        if (TutEngine.getKeyManager().moveLeft) {
+        if (tutEngine.getKeyManager().moveLeft) {
             xMove = -speed;
             currentAnim = animLeft;
         }
-        if (TutEngine.getKeyManager().moveRight) {
+        if (tutEngine.getKeyManager().moveRight) {
             xMove = speed;
             currentAnim = animRight;
         }
@@ -319,7 +319,7 @@ public class EntityPlayer extends EntityCreature {
     private void tileInteract() {
         int x = (int) position.x / Tile.TILE_WIDTH;
         int y = (int) position.y / Tile.TILE_HEIGHT;
-        Tile t = ((TutEngine) TutEngine).getWorld().getFGTile(x, y);
+        Tile t = tutEngine.getWorld().getFGTile(x, y);
         if (isAttacking) {
             int dmg = NumberUtils.getRandomInt(1, 5);
             if (equippedItem != null) {
@@ -393,7 +393,7 @@ public class EntityPlayer extends EntityCreature {
     }
 
     public boolean canSprint() {
-        return TutEngine.getKeyManager().useSprint && !inWater() && currentAnim != animIdle && sprintTimer > 0;
+        return tutEngine.getKeyManager().useSprint && !inWater() && currentAnim != animIdle && sprintTimer > 0;
     }
 
     public String getUsername() {

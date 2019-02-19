@@ -1,8 +1,8 @@
-package coffeecatteam.theultimatetile.game.entities.statics;
+package coffeecatteam.theultimatetile.entities.statics;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.Entity;
+import coffeecatteam.theultimatetile.entities.Entity;
 import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import org.newdawn.slick.Graphics;
@@ -37,7 +37,7 @@ public class EntityNature extends EntityStatic {
         for (Item item : drops) {
             int amt = NumberUtils.getRandomInt(3);
             for (int i = 0; i < amt; i++) {
-                ((TutEngine) TutEngine).getItemManager().addItem(new ItemStack(item), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
+                tutEngine.getItemManager().addItem(new ItemStack(item), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
             }
         }
     }
