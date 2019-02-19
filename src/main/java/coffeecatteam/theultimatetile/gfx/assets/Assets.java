@@ -157,7 +157,6 @@ public class Assets {
 
             UnicodeFont font = new org.newdawn.slick.UnicodeFont(awtFont);
             font.addAsciiGlyphs();
-            font.getEffects().add(new ShadowEffect(Color.darkGray, 2, 2, 0.5f));
             font.getEffects().add(new ColorEffect(java.awt.Color.white));
             font.addAsciiGlyphs();
             font.loadGlyphs();

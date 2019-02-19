@@ -3,12 +3,13 @@ package coffeecatteam.theultimatetile.gfx.ui.button;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIObject;
 import coffeecatteam.theultimatetile.gfx.ui.UITextBox;
+import coffeecatteam.theultimatetile.state.StateOptions;
 import org.newdawn.slick.*;
 
 public class UIButton extends UIObject {
@@ -24,7 +25,7 @@ public class UIButton extends UIObject {
     private Font font;
 
     private Image[] currentTexture;
-    protected boolean hasTooltip = false, hasCustomWidth = false;
+    protected boolean hasTooltip = false, hasCustomWidth = false, hoverSound = false;
     protected UITextBox tooltip;
 
     private boolean centeredX, centeredY;
@@ -67,10 +68,15 @@ public class UIButton extends UIObject {
         super.update(container, delta);
         this.hovering = this.bounds.contains(tutEngine.getMouseX(), tutEngine.getMouseY()) && !this.disabled;
 
-        if (this.hovering)
+        if (this.hovering) {
             this.currentTexture = Assets.BUTTON_HOVER;
-        else
+            if (!hoverSound)
+                Sounds.CLICK_1.play(0.5f, 1);
+            hoverSound = true;
+        } else {
             this.currentTexture = Assets.BUTTON_ENABLED;
+            hoverSound = false;
+        }
         if (this.disabled)
             this.currentTexture = Assets.BUTTON_DISABLED;
 

@@ -14,13 +14,13 @@ public class Sounds {
 
     public static Sound PUNCH;
 
-    public static Sound STEP_GROUND;
-    public static Sound STEP_STONE;
-    public static Sound STEP_WOOD;
+    public static Sound STEP_GROUND, STEP_STONE, STEP_WOOD;
 
     public static Sound BUSH;
 
     public static Sound SPLASH;
+
+    public static Sound CLICK_1, CLICK_2;
 
     public static void init() throws SlickException {
         BG_MUSIC = loadMusic("bg_music");
@@ -36,6 +36,9 @@ public class Sounds {
         BUSH = loadSound("bush");
 
         SPLASH = loadSound("splash");
+
+        CLICK_1 = loadSound("click_1");
+        CLICK_2 = loadSound("click_2");
         TutEngine.getTutEngine().getLogger().print("Sounds loaded!");
     }
 
