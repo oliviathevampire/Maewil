@@ -8,6 +8,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
+import org.newdawn.slick.font.effects.ShadowEffect;
 
 import java.awt.*;
 import java.awt.image.RasterFormatException;
@@ -23,7 +24,6 @@ public class Assets {
     public static Image MISSING_TEXTURE;
 
     /* Sprite Sheets */
-    private static SpriteSheet terrainSheet, grassSheet, sandSheet, brokenStoneSheet;
     private static SpriteSheet effectSheet;
 
     private static SpriteSheet healthSheet;
@@ -46,21 +46,13 @@ public class Assets {
     /* Fonts */
     public static Map<String, Font> FONTS = new HashMap<>();
 
-    /* Tiles */
+    /* Tiles */ //TODO: Change these to json
     public static int GRASS_ALTS, SAND_ALTS, BROKEN_STONE_ALTS;
     public static Image[] GRASS, SAND, BROKEN_STONE;
-    public static Image DIRT;
-    public static Image ANDESITE, DIORITE, COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE, OBSIDIAN;
-    public static Image PLANKS, BOOKSHELF, CHEST;
-    public static Image[] STONE, TILE_CRACKING;
-
-    public static Image[] WATER, LAVA;
-
-    public static Image AIR;
 
     /* Special Tiles */
     public static Image[] SPLASH_EFFECT, SPRINT_EFFECT;
-    public static Image[] ULTIMATE_TILE, BINARY;
+    public static Image[] ULTIMATE_TILE, TILE_CRACKING;
 
     /* Items */
     public static Image ITEM_STICK, ITEM_LEAF, ITEM_ROCK;
@@ -165,6 +157,7 @@ public class Assets {
 
             UnicodeFont font = new org.newdawn.slick.UnicodeFont(awtFont);
             font.addAsciiGlyphs();
+            font.getEffects().add(new ShadowEffect(Color.darkGray, 2, 2, 0.5f));
             font.getEffects().add(new ColorEffect(java.awt.Color.white));
             font.addAsciiGlyphs();
             font.loadGlyphs();
@@ -176,44 +169,22 @@ public class Assets {
         }
     }
 
-    /* Tiles */
+    // TODO: CHANGE TO JSON SYSTEM
+    // TODO: REMOVE METHOD
     private static void initTiles() {
-        // Grass
+        // ALTS
         GRASS_ALTS = 7;
-        GRASS = TileTextureAlts.getTextureAlts(GRASS_ALTS, 47, grassSheet, width, height);
+        GRASS = TileTextureAlts.getTextureAlts(GRASS_ALTS, 47, "grass", width, height);
         SAND_ALTS = 4;
-        SAND = TileTextureAlts.getTextureAlts(SAND_ALTS, 47, sandSheet, width, height);
+        SAND = TileTextureAlts.getTextureAlts(SAND_ALTS, 47, "sand", width, height);
         BROKEN_STONE_ALTS = 2;
-        BROKEN_STONE = TileTextureAlts.getTextureAlts(BROKEN_STONE_ALTS, 47, brokenStoneSheet, width, height);
+        BROKEN_STONE = TileTextureAlts.getTextureAlts(BROKEN_STONE_ALTS, 47, "broken_stone", width, height);
 
-        DIRT = getSpriteInd(terrainSheet, 0, 0, width, height);
-        ANDESITE = getSpriteInd(terrainSheet, 1, 0, width, height);
-        DIORITE = getSpriteInd(terrainSheet, 2, 0, width, height);
-        COAL_ORE = getSpriteInd(terrainSheet, 3, 0, width, height);
-        IRON_ORE = getSpriteInd(terrainSheet, 4, 0, width, height);
-        GOLD_ORE = getSpriteInd(terrainSheet, 5, 0, width, height);
-        DIAMOND_ORE = getSpriteInd(terrainSheet, 6, 0, width, height);
-        OBSIDIAN = getSpriteInd(terrainSheet, 7, 0, width, height);
+        // Special
+        ULTIMATE_TILE = getTileFrames("ultimate", 7, 2);
 
-        PLANKS = getSpriteInd(terrainSheet, 8, 0, width, height);
+        TILE_CRACKING = getTileFrames("tile_cracking", 9);
 
-        AIR = getSpriteInd(terrainSheet, 9, 0, width, height);
-
-        BOOKSHELF = getSpriteInd(terrainSheet, 10, 0, width, height);
-        CHEST = getSpriteInd(terrainSheet, 11, 0, width, height);
-
-        STONE = getFrames(terrainSheet, 1, 0, 4);
-
-        TILE_CRACKING = getFrames("/assets/textures/tiles/tile_cracking.png", 0, 8);
-
-        WATER = getFrames(terrainSheet, 6, 0, 15);
-        LAVA = getFrames(terrainSheet, 7, 0, 15);
-
-        ULTIMATE_TILE = getFrames("/assets/textures/tiles/ultimate.png", 0, 0, 6, width * 2, height * 2);
-
-        BINARY = getFrames("/assets/textures/tiles/binary.png", 0, 15);
-
-        /* Effects */
         SPLASH_EFFECT = getFrames(effectSheet, 0, 0, 15);
         SPRINT_EFFECT = getFrames(effectSheet, 1, 0, 15);
 
@@ -421,13 +392,6 @@ public class Assets {
         MISSING_TEXTURE = ImageLoader.loadImage("/assets/textures/missing.png");
 
         /* Sprite Sheets */
-        terrainSheet = new SpriteSheet("/assets/textures/tiles/terrain.png");
-
-        String overlapPath = "/assets/textures/tiles/overlap/";
-        grassSheet = new SpriteSheet(overlapPath + "grass.png");
-        sandSheet = new SpriteSheet(overlapPath + "sand.png");
-        brokenStoneSheet = new SpriteSheet(overlapPath + "broken_stone.png");
-
         effectSheet = new SpriteSheet("/assets/textures/effect.png");
 
         healthSheet = new SpriteSheet("/assets/textures/gui/overlay/health.png");
@@ -470,6 +434,22 @@ public class Assets {
         initGui();
 
         logger.print("Assets loaded!");
+    }
+
+    public static Image getTileTexture(String tile) {
+        return getTileTexture(tile, 0);
+    }
+
+    public static Image getTileTexture(String tile, int xOff) {
+        return getSpriteExact("/assets/textures/tiles/" + tile + ".png", width * xOff, 0, width, height);
+    }
+
+    public static Image[] getTileFrames(String tile, int frameCount) {
+        return getTileFrames(tile, frameCount, 1);
+    }
+
+    public static Image[] getTileFrames(String tile, int frameCount, int sizeMod) {
+        return getFrames("/assets/textures/tiles/" + tile + ".png", 0, 0, frameCount - 1, width * sizeMod, height * sizeMod);
     }
 
     public static Image[] getFrames(String sheet, int xStart, int xEnd) {

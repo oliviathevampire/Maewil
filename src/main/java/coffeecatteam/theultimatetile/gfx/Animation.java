@@ -5,9 +5,27 @@ import org.newdawn.slick.Image;
 
 public class Animation {
 
+    public static final int DEFAULT_SPEED = 50;
+
     private int speed, index;
     private long lastTime, timer;
     private Image[] frames;
+
+    public Animation() {
+        this(new Image[]{});
+    }
+
+    public Animation(Image image) {
+        this(new Image[]{image, image});
+    }
+
+    public Animation(int speed, Image image) {
+        this(speed, new Image[]{image});
+    }
+
+    public Animation(Image[] frames) {
+        this(DEFAULT_SPEED, frames);
+    }
 
     public Animation(int speed, Image[] frames) {
         this.speed = speed;
