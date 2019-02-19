@@ -1,6 +1,7 @@
 {
   "type": "animated",
-  "textures": [
+  "texture": "tiles/lava.png",
+  "frames": [
     0,
     1,
     2,

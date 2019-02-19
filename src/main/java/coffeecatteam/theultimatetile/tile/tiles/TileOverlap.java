@@ -1,14 +1,14 @@
 package coffeecatteam.theultimatetile.tile.tiles;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.tile.Tile;
 import coffeecatteam.theultimatetile.tile.TilePos;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.tile.Tiles;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @author CoffeeCatRailway
@@ -17,21 +17,23 @@ import java.util.List;
 public abstract class TileOverlap extends Tile {
 
     protected Image[] overlap;
-    private List<Class<? extends Tile>> connect, ignore;
+    private ArrayList<Class<? extends Tile>> connect = new ArrayList<>(), ignore = new ArrayList<>();
     protected int alts;
 
-    public TileOverlap(TutEngine tutEngine, Image texture, Image[] overlap, String id, boolean isSolid, TileType tileType, int alts) {
-        super(tutEngine, texture, id, isSolid, tileType);
+    public TileOverlap(TutEngine tutEngine, Image[] overlap, String id, boolean isSolid, TileType tileType, int alts) {
+        super(tutEngine, id, isSolid, tileType);
         this.overlap = overlap;
         this.alts = alts;
     }
 
-    protected void setConnect(Class<? extends Tile>... connect) {
-        this.connect = Arrays.asList(connect);
+    protected void setConnect(String... ids) {
+        for (String id : ids)
+            this.connect.add(Tiles.getTileClass(id));
     }
 
-    protected void setIgnore(Class<? extends Tile>... ignore) {
-        this.ignore = Arrays.asList(ignore);
+    protected void setIgnore(String... ids) {
+        for (String id : ids)
+            this.ignore.add(Tiles.getTileClass(id));
     }
 
     @Override
@@ -160,412 +162,412 @@ public abstract class TileOverlap extends Tile {
         return overlap[alts + index];
     }
 
-    private boolean isConnected(TilePos pos) {
+    private boolean connect(TilePos pos) {
         return connect.contains(getTileAt(pos).getClass());
     }
 
-    private boolean notConnected(TilePos pos) {
+    private boolean ignore(TilePos pos) {
         return ignore.contains(getTileAt(pos).getClass()) || !connect.contains(getTileAt(pos).getClass());
     }
 
     private boolean topLeftCorner() {
-        return isConnected(position.up()) &&
-                isConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                notConnected(position.downRight());
+        return connect(position.up()) &&
+                connect(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                ignore(position.downRight());
     }
 
     private boolean leftSide() {
-        return isConnected(position.left()) &&
-                notConnected(position.up()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down());
+        return connect(position.left()) &&
+                ignore(position.up()) &&
+                ignore(position.right()) &&
+                ignore(position.down());
     }
 
     private boolean bottomLeftCorner() {
-        return notConnected(position.up()) &&
-                isConnected(position.left()) &&
-                notConnected(position.right()) &&
-                isConnected(position.down()) &&
-                notConnected(position.upRight());
+        return ignore(position.up()) &&
+                connect(position.left()) &&
+                ignore(position.right()) &&
+                connect(position.down()) &&
+                ignore(position.upRight());
     }
 
     private boolean topSide() {
-        return notConnected(position.left()) &&
-                isConnected(position.up()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down());
+        return ignore(position.left()) &&
+                connect(position.up()) &&
+                ignore(position.right()) &&
+                ignore(position.down());
     }
 
     private boolean none() {
-        return notConnected(position.upLeft()) &&
-                notConnected(position.up()) &&
-                notConnected(position.upRight()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.downLeft()) &&
-                notConnected(position.down()) &&
-                notConnected(position.downRight());
+        return ignore(position.upLeft()) &&
+                ignore(position.up()) &&
+                ignore(position.upRight()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.downLeft()) &&
+                ignore(position.down()) &&
+                ignore(position.downRight());
     }
 
     private boolean bottomSide() {
-        return notConnected(position.left()) &&
-                notConnected(position.up()) &&
-                notConnected(position.right()) &&
-                isConnected(position.down());
+        return ignore(position.left()) &&
+                ignore(position.up()) &&
+                ignore(position.right()) &&
+                connect(position.down());
     }
 
     private boolean topRightCorner() {
-        return isConnected(position.up()) &&
-                isConnected(position.right()) &&
-                notConnected(position.left()) &&
-                notConnected(position.down()) &&
-                notConnected(position.downLeft());
+        return connect(position.up()) &&
+                connect(position.right()) &&
+                ignore(position.left()) &&
+                ignore(position.down()) &&
+                ignore(position.downLeft());
     }
 
     private boolean rightSide() {
-        return notConnected(position.left()) &&
-                notConnected(position.up()) &&
-                isConnected(position.right()) &&
-                notConnected(position.down());
+        return ignore(position.left()) &&
+                ignore(position.up()) &&
+                connect(position.right()) &&
+                ignore(position.down());
     }
 
     private boolean bottomRightCorner() {
-        return notConnected(position.up()) &&
-                isConnected(position.right()) &&
-                notConnected(position.left()) &&
-                isConnected(position.down()) &&
-                notConnected(position.upLeft());
+        return ignore(position.up()) &&
+                connect(position.right()) &&
+                ignore(position.left()) &&
+                connect(position.down()) &&
+                ignore(position.upLeft());
     }
 
     private boolean topLeftCornerSmall() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                notConnected(position.downRight()) &&
-                isConnected(position.upLeft());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                ignore(position.downRight()) &&
+                connect(position.upLeft());
     }
 
     private boolean bottomLeftCornerSmall() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.downLeft()) &&
-                notConnected(position.upRight());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.downLeft()) &&
+                ignore(position.upRight());
     }
 
     private boolean topRightCornerSmall() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                notConnected(position.downLeft()) &&
-                isConnected(position.upRight());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                ignore(position.downLeft()) &&
+                connect(position.upRight());
     }
 
     private boolean bottomRightCornerSmall() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.downRight()) &&
-                notConnected(position.upLeft());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.downRight()) &&
+                ignore(position.upLeft());
     }
 
     private boolean topBottomRight() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.downRight()) &&
-                isConnected(position.upRight());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.downRight()) &&
+                connect(position.upRight());
     }
 
     private boolean bottomLeftRight() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.downLeft()) &&
-                isConnected(position.downRight());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.downLeft()) &&
+                connect(position.downRight());
     }
 
     private boolean topBottomLeft() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.downLeft()) &&
-                isConnected(position.upLeft());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.downLeft()) &&
+                connect(position.upLeft());
     }
 
     private boolean topLeftRight() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.upLeft()) &&
-                isConnected(position.upRight());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.upLeft()) &&
+                connect(position.upRight());
     }
 
     private boolean topLeftCornerInner() {
-        return isConnected(position.up()) &&
-                isConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.downRight());
+        return connect(position.up()) &&
+                connect(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.downRight());
     }
 
     private boolean bottomLeftCornerInner() {
-        return notConnected(position.up()) &&
-                isConnected(position.left()) &&
-                notConnected(position.right()) &&
-                isConnected(position.down()) &&
-                isConnected(position.upRight());
+        return ignore(position.up()) &&
+                connect(position.left()) &&
+                ignore(position.right()) &&
+                connect(position.down()) &&
+                connect(position.upRight());
     }
 
     private boolean topRightCornerInner() {
-        return isConnected(position.up()) &&
-                notConnected(position.left()) &&
-                isConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.downLeft());
+        return connect(position.up()) &&
+                ignore(position.left()) &&
+                connect(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.downLeft());
     }
 
     private boolean bottomRightCornerInner() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                isConnected(position.right()) &&
-                isConnected(position.down()) &&
-                isConnected(position.upLeft());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                connect(position.right()) &&
+                connect(position.down()) &&
+                connect(position.upLeft());
     }
 
     private boolean allSides() {
-        return isConnected(position.up()) &&
-                isConnected(position.left()) &&
-                isConnected(position.right()) &&
-                isConnected(position.down());
+        return connect(position.up()) &&
+                connect(position.left()) &&
+                connect(position.right()) &&
+                connect(position.down());
     }
 
     private boolean endUp() {
-        return isConnected(position.up()) &&
-                isConnected(position.left()) &&
-                isConnected(position.right()) &&
-                notConnected(position.down());
+        return connect(position.up()) &&
+                connect(position.left()) &&
+                connect(position.right()) &&
+                ignore(position.down());
     }
 
     private boolean straightUpDown() {
-        return notConnected(position.up()) &&
-                isConnected(position.left()) &&
-                isConnected(position.right()) &&
-                notConnected(position.down());
+        return ignore(position.up()) &&
+                connect(position.left()) &&
+                connect(position.right()) &&
+                ignore(position.down());
     }
 
     private boolean endDown() {
-        return notConnected(position.up()) &&
-                isConnected(position.left()) &&
-                isConnected(position.right()) &&
-                isConnected(position.down());
+        return ignore(position.up()) &&
+                connect(position.left()) &&
+                connect(position.right()) &&
+                connect(position.down());
     }
 
     private boolean endLeft() {
-        return isConnected(position.up()) &&
-                isConnected(position.left()) &&
-                notConnected(position.right()) &&
-                isConnected(position.down());
+        return connect(position.up()) &&
+                connect(position.left()) &&
+                ignore(position.right()) &&
+                connect(position.down());
     }
 
     private boolean straightLeftRight() {
-        return isConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                isConnected(position.down());
+        return connect(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                connect(position.down());
     }
 
     private boolean endRight() {
-        return isConnected(position.up()) &&
-                notConnected(position.left()) &&
-                isConnected(position.right()) &&
-                isConnected(position.down());
+        return connect(position.up()) &&
+                ignore(position.left()) &&
+                connect(position.right()) &&
+                connect(position.down());
     }
 
     private boolean allCorners() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.upLeft()) &&
-                isConnected(position.upRight()) &&
-                isConnected(position.downLeft()) &&
-                isConnected(position.downRight());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.upLeft()) &&
+                connect(position.upRight()) &&
+                connect(position.downLeft()) &&
+                connect(position.downRight());
     }
 
     private boolean downLeftUpRightCorners() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.upRight()) &&
-                isConnected(position.downLeft());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.upRight()) &&
+                connect(position.downLeft());
     }
 
     private boolean upLeftDownRightCorners() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.downRight()) &&
-                isConnected(position.upLeft());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.downRight()) &&
+                connect(position.upLeft());
     }
 
     private boolean leftUpRightDownRight() {
-        return notConnected(position.up()) &&
-                isConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.upRight()) &&
-                isConnected(position.downRight());
+        return ignore(position.up()) &&
+                connect(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.upRight()) &&
+                connect(position.downRight());
     }
 
     private boolean leftDownRight() {
-        return notConnected(position.up()) &&
-                isConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                notConnected(position.upRight()) &&
-                isConnected(position.downRight());
+        return ignore(position.up()) &&
+                connect(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                ignore(position.upRight()) &&
+                connect(position.downRight());
     }
 
     private boolean leftUpRight() {
-        return notConnected(position.up()) &&
-                isConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.upRight()) &&
-                notConnected(position.downRight());
+        return ignore(position.up()) &&
+                connect(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.upRight()) &&
+                ignore(position.downRight());
     }
 
     private boolean rightUpLeftDownLeft() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                isConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.upLeft()) &&
-                isConnected(position.downLeft());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                connect(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.upLeft()) &&
+                connect(position.downLeft());
     }
 
     private boolean rightDownLeft() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                isConnected(position.right()) &&
-                notConnected(position.down()) &&
-                notConnected(position.upLeft()) &&
-                isConnected(position.downLeft());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                connect(position.right()) &&
+                ignore(position.down()) &&
+                ignore(position.upLeft()) &&
+                connect(position.downLeft());
     }
 
     private boolean rightUpLeft() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                isConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.upLeft()) &&
-                notConnected(position.downLeft());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                connect(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.upLeft()) &&
+                ignore(position.downLeft());
     }
 
     private boolean upDownLeftDownRight() {
-        return isConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.downLeft()) &&
-                isConnected(position.downRight());
+        return connect(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.downLeft()) &&
+                connect(position.downRight());
     }
 
     private boolean upDownRight() {
-        return isConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                notConnected(position.downLeft()) &&
-                isConnected(position.downRight());
+        return connect(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                ignore(position.downLeft()) &&
+                connect(position.downRight());
     }
 
     private boolean upDownLeft() {
-        return isConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.downLeft()) &&
-                notConnected(position.downRight());
+        return connect(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.downLeft()) &&
+                ignore(position.downRight());
     }
 
     private boolean downUpLeftUpRight() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                isConnected(position.down()) &&
-                isConnected(position.upLeft()) &&
-                isConnected(position.upRight());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                connect(position.down()) &&
+                connect(position.upLeft()) &&
+                connect(position.upRight());
     }
 
     private boolean downUpLeft() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                isConnected(position.down()) &&
-                isConnected(position.upLeft()) &&
-                notConnected(position.upRight());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                connect(position.down()) &&
+                connect(position.upLeft()) &&
+                ignore(position.upRight());
     }
 
     private boolean downUpRight() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                isConnected(position.down()) &&
-                notConnected(position.upLeft()) &&
-                isConnected(position.upRight());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                connect(position.down()) &&
+                ignore(position.upLeft()) &&
+                connect(position.upRight());
     }
 
     private boolean downLeftUpRightDownRightCorners() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.downLeft()) &&
-                isConnected(position.upRight()) &&
-                isConnected(position.downRight());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.downLeft()) &&
+                connect(position.upRight()) &&
+                connect(position.downRight());
     }
 
     private boolean upLeftUpRightDownRightCorners() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.upLeft()) &&
-                isConnected(position.upRight()) &&
-                isConnected(position.downRight());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.upLeft()) &&
+                connect(position.upRight()) &&
+                connect(position.downRight());
     }
 
     private boolean upLeftDownLeftDownRightCorners() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.upLeft()) &&
-                isConnected(position.downLeft()) &&
-                isConnected(position.downRight());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.upLeft()) &&
+                connect(position.downLeft()) &&
+                connect(position.downRight());
     }
 
     private boolean upLeftDownLeftUpRightCorners() {
-        return notConnected(position.up()) &&
-                notConnected(position.left()) &&
-                notConnected(position.right()) &&
-                notConnected(position.down()) &&
-                isConnected(position.upLeft()) &&
-                isConnected(position.downLeft()) &&
-                isConnected(position.upRight());
+        return ignore(position.up()) &&
+                ignore(position.left()) &&
+                ignore(position.right()) &&
+                ignore(position.down()) &&
+                connect(position.upLeft()) &&
+                connect(position.downLeft()) &&
+                connect(position.upRight());
     }
 }

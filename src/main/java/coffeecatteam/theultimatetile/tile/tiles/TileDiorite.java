@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.tile.tiles;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 /**
  * @author CoffeeCatRailway
@@ -9,12 +8,12 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
  */
 public class TileDiorite extends TileStone {
 
-    public TileDiorite(TutEngine tutEngine, String id) {
-        super(tutEngine, Assets.DIORITE, id, true);
+    public TileDiorite(TutEngine tutEngine) {
+        super(tutEngine, "diorite", true);
     }
 
     @Override
     public TileDiorite newTile() {
-        return (TileDiorite) super.newTile(new TileDiorite(tutEngine, id));
+        return super.newTile(new TileDiorite(tutEngine));
     }
 }

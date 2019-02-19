@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.tile.tiles;
 
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.tile.Tile;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 
 /**
  * @author CoffeeCatRailway
@@ -10,20 +10,13 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
  */
 public class TileGrass extends Tile {
 
-    public TileGrass(TutEngine tutEngine, String id) {
-        super(tutEngine, null, id, false, Tile.TileType.GROUND);
-    }
-
-    @Override
-    public void init() {
-        this.setHasAlts(true);
-        this.addTextureAlts(Assets.GRASS, Assets.GRASS_ALTS);
-
-        super.init();
+    public TileGrass(TutEngine tutEngine) {
+        super(tutEngine, "grass", false, Tile.TileType.GROUND);
+        this.setMapColor(WorldColors.GRASS);
     }
 
     @Override
     public TileGrass newTile() {
-        return (TileGrass) super.newTile(new TileGrass(tutEngine, id));
+        return super.newTile(new TileGrass(tutEngine));
     }
 }

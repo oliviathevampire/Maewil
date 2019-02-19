@@ -12,7 +12,7 @@ public class WorldColors {
      * Used for world generation
      */
     public static final Color DEAP_OCEAN = new Color(0, 0, 216);
-    public static final Color OCEAN = Color.blue;
+    public static final Color WATER = Color.blue;
     public static final Color SAND = Color.orange;
     public static final Color GRASS = Color.green;
     public static final Color STONE = Color.gray;

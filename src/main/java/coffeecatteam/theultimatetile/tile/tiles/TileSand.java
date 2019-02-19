@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.tile.tiles;
 
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 
 /**
  * @author CoffeeCatRailway
@@ -9,22 +10,15 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
  */
 public class TileSand extends TileOverlap {
 
-    public TileSand(TutEngine tutEngine, String id) {
-        super(tutEngine, null, Assets.GRASS, id, false, TileType.GROUND, Assets.GRASS_ALTS);
-        this.setConnect(TileGrass.class);
-        this.setIgnore(TileSand.class);
-    }
-
-    @Override
-    public void init() {
-        this.setHasAlts(true);
-        this.addTextureAlts(Assets.SAND, Assets.SAND_ALTS);
-
-        super.init();
+    public TileSand(TutEngine tutEngine) {
+        super(tutEngine, Assets.GRASS, "sand", false, TileType.GROUND, Assets.GRASS_ALTS);
+        this.setMapColor(WorldColors.SAND);
+        this.setConnect("grass");
+        this.setIgnore("sand");
     }
 
     @Override
     public TileSand newTile() {
-        return (TileSand) super.newTile(new TileSand(tutEngine, id));
+        return super.newTile(new TileSand(tutEngine));
     }
 }

@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.tile.tiles;
 
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.tile.Tile;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 
 /**
  * @author CoffeeCatRailway
@@ -11,11 +11,12 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
 public class TileAir extends Tile {
 
     public TileAir(TutEngine tutEngine) {
-        super(tutEngine, Assets.AIR, "air", false, Tile.TileType.AIR);
+        super(tutEngine, "air", false, Tile.TileType.AIR);
+        this.setMapColor(WorldColors.AIR);
     }
 
     @Override
     public TileAir newTile() {
-        return (TileAir) super.newTile(new TileAir(tutEngine));
+        return super.newTile(new TileAir(tutEngine));
     }
 }

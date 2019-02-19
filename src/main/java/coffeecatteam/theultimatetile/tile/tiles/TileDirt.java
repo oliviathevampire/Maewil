@@ -1,8 +1,9 @@
 package coffeecatteam.theultimatetile.tile.tiles;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.tile.Tile;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.tile.Tile;
+import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 
 /**
  * @author CoffeeCatRailway
@@ -10,14 +11,15 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
  */
 public class TileDirt extends TileOverlap {
 
-    public TileDirt(TutEngine tutEngine, String id) {
-        super(tutEngine, Assets.DIRT, Assets.GRASS, id, false, Tile.TileType.GROUND, Assets.GRASS_ALTS);
-        this.setConnect(TileGrass.class);
-        this.setIgnore(TileDirt.class);
+    public TileDirt(TutEngine tutEngine) {
+        super(tutEngine, Assets.GRASS, "dirt", false, Tile.TileType.GROUND, Assets.GRASS_ALTS);
+        this.setMapColor(WorldColors.DIRT);
+        this.setConnect("grass");
+        this.setIgnore("dirt");
     }
 
     @Override
     public TileDirt newTile() {
-        return (TileDirt) super.newTile(new TileDirt(tutEngine, id));
+        return super.newTile(new TileDirt(tutEngine));
     }
 }

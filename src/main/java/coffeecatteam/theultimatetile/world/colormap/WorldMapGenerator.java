@@ -45,7 +45,7 @@ public class WorldMapGenerator {
                 double value = noise.eval((float) ((x + xOff) / sizeLand), (float) ((y + yOff) / sizeLand));
                 Color c = WorldColors.DEAP_OCEAN;
                 if (value > -0.3 && value < -0.1) {
-                    c = WorldColors.OCEAN;
+                    c = WorldColors.WATER;
                 } else {
                     if (value > -0.1 && value < 0.15) {
                         c = WorldColors.SAND;

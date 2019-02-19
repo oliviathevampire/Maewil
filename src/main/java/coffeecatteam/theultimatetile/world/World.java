@@ -1,24 +1,17 @@
 package coffeecatteam.theultimatetile.world;
 
-import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.game.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.tile.Tile;
-import coffeecatteam.theultimatetile.tile.TilePos;
-import coffeecatteam.theultimatetile.world.colormap.WorldMapGenerator;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
+import coffeecatteam.theultimatetile.tile.Tile;
+import coffeecatteam.theultimatetile.tile.TilePos;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.util.BufferedImageUtil;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class World {
@@ -35,24 +28,23 @@ public class World {
 
     private OverlayManager overlayManager;
 
-    private Image mapCursor = Assets.MAP_CURSOR[0];
-    private Color halfTransparent = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+    private final Color tint = new Color(63, 63, 63, 127);
 
-    private boolean isForcedUpdate = false;
+    private boolean isForcedUpdateThread = false;
     private Thread forcedUpdateThread;
 
     public World(TutEngine tutEngine, String path, String worldName) {
         this.tutEngine = tutEngine;
         this.worldName = worldName;
-        overlayManager = new OverlayManager(tutEngine, ((TutEngine) tutEngine).getEntityManager().getPlayer());
+        overlayManager = new OverlayManager(tutEngine, tutEngine.getEntityManager().getPlayer());
 
         try {
             loadWorld(path);
         } catch (IOException | ParseException e) {
             tutEngine.getLogger().print(e);
         }
-        ((TutEngine) tutEngine).getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
-        ((TutEngine) tutEngine).getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
+        tutEngine.getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
+        tutEngine.getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
     }
 
     public World(TutEngine tutEngine, String worldName, int width, int height, Vector2D spawn, Tile[][] bg_tiles, Tile[][] fg_tiles) {
@@ -69,18 +61,44 @@ public class World {
         this.bg_tiles = bg_tiles;
         this.fg_tiles = fg_tiles;
 
-        overlayManager = new OverlayManager(tutEngine, ((TutEngine) tutEngine).getEntityManager().getPlayer());
+        overlayManager = new OverlayManager(tutEngine, tutEngine.getEntityManager().getPlayer());
     }
 
-    private void forcedUpdateInit(GameContainer container, int delta) {
-        if (!isForcedUpdate) {
-            isForcedUpdate = true;
+    public void update(GameContainer container, int delta) {
+        int xStart = (int) Math.max(0, tutEngine.getCamera().getxOffset() / Tile.TILE_WIDTH);
+        int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + tutEngine.getWidth()) / Tile.TILE_WIDTH + 1);
+        int yStart = (int) Math.max(0, tutEngine.getCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (tutEngine.getCamera().getyOffset() + tutEngine.getHeight()) / Tile.TILE_HEIGHT + 1);
+
+        for (int y = yStart; y < yEnd; y++) {
+            for (int x = xStart; x < xEnd; x++) {
+                getBGTile(x, y).updateBounds();
+                getBGTile(x, y).setWorldLayer(bg_tiles);
+
+                getFGTile(x, y).update(container, delta);
+                getFGTile(x, y).setWorldLayer(fg_tiles);
+            }
+        }
+
+        forcedUpdateThreadInit(container, delta);
+
+        tutEngine.getItemManager().update(container, delta);
+        tutEngine.getEntityManager().update(container, delta);
+        overlayManager.update(container, delta);
+    }
+
+    /*
+     * Update all tiles with a forcedUpdate method in-use/override
+     */
+    private void forcedUpdateThreadInit(GameContainer container, int delta) {
+        if (!isForcedUpdateThread) {
+            isForcedUpdateThread = true;
 
             forcedUpdateThread = new Thread(() -> {
                 CatLogger logger = new CatLogger();
-                logger.print("Forced update initialized");
+                logger.print("Forced update thread initialized");
 
-                while (isForcedUpdate) {
+                while (isForcedUpdateThread) {
                     for (int y = 0; y < height; y++) {
                         for (int x = 0; x < width; x++) {
                             getBGTile(x, y).forcedUpdate(container, delta);
@@ -101,40 +119,16 @@ public class World {
         }
     }
 
-    public void update(GameContainer container, int delta) {
-        int xStart = (int) Math.max(0, ((TutEngine) tutEngine).getCamera().getxOffset() / Tile.TILE_WIDTH);
-        int xEnd = (int) Math.min(width, (((TutEngine) tutEngine).getCamera().getxOffset() + tutEngine.getWidth()) / Tile.TILE_WIDTH + 1);
-        int yStart = (int) Math.max(0, ((TutEngine) tutEngine).getCamera().getyOffset() / Tile.TILE_HEIGHT);
-        int yEnd = (int) Math.min(height, (((TutEngine) tutEngine).getCamera().getyOffset() + tutEngine.getHeight()) / Tile.TILE_HEIGHT + 1);
-
-        for (int y = yStart; y < yEnd; y++) {
-            for (int x = xStart; x < xEnd; x++) {
-                getBGTile(x, y).updateBounds();
-                getBGTile(x, y).setWorldLayer(bg_tiles);
-
-                getFGTile(x, y).update(container, delta);
-                getFGTile(x, y).setWorldLayer(fg_tiles);
-            }
-        }
-
-        forcedUpdateInit(container, delta);
-
-        ((TutEngine) tutEngine).getItemManager().update(container, delta);
-        ((TutEngine) tutEngine).getEntityManager().update(container, delta);
-        overlayManager.update(container, delta);
-    }
-
     public void render(Graphics g) {
-        int xStart = (int) Math.max(0, ((TutEngine) tutEngine).getCamera().getxOffset() / Tile.TILE_WIDTH);
-        int xEnd = (int) Math.min(width, (((TutEngine) tutEngine).getCamera().getxOffset() + tutEngine.getWidth()) / Tile.TILE_WIDTH + 1);
-        int yStart = (int) Math.max(0, ((TutEngine) tutEngine).getCamera().getyOffset() / Tile.TILE_HEIGHT);
-        int yEnd = (int) Math.min(height, (((TutEngine) tutEngine).getCamera().getyOffset() + tutEngine.getHeight()) / Tile.TILE_HEIGHT + 1);
+        int xStart = (int) Math.max(0, tutEngine.getCamera().getxOffset() / Tile.TILE_WIDTH);
+        int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + tutEngine.getWidth()) / Tile.TILE_WIDTH + 1);
+        int yStart = (int) Math.max(0, tutEngine.getCamera().getyOffset() / Tile.TILE_HEIGHT);
+        int yEnd = (int) Math.min(height, (tutEngine.getCamera().getyOffset() + tutEngine.getHeight()) / Tile.TILE_HEIGHT + 1);
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)
                 getBGTile(x, y).render(g);
 
-        Color tint = new Color(63, 63, 63, 127);
         g.setColor(tint);
         g.fillRect(0, 0, tutEngine.getWidth(), tutEngine.getHeight());
 
@@ -142,135 +136,14 @@ public class World {
             for (int x = xStart; x < xEnd; x++)
                 getFGTile(x, y).render(g);
 
-        ((TutEngine) tutEngine).getItemManager().render(g);
-        ((TutEngine) tutEngine).getEntityManager().render(g);
+        tutEngine.getItemManager().render(g);
+        tutEngine.getEntityManager().render(g);
         overlayManager.render(g);
 
         /*
          * Mini Map
          */
-        float padding = 10;
-        float x = padding, y = padding, mapSize = 180;
-        g.setColor(Color.white);
-
-        int viewSize = 100;
-        BufferedImage mapbg = new BufferedImage(viewSize, viewSize, BufferedImage.TYPE_INT_ARGB); /* BG */
-        BufferedImage mapfg = new BufferedImage(viewSize, viewSize, BufferedImage.TYPE_INT_ARGB); /* FG */
-        int pwx = (int) (((TutEngine) tutEngine).getPlayer().getPosition().x / Tile.TILE_WIDTH);
-        int pwy = (int) (((TutEngine) tutEngine).getPlayer().getPosition().y / Tile.TILE_HEIGHT);
-
-        /*
-         * Get world viewing coords
-         */
-        int mxStart = pwx - viewSize / 2;
-        int mxEnd = pwx + viewSize / 2;
-        int myStart = pwy - viewSize / 2;
-        int myEnd = pwy + viewSize / 2;
-
-        if (mxStart < 0) {
-            mxStart = 0;
-            mxEnd = viewSize;
-        }
-        if (mxEnd > width - 1) {
-            mxStart = width - 1 - viewSize;
-            mxEnd = width - 1;
-        }
-        if (myStart < 0) {
-            myStart = 0;
-            myEnd = viewSize;
-        }
-        if (myEnd > height - 1) {
-            myStart = height - 1 - viewSize;
-            myEnd = height - 1;
-        }
-
-        /*
-         * Generate map image
-         */
-        for (int my = myStart; my < myEnd; my++) {
-            for (int mx = mxStart; mx < mxEnd; mx++) {
-                /* BG */
-                int cbg = WorldMapGenerator.getRGBA(getBGTile(mx, my).getMapColor().getRGB());
-                int pixelXbg = (int) NumberUtils.map(mx, mxStart, mxEnd, 0, viewSize - 1);
-                int pixelYbg = (int) NumberUtils.map(my, myStart, myEnd, 0, viewSize - 1);
-                mapbg.setRGB(pixelXbg, pixelYbg, cbg);
-
-                /* FG */
-                int cfg = WorldMapGenerator.getRGBA(getFGTile(mx, my).getMapColor().getRGB());
-                int pixelXfg = (int) NumberUtils.map(mx, mxStart, mxEnd, 0, viewSize - 1);
-                int pixelYfg = (int) NumberUtils.map(my, myStart, myEnd, 0, viewSize - 1);
-                mapfg.setRGB(pixelXfg, pixelYfg, cfg);
-            }
-        }
-
-        int mapSizeOff = 14;
-        float mapBorderSize = mapSize + padding;
-        EntityPlayer player = tutEngine.getTutEngine().getPlayer();
-        Color trans = ((player.getPosition().x + player.getWidth() / 2f < mapBorderSize && player.getPosition().y + player.getHeight() / 2f < mapBorderSize) ? halfTransparent : Color.white);
-        try {
-            /* BG */
-            Image mapDrawbg = new Image(BufferedImageUtil.getTexture("mapbg", mapbg));
-            mapDrawbg.setFilter(Image.FILTER_NEAREST);
-            mapDrawbg.draw(x + mapSizeOff / 2f, y + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2, trans);
-
-            tint.a = trans.a;
-            g.setColor(tint);
-            g.fillRect(x + mapSizeOff / 2f, y + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2);
-
-            /* FG */
-            Image mapDrawfg = new Image(BufferedImageUtil.getTexture("mapfg", mapfg));
-            mapDrawfg.setFilter(Image.FILTER_NEAREST);
-            mapDrawfg.draw(x + mapSizeOff / 2f, y + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2, trans);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        /*
-         * Convert player world coords to map coords
-         */
-        float cursorSize = 20f;
-        float pxd = x + mapSize / 2f - cursorSize / 2f;
-        float pyd = y + mapSize / 2f - cursorSize / 2f;
-
-        float px = pxd;
-        float py = pyd;
-
-        if (mxStart <= 0)
-            px = NumberUtils.map((float) ((TutEngine) tutEngine).getPlayer().getPosition().x, 0, (viewSize + cursorSize) * Tile.TILE_WIDTH, x, x + mapSize);
-        if (mxEnd >= width - 1)
-            px = NumberUtils.map((float) ((TutEngine) tutEngine).getPlayer().getPosition().x, (width - (viewSize - cursorSize / 2)) * Tile.TILE_WIDTH, width * Tile.TILE_WIDTH, x, x + mapSize - cursorSize / 2);
-        if (myStart <= 0)
-            py = NumberUtils.map((float) ((TutEngine) tutEngine).getPlayer().getPosition().y, 0, (viewSize + cursorSize) * Tile.TILE_HEIGHT, y, y + mapSize);
-        if (myEnd >= height - 1)
-            py = NumberUtils.map((float) ((TutEngine) tutEngine).getPlayer().getPosition().y, (height - (viewSize - cursorSize / 2)) * Tile.TILE_HEIGHT, height * Tile.TILE_HEIGHT, y, y + mapSize - cursorSize / 2);
-
-        /*
-         * Draw cursor (arrow) and border
-         */
-        updateMapCursor();
-        mapCursor.draw(px, py, cursorSize, cursorSize);
-
-        Assets.MAP_BORDER.draw(x - padding / 2, y - padding / 2, mapBorderSize, mapBorderSize, trans);
-    }
-
-    private void updateMapCursor() {
-        if (tutEngine.getKeyManager().moveUp)
-            mapCursor = Assets.MAP_CURSOR[0];
-        if (tutEngine.getKeyManager().moveRight)
-            mapCursor = Assets.MAP_CURSOR[1];
-        if (tutEngine.getKeyManager().moveDown)
-            mapCursor = Assets.MAP_CURSOR[2];
-        if (tutEngine.getKeyManager().moveLeft)
-            mapCursor = Assets.MAP_CURSOR[3];
-
-        if (tutEngine.getKeyManager().moveUp && tutEngine.getKeyManager().moveRight)
-            mapCursor = Assets.MAP_CURSOR[4];
-        if (tutEngine.getKeyManager().moveRight && tutEngine.getKeyManager().moveDown)
-            mapCursor = Assets.MAP_CURSOR[5];
-        if (tutEngine.getKeyManager().moveDown && tutEngine.getKeyManager().moveLeft)
-            mapCursor = Assets.MAP_CURSOR[6];
-        if (tutEngine.getKeyManager().moveLeft && tutEngine.getKeyManager().moveUp)
-            mapCursor = Assets.MAP_CURSOR[7];
+        WorldMiniMap.render(g, tutEngine, width, height, tint);
     }
 
     public Tile getBGTile(int x, int y) {
@@ -351,7 +224,7 @@ public class World {
         bg_tiles = new Tile[width][height];
         fg_tiles = new Tile[width][height];
 
-        tutEngine.getTutEngine().setUsername(worldJsonLoader.getUsername());
+        tutEngine.setUsername(worldJsonLoader.getUsername());
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -407,7 +280,7 @@ public class World {
     }
 
     public void stopForcedUpdateThread() {
-        this.isForcedUpdate = false;
+        this.isForcedUpdateThread = false;
     }
 
     public long getSeed() {

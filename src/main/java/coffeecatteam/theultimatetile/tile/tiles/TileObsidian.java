@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.tile.tiles;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 
 /**
  * @author CoffeeCatRailway
@@ -9,13 +9,14 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
  */
 public class TileObsidian extends TileStone {
 
-    public TileObsidian(TutEngine tutEngine, String id) {
-        super(tutEngine, Assets.OBSIDIAN, id, true);
+    public TileObsidian(TutEngine tutEngine) {
+        super(tutEngine, "obsidian", true);
+        this.setMapColor(WorldColors.STONE);
         this.setDrop(null);
     }
 
     @Override
     public TileObsidian newTile() {
-        return (TileObsidian) super.newTile(new TileObsidian(tutEngine, id));
+        return super.newTile(new TileObsidian(tutEngine));
     }
 }

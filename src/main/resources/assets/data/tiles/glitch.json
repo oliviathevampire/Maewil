@@ -1,6 +1,7 @@
 {
   "type": "animated",
-  "textures": [
+  "texture": "tiles/binary.png",
+  "frames": [
     0,
     1,
     2,
@@ -19,5 +20,5 @@
 	15
   ],
   "size": 16,
-  "speed": 50
+  "speed": 75
 }

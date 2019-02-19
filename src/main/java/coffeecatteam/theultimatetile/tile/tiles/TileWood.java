@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.tile.tiles;
 
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.tile.Tile;
-import org.newdawn.slick.Image;
+import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 
 /**
  * @author CoffeeCatRailway
@@ -10,12 +10,13 @@ import org.newdawn.slick.Image;
  */
 public class TileWood extends Tile {
 
-    public TileWood(TutEngine tutEngine, Image texture, String id) {
-        super(tutEngine, texture, id, true, TileType.WOOD);
+    public TileWood(TutEngine tutEngine, String id) {
+        super(tutEngine, id, true, TileType.WOOD);
+        this.setMapColor(WorldColors.WOOD);
     }
 
     @Override
     public TileWood newTile() {
-        return (TileWood) super.newTile(new TileWood(tutEngine, texture, id));
+        return super.newTile(new TileWood(tutEngine, id));
     }
 }

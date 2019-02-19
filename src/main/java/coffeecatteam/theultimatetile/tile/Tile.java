@@ -3,28 +3,32 @@ package coffeecatteam.theultimatetile.tile;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.gfx.Animation;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.inventory.items.ItemStack;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class Tile {
 
     public static final int TILE_WIDTH = 48, TILE_HEIGHT = 48;
+    public static final int DEFAULT_ALT_CHANCE = 850;
 
     protected TutEngine tutEngine;
 
-    protected Image texture;
+    protected Animation texture;
     protected ArrayList<Image> textureAlts = new ArrayList<>();
     private int altAmt;
     private boolean hasAlts = false;
-    private int altChance = 850;
+    private int altChance = DEFAULT_ALT_CHANCE;
 
     protected final String id;
     protected Color mapColor = WorldColors.STONE;
@@ -39,9 +43,8 @@ public abstract class Tile {
     protected Item drop;
     protected int health, maxHealth = 300;
 
-    public Tile(TutEngine tutEngine, Image texture, String id, boolean isSolid, TileType tileType) {
+    public Tile(TutEngine tutEngine, String id, boolean isSolid, TileType tileType) {
         this.tutEngine = tutEngine;
-        this.texture = texture;
         this.id = id;
 
         bounds = new AABB(this.position.toVector2D(), TILE_WIDTH, TILE_HEIGHT);
@@ -49,23 +52,21 @@ public abstract class Tile {
         this.tileType = tileType;
 
         this.health = this.maxHealth;
-        init();
     }
 
-    public void init() {
+    protected void chooseAltTexture() {
         if (hasAlts) {
             int max = 1000;
             int i = NumberUtils.getRandomInt(max);
             if (i < altChance)
-                this.texture = textureAlts.get(0);
+                this.texture = new Animation(textureAlts.get(0));
             else
-                this.texture = textureAlts.get((int) NumberUtils.map(i, altChance, max, 1, altAmt - 1));
+                this.texture = new Animation(textureAlts.get((int) NumberUtils.map(i, altChance, max, 1, altAmt - 1)));
         }
     }
 
     public void updateBounds() {
-        if (tutEngine instanceof TutEngine)
-            bounds = new AABB((int) (position.getX() * Tile.TILE_WIDTH - ((TutEngine) tutEngine).getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_HEIGHT - ((TutEngine) tutEngine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
+        bounds = new AABB((int) (position.getX() * Tile.TILE_WIDTH - tutEngine.getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_HEIGHT - tutEngine.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
     }
 
     protected Tile getTileAt(TilePos pos) {
@@ -81,10 +82,12 @@ public abstract class Tile {
     }
 
     public void forcedUpdate(GameContainer container, int delta) {
+        if (texture != null)
+            texture.update(container, delta);
     }
 
     public void render(Graphics g) {
-        render(g, (int) (position.getX() * Tile.TILE_WIDTH - ((TutEngine) tutEngine).getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_HEIGHT - ((TutEngine) tutEngine).getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
+        render(g, (int) (position.getX() * Tile.TILE_WIDTH - tutEngine.getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_HEIGHT - tutEngine.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
     }
 
     public void render(Graphics g, int x, int y, int width, int height) {
@@ -107,20 +110,14 @@ public abstract class Tile {
             if (isSolid && !unbreakable) {
                 this.health -= damage;
                 if (this.health <= 0) {
-                    if (position.getX() == 0 || position.getX() == ((TutEngine) tutEngine).getWorld().getWidth() || position.getY() == 0 || position.getY() == ((TutEngine) tutEngine).getWorld().getHeight())
+                    if (position.getX() == 0 || position.getX() == tutEngine.getWorld().getWidth() || position.getY() == 0 || position.getY() == tutEngine.getWorld().getHeight())
                         return;
-                    ((TutEngine) tutEngine).getWorld().setFGTile(position.getX(), position.getY(), Tiles.AIR);
-                    ((TutEngine) tutEngine).getItemManager().addItem(new ItemStack(drop), position.getX() * Tile.TILE_WIDTH, (position.getY() * Tile.TILE_HEIGHT));
+                    tutEngine.getWorld().setFGTile(position.getX(), position.getY(), Tiles.AIR);
+                    tutEngine.getItemManager().addItem(new ItemStack(drop), position.getX() * Tile.TILE_WIDTH, (position.getY() * Tile.TILE_HEIGHT));
                     this.health = this.maxHealth;
                 }
             }
         }
-    }
-
-    public abstract <T extends Tile> T newTile();
-
-    protected Tile newTile(Tile tile) {
-        return tile.setMapColor(mapColor).setPos(position).setSolid(isSolid).setUnbreakable(unbreakable);
     }
 
     public Item getDrop() {
@@ -200,36 +197,6 @@ public abstract class Tile {
         return position;
     }
 
-    public Image getTexture() {
-        return texture;
-    }
-
-    public void setTexture(Image texture) {
-        this.texture = texture;
-    }
-
-    public boolean hasAlts() {
-        return hasAlts;
-    }
-
-    public void setHasAlts(boolean hasAlts) {
-        this.hasAlts = hasAlts;
-    }
-
-    protected void addTextureAlts(Image[] alts) {
-        addTextureAlts(alts, alts.length);
-    }
-
-    protected void addTextureAlts(Image[] alts, int altAmt) {
-        for (int i = 0; i < altAmt; i++)
-            this.textureAlts.add(alts[i]);
-        this.altAmt = altAmt;
-    }
-
-    public void setAltChance(int altChance) {
-        this.altChance = altChance;
-    }
-
     public TileType getTileType() {
         return tileType;
     }
@@ -240,5 +207,105 @@ public abstract class Tile {
 
     public enum TileType {
         GROUND, STONE, WOOD, FLUID, AIR
+    }
+
+    /*
+     * TEXTURE/S
+     */
+    // Get/set texture
+    public Image getTexture() {
+        if (texture != null)
+            return texture.getCurrentFrame();
+        else
+            return Assets.MISSING_TEXTURE;
+    }
+
+    public void setTexture(Image texture) {
+        this.texture = new Animation(texture);
+    }
+
+    public void setTexture(Image[] textures) {
+        this.texture = new Animation(textures);
+    }
+
+
+    // Get all textures
+    public Image[] getAllTextures() {
+        return texture.getFrames();
+    }
+
+
+    // Get/set animation
+    public Animation getAnimation() {
+        return texture;
+    }
+
+    public Tile setAnimation(Animation animation) {
+        this.texture = animation;
+        return this;
+    }
+
+
+    // Get/set has alts
+    public boolean hasAlts() {
+        return hasAlts;
+    }
+
+    public void setHasAlts(boolean hasAlts) {
+        this.hasAlts = hasAlts;
+    }
+
+
+    // Get/set texture alts
+    public ArrayList<Image> getTextureAlts() {
+        return textureAlts;
+    }
+
+    public void setTextureAlts(Image[] textureAlts) {
+        setTextureAlts(Arrays.asList(textureAlts), textureAlts.length);
+    }
+
+    public void setTextureAlts(Image[] textureAlts, int altAmt) {
+        setTextureAlts(Arrays.asList(textureAlts), altAmt);
+    }
+
+    public void setTextureAlts(List<Image> textureAlts) {
+        setTextureAlts(textureAlts, textureAlts.size());
+    }
+
+    public void setTextureAlts(List<Image> textureAlts, int altAmt) {
+        this.textureAlts = new ArrayList<>();
+        for (int i = 0; i < altAmt; i++)
+            this.textureAlts.add(textureAlts.get(i));
+        this.altAmt = altAmt;
+        chooseAltTexture();
+    }
+
+
+    // Get/set alt chance
+    public int getAltChance() {
+        return altChance;
+    }
+
+    public void setAltChance(int altChance) {
+        this.altChance = altChance;
+        chooseAltTexture();
+    }
+
+    public abstract <T extends Tile> T newTile();
+
+    protected <T extends Tile> T newTile(T tile) {
+        T t = tile;
+        t.setMapColor(mapColor);
+        t.setPos(position);
+        t.setSolid(isSolid);
+        t.setUnbreakable(unbreakable);
+        t.setAnimation(texture);
+        t.setHasAlts(hasAlts);
+        t.setTextureAlts(textureAlts);
+        t.setAltChance(altChance);
+        t.setDrop(drop);
+        t.setTileType(tileType);
+        return t;
     }
 }

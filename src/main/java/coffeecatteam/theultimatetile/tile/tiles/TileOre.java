@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.tile.tiles;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.inventory.items.Item;
 import coffeecatteam.theultimatetile.tile.Tile;
-import org.newdawn.slick.Image;
+import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 
 /**
  * @author CoffeeCatRailway
@@ -11,13 +11,14 @@ import org.newdawn.slick.Image;
  */
 public class TileOre extends Tile {
 
-    public TileOre(TutEngine tutEngine, Image texture, String id, Item drop) {
-        super(tutEngine, texture, id, true, TileType.STONE);
+    public TileOre(TutEngine tutEngine, String id, Item drop) {
+        super(tutEngine, id, true, TileType.STONE);
+        this.setMapColor(WorldColors.STONE);
         this.setDrop(drop);
     }
 
     @Override
     public TileOre newTile() {
-        return (TileOre) super.newTile(new TileOre(tutEngine, texture, id, drop));
+        return super.newTile(new TileOre(tutEngine, id, drop));
     }
 }

@@ -61,20 +61,21 @@ public class WorldGenerator {
             for (int x = 0; x < worldSize; x++) {
                 Color lc = new Color(WorldMapGenerator.getRGBA(landMap.getRGB(x, y)));
                 Color pc = new Color(WorldMapGenerator.getRGBA(pathMap.getRGB(x, y)));
-                Tile tile = Tiles.AIR.newTile();
+                Tile tile = Tiles.AIR;
 
                 if (lc.getRGB() == WorldColors.DIRT.getRGB()
                         || pc.getRGB() == WorldColors.DIRT.getRGB()
                         || lc.getRGB() == WorldColors.GRASS.getRGB()
                         || lc.getRGB() == WorldColors.DEAP_OCEAN.getRGB())
-                    tile = Tiles.DIRT.newTile();
+                        tile = Tiles.DIRT;
 
-                if (lc.getRGB() == WorldColors.SAND.getRGB() || lc.getRGB() == WorldColors.OCEAN.getRGB())
-                    tile = Tiles.SAND.newTile();
+                if (lc.getRGB() == WorldColors.SAND.getRGB() || lc.getRGB() == WorldColors.WATER.getRGB())
+                    tile = Tiles.SAND;
 
                 if (lc.getRGB() == WorldColors.STONE.getRGB())
-                    tile = Tiles.STONE.newTile();
+                    tile = Tiles.STONE;
 
+                tile = tile.newTile();
                 checkBorderTilePos(tile, x, y, true);
                 tiles[x][y] = tile.setPos(new TilePos(x, y));
             }
@@ -91,23 +92,24 @@ public class WorldGenerator {
             for (int x = 0; x < worldSize; x++) {
                 Color lc = new Color(WorldMapGenerator.getRGBA(landMap.getRGB(x, y)));
                 Color pc = new Color(WorldMapGenerator.getRGBA(pathMap.getRGB(x, y)));
-                Tile tile = Tiles.AIR.newTile();
+                Tile tile = Tiles.AIR;
 
                 if (lc.getRGB() == WorldColors.GRASS.getRGB())
-                    tile = Tiles.GRASS.newTile();
+                    tile = Tiles.GRASS;
 
-                if (lc.getRGB() == WorldColors.DEAP_OCEAN.getRGB() || lc.getRGB() == WorldColors.OCEAN.getRGB())
-                    tile = Tiles.WATER.newTile();
+                if (lc.getRGB() == WorldColors.DEAP_OCEAN.getRGB() || lc.getRGB() == WorldColors.WATER.getRGB())
+                    tile = Tiles.WATER;
 
                 if (lc.getRGB() == WorldColors.SAND.getRGB())
-                    tile = Tiles.SAND.newTile();
+                    tile = Tiles.SAND;
 
                 if (lc.getRGB() == WorldColors.STONE.getRGB())
-                    tile = Tiles.STONE.newTile();
+                    tile = Tiles.STONE;
 
                 if (lc.getRGB() == WorldColors.DIRT.getRGB() || pc.getRGB() == WorldColors.DIRT.getRGB())
-                    tile = Tiles.DIRT.newTile();
+                    tile = Tiles.DIRT;
 
+                tile = tile.newTile();
                 checkBorderTilePos(tile, x, y, false);
                 tiles[x][y] = tile.setPos(new TilePos(x, y));
             }
