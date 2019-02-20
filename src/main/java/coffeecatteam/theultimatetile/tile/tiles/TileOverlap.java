@@ -9,6 +9,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author CoffeeCatRailway
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 public abstract class TileOverlap extends Tile {
 
     protected Image[] overlap;
-    private ArrayList<Class<? extends Tile>> connect = new ArrayList<>(), ignore = new ArrayList<>();
+    private ArrayList<String> connect = new ArrayList<>(), ignore = new ArrayList<>();
     protected int alts;
 
     public TileOverlap(TutEngine tutEngine, Image[] overlap, String id, boolean isSolid, TileType tileType, int alts) {
@@ -27,13 +28,11 @@ public abstract class TileOverlap extends Tile {
     }
 
     protected void setConnect(String... ids) {
-        for (String id : ids)
-            this.connect.add(Tiles.getTileClass(id));
+        this.connect.addAll(Arrays.asList(ids));
     }
 
     protected void setIgnore(String... ids) {
-        for (String id : ids)
-            this.ignore.add(Tiles.getTileClass(id));
+        this.ignore.addAll(Arrays.asList(ids));
     }
 
     @Override
@@ -163,11 +162,11 @@ public abstract class TileOverlap extends Tile {
     }
 
     private boolean connect(TilePos pos) {
-        return connect.contains(getTileAt(pos).getClass());
+        return connect.contains(getTileAt(pos).getId());
     }
 
     private boolean ignore(TilePos pos) {
-        return ignore.contains(getTileAt(pos).getClass()) || !connect.contains(getTileAt(pos).getClass());
+        return ignore.contains(getTileAt(pos).getId()) || !connect.contains(getTileAt(pos).getId());
     }
 
     private boolean topLeftCorner() {

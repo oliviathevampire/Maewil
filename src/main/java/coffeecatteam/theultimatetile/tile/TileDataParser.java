@@ -2,7 +2,6 @@ package coffeecatteam.theultimatetile.tile;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
-import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
@@ -20,14 +19,13 @@ import java.io.IOException;
  */
 public class TileDataParser {
 
-    public static Tile loadTileData(TutEngine tutEngine, String id) {
+    public static Tile loadTileData(String id) {
         try {
             JSONParser parser = new JSONParser();
             JSONObject data = (JSONObject) parser.parse(FileUtils.loadFileInSideJar("/assets/data/tiles/" + id + ".json"));
             Tile tile = Tiles.getTile(id);
 
             String type = String.valueOf(data.get("type"));
-            if (type.equals("empty")) return tile;
             String texturePath = "/assets/textures/" + data.get("texture");
             int spriteSize = NumberUtils.parseInt(data.get("size"));
 
