@@ -3,7 +3,6 @@ package coffeecatteam.theultimatetile;
 import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.DevEnvUtils;
 import coffeecatteam.coffeecatutils.logger.CatLoggerUtils;
-import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
@@ -20,8 +19,8 @@ public class Launcher {
         }
 
         /* Width, height & title */
-        int width = 850;
-        int height = 800;
+        int width = 912;
+        int height = 768;
         String title = "The Ultimate Tile";
 
         /* Initialize logger */

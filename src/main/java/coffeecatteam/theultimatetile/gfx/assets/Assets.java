@@ -8,7 +8,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
-import org.newdawn.slick.font.effects.ShadowEffect;
 
 import java.awt.*;
 import java.awt.image.RasterFormatException;
@@ -130,22 +129,21 @@ public class Assets {
     /* Fonts */
     private static void initFonts() {
         String fontPath = "/assets/fonts/LCD_Solid.ttf";
-
         for (int i = 5; i <= 100; i += 5) {
             /* PLAIN */
             String pIndex = String.valueOf(i);
             FONTS.put(pIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.PLAIN));
-            logger.print("Font size [" + pIndex + "] loaded!");
+            logger.print("Font [" + pIndex + "] loaded!");
 
             /* BOLD */
             String bIndex = String.valueOf(i) + "-bold";
             FONTS.put(bIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.BOLD));
-            logger.print("Font size [" + bIndex + "] loaded!");
+            logger.print("Font [" + bIndex + "] loaded!");
 
             /* ITALIC */
             String iIndex = String.valueOf(i) + "-italic";
             FONTS.put(iIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.ITALIC));
-            logger.print("Font size [" + iIndex + "] loaded!");
+            logger.print("Font [" + iIndex + "] loaded!");
         }
 
         logger.print("Assets [Fonts] loaded!");

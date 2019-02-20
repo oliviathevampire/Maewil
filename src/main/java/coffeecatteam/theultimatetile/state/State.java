@@ -35,8 +35,8 @@ public abstract class State {
         this.logger = tutEngine.getLogger();
         this.uiManager = new UIManager(tutEngine);
 
-        this.bgWidth = tutEngine.getWidth() / Tile.TILE_WIDTH + 1;
-        this.bgHeight = tutEngine.getHeight() / Tile.TILE_HEIGHT + 1;
+        this.bgWidth = tutEngine.getWidth() / Tile.TILE_WIDTH;
+        this.bgHeight = tutEngine.getHeight() / Tile.TILE_HEIGHT;
         this.bgTiles = new Tile[this.bgWidth][this.bgHeight];
 
         for (int y = 0; y < this.bgHeight; y++) {
@@ -45,7 +45,6 @@ public abstract class State {
                 if (x == 0 || y == 0 || x >= this.bgWidth - 1 || y >= this.bgHeight - 1)
                     tile = border[new Random().nextInt(border.length)];
 
-//                tile = Tiles.getTile(tile.getId()).setPos(new TilePos(x, y));
                     this.bgTiles[x][y] = tile.newTile().setPos(new TilePos(x, y));
             }
         }

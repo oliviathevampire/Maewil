@@ -28,8 +28,6 @@ public class World {
 
     private OverlayManager overlayManager;
 
-    private final Color tint = new Color(63, 63, 63, 127);
-
     private boolean isForcedUpdateThread = false;
     private Thread forcedUpdateThread;
 
@@ -129,6 +127,7 @@ public class World {
             for (int x = xStart; x < xEnd; x++)
                 getBGTile(x, y).render(g);
 
+        Color tint = new Color(63, 63, 63, 128);
         g.setColor(tint);
         g.fillRect(0, 0, tutEngine.getWidth(), tutEngine.getHeight());
 

@@ -71,7 +71,7 @@ public class UIButton extends UIObject {
         if (this.hovering) {
             this.currentTexture = Assets.BUTTON_HOVER;
             if (!hoverSound)
-                Sounds.CLICK_1.play(0.5f, 1);
+                Sounds.CLICK_1.play(0.5f, 0.2f);
             hoverSound = true;
         } else {
             this.currentTexture = Assets.BUTTON_ENABLED;

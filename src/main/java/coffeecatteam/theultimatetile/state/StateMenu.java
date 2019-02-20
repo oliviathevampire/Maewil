@@ -18,7 +18,7 @@ import org.newdawn.slick.Graphics;
 public class StateMenu extends State {
 
     public StateMenu(TutEngine tutEngineIn) {
-        super(tutEngineIn, new Tile[]{Tiles.BOOKSHELF, Tiles.COAL_ORE, Tiles.PLANKS});
+        super(tutEngineIn);
 
         int yOff = 20;
 
