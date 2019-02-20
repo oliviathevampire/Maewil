@@ -3,69 +3,97 @@ package coffeecatteam.theultimatetile.tile;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.manager.ItemManager;
 import coffeecatteam.theultimatetile.tile.tiles.*;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Tiles {
 
-    private static TutEngine tutEngine;
-    public static final HashMap<String, Tile> TILES = new HashMap<>();
+    private static final HashMap<String, Tile> TILES = new HashMap<>();
 
+    /*
+     * Ground
+     */
     public static TileGrass GRASS;
     public static TileDirt DIRT;
-
-    public static TileStone STONE;
     public static TileSand SAND;
+
+    /*
+     * Stone
+     */
+    public static TileStone STONE;
+    public static TileBrokenStone BROKEN_STONE;
     public static TileAndesite ANDESITE;
     public static TileDiorite DIORITE;
+    public static TileObsidian OBSIDIAN;
 
     public static TileOre COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE;
 
-    public static TileObsidian OBSIDIAN;
-
+    /*
+     * Fluid
+     */
     public static TileWater WATER;
     private static TileLava LAVA;
 
-    public static TileWood PLANKS;
-    public static TileBrokenStone BROKEN_STONE;
+    /*
+     * Wood
+     */
+    public static TileWood PLANKS, BOOKSHELF, CHEST;
 
-    public static TileAir AIR; // USES EMPTY SPACE IN TILES SHEET
-
-    public static TileWood BOOKSHELF;
+    /*
+     * Other
+     */
+    public static TileAir AIR;
     public static TileGlitch GLITCH;
 
-    public static TileWood CHEST;
 
-    public static void init(TutEngine tutEngineIn) {
-        tutEngine = tutEngineIn;
+    public static void init(TutEngine tutEngine) {
+        try {
+            /*
+             * Ground
+             */
+            register(GRASS = (TileGrass) TileDataParser.loadTileData(new TileGrass(tutEngine)));
+            register(DIRT = (TileDirt) TileDataParser.loadTileData(new TileDirt(tutEngine)));
+            register(SAND = (TileSand) TileDataParser.loadTileData(new TileSand(tutEngine)));
 
-        register(GRASS = (TileGrass) TileDataParser.loadTileData("grass"));
-        register(DIRT = (TileDirt) TileDataParser.loadTileData("dirt"));
+            /*
+             * Stone
+             */
+            register(STONE = (TileStone) TileDataParser.loadTileData(new TileStone(tutEngine)));
+            register(BROKEN_STONE = (TileBrokenStone) TileDataParser.loadTileData(new TileBrokenStone(tutEngine)));
+            register(ANDESITE = (TileAndesite) TileDataParser.loadTileData(new TileAndesite(tutEngine)));
+            register(DIORITE = (TileDiorite) TileDataParser.loadTileData(new TileDiorite(tutEngine)));
+            register(OBSIDIAN = (TileObsidian) TileDataParser.loadTileData(new TileObsidian(tutEngine)));
 
-        register(STONE = (TileStone) TileDataParser.loadTileData("stone"));
-        register(SAND = (TileSand) TileDataParser.loadTileData("sand"));
-        register(ANDESITE = (TileAndesite) TileDataParser.loadTileData("andesite"));
-        register(DIORITE = (TileDiorite) TileDataParser.loadTileData("diorite"));
+            register(COAL_ORE = (TileOre) TileDataParser.loadTileData(new TileOre(tutEngine, "coal_ore", ItemManager.COAL)));
+            register(IRON_ORE = (TileOre) TileDataParser.loadTileData(new TileOre(tutEngine, "iron_ore", ItemManager.IRON_INGOT)));
+            register(GOLD_ORE = (TileOre) TileDataParser.loadTileData(new TileOre(tutEngine, "gold_ore", ItemManager.GOLD_INGOT)));
+            register(DIAMOND_ORE = (TileOre) TileDataParser.loadTileData(new TileOre(tutEngine, "diamond_ore", ItemManager.DIAMOND)));
 
-        register(COAL_ORE = (TileOre) TileDataParser.loadTileData("coal_ore"));
-        register(IRON_ORE = (TileOre) TileDataParser.loadTileData("iron_ore"));
-        register(GOLD_ORE = (TileOre) TileDataParser.loadTileData("gold_ore"));
-        register(DIAMOND_ORE = (TileOre) TileDataParser.loadTileData("diamond_ore"));
+            /*
+             * Fluid
+             */
+            register(WATER = (TileWater) TileDataParser.loadTileData(new TileWater(tutEngine)));
+            register(LAVA = (TileLava) TileDataParser.loadTileData(new TileLava(tutEngine)));
 
-        register(OBSIDIAN = (TileObsidian) TileDataParser.loadTileData("obsidian"));
+            /*
+             * Wood
+             */
+            register(PLANKS = (TileWood) TileDataParser.loadTileData(new TileWood(tutEngine, "planks")));
+            register(BOOKSHELF = (TileWood) TileDataParser.loadTileData(new TileWood(tutEngine, "bookshelf")));
+            register(CHEST = (TileWood) TileDataParser.loadTileData(new TileWood(tutEngine, "chest")));
 
-        register(WATER = (TileWater) TileDataParser.loadTileData("water"));
-        register(LAVA = (TileLava) TileDataParser.loadTileData("lava"));
-
-        register(PLANKS = (TileWood) TileDataParser.loadTileData("planks"));
-        register(BROKEN_STONE = (TileBrokenStone) TileDataParser.loadTileData("broken_stone"));
-
-        register(AIR = (TileAir) TileDataParser.loadTileData("air"));
-
-        register(BOOKSHELF = (TileWood) TileDataParser.loadTileData("bookshelf"));
-        register(GLITCH = (TileGlitch) TileDataParser.loadTileData("glitch"));
-
-        register(CHEST = (TileWood) TileDataParser.loadTileData("chest"));
+            /*
+             * Other
+             */
+            register(AIR = (TileAir) TileDataParser.loadTileData(new TileAir(tutEngine)));
+            register(GLITCH = (TileGlitch) TileDataParser.loadTileData(new TileGlitch(tutEngine)));
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void register(Tile tile) {
@@ -73,54 +101,10 @@ public class Tiles {
     }
 
     public static Tile getTile(String id) {
-        switch (id) {
-            case "grass":
-                return new TileGrass(tutEngine);
-            case "dirt":
-                return new TileDirt(tutEngine);
+        return TILES.get(id).newTile();
+    }
 
-            case "stone":
-                return new TileStone(tutEngine);
-            case "sand":
-                return new TileSand(tutEngine);
-            case "andesite":
-                return new TileAndesite(tutEngine);
-            case "diorite":
-                return new TileDiorite(tutEngine);
-
-            case "coal_ore":
-                return new TileOre(tutEngine, id, ItemManager.COAL);
-            case "iron_ore":
-                return new TileOre(tutEngine, id, ItemManager.IRON_INGOT);
-            case "gold_ore":
-                return new TileOre(tutEngine, id, ItemManager.GOLD_INGOT);
-            case "diamond_ore":
-                return new TileOre(tutEngine, id, ItemManager.DIAMOND);
-
-            case "obsidian":
-                return new TileObsidian(tutEngine);
-
-            case "water":
-                return new TileWater(tutEngine);
-            case "lava":
-                return new TileLava(tutEngine);
-
-            case "planks":
-                return new TileWood(tutEngine, id);
-            case "broken_stone":
-                return new TileBrokenStone(tutEngine);
-
-            case "air":
-                return new TileAir(tutEngine);
-
-            case "bookshelf":
-                return new TileWood(tutEngine, id);
-            default:
-            case "glitch":
-                return new TileGlitch(tutEngine);
-
-            case "chest":
-                return new TileWood(tutEngine, id);
-        }
+    public static List<Tile> getTiles() {
+        return new ArrayList<>(TILES.values());
     }
 }
