@@ -34,34 +34,38 @@ public class Tiles {
     public static TileWood BOOKSHELF;
     public static TileGlitch GLITCH;
 
+    public static TileWood CHEST;
+
     public static void init(TutEngine tutEngineIn) {
         tutEngine = tutEngineIn;
 
-        register(GRASS = (TileGrass) TileDataParser.loadTileData(tutEngineIn, "grass"));
-        register(DIRT = (TileDirt) TileDataParser.loadTileData(tutEngineIn, "dirt"));
+        register(GRASS = (TileGrass) TileDataParser.loadTileData("grass"));
+        register(DIRT = (TileDirt) TileDataParser.loadTileData("dirt"));
 
-        register(STONE = (TileStone) TileDataParser.loadTileData(tutEngineIn, "stone"));
-        register(SAND = (TileSand) TileDataParser.loadTileData(tutEngineIn, "sand"));
-        register(ANDESITE = (TileAndesite) TileDataParser.loadTileData(tutEngineIn, "andesite"));
-        register(DIORITE = (TileDiorite) TileDataParser.loadTileData(tutEngineIn, "diorite"));
+        register(STONE = (TileStone) TileDataParser.loadTileData("stone"));
+        register(SAND = (TileSand) TileDataParser.loadTileData("sand"));
+        register(ANDESITE = (TileAndesite) TileDataParser.loadTileData("andesite"));
+        register(DIORITE = (TileDiorite) TileDataParser.loadTileData("diorite"));
 
-        register(COAL_ORE = (TileOre) TileDataParser.loadTileData(tutEngineIn, "coal_ore"));
-        register(IRON_ORE = (TileOre) TileDataParser.loadTileData(tutEngineIn, "iron_ore"));
-        register(GOLD_ORE = (TileOre) TileDataParser.loadTileData(tutEngineIn, "gold_ore"));
-        register(DIAMOND_ORE = (TileOre) TileDataParser.loadTileData(tutEngineIn, "diamond_ore"));
+        register(COAL_ORE = (TileOre) TileDataParser.loadTileData("coal_ore"));
+        register(IRON_ORE = (TileOre) TileDataParser.loadTileData("iron_ore"));
+        register(GOLD_ORE = (TileOre) TileDataParser.loadTileData("gold_ore"));
+        register(DIAMOND_ORE = (TileOre) TileDataParser.loadTileData("diamond_ore"));
 
-        register(OBSIDIAN = (TileObsidian) TileDataParser.loadTileData(tutEngineIn, "obsidian"));
+        register(OBSIDIAN = (TileObsidian) TileDataParser.loadTileData("obsidian"));
 
-        register(WATER = (TileWater) TileDataParser.loadTileData(tutEngineIn, "water"));
-        register(LAVA = (TileLava) TileDataParser.loadTileData(tutEngineIn, "lava"));
+        register(WATER = (TileWater) TileDataParser.loadTileData("water"));
+        register(LAVA = (TileLava) TileDataParser.loadTileData("lava"));
 
-        register(PLANKS = (TileWood) TileDataParser.loadTileData(tutEngineIn, "planks"));
-        register(BROKEN_STONE = (TileBrokenStone) TileDataParser.loadTileData(tutEngineIn, "broken_stone"));
+        register(PLANKS = (TileWood) TileDataParser.loadTileData("planks"));
+        register(BROKEN_STONE = (TileBrokenStone) TileDataParser.loadTileData("broken_stone"));
 
-        register(AIR = (TileAir) TileDataParser.loadTileData(tutEngineIn, "air"));
+        register(AIR = (TileAir) TileDataParser.loadTileData("air"));
 
-        register(BOOKSHELF = (TileWood) TileDataParser.loadTileData(tutEngineIn, "bookshelf"));
-        register(GLITCH = (TileGlitch) TileDataParser.loadTileData(tutEngineIn, "glitch"));
+        register(BOOKSHELF = (TileWood) TileDataParser.loadTileData("bookshelf"));
+        register(GLITCH = (TileGlitch) TileDataParser.loadTileData("glitch"));
+
+        register(CHEST = (TileWood) TileDataParser.loadTileData("chest"));
     }
 
     private static void register(Tile tile) {
@@ -69,59 +73,54 @@ public class Tiles {
     }
 
     public static Tile getTile(String id) {
-        return (Tile) getTile(id, false);
-    }
-
-    public static Class<? extends Tile> getTileClass(String id) {
-        return (Class<? extends Tile>) getTile(id, true);
-    }
-
-    private static Object getTile(String id, boolean clazz) {
         switch (id) {
             case "grass":
-                return clazz ? TileGrass.class : new TileGrass(tutEngine);
+                return new TileGrass(tutEngine);
             case "dirt":
-                return clazz ? TileDirt.class : new TileDirt(tutEngine);
+                return new TileDirt(tutEngine);
 
             case "stone":
-                return clazz ? TileStone.class : new TileStone(tutEngine);
+                return new TileStone(tutEngine);
             case "sand":
-                return clazz ? TileSand.class : new TileSand(tutEngine);
+                return new TileSand(tutEngine);
             case "andesite":
-                return clazz ? TileAndesite.class : new TileAndesite(tutEngine);
+                return new TileAndesite(tutEngine);
             case "diorite":
-                return clazz ? TileDiorite.class : new TileDiorite(tutEngine);
+                return new TileDiorite(tutEngine);
 
             case "coal_ore":
-                return clazz ? TileOre.class : new TileOre(tutEngine, id, ItemManager.COAL);
+                return new TileOre(tutEngine, id, ItemManager.COAL);
             case "iron_ore":
-                return clazz ? TileOre.class : new TileOre(tutEngine, id, ItemManager.IRON_INGOT);
+                return new TileOre(tutEngine, id, ItemManager.IRON_INGOT);
             case "gold_ore":
-                return clazz ? TileOre.class : new TileOre(tutEngine, id, ItemManager.GOLD_INGOT);
+                return new TileOre(tutEngine, id, ItemManager.GOLD_INGOT);
             case "diamond_ore":
-                return clazz ? TileOre.class : new TileOre(tutEngine, id, ItemManager.DIAMOND);
+                return new TileOre(tutEngine, id, ItemManager.DIAMOND);
 
             case "obsidian":
-                return clazz ? TileObsidian.class : new TileObsidian(tutEngine);
+                return new TileObsidian(tutEngine);
 
             case "water":
-                return clazz ? TileWater.class : new TileWater(tutEngine);
+                return new TileWater(tutEngine);
             case "lava":
-                return clazz ? TileLava.class : new TileLava(tutEngine);
+                return new TileLava(tutEngine);
 
             case "planks":
-                return clazz ? TileWood.class : new TileWood(tutEngine, id);
+                return new TileWood(tutEngine, id);
             case "broken_stone":
-                return clazz ? TileBrokenStone.class : new TileBrokenStone(tutEngine);
+                return new TileBrokenStone(tutEngine);
 
             case "air":
-                return clazz ? TileAir.class : new TileAir(tutEngine);
+                return new TileAir(tutEngine);
 
             case "bookshelf":
-                return clazz ? TileWood.class : new TileWood(tutEngine, id);
+                return new TileWood(tutEngine, id);
             default:
             case "glitch":
-                return clazz ? TileGlitch.class : new TileGlitch(tutEngine);
+                return new TileGlitch(tutEngine);
+
+            case "chest":
+                return new TileWood(tutEngine, id);
         }
     }
 }

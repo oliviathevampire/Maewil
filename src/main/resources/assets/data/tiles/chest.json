@@ -1,5 +1,9 @@
 {
-  "type": "normal",
+  "type": "alts",
   "texture": "tiles/chest.png",
+  "textures": [
+    0,
+    1
+  ],
   "size": 16
 }
