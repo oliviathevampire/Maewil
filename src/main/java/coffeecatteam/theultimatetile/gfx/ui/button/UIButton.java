@@ -25,7 +25,7 @@ public class UIButton extends UIObject {
     private Font font;
 
     private Image[] currentTexture;
-    protected boolean hasTooltip = false, hasCustomWidth = false, hoverSound = false;
+    protected boolean hasTooltip = false, hasCustomWidth = false;
     protected UITextBox tooltip;
 
     private boolean centeredX, centeredY;
@@ -70,12 +70,8 @@ public class UIButton extends UIObject {
 
         if (this.hovering) {
             this.currentTexture = Assets.BUTTON_HOVER;
-            if (!hoverSound)
-                Sounds.CLICK_1.play(0.5f, 0.2f);
-            hoverSound = true;
         } else {
             this.currentTexture = Assets.BUTTON_ENABLED;
-            hoverSound = false;
         }
         if (this.disabled)
             this.currentTexture = Assets.BUTTON_DISABLED;
@@ -143,8 +139,10 @@ public class UIButton extends UIObject {
 
     @Override
     public void onClick() {
-        if (!disabled)
+        if (!disabled) {
+            Sounds.CLICK_1.play(0.5f, 0.2f);
             this.listener.onClick();
+        }
     }
 
     public void setListener(ClickListener listener) {
