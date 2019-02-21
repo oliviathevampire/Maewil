@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.tags;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.objs.items.ItemStack;
 
 /**
  * @author CoffeeCatRailway

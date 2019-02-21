@@ -1,12 +1,12 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.inventory.items.IInteractable;
-import coffeecatteam.theultimatetile.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.items.IInteractable;
+import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
-import coffeecatteam.theultimatetile.tile.Tile;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -169,10 +169,10 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         if (getSlot(inventorySelectedIndex).getStack() != null) {
             if (active) {
                 getSlot(inventorySelectedIndex).getStack().getItem().setPickedUp(false);
-                tutEngine.getItemManager().addItem(getSlot(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
+                tutEngine.getItems().addItem(getSlot(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
             } else {
                 getSlot(hotbarSelectedIndex + maxHotbarSize).getStack().getItem().setPickedUp(false);
-                tutEngine.getItemManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), player.getX() + xOff, player.getY() + yOff);
+                tutEngine.getItems().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), player.getX() + xOff, player.getY() + yOff);
             }
         }
     }

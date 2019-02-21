@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.gfx;
 
+import coffeecatteam.theultimatetile.TutEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 
@@ -43,7 +44,7 @@ public class Animation {
         return frames;
     }
 
-    public void update(GameContainer container, int delta) {
+    public void update() {
         timer += System.currentTimeMillis() - lastTime;
         lastTime = System.currentTimeMillis();
 
@@ -56,6 +57,11 @@ public class Animation {
     }
 
     public Image getCurrentFrame() {
-        return frames[index];
+        try {
+            return frames[index];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            TutEngine.getTutEngine().getLogger().print(e);
+            return frames[0];
+        }
     }
 }

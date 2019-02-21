@@ -3,15 +3,16 @@ package coffeecatteam.theultimatetile.jsonparsers.world;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.entities.Entity;
-import coffeecatteam.theultimatetile.inventory.items.Item;
-import coffeecatteam.theultimatetile.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.objs.entities.Entity;
+import coffeecatteam.theultimatetile.objs.items.Item;
+import coffeecatteam.theultimatetile.objs.items.ItemStack;
+import coffeecatteam.theultimatetile.objs.items.Items;
 import coffeecatteam.theultimatetile.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.tags.JsonToTag;
 import coffeecatteam.theultimatetile.tags.TagCompound;
 import coffeecatteam.theultimatetile.tags.TagException;
-import coffeecatteam.theultimatetile.tile.Tile;
-import coffeecatteam.theultimatetile.tile.Tiles;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import coffeecatteam.theultimatetile.manager.EntityManager;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
 import org.json.simple.JSONArray;
@@ -35,7 +36,7 @@ public class WorldJsonLoader implements IJSONLoader {
     static {
         BASE_FILES.put("world", "world_info");
         BASE_FILES.put("player", "player_info");
-        BASE_FILES.put("items", "items");
+        BASE_FILES.put("ITEMS", "ITEMS");
         BASE_FILES.put("entity_s", "entities/statics");
         BASE_FILES.put("entity_c", "entities/creatures");
         BASE_FILES.put("tile_bg", "tiles/background");
@@ -85,7 +86,7 @@ public class WorldJsonLoader implements IJSONLoader {
             tutEngine.getLogger().print("World [" + name + "] entities loaded!");
 
             loadItems();
-            tutEngine.getLogger().print("World [" + name + "] items loaded!");
+            tutEngine.getLogger().print("World [" + name + "] ITEMS loaded!");
 
             loadPlayerInfo();
             tutEngine.getLogger().print("World [" + name + "] player info loaded!");
@@ -175,10 +176,10 @@ public class WorldJsonLoader implements IJSONLoader {
 
     public void loadItems() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObjectItems = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path + "/" + BASE_FILES.get("items") + ".json"));
+        JSONObject jsonObjectItems = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path + "/" + BASE_FILES.get("ITEMS") + ".json"));
 
-        if (jsonObjectItems.containsKey("items")) {
-            JSONArray items = (JSONArray) jsonObjectItems.get("items");
+        if (jsonObjectItems.containsKey("ITEMS")) {
+            JSONArray items = (JSONArray) jsonObjectItems.get("ITEMS");
             for (Object item1 : items) {
                 JSONObject itemObj = (JSONObject) item1;
                 String id = (String) itemObj.get("id");
@@ -188,13 +189,13 @@ public class WorldJsonLoader implements IJSONLoader {
                 int count = 1;
                 if (itemObj.containsKey("count"))
                     count = NumberUtils.parseInt(itemObj.get("count"));
-                Item item = Item.items.get(id);
+                Item item = Items.ITEMS.get(id);
                 if (!item.isStackable())
                     count = 1;
 
-                tutEngine.getItemManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
+                tutEngine.getItems().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
             }
-            tutEngine.getLogger().print("Loaded world items");
+            tutEngine.getLogger().print("Loaded world ITEMS");
         }
     }
 
@@ -239,7 +240,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 if (slot.containsKey("count")) {
                     count = NumberUtils.parseInt(slot.get("count"));
                 }
-                Item item = Item.items.get(id);
+                Item item = Items.ITEMS.get(id);
                 if (!item.isStackable())
                     count = 1;
                 inventory[i] = new ItemStack(item, count);
@@ -259,7 +260,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 if (slot.containsKey("count")) {
                     count = NumberUtils.parseInt(slot.get("count"));
                 }
-                Item item = Item.items.get(id);
+                Item item = Items.ITEMS.get(id);
                 if (!item.isStackable())
                     count = 1;
                 hotbar[i - 12] = new ItemStack(item, count);

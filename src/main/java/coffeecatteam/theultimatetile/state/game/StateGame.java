@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateManager;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
-import coffeecatteam.theultimatetile.tile.Tile;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.world.World;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
@@ -57,10 +57,10 @@ public class StateGame extends State {
         UIButton btnMainMenu = new UIButton(tutEngine, true, tutEngine.getHeight() / 2 + yOffset + 10, "Main Menu", new ClickListener() {
             @Override
             public void onClick() {
-                StateManager.setCurrentState(tutEngine.stateMenu);
-
                 DiscordHandler.INSTANCE.updatePresence("Main Menu");
                 saveWorld(true);
+
+                StateManager.setCurrentState(tutEngine.stateMenu);
             }
 
             @Override
@@ -169,7 +169,7 @@ public class StateGame extends State {
     public void reset(String world, World wWorld) {
         tutEngine.getEntityManager().reset();
         tutEngine.getEntityManager().getPlayer().reset();
-        tutEngine.getItemManager().reset();
+        tutEngine.getItems().reset();
         if (wWorld == null)
             setWorld(world);
         else

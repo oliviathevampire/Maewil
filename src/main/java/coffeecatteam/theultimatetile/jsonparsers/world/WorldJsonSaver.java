@@ -1,12 +1,12 @@
 package coffeecatteam.theultimatetile.jsonparsers.world;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.entities.Entity;
-import coffeecatteam.theultimatetile.entities.creatures.EntityCreature;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.entities.statics.EntityStatic;
-import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.tile.Tile;
+import coffeecatteam.theultimatetile.objs.entities.Entity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.EntityCreature;
+import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.statics.EntityStatic;
+import coffeecatteam.theultimatetile.objs.items.ItemStack;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.world.World;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
 import org.json.simple.JSONArray;
@@ -45,7 +45,7 @@ public class WorldJsonSaver implements IJSONSaver {
             tutEngine.getLogger().print("World [" + world.getWorldName() + "] entities saved!");
 
             saveItems();
-            tutEngine.getLogger().print("World [" + world.getWorldName() + "] items saved!");
+            tutEngine.getLogger().print("World [" + world.getWorldName() + "] ITEMS saved!");
 
             savePlayerInfo(username);
             tutEngine.getLogger().print("World [" + world.getWorldName() + "] player info saved!");
@@ -176,7 +176,7 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject jsonObject = new JSONObject();
 
         JSONArray items = new JSONArray();
-        for (ItemStack stack : tutEngine.getItemManager().getItems()) {
+        for (ItemStack stack : tutEngine.getItems().getITEMS()) {
             JSONObject itemObj = new JSONObject();
             itemObj.put("id", stack.getId());
 
@@ -190,10 +190,10 @@ public class WorldJsonSaver implements IJSONSaver {
             }
             items.add(itemObj);
         }
-        jsonObject.put("items", items);
-        tutEngine.getLogger().print("World [" + path + "] items saved!");
+        jsonObject.put("ITEMS", items);
+        tutEngine.getLogger().print("World [" + path + "] ITEMS saved!");
 
-        saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("items"), jsonObject);
+        saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("ITEMS"), jsonObject);
     }
 
     public void savePlayerInfo(String username) throws IOException {

@@ -2,14 +2,14 @@ package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.inventory.items.Item;
-import coffeecatteam.theultimatetile.inventory.items.ItemStack;
+import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.items.Item;
+import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.tags.TagCompound;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.manager.ItemManager;
+import coffeecatteam.theultimatetile.objs.items.Items;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -34,7 +34,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
         if (itemData[0].equals("null"))
             slots.get(slots.size() - 1).setStack(null);
         else {
-            Item item = ItemManager.getItemById(itemData[0]);
+            Item item = Items.getItemById(itemData[0]);
             int count = NumberUtils.parseInt(itemData[1]);
             slots.get(slots.size() - 1).setStack(new ItemStack(item, count));
         }

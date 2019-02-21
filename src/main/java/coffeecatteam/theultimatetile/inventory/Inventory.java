@@ -1,9 +1,9 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.inventory.items.ItemStack;
-import coffeecatteam.theultimatetile.tile.Tile;
+import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.items.ItemStack;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.manager.InventoryManager;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -44,7 +44,7 @@ public abstract class Inventory {
         if (getSlot(selectedIndex).getStack() != null) {
             if (active) {
                 getSlot(selectedIndex).getStack().getItem().setPickedUp(false);
-                tutEngine.getItemManager().addItem(getSlot(selectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
+                tutEngine.getItems().addItem(getSlot(selectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
             }
         }
     }

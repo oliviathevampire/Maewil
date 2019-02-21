@@ -1,11 +1,11 @@
 package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.overlays.Overlay;
-import coffeecatteam.theultimatetile.overlays.OverlayGlub;
-import coffeecatteam.theultimatetile.overlays.OverlayPlayerHealth;
-import coffeecatteam.theultimatetile.overlays.OverlayPlayerSprint;
+import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.gfx.overlays.Overlay;
+import coffeecatteam.theultimatetile.gfx.overlays.OverlayGlub;
+import coffeecatteam.theultimatetile.gfx.overlays.OverlayPlayerHealth;
+import coffeecatteam.theultimatetile.gfx.overlays.OverlayPlayerSprint;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 

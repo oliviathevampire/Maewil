@@ -1,26 +1,27 @@
 package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.entities.Entity;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.entities.creatures.passive.EntityCow;
-import coffeecatteam.theultimatetile.entities.creatures.passive.EntityFox;
-import coffeecatteam.theultimatetile.entities.creatures.passive.EntityPig;
-import coffeecatteam.theultimatetile.entities.creatures.passive.EntitySheep;
-import coffeecatteam.theultimatetile.entities.creatures.undead.EntityBouncer;
-import coffeecatteam.theultimatetile.entities.creatures.undead.EntitySkeleton;
-import coffeecatteam.theultimatetile.entities.creatures.undead.EntityThing;
-import coffeecatteam.theultimatetile.entities.creatures.undead.EntityZombie;
-import coffeecatteam.theultimatetile.entities.statics.EntityExtraLife;
-import coffeecatteam.theultimatetile.entities.statics.EntityUltimateTile;
-import coffeecatteam.theultimatetile.entities.statics.interactable.EntityCampfire;
-import coffeecatteam.theultimatetile.entities.statics.interactable.EntityShopStall;
-import coffeecatteam.theultimatetile.entities.statics.nature.EntityBush;
-import coffeecatteam.theultimatetile.entities.statics.nature.EntityCrop;
-import coffeecatteam.theultimatetile.entities.statics.nature.EntityRock;
-import coffeecatteam.theultimatetile.entities.statics.nature.EntityTree;
+import coffeecatteam.theultimatetile.objs.entities.Entity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityCow;
+import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityFox;
+import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityPig;
+import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntitySheep;
+import coffeecatteam.theultimatetile.objs.entities.creatures.undead.EntityBouncer;
+import coffeecatteam.theultimatetile.objs.entities.creatures.undead.EntitySkeleton;
+import coffeecatteam.theultimatetile.objs.entities.creatures.undead.EntityThing;
+import coffeecatteam.theultimatetile.objs.entities.creatures.undead.EntityZombie;
+import coffeecatteam.theultimatetile.objs.entities.statics.EntityExtraLife;
+import coffeecatteam.theultimatetile.objs.entities.statics.EntityUltimateTile;
+import coffeecatteam.theultimatetile.objs.entities.statics.interactable.EntityCampfire;
+import coffeecatteam.theultimatetile.objs.entities.statics.interactable.EntityShopStall;
+import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityBush;
+import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityCrop;
+import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityRock;
+import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityTree;
+import coffeecatteam.theultimatetile.objs.items.Items;
 import coffeecatteam.theultimatetile.state.StateOptions;
-import coffeecatteam.theultimatetile.tile.Tile;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -59,15 +60,15 @@ public class EntityManager {
              * Crops
              */
             case "crop_carrot":
-                return new EntityCrop(tutEngine, id, Assets.CROP_CARROT, ItemManager.CARROT);
+                return new EntityCrop(tutEngine, id, Assets.CROP_CARROT, Items.CARROT);
             case "crop_wheat":
-                return new EntityCrop(tutEngine, id, Assets.CROP_WHEAT, ItemManager.WHEAT);
+                return new EntityCrop(tutEngine, id, Assets.CROP_WHEAT, Items.WHEAT);
             case "crop_potato":
-                return new EntityCrop(tutEngine, id, Assets.CROP_POTATO, ItemManager.POTATO);
+                return new EntityCrop(tutEngine, id, Assets.CROP_POTATO, Items.POTATO);
             case "crop_tomato":
-                return new EntityCrop(tutEngine, id, Assets.CROP_TOMATO, ItemManager.TOMATO);
+                return new EntityCrop(tutEngine, id, Assets.CROP_TOMATO, Items.TOMATO);
             case "crop_corn":
-                return new EntityCrop(tutEngine, id, Assets.CROP_CORN, ItemManager.CORN);
+                return new EntityCrop(tutEngine, id, Assets.CROP_CORN, Items.CORN);
 
             /*
              * Undead

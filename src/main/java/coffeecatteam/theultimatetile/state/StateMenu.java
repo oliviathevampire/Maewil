@@ -8,8 +8,6 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlink;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
-import coffeecatteam.theultimatetile.tile.Tile;
-import coffeecatteam.theultimatetile.tile.Tiles;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;

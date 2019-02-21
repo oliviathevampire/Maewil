@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
-import coffeecatteam.theultimatetile.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.state.StateCredits;
 import coffeecatteam.theultimatetile.state.StateManager;
 import coffeecatteam.theultimatetile.state.StateMenu;
@@ -10,7 +10,7 @@ import coffeecatteam.theultimatetile.state.game.StateGame;
 import coffeecatteam.theultimatetile.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.state.options.OptionsSounds;
 import coffeecatteam.theultimatetile.state.options.controls.OptionsControls;
-import coffeecatteam.theultimatetile.tile.Tiles;
+import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import coffeecatteam.theultimatetile.world.World;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.gfx.Text;
@@ -18,10 +18,17 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.manager.EntityManager;
 import coffeecatteam.theultimatetile.manager.InventoryManager;
-import coffeecatteam.theultimatetile.manager.ItemManager;
+import coffeecatteam.theultimatetile.objs.items.Items;
 import coffeecatteam.theultimatetile.manager.KeyManager;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
+import org.json.simple.parser.ParseException;
 import org.newdawn.slick.*;
+import org.newdawn.slick.imageout.ImageOut;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class TutEngine extends BasicGame {
 
@@ -55,7 +62,7 @@ public class TutEngine extends BasicGame {
     public OptionsSounds optionsSpounds;
 
     private EntityManager entityManager;
-    private ItemManager itemManager;
+    private Items items;
     private InventoryManager inventoryManager;
 
     private Camera camera;
@@ -72,15 +79,21 @@ public class TutEngine extends BasicGame {
 
     @Override
     public void init(GameContainer container) throws SlickException {
+        logger.print("Fullscreen is set to [" + container.isFullscreen() + "]");
+
         Assets.init();
         container.setShowFPS(false);
         container.setDefaultFont(Assets.FONTS.get("10"));
         container.setMouseCursor(Assets.CURSOR, 0, 0);
 
-        ItemManager.init();
         Sounds.init();
 
-        Tiles.init(this);
+        try {
+            Items.init(this);
+            Tiles.init(this);
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
 
         keyManager = new KeyManager();
         stateOptions = new StateOptions(this, initOptionsUI);
@@ -98,7 +111,7 @@ public class TutEngine extends BasicGame {
 
         entityManager = new EntityManager(this, new EntityPlayer(this, ""));
 
-        itemManager = new ItemManager(this);
+        items = new Items(this);
 
         inventoryManager = new InventoryManager(this);
     }
@@ -133,6 +146,24 @@ public class TutEngine extends BasicGame {
 
         if (StateManager.getCurrentState() != null)
             StateManager.getCurrentState().update(container, delta);
+
+        /*
+         * Take a screenshot
+         */
+        if (container.getInput().isKeyPressed(Input.KEY_F2)) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
+            String dateAndTime = dateFormat.format(new Date());
+            String filename = "sreenshots/" + dateAndTime + ".png";
+            File file = new File(filename);
+            file.getParentFile().mkdirs();
+
+            Image target = new Image(container.getWidth(), container.getHeight());
+            container.getGraphics().copyArea(target, 0, 0);
+            ImageOut.write(target, filename);
+            target.destroy();
+
+            logger.print("Screenshot saved to [" + filename + "]");
+        }
     }
 
     @Override
@@ -266,8 +297,8 @@ public class TutEngine extends BasicGame {
         return entityManager.getPlayer();
     }
 
-    public ItemManager getItemManager() {
-        return itemManager;
+    public Items getItems() {
+        return items;
     }
 
     public InventoryManager getInventoryManager() {

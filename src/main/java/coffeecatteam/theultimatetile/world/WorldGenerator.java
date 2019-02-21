@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.world;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
-import coffeecatteam.theultimatetile.tile.Tile;
-import coffeecatteam.theultimatetile.tile.TilePos;
-import coffeecatteam.theultimatetile.tile.Tiles;
-import coffeecatteam.theultimatetile.tile.tiles.TileStone;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import coffeecatteam.theultimatetile.objs.tiles.TilePos;
+import coffeecatteam.theultimatetile.objs.tiles.Tiles;
+import coffeecatteam.theultimatetile.objs.tiles.TileStone;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 import coffeecatteam.theultimatetile.world.colormap.WorldMapGenerator;
 import coffeecatteam.theultimatetile.world.noise.OpenSimplexNoise;

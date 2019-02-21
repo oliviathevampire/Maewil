@@ -2,9 +2,9 @@ package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.tile.Tile;
-import coffeecatteam.theultimatetile.tile.TilePos;
-import coffeecatteam.theultimatetile.tile.Tiles;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import coffeecatteam.theultimatetile.objs.tiles.TilePos;
+import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import coffeecatteam.theultimatetile.manager.UIManager;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -37,6 +37,10 @@ public abstract class State {
 
         this.bgWidth = tutEngine.getWidth() / Tile.TILE_WIDTH;
         this.bgHeight = tutEngine.getHeight() / Tile.TILE_HEIGHT;
+
+        if (this.bgWidth * Tile.TILE_WIDTH < tutEngine.getWidth()) this.bgWidth += 1;
+        if (this.bgHeight * Tile.TILE_HEIGHT < tutEngine.getHeight()) this.bgHeight += 1;
+
         this.bgTiles = new Tile[this.bgWidth][this.bgHeight];
 
         for (int y = 0; y < this.bgHeight; y++) {

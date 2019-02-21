@@ -1,14 +1,15 @@
 package coffeecatteam.theultimatetile.state;
 
+import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.state.game.StateGame;
-import coffeecatteam.theultimatetile.tile.Tile;
-import coffeecatteam.theultimatetile.tile.tiles.TileAir;
-import coffeecatteam.theultimatetile.tile.tiles.TileDirt;
-import coffeecatteam.theultimatetile.tile.tiles.TileGrass;
-import coffeecatteam.theultimatetile.tile.tiles.TileSand;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import coffeecatteam.theultimatetile.objs.tiles.TileAir;
+import coffeecatteam.theultimatetile.objs.tiles.TileDirt;
+import coffeecatteam.theultimatetile.objs.tiles.TileGrass;
+import coffeecatteam.theultimatetile.objs.tiles.TileSand;
 import coffeecatteam.theultimatetile.world.World;
 import coffeecatteam.theultimatetile.world.WorldGenerator;
 import coffeecatteam.theultimatetile.gfx.Text;
@@ -113,7 +114,11 @@ public class StateCreateWorld extends StateAbstractMenu {
 
         World world = new World(tutEngine, worldName, worldSize, worldSize, getPlayerSpawn(), bgTiles, fgTiles).setSeed(seed);
         StateManager.setCurrentState(new StateGame(tutEngine, "./saves/Test_World", worldName, world));
-        tutEngine.setUsername("TEST");
+
+        if (ArgUtils.hasArgument(tutEngine.getArgs(), "-username"))
+            tutEngine.setUsername(ArgUtils.getArgument(tutEngine.getArgs(), "-username"));
+        else
+            tutEngine.setUsername("TEST");
 
         generating = false;
     }

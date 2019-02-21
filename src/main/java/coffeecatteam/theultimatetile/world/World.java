@@ -5,8 +5,8 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
-import coffeecatteam.theultimatetile.tile.Tile;
-import coffeecatteam.theultimatetile.tile.TilePos;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -80,7 +80,7 @@ public class World {
 
         forcedUpdateThreadInit(container, delta);
 
-        tutEngine.getItemManager().update(container, delta);
+        tutEngine.getItems().update(container, delta);
         tutEngine.getEntityManager().update(container, delta);
         overlayManager.update(container, delta);
     }
@@ -135,7 +135,7 @@ public class World {
             for (int x = xStart; x < xEnd; x++)
                 getFGTile(x, y).render(g);
 
-        tutEngine.getItemManager().render(g);
+        tutEngine.getItems().render(g);
         tutEngine.getEntityManager().render(g);
         overlayManager.render(g);
 
