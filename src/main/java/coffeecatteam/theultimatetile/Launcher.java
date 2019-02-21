@@ -6,6 +6,7 @@ import coffeecatteam.coffeecatutils.logger.CatLoggerUtils;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
+import java.awt.*;
 import java.io.File;
 
 public class Launcher {
@@ -23,6 +24,12 @@ public class Launcher {
         int height = 768;
         String title = "The Ultimate Tile";
 
+        boolean isFullscreen = ArgUtils.hasArgument(args, "-fullscreen");
+        if (isFullscreen) {
+            width = Toolkit.getDefaultToolkit().getScreenSize().width;
+            height = Toolkit.getDefaultToolkit().getScreenSize().height;
+        }
+
         /* Initialize logger */
         CatLoggerUtils.setOutputLog(ArgUtils.hasArgument(args, "-outputLog"));
         CatLoggerUtils.init();
@@ -36,6 +43,7 @@ public class Launcher {
             app.setUpdateOnlyWhenVisible(false);
             app.setAlwaysRender(true);
             app.setVSync(true);
+            app.setFullscreen(isFullscreen);
             app.start();
         } catch (SlickException e) {
             e.printStackTrace();
