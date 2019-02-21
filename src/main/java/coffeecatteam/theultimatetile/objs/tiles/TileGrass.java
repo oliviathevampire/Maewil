@@ -15,7 +15,7 @@ public class TileGrass extends Tile {
     }
 
     @Override
-    public TileGrass newTile() {
-        return super.newTile(new TileGrass(tutEngine));
+    public TileGrass newCopy() {
+        return super.newCopy(new TileGrass(tutEngine));
     }
 }

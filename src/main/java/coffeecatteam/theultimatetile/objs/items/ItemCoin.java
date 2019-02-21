@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.objs.items;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import org.newdawn.slick.Image;
 
 public class ItemCoin extends Item {
 
@@ -35,7 +34,7 @@ public class ItemCoin extends Item {
     }
 
     @Override
-    public ItemCoin newItem() {
-        return super.newItem(new ItemCoin(tutEngine, id, worth));
+    public ItemCoin newCopy() {
+        return super.newCopy(new ItemCoin(tutEngine, id, worth));
     }
 }

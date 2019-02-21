@@ -11,7 +11,7 @@ public class TileGlitch extends Tile {
     }
 
     @Override
-    public TileGlitch newTile() {
-        return super.newTile(new TileGlitch(tutEngine));
+    public TileGlitch newCopy() {
+        return super.newCopy(new TileGlitch(tutEngine));
     }
 }

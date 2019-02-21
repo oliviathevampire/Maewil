@@ -13,7 +13,7 @@ public class TileDiorite extends TileStone {
     }
 
     @Override
-    public TileDiorite newTile() {
-        return super.newTile(new TileDiorite(tutEngine));
+    public TileDiorite newCopy() {
+        return super.newCopy(new TileDiorite(tutEngine));
     }
 }

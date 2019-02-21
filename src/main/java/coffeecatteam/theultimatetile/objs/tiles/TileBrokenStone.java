@@ -17,7 +17,7 @@ public class TileBrokenStone extends Tile {
     }
 
     @Override
-    public TileBrokenStone newTile() {
-        return super.newTile(new TileBrokenStone(tutEngine));
+    public TileBrokenStone newCopy() {
+        return super.newCopy(new TileBrokenStone(tutEngine));
     }
 }

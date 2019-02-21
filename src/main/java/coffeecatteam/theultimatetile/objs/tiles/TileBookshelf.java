@@ -20,7 +20,7 @@ public class TileBookshelf extends TileWood {
     }
 
     @Override
-    public TileWood newTile() {
-        return super.newTile(new TileBookshelf(tutEngine));
+    public TileWood newCopy() {
+        return super.newCopy(new TileBookshelf(tutEngine));
     }
 }

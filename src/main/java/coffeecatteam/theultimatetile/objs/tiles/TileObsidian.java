@@ -16,7 +16,7 @@ public class TileObsidian extends TileStone {
     }
 
     @Override
-    public TileObsidian newTile() {
-        return super.newTile(new TileObsidian(tutEngine));
+    public TileObsidian newCopy() {
+        return super.newCopy(new TileObsidian(tutEngine));
     }
 }

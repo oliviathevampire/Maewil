@@ -3,7 +3,6 @@ package coffeecatteam.theultimatetile.objs.items;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
-import org.newdawn.slick.Image;
 
 public class ItemFood extends Item implements IInteractable {
 
@@ -31,7 +30,7 @@ public class ItemFood extends Item implements IInteractable {
     }
 
     @Override
-    public ItemFood newItem() {
-        return super.newItem(new ItemFood(tutEngine, id, healAmt));
+    public ItemFood newCopy() {
+        return super.newCopy(new ItemFood(tutEngine, id, healAmt));
     }
 }

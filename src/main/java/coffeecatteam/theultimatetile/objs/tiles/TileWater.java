@@ -18,7 +18,7 @@ public class TileWater extends TileOverlap {
     }
 
     @Override
-    public TileWater newTile() {
-        return super.newTile(new TileWater(tutEngine));
+    public TileWater newCopy() {
+        return super.newCopy(new TileWater(tutEngine));
     }
 }

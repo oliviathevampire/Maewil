@@ -15,7 +15,7 @@ public class TileWood extends Tile {
     }
 
     @Override
-    public TileWood newTile() {
-        return super.newTile(new TileWood(tutEngine, id));
+    public TileWood newCopy() {
+        return super.newCopy(new TileWood(tutEngine, id));
     }
 }

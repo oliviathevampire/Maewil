@@ -13,7 +13,7 @@ public class ItemBasic extends Item {
     }
 
     @Override
-    public ItemBasic newItem() {
-        return super.newItem(new ItemBasic(tutEngine, id));
+    public ItemBasic newCopy() {
+        return super.newCopy(new ItemBasic(tutEngine, id));
     }
 }

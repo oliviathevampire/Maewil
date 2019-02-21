@@ -24,11 +24,11 @@ public class TileStone extends TileOverlap {
             this.setIgnore("stone");
         }
 
-        this.setDrop(Items.BOOK);
+        this.setDrop(Items.ROCK);
     }
 
     @Override
-    public TileStone newTile() {
-        return super.newTile(new TileStone(tutEngine));
+    public TileStone newCopy() {
+        return super.newCopy(new TileStone(tutEngine));
     }
 }

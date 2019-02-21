@@ -13,7 +13,7 @@ public class TileAndesite extends TileStone {
     }
 
     @Override
-    public TileAndesite newTile() {
-        return super.newTile(new TileAndesite(tutEngine));
+    public TileAndesite newCopy() {
+        return super.newCopy(new TileAndesite(tutEngine));
     }
 }

@@ -23,7 +23,7 @@ public class ItemStack {
     }
 
     public ItemStack(Item item, int count) {
-        this.item = item.newItem();
+        this.item = item.newCopy();
         setCount(count);
     }
 

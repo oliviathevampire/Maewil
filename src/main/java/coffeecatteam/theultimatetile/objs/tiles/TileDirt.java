@@ -18,7 +18,7 @@ public class TileDirt extends TileOverlap {
     }
 
     @Override
-    public TileDirt newTile() {
-        return super.newTile(new TileDirt(tutEngine));
+    public TileDirt newCopy() {
+        return super.newCopy(new TileDirt(tutEngine));
     }
 }

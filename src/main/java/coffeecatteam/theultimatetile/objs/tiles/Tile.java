@@ -5,6 +5,7 @@ import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.objs.IHasData;
 import coffeecatteam.theultimatetile.objs.items.Item;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Tile {
+public abstract class Tile implements IHasData<Tile> {
 
     public static final int TILE_WIDTH = 48, TILE_HEIGHT = 48;
     public static final int DEFAULT_ALT_CHANCE = 850;
@@ -184,6 +185,7 @@ public abstract class Tile {
         return this;
     }
 
+    @Override
     public String getId() {
         return id;
     }
@@ -291,9 +293,8 @@ public abstract class Tile {
         chooseAltTexture();
     }
 
-    public abstract <T extends Tile> T newTile();
-
-    protected <T extends Tile> T newTile(T tile) {
+    @Override
+    public <T extends Tile> T newCopy(T tile) {
         T t = tile;
         t.setMapColor(mapColor);
         t.setPos(position);

@@ -18,7 +18,7 @@ public class TileSand extends TileOverlap {
     }
 
     @Override
-    public TileSand newTile() {
-        return super.newTile(new TileSand(tutEngine));
+    public TileSand newCopy() {
+        return super.newCopy(new TileSand(tutEngine));
     }
 }

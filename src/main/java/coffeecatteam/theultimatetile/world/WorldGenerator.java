@@ -75,7 +75,7 @@ public class WorldGenerator {
                 if (lc.getRGB() == WorldColors.STONE.getRGB())
                     tile = Tiles.STONE;
 
-                tile = tile.newTile();
+                tile = tile.newCopy();
                 checkBorderTilePos(tile, x, y, true);
                 tiles[x][y] = tile.setPos(new TilePos(x, y));
             }
@@ -109,7 +109,7 @@ public class WorldGenerator {
                 if (lc.getRGB() == WorldColors.DIRT.getRGB() || pc.getRGB() == WorldColors.DIRT.getRGB())
                     tile = Tiles.DIRT;
 
-                tile = tile.newTile();
+                tile = tile.newCopy();
                 checkBorderTilePos(tile, x, y, false);
                 tiles[x][y] = tile.setPos(new TilePos(x, y));
             }
@@ -148,7 +148,7 @@ public class WorldGenerator {
                     Tile tile = tiles[x][y];
 
                     if (value > minThreshold && value < maxThreshold) {
-                        tile = ore.newTile();
+                        tile = ore.newCopy();
                     }
 
                     checkBorderTilePos(tile, x, y, bg);

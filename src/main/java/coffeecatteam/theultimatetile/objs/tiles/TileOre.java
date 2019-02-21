@@ -17,7 +17,7 @@ public class TileOre extends Tile {
     }
 
     @Override
-    public TileOre newTile() {
-        return super.newTile(new TileOre(tutEngine, id, drop));
+    public TileOre newCopy() {
+        return super.newCopy(new TileOre(tutEngine, id, drop));
     }
 }

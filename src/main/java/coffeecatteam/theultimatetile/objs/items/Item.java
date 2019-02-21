@@ -6,7 +6,7 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.inventory.Slot;
-import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import coffeecatteam.theultimatetile.objs.IHasData;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Item {
+public abstract class Item implements IHasData<Item> {
 
     public static final int WIDTH = 32, HEIGHT = 32;
 
@@ -151,6 +151,7 @@ public abstract class Item {
         chooseAltTexture();
     }
 
+    @Override
     public String getId() {
         return this.id;
     }
@@ -183,16 +184,18 @@ public abstract class Item {
         this.stackable = stackable;
     }
 
-    public abstract <T extends Item> T newItem();
+//    public abstract <T extends Item> T newCopy();
 
-    protected <T extends Item> T newItem(T item) {
-        T i = item;
-        i.setAnimation(texture);
-        i.setHasAlts(hasAlts);
-        i.setTextureAlts(textureAlts);
-        i.setPosition(position);
-        i.setPickedUp(pickedUp);
-        i.setStackable(stackable);
-        return i;
+
+    @Override
+    public <T extends Item> T newCopy(T obj) {
+        T item = obj;
+        item.setAnimation(texture);
+        item.setHasAlts(hasAlts);
+        item.setTextureAlts(textureAlts);
+        item.setPosition(position);
+        item.setPickedUp(pickedUp);
+        item.setStackable(stackable);
+        return item;
     }
 }

@@ -15,7 +15,7 @@ public class TileAir extends Tile {
     }
 
     @Override
-    public TileAir newTile() {
-        return super.newTile(new TileAir(tutEngine));
+    public TileAir newCopy() {
+        return super.newCopy(new TileAir(tutEngine));
     }
 }

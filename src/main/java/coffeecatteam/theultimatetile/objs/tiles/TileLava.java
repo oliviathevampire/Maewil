@@ -11,7 +11,7 @@ public class TileLava extends Tile {
     }
 
     @Override
-    public TileLava newTile() {
-        return super.newTile(new TileLava(tutEngine));
+    public TileLava newCopy() {
+        return super.newCopy(new TileLava(tutEngine));
     }
 }

@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.objs.items;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import org.newdawn.slick.Image;
 
 public class ItemTool extends Item {
 
@@ -36,7 +35,7 @@ public class ItemTool extends Item {
     }
 
     @Override
-    public ItemTool newItem() {
-        return super.newItem(new ItemTool(tutEngine, id, damage, toolType, stackable));
+    public ItemTool newCopy() {
+        return super.newCopy(new ItemTool(tutEngine, id, damage, toolType, stackable));
     }
 }
