@@ -153,7 +153,7 @@ public class TutEngine extends BasicGame {
         if (container.getInput().isKeyPressed(Input.KEY_F2)) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
             String dateAndTime = dateFormat.format(new Date());
-            String filename = "sreenshots/" + dateAndTime + ".png";
+            String filename = "screenshots/" + dateAndTime + ".png";
             File file = new File(filename);
             file.getParentFile().mkdirs();
 
