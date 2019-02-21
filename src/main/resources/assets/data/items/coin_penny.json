@@ -1,0 +1,14 @@
+{
+  "type": "animated",
+  "texture": "items/coin_penny.png",
+  "frames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "size": 16,
+  "speed": 75
+}
