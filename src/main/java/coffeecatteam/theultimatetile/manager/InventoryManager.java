@@ -19,7 +19,7 @@ public class InventoryManager {
 
     public boolean openInventory(InventoryAbstractPlayer inventory) {
         if (!tutEngine.getPlayer().isGuiOpen()) {
-            tutEngine.getLogger().print(tutEngine.getPlayer().getUsername() + ": Opening inventory " + inventory.getInvName());
+            tutEngine.getLogger().info(tutEngine.getPlayer().getUsername() + ": Opening inventory " + inventory.getInvName());
             inventory.setActive(true);
             tutEngine.getPlayer().setGuiOpen(true);
             return true;
@@ -29,14 +29,14 @@ public class InventoryManager {
 
     public void closeAllInventories() {
         INVENTORIES.forEach(inventory -> {
-            tutEngine.getLogger().print(tutEngine.getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
+            tutEngine.getLogger().info(tutEngine.getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
             inventory.setActive(false);
             tutEngine.getPlayer().setGuiOpen(false);
         });
     }
 
     public void closeInventory(InventoryAbstractPlayer inventory) {
-        tutEngine.getLogger().print(tutEngine.getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
+        tutEngine.getLogger().info(tutEngine.getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
         inventory.setActive(false);
         tutEngine.getPlayer().setGuiOpen(false);
     }

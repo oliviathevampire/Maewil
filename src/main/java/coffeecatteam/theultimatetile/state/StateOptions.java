@@ -30,7 +30,7 @@ public class StateOptions extends StateAbstractMenu {
         try {
             OPTIONS.load();
         } catch (IOException | ParseException e) {
-            tutEngine.getLogger().print(e);
+            tutEngine.getLogger().error(e);
         }
 
         if (initUI) {
@@ -38,7 +38,7 @@ public class StateOptions extends StateAbstractMenu {
                 @Override
                 public void onClick() {
                     OPTIONS.setDebugMode(!OPTIONS.debugMode());
-                    logger.print("Degbug info mode " + (OPTIONS.debugMode() ? "enabled" : "disabled"));
+                    logger.warn("Degbug info mode " + (OPTIONS.debugMode() ? "enabled" : "disabled"));
                 }
 
                 @Override
@@ -50,7 +50,7 @@ public class StateOptions extends StateAbstractMenu {
                 @Override
                 public void onClick() {
                     OPTIONS.setFpsCounter(!OPTIONS.fpsCounter());
-                    logger.print("FPS counter " + (OPTIONS.fpsCounter() ? "enabled" : "disabled"));
+                    logger.warn("FPS counter " + (OPTIONS.fpsCounter() ? "enabled" : "disabled"));
                 }
 
                 @Override
@@ -65,7 +65,7 @@ public class StateOptions extends StateAbstractMenu {
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {
-                        logger.print(e);
+                        logger.error(e);
                     }
                     setPresence("Controls");
                 }
@@ -82,7 +82,7 @@ public class StateOptions extends StateAbstractMenu {
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {
-                        logger.print(e);
+                        logger.error(e);
                     }
                     setPresence("Sounds");
                 }
@@ -103,7 +103,7 @@ public class StateOptions extends StateAbstractMenu {
         try {
             OPTIONS.save();
         } catch (IOException e) {
-            logger.print(e);
+            logger.error(e);
         }
     }
 

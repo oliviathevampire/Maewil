@@ -39,7 +39,7 @@ public class World {
         try {
             loadWorld(path);
         } catch (IOException | ParseException e) {
-            tutEngine.getLogger().print(e);
+            tutEngine.getLogger().error(e);
         }
         tutEngine.getPlayer().setX(spawnX * Tile.TILE_WIDTH);
         tutEngine.getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
@@ -98,7 +98,7 @@ public class World {
 
             forcedUpdateThread = new Thread(() -> {
                 CatLogger logger = new CatLogger();
-                logger.print("Forced update thread initialized");
+                logger.info("Forced update thread initialized");
 
                 while (isForcedUpdateThread) {
                     for (int y = 0; y < height; y++) {
@@ -109,7 +109,7 @@ public class World {
                     }
                 }
 
-                logger.print("Stopping force update thread...");
+                logger.warn("Stopping force update thread...");
                 try {
                     forcedUpdateThread.join();
                 } catch (InterruptedException e) {
@@ -212,7 +212,7 @@ public class World {
         WorldJsonLoader worldJsonLoader = new WorldJsonLoader(path, tutEngine); // "/assets/worlds/dev_tests/json_format"
 
         worldJsonLoader.load();
-        tutEngine.getLogger().print("Loading world [" + worldJsonLoader.getName() + "]!");
+        tutEngine.getLogger().info("Loading world [" + worldJsonLoader.getName() + "]!");
 
         worldName = worldJsonLoader.getName();
 
@@ -239,7 +239,7 @@ public class World {
                 bg_tiles.setTile(x, y, tile);
             }
         }
-        tutEngine.getLogger().print("Loaded background tiles!");
+        tutEngine.getLogger().info("Loaded background tiles!");
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -251,7 +251,7 @@ public class World {
                 fg_tiles.setTile(x, y, tile);
             }
         }
-        tutEngine.getLogger().print("Loaded foreground tiles!");
+        tutEngine.getLogger().info("Loaded foreground tiles!");
     }
 
     public String getWorldName() {

@@ -46,11 +46,11 @@ public class WorldGenerator {
             pathMap = mapGenerator.generatePaths(0, 0, landMap);
             biomeMap = mapGenerator.generateBiomes(0, 0, landMap, pathMap);
             imageMapsGenerated = true;
-            logger.print("World image maps generated");
+            logger.info("World image maps generated");
 
             bgTiles = generateBGTiles();
             fgTiles = generateFGTiles();
-            logger.print("Tiles generated");
+            logger.info("Tiles generated");
         }, "WorldGenerator-Thread");
         generatorThread.start();
     }
@@ -82,7 +82,7 @@ public class WorldGenerator {
         }
         tiles = generateOres(tiles, true);
         bgTilesGenerated = true;
-        logger.print("Background tiles generated");
+        logger.info("Background tiles generated");
         return tiles;
     }
 
@@ -116,7 +116,7 @@ public class WorldGenerator {
         }
         tiles = generateOres(tiles, false);
         fgTilesGenerated = true;
-        logger.print("Foreground tiles generated");
+        logger.info("Foreground tiles generated");
         return tiles;
     }
 

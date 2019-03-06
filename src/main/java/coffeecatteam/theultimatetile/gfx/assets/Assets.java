@@ -43,7 +43,7 @@ public class Assets {
 
     /* Special Tiles */
     public static Image[] SPLASH_EFFECT, SPRINT_EFFECT;
-    public static Image[] ULTIMATE_TILE, TILE_CRACKING;
+    public static Image[] TILE_CRACKING;
 
     /* GUI */
     public static Image[] HEARTS;
@@ -81,20 +81,20 @@ public class Assets {
             /* PLAIN */
             String pIndex = String.valueOf(i);
             FONTS.put(pIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.PLAIN));
-            logger.print("Font [" + pIndex + "] loaded!");
+            logger.info("Font [" + pIndex + "] loaded!");
 
             /* BOLD */
             String bIndex = String.valueOf(i) + "-bold";
             FONTS.put(bIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.BOLD));
-            logger.print("Font [" + bIndex + "] loaded!");
+            logger.info("Font [" + bIndex + "] loaded!");
 
             /* ITALIC */
             String iIndex = String.valueOf(i) + "-italic";
             FONTS.put(iIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.ITALIC));
-            logger.print("Font [" + iIndex + "] loaded!");
+            logger.info("Font [" + iIndex + "] loaded!");
         }
 
-        logger.print("Assets [Fonts] loaded!");
+        logger.info("Assets [Fonts] loaded!");
     }
 
     private static Font loadTrueTypeFont(String path, float size, final int style) {
@@ -126,14 +126,12 @@ public class Assets {
         BROKEN_STONE = TileTextureAlts.getTextureAlts(BROKEN_STONE_ALTS, 47, "broken_stone", width, height);
 
         // Special
-        ULTIMATE_TILE = getTileFrames("ultimate", 7, 2);
-
         TILE_CRACKING = getTileFrames("tile_cracking", 9);
 
         SPLASH_EFFECT = getFrames(effectSheet, 0, 0, 15);
         SPRINT_EFFECT = getFrames(effectSheet, 1, 0, 15);
 
-        logger.print("Assets [Tiles] loaded!");
+        logger.info("Assets [Tiles] loaded!");
     }
 
     /* Entities */
@@ -144,7 +142,7 @@ public class Assets {
         GLUB_ORB = getFrames(glubSheet, 0, 0, 5, width, height);
         GLUB_METER = getFrames(glubSheet, 1, 0, 1, width * 4, height);
 
-        logger.print("Assets [Entities] loaded!");
+        logger.info("Assets [Entities] loaded!");
     }
 
     /* GUI */
@@ -195,7 +193,7 @@ public class Assets {
             }
         }
 
-        logger.print("Assets [GUI] loaded!");
+        logger.info("Assets [GUI] loaded!");
     }
 
     public static void init() {
@@ -220,7 +218,7 @@ public class Assets {
         initEntities();
         initGui();
 
-        logger.print("Assets loaded!");
+        logger.info("Assets loaded!");
     }
 
     public static Image getTileTexture(String tile) {
@@ -266,7 +264,7 @@ public class Assets {
             try {
                 frames[index] = sheet.crop(x * width, y * height, width, height);
             } catch (RasterFormatException e) {
-                logger.print(e + " - " + sheet.getPath());
+                logger.error(e + " - " + sheet.getPath());
                 frames[index] = MISSING_TEXTURE;
             }
             index++;
@@ -287,7 +285,7 @@ public class Assets {
         try {
             image = sheet.crop(indexX, indexY, width, height); /* Assets.width * indexX, Assets.height * indexY <-- This caused so many problems! */
         } catch (RasterFormatException e) {
-            logger.print(e + " - " + sheet.getPath() + " X: [" + indexX + "] Y: [" + indexY + "]");
+            logger.error(e + " - " + sheet.getPath() + " X: [" + indexX + "] Y: [" + indexY + "]");
         }
         return image;
     }

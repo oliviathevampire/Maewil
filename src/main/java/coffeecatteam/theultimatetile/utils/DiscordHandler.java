@@ -20,7 +20,7 @@ public class DiscordHandler {
 
     public void setup() {
         if (!ArgUtils.hasArgument(TutEngine.getTutEngine().getArgs(), "-disableDiscordRP")) {
-            TutEngine.getTutEngine().getLogger().print();
+            TutEngine.getTutEngine().getLogger().println();
             Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
             rpc = DiscordRPC.INSTANCE;
 
@@ -28,15 +28,15 @@ public class DiscordHandler {
             handlers.ready = user -> {
                 userId = user.username + "#" + user.discriminator;
                 DiscordHandler.READY = true;
-                TutEngine.getTutEngine().getLogger().print("Connected to discord");
-                TutEngine.getTutEngine().getLogger().print("Discord rich presence setup for " + userId);
-                TutEngine.getTutEngine().getLogger().print("Ready: " + READY);
-                TutEngine.getTutEngine().getLogger().print();
+                TutEngine.getTutEngine().getLogger().warn("Connected to discord");
+                TutEngine.getTutEngine().getLogger().warn("Discord rich presence setup for " + userId);
+                TutEngine.getTutEngine().getLogger().warn("Ready: " + READY);
+                TutEngine.getTutEngine().getLogger().println();
             };
             rpc.Discord_Initialize("502962688733741056", handlers, true, "");
 
             new Thread(() -> {
-                TutEngine.getTutEngine().getLogger().print("Started RPC Callback Handler");
+                TutEngine.getTutEngine().getLogger().warn("Started RPC Callback Handler");
                 while (!Thread.currentThread().isInterrupted()) {
                     rpc.Discord_RunCallbacks();
                     try {
@@ -92,11 +92,11 @@ public class DiscordHandler {
 
     public void shutdown() {
         if (!ArgUtils.hasArgument(TutEngine.getTutEngine().getArgs(), "-disableDiscordRP")) {
-            TutEngine.getTutEngine().getLogger().print("" + userId + " is disconnecting!");
+            TutEngine.getTutEngine().getLogger().warn("" + userId + " is disconnecting!");
             rpc.Discord_ClearPresence();
-            TutEngine.getTutEngine().getLogger().print("Cleared rich presence!");
+            TutEngine.getTutEngine().getLogger().warn("Cleared rich presence!");
             rpc.Discord_Shutdown();
-            TutEngine.getTutEngine().getLogger().print(userId + " hss disconnected!");
+            TutEngine.getTutEngine().getLogger().warn(userId + " hss disconnected!");
         }
     }
 }

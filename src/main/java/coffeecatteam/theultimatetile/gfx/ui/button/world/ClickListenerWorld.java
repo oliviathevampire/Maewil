@@ -34,7 +34,7 @@ public class ClickListenerWorld implements ClickListener {
         try {
             gamesJSONParser.load();
         } catch (IOException | ParseException e) {
-            tutEngine.getLogger().print(e);
+            tutEngine.getLogger().error(e);
         }
     }
 
@@ -69,7 +69,7 @@ public class ClickListenerWorld implements ClickListener {
 //            try {
 //                gamesJSONParser.save();
 //            } catch (IOException e) {
-//                engine.getLogger().print(e);
+//                engine.getLogger().error(e);
 //            }
 //        } else {
 //            worldName = SavedGamesJSONParser.GAMES.get(index).split(":")[1];
@@ -87,9 +87,9 @@ public class ClickListenerWorld implements ClickListener {
 //            }
 //        }
 //        tutEngine.setUsername(username);
-//        engine.getLogger().print("Set username: " + tutEngine.getUsername());
+//        engine.getLogger().info("Set username: " + tutEngine.getUsername());
 //
-//        engine.getLogger().print("Loading game [" + path + "]!");
+//        engine.getLogger().info("Loading game [" + path + "]!");
 //
 //        DiscordHandler.INSTANCE.updatePresence("In Game - " + tutEngine.getUsername(), "World: " + worldName, true);
 //        StateGame game = new StateGame(engine, path, worldName);

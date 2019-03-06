@@ -91,7 +91,7 @@ public class Utils {
 
             fileOutputStream.close();
         } catch (IOException e) {
-            TutEngine.getTutEngine().getLogger().print(e);
+            TutEngine.getTutEngine().getLogger().error(e);
         }
     }
 

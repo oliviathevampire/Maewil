@@ -45,7 +45,7 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
             }
         }
 
-        tutEngine.getLogger().print("Games loaded!");
+        tutEngine.getLogger().info("Games loaded!");
     }
 
     @Override
@@ -62,13 +62,13 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
                 jsonObject.put(tag, save);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            tutEngine.getLogger().print(e.getMessage());
+            tutEngine.getLogger().error(e.getMessage());
         }
 
         FileWriter file = new FileWriter(path);
         file.write(jsonObject.toJSONString());
         file.flush();
 
-        tutEngine.getLogger().print("Games saved!");
+        tutEngine.getLogger().info("Games saved!");
     }
 }

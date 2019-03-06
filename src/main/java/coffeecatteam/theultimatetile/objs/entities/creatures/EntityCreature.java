@@ -130,8 +130,8 @@ public abstract class EntityCreature extends Entity {
 
     protected boolean isCollidingWithTile(int x, int y) {
         if (this.getId().equals("player") && StateOptions.OPTIONS.debugMode()) {
-            tutEngine.getLogger().print("X: " + x + " Y: " + y);
-            tutEngine.getLogger().print(tutEngine.getWorld().getFGTile(x, y).getId() + " - " + tutEngine.getWorld().getFGTile(x, y).isSolid());
+            tutEngine.getLogger().warn("X: " + x + " Y: " + y);
+            tutEngine.getLogger().warn(tutEngine.getWorld().getFGTile(x, y).getId() + " - " + tutEngine.getWorld().getFGTile(x, y).isSolid());
         }
         return tutEngine.getWorld().getFGTile(x, y).isSolid();
     }

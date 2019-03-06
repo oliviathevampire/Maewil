@@ -26,7 +26,7 @@ public class AIWander extends AI {
         if (wanderTimer > wanderCooldown) {
             direction = MoveDirection.random();
             if (StateOptions.OPTIONS.debugMode())
-                tutEngine.getLogger().print("Wander DIR for entity [" + entity.getId() + "]: " + direction);
+                tutEngine.getLogger().warn("Wander DIR for entity [" + entity.getId() + "]: " + direction);
             wanderCooldown = NumberUtils.getRandomBoolean() ? 1600 : 3200;
             wanderTimer = 0;
         }

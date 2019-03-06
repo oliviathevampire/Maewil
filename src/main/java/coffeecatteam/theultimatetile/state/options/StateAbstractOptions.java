@@ -26,7 +26,7 @@ public abstract class StateAbstractOptions extends State {
                 try {
                     StateOptions.OPTIONS.save();
                 } catch (IOException e) {
-                    logger.print(e);
+                    logger.error(e);
                 }
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options");

@@ -29,7 +29,7 @@ public class UIHyperlinkCopyright extends UIHyperlink {
                     URI link = new URI("https://github.com/CoffeeCatRailway/TheUltimateTile/blob/master/LICENSE.md");
                     desktop.browse(link);
                 } catch (Exception e) {
-                    TutEngine.getTutEngine().getLogger().print(e);
+                    TutEngine.getTutEngine().getLogger().error(e);
                 }
             }
 

@@ -33,7 +33,7 @@ public class EntityShopStall extends EntityStatic {
 
     @Override
     public void interact() {
-        tutEngine.getLogger().print("Shop shop, shoppy time!");
+        tutEngine.getLogger().warn("Shop shop, shoppy time!");
         this.interacted = false;
     }
 

@@ -61,7 +61,7 @@ public class Animation {
             if (frames[index] == null)
                 return Assets.MISSING_TEXTURE;
         } catch (ArrayIndexOutOfBoundsException e) {
-            TutEngine.getTutEngine().getLogger().print(e);
+            TutEngine.getTutEngine().getLogger().error(e);
             return Assets.MISSING_TEXTURE;
         }
 

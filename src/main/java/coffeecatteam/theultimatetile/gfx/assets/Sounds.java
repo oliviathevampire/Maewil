@@ -39,7 +39,7 @@ public class Sounds {
 
         CLICK_1 = loadSound("click_1");
         CLICK_2 = loadSound("click_2");
-        TutEngine.getTutEngine().getLogger().print("Sounds loaded!");
+        TutEngine.getTutEngine().getLogger().info("Sounds loaded!");
     }
 
     public static Sound loadSound(String name) throws SlickException {

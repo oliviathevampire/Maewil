@@ -16,7 +16,7 @@ import java.io.IOException;
 public class JsonUtils {
 
     public static Object getValue(String key, String path, boolean inJar) throws IOException, ParseException {
-        TutEngine.getTutEngine().getLogger().print("Loading json value [" + key + "]");
+        TutEngine.getTutEngine().getLogger().info("Loading json value [" + key + "]");
         JSONParser parser = new JSONParser();
         JSONObject jsonObject;
         if (inJar) jsonObject = (JSONObject) parser.parse(FileUtils.loadFileInSideJar(path));
@@ -25,7 +25,7 @@ public class JsonUtils {
     }
 
     public static JSONArray getArray(String key, String path, boolean inJar) throws IOException, ParseException {
-        TutEngine.getTutEngine().getLogger().print("Loading json array [" + key + "]");
+        TutEngine.getTutEngine().getLogger().info("Loading json array [" + key + "]");
         JSONParser parser = new JSONParser();
         JSONObject jsonObject;
         if (inJar) jsonObject = (JSONObject) parser.parse(FileUtils.loadFileInSideJar(path));

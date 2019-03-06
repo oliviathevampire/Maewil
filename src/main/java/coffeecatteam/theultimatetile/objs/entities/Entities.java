@@ -110,7 +110,7 @@ public class Entities {
          */
         register(ITEM = parser.loadData(new EntityItem(tutEngine, Items.STICK.newCopy()))); // PLACE HOLDER IF NEEDED
 
-        TutEngine.getTutEngine().getLogger().print("Entities registered!");
+        TutEngine.getTutEngine().getLogger().info("Entities registered!");
     }
 
     private static void register(Entity entity) {

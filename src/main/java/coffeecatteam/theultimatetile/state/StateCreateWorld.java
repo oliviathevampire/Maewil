@@ -93,7 +93,7 @@ public class StateCreateWorld extends StateAbstractMenu {
     }
 
     private void generateWorld() {
-        logger.print("Generating world...");
+        logger.info("Generating world...");
 //        Tiles.chooseAltTexture(engine);
 
         double blendSize = 25.0d + sizeMod;

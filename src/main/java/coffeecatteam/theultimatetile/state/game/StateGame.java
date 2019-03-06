@@ -139,7 +139,7 @@ public class StateGame extends State {
         try {
             saver.save(username);
         } catch (IOException e) {
-            logger.print(e);
+            logger.error(e);
         }
         tutEngine.setUsername(username);
     }
@@ -152,7 +152,7 @@ public class StateGame extends State {
         try {
             saver.save();
         } catch (IOException e) {
-            logger.print(e);
+            logger.error(e);
         }
     }
 

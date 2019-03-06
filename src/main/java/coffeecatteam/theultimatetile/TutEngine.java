@@ -80,7 +80,7 @@ public class TutEngine extends BasicGame {
 
     @Override
     public void init(GameContainer container) throws SlickException {
-        logger.print("Fullscreen is set to [" + container.isFullscreen() + "]");
+        logger.warn("Fullscreen is set to [" + container.isFullscreen() + "]");
 
         Assets.init();
         container.setShowFPS(false);
@@ -162,7 +162,7 @@ public class TutEngine extends BasicGame {
             ImageOut.write(target, filename);
             target.destroy();
 
-            logger.print("Screenshot saved to [" + filename + "]");
+            logger.info("Screenshot saved to [" + filename + "]");
         }
     }
 
@@ -183,14 +183,14 @@ public class TutEngine extends BasicGame {
     public boolean closeRequested() {
         if (playBGMusic && Sounds.BG_MUSIC.playing())
             Sounds.BG_MUSIC.stop();
-        logger.print("Shutting down [" + this.getTitle() + "] engine!");
+        logger.warn("Shutting down [" + this.getTitle() + "] engine!");
         if (StateManager.getCurrentState() instanceof StateGame) {
-            logger.print("Saving world!");
+            logger.info("Saving world!");
             ((StateGame) StateManager.getCurrentState()).saveWorld(true);
-            logger.print("World saved!");
+            logger.info("World saved!");
         }
 
-        logger.print("Exiting [" + this.getTitle() + "]..");
+        logger.warn("Exiting [" + this.getTitle() + "]..");
         return true;
     }
 

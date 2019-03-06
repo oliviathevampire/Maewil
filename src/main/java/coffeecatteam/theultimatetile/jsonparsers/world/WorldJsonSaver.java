@@ -32,21 +32,21 @@ public class WorldJsonSaver implements IJSONSaver {
     }
 
     public void save(String username) throws IOException {
-        tutEngine.getLogger().print("Saving current world!");
+        tutEngine.getLogger().info("Saving current world!");
         saveWorldInfo(world);
-        tutEngine.getLogger().print("World [" + world.getWorldName() + "] info saved!");
+        tutEngine.getLogger().info("World [" + world.getWorldName() + "] info saved!");
 
         saveTiles(world.getWidth(), world.getHeight(), world.getBg_tiles(), world.getFg_tiles(), path, WorldJsonLoader.BASE_FILES.get("tile_bg"), WorldJsonLoader.BASE_FILES.get("tile_fg"));
-        tutEngine.getLogger().print("World [" + world.getWorldName() + "] tiles saved!");
+        tutEngine.getLogger().info("World [" + world.getWorldName() + "] tiles saved!");
 
         saveEntities();
-        tutEngine.getLogger().print("World [" + world.getWorldName() + "] entities saved!");
+        tutEngine.getLogger().info("World [" + world.getWorldName() + "] entities saved!");
 
         saveItems();
-        tutEngine.getLogger().print("World [" + world.getWorldName() + "] ITEMS saved!");
+        tutEngine.getLogger().info("World [" + world.getWorldName() + "] ITEMS saved!");
 
         savePlayerInfo(username);
-        tutEngine.getLogger().print("World [" + world.getWorldName() + "] player info saved!");
+        tutEngine.getLogger().info("World [" + world.getWorldName() + "] player info saved!");
     }
 
     @Override
@@ -87,7 +87,7 @@ public class WorldJsonSaver implements IJSONSaver {
             bg_tile.put("chunk" + y, chunk);
         }
         jsonObjectBG.put("bg_tile", bg_tile);
-        tutEngine.getLogger().print("Saved bg tiles");
+        tutEngine.getLogger().info("Saved bg tiles");
 
         JSONObject fg_tile = new JSONObject();
         for (int y = 0; y < height; y++) {
@@ -97,7 +97,7 @@ public class WorldJsonSaver implements IJSONSaver {
             fg_tile.put("chunk" + y, chunk);
         }
         jsonObjectFG.put("fg_tile", fg_tile);
-        tutEngine.getLogger().print("Saved fg tiles");
+        tutEngine.getLogger().info("Saved fg tiles");
 
         saveJSONFileToPath(savePath, bgFileName, jsonObjectBG);
         saveJSONFileToPath(savePath, fgFileName, jsonObjectFG);
@@ -140,7 +140,7 @@ public class WorldJsonSaver implements IJSONSaver {
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityStatic)
                             saveEntityObj(entity, statics);
-                tutEngine.getLogger().print("World [" + path + "] static entities saved!");
+                tutEngine.getLogger().info("World [" + path + "] static entities saved!");
             }
             jsonObjectStatic.put("statics", statics);
 
@@ -152,11 +152,11 @@ public class WorldJsonSaver implements IJSONSaver {
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityCreature)
                             saveEntityObj(entity, creatures);
-                tutEngine.getLogger().print("World [" + path + "] creature entities saved!");
+                tutEngine.getLogger().info("World [" + path + "] creature entities saved!");
             }
             jsonObjectCreature.put("creatures", creatures);
         }
-        tutEngine.getLogger().print("World [" + path + "] entities saved!");
+        tutEngine.getLogger().info("World [" + path + "] entities saved!");
 
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("entity_s"), jsonObjectStatic);
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("entity_c"), jsonObjectCreature);
@@ -184,7 +184,7 @@ public class WorldJsonSaver implements IJSONSaver {
             }
         }
         jsonObject.put("ITEMS", items);
-        tutEngine.getLogger().print("World [" + path + "] ITEMS saved!");
+        tutEngine.getLogger().info("World [" + path + "] ITEMS saved!");
 
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("ITEMS"), jsonObject);
     }
@@ -193,7 +193,7 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("username", username);
-        tutEngine.getLogger().print("Player username saved [" + tutEngine.getUsername() + "]");
+        tutEngine.getLogger().info("Player username saved [" + tutEngine.getUsername() + "]");
         jsonObject.put("health", tutEngine.getPlayer().getCurrentHealth());
         jsonObject.put("glubel", tutEngine.getPlayer().getGlubel());
         jsonObject.put("lvl", tutEngine.getPlayer().getLvl());

@@ -13,14 +13,14 @@ public class ImageLoader {
             InputStream file = ImageLoader.class.getResourceAsStream(path);
             if (file == null) {
                 file = ImageLoader.class.getResourceAsStream("/assets/textures/missing.png");
-                TutEngine.getTutEngine().getLogger().print(new Exception("Can't find texture: " + path));
+                TutEngine.getTutEngine().getLogger().error(new Exception("Can't find texture: " + path));
             }
 
             Image image = new Image(file, path, false);
             image.setFilter(Image.FILTER_NEAREST);
             return image;
         } catch (SlickException e) {
-            TutEngine.getTutEngine().getLogger().print(e);
+            TutEngine.getTutEngine().getLogger().error(e);
         }
         return null;
     }

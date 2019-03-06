@@ -96,7 +96,7 @@ public class Items {
         register(RAW_STEAK = parser.loadData(new ItemFood(tutEngine, "raw_steak", 3)));
         register(COOKED_STEAK = parser.loadData(new ItemFood(tutEngine, "cooked_steak", 6)));
 
-        TutEngine.getTutEngine().getLogger().print("Items registered!");
+        TutEngine.getTutEngine().getLogger().info("Items registered!");
     }
 
     private static void register(Item item) {

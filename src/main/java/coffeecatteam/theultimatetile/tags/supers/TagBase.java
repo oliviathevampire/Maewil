@@ -94,7 +94,7 @@ public abstract class TagBase {
         entity.setTag("tags", tags);
         baseCompound.setTag("entity", entity);
 
-        TutEngine.getTutEngine().getLogger().print(baseCompound.toString());
+        TutEngine.getTutEngine().getLogger().error(baseCompound.toString());
         System.exit(0);
     }
 

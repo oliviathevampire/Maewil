@@ -59,12 +59,12 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
      */
     public void appendTag(TagBase tag) {
         if (tag.getId() == 0) {
-            TutEngine.getTutEngine().getLogger().print("Invalid TagEnd added to ListTag");
+            TutEngine.getTutEngine().getLogger().warn("Invalid TagEnd added to ListTag");
         } else {
             if (this.tagType == 0) {
                 this.tagType = tag.getId();
             } else if (this.tagType != tag.getId()) {
-                TutEngine.getTutEngine().getLogger().print("Adding mismatching tag types to tag list");
+                TutEngine.getTutEngine().getLogger().warn("Adding mismatching tag types to tag list");
                 return;
             }
 
@@ -77,18 +77,18 @@ public class TagList extends TagBase implements java.lang.Iterable<TagBase> {
      */
     public void set(int idx, TagBase tag) {
         if (tag.getId() == 0) {
-            TutEngine.getTutEngine().getLogger().print("Invalid TagEnd added to ListTag");
+            TutEngine.getTutEngine().getLogger().warn("Invalid TagEnd added to ListTag");
         } else if (idx >= 0 && idx < this.tagList.size()) {
             if (this.tagType == 0) {
                 this.tagType = tag.getId();
             } else if (this.tagType != tag.getId()) {
-                TutEngine.getTutEngine().getLogger().print("Adding mismatching tag types to tag list");
+                TutEngine.getTutEngine().getLogger().warn("Adding mismatching tag types to tag list");
                 return;
             }
 
             this.tagList.set(idx, tag);
         } else {
-            TutEngine.getTutEngine().getLogger().print("index out of bounds to set tag in tag list");
+            TutEngine.getTutEngine().getLogger().warn("index out of bounds to set tag in tag list");
         }
     }
 

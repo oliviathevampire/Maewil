@@ -72,10 +72,10 @@ public class Biomes {
                 Exception incorrectValue = new Exception("Biome with id [" + id + "] has incorrect value: " + color[i]);
 
                 if (color[i] < 0) {
-                    TutEngine.getTutEngine().getLogger().print(incorrectValue);
+                    TutEngine.getTutEngine().getLogger().error(incorrectValue);
                     color[i] = 0;
                 } else if (color[i] > 255) {
-                    TutEngine.getTutEngine().getLogger().print(incorrectValue);
+                    TutEngine.getTutEngine().getLogger().error(incorrectValue);
                     color[i] = 255;
                 } else
                     color[i] = color[i];
