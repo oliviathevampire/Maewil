@@ -1,8 +1,11 @@
 package coffeecatteam.theultimatetile.gfx;
 
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
+
+import static coffeecatteam.coffeecatutils.NumberUtils.lerp;
 
 public class Camera {
 
@@ -29,20 +32,19 @@ public class Camera {
     }
 
     public void centerOnEntity(Entity e) {
-        xOffset = lerp(xOffset, e.getX() - tutEngine.getWidth() / 2f + e.getWidth() / 2f, smoothness);
-        yOffset = lerp(yOffset, e.getY() - tutEngine.getHeight() / 2f + e.getHeight() / 2f, smoothness);
+        changeOffset(e.getX() - tutEngine.getWidth() / 2f + e.getWidth() / 2f, e.getY() - tutEngine.getHeight() / 2f + e.getHeight() / 2f);
         checkBlankSpace();
-    }
-
-    private float lerp(float a, float b, float t) {
-        return (1 - t) * a + t * b;
     }
 
     public void move(float xAmt, float yAmt) {
-        xOffset = lerp(xOffset, xOffset + xAmt, smoothness);
-        yOffset = lerp(yOffset, yOffset + yAmt, smoothness);
-
+        changeOffset(xOffset + xAmt, yOffset + yAmt);
         checkBlankSpace();
+    }
+
+    private void changeOffset(float x, float y) {
+        Vector2D offset = lerp(xOffset, yOffset, x, y, smoothness);
+        xOffset = (float) offset.x;
+        yOffset = (float) offset.y;
     }
 
     public float getxOffset() {
