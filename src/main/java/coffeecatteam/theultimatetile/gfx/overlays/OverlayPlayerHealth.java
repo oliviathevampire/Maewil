@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.overlays;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
@@ -23,18 +24,7 @@ public class OverlayPlayerHealth extends Overlay {
     public void render(Graphics g) {
         int hWidth = 96;
         int hHeight = 96;
-        int hStage = 0;
-
-        if (player.getCurrentHealth() <= Entity.DEFAULT_HEALTH && player.getCurrentHealth() >= Entity.DEFAULT_HEALTH / 2 + Entity.DEFAULT_HEALTH / 4)
-            hStage = 0;
-        if (player.getCurrentHealth() <= Entity.DEFAULT_HEALTH / 2 + Entity.DEFAULT_HEALTH / 4 && player.getCurrentHealth() >= Entity.DEFAULT_HEALTH / 2)
-            hStage = 1;
-        if (player.getCurrentHealth() <= Entity.DEFAULT_HEALTH / 2 && player.getCurrentHealth() >= Entity.DEFAULT_HEALTH / 4)
-            hStage = 2;
-        if (player.getCurrentHealth() <= Entity.DEFAULT_HEALTH / 4 && player.getCurrentHealth() >= 0)
-            hStage = 3;
-        if (player.getCurrentHealth() <= 0)
-            hStage = 4;
+        int hStage = (int) NumberUtils.map(player.getCurrentHealth(), 0, player.getMaxHealth() * 2, Assets.HEARTS.length - 1, 0);
 
         Text.drawString(g, "HP: " + player.getCurrentHealth(), 10, tutEngine.getHeight() - hHeight, false, false, Color.red, Assets.FONTS.get("20"));
 
