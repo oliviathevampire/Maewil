@@ -8,6 +8,7 @@ public class Camera {
 
     private TutEngine tutEngine;
     private float xOffset, yOffset;
+    private float smoothness = 0.05f; // (0.05 - Super Smooth) (0.1 - Smooth) (1 - Sharp)
 
     public Camera(TutEngine tutEngine, float xOffset, float yOffset) {
         this.tutEngine = tutEngine;
@@ -28,14 +29,19 @@ public class Camera {
     }
 
     public void centerOnEntity(Entity e) {
-        xOffset = e.getX() - tutEngine.getWidth() / 2f + e.getWidth() / 2f;
-        yOffset = e.getY() - tutEngine.getHeight() / 2f + e.getHeight() / 2f;
+        xOffset = lerp(xOffset, e.getX() - tutEngine.getWidth() / 2f + e.getWidth() / 2f, smoothness);
+        yOffset = lerp(yOffset, e.getY() - tutEngine.getHeight() / 2f + e.getHeight() / 2f, smoothness);
         checkBlankSpace();
     }
 
+    private float lerp(float a, float b, float t) {
+        return (1 - t) * a + t * b;
+    }
+
     public void move(float xAmt, float yAmt) {
-        xOffset += xAmt;
-        yOffset += yAmt;
+        xOffset = lerp(xOffset, xOffset + xAmt, smoothness);
+        yOffset = lerp(yOffset, yOffset + yAmt, smoothness);
+
         checkBlankSpace();
     }
 
@@ -53,5 +59,9 @@ public class Camera {
 
     public void setyOffset(float yOffset) {
         this.yOffset = yOffset;
+    }
+
+    public void setSmoothness(float smoothness) {
+        this.smoothness = smoothness;
     }
 }
