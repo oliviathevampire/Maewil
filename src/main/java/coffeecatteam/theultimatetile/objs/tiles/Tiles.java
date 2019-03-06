@@ -50,7 +50,7 @@ public class Tiles {
 
     public static void init(TutEngine tutEngine) throws IOException, ParseException {
         TileDataParser parser = new TileDataParser();
-        
+
         /*
          * Ground
          */
@@ -96,7 +96,7 @@ public class Tiles {
         TILES.put(tile.getId(), tile);
     }
 
-    public static Tile getTile(String id) {
+    public static Tile getTileById(String id) {
         return TILES.get(id).newCopy();
     }
 

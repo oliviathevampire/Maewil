@@ -4,18 +4,15 @@ import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.state.game.StateGame;
-import coffeecatteam.theultimatetile.objs.tiles.Tile;
-import coffeecatteam.theultimatetile.objs.tiles.TileAir;
-import coffeecatteam.theultimatetile.objs.tiles.TileDirt;
-import coffeecatteam.theultimatetile.objs.tiles.TileGrass;
-import coffeecatteam.theultimatetile.objs.tiles.TileSand;
-import coffeecatteam.theultimatetile.world.World;
-import coffeecatteam.theultimatetile.world.WorldGenerator;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
+import coffeecatteam.theultimatetile.objs.tiles.*;
+import coffeecatteam.theultimatetile.state.game.StateGame;
+import coffeecatteam.theultimatetile.world.TileList;
+import coffeecatteam.theultimatetile.world.World;
+import coffeecatteam.theultimatetile.world.WorldGenerator;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -34,7 +31,7 @@ public class StateCreateWorld extends StateAbstractMenu {
     private float sizeMod;
     private int minWorldSize = 400, worldSize;
 
-    private Tile[][] bgTiles, fgTiles;
+    private TileList bgTiles, fgTiles;
     private boolean generating = false;
 
     public StateCreateWorld(TutEngine tutEngine) {
@@ -126,11 +123,12 @@ public class StateCreateWorld extends StateAbstractMenu {
     private Vector2D getPlayerSpawn() {
         int x = NumberUtils.getRandomInt(worldSize - 1);
         int y = NumberUtils.getRandomInt(worldSize - 1);
+        Tile tile = fgTiles.getTile(x, y);
 
-        if (fgTiles[x][y].isSolid() || fgTiles[x][y].isUnbreakable())
+        if (tile.isSolid() || tile.isUnbreakable())
             return getPlayerSpawn();
         else {
-            if (fgTiles[x][y] instanceof TileSand || fgTiles[x][y] instanceof TileGrass || fgTiles[x][y] instanceof TileDirt || fgTiles[x][y] instanceof TileAir)
+            if (tile instanceof TileSand || tile instanceof TileGrass || tile instanceof TileDirt || tile instanceof TileAir)
                 return new Vector2D(x, y);
             else
                 return getPlayerSpawn();

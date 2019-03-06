@@ -25,7 +25,7 @@ public abstract class EntityPassive extends EntityCreature {
         yMove = 0;
 
         // Movement
-        if (tutEngine.getEntityManager().getPlayer().isActive()) {
+        if (tutEngine.getPlayer().isActive()) {
             aiWander.update(container, delta);
         }
         move();

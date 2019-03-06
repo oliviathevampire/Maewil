@@ -20,7 +20,7 @@ public abstract class EntityUndead extends EntityCreature {
     public EntityUndead(TutEngine tutEngine, String id) {
         super(tutEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         aiWander = new AIWander(tutEngine, this, 1.5f);
-        aiFollowFlee = new AIFollowFlee(tutEngine, this, tutEngine.getEntityManager().getPlayer());
+        aiFollowFlee = new AIFollowFlee(tutEngine, this, tutEngine.getPlayer());
 
         bounds.x = width / 4f;
         bounds.y = height - height / 2f;
@@ -34,7 +34,7 @@ public abstract class EntityUndead extends EntityCreature {
         yMove = 0;
 
         // Movement
-        if (tutEngine.getEntityManager().getPlayer().isActive()) {
+        if (tutEngine.getPlayer().isActive()) {
             if (!aiFollowFlee.update(container, delta)) {
                 aiWander.update(container, delta);
             }
@@ -62,7 +62,7 @@ public abstract class EntityUndead extends EntityCreature {
         attackTimer = 0;
 
         for (Entity e : tutEngine.getEntityManager().getEntities())
-            if (e.equals(tutEngine.getEntityManager().getPlayer()))
+            if (e.equals(tutEngine.getPlayer()))
                 if (e.getCollisionBounds(0, 0).intersects(ar))
                     e.hurt(NumberUtils.getRandomInt(1, 3) + dmgModifier);
     }

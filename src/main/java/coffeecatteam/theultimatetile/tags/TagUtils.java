@@ -31,7 +31,6 @@ public class TagUtils {
      */
     public static ItemStack getItemFromTag(TagCompound compound) {
         ItemStack stack = new ItemStack(compound);
-        stack.setPickedUp(compound.getBoolean("pickedUp"));
         return stack;
     }
 
@@ -41,7 +40,6 @@ public class TagUtils {
     public static TagCompound createItemTag(ItemStack stack) {
         TagCompound compound = new TagCompound();
         stack.saveToTagCompound(compound);
-        compound.setBoolean("pickedUp", stack.isPickedUp());
         return compound;
     }
 }

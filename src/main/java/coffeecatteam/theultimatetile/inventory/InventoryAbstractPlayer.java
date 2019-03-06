@@ -1,13 +1,13 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.items.IInteractable;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
-import coffeecatteam.theultimatetile.objs.tiles.Tile;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -168,11 +168,9 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4f;
         if (getSlot(inventorySelectedIndex).getStack() != null) {
             if (active) {
-                getSlot(inventorySelectedIndex).getStack().getItem().setPickedUp(false);
-                tutEngine.getItems().addItem(getSlot(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
+                tutEngine.getEntityManager().addItem(getSlot(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff, false);
             } else {
-                getSlot(hotbarSelectedIndex + maxHotbarSize).getStack().getItem().setPickedUp(false);
-                tutEngine.getItems().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), player.getX() + xOff, player.getY() + yOff);
+                tutEngine.getEntityManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), player.getX() + xOff, player.getY() + yOff, false);
             }
         }
     }
@@ -287,11 +285,11 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
     @Override
     public void onOpen() {
-        copyItems(tutEngine.getEntityManager().getPlayer().getInventoryPlayer(), this, false);
+        copyItems(tutEngine.getPlayer().getInventoryPlayer(), this, false);
     }
 
     @Override
     public void onClose() {
-        copyItems(this, tutEngine.getEntityManager().getPlayer().getInventoryPlayer(), false);
+        copyItems(this, tutEngine.getPlayer().getInventoryPlayer(), false);
     }
 }

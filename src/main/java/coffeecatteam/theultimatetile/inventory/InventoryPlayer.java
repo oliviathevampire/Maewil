@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import org.newdawn.slick.Graphics;
 
 public class InventoryPlayer extends InventoryAbstractPlayer {
@@ -23,7 +23,7 @@ public class InventoryPlayer extends InventoryAbstractPlayer {
             int y = tutEngine.getHeight() / 2 - height / 2;
 
             Assets.INVENTORY.draw(x, y, width, height);
-            Assets.PLAYER_IDLE[0].draw(x + player.getWidth() / 2f, y + player.getHeight() / 2f, player.getWidth(), player.getHeight());
+            player.getTexture("idle").draw(x + player.getWidth() / 2f, y + player.getHeight() / 2f, player.getWidth(), player.getHeight());
 
             super.renderInventorySlots(g);
         }

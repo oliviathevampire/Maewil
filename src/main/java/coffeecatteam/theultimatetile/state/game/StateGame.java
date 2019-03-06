@@ -1,18 +1,18 @@
 package coffeecatteam.theultimatetile.state.game;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.state.State;
-import coffeecatteam.theultimatetile.state.StateManager;
-import coffeecatteam.theultimatetile.state.StateOptions;
-import coffeecatteam.theultimatetile.state.options.controls.Keybind;
-import coffeecatteam.theultimatetile.objs.tiles.Tile;
-import coffeecatteam.theultimatetile.world.World;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;
 import coffeecatteam.theultimatetile.manager.UIManager;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import coffeecatteam.theultimatetile.state.State;
+import coffeecatteam.theultimatetile.state.StateManager;
+import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
+import coffeecatteam.theultimatetile.world.World;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -90,15 +90,15 @@ public class StateGame extends State {
     @Override
     public void init() {
         paused = false;
-        tutEngine.getEntityManager().getPlayer().setX(world.getSpawnX() * Tile.TILE_WIDTH);
-        tutEngine.getEntityManager().getPlayer().setY(world.getSpawnY() * Tile.TILE_HEIGHT);
+        tutEngine.getPlayer().setX(world.getSpawnX() * Tile.TILE_WIDTH);
+        tutEngine.getPlayer().setY(world.getSpawnY() * Tile.TILE_HEIGHT);
     }
 
     @Override
     public void update(GameContainer container, int delta) {
-        if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !tutEngine.getEntityManager().getPlayer().isDead) {
-            if (!tutEngine.getEntityManager().getPlayer().isGuiOpen())
-                paused = !paused && !tutEngine.getEntityManager().getPlayer().getInventoryPlayer().isActive();
+        if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !tutEngine.getPlayer().isDead) {
+            if (!tutEngine.getPlayer().isGuiOpen())
+                paused = !paused && !tutEngine.getPlayer().getInventoryPlayer().isActive();
             saveWorld(false);
         }
 
@@ -112,7 +112,7 @@ public class StateGame extends State {
     public void render(Graphics g) {
         world.render(g);
 
-        if (tutEngine.getEntityManager().getPlayer().isDead) {
+        if (tutEngine.getPlayer().isDead) {
             Color tint = new Color(96, 96, 96, 127);
             g.setColor(tint);
             g.fillRect(0, 0, tutEngine.getWidth(), tutEngine.getHeight());
@@ -168,8 +168,7 @@ public class StateGame extends State {
 
     public void reset(String world, World wWorld) {
         tutEngine.getEntityManager().reset();
-        tutEngine.getEntityManager().getPlayer().reset();
-        tutEngine.getItems().reset();
+        tutEngine.getPlayer().reset();
         if (wWorld == null)
             setWorld(world);
         else

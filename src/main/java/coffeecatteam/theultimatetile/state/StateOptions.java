@@ -2,13 +2,13 @@ package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.objs.tiles.Tile;
-import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.OptionsJsonParser;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.Color;

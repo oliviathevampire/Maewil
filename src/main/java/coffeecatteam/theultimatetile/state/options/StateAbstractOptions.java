@@ -2,12 +2,12 @@ package coffeecatteam.theultimatetile.state.options;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.state.State;
-import coffeecatteam.theultimatetile.state.StateManager;
-import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
+import coffeecatteam.theultimatetile.state.State;
+import coffeecatteam.theultimatetile.state.StateManager;
+import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

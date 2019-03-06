@@ -2,9 +2,9 @@ package coffeecatteam.theultimatetile.state.options.controls;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.gfx.ui.button.UIButtonControl;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.StateAbstractOptions;
-import coffeecatteam.theultimatetile.gfx.ui.button.UIButtonControl;
 
 public class OptionsControls extends StateAbstractOptions {
 
