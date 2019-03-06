@@ -5,6 +5,7 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
+import coffeecatteam.theultimatetile.objs.items.Items;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import org.json.simple.parser.ParseException;
@@ -23,8 +24,7 @@ public class World {
     private float spawnY;
     private long seed = 0;
 
-    private Tile[][] bg_tiles;
-    private Tile[][] fg_tiles;
+    private TileList bg_tiles, fg_tiles;
 
     private OverlayManager overlayManager;
 
@@ -34,22 +34,22 @@ public class World {
     public World(TutEngine tutEngine, String path, String worldName) {
         this.tutEngine = tutEngine;
         this.worldName = worldName;
-        overlayManager = new OverlayManager(tutEngine, tutEngine.getEntityManager().getPlayer());
+        overlayManager = new OverlayManager(tutEngine, tutEngine.getPlayer());
 
         try {
             loadWorld(path);
         } catch (IOException | ParseException e) {
             tutEngine.getLogger().print(e);
         }
-        tutEngine.getEntityManager().getPlayer().setX(spawnX * Tile.TILE_WIDTH);
-        tutEngine.getEntityManager().getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
+        tutEngine.getPlayer().setX(spawnX * Tile.TILE_WIDTH);
+        tutEngine.getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
     }
 
-    public World(TutEngine tutEngine, String worldName, int width, int height, Vector2D spawn, Tile[][] bg_tiles, Tile[][] fg_tiles) {
+    public World(TutEngine tutEngine, String worldName, int width, int height, Vector2D spawn, TileList bg_tiles, TileList fg_tiles) {
         this(tutEngine, worldName, width, height, (int) spawn.x, (int) spawn.y, bg_tiles, fg_tiles);
     }
 
-    public World(TutEngine tutEngine, String worldName, int width, int height, int spawnX, int spawnY, Tile[][] bg_tiles, Tile[][] fg_tiles) {
+    public World(TutEngine tutEngine, String worldName, int width, int height, int spawnX, int spawnY, TileList bg_tiles, TileList fg_tiles) {
         this.tutEngine = tutEngine;
         this.worldName = worldName;
         this.width = width;
@@ -59,7 +59,7 @@ public class World {
         this.bg_tiles = bg_tiles;
         this.fg_tiles = fg_tiles;
 
-        overlayManager = new OverlayManager(tutEngine, tutEngine.getEntityManager().getPlayer());
+        overlayManager = new OverlayManager(tutEngine, tutEngine.getPlayer());
     }
 
     public void update(GameContainer container, int delta) {
@@ -80,9 +80,13 @@ public class World {
 
         forcedUpdateThreadInit(container, delta);
 
-        tutEngine.getItems().update(container, delta);
+//        tutEngine.getItems().update(container, delta);
+        Items.UPDATABLE_TIEMS.forEach(i -> i.update(container, delta));
+
         tutEngine.getEntityManager().update(container, delta);
         overlayManager.update(container, delta);
+
+        tutEngine.getCamera().centerOnEntity(tutEngine.getEntityManager().getPlayer());
     }
 
     /*
@@ -135,7 +139,6 @@ public class World {
             for (int x = xStart; x < xEnd; x++)
                 getFGTile(x, y).render(g);
 
-        tutEngine.getItems().render(g);
         tutEngine.getEntityManager().render(g);
         overlayManager.render(g);
 
@@ -150,9 +153,9 @@ public class World {
     }
 
     public Tile getBGTile(TilePos pos) {
-        checkTilePos(pos, false);
+        pos = checkTilePos(pos, false);
 
-        return bg_tiles[pos.getX()][pos.getY()];
+        return bg_tiles.getTile(pos);
     }
 
     public void setBGTile(int x, int y, Tile tile) {
@@ -160,9 +163,9 @@ public class World {
     }
 
     public void setBGTile(TilePos pos, Tile tile) {
-        checkTilePos(pos, true);
+        pos = checkTilePos(pos, true);
 
-        bg_tiles[pos.getX()][pos.getY()] = tile.setPos(pos);
+        bg_tiles.setTile(pos, tile.setPos(pos));
     }
 
     public Tile getFGTile(int x, int y) {
@@ -170,9 +173,9 @@ public class World {
     }
 
     public Tile getFGTile(TilePos pos) {
-        checkTilePos(pos, false);
+        pos = checkTilePos(pos, false);
 
-        return fg_tiles[pos.getX()][pos.getY()];
+        return fg_tiles.getTile(pos);
     }
 
     public void setFGTile(int x, int y, Tile tile) {
@@ -180,12 +183,12 @@ public class World {
     }
 
     public void setFGTile(TilePos pos, Tile tile) {
-        checkTilePos(pos, true);
+        pos = checkTilePos(pos, true);
 
-        fg_tiles[pos.getX()][pos.getY()] = tile.setPos(pos);
+        fg_tiles.setTile(pos, tile.setPos(pos));
     }
 
-    private void checkTilePos(TilePos pos, boolean wh_exact) {
+    private TilePos checkTilePos(TilePos pos, boolean wh_exact) {
         if (pos.getX() < 0)
             pos.setX(0);
         if (pos.getY() < 0)
@@ -202,6 +205,7 @@ public class World {
             if (pos.getY() > height)
                 pos.setY(height);
         }
+        return pos;
     }
 
     private void loadWorld(String path) throws IOException, ParseException {
@@ -217,34 +221,34 @@ public class World {
         spawnX = worldJsonLoader.getSpawnX();
         spawnY = worldJsonLoader.getSpawnY();
 
-        Tile[][] bg_tile_ids = worldJsonLoader.getBg_tiles().clone();
-        Tile[][] fg_tile_ids = worldJsonLoader.getFg_tiles().clone();
+        TileList bg_tile_ids = worldJsonLoader.getBg_tiles();
+        TileList fg_tile_ids = worldJsonLoader.getFg_tiles();
 
-        bg_tiles = new Tile[width][height];
-        fg_tiles = new Tile[width][height];
+        bg_tiles = new TileList(width, height);
+        fg_tiles = new TileList(width, height);
 
         tutEngine.setUsername(worldJsonLoader.getUsername());
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                Tile tile = bg_tile_ids[x][y].setPos(new TilePos(x, y)).setSolid(false);
+                Tile tile = bg_tile_ids.getTile(x, y).setPos(new TilePos(x, y)).setSolid(false);
                 if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
                     tile.setSolid(true);
                     tile.setUnbreakable(true);
                 }
-                bg_tiles[x][y] = tile;
+                bg_tiles.setTile(x, y, tile);
             }
         }
         tutEngine.getLogger().print("Loaded background tiles!");
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                Tile tile = fg_tile_ids[x][y].setPos(new TilePos(x, y));
+                Tile tile = fg_tile_ids.getTile(x, y).setPos(new TilePos(x, y));
                 if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
                     tile.setSolid(true);
                     tile.setUnbreakable(true);
                 }
-                fg_tiles[x][y] = tile;
+                fg_tiles.setTile(x, y, tile);
             }
         }
         tutEngine.getLogger().print("Loaded foreground tiles!");
@@ -270,11 +274,11 @@ public class World {
         return spawnY;
     }
 
-    public Tile[][] getBg_tiles() {
+    public TileList getBg_tiles() {
         return bg_tiles;
     }
 
-    public Tile[][] getFg_tiles() {
+    public TileList getFg_tiles() {
         return fg_tiles;
     }
 

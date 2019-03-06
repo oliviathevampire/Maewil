@@ -2,10 +2,11 @@ package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.objs.tiles.Tiles;
-import coffeecatteam.theultimatetile.manager.UIManager;
+import coffeecatteam.theultimatetile.world.TileList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -19,7 +20,7 @@ public abstract class State {
     protected TutEngine tutEngine;
 
     private int bgWidth, bgHeight;
-    private Tile[][] bgTiles;
+    private TileList bgTiles;
     protected static final Tile[] CENTRE_GRASS = new Tile[]{Tiles.GRASS}, BORDER_STONE_BROKEN = new Tile[]{Tiles.STONE, Tiles.BROKEN_STONE};
 
     public State(TutEngine tutEngine) {
@@ -41,7 +42,7 @@ public abstract class State {
         if (this.bgWidth * Tile.TILE_WIDTH < tutEngine.getWidth()) this.bgWidth += 1;
         if (this.bgHeight * Tile.TILE_HEIGHT < tutEngine.getHeight()) this.bgHeight += 1;
 
-        this.bgTiles = new Tile[this.bgWidth][this.bgHeight];
+        this.bgTiles = new TileList(this.bgWidth, this.bgHeight);
 
         for (int y = 0; y < this.bgHeight; y++) {
             for (int x = 0; x < this.bgWidth; x++) {
@@ -49,13 +50,13 @@ public abstract class State {
                 if (x == 0 || y == 0 || x >= this.bgWidth - 1 || y >= this.bgHeight - 1)
                     tile = border[new Random().nextInt(border.length)];
 
-                    this.bgTiles[x][y] = tile.newCopy().setPos(new TilePos(x, y));
+                this.bgTiles.setTile(x, y, tile.newCopy().setPos(new TilePos(x, y)));
             }
         }
 
         for (int y = 0; y < this.bgHeight; y++)
             for (int x = 0; x < this.bgWidth; x++)
-                this.bgTiles[x][y].setWorldLayer(this.bgTiles);
+                this.bgTiles.getTile(x, y).setWorldLayer(bgTiles);
     }
 
     public void init() {
@@ -70,10 +71,10 @@ public abstract class State {
     }
 
     protected void renderBG(Graphics g) {
-        for (int y = 0; y < bgHeight; y++) {
-            for (int x = 0; x < bgWidth; x++) {
-                bgTiles[x][y].forcedUpdate(null, 0);
-                bgTiles[x][y].render(g);
+        for (int y = 0; y < this.bgHeight; y++) {
+            for (int x = 0; x < this.bgWidth; x++) {
+                this.bgTiles.getTile(x, y).forcedUpdate(null, 0);
+                this.bgTiles.getTile(x, y).render(g);
             }
         }
     }

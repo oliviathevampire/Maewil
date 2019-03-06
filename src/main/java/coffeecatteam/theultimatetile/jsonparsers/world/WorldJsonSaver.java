@@ -2,13 +2,15 @@ package coffeecatteam.theultimatetile.jsonparsers.world;
 
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
+import coffeecatteam.theultimatetile.objs.entities.EntityItem;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.entities.statics.EntityStatic;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
-import coffeecatteam.theultimatetile.world.World;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
+import coffeecatteam.theultimatetile.world.TileList;
+import coffeecatteam.theultimatetile.world.World;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -37,19 +39,14 @@ public class WorldJsonSaver implements IJSONSaver {
         saveTiles(world.getWidth(), world.getHeight(), world.getBg_tiles(), world.getFg_tiles(), path, WorldJsonLoader.BASE_FILES.get("tile_bg"), WorldJsonLoader.BASE_FILES.get("tile_fg"));
         tutEngine.getLogger().print("World [" + world.getWorldName() + "] tiles saved!");
 
-        /*
-         * TEMP!!!
-         */
-        if (tutEngine instanceof TutEngine) {
-            saveEntities();
-            tutEngine.getLogger().print("World [" + world.getWorldName() + "] entities saved!");
+        saveEntities();
+        tutEngine.getLogger().print("World [" + world.getWorldName() + "] entities saved!");
 
-            saveItems();
-            tutEngine.getLogger().print("World [" + world.getWorldName() + "] ITEMS saved!");
+        saveItems();
+        tutEngine.getLogger().print("World [" + world.getWorldName() + "] ITEMS saved!");
 
-            savePlayerInfo(username);
-            tutEngine.getLogger().print("World [" + world.getWorldName() + "] player info saved!");
-        }
+        savePlayerInfo(username);
+        tutEngine.getLogger().print("World [" + world.getWorldName() + "] player info saved!");
     }
 
     @Override
@@ -69,13 +66,8 @@ public class WorldJsonSaver implements IJSONSaver {
 
         JSONArray spawn = new JSONArray();
         float spawnX, spawnY;
-        if (tutEngine instanceof TutEngine) {
-            spawnX = tutEngine.getEntityManager().getPlayer().getX() / Tile.TILE_WIDTH;
-            spawnY = tutEngine.getEntityManager().getPlayer().getY() / Tile.TILE_HEIGHT;
-        } else {
-            spawnX = world.getSpawnX();
-            spawnY = world.getSpawnY();
-        }
+        spawnX = tutEngine.getPlayer().getX() / Tile.TILE_WIDTH;
+        spawnY = tutEngine.getPlayer().getY() / Tile.TILE_HEIGHT;
         spawn.add(0, spawnX);
         spawn.add(1, spawnY);
         jsonObject.put("spawn", spawn);
@@ -83,16 +75,15 @@ public class WorldJsonSaver implements IJSONSaver {
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("world"), jsonObject);
     }
 
-    public void saveTiles(int width, int height, Tile[][] bgTiles, Tile[][] fgTiles, String savePath, String bgFileName, String fgFileName) throws IOException {
+    public void saveTiles(int width, int height, TileList bgTiles, TileList fgTiles, String savePath, String bgFileName, String fgFileName) throws IOException {
         JSONObject jsonObjectBG = new JSONObject();
         JSONObject jsonObjectFG = new JSONObject();
 
         JSONObject bg_tile = new JSONObject();
         for (int y = 0; y < height; y++) {
             JSONArray chunk = new JSONArray();
-            for (int x = 0; x < width; x++) {
-                saveTile(chunk, bgTiles[x][y], x, y);
-            }
+            for (int x = 0; x < width; x++)
+                saveTile(chunk, bgTiles.getTile(x, y), x, y);
             bg_tile.put("chunk" + y, chunk);
         }
         jsonObjectBG.put("bg_tile", bg_tile);
@@ -101,9 +92,8 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject fg_tile = new JSONObject();
         for (int y = 0; y < height; y++) {
             JSONArray chunk = new JSONArray();
-            for (int x = 0; x < width; x++) {
-                saveTile(chunk, fgTiles[x][y], x, y);
-            }
+            for (int x = 0; x < width; x++)
+                saveTile(chunk, fgTiles.getTile(x, y), x, y);
             fg_tile.put("chunk" + y, chunk);
         }
         jsonObjectFG.put("fg_tile", fg_tile);
@@ -176,19 +166,22 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject jsonObject = new JSONObject();
 
         JSONArray items = new JSONArray();
-        for (ItemStack stack : tutEngine.getItems().getITEMS()) {
-            JSONObject itemObj = new JSONObject();
-            itemObj.put("id", stack.getId());
+        for (Entity entity : tutEngine.getEntityManager().getEntities()) {
+            if (entity instanceof EntityItem) {
+                ItemStack stack = ((EntityItem) entity).getStack();
+                JSONObject itemObj = new JSONObject();
+                itemObj.put("id", stack.getId());
 
-            JSONArray pos = new JSONArray();
-            pos.add(0, stack.getItem().getPosition().x / Tile.TILE_WIDTH);
-            pos.add(1, stack.getItem().getPosition().y / Tile.TILE_HEIGHT);
-            itemObj.put("pos", pos);
+                JSONArray pos = new JSONArray();
+                pos.add(0, entity.getPosition().x / Tile.TILE_WIDTH);
+                pos.add(1, entity.getPosition().y / Tile.TILE_HEIGHT);
+                itemObj.put("pos", pos);
 
-            if (stack.getCount() > 1) {
-                itemObj.put("count", stack.getCount());
+                if (stack.getCount() > 1) {
+                    itemObj.put("count", stack.getCount());
+                }
+                items.add(itemObj);
             }
-            items.add(itemObj);
         }
         jsonObject.put("ITEMS", items);
         tutEngine.getLogger().print("World [" + path + "] ITEMS saved!");
@@ -201,19 +194,19 @@ public class WorldJsonSaver implements IJSONSaver {
 
         jsonObject.put("username", username);
         tutEngine.getLogger().print("Player username saved [" + tutEngine.getUsername() + "]");
-        jsonObject.put("health", tutEngine.getEntityManager().getPlayer().getCurrentHealth());
-        jsonObject.put("glubel", tutEngine.getEntityManager().getPlayer().getGlubel());
-        jsonObject.put("lvl", tutEngine.getEntityManager().getPlayer().getLvl());
+        jsonObject.put("health", tutEngine.getPlayer().getCurrentHealth());
+        jsonObject.put("glubel", tutEngine.getPlayer().getGlubel());
+        jsonObject.put("lvl", tutEngine.getPlayer().getLvl());
 
         JSONArray selected_slots = new JSONArray();
-        selected_slots.add(0, tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getInventorySelectedIndex());
-        selected_slots.add(1, tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getHotbarSelectedIndex());
+        selected_slots.add(0, tutEngine.getPlayer().getInventoryPlayer().getInventorySelectedIndex());
+        selected_slots.add(1, tutEngine.getPlayer().getInventoryPlayer().getHotbarSelectedIndex());
         jsonObject.put("selected_slots", selected_slots);
 
         JSONObject inventory = new JSONObject();
         for (int i = 0; i < 12; i++) {
             JSONObject slot = new JSONObject();
-            ItemStack stack = tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlot(i).getStack();
+            ItemStack stack = tutEngine.getPlayer().getInventoryPlayer().getSlot(i).getStack();
             if (stack == null)
                 slot.put("id", "null");
             else {
@@ -228,7 +221,7 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject hotbar = new JSONObject();
         for (int i = 12; i < 15; i++) {
             JSONObject slot = new JSONObject();
-            ItemStack stack = tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlot(i).getStack();
+            ItemStack stack = tutEngine.getPlayer().getInventoryPlayer().getSlot(i).getStack();
             if (stack == null)
                 slot.put("id", "null");
             else {

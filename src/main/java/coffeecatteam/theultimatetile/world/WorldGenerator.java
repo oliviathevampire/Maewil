@@ -3,8 +3,8 @@ package coffeecatteam.theultimatetile.world;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
-import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import coffeecatteam.theultimatetile.objs.tiles.TileStone;
+import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 import coffeecatteam.theultimatetile.world.colormap.WorldMapGenerator;
 import coffeecatteam.theultimatetile.world.noise.OpenSimplexNoise;
@@ -26,7 +26,7 @@ public class WorldGenerator {
 
     private double blendSize = 25.0d;
 
-    private Tile[][] bgTiles, fgTiles;
+    private TileList bgTiles, fgTiles;
     private CatLogger logger;
 
     private boolean imageMapsGenerated = false, bgTilesGenerated = false, fgTilesGenerated = false;
@@ -55,8 +55,8 @@ public class WorldGenerator {
         generatorThread.start();
     }
 
-    private Tile[][] generateBGTiles() {
-        Tile[][] tiles = new Tile[worldSize][worldSize];
+    private TileList generateBGTiles() {
+        TileList tiles = new TileList(worldSize);
         for (int y = 0; y < worldSize; y++) {
             for (int x = 0; x < worldSize; x++) {
                 Color lc = new Color(WorldMapGenerator.getRGBA(landMap.getRGB(x, y)));
@@ -67,7 +67,7 @@ public class WorldGenerator {
                         || pc.getRGB() == WorldColors.DIRT.getRGB()
                         || lc.getRGB() == WorldColors.GRASS.getRGB()
                         || lc.getRGB() == WorldColors.DEAP_OCEAN.getRGB())
-                        tile = Tiles.DIRT;
+                    tile = Tiles.DIRT;
 
                 if (lc.getRGB() == WorldColors.SAND.getRGB() || lc.getRGB() == WorldColors.WATER.getRGB())
                     tile = Tiles.SAND;
@@ -77,7 +77,7 @@ public class WorldGenerator {
 
                 tile = tile.newCopy();
                 checkBorderTilePos(tile, x, y, true);
-                tiles[x][y] = tile.setPos(new TilePos(x, y));
+                tiles.setTile(x, y, tile.setPos(new TilePos(x, y)));
             }
         }
         tiles = generateOres(tiles, true);
@@ -86,8 +86,8 @@ public class WorldGenerator {
         return tiles;
     }
 
-    private Tile[][] generateFGTiles() {
-        Tile[][] tiles = new Tile[worldSize][worldSize];
+    private TileList generateFGTiles() {
+        TileList tiles = new TileList(worldSize);
         for (int y = 0; y < worldSize; y++) {
             for (int x = 0; x < worldSize; x++) {
                 Color lc = new Color(WorldMapGenerator.getRGBA(landMap.getRGB(x, y)));
@@ -111,7 +111,7 @@ public class WorldGenerator {
 
                 tile = tile.newCopy();
                 checkBorderTilePos(tile, x, y, false);
-                tiles[x][y] = tile.setPos(new TilePos(x, y));
+                tiles.setTile(x, y, tile.setPos(new TilePos(x, y)));
             }
         }
         tiles = generateOres(tiles, false);
@@ -120,7 +120,7 @@ public class WorldGenerator {
         return tiles;
     }
 
-    private Tile[][] generateOres(Tile[][] tiles, boolean bg) {
+    private TileList generateOres(TileList tiles, boolean bg) {
         double oreSize = 1.0d;
         double stoneSize = 10.0d;
 
@@ -134,25 +134,25 @@ public class WorldGenerator {
 
         addOre(tiles, Tiles.BROKEN_STONE, -0.15d, 0.15d, stoneSize, bg);
 
-        return tiles.clone();
+        return tiles;
     }
 
-    private void addOre(Tile[][] tiles, Tile ore, double minThreshold, double maxThreshold, double blendSize, boolean bg) {
+    private void addOre(TileList tiles, Tile ore, double minThreshold, double maxThreshold, double blendSize, boolean bg) {
         OpenSimplexNoise noise = new OpenSimplexNoise(seed + seedOreOff);
         seedOreOff += seedOreOffInc;
 
         for (int y = 0; y < worldSize; y++) {
             for (int x = 0; x < worldSize; x++) {
                 double value = noise.eval((float) (x / blendSize), (float) (y / blendSize));
-                if (tiles[x][y] instanceof TileStone) {
-                    Tile tile = tiles[x][y];
+                if (tiles.getTile(x, y) instanceof TileStone) {
+                    Tile tile = tiles.getTile(x, y);
 
                     if (value > minThreshold && value < maxThreshold) {
                         tile = ore.newCopy();
                     }
 
                     checkBorderTilePos(tile, x, y, bg);
-                    tiles[x][y] = tile.setPos(new TilePos(x, y));
+                    tiles.setTile(x, y, tile.setPos(new TilePos(x, y)));
                 }
             }
         }
@@ -171,11 +171,11 @@ public class WorldGenerator {
         this.blendSize = blendSize;
     }
 
-    public Tile[][] getBgTiles() {
+    public TileList getBgTiles() {
         return bgTiles;
     }
 
-    public Tile[][] getFgTiles() {
+    public TileList getFgTiles() {
         return fgTiles;
     }
 

@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.IHasData;
 import coffeecatteam.theultimatetile.objs.items.Item;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
+import coffeecatteam.theultimatetile.world.TileList;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -36,7 +37,8 @@ public abstract class Tile implements IHasData<Tile> {
 
     protected AABB bounds;
     protected TilePos position = new TilePos();
-    protected Tile[][] worldLayer;
+    protected TileList worldLayer;
+    protected int worldWidth;
 
     protected boolean isSolid, unbreakable = false;
     protected TileType tileType;
@@ -73,9 +75,10 @@ public abstract class Tile implements IHasData<Tile> {
     protected Tile getTileAt(TilePos pos) {
         if (pos.getX() < 0) pos.setX(0);
         if (pos.getY() < 0) pos.setY(0);
-        if (pos.getX() > worldLayer.length - 1) pos.setX(worldLayer.length - 1);
-        if (pos.getY() > worldLayer[0].length - 1) pos.setY(worldLayer[0].length - 1);
-        return worldLayer[pos.getX()][pos.getY()];
+        if (pos.getX() > worldLayer.getWidth() - 1) pos.setX(worldLayer.getWidth() - 1);
+        if (pos.getY() > worldLayer.getHeight() - 1) pos.setY(worldLayer.getHeight() - 1);
+//        return worldLayer[pos.getX()][pos.getY()];
+        return worldLayer.getTile(pos.getX(), pos.getY());
     }
 
     public void update(GameContainer container, int delta) {
@@ -113,7 +116,7 @@ public abstract class Tile implements IHasData<Tile> {
                     if (position.getX() == 0 || position.getX() == tutEngine.getWorld().getWidth() || position.getY() == 0 || position.getY() == tutEngine.getWorld().getHeight())
                         return;
                     tutEngine.getWorld().setFGTile(position.getX(), position.getY(), Tiles.AIR);
-                    tutEngine.getItems().addItem(new ItemStack(drop), position.getX() * Tile.TILE_WIDTH, (position.getY() * Tile.TILE_HEIGHT));
+                    tutEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), position.getX() * Tile.TILE_WIDTH, position.getY() * Tile.TILE_HEIGHT, true);
                     this.health = this.maxHealth;
                 }
             }
@@ -168,12 +171,16 @@ public abstract class Tile implements IHasData<Tile> {
         return this;
     }
 
-    public Tile[][] getWorldLayer() {
+    public TileList getWorldLayer() {
         return worldLayer;
     }
 
-    public void setWorldLayer(Tile[][] worldLayer) {
+    public void setWorldLayer(TileList worldLayer) {
         this.worldLayer = worldLayer;
+    }
+
+    public int getWorldWidth() {
+        return worldWidth;
     }
 
     public boolean isSolid() {
