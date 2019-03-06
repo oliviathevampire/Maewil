@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.gfx;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import org.newdawn.slick.GameContainer;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.Image;
 
 public class Animation {
@@ -58,10 +58,13 @@ public class Animation {
 
     public Image getCurrentFrame() {
         try {
-            return frames[index];
+            if (frames[index] == null)
+                return Assets.MISSING_TEXTURE;
         } catch (ArrayIndexOutOfBoundsException e) {
             TutEngine.getTutEngine().getLogger().print(e);
-            return frames[0];
+            return Assets.MISSING_TEXTURE;
         }
+
+        return frames[index];
     }
 }
