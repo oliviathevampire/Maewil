@@ -3,27 +3,25 @@ package coffeecatteam.theultimatetile.objs.entities.creatures;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.objs.entities.Entity;
-import coffeecatteam.theultimatetile.inventory.InventoryPlayer;
-import coffeecatteam.theultimatetile.inventory.Slot;
-import coffeecatteam.theultimatetile.objs.items.IInteractable;
-import coffeecatteam.theultimatetile.objs.items.ItemStack;
-import coffeecatteam.theultimatetile.objs.items.ItemTool;
-import coffeecatteam.theultimatetile.state.StateOptions;
-import coffeecatteam.theultimatetile.state.options.controls.Keybind;
-import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.assets.Sounds;
+import coffeecatteam.theultimatetile.inventory.InventoryPlayer;
+import coffeecatteam.theultimatetile.inventory.Slot;
+import coffeecatteam.theultimatetile.objs.entities.Entity;
+import coffeecatteam.theultimatetile.objs.items.IInteractable;
+import coffeecatteam.theultimatetile.objs.items.ItemStack;
+import coffeecatteam.theultimatetile.objs.items.ItemTool;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.newdawn.slick.*;
 
 import java.util.List;
 
 public class EntityPlayer extends EntityCreature {
-
-    private Animation animDead;
 
     private Animation sprintEffect;
 
@@ -57,18 +55,6 @@ public class EntityPlayer extends EntityCreature {
         bounds.width = width / 2;
         bounds.height = height / 2;
 
-        // Animations - 500 = 0.5 second
-        int speed = 135;
-        int upDownSpeed = speed + 115;
-        animIdle = new Animation(speed, Assets.PLAYER_IDLE);
-        animUp = new Animation(upDownSpeed, Assets.PLAYER_UP);
-        animDown = new Animation(upDownSpeed, Assets.PLAYER_DOWN);
-        animLeft = new Animation(speed, Assets.PLAYER_LEFT);
-        animRight = new Animation(speed, Assets.PLAYER_RIGHT);
-        animDead = new Animation(speed, Assets.PLAYER_DEAD);
-
-        currentAnim = animIdle;
-
         sprintEffect = new Animation(50, Assets.SPRINT_EFFECT);
     }
 
@@ -100,14 +86,11 @@ public class EntityPlayer extends EntityCreature {
             }
             if (tutEngine.keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && inventoryPlayer.isActive())
                 tutEngine.getInventoryManager().closeAllInventories();
-
-            tutEngine.getCamera().centerOnEntity(this);
         }
 
         inventoryPlayer.update(container, delta);
 
         // Animation
-        currentAnim.update();
         sprintEffect.update();
     }
 
@@ -250,7 +233,7 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void die(List<Entity> entities, int index) {
-        currentAnim = animDead;
+        setCurrentTexture("dead");
 
         if (!isDead) {
             // Drop ITEMS in inventory
@@ -271,8 +254,7 @@ public class EntityPlayer extends EntityCreature {
     }
 
     private void dropItem(ItemStack stack, float x, float y) {
-        stack.setPickedUp(false);
-        tutEngine.getItems().addItem(stack, x, y);
+        tutEngine.getEntityManager().addItem(stack.copy(), x, y, false);
     }
 
     private void getInput(GameContainer container, int delta) {
@@ -298,22 +280,22 @@ public class EntityPlayer extends EntityCreature {
 
         if (tutEngine.getKeyManager().moveUp) {
             yMove = -speed;
-            currentAnim = animUp;
+//            setCurrentTexture("walkUp");
         }
         if (tutEngine.getKeyManager().moveDown) {
             yMove = speed;
-            currentAnim = animDown;
+//            setCurrentTexture("walkDown");
         }
         if (tutEngine.getKeyManager().moveLeft) {
             xMove = -speed;
-            currentAnim = animLeft;
+//            setCurrentTexture("walkLeft");
         }
         if (tutEngine.getKeyManager().moveRight) {
             xMove = speed;
-            currentAnim = animRight;
+//            setCurrentTexture("walkRight");
         }
-        if (xMove == 0 && yMove == 0)
-            currentAnim = animIdle;
+//        if (xMove == 0 && yMove == 0)
+//            setCurrentTexture("idle");
     }
 
     private void tileInteract() {
@@ -336,8 +318,8 @@ public class EntityPlayer extends EntityCreature {
     @Override
     public void render(Graphics g) {
         if (Utils.isDate(4, 1))
-            currentAnim.getCurrentFrame().rotate((float) Math.toRadians(180d));
-        currentAnim.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
+            getCurrentTexture().getCurrentFrame().rotate((float) Math.toRadians(180d));
+        getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height);
 
         this.renderEffect(g);
     }
@@ -393,7 +375,7 @@ public class EntityPlayer extends EntityCreature {
     }
 
     public boolean canSprint() {
-        return tutEngine.getKeyManager().useSprint && !inWater() && currentAnim != animIdle && sprintTimer > 0;
+        return tutEngine.getKeyManager().useSprint && !inWater() && getCurrentTexture() != getTextures().get("idle") && sprintTimer > 0;
     }
 
     public String getUsername() {
@@ -454,5 +436,10 @@ public class EntityPlayer extends EntityCreature {
 
     public void setIsDead(boolean dead) {
         isDead = dead;
+    }
+
+    @Override
+    public EntityPlayer newCopy() {
+        return super.newCopy(new EntityPlayer(tutEngine, username));
     }
 }

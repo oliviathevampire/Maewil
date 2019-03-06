@@ -1,30 +1,25 @@
 package coffeecatteam.theultimatetile.objs.entities.creatures.undead;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityUndead;
-import coffeecatteam.theultimatetile.state.StateOptions;
-import coffeecatteam.theultimatetile.gfx.Animation;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.assets.Sounds;
+import coffeecatteam.theultimatetile.objs.entities.Entity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.objs.items.Items;
+import coffeecatteam.theultimatetile.state.StateOptions;
 import org.newdawn.slick.GameContainer;
 
 public class EntityBouncer extends EntityUndead {
 
     private long lastSoundTimer, soundCooldown = 800, soundTimer = soundCooldown;
 
-    public EntityBouncer(TutEngine tutEngine, String id) {
-        super(tutEngine, id);
+    public EntityBouncer(TutEngine tutEngine) {
+        super(tutEngine, "bouncer");
         this.drop = Items.BOUNCY_BALL;
     }
 
     @Override
-    protected void init() {
-        animIdle = new Animation(animSpeed, Assets.BOUNCER_IDLE);
-        animUp = new Animation(animUpDownSpeed, Assets.BOUNCER_UP);
-        animDown = new Animation(animUpDownSpeed, Assets.BOUNCER_DOWN);
-        animLeft = new Animation(animSpeed, Assets.BOUNCER_LEFT);
-        animRight = new Animation(animSpeed, Assets.BOUNCER_RIGHT);
+    public Entity newCopy() {
+        return super.newCopy(new EntityBouncer(tutEngine));
     }
 
     @Override

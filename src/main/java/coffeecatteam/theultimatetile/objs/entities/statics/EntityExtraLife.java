@@ -1,13 +1,9 @@
 package coffeecatteam.theultimatetile.objs.entities.statics;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
-import coffeecatteam.theultimatetile.gfx.Animation;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 
 /**
  * @author CoffeeCatRailway
@@ -15,28 +11,22 @@ import org.newdawn.slick.Graphics;
  */
 public class EntityExtraLife extends EntityStatic {
 
-    private Animation animation;
-
-    public EntityExtraLife(TutEngine tutEngine, String id) {
-        super(tutEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.NONE);
-
-        animation = new Animation(135, Assets.EXTRA_LIFE);
+    public EntityExtraLife(TutEngine tutEngine) {
+        super(tutEngine, "extra_life", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.NONE);
+        setCurrentTexture("main");
         isCollidable = false;
     }
 
     @Override
     public void update(GameContainer container, int delta) {
-        bounds = new AABB(this.position, width, height);
-
-        animation.update();
-        if (this.isTouching(tutEngine.getEntityManager().getPlayer())) {
-            tutEngine.getEntityManager().getPlayer().heal(NumberUtils.getRandomInt(DEFAULT_HEALTH / 2, DEFAULT_HEALTH));
+        if (this.isTouching(tutEngine.getPlayer())) {
+            tutEngine.getPlayer().heal(NumberUtils.getRandomInt(DEFAULT_HEALTH / 2, DEFAULT_HEALTH));
             this.hurt(this.currentHealth);
         }
     }
 
     @Override
-    public void render(Graphics g) {
-        animation.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
+    public Entity newCopy() {
+        return super.newCopy(new EntityExtraLife(tutEngine));
     }
 }

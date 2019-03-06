@@ -1,13 +1,10 @@
 package coffeecatteam.theultimatetile.objs.items;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.coffeecatutils.position.AABB;
-import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Animation;
-import coffeecatteam.theultimatetile.inventory.Slot;
 import coffeecatteam.theultimatetile.objs.IHasData;
-import org.newdawn.slick.Graphics;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 
 import java.util.ArrayList;
@@ -22,21 +19,15 @@ public abstract class Item implements IHasData<Item> {
 
     protected Animation texture;
     protected ArrayList<Image> textureAlts = new ArrayList<>();
-    private int altAmt;
     private boolean hasAlts = false;
 
     protected final String id;
-    protected AABB bounds;
-
-    protected Vector2D position = new Vector2D();
-    protected boolean pickedUp = false;
     protected boolean stackable = true;
 
     public Item(TutEngine tutEngine, String id) {
         this.tutEngine = tutEngine;
         this.id = id;
-
-        this.bounds = new AABB(this.position, WIDTH, HEIGHT);
+        Items.UPDATABLE_TIEMS.add(this);
     }
 
     protected void chooseAltTexture() {
@@ -44,70 +35,11 @@ public abstract class Item implements IHasData<Item> {
             this.texture = new Animation(textureAlts.get(NumberUtils.getRandomInt(0, textureAlts.size() - 1)));
     }
 
-    public void update(int count) {
-        if (this.tutEngine.getEntityManager().getPlayer().isActive()) {
-            if (this.tutEngine.getEntityManager().getPlayer().getCollisionBounds(0, 0).intersects(this.bounds)) {
-                if (!this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().isFull()) {
-                    this.pickedUp = true;
-                } else {
-                    int hotbar = 0;
-                    for (Slot slot : this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlots()) {
-                        if (slot.getStack() != null) {
-                            if (slot.getStack().getId().equals(this.id)) {
-                                if (slot.getStack().getItem().isStackable()) {
-                                    this.pickedUp = true;
-                                }
-                            } else {
-                                hotbar++;
-                            }
-                        }
-                    }
-
-                    if (hotbar >= this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().size()) {
-                        if (!this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().isHotbarFull()) {
-                            this.pickedUp = true;
-                        } else {
-                            for (Slot slot : this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().getSlots()) {
-                                if (slot.getStack() != null) {
-                                    if (slot.getStack().getId().equals(this.id)) {
-                                        if (slot.getStack().getItem().isStackable()) {
-                                            this.pickedUp = true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (this.pickedUp) {
-            if (!this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().isFull())
-                this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().addItem(new ItemStack(this, count));
-            else
-                this.tutEngine.getEntityManager().getPlayer().getInventoryPlayer().addStackToHotbar(new ItemStack(this, count));
-        }
-
-        this.bounds = new AABB(this.position, WIDTH, HEIGHT);
-    }
-
-    public void render(Graphics g) {
-        render(g, (int) (this.position.x - this.tutEngine.getCamera().getxOffset()), (int) (this.position.y - this.tutEngine.getCamera().getyOffset()));
-    }
-
-    public void render(Graphics g, int x, int y) {
-        getTexture().draw(x, y, WIDTH, HEIGHT);
-    }
-
-    public void setPosition(int x, int y) {
-        this.position.x = x;
-        this.position.y = y;
-        this.bounds.x = x;
-        this.bounds.y = y;
+    public void update(GameContainer container, int delta) {
+        this.texture.update();
     }
 
     public Image getTexture() {
-        this.texture.update();
         return this.texture.getCurrentFrame();
     }
 
@@ -132,48 +64,18 @@ public abstract class Item implements IHasData<Item> {
     }
 
     public void setTextureAlts(Image[] textureAlts) {
-        setTextureAlts(Arrays.asList(textureAlts), textureAlts.length);
-    }
-
-    public void setTextureAlts(Image[] textureAlts, int altAmt) {
-        setTextureAlts(Arrays.asList(textureAlts), altAmt);
+        setTextureAlts(Arrays.asList(textureAlts));
     }
 
     public void setTextureAlts(List<Image> textureAlts) {
-        setTextureAlts(textureAlts, textureAlts.size());
-    }
-
-    public void setTextureAlts(List<Image> textureAlts, int altAmt) {
         this.textureAlts = new ArrayList<>();
-        for (int i = 0; i < altAmt; i++)
-            this.textureAlts.add(textureAlts.get(i));
-        this.altAmt = altAmt;
+        this.textureAlts.addAll(textureAlts);
         chooseAltTexture();
     }
 
     @Override
     public String getId() {
         return this.id;
-    }
-
-    public AABB getBounds() {
-        return bounds;
-    }
-
-    public Vector2D getPosition() {
-        return position;
-    }
-
-    public void setPosition(Vector2D position) {
-        this.position = position;
-    }
-
-    public boolean isPickedUp() {
-        return this.pickedUp;
-    }
-
-    public void setPickedUp(boolean pickedUp) {
-        this.pickedUp = pickedUp;
     }
 
     public boolean isStackable() {
@@ -184,17 +86,12 @@ public abstract class Item implements IHasData<Item> {
         this.stackable = stackable;
     }
 
-//    public abstract <T extends Item> T newCopy();
-
-
     @Override
     public <T extends Item> T newCopy(T obj) {
         T item = obj;
         item.setAnimation(texture);
         item.setHasAlts(hasAlts);
         item.setTextureAlts(textureAlts);
-        item.setPosition(position);
-        item.setPickedUp(pickedUp);
         item.setStackable(stackable);
         return item;
     }

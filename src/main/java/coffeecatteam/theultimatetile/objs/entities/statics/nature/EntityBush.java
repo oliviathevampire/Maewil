@@ -4,12 +4,15 @@ import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.statics.EntityNature;
 import coffeecatteam.theultimatetile.objs.items.Items;
-import org.newdawn.slick.Image;
 
 public class EntityBush extends EntityNature {
 
-    public EntityBush(TutEngine tutEngine, String id, Image texture, int width) {
-        super(tutEngine, id, texture, width, Entity.DEFAULT_HEIGHT, EntityHitType.BUSH);
+    private EntityRock.RockType type;
+
+    public EntityBush(TutEngine tutEngine, EntityRock.RockType type) {
+        super(tutEngine, "bush", type.getWidth(), type.getHeight(), EntityHitType.BUSH);
+        setCurrentTexture(type.getId());
+        this.type = type;
 
         bounds.x = this.width / 4f - (this.width / 4f) / 2;
         bounds.y = height / 2f + height / 3f;
@@ -18,5 +21,10 @@ public class EntityBush extends EntityNature {
 
         drops.add(Items.LEAF);
         drops.add(Items.STICK);
+    }
+
+    @Override
+    public Entity newCopy() {
+        return super.newCopy(new EntityRock(tutEngine, type));
     }
 }

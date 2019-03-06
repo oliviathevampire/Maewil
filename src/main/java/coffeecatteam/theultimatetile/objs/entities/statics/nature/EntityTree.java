@@ -4,18 +4,17 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.statics.EntityNature;
-import coffeecatteam.theultimatetile.objs.items.ItemStack;
-import coffeecatteam.theultimatetile.objs.tiles.Tile;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.items.Items;
-import org.newdawn.slick.Image;
-
-import java.util.List;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
 
 public class EntityTree extends EntityNature {
 
-    public EntityTree(TutEngine tutEngine, String id, TreeType type) {
-        super(tutEngine, id, type.getTexture(), type.getWidth(), type.getHeight(), EntityHitType.WOOD);
+    private TreeType type;
+
+    public EntityTree(TutEngine tutEngine, TreeType type) {
+        super(tutEngine, "tree", type.getWidth(), type.getHeight(), EntityHitType.WOOD);
+        setCurrentTexture(type.getId());
+        this.type = type;
 
         bounds.x = width / 4f;
         bounds.y = height - height / 4f;
@@ -24,32 +23,27 @@ public class EntityTree extends EntityNature {
 
         drops.add(Items.LEAF);
         drops.add(Items.STICK);
-    }
-
-    @Override
-    public void die(List<Entity> entities, int index) {
-        super.die(entities, index);
-        tutEngine.getItems().addItem(new ItemStack(Items.APPLE), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
+        drops.add(NumberUtils.getRandomBoolean() ? Items.APPLE : Items.STICK);
     }
 
     public enum TreeType {
 
-        SMALL(Assets.TREE_SMALL, Tile.TILE_WIDTH, Tile.TILE_HEIGHT * 2),
-        MEDIUM(Assets.TREE_MEDIUM, Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2),
-        LARGE(Assets.TREE_LARGE, Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2),
-        EXTRA_LARGE(Assets.TREE_EXTRA_LARGE, Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 4);
+        SMALL("small", Tile.TILE_WIDTH, Tile.TILE_HEIGHT * 2),
+        MEDIUM("medium", Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2),
+        LARGE("large", Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2),
+        EXTRA_LARGE("extra_large", Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 4);
 
-        private Image texture;
+        private String id;
         private int width, height;
 
-        TreeType(Image texture, int width, int height) {
-            this.texture = texture;
+        TreeType(String id, int width, int height) {
+            this.id = id;
             this.width = width;
             this.height = height;
         }
 
-        public Image getTexture() {
-            return texture;
+        public String getId() {
+            return id;
         }
 
         public int getWidth() {
@@ -59,5 +53,10 @@ public class EntityTree extends EntityNature {
         public int getHeight() {
             return height;
         }
+    }
+
+    @Override
+    public Entity newCopy() {
+        return super.newCopy(new EntityTree(tutEngine, type));
     }
 }

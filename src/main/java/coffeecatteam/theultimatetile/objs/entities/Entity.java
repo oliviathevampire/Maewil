@@ -4,20 +4,24 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.tags.TagCompound;
+import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
+import coffeecatteam.theultimatetile.objs.IHasData;
+import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import coffeecatteam.theultimatetile.objs.tiles.TileLava;
+import coffeecatteam.theultimatetile.objs.tiles.TileWater;
+import coffeecatteam.theultimatetile.tags.TagCompound;
 import org.newdawn.slick.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Entity {
-
-    public static Map<String, Entity> entities = new HashMap<>();
+public abstract class Entity implements IHasData<Entity> {
 
     public static final int DEFAULT_HEALTH = 100;
     public static final int DEFAULT_WIDTH = 48, DEFAULT_HEIGHT = 48;
@@ -38,10 +42,14 @@ public abstract class Entity {
     private EntityHitType entityHitType;
 
     protected int renderX, renderY;
-    protected Image texture;
+    private Map<String, Animation> textures = new HashMap<>();
+    private Animation currentTexture = new Animation(Assets.MISSING_TEXTURE);
+
+    private Animation splashEffect;
     private SpriteSheet HEALTH_BAR = new SpriteSheet("/assets/textures/gui/overlay/health_bar.png");
 
     public Entity(TutEngine tutEngine, String id, int width, int height, EntityHitType entityHitType) {
+        this.tutEngine = tutEngine;
         this.id = id;
 
         this.width = width;
@@ -50,9 +58,8 @@ public abstract class Entity {
 
         bounds = new AABB(this.position, width, height);
 
-        entities.put(id, this);
-        entities.get(id).settutEngine(tutEngine);
         this.entityHitType = entityHitType;
+        splashEffect = new Animation(50, Assets.SPLASH_EFFECT);
     }
 
     public Entity setTags(TagCompound tags) {
@@ -68,10 +75,16 @@ public abstract class Entity {
     }
 
     public void updateA(GameContainer container, int delta) {
+//        bounds = new AABB(this.position, width, height);
         update(container, delta);
 
-        this.renderX = (int) (this.position.x - ((TutEngine) this.tutEngine).getCamera().getxOffset());
-        this.renderY = (int) (this.position.y - ((TutEngine) this.tutEngine).getCamera().getyOffset());
+        this.renderX = (int) (this.position.x - this.tutEngine.getCamera().getxOffset());
+        this.renderY = (int) (this.position.y - this.tutEngine.getCamera().getyOffset());
+        splashEffect.update();
+
+        if (currentTexture != null)
+            currentTexture.update();
+        textures.values().forEach(Animation::update);
 
         if (this.interacted)
             this.interact();
@@ -81,8 +94,7 @@ public abstract class Entity {
     }
 
     public void render(Graphics g) {
-        if (texture != null)
-            texture.draw(this.renderX, this.renderY, width, height);
+        getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height);
     }
 
     public void postRender(Graphics g) {
@@ -106,9 +118,29 @@ public abstract class Entity {
         Text.drawString(g, textHealth, this.renderX - xOff, this.renderY - Text.getHeight(textHealth, font) / 2, false, false, new Color(0, 255, 0), font);
     }
 
+    public void renderEffect(Graphics g) {
+        if (inWater())
+            splashEffect.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
+    }
+
+    public Tile getTileAtMid() {
+        float x = (float) ((position.x + width / 2) / Tile.TILE_WIDTH);
+        float y = (float) ((position.y + height / 2f + height / 4f) / Tile.TILE_HEIGHT);
+        Tile t = tutEngine.getWorld().getFGTile((int) x, (int) y);
+        return t;
+    }
+
+    public boolean inWater() {
+        return getTileAtMid() instanceof TileWater;
+    }
+
+    public boolean inLava() {
+        return getTileAtMid() instanceof TileLava;
+    }
+
     public void die(List<Entity> entities, int index) {
         entities.remove(index);
-        tutEngine.getEntityManager().getPlayer().setGlubel(tutEngine.getEntityManager().getPlayer().getGlubel() + NumberUtils.getRandomInt(1, 5));
+        tutEngine.getPlayer().setGlubel(tutEngine.getPlayer().getGlubel() + NumberUtils.getRandomInt(1, 5));
     }
 
     public void interact() {
@@ -152,14 +184,6 @@ public abstract class Entity {
 
     public boolean isTouching(Entity entity) {
         return this.bounds.contains(entity.getPosition().x + entity.getWidth() / 2d, entity.getPosition().y + entity.getHeight() / 2d);
-    }
-
-    public TutEngine gettutEngine() {
-        return tutEngine;
-    }
-
-    public void settutEngine(TutEngine tutEngine) {
-        this.tutEngine = tutEngine;
     }
 
     public String getId() {
@@ -250,6 +274,10 @@ public abstract class Entity {
         CREATURE, WOOD, STONE, BUSH, NONE
     }
 
+    public boolean isShowHitbox() {
+        return showHitbox;
+    }
+
     public Entity setShowHitbox(boolean showHitbox) {
         this.showHitbox = showHitbox;
         return this;
@@ -261,5 +289,40 @@ public abstract class Entity {
 
     public void setBounds(AABB bounds) {
         this.bounds = bounds;
+    }
+
+    public Map<String, Animation> getTextures() {
+        return textures;
+    }
+
+    public void setTextures(Map<String, Animation> textures) {
+        this.textures = textures;
+    }
+
+    public Animation getCurrentTexture() {
+        return currentTexture;
+    }
+
+    public void setCurrentTexture(String id) {
+        this.currentTexture = this.textures.get(id);
+    }
+
+    public Image getTexture(String id) {
+        return this.textures.get(id).getCurrentFrame();
+    }
+
+    @Override
+    public <T extends Entity> T newCopy(T obj) {
+        T entity = obj;
+        entity.setActive(active);
+        entity.setCurrentHealth(currentHealth);
+        entity.setMaxHealth(maxHealth);
+        entity.setEntityHitType(entityHitType);
+        entity.setPosition(position);
+        entity.setShowHitbox(showHitbox);
+        entity.setTags(TAGS);
+        entity.setTextures(textures);
+        entity.setCurrentTexture(new ArrayList<>(textures.keySet()).get(0));
+        return entity;
     }
 }

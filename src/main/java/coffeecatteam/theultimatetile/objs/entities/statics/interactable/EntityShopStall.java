@@ -5,40 +5,30 @@ import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.statics.EntityStatic;
-import coffeecatteam.theultimatetile.gfx.Animation;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 public class EntityShopStall extends EntityStatic {
 
-    private Animation ROOF;
-
-    public EntityShopStall(TutEngine tutEngine, String id) {
-        super(tutEngine, id, Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, EntityHitType.WOOD);
-
-        bounds = new AABB(0, height / 2 + height / 3, width, height / 12);
-        ROOF = pickRoof();
+    public EntityShopStall(TutEngine tutEngine) {
+        super(tutEngine, "shop_Stall", Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, EntityHitType.WOOD);
+        setCurrentTexture(pickRoof().getId());
     }
 
-    private Animation pickRoof() {
-        int speed = 250;
-        Animation anim = new Animation(speed, Assets.SHOP_ROOF_ORANGE);
+    private RoofType pickRoof() {
         int i = NumberUtils.getRandomInt(3);
         if (i == 0)
-            anim.setFrames(Assets.SHOP_ROOF_ORANGE);
+            return RoofType.ORANGE;
         if (i == 1)
-            anim.setFrames(Assets.SHOP_ROOF_BLUE);
+            return RoofType.BLUE;
         if (i == 2)
-            anim.setFrames(Assets.SHOP_ROOF_RED);
-        if (i == 3)
-            anim.setFrames(Assets.SHOP_ROOF_GREY);
-        return anim;
+            return RoofType.RED;
+        return RoofType.WHITE;
     }
 
     @Override
     public void update(GameContainer container, int delta) {
-        ROOF.update();
+        bounds = new AABB(0, height / 2f + height / 3f, width, height / 12);
     }
 
     @Override
@@ -49,7 +39,30 @@ public class EntityShopStall extends EntityStatic {
 
     @Override
     public void render(Graphics g) {
-        Assets.SHOP_STALL.draw(this.renderX, this.renderY, width, height);
-        ROOF.getCurrentFrame().draw(this.renderX, this.renderY, width, height / 2f);
+        getTexture("stall").draw(this.renderX, this.renderY, width, height);
+        getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height / 2f);
+    }
+
+    @Override
+    public Entity newCopy() {
+        return super.newCopy(new EntityShopStall(tutEngine));
+    }
+
+    enum RoofType {
+
+        ORANGE("orange"),
+        BLUE("blue"),
+        RED("red"),
+        WHITE("white");
+
+        private String id;
+
+        RoofType(String id) {
+            this.id = "roof" + id;
+        }
+
+        public String getId() {
+            return id;
+        }
     }
 }

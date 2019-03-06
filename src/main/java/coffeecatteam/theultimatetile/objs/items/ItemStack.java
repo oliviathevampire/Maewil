@@ -1,8 +1,6 @@
 package coffeecatteam.theultimatetile.objs.items;
 
-import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.tags.TagCompound;
-import coffeecatteam.theultimatetile.tags.TagUtils;
 import org.newdawn.slick.Image;
 
 public class ItemStack {
@@ -14,8 +12,6 @@ public class ItemStack {
 
     public ItemStack(TagCompound compound) {
         this(Items.getItemById(compound.getString("id")), compound.getInteger("count"));
-        if (compound.hasKey("pos"))
-            setPosition(TagUtils.getPosFromTag(compound.getCompoundTag("pos")));
     }
 
     public ItemStack(Item item) {
@@ -30,24 +26,10 @@ public class ItemStack {
     public void saveToTagCompound(TagCompound compound) {
         compound.setString("id", this.getId());
         compound.setInteger("count", this.getCount());
-        compound.setTag("pos", TagUtils.createPosTag(this.getPosition()));
-    }
-
-    public Vector2D getPosition() {
-        return this.item.getPosition();
-    }
-
-    public ItemStack setPosition(int x, int y) {
-        return setPosition(new Vector2D(x, y));
-    }
-
-    public ItemStack setPosition(Vector2D pos) {
-        this.item.setPosition(pos);
-        return new ItemStack(this.item, this.count);
     }
 
     public ItemStack copy() {
-        ItemStack itemStack = new ItemStack(this.item, this.count);
+        ItemStack itemStack = new ItemStack(this.item.newCopy(), this.count);
         return itemStack;
     }
 
@@ -79,13 +61,5 @@ public class ItemStack {
         this.count = count;
         if (this.count > MAX_STACK_COUNT)
             this.count = MAX_STACK_COUNT;
-    }
-
-    public boolean isPickedUp() {
-        return this.item.isPickedUp();
-    }
-
-    public void setPickedUp(boolean pickedUp) {
-        this.item.setPickedUp(pickedUp);
     }
 }

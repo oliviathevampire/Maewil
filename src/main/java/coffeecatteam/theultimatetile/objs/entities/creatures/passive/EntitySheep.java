@@ -1,10 +1,9 @@
 package coffeecatteam.theultimatetile.objs.entities.creatures.passive;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.ai.AIFollowFlee;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPassive;
-import coffeecatteam.theultimatetile.gfx.Animation;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.items.Items;
 import org.newdawn.slick.GameContainer;
 
@@ -12,10 +11,10 @@ public class EntitySheep extends EntityPassive {
 
     private AIFollowFlee aiFollowFlee;
 
-    public EntitySheep(TutEngine tutEngine, String id) {
-        super(tutEngine, id);
+    public EntitySheep(TutEngine tutEngine) {
+        super(tutEngine, "sheep");
         this.drop = Items.WOOL_BUNDLE;
-        aiFollowFlee = new AIFollowFlee(tutEngine, this, tutEngine.getEntityManager().getPlayer(), 100f, 3.5f).setFlee();
+        aiFollowFlee = new AIFollowFlee(tutEngine, this, tutEngine.getPlayer(), 100f, 3.5f).setFlee();
     }
 
     @Override
@@ -24,7 +23,7 @@ public class EntitySheep extends EntityPassive {
         yMove = 0;
 
         // Movement
-        if (tutEngine.getEntityManager().getPlayer().isActive()) {
+        if (tutEngine.getPlayer().isActive()) {
             if (TAGS.hasKey("fleePlayer") && TAGS.getBoolean("fleePlayer")) {
                 if (!aiFollowFlee.update(container, delta))
                     aiWander.update(container, delta);
@@ -35,11 +34,7 @@ public class EntitySheep extends EntityPassive {
     }
 
     @Override
-    protected void init() {
-        animIdle = new Animation(animSpeed, Assets.SHEEP_IDLE);
-        animUp = new Animation(animUpDownSpeed, Assets.SHEEP_UP);
-        animDown = new Animation(animUpDownSpeed, Assets.SHEEP_DOWN);
-        animLeft = new Animation(animSpeed, Assets.SHEEP_LEFT);
-        animRight = new Animation(animSpeed, Assets.SHEEP_RIGHT);
+    public Entity newCopy() {
+        return super.newCopy(new EntitySheep(tutEngine));
     }
 }

@@ -14,15 +14,14 @@ import java.io.IOException;
  */
 public abstract class DataParser<E extends IHasData<E>> {
 
-    private String dataFolderName;
+    protected String dataFolderName;
 
     public DataParser(String dataFolderName) {
         this.dataFolderName = dataFolderName;
     }
 
     public E loadData(E obj) throws IOException, ParseException {
-        JSONParser parser = new JSONParser();
-        JSONObject data = (JSONObject) parser.parse(FileUtils.loadFileInSideJar("/assets/data/" + dataFolderName + "/" + obj.getId() + ".json"));
+        JSONObject data = getData(dataFolderName + "/" + obj.getId(), true);
 
         TextureType type = TextureType.getByName(String.valueOf(data.get("type")));
         String texturePath = "/assets/textures/" + data.get("texture");
@@ -47,7 +46,9 @@ public abstract class DataParser<E extends IHasData<E>> {
     }
 
     abstract E singleData(JSONObject data, E obj, String texturePath, int spriteSize);
+
     abstract E multipleData(JSONObject data, E obj, String texturePath, int spriteSize);
+
     abstract E animatedData(JSONObject data, E obj, String texturePath, int spriteSize);
 
     enum TextureType {
@@ -64,6 +65,16 @@ public abstract class DataParser<E extends IHasData<E>> {
                 if (type.typeName.equals(typeName))
                     return type;
             return SINGLE;
+        }
+    }
+
+    public static JSONObject getData(String fileName, boolean inJar) throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        String path = "/assets/data/" + fileName + ".json";
+        if (inJar) {
+            return (JSONObject) parser.parse(FileUtils.loadFileInSideJar(path));
+        } else {
+            return (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path));
         }
     }
 }

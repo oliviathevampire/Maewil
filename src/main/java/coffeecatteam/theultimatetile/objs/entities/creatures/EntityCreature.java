@@ -7,12 +7,8 @@ import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.ai.AI;
 import coffeecatteam.theultimatetile.objs.items.Item;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
-import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
-import coffeecatteam.theultimatetile.objs.tiles.TileLava;
-import coffeecatteam.theultimatetile.objs.tiles.TileWater;
-import coffeecatteam.theultimatetile.gfx.Animation;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.state.StateOptions;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -26,14 +22,6 @@ public abstract class EntityCreature extends Entity {
     public static final float DEFAULT_WATER_SPEED = 1f, DEFAULT_IN_WATER_SPEED = 0.6f;
     protected float waterSpeed = DEFAULT_WATER_SPEED;
 
-    /* Animations - 500 = 0.5 second */
-    protected Animation animIdle, animUp, animDown, animLeft, animRight;
-    protected Animation currentAnim;
-    protected int animSpeed = 135;
-    protected int animUpDownSpeed = animSpeed + 115;
-
-    private Animation splashEffect;
-
     protected Item drop = null;
 
     protected float speed;
@@ -44,15 +32,15 @@ public abstract class EntityCreature extends Entity {
     public EntityCreature(TutEngine tutEngine, String id, int width, int height) {
         super(tutEngine, id, width, height, EntityHitType.CREATURE);
         init();
-        splashEffect = new Animation(50, Assets.SPLASH_EFFECT);
-        currentAnim = animIdle;
+        setCurrentTexture("idle");
 
         speed = DEFAULT_SPEED;
         xMove = 0;
         yMove = 0;
     }
 
-    protected abstract void init();
+    protected void init() {
+    }
 
     @Override
     public void updateA(GameContainer container, int delta) {
@@ -61,8 +49,6 @@ public abstract class EntityCreature extends Entity {
         ais.forEach(ai -> ai.update(container, delta));
 
         // Animation
-        currentAnim.update();
-        splashEffect.update();
         updateAnim();
 
         if (this.inLava()) {
@@ -76,30 +62,24 @@ public abstract class EntityCreature extends Entity {
 
     private void updateAnim() {
         if (yMove < 0)
-            currentAnim = animUp;
+            setCurrentTexture("walkUp");
         if (yMove > 0)
-            currentAnim = animDown;
+            setCurrentTexture("walkDown");
 
         if (xMove < 0)
-            currentAnim = animLeft;
+            setCurrentTexture("walkLeft");
         if (xMove > 0)
-            currentAnim = animRight;
+            setCurrentTexture("walkRight");
 
         if (xMove == 0 && yMove == 0)
-            currentAnim = animIdle;
+            setCurrentTexture("idle");
     }
 
     @Override
     public void render(Graphics g) {
-        currentAnim.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
-
+        super.render(g);
         this.renderEffect(g);
         this.renderHealth(g);
-    }
-
-    public void renderEffect(Graphics g) {
-        if (inWater())
-            splashEffect.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
     }
 
     @Override
@@ -108,23 +88,8 @@ public abstract class EntityCreature extends Entity {
         if (drop != null) {
             int amt = NumberUtils.getRandomInt(4);
             for (int i = 0; i < amt; i++)
-                tutEngine.getItems().addItem(new ItemStack(drop), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height));
+                tutEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height), false);
         }
-    }
-
-    public Tile getTileAtMid() {
-        float x = (float) ((position.x + width / 2) / Tile.TILE_WIDTH);
-        float y = (float) ((position.y + height / 2f + height / 4f) / Tile.TILE_HEIGHT);
-        Tile t = tutEngine.getWorld().getFGTile((int) x, (int) y);
-        return t;
-    }
-
-    public boolean inWater() {
-        return getTileAtMid() instanceof TileWater;
-    }
-
-    public boolean inLava() {
-        return getTileAtMid() instanceof TileLava;
     }
 
     public void move() {
@@ -140,48 +105,30 @@ public abstract class EntityCreature extends Entity {
     }
 
     public void moveX() {
-        if (xMove != 0)
+        if (xMove != 0) {
             xMove *= waterSpeed;
+            int tx = (int) (position.x + xMove + bounds.x + (xMove > 0 ? bounds.width : 0)) / Tile.TILE_WIDTH;
 
-        if (xMove > 0) {
-            int tx = (int) (position.x + xMove + bounds.x + bounds.width) / Tile.TILE_WIDTH;
-
-            if (!collisionWidthTile(tx, (int) (position.y + bounds.y) / Tile.TILE_HEIGHT) && !collisionWidthTile(tx, (int) (position.y + bounds.y + bounds.height) / Tile.TILE_HEIGHT))
+            if (!isCollidingWithTile(tx, (int) (position.y + bounds.y) / Tile.TILE_HEIGHT) && !isCollidingWithTile(tx, (int) (position.y + bounds.y + bounds.height) / Tile.TILE_HEIGHT))
                 position.add(new Vector2D(xMove, 0));
             else
-                position.x = tx * Tile.TILE_WIDTH - bounds.x - bounds.width - 1;
-        } else if (xMove < 0) {
-            int tx = (int) (position.x + xMove + bounds.x) / Tile.TILE_WIDTH;
-
-            if (!collisionWidthTile(tx, (int) (position.y + bounds.y) / Tile.TILE_HEIGHT) && !collisionWidthTile(tx, (int) (position.y + bounds.y + bounds.height) / Tile.TILE_HEIGHT))
-                position.add(new Vector2D(xMove, 0));
-            else
-                position.x = tx * Tile.TILE_WIDTH + Tile.TILE_WIDTH - bounds.x;
+                position.x = tx * Tile.TILE_WIDTH + (xMove > 0 ? -bounds.width - 1 : Tile.TILE_WIDTH) - bounds.x;
         }
     }
 
     public void moveY() {
-        if (yMove != 0)
+        if (yMove != 0) {
             yMove *= waterSpeed;
+            int ty = (int) (position.y + yMove + bounds.y + (yMove > 0 ? bounds.height : 0)) / Tile.TILE_HEIGHT;
 
-        if (yMove < 0) {
-            int ty = (int) (position.y + yMove + bounds.y) / Tile.TILE_HEIGHT;
-
-            if (!collisionWidthTile((int) (position.x + bounds.x) / Tile.TILE_WIDTH, ty) && !collisionWidthTile((int) (position.x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty))
+            if (!isCollidingWithTile((int) (position.x + bounds.x) / Tile.TILE_WIDTH, ty) && !isCollidingWithTile((int) (position.x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty))
                 position.add(new Vector2D(0, yMove));
             else
-                position.y = ty * Tile.TILE_HEIGHT + Tile.TILE_HEIGHT - bounds.y;
-        } else if (yMove > 0) {
-            int ty = (int) (position.y + yMove + bounds.y + bounds.height) / Tile.TILE_HEIGHT;
-
-            if (!collisionWidthTile((int) (position.x + bounds.x) / Tile.TILE_WIDTH, ty) && !collisionWidthTile((int) (position.x + bounds.x + bounds.width) / Tile.TILE_WIDTH, ty))
-                position.add(new Vector2D(0, yMove));
-            else
-                position.y = ty * Tile.TILE_HEIGHT - bounds.y - bounds.height - 1;
+                position.y = ty * Tile.TILE_HEIGHT + (yMove > 0 ? -bounds.height - 1 : Tile.TILE_HEIGHT) - bounds.y;
         }
     }
 
-    protected boolean collisionWidthTile(int x, int y) {
+    protected boolean isCollidingWithTile(int x, int y) {
         if (this.getId().equals("player") && StateOptions.OPTIONS.debugMode()) {
             tutEngine.getLogger().print("X: " + x + " Y: " + y);
             tutEngine.getLogger().print(tutEngine.getWorld().getFGTile(x, y).getId() + " - " + tutEngine.getWorld().getFGTile(x, y).isSolid());

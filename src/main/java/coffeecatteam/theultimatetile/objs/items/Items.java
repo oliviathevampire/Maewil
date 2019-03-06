@@ -1,23 +1,18 @@
 package coffeecatteam.theultimatetile.objs.items;
 
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.ItemDataParser;
 import org.json.simple.parser.ParseException;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 public class Items {
 
     public static final HashMap<String, Item> ITEMS = new HashMap<>();
+    public static final List<Item> UPDATABLE_TIEMS = new ArrayList<>();
 
     /*
      * General
@@ -48,7 +43,7 @@ public class Items {
 
     public static void init(TutEngine tutEngine) throws IOException, ParseException {
         ItemDataParser parser = new ItemDataParser();
-        
+
         /*
          * General
          */
@@ -109,55 +104,10 @@ public class Items {
     }
 
     public static Item getItemById(String id) {
-        return ITEMS.get(id);
+        return ITEMS.get(id).newCopy();
     }
 
-    /*
-     * Item Manager
-     */
-    private TutEngine tutEngine;
-    private static final List<ItemStack> ITEM_STACKS = new ArrayList<>();
-
-    public Items(TutEngine tutEngine) {
-        this.tutEngine = tutEngine;
-    }
-
-    public void update(GameContainer container, int delta) {
-        Iterator<ItemStack> it = ITEM_STACKS.iterator();
-        while (it.hasNext()) {
-            ItemStack stack = it.next();
-            stack.getItem().update(stack.getCount());
-            if (stack.getItem().isPickedUp())
-                it.remove();
-        }
-    }
-
-    public void render(Graphics g) {
-        for (ItemStack stack : ITEM_STACKS) {
-            stack.getItem().render(g);
-            if (stack.getCount() > 1)
-                Text.drawString(g, String.valueOf(stack.getCount()), (int) (stack.getItem().getPosition().x - this.tutEngine.getCamera().getxOffset()), (int) (stack.getItem().getPosition().y + 15 - this.tutEngine.getCamera().getyOffset()), false, false, Color.white, Assets.FONTS.get("20"));
-        }
-    }
-
-    public void addItem(ItemStack stack, float x, float y) {
-        addItem(stack, (int) x, (int) y);
-    }
-
-    public void addItem(ItemStack stack, int x, int y) {
-        stack.setPosition(x, y);
-        addItem(stack);
-    }
-
-    public void addItem(ItemStack stack) {
-        ITEM_STACKS.add(stack);
-    }
-
-    public List<ItemStack> getITEMS() {
-        return ITEM_STACKS;
-    }
-
-    public void reset() {
-        ITEM_STACKS.clear();
+    public static List<Item> getItems() {
+        return new ArrayList<>(ITEMS.values());
     }
 }

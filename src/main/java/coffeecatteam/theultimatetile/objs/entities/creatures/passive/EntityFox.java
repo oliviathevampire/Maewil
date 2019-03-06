@@ -1,22 +1,17 @@
 package coffeecatteam.theultimatetile.objs.entities.creatures.passive;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPassive;
-import coffeecatteam.theultimatetile.gfx.Animation;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
 
 public class EntityFox extends EntityPassive {
 
-    public EntityFox(TutEngine tutEngine, String id) {
-        super(tutEngine, id);
+    public EntityFox(TutEngine tutEngine) {
+        super(tutEngine, "fox");
     }
 
     @Override
-    protected void init() {
-        animIdle = new Animation(animSpeed, Assets.FOX_IDLE);
-        animUp = new Animation(animUpDownSpeed, Assets.FOX_UP);
-        animDown = new Animation(animUpDownSpeed, Assets.FOX_DOWN);
-        animLeft = new Animation(animSpeed, Assets.FOX_LEFT);
-        animRight = new Animation(animSpeed, Assets.FOX_RIGHT);
+    public Entity newCopy() {
+        return super.newCopy(new EntityFox(tutEngine));
     }
 }

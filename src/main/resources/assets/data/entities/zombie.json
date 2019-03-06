@@ -1,0 +1,32 @@
+{
+  "type": "creature",
+  "texture": "entities/living/undead/zombie.png",
+  "spriteSize": [16, 16],
+  "animations": {
+    "idle": {
+      "length": 4,
+      "speed": 135,
+      "startPos": [0, 0]
+    },
+    "walkUp": {
+      "length": 3,
+      "speed": 250,
+      "startPos": [0, 1]
+    },
+    "walkDown": {
+      "length": 3,
+      "speed": 250,
+      "startPos": [3, 1]
+    },
+    "walkLeft": {
+      "length": 4,
+      "speed": 135,
+      "startPos": [4, 2]
+    },
+    "walkRight": {
+      "length": 4,
+      "speed": 135,
+      "startPos": [0, 2]
+    }
+  }
+}

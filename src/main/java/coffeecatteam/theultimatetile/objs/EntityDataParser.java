@@ -12,7 +12,6 @@ import org.json.simple.parser.ParseException;
 import org.newdawn.slick.Image;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

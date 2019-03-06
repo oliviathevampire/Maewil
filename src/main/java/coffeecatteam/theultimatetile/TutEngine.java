@@ -1,7 +1,18 @@
 package coffeecatteam.theultimatetile;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
+import coffeecatteam.theultimatetile.gfx.Camera;
+import coffeecatteam.theultimatetile.gfx.Text;
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.gfx.assets.Sounds;
+import coffeecatteam.theultimatetile.manager.EntityManager;
+import coffeecatteam.theultimatetile.manager.InventoryManager;
+import coffeecatteam.theultimatetile.manager.KeyManager;
+import coffeecatteam.theultimatetile.objs.EntityDataParser;
+import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.items.Items;
+import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import coffeecatteam.theultimatetile.state.StateCredits;
 import coffeecatteam.theultimatetile.state.StateManager;
 import coffeecatteam.theultimatetile.state.StateMenu;
@@ -10,17 +21,8 @@ import coffeecatteam.theultimatetile.state.game.StateGame;
 import coffeecatteam.theultimatetile.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.state.options.OptionsSounds;
 import coffeecatteam.theultimatetile.state.options.controls.OptionsControls;
-import coffeecatteam.theultimatetile.objs.tiles.Tiles;
-import coffeecatteam.theultimatetile.world.World;
-import coffeecatteam.theultimatetile.gfx.Camera;
-import coffeecatteam.theultimatetile.gfx.Text;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.gfx.assets.Sounds;
-import coffeecatteam.theultimatetile.manager.EntityManager;
-import coffeecatteam.theultimatetile.manager.InventoryManager;
-import coffeecatteam.theultimatetile.objs.items.Items;
-import coffeecatteam.theultimatetile.manager.KeyManager;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
+import coffeecatteam.theultimatetile.world.World;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.*;
 import org.newdawn.slick.imageout.ImageOut;
@@ -62,7 +64,6 @@ public class TutEngine extends BasicGame {
     public OptionsSounds optionsSpounds;
 
     private EntityManager entityManager;
-    private Items items;
     private InventoryManager inventoryManager;
 
     private Camera camera;
@@ -89,8 +90,11 @@ public class TutEngine extends BasicGame {
         Sounds.init();
 
         try {
+            entityManager = new EntityManager(this, (EntityPlayer) new EntityDataParser().loadData(new EntityPlayer(this, ""))); // new EntityPlayer(this, "")
+
             Items.init(this);
             Tiles.init(this);
+            Entities.init(this);
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -108,10 +112,6 @@ public class TutEngine extends BasicGame {
         optionsControls = new OptionsControls(this);
         optionsSpounds = new OptionsSounds(this);
         StateManager.setCurrentState(stateMenu);
-
-        entityManager = new EntityManager(this, new EntityPlayer(this, ""));
-
-        items = new Items(this);
 
         inventoryManager = new InventoryManager(this);
     }
@@ -295,10 +295,6 @@ public class TutEngine extends BasicGame {
 
     public EntityPlayer getPlayer() {
         return entityManager.getPlayer();
-    }
-
-    public Items getItems() {
-        return items;
     }
 
     public InventoryManager getInventoryManager() {

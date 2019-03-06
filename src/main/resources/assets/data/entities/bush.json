@@ -1,0 +1,14 @@
+{
+  "type": "static",
+  "texture": "entities/static/nature/bush.png",
+  "sprites": {
+    "small": {
+      "topLeft": [0, 0],
+      "bottomRight": [15, 15]
+    },
+    "medium": {
+      "topLeft": [16, 0],
+      "bottomRight": [47, 15]
+    }
+  }
+}

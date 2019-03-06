@@ -2,27 +2,11 @@ package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
+import coffeecatteam.theultimatetile.objs.entities.EntityItem;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityCow;
-import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityFox;
-import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityPig;
-import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntitySheep;
-import coffeecatteam.theultimatetile.objs.entities.creatures.undead.EntityBouncer;
-import coffeecatteam.theultimatetile.objs.entities.creatures.undead.EntitySkeleton;
-import coffeecatteam.theultimatetile.objs.entities.creatures.undead.EntityThing;
-import coffeecatteam.theultimatetile.objs.entities.creatures.undead.EntityZombie;
-import coffeecatteam.theultimatetile.objs.entities.statics.EntityExtraLife;
-import coffeecatteam.theultimatetile.objs.entities.statics.EntityUltimateTile;
-import coffeecatteam.theultimatetile.objs.entities.statics.interactable.EntityCampfire;
-import coffeecatteam.theultimatetile.objs.entities.statics.interactable.EntityShopStall;
-import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityBush;
-import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityCrop;
-import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityRock;
-import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityTree;
-import coffeecatteam.theultimatetile.objs.items.Items;
-import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
-import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.state.StateOptions;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -31,88 +15,6 @@ import java.util.Comparator;
 
 public class EntityManager {
 
-    /*
-     * EntityLoader
-     */
-    public static Entity loadEntity(TutEngine tutEngine, String id) {
-        switch (id) {
-            /*
-             * Nature / Statics
-             */
-            case "tree_small":
-                return new EntityTree(tutEngine, id, EntityTree.TreeType.SMALL);
-            case "tree_medium":
-                return new EntityTree(tutEngine, id, EntityTree.TreeType.MEDIUM);
-            case "tree_large":
-                return new EntityTree(tutEngine, id, EntityTree.TreeType.LARGE);
-            case "tree_extra_large":
-                return new EntityTree(tutEngine, id, EntityTree.TreeType.EXTRA_LARGE);
-            case "rock_medium":
-                return new EntityRock(tutEngine, id, Assets.ROCK_V1);
-            case "rock_small":
-                return new EntityRock(tutEngine, id, Assets.ROCK_V2);
-            case "bush_small":
-                return new EntityBush(tutEngine, id, Assets.BUSH_SMALL, Entity.DEFAULT_WIDTH);
-            case "bush_large":
-                return new EntityBush(tutEngine, id, Assets.BUSH_LARGE, Entity.DEFAULT_WIDTH * 2);
-
-            /*
-             * Crops
-             */
-            case "crop_carrot":
-                return new EntityCrop(tutEngine, id, Assets.CROP_CARROT, Items.CARROT);
-            case "crop_wheat":
-                return new EntityCrop(tutEngine, id, Assets.CROP_WHEAT, Items.WHEAT);
-            case "crop_potato":
-                return new EntityCrop(tutEngine, id, Assets.CROP_POTATO, Items.POTATO);
-            case "crop_tomato":
-                return new EntityCrop(tutEngine, id, Assets.CROP_TOMATO, Items.TOMATO);
-            case "crop_corn":
-                return new EntityCrop(tutEngine, id, Assets.CROP_CORN, Items.CORN);
-
-            /*
-             * Undead
-             */
-            case "zombie":
-                return new EntityZombie(tutEngine, id);
-            case "skeleton":
-                return new EntitySkeleton(tutEngine, id);
-            case "bouncer":
-                return new EntityBouncer(tutEngine, id);
-            case "thing":
-                return new EntityThing(tutEngine, id);
-
-            /*
-             * Passive
-             */
-            case "pig":
-                return new EntityPig(tutEngine, id);
-            case "cow":
-                return new EntityCow(tutEngine, id);
-            case "sheep":
-                return new EntitySheep(tutEngine, id);
-            case "fox":
-                return new EntityFox(tutEngine, id);
-
-            /*
-             * Other
-             */
-            case "ultimate":
-                return new EntityUltimateTile(tutEngine, id);
-            case "extra_life":
-                return new EntityExtraLife(tutEngine, id);
-
-            case "shop":
-                return new EntityShopStall(tutEngine, id);
-            case "campfire":
-                return new EntityCampfire(tutEngine, id);
-        }
-        return new EntityRock(tutEngine, "rock", Assets.ROCK_V1);
-    }
-
-    /*
-     * EntityManager
-     */
     private TutEngine tutEngine;
     private EntityPlayer player;
     private ArrayList<Entity> entities;
@@ -167,6 +69,10 @@ public class EntityManager {
             e.setY(e.getY() / Tile.TILE_HEIGHT);
         }
         entities.add(e);
+    }
+
+    public void addItem(ItemStack item, float x, float y, boolean atTile) {
+        addEntity(new EntityItem(tutEngine, item), x, y, atTile);
     }
 
     public EntityPlayer getPlayer() {

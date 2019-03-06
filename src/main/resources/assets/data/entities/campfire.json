@@ -1,0 +1,12 @@
+{
+  "type": "static",
+  "texture": "entities/static/campfire.png",
+  "sprites": {
+    "main": {
+      "length": 10,
+      "speed": 135,
+      "spriteSize": [16, 16],
+      "startPos": [0, 0]
+    }
+  }
+}

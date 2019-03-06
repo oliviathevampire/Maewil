@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.manager.InventoryManager;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
-import coffeecatteam.theultimatetile.manager.InventoryManager;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -39,12 +39,11 @@ public abstract class Inventory {
     }
 
     public void dropItem(boolean active, int selectedIndex) {
-        float xOff = Tile.TILE_WIDTH / 4;
-        float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4;
+        float xOff = Tile.TILE_WIDTH / 4f;
+        float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4f;
         if (getSlot(selectedIndex).getStack() != null) {
             if (active) {
-                getSlot(selectedIndex).getStack().getItem().setPickedUp(false);
-                tutEngine.getItems().addItem(getSlot(selectedIndex).remove(), player.getX() + xOff, player.getY() + yOff);
+                tutEngine.getEntityManager().addItem(getSlot(selectedIndex).remove(), player.getX() + xOff, player.getY() + yOff, false);
             }
         }
     }
