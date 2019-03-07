@@ -108,8 +108,8 @@ public class Assets {
             font.loadGlyphs();
 
             return font;
-        } catch (IOException | FontFormatException | SlickException var3) {
-            var3.printStackTrace();
+        } catch (IOException | FontFormatException | SlickException e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -219,10 +219,6 @@ public class Assets {
         initGui();
 
         logger.info("Assets loaded!");
-    }
-
-    public static Image getTileTexture(String tile) {
-        return getTileTexture(tile, 0);
     }
 
     public static Image getTileTexture(String tile, int xOff) {
