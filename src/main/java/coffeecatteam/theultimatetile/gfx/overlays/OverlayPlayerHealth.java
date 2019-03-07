@@ -23,10 +23,13 @@ public class OverlayPlayerHealth extends Overlay {
     public void render(Graphics g) {
         int hWidth = 96;
         int hHeight = 96;
-        int hStage = (int) NumberUtils.map(player.getCurrentHealth(), 0, player.getMaxHealth() * 2, Assets.HEARTS.length - 1, 0);
+
+        boolean overMaxHealthDouble = player.getCurrentHealth() > player.getMaxHealth() * 2;
+        float from = (overMaxHealthDouble ? player.getCurrentHealth() : player.getMaxHealth() * 2);
+        float to = Assets.HEARTS.length - 1;
+        int hStage = (int) NumberUtils.map(player.getCurrentHealth(), 0, from, to, 0);
 
         Text.drawString(g, "HP: " + player.getCurrentHealth(), 10, tutEngine.getHeight() - hHeight, false, false, Color.red, Assets.FONTS.get("20"));
-
         Assets.HEARTS[hStage].draw(0, tutEngine.getHeight() - hHeight, hWidth, hHeight);
     }
 }
