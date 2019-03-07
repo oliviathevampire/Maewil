@@ -21,6 +21,7 @@ public abstract class State {
 
     private int bgWidth, bgHeight;
     private TileList bgTiles;
+    private Tile[] centre, border;
     protected static final Tile[] CENTRE_GRASS = new Tile[]{Tiles.GRASS}, BORDER_STONE_BROKEN = new Tile[]{Tiles.STONE, Tiles.BROKEN_STONE};
 
     public State(TutEngine tutEngine) {
@@ -36,6 +37,9 @@ public abstract class State {
         this.logger = tutEngine.getLogger();
         this.uiManager = new UIManager(tutEngine);
 
+        this.centre = centre;
+        this.border = border;
+
         this.bgWidth = tutEngine.getWidth() / Tile.TILE_WIDTH;
         this.bgHeight = tutEngine.getHeight() / Tile.TILE_HEIGHT;
 
@@ -43,7 +47,9 @@ public abstract class State {
         if (this.bgHeight * Tile.TILE_HEIGHT < tutEngine.getHeight()) this.bgHeight += 1;
 
         this.bgTiles = new TileList(this.bgWidth, this.bgHeight);
+    }
 
+    public void init() {
         for (int y = 0; y < this.bgHeight; y++) {
             for (int x = 0; x < this.bgWidth; x++) {
                 Tile tile = centre[new Random().nextInt(centre.length)];
@@ -57,9 +63,6 @@ public abstract class State {
         for (int y = 0; y < this.bgHeight; y++)
             for (int x = 0; x < this.bgWidth; x++)
                 this.bgTiles.getTile(x, y).setWorldLayer(bgTiles);
-    }
-
-    public void init() {
     }
 
     public abstract void update(GameContainer container, int delta);
