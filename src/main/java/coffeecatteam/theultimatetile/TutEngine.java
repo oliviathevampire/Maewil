@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
@@ -38,20 +39,20 @@ public class TutEngine extends BasicGame {
 
     private static TutEngine tutEngine;
 
-    protected String[] args;
-    protected int width, height, fps;
+    private String[] args;
+    private int width, height, fps;
 
     /*
      * Mouse & keyboard values
      */
-    protected int mouseX, mouseY;
-    protected boolean leftPressed, rightPressed;
-    protected boolean leftDown, rightDown;
+    private Vector2D mousePos;
+    private boolean leftPressed, rightPressed;
+    private boolean leftDown, rightDown;
 
-    protected KeyManager keyManager;
+    private KeyManager keyManager;
     private char keyJustPressed = Character.UNASSIGNED;
 
-    protected boolean initOptionsUI = true, playBGMusic = true, close = false;
+    private boolean initOptionsUI = true, playBGMusic = true, close = false;
 
     // States
     public StateMenu stateMenu;
@@ -90,7 +91,7 @@ public class TutEngine extends BasicGame {
         Sounds.init();
 
         try {
-            entityManager = new EntityManager(this, (EntityPlayer) new EntityDataParser().loadData(new EntityPlayer(this, ""))); // new EntityPlayer(this, "")
+            entityManager = new EntityManager(this, (EntityPlayer) new EntityDataParser().loadData(new EntityPlayer(this, "")));
 
             Items.init(this);
             Tiles.init(this);
@@ -118,15 +119,14 @@ public class TutEngine extends BasicGame {
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
-//        TagBase.TEST();
+//          TagBase.TEST();
         if (close) container.exit();
         keyManager.update(container, delta);
 
         /*
          * Mouse values
          */
-        this.mouseX = container.getInput().getMouseX();
-        this.mouseY = container.getInput().getMouseY();
+        this.mousePos = new Vector2D(container.getInput().getMouseX(), container.getInput().getMouseY());
         this.leftPressed = container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON);
         this.rightPressed = container.getInput().isMousePressed(Input.MOUSE_RIGHT_BUTTON);
         this.leftDown = container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
@@ -144,8 +144,7 @@ public class TutEngine extends BasicGame {
             }
         }
 
-        if (StateManager.getCurrentState() != null)
-            StateManager.getCurrentState().update(container, delta);
+        StateManager.getCurrentState().update(container, delta);
 
         /*
          * Take a screenshot
@@ -249,12 +248,8 @@ public class TutEngine extends BasicGame {
         this.close = true;
     }
 
-    public int getMouseX() {
-        return mouseX;
-    }
-
-    public int getMouseY() {
-        return mouseY;
+    public Vector2D getMousePos() {
+        return mousePos;
     }
 
     public boolean isLeftPressed() {

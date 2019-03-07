@@ -47,7 +47,7 @@ public class UISlider extends UIObject {
         slider.update(container, delta);
         if (slider.isMouseHovering()) {
             if (tutEngine.isLeftDown() || tutEngine.isLeftPressed()) {
-                slider.position.x = tutEngine.getMouseX() - slider.getWidth() / 2d;
+                slider.position.x = tutEngine.getMousePos().x - slider.getWidth() / 2d;
 
                 if (slider.position.x < slMinX) slider.position.x = slMinX;
                 if (slider.position.x > slMaxX) slider.position.x = slMaxX;
@@ -126,7 +126,7 @@ public class UISlider extends UIObject {
         }
 
         public boolean isMouseHovering() {
-            return bounds.contains(tutEngine.getMouseX(), tutEngine.getMouseY());
+            return bounds.contains(tutEngine.getMousePos());
         }
 
         public int getWidth() {

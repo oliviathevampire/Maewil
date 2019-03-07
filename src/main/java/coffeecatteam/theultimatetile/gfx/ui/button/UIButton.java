@@ -66,7 +66,7 @@ public class UIButton extends UIObject {
     @Override
     public void update(GameContainer container, int delta) {
         super.update(container, delta);
-        this.hovering = this.bounds.contains(tutEngine.getMouseX(), tutEngine.getMouseY()) && !this.disabled;
+        this.hovering = this.bounds.contains(tutEngine.getMousePos()) && !this.disabled;
 
         if (this.hovering) {
             this.currentTexture = Assets.BUTTON_HOVER;
@@ -120,8 +120,8 @@ public class UIButton extends UIObject {
     @Override
     public void postRender(Graphics g) {
         if (isHovering() && hasTooltip) {
-            int x = tutEngine.getMouseX(), x1 = x + this.tooltip.getWidth(), xDiff = 0;
-            int y = tutEngine.getMouseY(), y1 = y + this.tooltip.getHeight(), yDiff = 0;
+            int x = (int) tutEngine.getMousePos().x, x1 = x + this.tooltip.getWidth(), xDiff = 0;
+            int y = (int) tutEngine.getMousePos().y, y1 = y + this.tooltip.getHeight(), yDiff = 0;
 
             if (x1 > tutEngine.getWidth()) xDiff = x1 - tutEngine.getWidth();
             if (y1 > tutEngine.getHeight()) yDiff = y1 - tutEngine.getHeight();

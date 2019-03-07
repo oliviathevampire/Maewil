@@ -24,7 +24,7 @@ public abstract class UIObject {
     }
 
     public void update(GameContainer container, int delta) {
-        if (this.bounds.contains(TutEngine.getTutEngine().getMouseX(), TutEngine.getTutEngine().getMouseY()) && TutEngine.getTutEngine().isLeftPressed())
+        if (this.bounds.contains(TutEngine.getTutEngine().getMousePos()) && TutEngine.getTutEngine().isLeftPressed())
             onClick();
     }
 
