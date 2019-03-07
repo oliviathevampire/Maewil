@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.objs.entities.statics.nature;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.statics.EntityNature;
@@ -16,14 +17,14 @@ public class EntityTree extends EntityNature {
         setCurrentTexture(type.getId());
         this.type = type;
 
-        bounds.x = width / 4f;
-        bounds.y = height - height / 4f;
-        bounds.width = width / 2;
-        bounds.height = height / 4;
-
         drops.add(Items.LEAF);
         drops.add(Items.STICK);
         drops.add(NumberUtils.getRandomBoolean() ? Items.APPLE : Items.STICK);
+    }
+
+    @Override
+    public AABB getTileBounds() {
+        return new AABB(width / 4f, height - height / 4f, width / 2, height / 4);
     }
 
     public enum TreeType {

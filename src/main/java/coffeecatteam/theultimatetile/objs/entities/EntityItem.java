@@ -31,6 +31,7 @@ public class EntityItem extends Entity {
         super(tutEngine, "item", Item.WIDTH, Item.HEIGHT, EntityHitType.NONE);
         this.stack = stack;
         this.pickedUp = pickedUp;
+        this.isCollidable = false;
     }
 
     @Override
@@ -76,6 +77,7 @@ public class EntityItem extends Entity {
                 this.tutEngine.getPlayer().getInventoryPlayer().addItem(new ItemStack(stack.getItem(), stack.getCount()));
             else
                 this.tutEngine.getPlayer().getInventoryPlayer().addStackToHotbar(new ItemStack(stack.getItem(), stack.getCount()));
+            this.hurt(currentHealth);
         }
     }
 

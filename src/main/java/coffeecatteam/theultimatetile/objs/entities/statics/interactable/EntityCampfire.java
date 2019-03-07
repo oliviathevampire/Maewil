@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.objs.entities.statics.interactable;
 
+import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.inventory.InventoryCampfire;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
@@ -16,8 +17,11 @@ public class EntityCampfire extends EntityStatic {
         setCurrentTexture("main");
 
         inventoryCampfire = new InventoryCampfire(tutEngine, tutEngine.getPlayer(), TAGS);
-        bounds.y = (int) (position.y + height / 2);
-        bounds.height = height / 2;
+    }
+
+    @Override
+    public AABB getTileBounds() {
+        return new AABB(0, height / 2f, width, height / 2);
     }
 
     @Override

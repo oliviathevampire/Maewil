@@ -21,11 +21,11 @@ public abstract class EntityUndead extends EntityCreature {
         super(tutEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
         aiWander = new AIWander(tutEngine, this, 1.5f);
         aiFollowFlee = new AIFollowFlee(tutEngine, this, tutEngine.getPlayer());
+    }
 
-        bounds.x = width / 4f;
-        bounds.y = height - height / 2f;
-        bounds.width = width / 2;
-        bounds.height = height / 2;
+    @Override
+    public AABB getTileBounds() {
+        return new AABB(width / 4f, height - height / 2f, width / 2, height / 2);
     }
 
     @Override

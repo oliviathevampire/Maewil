@@ -50,12 +50,12 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     protected void init() {
-        bounds.x = width / 4f;
-        bounds.y = height - height / 2f;
-        bounds.width = width / 2;
-        bounds.height = height / 2;
-
         sprintEffect = new Animation(50, Assets.SPRINT_EFFECT);
+    }
+
+    @Override
+    public AABB getTileBounds() {
+        return new AABB(width / 4f, height - height / 2f, width / 2, height / 2);
     }
 
     @Override

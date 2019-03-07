@@ -27,8 +27,13 @@ public class EntityShopStall extends EntityStatic {
     }
 
     @Override
+    public AABB getTileBounds() {
+        return new AABB(0, height / 2f + height / 3f, width, height / 12);
+    }
+
+    @Override
     public void update(GameContainer container, int delta) {
-        bounds = new AABB(0, height / 2f + height / 3f, width, height / 12);
+        // TODO: ADD FUNCTION
     }
 
     @Override

@@ -6,7 +6,6 @@ import coffeecatteam.theultimatetile.objs.entities.EntityItem;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
-import coffeecatteam.theultimatetile.state.StateOptions;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -49,7 +48,6 @@ public class EntityManager {
             e.preRender(g);
 
         for (Entity e : entities) {
-            e.setShowHitbox(StateOptions.OPTIONS.debugMode());
             e.render(g);
         }
 

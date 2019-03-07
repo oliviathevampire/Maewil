@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.objs.entities.statics.nature;
 
+import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.statics.EntityNature;
@@ -14,13 +15,13 @@ public class EntityBush extends EntityNature {
         setCurrentTexture(type.getId());
         this.type = type;
 
-        bounds.x = this.width / 4f - (this.width / 4f) / 2;
-        bounds.y = height / 2f + height / 3f;
-        bounds.width = this.width / 4 + this.width / 2;
-        bounds.height = height / 3;
-
         drops.add(Items.LEAF);
         drops.add(Items.STICK);
+    }
+
+    @Override
+    public AABB getTileBounds() {
+        return new AABB(width / 4f - (width / 4f) / 2, height / 2f + height / 3f, width / 4 + width / 2, height / 3);
     }
 
     @Override

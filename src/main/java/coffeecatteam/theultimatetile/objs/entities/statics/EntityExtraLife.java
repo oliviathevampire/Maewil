@@ -11,17 +11,21 @@ import org.newdawn.slick.GameContainer;
  */
 public class EntityExtraLife extends EntityStatic {
 
+    private int healAmt;
+
     public EntityExtraLife(TutEngine tutEngine) {
         super(tutEngine, "extra_life", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.NONE);
         setCurrentTexture("main");
         isCollidable = false;
+
+        healAmt = NumberUtils.getRandomInt(Entity.DEFAULT_HEALTH / 2, Entity.DEFAULT_HEALTH);
     }
 
     @Override
     public void update(GameContainer container, int delta) {
         if (this.isTouching(tutEngine.getPlayer())) {
-            tutEngine.getPlayer().heal(NumberUtils.getRandomInt(DEFAULT_HEALTH / 2, DEFAULT_HEALTH));
-            this.hurt(this.currentHealth);
+            tutEngine.getPlayer().heal(healAmt);
+            this.hurt(getCurrentHealth());
         }
     }
 

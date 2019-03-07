@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.objs.entities.statics.nature;
 
+import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.statics.EntityNature;
@@ -15,12 +16,12 @@ public class EntityRock extends EntityNature {
         setCurrentTexture(type.getId());
         this.type = type;
 
-        bounds.x = 0;
-        bounds.y = height / 2f + height / 3f;
-        bounds.width = width;
-        bounds.height = height / 3;
-
         drops.add(Items.ROCK);
+    }
+
+    @Override
+    public AABB getTileBounds() {
+        return new AABB(0, height / 2f + height / 3f, width, height / 3);
     }
 
     public enum RockType {

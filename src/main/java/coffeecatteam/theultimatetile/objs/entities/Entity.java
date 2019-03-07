@@ -13,6 +13,7 @@ import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TileLava;
 import coffeecatteam.theultimatetile.objs.tiles.TileWater;
+import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.tags.TagCompound;
 import org.newdawn.slick.*;
 
@@ -33,9 +34,8 @@ public abstract class Entity implements IHasData<Entity> {
     protected int width, height;
     protected int currentHealth, maxHealth = DEFAULT_HEALTH;
     protected boolean active = true;
-    protected AABB bounds;
 
-    protected boolean showHitbox = false, isCollidable = true, interacted = false;
+    protected boolean isCollidable = true, interacted = false;
     private int extraDmg = 0;
 
     protected TagCompound TAGS = new TagCompound();
@@ -56,8 +56,6 @@ public abstract class Entity implements IHasData<Entity> {
         this.height = height;
         currentHealth = maxHealth;
 
-        bounds = new AABB(this.position, width, height);
-
         this.entityHitType = entityHitType;
         splashEffect = new Animation(50, Assets.SPLASH_EFFECT);
     }
@@ -75,7 +73,6 @@ public abstract class Entity implements IHasData<Entity> {
     }
 
     public void updateA(GameContainer container, int delta) {
-//        bounds = new AABB(this.position, width, height);
         update(container, delta);
 
         this.renderX = (int) (this.position.x - this.tutEngine.getCamera().getxOffset());
@@ -98,9 +95,12 @@ public abstract class Entity implements IHasData<Entity> {
     }
 
     public void postRender(Graphics g) {
-        if (showHitbox) {
+        if (StateOptions.OPTIONS.debugMode()) {
             g.setColor(Color.red);
-            g.drawRect((int) (position.x + bounds.x - tutEngine.getCamera().getxOffset()), (int) (position.y + bounds.y - tutEngine.getCamera().getyOffset()), bounds.width, bounds.height);
+            g.drawRect(getEntityBounds().x - tutEngine.getCamera().getxOffset(), getEntityBounds().y - tutEngine.getCamera().getyOffset(), getEntityBounds().width, getEntityBounds().height);
+
+            g.setColor(Color.blue);
+            g.drawRect((int) (position.x + getTileBounds().x - tutEngine.getCamera().getxOffset()), (int) (position.y + getTileBounds().y - tutEngine.getCamera().getyOffset()), getTileBounds().width, getTileBounds().height);
         }
     }
 
@@ -178,12 +178,22 @@ public abstract class Entity implements IHasData<Entity> {
         return false;
     }
 
+    public AABB getTileBounds() {
+        return new AABB(new Vector2D(), width, height);
+    }
+
+    public AABB getEntityBounds() {
+        float x = (float) (position.x + getTileBounds().x);
+        float y = (float) (position.y + getTileBounds().y);
+        return new AABB(x, y, getTileBounds().width, getTileBounds().height);
+    }
+
     public AABB getCollisionBounds(float xOffset, float yOffset) {
-        return new AABB((int) (position.x + bounds.x + xOffset), (int) (position.y + bounds.y + yOffset), bounds.width, bounds.height);
+        return new AABB((int) (getEntityBounds().x + xOffset), (int) (getEntityBounds().y + yOffset), getEntityBounds().width, getEntityBounds().height);
     }
 
     public boolean isTouching(Entity entity) {
-        return this.bounds.contains(entity.getPosition().x + entity.getWidth() / 2d, entity.getPosition().y + entity.getHeight() / 2d);
+        return this.getEntityBounds().contains(entity.getPosition().x + entity.getWidth() / 2d, entity.getPosition().y + entity.getHeight() / 2d);
     }
 
     public String getId() {
@@ -274,23 +284,6 @@ public abstract class Entity implements IHasData<Entity> {
         CREATURE, WOOD, STONE, BUSH, NONE
     }
 
-    public boolean isShowHitbox() {
-        return showHitbox;
-    }
-
-    public Entity setShowHitbox(boolean showHitbox) {
-        this.showHitbox = showHitbox;
-        return this;
-    }
-
-    public AABB getBounds() {
-        return bounds;
-    }
-
-    public void setBounds(AABB bounds) {
-        this.bounds = bounds;
-    }
-
     public Map<String, Animation> getTextures() {
         return textures;
     }
@@ -319,7 +312,6 @@ public abstract class Entity implements IHasData<Entity> {
         entity.setMaxHealth(maxHealth);
         entity.setEntityHitType(entityHitType);
         entity.setPosition(position);
-        entity.setShowHitbox(showHitbox);
         entity.setTags(TAGS);
         entity.setTextures(textures);
         entity.setCurrentTexture(new ArrayList<>(textures.keySet()).get(0));
