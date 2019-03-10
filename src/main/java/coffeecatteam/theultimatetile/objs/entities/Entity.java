@@ -7,7 +7,6 @@ import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
 import coffeecatteam.theultimatetile.objs.IHasData;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
@@ -17,7 +16,6 @@ import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.tags.TagCompound;
 import org.newdawn.slick.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,9 +42,9 @@ public abstract class Entity implements IHasData<Entity> {
     protected int renderX, renderY;
     private Map<String, Animation> textures = new HashMap<>();
     private Animation currentTexture = new Animation(Assets.MISSING_TEXTURE);
+    private String currentTextureId = "";
 
     private Animation splashEffect;
-    private SpriteSheet HEALTH_BAR = new SpriteSheet("/assets/textures/gui/overlay/health_bar.png");
 
     public Entity(TutEngine tutEngine, String id, int width, int height, EntityHitType entityHitType) {
         this.tutEngine = tutEngine;
@@ -105,12 +103,9 @@ public abstract class Entity implements IHasData<Entity> {
     }
 
     public void renderHealth(Graphics g) {
-
-        int barWidth = 16;
-        HEALTH_BAR.crop(0, 9, barWidth, 2).draw(this.renderX, this.renderY - 8, width, 4);
-
+        Assets.HEALTH_BAR[1].draw(this.renderX, this.renderY - 8, width, 4);
         int ht = (int) NumberUtils.map(currentHealth, 0, maxHealth, 0, width); // (currentHealth * 100.0f) / 15
-        HEALTH_BAR.crop(0, 5, barWidth, 2).draw(this.renderX, this.renderY - 8, ht, 4);
+        Assets.HEALTH_BAR[0].draw(this.renderX, this.renderY - 8, ht, 4);
 
         Font font = Assets.FONTS.get("20");
         String textHealth = "HP: " + currentHealth;
@@ -293,11 +288,22 @@ public abstract class Entity implements IHasData<Entity> {
     }
 
     public Animation getCurrentTexture() {
+        if (currentTexture == null || currentTexture.getCurrentFrame() == null)
+            return new Animation(Assets.MISSING_TEXTURE);
         return currentTexture;
     }
 
     public void setCurrentTexture(String id) {
         this.currentTexture = this.textures.get(id);
+        currentTextureId = id;
+    }
+
+    public String getCurrentTextureId() {
+        return currentTextureId;
+    }
+
+    public void setCurrentTextureId(String currentTextureId) {
+        this.currentTextureId = currentTextureId;
     }
 
     public Image getTexture(String id) {
@@ -314,7 +320,8 @@ public abstract class Entity implements IHasData<Entity> {
         entity.setPosition(position);
         entity.setTags(TAGS);
         entity.setTextures(textures);
-        entity.setCurrentTexture(new ArrayList<>(textures.keySet()).get(0));
+        entity.setCurrentTexture(currentTextureId);
+        entity.setCurrentTextureId(currentTextureId);
         return entity;
     }
 }

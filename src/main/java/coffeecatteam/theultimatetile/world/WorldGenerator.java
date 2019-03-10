@@ -2,12 +2,10 @@ package coffeecatteam.theultimatetile.world;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.objs.tiles.TileStone;
 import coffeecatteam.theultimatetile.objs.tiles.Tiles;
-import coffeecatteam.theultimatetile.world.colormap.Biomes;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 import coffeecatteam.theultimatetile.world.colormap.WorldMapGenerator;
 import coffeecatteam.theultimatetile.world.noise.OpenSimplexNoise;
@@ -56,6 +54,8 @@ public class WorldGenerator {
             bgTiles = generateBGTiles();
             fgTiles = generateFGTiles();
             logger.info("Tiles generated");
+
+            tutEngine.getEntityManager().reset();
         }, "WorldGenerator-Thread");
         generatorThread.start();
     }

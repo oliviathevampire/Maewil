@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile.objs.entities.creatures;
 
-import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;

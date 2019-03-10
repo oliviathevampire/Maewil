@@ -26,6 +26,6 @@ public class EntityBush extends EntityNature {
 
     @Override
     public Entity newCopy() {
-        return super.newCopy(new EntityRock(tutEngine, type));
+        return super.newCopy(new EntityBush(tutEngine, type));
     }
 }
