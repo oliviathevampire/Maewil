@@ -44,7 +44,7 @@ public class StateCreateWorld extends StateAbstractMenu {
 
         int sizeMin = Math.min((int) -(sizeMod * 2), (int) (sizeMod * 2));
         int sizeMax = Math.max((int) -(sizeMod * 2), (int) (sizeMod * 2));
-        worldSize = minWorldSize + NumberUtils.getRandomInt(sizeMin, sizeMax);
+        worldSize = minWorldSize + NumberUtils.getRandomInt(Math.min(sizeMin, sizeMax), Math.max(sizeMin, sizeMax));
 
         uiManager.addObject(new UIButton(tutEngine, true, "Create World", new ClickListener() {
             @Override
@@ -94,10 +94,10 @@ public class StateCreateWorld extends StateAbstractMenu {
 
     private void generateWorld() {
         logger.info("Generating world...");
-//        Tiles.chooseAltTexture(engine);
+        tutEngine.getPlayer().reset();
 
         double blendSize = 25.0d + sizeMod;
-        WorldGenerator generator = new WorldGenerator(seed, worldSize);
+        WorldGenerator generator = new WorldGenerator(tutEngine, seed, worldSize);
         generator.setBlendSize(blendSize);
         generator.generate();
 

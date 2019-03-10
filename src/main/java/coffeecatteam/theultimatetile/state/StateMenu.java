@@ -8,10 +8,10 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlink;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
+import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
-import org.newdawn.slick.Font;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
+import javafx.scene.shape.DrawMode;
+import org.newdawn.slick.*;
 
 public class StateMenu extends State {
 
@@ -91,5 +91,17 @@ public class StateMenu extends State {
         int w = 80 * 6;
         int h = 48 * 6;
         Assets.TITLE.draw(tutEngine.getWidth() / 2f - w / 2f, 20, w, h);
+
+        tutEngine.getPlayer().getTextures().get("idle").update();
+        Image player = tutEngine.getPlayer().getTexture("idle");
+        float sizeP = 64;
+        float xp = tutEngine.getWidth() / 4f - sizeP / 2f;
+        float yp = tutEngine.getHeight() / 2f - sizeP / 2f;
+        player.draw(xp, yp, sizeP, sizeP);
+
+        Entities.ULTIMATE.getTextures().get("main").update();
+        Image ultimate = Entities.ULTIMATE.getTexture("main");
+        float sizeU = sizeP * 1.5f;
+        ultimate.draw((tutEngine.getWidth() / 4f) * 3 - sizeU / 2f, tutEngine.getHeight() / 2f - sizeU / 2f, sizeU, sizeU);
     }
 }

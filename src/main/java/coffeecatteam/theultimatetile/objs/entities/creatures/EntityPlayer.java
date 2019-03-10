@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.objs.entities.creatures;
 
+import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
@@ -56,6 +57,11 @@ public class EntityPlayer extends EntityCreature {
     @Override
     public AABB getTileBounds() {
         return new AABB(width / 4f, height - height / 2f, width / 2, height / 2);
+    }
+
+    @Override
+    public AABB getEntityBounds() {
+        return new AABB((float) position.x, (float) (position.y + height / 2f), width, height / 2);
     }
 
     @Override
@@ -254,7 +260,7 @@ public class EntityPlayer extends EntityCreature {
     }
 
     private void dropItem(ItemStack stack, float x, float y) {
-        tutEngine.getEntityManager().addItem(stack.copy(), x, y, false);
+        tutEngine.getEntityManager().addItem(stack.copy(), (x) / Tile.TILE_WIDTH, (y) / Tile.TILE_HEIGHT);
     }
 
     private void getInput(GameContainer container, int delta) {
@@ -420,6 +426,7 @@ public class EntityPlayer extends EntityCreature {
         lvl = 0;
         equippedItem = null;
         extraDmg = 0;
+        currentHealth = maxHealth;
     }
 
     public boolean isGuiOpen() {

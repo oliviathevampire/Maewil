@@ -168,9 +168,9 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4f;
         if (getSlot(inventorySelectedIndex).getStack() != null) {
             if (active) {
-                tutEngine.getEntityManager().addItem(getSlot(inventorySelectedIndex).remove(), player.getX() + xOff, player.getY() + yOff, false);
+                tutEngine.getEntityManager().addItem(getSlot(inventorySelectedIndex).remove(), (player.getX() + xOff) / Tile.TILE_WIDTH, (player.getY() + yOff) / Tile.TILE_HEIGHT);
             } else {
-                tutEngine.getEntityManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), player.getX() + xOff, player.getY() + yOff, false);
+                tutEngine.getEntityManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), (player.getX() + xOff) / Tile.TILE_WIDTH, (player.getY() + yOff) / Tile.TILE_HEIGHT);
             }
         }
     }

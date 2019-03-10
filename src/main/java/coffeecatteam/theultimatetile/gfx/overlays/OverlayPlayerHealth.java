@@ -24,8 +24,9 @@ public class OverlayPlayerHealth extends Overlay {
         int hWidth = 96;
         int hHeight = 96;
 
-        boolean overMaxHealthDouble = player.getCurrentHealth() > player.getMaxHealth() * 2;
-        float from = (overMaxHealthDouble ? player.getCurrentHealth() : player.getMaxHealth() * 2);
+        int overMaxHealth = player.getMaxHealth() * 6;
+        boolean overMaxHealthDouble = player.getCurrentHealth() > overMaxHealth;
+        float from = (overMaxHealthDouble ? player.getCurrentHealth() : overMaxHealth);
         float to = Assets.HEARTS.length - 1;
         int hStage = (int) NumberUtils.map(player.getCurrentHealth(), 0, from, to, 0);
 

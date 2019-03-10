@@ -1,9 +1,11 @@
 package coffeecatteam.theultimatetile.manager;
 
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.EntityItem;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.statics.EntityExtraLife;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import org.newdawn.slick.GameContainer;
@@ -55,22 +57,22 @@ public class EntityManager {
             e.postRender(g);
     }
 
-    public void addEntity(Entity e) {
-        entities.add(e);
+    public void addEntity(Entity entity) {
+        entities.add(entity.newCopy());
     }
 
-    public void addEntity(Entity e, float x, float y, boolean atTile) {
-        e.setX(x * Tile.TILE_WIDTH);
-        e.setY(y * Tile.TILE_HEIGHT);
-        if (!atTile) {
-            e.setX(e.getX() / Tile.TILE_WIDTH);
-            e.setY(e.getY() / Tile.TILE_HEIGHT);
+    public void addEntity(Entity entity, float x, float y, boolean atTile) {
+        Entity newEntity = entity.newCopy();
+        if (atTile) {
+            newEntity.setPosition(new Vector2D(x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT));
+        } else {
+            newEntity.setPosition(new Vector2D(x, y));
         }
-        entities.add(e);
+        entities.add(newEntity);
     }
 
-    public void addItem(ItemStack item, float x, float y, boolean atTile) {
-        addEntity(new EntityItem(tutEngine, item), x, y, atTile);
+    public void addItem(ItemStack item, float x, float y) {
+        addEntity(new EntityItem(tutEngine, item), x, y, true);
     }
 
     public EntityPlayer getPlayer() {

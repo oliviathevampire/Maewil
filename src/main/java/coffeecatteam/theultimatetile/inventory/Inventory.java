@@ -43,7 +43,7 @@ public abstract class Inventory {
         float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4f;
         if (getSlot(selectedIndex).getStack() != null) {
             if (active) {
-                tutEngine.getEntityManager().addItem(getSlot(selectedIndex).remove(), player.getX() + xOff, player.getY() + yOff, false);
+                tutEngine.getEntityManager().addItem(getSlot(selectedIndex).remove(), (player.getX() + xOff) / Tile.TILE_WIDTH, (player.getY() + yOff) / Tile.TILE_HEIGHT);
             }
         }
     }

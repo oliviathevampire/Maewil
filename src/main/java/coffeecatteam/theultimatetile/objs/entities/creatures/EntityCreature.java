@@ -88,7 +88,7 @@ public abstract class EntityCreature extends Entity {
         if (drop != null) {
             int amt = NumberUtils.getRandomInt(4);
             for (int i = 0; i < amt; i++)
-                tutEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height), false);
+                tutEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), (float) (position.x + NumberUtils.getRandomInt(width)) / Tile.TILE_WIDTH, (float) (position.y + NumberUtils.getRandomInt(height)) / Tile.TILE_HEIGHT);
         }
     }
 

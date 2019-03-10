@@ -18,7 +18,7 @@ public class EntityExtraLife extends EntityStatic {
         setCurrentTexture("main");
         isCollidable = false;
 
-        healAmt = NumberUtils.getRandomInt(Entity.DEFAULT_HEALTH / 2, Entity.DEFAULT_HEALTH);
+        healAmt = NumberUtils.getRandomInt(Entity.DEFAULT_HEALTH / 4, Entity.DEFAULT_HEALTH);
     }
 
     @Override

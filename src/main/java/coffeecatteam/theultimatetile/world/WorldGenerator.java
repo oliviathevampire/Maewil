@@ -1,10 +1,13 @@
 package coffeecatteam.theultimatetile.world;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
+import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.objs.tiles.TileStone;
 import coffeecatteam.theultimatetile.objs.tiles.Tiles;
+import coffeecatteam.theultimatetile.world.colormap.Biomes;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 import coffeecatteam.theultimatetile.world.colormap.WorldMapGenerator;
 import coffeecatteam.theultimatetile.world.noise.OpenSimplexNoise;
@@ -18,6 +21,7 @@ import java.awt.image.BufferedImage;
  */
 public class WorldGenerator {
 
+    private TutEngine tutEngine;
     private int worldSize;
     private BufferedImage landMap, pathMap, biomeMap;
 
@@ -32,7 +36,8 @@ public class WorldGenerator {
     private boolean imageMapsGenerated = false, bgTilesGenerated = false, fgTilesGenerated = false;
     private Thread generatorThread;
 
-    public WorldGenerator(long seed, int worldSize) {
+    public WorldGenerator(TutEngine tutEngine, long seed, int worldSize) {
+        this.tutEngine = tutEngine;
         this.seed = seed;
         this.worldSize = worldSize;
     }

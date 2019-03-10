@@ -116,7 +116,7 @@ public abstract class Tile implements IHasData<Tile> {
                     if (position.getX() == 0 || position.getX() == tutEngine.getWorld().getWidth() || position.getY() == 0 || position.getY() == tutEngine.getWorld().getHeight())
                         return;
                     tutEngine.getWorld().setFGTile(position.getX(), position.getY(), Tiles.AIR);
-                    tutEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), position.getX() * Tile.TILE_WIDTH, position.getY() * Tile.TILE_HEIGHT, true);
+                    tutEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), position.getX(), position.getY());
                     this.health = this.maxHealth;
                 }
             }

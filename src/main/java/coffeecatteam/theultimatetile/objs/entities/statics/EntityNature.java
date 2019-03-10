@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.items.Item;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import org.newdawn.slick.Graphics;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public abstract class EntityNature extends EntityStatic {
         for (Item item : drops) {
             int amt = NumberUtils.getRandomInt(3);
             for (int i = 0; i < amt; i++)
-                tutEngine.getEntityManager().addItem(new ItemStack(item.newCopy()), (float) position.x + NumberUtils.getRandomInt(width), (float) position.y + NumberUtils.getRandomInt(height), false);
+                tutEngine.getEntityManager().addItem(new ItemStack(item.newCopy()), (float) (position.x + NumberUtils.getRandomInt(width)) / Tile.TILE_WIDTH, (float) (position.y + NumberUtils.getRandomInt(height)) / Tile.TILE_HEIGHT);
         }
     }
 
