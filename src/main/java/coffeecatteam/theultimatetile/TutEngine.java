@@ -9,7 +9,6 @@ import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.manager.EntityManager;
 import coffeecatteam.theultimatetile.manager.InventoryManager;
 import coffeecatteam.theultimatetile.manager.KeyManager;
-import coffeecatteam.theultimatetile.objs.EntityDataParser;
 import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.items.Items;
@@ -91,7 +90,7 @@ public class TutEngine extends BasicGame {
         Sounds.init();
 
         try {
-            entityManager = new EntityManager(this, (EntityPlayer) new EntityDataParser().loadData(new EntityPlayer(this, "")));
+            entityManager = new EntityManager(this);
 
             Items.init(this);
             Tiles.init(this);

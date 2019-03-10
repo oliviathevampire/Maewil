@@ -5,7 +5,6 @@ import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.EntityItem;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.objs.entities.statics.EntityExtraLife;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import org.newdawn.slick.GameContainer;
@@ -25,11 +24,10 @@ public class EntityManager {
         return 1;
     };
 
-    public EntityManager(TutEngine tutEngine, EntityPlayer player) {
+    public EntityManager(TutEngine tutEngine) {
         this.tutEngine = tutEngine;
-        this.player = player;
         entities = new ArrayList<>();
-        addEntity(this.player);
+        entities.add(null);
     }
 
     public void update(GameContainer container, int delta) {

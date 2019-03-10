@@ -1,7 +1,9 @@
 package coffeecatteam.theultimatetile.objs.entities;
 
+import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.EntityDataParser;
+import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityCow;
 import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityFox;
 import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityPig;
@@ -35,6 +37,11 @@ public class Entities {
     public static final HashMap<String, Entity> ENTITIES = new HashMap<>();
 
     /*
+     * Player
+     */
+    public static EntityPlayer PLAYER;
+
+    /*
      * Static
      */
     public static Entity TREE_SMALL, TREE_MEDIUM, TREE_LARGE, TREE_EXTRA_LARGE;
@@ -64,6 +71,13 @@ public class Entities {
 
     public static void init(TutEngine tutEngine) throws IOException, ParseException {
         EntityDataParser parser = new EntityDataParser();
+
+        /*
+         * Player
+         */
+        String username = ArgUtils.hasArgument(tutEngine.getArgs(), "-username") ? ArgUtils.getArgument(tutEngine.getArgs(), "-username") : "";
+        register(PLAYER = (EntityPlayer) parser.loadData(new EntityPlayer(tutEngine, username)));
+        tutEngine.getEntityManager().setPlayer(PLAYER);
 
         /*
          * Static
