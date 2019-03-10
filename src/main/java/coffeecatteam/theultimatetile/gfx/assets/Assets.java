@@ -25,7 +25,6 @@ public class Assets {
     /* Sprite Sheets */
     private static SpriteSheet effectSheet;
 
-    private static SpriteSheet healthSheet;
     private static SpriteSheet glubSheet;
     private static SpriteSheet itemsSheet;
 
@@ -46,8 +45,7 @@ public class Assets {
     public static Image[] TILE_CRACKING;
 
     /* GUI */
-    public static Image[] HEARTS;
-    public static Image[] SPRINT;
+    public static Image[] HEARTS, SPRINT, HEALTH_BAR;
 
     public static Image[] GLUB_ORB;
     public static Image[] GLUB_METER;
@@ -136,8 +134,12 @@ public class Assets {
 
     /* Entities */
     private static void initEntities() {
-        HEARTS = getFrames(healthSheet, 0, 0, 8);
-        SPRINT = getFrames(healthSheet, 2, 0, 1, width * 2, height);
+        HEARTS = getFrames("/assets/textures/gui/overlay/player_health.png", 0, 0, 24);
+        SPRINT = getFrames("/assets/textures/gui/overlay/player_stats.png", 1, 0, 1, width * 2, height);
+        HEALTH_BAR = new Image[2];
+        SpriteSheet hb = new SpriteSheet("/assets/textures/gui/overlay/health_bar.png");
+        HEALTH_BAR[0] = hb.crop(0, 0, hb.getSheet().getWidth(), hb.getSheet().getHeight() / 2);
+        HEALTH_BAR[1] = hb.crop(0, hb.getSheet().getHeight() / 2, hb.getSheet().getWidth(), hb.getSheet().getHeight() / 2);
 
         GLUB_ORB = getFrames(glubSheet, 0, 0, 5, width, height);
         GLUB_METER = getFrames(glubSheet, 1, 0, 1, width * 4, height);
@@ -204,7 +206,6 @@ public class Assets {
         /* Sprite Sheets */
         effectSheet = new SpriteSheet("/assets/textures/effect.png");
 
-        healthSheet = new SpriteSheet("/assets/textures/gui/overlay/health.png");
         glubSheet = new SpriteSheet("/assets/textures/glub.png");
         itemsSheet = new SpriteSheet("/assets/textures/items.png");
 
