@@ -12,6 +12,16 @@ public class SpriteSheet {
         this.sheet = ImageLoader.loadImage(path);
     }
 
+    public SpriteSheet(Image sheet) {
+        this.path = sheet.getName();
+        this.sheet = sheet;
+    }
+
+    public SpriteSheet(String path, Image sheet) {
+        this.path = path;
+        this.sheet = sheet;
+    }
+
     public Image crop(int x, int y, int width, int height) {
         return sheet.getSubImage(x, y, width, height);
     }
@@ -22,5 +32,9 @@ public class SpriteSheet {
 
     public String getPath() {
         return path;
+    }
+
+    public SpriteSheet copy() {
+        return new SpriteSheet(path, sheet.copy());
     }
 }
