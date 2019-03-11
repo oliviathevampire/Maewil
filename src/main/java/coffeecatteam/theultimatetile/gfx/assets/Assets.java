@@ -26,7 +26,6 @@ public class Assets {
     private static SpriteSheet effectSheet;
 
     private static SpriteSheet glubSheet;
-    private static SpriteSheet itemsSheet;
 
     /* GUI */
     private static SpriteSheet menuSheet;
@@ -207,7 +206,6 @@ public class Assets {
         effectSheet = new SpriteSheet("/assets/textures/effect.png");
 
         glubSheet = new SpriteSheet("/assets/textures/glub.png");
-        itemsSheet = new SpriteSheet("/assets/textures/items.png");
 
         /* GUI */
         menuSheet = new SpriteSheet("/assets/textures/gui/menu.png");

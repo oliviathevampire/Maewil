@@ -14,6 +14,7 @@ public class EntityBush extends EntityNature {
         super(tutEngine, "bush", type.getWidth(), type.getHeight(), EntityHitType.BUSH);
         setCurrentTexture(type.getId());
         this.type = type;
+        this.isCollidable = false;
 
         drops.add(Items.LEAF);
         drops.add(Items.STICK);

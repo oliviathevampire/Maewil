@@ -11,6 +11,7 @@ import coffeecatteam.theultimatetile.objs.IHasData;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TileLava;
+import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.objs.tiles.TileWater;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.tags.TagCompound;
@@ -118,10 +119,14 @@ public abstract class Entity implements IHasData<Entity> {
             splashEffect.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
     }
 
-    public Tile getTileAtMid() {
+    public TilePos getTilePosAtMid() {
         float x = (float) ((position.x + width / 2) / Tile.TILE_WIDTH);
         float y = (float) ((position.y + height / 2f + height / 4f) / Tile.TILE_HEIGHT);
-        Tile t = tutEngine.getWorld().getFGTile((int) x, (int) y);
+        return new TilePos((int) x, (int) y);
+    }
+
+    public Tile getTileAtMid() {
+        Tile t = tutEngine.getWorld().getFGTile(getTilePosAtMid().getX(), getTilePosAtMid().getY());
         return t;
     }
 

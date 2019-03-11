@@ -14,6 +14,7 @@ import coffeecatteam.theultimatetile.objs.items.IInteractable;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.items.ItemTool;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.utils.Utils;
@@ -283,30 +284,28 @@ public class EntityPlayer extends EntityCreature {
                 sprintTimer = maxSprintTimer;
         }
 
-        if (tutEngine.getKeyManager().moveUp) {
+        if (tutEngine.getKeyManager().moveUp)
             yMove = -speed;
-//            setCurrentTexture("walkUp");
-        }
-        if (tutEngine.getKeyManager().moveDown) {
+        if (tutEngine.getKeyManager().moveDown)
             yMove = speed;
-//            setCurrentTexture("walkDown");
-        }
-        if (tutEngine.getKeyManager().moveLeft) {
+        if (tutEngine.getKeyManager().moveLeft)
             xMove = -speed;
-//            setCurrentTexture("walkLeft");
-        }
-        if (tutEngine.getKeyManager().moveRight) {
+        if (tutEngine.getKeyManager().moveRight)
             xMove = speed;
-//            setCurrentTexture("walkRight");
-        }
-//        if (xMove == 0 && yMove == 0)
-//            setCurrentTexture("idle");
     }
 
     private void tileInteract() {
-        int x = (int) position.x / Tile.TILE_WIDTH;
-        int y = (int) position.y / Tile.TILE_HEIGHT;
-        Tile t = tutEngine.getWorld().getFGTile(x, y);
+        TilePos tilePos = getTilePosAtMid();
+        if (tutEngine.getKeyManager().moveUp)
+            tilePos = getTilePosAtMid().up();
+        if (tutEngine.getKeyManager().moveDown)
+            tilePos = getTilePosAtMid().down();
+        if (tutEngine.getKeyManager().moveLeft)
+            tilePos = getTilePosAtMid().left();
+        if (tutEngine.getKeyManager().moveRight)
+            tilePos = getTilePosAtMid().right();
+
+        Tile tile = tutEngine.getWorld().getFGTile(tilePos.getX(), tilePos.getY());
         if (isAttacking) {
             int dmg = NumberUtils.getRandomInt(1, 3);
             if (equippedItem != null) {
@@ -316,7 +315,7 @@ public class EntityPlayer extends EntityCreature {
                         dmg += extraDmg;
                 }
             }
-            t.damage(dmg);
+            tile.damage(dmg);
         }
     }
 
