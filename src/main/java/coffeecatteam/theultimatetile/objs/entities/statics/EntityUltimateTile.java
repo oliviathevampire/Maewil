@@ -6,7 +6,7 @@ import coffeecatteam.theultimatetile.objs.entities.Entity;
 public class EntityUltimateTile extends EntityStatic {
 
     public EntityUltimateTile(TutEngine tutEngine) {
-        super(tutEngine, "ultimate", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.NONE);
+        super(tutEngine, "ultimate", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, HitType.NONE);
         isCollidable = false;
         setCurrentTexture("main");
     }

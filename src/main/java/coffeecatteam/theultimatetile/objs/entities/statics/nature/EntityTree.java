@@ -7,19 +7,26 @@ import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.statics.EntityNature;
 import coffeecatteam.theultimatetile.objs.items.Items;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import org.newdawn.slick.GameContainer;
 
 public class EntityTree extends EntityNature {
 
     private TreeType type;
 
     public EntityTree(TutEngine tutEngine, TreeType type) {
-        super(tutEngine, "tree", type.getWidth(), type.getHeight(), EntityHitType.WOOD);
-        setCurrentTexture(type.getId());
+        super(tutEngine, "tree", type.getWidth(), type.getHeight(), HitType.WOOD);
         this.type = type;
+        setCurrentTexture(this.type.getId());
+//        setCurrentTextureId(this.type.getId());
 
         drops.add(Items.LEAF);
         drops.add(Items.STICK);
         drops.add(NumberUtils.getRandomBoolean() ? Items.APPLE : Items.STICK);
+    }
+
+    @Override
+    public void update(GameContainer container, int delta) {
+        super.update(container, delta);
     }
 
     @Override

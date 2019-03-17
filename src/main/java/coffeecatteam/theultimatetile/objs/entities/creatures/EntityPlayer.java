@@ -60,11 +60,6 @@ public class EntityPlayer extends EntityCreature {
     }
 
     @Override
-    public AABB getEntityBounds() {
-        return new AABB((float) position.x, (float) (position.y + height / 2f), width, height / 2);
-    }
-
-    @Override
     public void update(GameContainer container, int delta) {
         this.prevX = (float) position.x;
         this.prevY = (float) position.y;
@@ -200,7 +195,7 @@ public class EntityPlayer extends EntityCreature {
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
                 e.isInteracted(extraDmg);
                 Sound hitSound;
-                switch (e.getEntityHitType()) {
+                switch (e.getHitType()) {
                     default:
                     case CREATURE:
                         hitSound = Sounds.PUNCH;

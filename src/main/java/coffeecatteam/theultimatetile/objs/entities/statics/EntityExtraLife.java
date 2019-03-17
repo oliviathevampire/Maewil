@@ -14,7 +14,7 @@ public class EntityExtraLife extends EntityStatic {
     private int healAmt;
 
     public EntityExtraLife(TutEngine tutEngine) {
-        super(tutEngine, "extra_life", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.NONE);
+        super(tutEngine, "extra_life", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, HitType.NONE);
         setCurrentTexture("main");
         isCollidable = false;
 

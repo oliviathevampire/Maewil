@@ -9,14 +9,14 @@
       "startPos": [0, 0]
     },
     "walkUp": {
-      "length": 3,
+      "length": 4,
       "speed": 250,
       "startPos": [0, 1]
     },
     "walkDown": {
-      "length": 3,
+      "length": 4,
       "speed": 250,
-      "startPos": [3, 1]
+      "startPos": [4, 1]
     },
     "walkLeft": {
       "length": 4,

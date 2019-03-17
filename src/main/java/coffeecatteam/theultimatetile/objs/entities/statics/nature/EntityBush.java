@@ -11,7 +11,7 @@ public class EntityBush extends EntityNature {
     private EntityRock.RockType type;
 
     public EntityBush(TutEngine tutEngine, EntityRock.RockType type) {
-        super(tutEngine, "bush", type.getWidth(), type.getHeight(), EntityHitType.BUSH);
+        super(tutEngine, "bush", type.getWidth(), type.getHeight(), HitType.BUSH);
         setCurrentTexture(type.getId());
         this.type = type;
         this.isCollidable = false;

@@ -30,7 +30,7 @@ public abstract class EntityCreature extends Entity {
     protected List<AI> ais = new ArrayList<>();
 
     public EntityCreature(TutEngine tutEngine, String id, int width, int height) {
-        super(tutEngine, id, width, height, EntityHitType.CREATURE);
+        super(tutEngine, id, width, height, HitType.CREATURE);
         init();
         setCurrentTexture("idle");
 

@@ -5,8 +5,8 @@ import coffeecatteam.theultimatetile.objs.entities.Entity;
 
 public abstract class EntityStatic extends Entity {
 
-    public EntityStatic(TutEngine tutEngine, String id, int width, int height, EntityHitType entityHitType) {
-        super(tutEngine, id, width, height, entityHitType);
+    public EntityStatic(TutEngine tutEngine, String id, int width, int height, HitType hitType) {
+        super(tutEngine, id, width, height, hitType);
         currentHealth = 10;
     }
 }

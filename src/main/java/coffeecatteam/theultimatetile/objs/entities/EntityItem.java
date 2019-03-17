@@ -28,7 +28,7 @@ public class EntityItem extends Entity {
     }
 
     public EntityItem(TutEngine tutEngine, ItemStack stack, boolean pickedUp) {
-        super(tutEngine, "item", Item.WIDTH, Item.HEIGHT, EntityHitType.NONE);
+        super(tutEngine, "item", Item.WIDTH, Item.HEIGHT, HitType.NONE);
         this.stack = stack;
         this.pickedUp = pickedUp;
         this.isCollidable = false;

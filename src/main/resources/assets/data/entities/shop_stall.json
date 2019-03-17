@@ -3,8 +3,8 @@
   "texture": "entities/static/shop_stall.png",
   "sprites": {
     "stall": {
-      "topLeft": [0, 64],
-      "bottomRight": [31, 95]
+      "spritePos": [0, 64],
+      "spriteSize": [32, 32]
     },
     "roof_orange": {
       "length": 8,

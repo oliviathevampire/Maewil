@@ -12,7 +12,7 @@ public class EntityRock extends EntityNature {
     private RockType type;
 
     public EntityRock(TutEngine tutEngine, RockType type) {
-        super(tutEngine, "rock", type.getWidth(), type.getHeight(), EntityHitType.STONE);
+        super(tutEngine, "rock", type.getWidth(), type.getHeight(), HitType.STONE);
         setCurrentTexture(type.getId());
         this.type = type;
 

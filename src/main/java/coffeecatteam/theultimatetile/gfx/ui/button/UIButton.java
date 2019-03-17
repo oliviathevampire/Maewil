@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.gfx.ui.button;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.assets.Sounds;
@@ -24,12 +25,52 @@ public class UIButton extends UIObject {
     private boolean underlined;
     private Font font;
 
+    private boolean useImage, renderBtnBG = true, renderBtnHover = true;
+
+    private Animation image = new Animation();
+    private float imgScale;
+    private int padding;
+
     private Image[] currentTexture;
     protected boolean hasTooltip = false, hasCustomWidth = false;
     protected UITextBox tooltip;
 
     private boolean centeredX, centeredY;
 
+    /*
+     * Button - Image/Animation
+     */
+    public UIButton(TutEngine tutEngine, Vector2D position, Image image, ClickListener listener) {
+        this(tutEngine, position, new Animation(image), listener);
+    }
+
+    public UIButton(TutEngine tutEngine, Vector2D position, Image image, float imgScale, ClickListener listener) {
+        this(tutEngine, position, new Animation(image), imgScale, listener);
+    }
+
+    public UIButton(TutEngine tutEngine, Vector2D position, Image image, float imgScale, int padding, ClickListener listener) {
+        this(tutEngine, position, new Animation(image), imgScale, padding, listener);
+    }
+
+    public UIButton(TutEngine tutEngine, Vector2D position, Animation animation, ClickListener listener) {
+        this(tutEngine, position, animation, 1.0f, listener);
+    }
+
+    public UIButton(TutEngine tutEngine, Vector2D position, Animation animation, float imgScale, ClickListener listener) {
+        this(tutEngine, position, animation, imgScale, 16, listener);
+    }
+
+    public UIButton(TutEngine tutEngine, Vector2D position, Animation animation, float imgScale, int padding, ClickListener listener) {
+        this(tutEngine, position, listener);
+        this.useImage = true;
+        this.image = animation;
+        this.imgScale = imgScale;
+        this.padding = padding;
+    }
+
+    /*
+     * Button - Text
+     */
     public UIButton(TutEngine tutEngine, boolean centered, String text, ClickListener listener) {
         this(tutEngine, new Vector2D(), text, false, Assets.FONTS.get("40"), listener);
         this.centeredX = centeredY = centered;
@@ -50,13 +91,20 @@ public class UIButton extends UIObject {
     }
 
     public UIButton(TutEngine tutEngine, Vector2D position, String text, boolean underlined, Font font, ClickListener listener) {
-        super(position, 0, 0);
-        this.tutEngine = tutEngine;
-        this.listener = listener;
-
+        this(tutEngine, position, listener);
+        this.useImage = false;
         this.text = text;
         this.underlined = underlined;
         this.font = font;
+    }
+
+    /*
+     * Button - Base
+     */
+    UIButton(TutEngine tutEngine, Vector2D position, ClickListener listener) {
+        super(position, 0, 0);
+        this.tutEngine = tutEngine;
+        this.listener = listener;
         this.currentTexture = Assets.BUTTON_ENABLED;
 
         this.centeredX = centeredY = false;
@@ -67,6 +115,7 @@ public class UIButton extends UIObject {
     public void update(GameContainer container, int delta) {
         super.update(container, delta);
         this.hovering = this.bounds.contains(tutEngine.getMousePos()) && !this.disabled;
+        if (useImage) this.image.update();
 
         if (this.hovering) {
             this.currentTexture = Assets.BUTTON_HOVER;
@@ -77,39 +126,61 @@ public class UIButton extends UIObject {
             this.currentTexture = Assets.BUTTON_DISABLED;
 
         listener.update(container, delta);
-        bounds = new AABB(position, width, height);
+        bounds = new AABB(position, (int) width, (int) height);
     }
 
     @Override
     public void render(Graphics g) {
-        int textWidth = Text.getWidth(text, font);
-        int textHeight = Text.getHeight(text, font);
+        int sectionWidth = 64;
+        if (useImage) {
+            Image current = image.getCurrentFrame();
 
-        int pWidth = 64;
-        int pHeight = textHeight + 16;
+            float pad = this.padding * 2;
+            float imgX = (float) (this.position.x + this.padding);
+            float imgWidth = current.getWidth() * this.imgScale;
+            float imgHeight = current.getHeight() * this.imgScale;
 
-        int textX = (int) this.position.x + pWidth / 4;
-        int textY = (int) this.position.y + 8;
+            this.width = imgWidth + pad;
+            this.height = imgHeight + pad;
+            float midWidth = imgWidth - sectionWidth + this.padding * 1.5f;
 
-        this.currentTexture[0].draw((int) this.position.x, (int) this.position.y, pWidth, pHeight);
+            if (renderBtnBG) {
+                this.currentTexture[0].draw((int) this.position.x, (int) this.position.y, sectionWidth, this.height);
+                this.currentTexture[1].draw(imgX, (int) this.position.y, midWidth, this.height);
+                this.currentTexture[2].draw(imgX + midWidth, (int) this.position.y, sectionWidth, this.height);
+            }
 
-        this.currentTexture[1].draw(textX, (int) this.position.y, (hasCustomWidth ? width : textWidth), pHeight);
+            current.draw((int) this.position.x + this.padding, (int) this.position.y + this.padding, imgWidth, imgHeight);
+            if (hovering && renderBtnHover) {
+                g.setColor(new Color(101, 189, 171, 108));
+                g.fillRect((float) this.position.x + this.padding, (float) (this.position.y + this.padding), imgWidth, imgHeight);
+            }
+        } else {
+            int textWidth = Text.getWidth(text, font);
+            int textHeight = Text.getHeight(text, font);
 
-        this.currentTexture[2].draw(textX + ((hasCustomWidth ? width : textWidth) - (pWidth / 2f + pWidth / 4f)), (int) this.position.y, pWidth, pHeight);
+            int pHeight = textHeight + 16;
 
-        if (!hasCustomWidth)
-            this.width = textWidth + pWidth / 2;
-        this.height = pHeight;
+            float textX = (float) (this.position.x + sectionWidth / 4f);
+            float textY = (float) (this.position.y + 8);
 
-        if (StateOptions.OPTIONS.debugMode()) {
-            g.setColor(Color.red);
-            g.drawRect((int) position.x, (int) position.y, width, height);
+            this.currentTexture[0].draw((int) this.position.x, (int) this.position.y, sectionWidth, pHeight);
+            this.currentTexture[1].draw(textX, (int) this.position.y, (hasCustomWidth ? width : textWidth), pHeight);
+            this.currentTexture[2].draw(textX + ((hasCustomWidth ? width : textWidth) - (sectionWidth / 2f + sectionWidth / 4f)), (int) this.position.y, sectionWidth, pHeight);
+
+            if (!hasCustomWidth)
+                this.width = textWidth + sectionWidth / 2f;
+            this.height = pHeight;
+
+            if (StateOptions.OPTIONS.debugMode()) {
+                g.setColor(Color.red);
+                g.drawRect((int) position.x, (int) position.y, width, height);
+            }
+
+            if (hasCustomWidth)
+                textX = (int) this.position.x + sectionWidth / 4f + (width / 2 - textWidth / 2f);
+            Text.drawString(g, this.text, (int) textX, (int) textY + textHeight, false, underlined, Color.gray, font);
         }
-
-        if (hasCustomWidth) {
-            textX = (int) this.position.x + pWidth / 4 + (width / 2 - textWidth / 2);
-        }
-        Text.drawString(g, this.text, textX, textY + textHeight, false, underlined, Color.gray, font);
 
         if (centeredX)
             this.position.x = tutEngine.getWidth() / 2d - this.width / 2d;
@@ -120,8 +191,8 @@ public class UIButton extends UIObject {
     @Override
     public void postRender(Graphics g) {
         if (isHovering() && hasTooltip) {
-            int x = (int) tutEngine.getMousePos().x, x1 = x + this.tooltip.getWidth(), xDiff = 0;
-            int y = (int) tutEngine.getMousePos().y, y1 = y + this.tooltip.getHeight(), yDiff = 0;
+            float x = (float) tutEngine.getMousePos().x, x1 = x + this.tooltip.getWidth(), xDiff = 0;
+            float y = (float) tutEngine.getMousePos().y, y1 = y + this.tooltip.getHeight(), yDiff = 0;
 
             if (x1 > tutEngine.getWidth()) xDiff = x1 - tutEngine.getWidth();
             if (y1 > tutEngine.getHeight()) yDiff = y1 - tutEngine.getHeight();
@@ -172,5 +243,37 @@ public class UIButton extends UIObject {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void setRenderBtnBG(boolean renderBtnBG) {
+        this.renderBtnBG = renderBtnBG;
+    }
+
+    public void setRenderBtnHover(boolean renderBtnHover) {
+        this.renderBtnHover = renderBtnHover;
+    }
+
+    public Animation getImage() {
+        return image;
+    }
+
+    public void setImage(Animation image) {
+        this.image = image;
+    }
+
+    public float getImgScale() {
+        return imgScale;
+    }
+
+    public void setImgScale(float imgScale) {
+        this.imgScale = imgScale;
+    }
+
+    public int getPadding() {
+        return padding;
+    }
+
+    public void setPadding(int padding) {
+        this.padding = padding;
     }
 }

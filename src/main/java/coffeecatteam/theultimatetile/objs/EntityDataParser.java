@@ -1,147 +1,147 @@
 package coffeecatteam.theultimatetile.objs;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.logger.CatLogger;
+import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.gfx.image.ImageLoader;
-import coffeecatteam.theultimatetile.objs.entities.Entity;
+import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
 import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
 import org.newdawn.slick.Image;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author CoffeeCatRailway
  * Created: 24/02/2019
  */
-public class EntityDataParser extends DataParser<Entity> {
+public class EntityDataParser extends DataParser<coffeecatteam.theultimatetile.objs.entities.Entity> {
+
+    private HashMap<String, HashMap<String, Animation>> LOADED = new HashMap<>();
 
     public EntityDataParser() {
         super("entities");
     }
 
-    public Entity loadData(Entity obj) throws IOException, ParseException {
-        JSONObject data = DataParser.getData(dataFolderName + "/" + obj.getId(), true);
+    @Override
+    coffeecatteam.theultimatetile.objs.entities.Entity customLoadData(JSONObject data, coffeecatteam.theultimatetile.objs.entities.Entity obj) {
+        coffeecatteam.theultimatetile.objs.entities.Entity entity = obj.newCopy();
 
-        EntityType type = EntityType.getByName(String.valueOf(data.get("type")));
-        Image texture = Assets.MISSING_TEXTURE;
+        if (!LOADED.keySet().contains(entity.getId())) {
+            DataTypes.Entity type = DataTypes.Entity.getByName(String.valueOf(data.get("type")));
+            SpriteSheet texture = getTexture(data);
+            logger.info("Loading entity of type [" + type + "-" + type.typeName +  "] with id [" + entity.getId() + "]");
+
+            HashMap<String, Animation> textures = new HashMap<>();
+            switch (type) {
+                case STATIC:
+                    JSONObject sprites = (JSONObject) data.get("sprites");
+
+                    for (Object key : sprites.keySet()) {
+                        JSONObject sprite = (JSONObject) sprites.get(key);
+                        SpriteSheet spriteTexture;
+                        if (sprite.containsKey("texture")) spriteTexture = getTexture(sprite).copy();
+                        else spriteTexture = texture.copy();
+
+                        if (sprite.containsKey("length"))
+                            textures.put((String) key, getAnimation(spriteTexture.getSheet(), sprite));
+                        else
+                            textures.put((String) key, getAnimation(spriteTexture.getSheet(), sprite, false, "spritePos"));
+                    }
+                    break;
+
+                case LIVING:
+                    JSONObject animations = (JSONObject) data.get("animations");
+
+                    JSONArray size = (JSONArray) data.get("spriteSize");
+                    int width = NumberUtils.parseInt(size.get(0));
+                    int height = NumberUtils.parseInt(size.get(1));
+
+                    for (Object key : animations.keySet()) {
+                        JSONObject anim = (JSONObject) animations.get(key);
+                        textures.put(String.valueOf(key), getAnimation(texture.getSheet().copy(), anim, width, height));
+                    }
+                    break;
+
+                case CUSTOM:
+                    textures.put(entity.getId(), new Animation(Tiles.AIR.getTexture()));
+                    break;
+            }
+
+            entity.setTextures(textures);
+            LOADED.put(entity.getId(), textures);
+        } else {
+            logger.info("Getting textures for entity with id [" + entity.getId() + "]");
+            entity.setTextures(LOADED.get(entity.getId()));
+        }
+
+        return entity.newCopy();
+    }
+
+    private SpriteSheet getTexture(JSONObject data) {
+        SpriteSheet texture = new SpriteSheet(Assets.MISSING_TEXTURE);
         if (data.containsKey("texture")) {
             String texturePath = "/assets/textures/";
+
             if (data.get("texture") instanceof JSONArray) {
                 JSONArray texturePaths = (JSONArray) data.get("texture");
                 texturePath += String.valueOf(texturePaths.get(NumberUtils.getRandomInt(0, texturePaths.size() - 1)));
             } else {
                 texturePath += data.get("texture");
             }
-            texture = ImageLoader.loadImage(texturePath);
+
+            texture = new SpriteSheet(texturePath);
         }
-
-        Map<String, Animation> textures = new HashMap<>();
-        switch (type) {
-            default:
-            case STATIC:
-                JSONObject sprites = (JSONObject) data.get("sprites");
-
-                for (Object key : sprites.keySet()) {
-                    JSONObject sprite = (JSONObject) sprites.get(key);
-
-                    if (sprite.containsKey("length")) {
-                        textures.put(String.valueOf(key), getAnimation(texture, sprite));
-                    } else {
-                        int tlX = NumberUtils.parseInt(((JSONArray) sprite.get("topLeft")).get(0));
-                        int tlY = NumberUtils.parseInt(((JSONArray) sprite.get("topLeft")).get(1));
-
-                        int brX = NumberUtils.parseInt(((JSONArray) sprite.get("bottomRight")).get(0));
-                        int brY = NumberUtils.parseInt(((JSONArray) sprite.get("bottomRight")).get(1));
-
-                        Animation st = new Animation(texture.getSubImage(tlX, tlY, brX - tlX + 1, brY - tlY + 1));
-                        textures.put(String.valueOf(key), st);
-                    }
-                }
-                break;
-
-            case LIVING:
-                JSONObject animations = (JSONObject) data.get("animations");
-                int sizeX = NumberUtils.parseInt(((JSONArray) data.get("spriteSize")).get(0));
-                int sizeY = NumberUtils.parseInt(((JSONArray) data.get("spriteSize")).get(1));
-
-                for (Object key : animations.keySet()) {
-                    JSONObject anim = (JSONObject) animations.get(key);
-                    textures.put(String.valueOf(key), getAnimation(texture, anim, sizeX, sizeY));
-                }
-                break;
-
-            case CUSTOM:
-                textures.put(obj.getId(), new Animation(Tiles.AIR.getTexture()));
-                break;
-        }
-        obj.setTextures(textures);
-
-        return obj.newCopy();
+        return texture;
     }
 
     private Animation getAnimation(Image texture, JSONObject data) {
-        int sizeX = NumberUtils.parseInt(((JSONArray) data.get("spriteSize")).get(0));
-        int sizeY = NumberUtils.parseInt(((JSONArray) data.get("spriteSize")).get(1));
-        return getAnimation(texture, data, sizeX, sizeY);
+        JSONArray size = (JSONArray) data.get("spriteSize");
+        int width = NumberUtils.parseInt(size.get(0));
+        int height = NumberUtils.parseInt(size.get(1));
+        return getAnimation(texture, data, width, height);
     }
 
-    private Animation getAnimation(Image texture, JSONObject data, int sizeX, int sizeY) {
-        int length = NumberUtils.parseInt(data.get("length"));
-        int speed;
+    private Animation getAnimation(Image texture, JSONObject data, int width, int height) {
+        return getAnimation(texture, data, width, height, true, "startPos");
+    }
+
+    private Animation getAnimation(Image texture, JSONObject data, boolean xyExact, String posKey) {
+        JSONArray size = (JSONArray) data.get("spriteSize");
+        int width = NumberUtils.parseInt(size.get(0));
+        int height = NumberUtils.parseInt(size.get(1));
+        return getAnimation(texture, data, width, height, xyExact, posKey);
+    }
+
+    private Animation getAnimation(Image texture, JSONObject data, int width, int height, boolean xyExact, String posKey) {
+        int length = 1;
+        if (data.containsKey("length"))
+            length = NumberUtils.parseInt(data.get("length"));
+
+        int speed = Animation.DEFAULT_SPEED;
         if (data.containsKey("speed"))
             speed = NumberUtils.parseInt(data.get("speed"));
-        else
-            speed = Animation.DEFAULT_SPEED;
 
-        int startPosX = NumberUtils.parseInt(((JSONArray) data.get("startPos")).get(0));
-        int startPosY = NumberUtils.parseInt(((JSONArray) data.get("startPos")).get(1));
+        JSONArray pos = (JSONArray) data.get(posKey);
+        int startPosX = NumberUtils.parseInt(pos.get(0));
+        int startPosY = NumberUtils.parseInt(pos.get(1));
 
         Image[] images = new Image[length];
         for (int i = 0; i < length; i++) {
-            int x = startPosX * sizeX + sizeX * i;
-            int y = startPosY * sizeY;
-            Image img = texture.getSubImage(x, y, sizeX, sizeY);
+            int x = startPosX;
+            int y = startPosY;
+            if (xyExact) {
+                x = startPosX * width + width * i;
+                y = startPosY * height;
+            }
+
+            Image img = texture.getSubImage(x, y, width, height);
             images[i] = img.copy();
         }
-        Animation animation = new Animation(speed, images);
-        return animation;
-    }
 
-    enum EntityType {
-        STATIC("static"), LIVING("creature"), CUSTOM("custom");
-
-        String typeName;
-
-        EntityType(String typeName) {
-            this.typeName = typeName;
-        }
-
-        public static EntityType getByName(String typeName) {
-            for (EntityType type : values())
-                if (type.typeName.equals(typeName))
-                    return type;
-            return STATIC;
-        }
-    }
-
-    @Override
-    Entity singleData(JSONObject data, Entity obj, String texturePath, int spriteSize) {
-        return null;
-    }
-
-    @Override
-    Entity multipleData(JSONObject data, Entity obj, String texturePath, int spriteSize) {
-        return null;
-    }
-
-    @Override
-    Entity animatedData(JSONObject data, Entity obj, String texturePath, int spriteSize) {
-        return null;
+        return new Animation(speed, images);
     }
 }

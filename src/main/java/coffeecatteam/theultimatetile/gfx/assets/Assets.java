@@ -50,6 +50,7 @@ public class Assets {
     public static Image[] GLUB_METER;
 
     public static Image TITLE;
+    public static Image[] TITLE_FG;
     public static Image DEAD_OVERLAY;
 
     public static Image[] BUTTON_ENABLED = new Image[3];
@@ -148,8 +149,12 @@ public class Assets {
 
     /* GUI */
     private static void initGui() {
-        TITLE = getSpriteInd(menuSheet, 3, 0, 80, 48);
-        DEAD_OVERLAY = getSpriteExact("/assets/textures/gui/dead_overlay.png", 0, 0, 512, 512);
+        TITLE = getSpriteExact("/assets/textures/gui/title.png", 0, 0, 101, 84);
+        TITLE_FG = new Image[3];
+        for (int i = 0; i < TITLE_FG.length; i++) {
+            TITLE_FG[i] = getSpriteExact("/assets/textures/gui/title.png", 112, 64 * i, 112, 64);
+        }
+        DEAD_OVERLAY = getImage("/assets/textures/gui/dead_overlay.png");
 
         BUTTON_ENABLED = getFrames(menuSheet, 0, 0, 2, width, height);
         BUTTON_HOVER = getFrames(menuSheet, 1, 0, 2, width, height);
@@ -184,8 +189,8 @@ public class Assets {
         CHECK_BOX_BG = getSpriteInd(menuSheet, 2, 3, width, height);
         CHECK_BOX_FG = getSpriteInd(menuSheet, 3, 3, width, height);
 
-        CURSOR = getSpriteExact("/assets/textures/cursor.png", 0, 0, 32, 32);
-        MAP_BORDER = getSpriteExact("/assets/textures/gui/map/border.png", 0, 0, 64, 64);
+        CURSOR = getImage("/assets/textures/cursor.png");
+        MAP_BORDER = getImage("/assets/textures/gui/map/border.png");
         MAP_CURSOR = new Image[8];
         for (int y = 0; y < 2; y++) {
             for (int x = 0; x < 4; x++) {
@@ -200,7 +205,7 @@ public class Assets {
     public static void init() {
         logger = new CatLogger("TUT-Assets");
 
-        MISSING_TEXTURE = ImageLoader.loadImage("/assets/textures/missing.png");
+        MISSING_TEXTURE = getImage("/assets/textures/missing.png");
 
         /* Sprite Sheets */
         effectSheet = new SpriteSheet("/assets/textures/effect.png");
@@ -265,6 +270,11 @@ public class Assets {
             index++;
         }
         return frames;
+    }
+
+    public static Image getImage(String path) {
+        SpriteSheet sheet = new SpriteSheet(path);
+        return getSpriteExact(sheet, 0, 0, sheet.getWidth(), sheet.getHeight());
     }
 
     public static Image getSpriteExact(String sheet, int indexX, int indexY, int width, int height) {

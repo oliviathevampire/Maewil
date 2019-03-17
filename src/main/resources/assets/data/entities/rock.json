@@ -3,12 +3,12 @@
   "texture": "entities/static/nature/rock.png",
   "sprites": {
     "small": {
-      "topLeft": [0, 0],
-      "bottomRight": [15, 15]
+      "spritePos": [0, 0],
+      "spriteSize": [16, 16]
     },
     "medium": {
-      "topLeft": [16, 0],
-      "bottomRight": [31, 15]
+      "spritePos": [16, 0],
+      "spriteSize": [16, 16]
     }
   }
 }

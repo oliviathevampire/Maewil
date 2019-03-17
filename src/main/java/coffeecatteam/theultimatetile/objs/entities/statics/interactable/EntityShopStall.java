@@ -11,7 +11,7 @@ import org.newdawn.slick.Graphics;
 public class EntityShopStall extends EntityStatic {
 
     public EntityShopStall(TutEngine tutEngine) {
-        super(tutEngine, "shop_Stall", Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, EntityHitType.WOOD);
+        super(tutEngine, "shop_Stall", Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, HitType.WOOD);
         setCurrentTexture(pickRoof().getId());
     }
 
@@ -33,7 +33,7 @@ public class EntityShopStall extends EntityStatic {
 
     @Override
     public void update(GameContainer container, int delta) {
-        // TODO: ADD FUNCTION
+        // TODO: ADD FUNCTIONALITY
     }
 
     @Override
@@ -50,7 +50,9 @@ public class EntityShopStall extends EntityStatic {
 
     @Override
     public Entity newCopy() {
-        return super.newCopy(new EntityShopStall(tutEngine));
+        EntityShopStall stall = super.newCopy(new EntityShopStall(tutEngine));
+        stall.setCurrentTexture(pickRoof().getId());
+        return stall;
     }
 
     enum RoofType {
@@ -63,7 +65,7 @@ public class EntityShopStall extends EntityStatic {
         private String id;
 
         RoofType(String id) {
-            this.id = "roof" + id;
+            this.id = "roof_" + id;
         }
 
         public String getId() {

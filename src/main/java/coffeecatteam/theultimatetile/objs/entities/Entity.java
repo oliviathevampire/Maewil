@@ -15,6 +15,9 @@ import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.objs.tiles.TileWater;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.tags.TagCompound;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.newdawn.slick.*;
 
 import java.util.HashMap;
@@ -38,7 +41,7 @@ public abstract class Entity implements IHasData<Entity> {
     private int extraDmg = 0;
 
     protected TagCompound TAGS = new TagCompound();
-    private EntityHitType entityHitType;
+    private HitType hitType;
 
     protected int renderX, renderY;
     private Map<String, Animation> textures = new HashMap<>();
@@ -47,7 +50,7 @@ public abstract class Entity implements IHasData<Entity> {
 
     private Animation splashEffect;
 
-    public Entity(TutEngine tutEngine, String id, int width, int height, EntityHitType entityHitType) {
+    public Entity(TutEngine tutEngine, String id, int width, int height, HitType hitType) {
         this.tutEngine = tutEngine;
         this.id = id;
 
@@ -55,7 +58,7 @@ public abstract class Entity implements IHasData<Entity> {
         this.height = height;
         currentHealth = maxHealth;
 
-        this.entityHitType = entityHitType;
+        this.hitType = hitType;
         splashEffect = new Animation(50, Assets.SPLASH_EFFECT);
     }
 
@@ -272,16 +275,37 @@ public abstract class Entity implements IHasData<Entity> {
         this.currentHealth = this.maxHealth;
     }
 
-    public EntityHitType getEntityHitType() {
-        return entityHitType;
+    public HitType getHitType() {
+        return hitType;
     }
 
-    public void setEntityHitType(EntityHitType entityHitType) {
-        this.entityHitType = entityHitType;
+    public void setHitType(HitType hitType) {
+        this.hitType = hitType;
     }
 
-    public enum EntityHitType {
-        CREATURE, WOOD, STONE, BUSH, NONE
+    public enum HitType {
+        CREATURE(0),
+        WOOD(1),
+        STONE(2),
+        BUSH(3),
+        NONE(4);
+
+        private int index;
+
+        HitType(int index) {
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public static HitType getHitType(int index) {
+            for (HitType type : values())
+                if (type.getIndex() == index)
+                    return type;
+            return NONE;
+        }
     }
 
     public Map<String, Animation> getTextures() {
@@ -321,7 +345,7 @@ public abstract class Entity implements IHasData<Entity> {
         entity.setActive(active);
         entity.setCurrentHealth(currentHealth);
         entity.setMaxHealth(maxHealth);
-        entity.setEntityHitType(entityHitType);
+        entity.setHitType(hitType);
         entity.setPosition(position);
         entity.setTags(TAGS);
         entity.setTextures(textures);

@@ -28,7 +28,7 @@ public class UIHyperlink extends UIObject {
 
         this.text = text;
         this.font = font;
-        bounds = new AABB((int) this.position.x, (int) this.position.y, width, height);
+        bounds = new AABB((int) this.position.x, (int) this.position.y, (int) width, height);
     }
 
     public UIHyperlink setColors(Color mainColor, Color hoverColor) {
@@ -51,7 +51,7 @@ public class UIHyperlink extends UIObject {
     @Override
     public void render(Graphics g) {
         width = Text.getWidth(text, font);
-        bounds.width = width;
+        bounds.width = (int) width;
         Text.drawString(g, text, (int) this.position.x, (int) this.position.y + Text.getHeight(text, font), false, this.c, font);
     }
 

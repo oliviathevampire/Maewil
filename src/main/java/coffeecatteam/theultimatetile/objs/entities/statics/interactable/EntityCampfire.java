@@ -13,7 +13,7 @@ public class EntityCampfire extends EntityStatic {
     private InventoryCampfire inventoryCampfire;
 
     public EntityCampfire(TutEngine tutEngine) {
-        super(tutEngine, "campfire", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.WOOD);
+        super(tutEngine, "campfire", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, HitType.WOOD);
         setCurrentTexture("main");
 
         inventoryCampfire = new InventoryCampfire(tutEngine, tutEngine.getPlayer(), TAGS);

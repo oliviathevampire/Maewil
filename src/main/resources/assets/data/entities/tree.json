@@ -3,20 +3,20 @@
   "texture": "entities/static/nature/tree.png",
   "sprites": {
     "small": {
-      "topLeft": [0, 0],
-      "bottomRight": [15, 31]
+      "spritePos": [0, 0],
+      "spriteSize": [16, 32]
     },
     "medium": {
-      "topLeft": [16, 0],
-      "bottomRight": [47, 31]
+      "spritePos": [16, 0],
+      "spriteSize": [32, 32]
     },
     "large": {
-      "topLeft": [48, 0],
-      "bottomRight": [79, 31]
+      "spritePos": [48, 0],
+      "spriteSize": [32, 32]
     },
     "extra_large": {
-      "topLeft": [80, 0],
-      "bottomRight": [111, 63]
+      "spritePos": [80, 0],
+      "spriteSize": [32, 64]
     }
   }
 }

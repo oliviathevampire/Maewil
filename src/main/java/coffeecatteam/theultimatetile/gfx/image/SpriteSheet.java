@@ -34,6 +34,14 @@ public class SpriteSheet {
         return path;
     }
 
+    public int getWidth() {
+        return sheet.getWidth();
+    }
+
+    public int getHeight() {
+        return sheet.getHeight();
+    }
+
     public SpriteSheet copy() {
         return new SpriteSheet(path, sheet.copy());
     }

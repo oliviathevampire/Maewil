@@ -12,7 +12,7 @@ public class EntityCrop extends EntityNature {
     private CropType type;
 
     public EntityCrop(TutEngine tutEngine, CropType type) {
-        super(tutEngine, "crop", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, EntityHitType.BUSH);
+        super(tutEngine, "crop", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, HitType.BUSH);
         isCollidable = false;
         setCurrentTexture(type.getId());
         this.type = type;

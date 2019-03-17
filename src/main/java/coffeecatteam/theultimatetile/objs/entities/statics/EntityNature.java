@@ -19,8 +19,8 @@ public abstract class EntityNature extends EntityStatic {
 
     protected List<Item> drops = new ArrayList<>();
 
-    public EntityNature(TutEngine tutEngine, String id, int width, int height, EntityHitType entityHitType) {
-        super(tutEngine, id, width, height, entityHitType);
+    public EntityNature(TutEngine tutEngine, String id, int width, int height, HitType hitType) {
+        super(tutEngine, id, width, height, hitType);
     }
 
     @Override

@@ -58,7 +58,7 @@ public class StateCredits extends StateAbstractMenu {
         super.render(g);
 
         textBoxDev.setPosition(new Vector2D(tutEngine.getWidth() / 2d - textBoxDev.getWidth() / 2d, 100));
-        int tbDiff = textBoxDev.getWidth() - textBoxHelper.getWidth();
+        float tbDiff = textBoxDev.getWidth() - textBoxHelper.getWidth();
         textBoxHelper.setPosition(new Vector2D(textBoxDev.getPosition().x + tbDiff / 2d, textBoxDev.getPosition().y + textBoxDev.getHeight() + 10));
 
         textBoxDev.render(g);

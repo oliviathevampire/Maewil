@@ -1,7 +1,10 @@
 package coffeecatteam.theultimatetile.objs.entities;
 
 import coffeecatteam.coffeecatutils.ArgUtils;
+import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.jsonparsers.JsonUtils;
 import coffeecatteam.theultimatetile.objs.EntityDataParser;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityCow;
@@ -21,6 +24,11 @@ import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityCrop;
 import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityRock;
 import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityTree;
 import coffeecatteam.theultimatetile.objs.items.Items;
+import coffeecatteam.theultimatetile.tags.JsonToTag;
+import coffeecatteam.theultimatetile.tags.TagCompound;
+import coffeecatteam.theultimatetile.tags.TagException;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -137,5 +145,61 @@ public class Entities {
 
     public static List<Entity> getEntities() {
         return new ArrayList<>(ENTITIES.values());
+    }
+
+    public static Entity jsonToEntity(JSONObject json) {
+        Entity entity = getEntityById((String) json.get("id"));
+
+        JSONObject posObj = (JSONObject) json.get("pos");
+        Vector2D position = new Vector2D();
+        position.x = NumberUtils.parseDouble(posObj.get("x"));
+        position.y = NumberUtils.parseDouble(posObj.get("y"));
+        entity.setPosition(position);
+
+        TagCompound tags;
+        try {
+            JSONObject tagsJson = (JSONObject) json.get("tags");
+            tags = JsonToTag.getTagFromJson(tagsJson.toString());
+        } catch (TagException e) {
+            TutEngine.getTutEngine().getLogger().error(e);
+            tags = new TagCompound();
+        }
+        entity.setTags(tags);
+
+        int health = NumberUtils.parseInt(json.get("health"));
+        entity.setCurrentHealth(health);
+
+        int maxHealth = NumberUtils.parseInt(json.get("maxHealth"));
+        entity.setMaxHealth(maxHealth);
+
+        int hitType = NumberUtils.parseInt(json.get("hitType"));
+        entity.setHitType(Entity.HitType.getHitType(hitType));
+
+        String textureId = String.valueOf(json.get("currentTextureId"));
+        entity.setCurrentTextureId(textureId);
+
+        return entity.newCopy();
+    }
+
+    public static JSONObject entityToJson(Entity entity) {
+        JSONObject json = new JSONObject();
+
+        json.put("id", entity.getId());
+        JSONObject pos = new JSONObject();
+        pos.put("x", entity.getPosition().x);
+        pos.put("y", entity.getPosition().y);
+        json.put("pos", pos);
+        try {
+            json.put("tags", new JSONParser().parse(entity.getTags().toString()));
+        } catch (ParseException e) {
+            TutEngine.getTutEngine().getLogger().error(e);
+            json.put("tags", new JSONObject());
+        }
+        json.put("health", entity.getCurrentHealth());
+        json.put("maxHealth", entity.getMaxHealth());
+        json.put("hitType", entity.getHitType().getIndex());
+        json.put("currentTextureId", entity.getCurrentTextureId());
+
+        return json;
     }
 }
