@@ -63,12 +63,12 @@ public class UITextBox extends UIObject {
     }
 
     @Override
-    public int getWidth() {
+    public float getWidth() {
         return 64 + getLongestString();
     }
 
     @Override
-    public int getHeight() {
+    public float getHeight() {
         return 64 + getHeightOFStrings();
     }
 

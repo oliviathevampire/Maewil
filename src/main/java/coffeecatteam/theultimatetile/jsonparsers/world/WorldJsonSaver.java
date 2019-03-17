@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.jsonparsers.world;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.EntityItem;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityCreature;
@@ -139,7 +140,7 @@ public class WorldJsonSaver implements IJSONSaver {
                 for (Entity entity : tutEngine.getEntityManager().getEntities())
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityStatic)
-                            saveEntityObj(entity, statics);
+                            statics.add(Entities.entityToJson(entity));
                 tutEngine.getLogger().info("World [" + path + "] static entities saved!");
             }
             jsonObjectStatic.put("statics", statics);
@@ -151,7 +152,7 @@ public class WorldJsonSaver implements IJSONSaver {
                 for (Entity entity : tutEngine.getEntityManager().getEntities())
                     if (!(entity instanceof EntityPlayer))
                         if (entity instanceof EntityCreature)
-                            saveEntityObj(entity, creatures);
+                            creatures.add(Entities.entityToJson(entity));
                 tutEngine.getLogger().info("World [" + path + "] creature entities saved!");
             }
             jsonObjectCreature.put("creatures", creatures);
@@ -234,30 +235,6 @@ public class WorldJsonSaver implements IJSONSaver {
         jsonObject.put("hotbar", hotbar);
 
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("player"), jsonObject);
-    }
-
-    private void saveEntityObj(Entity entity, JSONArray entitiesArray) {
-        JSONObject entityObj = new JSONObject();
-        entityObj.put("id", entity.getId());
-
-        JSONArray pos = new JSONArray();
-        pos.add(0, entity.getX() / Tile.TILE_WIDTH);
-        pos.add(1, entity.getY() / Tile.TILE_HEIGHT);
-        entityObj.put("pos", pos);
-
-        try {
-            JSONParser parser = new JSONParser();
-            if (!entity.getTags().hasNoTags()) {
-                entityObj.put("tags", parser.parse(entity.getTags().toString()));
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if (entity.getCurrentHealth() < entity.getMaxHealth())
-            entityObj.put("health", entity.getCurrentHealth());
-
-        entitiesArray.add(entityObj);
     }
 
     private void saveJSONFileToSave(String path, String fileName, JSONObject data) throws IOException {

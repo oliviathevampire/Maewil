@@ -287,11 +287,11 @@ public class WorldJsonLoader implements IJSONLoader {
     private void loadEntityObj(JSONObject entityObj) {
         String id = (String) entityObj.get("id");
 
-        TagCompound data = new TagCompound();
+        TagCompound tags = new TagCompound();
         if (entityObj.containsKey("tags")) {
-            JSONObject tags = (JSONObject) entityObj.get("tags");
+            JSONObject tagsJson = (JSONObject) entityObj.get("tags");
             try {
-                data = JsonToTag.getTagFromJson(tags.toJSONString());
+                tags = JsonToTag.getTagFromJson(tagsJson.toJSONString());
             } catch (TagException e) {
                 e.printStackTrace();
             }
@@ -311,31 +311,10 @@ public class WorldJsonLoader implements IJSONLoader {
             health = healthJ;
         }
 
-        int count = 1;
-        if (entityObj.containsKey("count")) {
-            int countJ = NumberUtils.parseInt(entityObj.get("count"));
-            if (countJ > 9)
-                countJ = 9;
-            if (countJ < 1)
-                countJ = 1;
-            count = countJ;
-        }
-        loadEntity(id, x, y, count, pos, health, data);
-    }
-
-    private void loadEntity(String id, float x, float y, int count, JSONArray pos, int health, TagCompound tags) {
-        float ogX = NumberUtils.parseFloat(pos.get(0));
-        for (int i = 0; i < count; i++) {
-            Entity entity = Entities.getEntityById(id).newCopy();
-            entity.setTags(tags);
-            entity.setCurrentHealth(health);
-            tutEngine.getEntityManager().addEntity(entity, x, y, true);
-            x++;
-            if (x > ogX + 2) {
-                x = ogX;
-                y++;
-            }
-        }
+        Entity entity = Entities.getEntityById(id).newCopy();
+        entity.setTags(tags);
+        entity.setCurrentHealth(health);
+        tutEngine.getEntityManager().addEntity(entity, x, y, true);
     }
 
     public static void copyFiles(TutEngine tutEngine, String from, String dest) {

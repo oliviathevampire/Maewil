@@ -9,7 +9,7 @@ import org.newdawn.slick.Graphics;
 public abstract class UIObject {
 
     protected Vector2D position;
-    protected int width, height;
+    protected float width, height;
     protected AABB bounds;
 
     public UIObject(float x, float y, int width, int height) {
@@ -24,6 +24,7 @@ public abstract class UIObject {
     }
 
     public void update(GameContainer container, int delta) {
+        bounds = new AABB(this.position, (int) width, (int) height);
         if (this.bounds.contains(TutEngine.getTutEngine().getMousePos()) && TutEngine.getTutEngine().isLeftPressed())
             onClick();
     }
@@ -43,7 +44,7 @@ public abstract class UIObject {
         this.position = position;
     }
 
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
 
@@ -51,7 +52,7 @@ public abstract class UIObject {
         this.width = width;
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
 

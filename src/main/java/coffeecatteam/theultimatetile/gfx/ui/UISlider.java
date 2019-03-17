@@ -32,13 +32,13 @@ public class UISlider extends UIObject {
         segWidth = 10;
         startX = (int) this.position.x + segWidth;
         endX = startX + width;
-        int slWidth = 20;
-        int slHeight = height * 2;
+        float slWidth = 20;
+        float slHeight = height * 2;
 
-        slMinX = startX - slWidth / 2;
+        slMinX = (int) (startX - slWidth / 2);
         slMaxX = slMinX + width;
 
-        slider = new Slider(tutEngine, new Vector2D(valueToX(defaultValue), (int) (this.position.y - slHeight / 4)), slWidth, slHeight);
+        slider = new Slider(tutEngine, new Vector2D(valueToX(defaultValue), (int) (this.position.y - slHeight / 4)), (int) slWidth, (int) slHeight);
     }
 
     @Override

@@ -90,6 +90,8 @@ public class Tiles {
          */
         register(AIR = parser.loadData(new TileAir(tutEngine)));
         register(GLITCH = parser.loadData(new TileGlitch(tutEngine)));
+
+        TutEngine.getTutEngine().getLogger().info("Tiles registered!");
     }
 
     private static void register(Tile tile) {

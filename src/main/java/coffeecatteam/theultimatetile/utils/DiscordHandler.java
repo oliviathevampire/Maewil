@@ -6,9 +6,13 @@ import club.minnced.discord.rpc.DiscordRichPresence;
 import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.DevEnvUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
+import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.TutEngine;
 
 public class DiscordHandler {
+    
+    private CatLogger logger;
+    private static final String disbaleArg = "-disableDiscordRP";
 
     private static final long timeStamp = System.currentTimeMillis();
     public static final DiscordHandler INSTANCE = new DiscordHandler();
@@ -19,8 +23,9 @@ public class DiscordHandler {
     public static boolean READY = false;
 
     public void setup() {
-        if (!ArgUtils.hasArgument(TutEngine.getTutEngine().getArgs(), "-disableDiscordRP")) {
-            TutEngine.getTutEngine().getLogger().println();
+        if (!ArgUtils.hasArgument(TutEngine.getTutEngine().getArgs(), disbaleArg)) {
+            logger = new CatLogger("TUT-DiscordRichPresence");
+            logger.println();
             Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
             rpc = DiscordRPC.INSTANCE;
 
@@ -28,17 +33,21 @@ public class DiscordHandler {
             handlers.ready = user -> {
                 userId = user.username + "#" + user.discriminator;
                 DiscordHandler.READY = true;
-                TutEngine.getTutEngine().getLogger().warn("Connected to discord");
-                TutEngine.getTutEngine().getLogger().warn("Discord rich presence setup for " + userId);
-                TutEngine.getTutEngine().getLogger().warn("Ready: " + READY);
-                TutEngine.getTutEngine().getLogger().println();
+                logger.warn("Connected to discord");
+                logger.info("Discord rich presence setup for " + userId);
+                logger.info("Ready: " + READY);
+                logger.println();
             };
             rpc.Discord_Initialize("502962688733741056", handlers, true, "");
 
             new Thread(() -> {
-                TutEngine.getTutEngine().getLogger().warn("Started RPC Callback Handler");
+                logger.warn("Started RPC Callback Handler");
                 while (!Thread.currentThread().isInterrupted()) {
                     rpc.Discord_RunCallbacks();
+                    if (!READY) {
+                        logger.info("Connecting rich presence...");
+                        rpc.Discord_UpdateHandlers(handlers);
+                    }
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
@@ -60,7 +69,7 @@ public class DiscordHandler {
     }
 
     public void updatePresence(String details, String state, boolean inGame) {
-        if (!ArgUtils.hasArgument(TutEngine.getTutEngine().getArgs(), "-disableDiscordRP")) {
+        if (!ArgUtils.hasArgument(TutEngine.getTutEngine().getArgs(), disbaleArg)) {
             DiscordRichPresence presence = new DiscordRichPresence();
             presence.details = (DevEnvUtils.isRunningFromDevEnviroment() ? "Developing TUT - " : "") + details;
             presence.state = state;
@@ -91,12 +100,12 @@ public class DiscordHandler {
     }
 
     public void shutdown() {
-        if (!ArgUtils.hasArgument(TutEngine.getTutEngine().getArgs(), "-disableDiscordRP")) {
-            TutEngine.getTutEngine().getLogger().warn("" + userId + " is disconnecting!");
+        if (!ArgUtils.hasArgument(TutEngine.getTutEngine().getArgs(), disbaleArg)) {
+            logger.warn("" + userId + " is disconnecting!");
             rpc.Discord_ClearPresence();
-            TutEngine.getTutEngine().getLogger().warn("Cleared rich presence!");
+            logger.info("Cleared rich presence!");
             rpc.Discord_Shutdown();
-            TutEngine.getTutEngine().getLogger().warn(userId + " hss disconnected!");
+            logger.info(userId + " hss disconnected!");
         }
     }
 }
