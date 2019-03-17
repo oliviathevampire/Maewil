@@ -4,8 +4,10 @@ import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
+import coffeecatteam.theultimatetile.gfx.ui.UITitleRender;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;
 import coffeecatteam.theultimatetile.manager.UIManager;
+import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateManager;
@@ -29,20 +31,21 @@ public class StateGame extends State {
     private UIManager uiManagerPaused;
     private UIManager uiManagerDead;
 
-    public StateGame(TutEngine tutEngine, String world, String worldName) {
-        this(tutEngine, world, worldName, null);
+    public StateGame(TutEngine tutEngine, String worldPath, String worldName) {
+        this(tutEngine, worldPath, worldName, null);
     }
 
-    public StateGame(TutEngine tutEngine, String worldS, String worldName, World wWorld) {
+    public StateGame(TutEngine tutEngine, String worldPath, String worldName, World newWorld) {
         super(tutEngine);
         this.worldName = worldName;
 
         uiManagerPaused = new UIManager(tutEngine);
         uiManagerDead = new UIManager(tutEngine);
-        reset(worldS, wWorld);
+        setWorld(worldPath, newWorld);
         init();
 
         int yOffset = 30;
+        uiManagerPaused.addObject(new UITitleRender());
         uiManagerPaused.addObject(new UIButton(tutEngine, true, tutEngine.getHeight() / 2 - yOffset, "Resume", new ClickListener() {
             @Override
             public void onClick() {
@@ -125,10 +128,6 @@ public class StateGame extends State {
                 g.setColor(tint);
                 g.fillRect(0, 0, tutEngine.getWidth(), tutEngine.getHeight());
 
-                int w = 80 * 6;
-                int h = 48 * 6;
-                Assets.TITLE.draw(tutEngine.getWidth() / 2f - w / 2f, 30, w, h);
-
                 uiManagerPaused.render(g);
             }
         }
@@ -156,22 +155,16 @@ public class StateGame extends State {
         }
     }
 
-    public void setWorld(World world) {
+    private void setWorld(World world) {
         this.world = world;
         tutEngine.setWorld(world);
         init();
     }
 
-    public void setWorld(String path) {
-        setWorld(new World(tutEngine, path, worldName));
-    }
-
-    public void reset(String world, World wWorld) {
-        tutEngine.getEntityManager().reset();
-        tutEngine.getPlayer().reset();
-        if (wWorld == null)
-            setWorld(world);
+    public void setWorld(String worldPath, World newWorld) {
+        if (newWorld == null)
+            setWorld(new World(tutEngine, worldPath, worldName));
         else
-            setWorld(wWorld);
+            setWorld(newWorld);
     }
 }

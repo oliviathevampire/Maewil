@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlink;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
+import coffeecatteam.theultimatetile.gfx.ui.UITitleRender;
 import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.newdawn.slick.Font;
@@ -17,10 +18,29 @@ import org.newdawn.slick.Image;
 
 public class StateMenu extends State {
 
+    private UIButton btnPlayer;
+
     public StateMenu(TutEngine tutEngineIn) {
         super(tutEngineIn);
 
         int yOff = 20;
+        uiManager.addObject(new UITitleRender());
+
+        float sizeP = 64;
+        float xp = tutEngine.getWidth() / 4f - sizeP / 2f;
+        float yp = tutEngine.getHeight() / 2f - sizeP / 2f;
+        uiManager.addObject(btnPlayer = new UIButton(tutEngineIn, new Vector2D(xp, yp), tutEngine.getPlayer().getTextures().get("idle"), 4.0f, 0, new ClickListener() {
+            @Override
+            public void onClick() {
+                // TODO: Add entity texture data alt support
+            }
+
+            @Override
+            public void update(GameContainer container, int delta) {
+            }
+        }));
+        btnPlayer.setRenderBtnBG(false);
+        btnPlayer.setRenderBtnHover(false);
 
         uiManager.addObject(new UIButton(tutEngineIn, true, tutEngine.getHeight() / 2 - yOff, "Select Game", new ClickListener() {
             @Override
@@ -90,20 +110,10 @@ public class StateMenu extends State {
         this.renderBG(g);
         uiManager.render(g);
 
-        int w = 80 * 6;
-        int h = 48 * 6;
-        Assets.TITLE.draw(tutEngine.getWidth() / 2f - w / 2f, 20, w, h);
-
-        tutEngine.getPlayer().getTextures().get("idle").update();
-        Image player = tutEngine.getPlayer().getTexture("idle");
-        float sizeP = 64;
-        float xp = tutEngine.getWidth() / 4f - sizeP / 2f;
-        float yp = tutEngine.getHeight() / 2f - sizeP / 2f;
-        player.draw(xp, yp, sizeP, sizeP);
 
         Entities.ULTIMATE.getTextures().get("main").update();
         Image ultimate = Entities.ULTIMATE.getTexture("main");
-        float sizeU = sizeP * 1.5f;
+        float sizeU = 96;
         ultimate.draw((tutEngine.getWidth() / 4f) * 3 - sizeU / 2f, tutEngine.getHeight() / 2f - sizeU / 2f, sizeU, sizeU);
     }
 }
