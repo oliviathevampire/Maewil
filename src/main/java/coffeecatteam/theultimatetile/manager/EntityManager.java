@@ -15,44 +15,73 @@ import java.util.Comparator;
 
 public class EntityManager {
 
+    public static int RENDER_VIEW;
+
     private TutEngine tutEngine;
     private EntityPlayer player;
     private ArrayList<Entity> entities;
-    private Comparator<Entity> renderSorter = (Entity a, Entity b) -> {
-        if (a.getY() + a.getHeight() < b.getY() + b.getHeight())
-            return -1;
-        return 1;
+    private Comparator<Entity> renderSorter = (a, b) -> {
+        float y1 = a.getY() + a.getHeight();
+        float y2 = b.getY() + b.getHeight();
+        if (y1 == y2)
+            return 0;
+        else {
+            if (y1 < y2)
+                return -1;
+            return 1;
+        }
     };
 
     public EntityManager(TutEngine tutEngine) {
         this.tutEngine = tutEngine;
         entities = new ArrayList<>();
         entities.add(null);
+
+        if (tutEngine.getWidth() > tutEngine.getHeight()) {
+            RENDER_VIEW = tutEngine.getWidth() / Tile.TILE_SIZE + 1;
+        } else {
+            RENDER_VIEW = tutEngine.getHeight() / Tile.TILE_SIZE + 1;
+        }
     }
 
     public void update(GameContainer container, int delta) {
         for (int i = 0; i < entities.size(); i++) {
-            Entity e = entities.get(i);
-            e.updateA(container, delta);
-            if (!e.isActive()) {
-                e.die(entities, i);
-                if (!(e instanceof EntityPlayer))
+            Entity entity = entities.get(i);
+            if (isEntityInView(entity, (int) (RENDER_VIEW * 1.5f)))
+                entity.updateA(container, delta);
+
+            if (!entity.isActive()) {
+                entity.die();
+                if (!(entity instanceof EntityPlayer)) {
+                    entities.remove(i);
                     i--;
+                }
             }
         }
+
         entities.sort(renderSorter);
     }
 
     public void render(Graphics g) {
-        for (Entity e : entities)
-            e.preRender(g);
+        for (Entity entity : entities)
+            if (isEntityInView(entity, RENDER_VIEW))
+                entity.preRender(g);
 
-        for (Entity e : entities) {
-            e.render(g);
-        }
+        for (Entity entity : entities)
+            if (isEntityInView(entity, RENDER_VIEW))
+                entity.render(g);
 
-        for (Entity e : entities)
-            e.postRender(g);
+        for (Entity entity : entities)
+            if (isEntityInView(entity, RENDER_VIEW))
+                entity.postRender(g);
+    }
+
+    public boolean isEntityInView(Entity entity, int view) {
+        return isEntityInView(entity.getPosition(), player.getPosition(), view);
+    }
+
+    public boolean isEntityInView(Vector2D origin, Vector2D destination, int view) {
+        return origin.getDistanceFrom(destination) / Tile.TILE_SIZE < view;
     }
 
     public void addEntity(Entity entity) {
@@ -62,7 +91,7 @@ public class EntityManager {
     public void addEntity(Entity entity, float x, float y, boolean atTile) {
         Entity newEntity = entity.newCopy();
         if (atTile) {
-            newEntity.setPosition(new Vector2D(x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT));
+            newEntity.setPosition(new Vector2D(x * Tile.TILE_SIZE, y * Tile.TILE_SIZE));
         } else {
             newEntity.setPosition(new Vector2D(x, y));
         }
