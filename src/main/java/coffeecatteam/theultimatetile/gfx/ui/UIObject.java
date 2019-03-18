@@ -12,15 +12,15 @@ public abstract class UIObject {
     protected float width, height;
     protected AABB bounds;
 
-    public UIObject(float x, float y, int width, int height) {
+    public UIObject(float x, float y, float width, float height) {
         this(new Vector2D(x, y), width, height);
     }
 
-    public UIObject(Vector2D position, int width, int height) {
+    public UIObject(Vector2D position, float width, float height) {
         this.position = position;
         this.width = width;
         this.height = height;
-        bounds = new AABB(this.position, width, height);
+        bounds = new AABB(this.position, (int) width, (int) height);
     }
 
     public void update(GameContainer container, int delta) {

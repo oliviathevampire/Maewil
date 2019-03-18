@@ -156,10 +156,10 @@ public class UIButton extends UIObject {
                 g.fillRect((float) this.position.x + this.padding, (float) (this.position.y + this.padding), imgWidth, imgHeight);
             }
         } else {
-            int textWidth = Text.getWidth(text, font);
-            int textHeight = Text.getHeight(text, font);
+            float textWidth = Text.getWidth(text, font);
+            float textHeight = Text.getHeight(text, font);
 
-            int pHeight = textHeight + 16;
+            float pHeight = textHeight + 16;
 
             float textX = (float) (this.position.x + sectionWidth / 4f);
             float textY = (float) (this.position.y + 8);

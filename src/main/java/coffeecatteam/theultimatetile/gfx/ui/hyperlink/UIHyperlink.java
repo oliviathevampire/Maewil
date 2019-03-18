@@ -22,13 +22,13 @@ public class UIHyperlink extends UIObject {
     private String text;
     private Font font;
 
-    public UIHyperlink(Vector2D position, int height, String text, Font font, ClickListener listener) {
+    public UIHyperlink(Vector2D position, float height, String text, Font font, ClickListener listener) {
         super(position, 0, height);
         this.listener = listener;
 
         this.text = text;
         this.font = font;
-        bounds = new AABB((int) this.position.x, (int) this.position.y, (int) width, height);
+        bounds = new AABB((int) this.position.x, (int) this.position.y, (int) width, (int) height);
     }
 
     public UIHyperlink setColors(Color mainColor, Color hoverColor) {

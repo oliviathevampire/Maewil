@@ -85,7 +85,7 @@ public class StateMenu extends State {
         uiManager.addObject(new UIHyperlinkCopyright(new Vector2D(5, cy)));
         Font font = Assets.FONTS.get("30");
         String text = "Credits";
-        int height = Text.getHeight(text, font);
+        int height = (int) Text.getHeight(text, font);
         uiManager.addObject(new UIHyperlink(new Vector2D(tutEngine.getWidth() - 5 - Text.getWidth(text, font), cy - 10), height, text, font, new ClickListener() {
             @Override
             public void onClick() {

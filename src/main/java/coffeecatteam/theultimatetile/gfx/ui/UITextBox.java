@@ -43,8 +43,8 @@ public class UITextBox extends UIObject {
         lines.clear();
     }
 
-    private int getLongestString() {
-        int len = 0;
+    private float getLongestString() {
+        float len = 0;
         if (lines.size() > 0) {
             for (TextF textF : lines)
                 if (textF.getWidth() > len)
@@ -130,11 +130,11 @@ public class UITextBox extends UIObject {
             return color;
         }
 
-        public int getWidth() {
+        public float getWidth() {
             return Text.getWidth(text, font);
         }
 
-        public int getHeight() {
+        public float getHeight() {
             return Text.getHeight(text, font);
         }
     }
