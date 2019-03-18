@@ -40,11 +40,11 @@ public abstract class State {
         this.centre = centre;
         this.border = border;
 
-        this.bgWidth = tutEngine.getWidth() / Tile.TILE_WIDTH;
-        this.bgHeight = tutEngine.getHeight() / Tile.TILE_HEIGHT;
+        this.bgWidth = tutEngine.getWidth() / Tile.TILE_SIZE;
+        this.bgHeight = tutEngine.getHeight() / Tile.TILE_SIZE;
 
-        if (this.bgWidth * Tile.TILE_WIDTH < tutEngine.getWidth()) this.bgWidth += 1;
-        if (this.bgHeight * Tile.TILE_HEIGHT < tutEngine.getHeight()) this.bgHeight += 1;
+        if (this.bgWidth * Tile.TILE_SIZE < tutEngine.getWidth()) this.bgWidth += 1;
+        if (this.bgHeight * Tile.TILE_SIZE < tutEngine.getHeight()) this.bgHeight += 1;
 
         this.bgTiles = new TileList(this.bgWidth, this.bgHeight);
     }

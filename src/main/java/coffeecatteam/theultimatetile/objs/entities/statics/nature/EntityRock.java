@@ -26,8 +26,8 @@ public class EntityRock extends EntityNature {
 
     public enum RockType {
 
-        SMALL("small", Tile.TILE_WIDTH, Tile.TILE_HEIGHT),
-        MEDIUM("medium", Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT);
+        SMALL("small", Tile.TILE_SIZE, Tile.TILE_SIZE),
+        MEDIUM("medium", Tile.TILE_SIZE * 2, Tile.TILE_SIZE);
 
         private String id;
         private int width, height;

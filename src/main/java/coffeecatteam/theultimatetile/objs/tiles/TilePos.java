@@ -23,7 +23,7 @@ public class TilePos {
     }
 
     public static TilePos convertEntityPosition(Vector2D pos) {
-        return new TilePos((int) (pos.x / Tile.TILE_WIDTH), (int) (pos.y / Tile.TILE_HEIGHT));
+        return new TilePos((int) (pos.x / Tile.TILE_SIZE), (int) (pos.y / Tile.TILE_SIZE));
     }
 
     public int getX() {

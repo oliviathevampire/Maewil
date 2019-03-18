@@ -14,8 +14,6 @@ import coffeecatteam.theultimatetile.world.TileList;
 import coffeecatteam.theultimatetile.world.World;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -67,8 +65,8 @@ public class WorldJsonSaver implements IJSONSaver {
 
         JSONArray spawn = new JSONArray();
         float spawnX, spawnY;
-        spawnX = tutEngine.getPlayer().getX() / Tile.TILE_WIDTH;
-        spawnY = tutEngine.getPlayer().getY() / Tile.TILE_HEIGHT;
+        spawnX = tutEngine.getPlayer().getX() / Tile.TILE_SIZE;
+        spawnY = tutEngine.getPlayer().getY() / Tile.TILE_SIZE;
         spawn.add(0, spawnX);
         spawn.add(1, spawnY);
         jsonObject.put("spawn", spawn);
@@ -174,8 +172,8 @@ public class WorldJsonSaver implements IJSONSaver {
                 itemObj.put("id", stack.getId());
 
                 JSONArray pos = new JSONArray();
-                pos.add(0, entity.getPosition().x / Tile.TILE_WIDTH);
-                pos.add(1, entity.getPosition().y / Tile.TILE_HEIGHT);
+                pos.add(0, entity.getPosition().x / Tile.TILE_SIZE);
+                pos.add(1, entity.getPosition().y / Tile.TILE_SIZE);
                 itemObj.put("pos", pos);
 
                 if (stack.getCount() > 1) {

@@ -39,11 +39,11 @@ public abstract class Inventory {
     }
 
     public void dropItem(boolean active, int selectedIndex) {
-        float xOff = Tile.TILE_WIDTH / 4f;
-        float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4f;
+        float xOff = Tile.TILE_SIZE / 4f;
+        float yOff = Tile.TILE_SIZE + Tile.TILE_SIZE / 4f;
         if (getSlot(selectedIndex).getStack() != null) {
             if (active) {
-                tutEngine.getEntityManager().addItem(getSlot(selectedIndex).remove(), (player.getX() + xOff) / Tile.TILE_WIDTH, (player.getY() + yOff) / Tile.TILE_HEIGHT);
+                tutEngine.getEntityManager().addItem(getSlot(selectedIndex).remove(), (player.getX() + xOff) / Tile.TILE_SIZE, (player.getY() + yOff) / Tile.TILE_SIZE);
             }
         }
     }

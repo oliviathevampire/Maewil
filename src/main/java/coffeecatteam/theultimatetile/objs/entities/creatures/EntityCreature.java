@@ -83,12 +83,11 @@ public abstract class EntityCreature extends Entity {
     }
 
     @Override
-    public void die(List<Entity> entities, int index) {
-        super.die(entities, index);
+    public void die() {
         if (drop != null) {
             int amt = NumberUtils.getRandomInt(4);
             for (int i = 0; i < amt; i++)
-                tutEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), (float) (position.x + NumberUtils.getRandomInt(width)) / Tile.TILE_WIDTH, (float) (position.y + NumberUtils.getRandomInt(height)) / Tile.TILE_HEIGHT);
+                tutEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), (float) (position.x + NumberUtils.getRandomInt(width)) / Tile.TILE_SIZE, (float) (position.y + NumberUtils.getRandomInt(height)) / Tile.TILE_SIZE);
         }
     }
 
@@ -107,24 +106,24 @@ public abstract class EntityCreature extends Entity {
     public void moveX() {
         if (xMove != 0) {
             xMove *= waterSpeed;
-            int tx = (int) (position.x + xMove + getTileBounds().x + (xMove > 0 ? getTileBounds().width : 0)) / Tile.TILE_WIDTH;
+            int tx = (int) (position.x + xMove + getTileBounds().x + (xMove > 0 ? getTileBounds().width : 0)) / Tile.TILE_SIZE;
 
-            if (!isCollidingWithTile(tx, (int) (position.y + getTileBounds().y) / Tile.TILE_HEIGHT) && !isCollidingWithTile(tx, (int) (position.y + getTileBounds().y + getTileBounds().height) / Tile.TILE_HEIGHT))
+            if (!isCollidingWithTile(tx, (int) (position.y + getTileBounds().y) / Tile.TILE_SIZE) && !isCollidingWithTile(tx, (int) (position.y + getTileBounds().y + getTileBounds().height) / Tile.TILE_SIZE))
                 position.add(new Vector2D(xMove, 0));
             else
-                position.x = tx * Tile.TILE_WIDTH + (xMove > 0 ? -getTileBounds().width - 1 : Tile.TILE_WIDTH) - getTileBounds().x;
+                position.x = tx * Tile.TILE_SIZE + (xMove > 0 ? -getTileBounds().width - 1 : Tile.TILE_SIZE) - getTileBounds().x;
         }
     }
 
     public void moveY() {
         if (yMove != 0) {
             yMove *= waterSpeed;
-            int ty = (int) (position.y + yMove + getTileBounds().y + (yMove > 0 ? getTileBounds().height : 0)) / Tile.TILE_HEIGHT;
+            int ty = (int) (position.y + yMove + getTileBounds().y + (yMove > 0 ? getTileBounds().height : 0)) / Tile.TILE_SIZE;
 
-            if (!isCollidingWithTile((int) (position.x + getTileBounds().x) / Tile.TILE_WIDTH, ty) && !isCollidingWithTile((int) (position.x + getTileBounds().x + getTileBounds().width) / Tile.TILE_WIDTH, ty))
+            if (!isCollidingWithTile((int) (position.x + getTileBounds().x) / Tile.TILE_SIZE, ty) && !isCollidingWithTile((int) (position.x + getTileBounds().x + getTileBounds().width) / Tile.TILE_SIZE, ty))
                 position.add(new Vector2D(0, yMove));
             else
-                position.y = ty * Tile.TILE_HEIGHT + (yMove > 0 ? -getTileBounds().height - 1 : Tile.TILE_HEIGHT) - getTileBounds().y;
+                position.y = ty * Tile.TILE_SIZE + (yMove > 0 ? -getTileBounds().height - 1 : Tile.TILE_SIZE) - getTileBounds().y;
         }
     }
 

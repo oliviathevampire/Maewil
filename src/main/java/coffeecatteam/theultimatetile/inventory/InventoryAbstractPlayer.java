@@ -164,13 +164,13 @@ public abstract class InventoryAbstractPlayer extends Inventory {
     }
 
     public void dropItem(boolean active, int inventorySelectedIndex, int hotbarSelectedIndex) {
-        float xOff = Tile.TILE_WIDTH / 4f;
-        float yOff = Tile.TILE_HEIGHT + Tile.TILE_HEIGHT / 4f;
+        float xOff = Tile.TILE_SIZE / 4f;
+        float yOff = Tile.TILE_SIZE + Tile.TILE_SIZE / 4f;
         if (getSlot(inventorySelectedIndex).getStack() != null) {
             if (active) {
-                tutEngine.getEntityManager().addItem(getSlot(inventorySelectedIndex).remove(), (player.getX() + xOff) / Tile.TILE_WIDTH, (player.getY() + yOff) / Tile.TILE_HEIGHT);
+                tutEngine.getEntityManager().addItem(getSlot(inventorySelectedIndex).remove(), (player.getX() + xOff) / Tile.TILE_SIZE, (player.getY() + yOff) / Tile.TILE_SIZE);
             } else {
-                tutEngine.getEntityManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), (player.getX() + xOff) / Tile.TILE_WIDTH, (player.getY() + yOff) / Tile.TILE_HEIGHT);
+                tutEngine.getEntityManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), (player.getX() + xOff) / Tile.TILE_SIZE, (player.getY() + yOff) / Tile.TILE_SIZE);
             }
         }
     }

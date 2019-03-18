@@ -21,7 +21,7 @@ import java.util.List;
 
 public abstract class Tile implements IHasData<Tile> {
 
-    public static final int TILE_WIDTH = 48, TILE_HEIGHT = 48;
+    public static final int TILE_SIZE = 48;
     public static final int DEFAULT_ALT_CHANCE = 850;
 
     protected TutEngine tutEngine;
@@ -50,7 +50,7 @@ public abstract class Tile implements IHasData<Tile> {
         this.tutEngine = tutEngine;
         this.id = id;
 
-        bounds = new AABB(this.position.toVector2D(), TILE_WIDTH, TILE_HEIGHT);
+        bounds = new AABB(this.position.toVector2D(), TILE_SIZE, TILE_SIZE);
         this.isSolid = isSolid;
         this.tileType = tileType;
 
@@ -69,7 +69,7 @@ public abstract class Tile implements IHasData<Tile> {
     }
 
     public void updateBounds() {
-        bounds = new AABB((int) (position.getX() * Tile.TILE_WIDTH - tutEngine.getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_HEIGHT - tutEngine.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
+        bounds = new AABB((int) (position.getX() * Tile.TILE_SIZE - tutEngine.getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_SIZE - tutEngine.getCamera().getyOffset()), TILE_SIZE, TILE_SIZE);
     }
 
     protected Tile getTileAt(TilePos pos) {
@@ -91,7 +91,7 @@ public abstract class Tile implements IHasData<Tile> {
     }
 
     public void render(Graphics g) {
-        render(g, (int) (position.getX() * Tile.TILE_WIDTH - tutEngine.getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_HEIGHT - tutEngine.getCamera().getyOffset()), TILE_WIDTH, TILE_HEIGHT);
+        render(g, (int) (position.getX() * Tile.TILE_SIZE - tutEngine.getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_SIZE - tutEngine.getCamera().getyOffset()), TILE_SIZE, TILE_SIZE);
     }
 
     public void render(Graphics g, int x, int y, int width, int height) {

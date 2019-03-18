@@ -31,8 +31,8 @@ public class WorldMiniMap {
         int viewSize = 100;
         BufferedImage mapbg = new BufferedImage(viewSize, viewSize, BufferedImage.TYPE_INT_ARGB); /* BG */
         BufferedImage mapfg = new BufferedImage(viewSize, viewSize, BufferedImage.TYPE_INT_ARGB); /* FG */
-        int pwx = (int) (tutEngine.getPlayer().getPosition().x / Tile.TILE_WIDTH);
-        int pwy = (int) (tutEngine.getPlayer().getPosition().y / Tile.TILE_HEIGHT);
+        int pwx = (int) (tutEngine.getPlayer().getPosition().x / Tile.TILE_SIZE);
+        int pwy = (int) (tutEngine.getPlayer().getPosition().y / Tile.TILE_SIZE);
 
         /*
          * Get world viewing coords
@@ -111,13 +111,13 @@ public class WorldMiniMap {
         float py = pyd;
 
         if (mxStart <= 0)
-            px = NumberUtils.map((float) tutEngine.getPlayer().getPosition().x, 0, (viewSize + cursorSize) * Tile.TILE_WIDTH, x, x + mapSize);
+            px = NumberUtils.map((float) tutEngine.getPlayer().getPosition().x, 0, (viewSize + cursorSize) * Tile.TILE_SIZE, x, x + mapSize);
         if (mxEnd >= width - 1)
-            px = NumberUtils.map((float) tutEngine.getPlayer().getPosition().x, (width - (viewSize - cursorSize / 2)) * Tile.TILE_WIDTH, width * Tile.TILE_WIDTH, x, x + mapSize - cursorSize / 2);
+            px = NumberUtils.map((float) tutEngine.getPlayer().getPosition().x, (width - (viewSize - cursorSize / 2)) * Tile.TILE_SIZE, width * Tile.TILE_SIZE, x, x + mapSize - cursorSize / 2);
         if (myStart <= 0)
-            py = NumberUtils.map((float) tutEngine.getPlayer().getPosition().y, 0, (viewSize + cursorSize) * Tile.TILE_HEIGHT, y, y + mapSize);
+            py = NumberUtils.map((float) tutEngine.getPlayer().getPosition().y, 0, (viewSize + cursorSize) * Tile.TILE_SIZE, y, y + mapSize);
         if (myEnd >= height - 1)
-            py = NumberUtils.map((float) tutEngine.getPlayer().getPosition().y, (height - (viewSize - cursorSize / 2)) * Tile.TILE_HEIGHT, height * Tile.TILE_HEIGHT, y, y + mapSize - cursorSize / 2);
+            py = NumberUtils.map((float) tutEngine.getPlayer().getPosition().y, (height - (viewSize - cursorSize / 2)) * Tile.TILE_SIZE, height * Tile.TILE_SIZE, y, y + mapSize - cursorSize / 2);
 
         /*
          * Draw cursor (arrow) and border

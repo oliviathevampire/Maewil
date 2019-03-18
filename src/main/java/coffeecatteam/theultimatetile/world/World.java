@@ -30,6 +30,8 @@ public class World {
 
     private boolean isForcedUpdateThread = false;
     private Thread forcedUpdateThread;
+    private GameContainer container;
+    private int delta;
 
     public World(TutEngine tutEngine, String path, String worldName) {
         this.tutEngine = tutEngine;
@@ -41,8 +43,8 @@ public class World {
         } catch (IOException | ParseException e) {
             tutEngine.getLogger().error(e);
         }
-        tutEngine.getPlayer().setX(spawnX * Tile.TILE_WIDTH);
-        tutEngine.getPlayer().setY(spawnY * Tile.TILE_HEIGHT);
+        tutEngine.getPlayer().setX(spawnX * Tile.TILE_SIZE);
+        tutEngine.getPlayer().setY(spawnY * Tile.TILE_SIZE);
     }
 
     public World(TutEngine tutEngine, String worldName, int width, int height, Vector2D spawn, TileList bg_tiles, TileList fg_tiles) {
@@ -63,10 +65,10 @@ public class World {
     }
 
     public void update(GameContainer container, int delta) {
-        int xStart = (int) Math.max(0, tutEngine.getCamera().getxOffset() / Tile.TILE_WIDTH);
-        int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + tutEngine.getWidth()) / Tile.TILE_WIDTH + 1);
-        int yStart = (int) Math.max(0, tutEngine.getCamera().getyOffset() / Tile.TILE_HEIGHT);
-        int yEnd = (int) Math.min(height, (tutEngine.getCamera().getyOffset() + tutEngine.getHeight()) / Tile.TILE_HEIGHT + 1);
+        int xStart = (int) Math.max(0, tutEngine.getCamera().getxOffset() / Tile.TILE_SIZE);
+        int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + tutEngine.getWidth()) / Tile.TILE_SIZE + 1);
+        int yStart = (int) Math.max(0, tutEngine.getCamera().getyOffset() / Tile.TILE_SIZE);
+        int yEnd = (int) Math.min(height, (tutEngine.getCamera().getyOffset() + tutEngine.getHeight()) / Tile.TILE_SIZE + 1);
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
@@ -78,9 +80,10 @@ public class World {
             }
         }
 
-        forcedUpdateThreadInit(container, delta);
+        this.container = container;
+        this.delta = delta;
+        forcedUpdateThreadInit();
 
-//        tutEngine.getItems().update(container, delta);
         Items.UPDATABLE_TIEMS.forEach(i -> i.update(container, delta));
 
         tutEngine.getEntityManager().update(container, delta);
@@ -92,7 +95,7 @@ public class World {
     /*
      * Update all tiles with a forcedUpdate method in-use/override
      */
-    private void forcedUpdateThreadInit(GameContainer container, int delta) {
+    private void forcedUpdateThreadInit() {
         if (!isForcedUpdateThread) {
             isForcedUpdateThread = true;
 
@@ -122,10 +125,10 @@ public class World {
     }
 
     public void render(Graphics g) {
-        int xStart = (int) Math.max(0, tutEngine.getCamera().getxOffset() / Tile.TILE_WIDTH);
-        int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + tutEngine.getWidth()) / Tile.TILE_WIDTH + 1);
-        int yStart = (int) Math.max(0, tutEngine.getCamera().getyOffset() / Tile.TILE_HEIGHT);
-        int yEnd = (int) Math.min(height, (tutEngine.getCamera().getyOffset() + tutEngine.getHeight()) / Tile.TILE_HEIGHT + 1);
+        int xStart = (int) Math.max(0, tutEngine.getCamera().getxOffset() / Tile.TILE_SIZE);
+        int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + tutEngine.getWidth()) / Tile.TILE_SIZE + 1);
+        int yStart = (int) Math.max(0, tutEngine.getCamera().getyOffset() / Tile.TILE_SIZE);
+        int yEnd = (int) Math.min(height, (tutEngine.getCamera().getyOffset() + tutEngine.getHeight()) / Tile.TILE_SIZE + 1);
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)

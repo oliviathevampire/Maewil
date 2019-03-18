@@ -93,8 +93,8 @@ public class StateGame extends State {
     @Override
     public void init() {
         paused = false;
-        tutEngine.getPlayer().setX(world.getSpawnX() * Tile.TILE_WIDTH);
-        tutEngine.getPlayer().setY(world.getSpawnY() * Tile.TILE_HEIGHT);
+        tutEngine.getPlayer().setX(world.getSpawnX() * Tile.TILE_SIZE);
+        tutEngine.getPlayer().setY(world.getSpawnY() * Tile.TILE_SIZE);
     }
 
     @Override

@@ -189,7 +189,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 if (!item.isStackable())
                     count = 1;
 
-                tutEngine.getEntityManager().addItem(new ItemStack(item, count), x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT);
+                tutEngine.getEntityManager().addItem(new ItemStack(item, count), x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
             }
             tutEngine.getLogger().info("Loaded world ITEMS");
         }

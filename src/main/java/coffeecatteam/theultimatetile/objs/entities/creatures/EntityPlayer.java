@@ -20,8 +20,6 @@ import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.newdawn.slick.*;
 
-import java.util.List;
-
 public class EntityPlayer extends EntityCreature {
 
     private Animation sprintEffect;
@@ -100,8 +98,8 @@ public class EntityPlayer extends EntityCreature {
         super.move();
 
         Sound stepSound = null;
-        int tileX = (int) (position.x + 0.5f) / Tile.TILE_WIDTH;
-        int tileY = (int) (position.y + 0.5f) / Tile.TILE_HEIGHT;
+        int tileX = (int) (position.x + 0.5f) / Tile.TILE_SIZE;
+        int tileY = (int) (position.y + 0.5f) / Tile.TILE_SIZE;
 
         Tile bgTile = tutEngine.getWorld().getBGTile(tileX, tileY);
         Tile fgTile = tutEngine.getWorld().getFGTile(tileX, tileY);
@@ -233,7 +231,7 @@ public class EntityPlayer extends EntityCreature {
     }
 
     @Override
-    public void die(List<Entity> entities, int index) {
+    public void die() {
         setCurrentTexture("dead");
 
         if (!isDead) {
@@ -255,7 +253,7 @@ public class EntityPlayer extends EntityCreature {
     }
 
     private void dropItem(ItemStack stack, float x, float y) {
-        tutEngine.getEntityManager().addItem(stack.copy(), (x) / Tile.TILE_WIDTH, (y) / Tile.TILE_HEIGHT);
+        tutEngine.getEntityManager().addItem(stack.copy(), (x) / Tile.TILE_SIZE, (y) / Tile.TILE_SIZE);
     }
 
     private void getInput(GameContainer container, int delta) {
@@ -336,17 +334,17 @@ public class EntityPlayer extends EntityCreature {
     public void postRender(Graphics g) {
         Font font = Assets.FONTS.get("20");
         if (username != null) {
-            int nameWidth = Text.getWidth(username, font);
-            int nameHeight = Text.getHeight(username, font);
+            float nameWidth = Text.getWidth(username, font);
+            float nameHeight = Text.getHeight(username, font);
             int add = 8;
             Color tint = new Color(96, 96, 96, 127);
             g.setColor(tint);
 
-            int xOff = nameWidth / 2 - width / 2;
+            float xOff = nameWidth / 2 - width / 2f;
             int yOff = height / 2;
 
-            g.fillRect(this.renderX - xOff - add / 2, this.renderY - yOff - add / 2, nameWidth + add, nameHeight + add);
-            Text.drawString(g, username, this.renderX - xOff + nameWidth / 2, this.renderY - yOff - nameHeight / 2 - add / 2, true, Color.white, font);
+            g.fillRect(this.renderX - xOff - add / 2f, this.renderY - yOff - add / 2f, nameWidth + add, nameHeight + add);
+            Text.drawString(g, username, this.renderX - xOff + nameWidth / 2, this.renderY - yOff - nameHeight / 2 - add / 2f, true, Color.white, font);
         }
 
         inventoryPlayer.render(g);

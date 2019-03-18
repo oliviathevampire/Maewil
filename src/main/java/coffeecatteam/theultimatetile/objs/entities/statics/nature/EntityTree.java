@@ -36,10 +36,10 @@ public class EntityTree extends EntityNature {
 
     public enum TreeType {
 
-        SMALL("small", Tile.TILE_WIDTH, Tile.TILE_HEIGHT * 2),
-        MEDIUM("medium", Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2),
-        LARGE("large", Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 2),
-        EXTRA_LARGE("extra_large", Tile.TILE_WIDTH * 2, Tile.TILE_HEIGHT * 4);
+        SMALL("small", Tile.TILE_SIZE, Tile.TILE_SIZE * 2),
+        MEDIUM("medium", Tile.TILE_SIZE * 2, Tile.TILE_SIZE * 2),
+        LARGE("large", Tile.TILE_SIZE * 2, Tile.TILE_SIZE * 2),
+        EXTRA_LARGE("extra_large", Tile.TILE_SIZE * 2, Tile.TILE_SIZE * 4);
 
         private String id;
         private int width, height;

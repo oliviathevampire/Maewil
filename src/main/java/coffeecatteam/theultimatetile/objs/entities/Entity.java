@@ -15,13 +15,9 @@ import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.objs.tiles.TileWater;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.tags.TagCompound;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.newdawn.slick.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public abstract class Entity implements IHasData<Entity> {
@@ -43,7 +39,7 @@ public abstract class Entity implements IHasData<Entity> {
     protected TagCompound TAGS = new TagCompound();
     private HitType hitType;
 
-    protected int renderX, renderY;
+    protected float renderX, renderY;
     private Map<String, Animation> textures = new HashMap<>();
     private Animation currentTexture = new Animation(Assets.MISSING_TEXTURE);
     private String currentTextureId = "";
@@ -113,7 +109,7 @@ public abstract class Entity implements IHasData<Entity> {
 
         Font font = Assets.FONTS.get("20");
         String textHealth = "HP: " + currentHealth;
-        int xOff = Text.getWidth(textHealth, font) / 2 - width / 2;
+        float xOff = Text.getWidth(textHealth, font) / 2 - width / 2f;
         Text.drawString(g, textHealth, this.renderX - xOff, this.renderY - Text.getHeight(textHealth, font) / 2, false, false, new Color(0, 255, 0), font);
     }
 
@@ -123,8 +119,8 @@ public abstract class Entity implements IHasData<Entity> {
     }
 
     public TilePos getTilePosAtMid() {
-        float x = (float) ((position.x + width / 2) / Tile.TILE_WIDTH);
-        float y = (float) ((position.y + height / 2f + height / 4f) / Tile.TILE_HEIGHT);
+        float x = (float) ((position.x + width / 2) / Tile.TILE_SIZE);
+        float y = (float) ((position.y + height / 2f + height / 4f) / Tile.TILE_SIZE);
         return new TilePos((int) x, (int) y);
     }
 
@@ -141,8 +137,7 @@ public abstract class Entity implements IHasData<Entity> {
         return getTileAtMid() instanceof TileLava;
     }
 
-    public void die(List<Entity> entities, int index) {
-        entities.remove(index);
+    public void die() {
         tutEngine.getPlayer().setGlubel(tutEngine.getPlayer().getGlubel() + NumberUtils.getRandomInt(1, 5));
     }
 

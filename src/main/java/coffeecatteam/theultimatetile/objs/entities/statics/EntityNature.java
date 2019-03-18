@@ -2,7 +2,6 @@ package coffeecatteam.theultimatetile.objs.entities.statics;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.items.Item;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
@@ -31,12 +30,11 @@ public abstract class EntityNature extends EntityStatic {
     }
 
     @Override
-    public void die(List<Entity> entities, int index) {
-        super.die(entities, index);
+    public void die() {
         for (Item item : drops) {
             int amt = NumberUtils.getRandomInt(3);
             for (int i = 0; i < amt; i++)
-                tutEngine.getEntityManager().addItem(new ItemStack(item.newCopy()), (float) (position.x + NumberUtils.getRandomInt(width)) / Tile.TILE_WIDTH, (float) (position.y + NumberUtils.getRandomInt(height)) / Tile.TILE_HEIGHT);
+                tutEngine.getEntityManager().addItem(new ItemStack(item.newCopy()), (float) (position.x + NumberUtils.getRandomInt(width)) / Tile.TILE_SIZE, (float) (position.y + NumberUtils.getRandomInt(height)) / Tile.TILE_SIZE);
         }
     }
 
