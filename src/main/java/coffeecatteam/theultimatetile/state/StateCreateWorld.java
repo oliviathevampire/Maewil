@@ -8,6 +8,8 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
+import coffeecatteam.theultimatetile.objs.entities.Entity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.tiles.*;
 import coffeecatteam.theultimatetile.state.game.StateGame;
 import coffeecatteam.theultimatetile.world.TileList;
@@ -37,23 +39,7 @@ public class StateCreateWorld extends StateAbstractMenu {
     public StateCreateWorld(TutEngine tutEngine) {
         super(tutEngine, CENTRE_GRASS);
 
-        uiManager.addObject(new UIButton(tutEngine, true, "Create World", new ClickListener() {
-            @Override
-            public void onClick() {
-                generateWorld();
-            }
-
-            @Override
-            public void update(GameContainer container, int delta) {
-            }
-        }));
-    }
-
-    private void generateWorld() {
-        /*
-         * World properties
-         */
-        worldName = "Test World";
+        worldName = "ADD TEXT BOX";
         long range = 1000000000L;
         seed = generateSeed(-range, range);
         sizeMod = NumberUtils.getRandomFloat(0.0f, 50.0f);
@@ -67,6 +53,19 @@ public class StateCreateWorld extends StateAbstractMenu {
             sizeModExtra = NumberUtils.getRandomInt(sizeMax, sizeMin);
         worldSize = minWorldSize + sizeModExtra;
 
+        uiManager.addObject(new UIButton(tutEngine, true, "Create World", new ClickListener() {
+            @Override
+            public void onClick() {
+                generateWorld();
+            }
+
+            @Override
+            public void update(GameContainer container, int delta) {
+            }
+        }));
+    }
+
+    private void generateWorld() {
         /*
          * Tiles, entities, etc..
          */
@@ -104,6 +103,15 @@ public class StateCreateWorld extends StateAbstractMenu {
         int x = NumberUtils.getRandomInt(worldSize - 1);
         int y = NumberUtils.getRandomInt(worldSize - 1);
         Tile tile = fgTiles.getTile(x, y);
+
+        for (Entity entity : tutEngine.getEntityManager().getEntities()) {
+            if (!(entity instanceof EntityPlayer)) {
+                int nx = x * Tile.TILE_SIZE;
+                int ny = y * Tile.TILE_SIZE;
+                if (tutEngine.getEntityManager().isEntityInView(new Vector2D(nx, ny), entity.getPosition(), 2))
+                    return getPlayerSpawn();
+            }
+        }
 
         if (tile.isSolid() || tile.isUnbreakable())
             return getPlayerSpawn();
