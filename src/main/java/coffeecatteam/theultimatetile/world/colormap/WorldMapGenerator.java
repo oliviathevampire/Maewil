@@ -125,22 +125,21 @@ public class WorldMapGenerator {
                 double value = noise.eval((float) ((x + xOff) / sizeBiome), (float) ((y + yOff) / sizeBiome));
                 Color c = Biomes.NONE.getColor();
                 if (landMap.getRGB(x, y) == WorldColors.GRASS.getRGB() && pathMap.getRGB(x, y) != WorldColors.DIRT.getRGB()) {
-                    if (value < 0.15) {
-                        c = Biomes.PLAINS.getColor();
-                    } else if (value > 0.15 && value < 0.55) {
+                    if (value > 0.15 && value < 0.55) {
                         c = Biomes.FOREST.getColor();
                     } else {
                         c = Biomes.PLAINS.getColor();
                     }
-                }
-                if (landMap.getRGB(x, y) == WorldColors.DIRT.getRGB()) {
-                    c = Biomes.CAVE.getColor();
-                }
-                if (landMap.getRGB(x, y) == WorldColors.STONE.getRGB()) {
-                    if (pathMap.getRGB(x, y) == WorldColors.DIRT.getRGB()) {
+                } else {
+                    if (landMap.getRGB(x, y) == WorldColors.DIRT.getRGB()) {
                         c = Biomes.CAVE.getColor();
-                    } else {
-                        c = Biomes.UNDERGROUND.getColor();
+                    }
+                    if (landMap.getRGB(x, y) == WorldColors.STONE.getRGB()) {
+                        if (pathMap.getRGB(x, y) == WorldColors.DIRT.getRGB()) {
+                            c = Biomes.CAVE.getColor();
+                        } else {
+                            c = Biomes.UNDERGROUND.getColor();
+                        }
                     }
                 }
                 image.setRGB(x, y, getRGBA(c.getRGB()));

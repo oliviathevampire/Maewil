@@ -85,8 +85,8 @@ public class Biomes {
 
     public static Biome getBiomeAt(BufferedImage biomeMap, int x, int y) {
         for (Biome biome : Biomes.biomes) {
-            Color color = new Color(WorldMapGenerator.getRGBA(biomeMap.getRGB(x, y)));
-            if (biome.getColor().getRGB() == color.getRGB())
+            int rgba = biomeMap.getRGB(x, y);
+            if (biome.getColor().getRGB() == rgba)
                 return biome;
         }
         return Biomes.NONE;

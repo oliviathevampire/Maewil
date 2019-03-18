@@ -1,11 +1,14 @@
 package coffeecatteam.theultimatetile.world;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.objs.tiles.TileStone;
 import coffeecatteam.theultimatetile.objs.tiles.Tiles;
+import coffeecatteam.theultimatetile.world.colormap.Biomes;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 import coffeecatteam.theultimatetile.world.colormap.WorldMapGenerator;
 import coffeecatteam.theultimatetile.world.noise.OpenSimplexNoise;
@@ -45,17 +48,30 @@ public class WorldGenerator {
             logger = new CatLogger();
             WorldMapGenerator mapGenerator = new WorldMapGenerator(seed, worldSize, worldSize, blendSize);
 
+            // Land maps
             landMap = mapGenerator.generateLand(0, 0, true);
             pathMap = mapGenerator.generatePaths(0, 0, landMap);
             biomeMap = mapGenerator.generateBiomes(0, 0, landMap, pathMap);
             imageMapsGenerated = true;
             logger.info("World image maps generated");
 
+            // Tiles
             bgTiles = generateBGTiles();
             fgTiles = generateFGTiles();
             logger.info("Tiles generated");
 
+            // Entities
             tutEngine.getEntityManager().reset();
+            for (int y = 0; y < worldSize; y += 2) {
+                for (int x = 0; x < worldSize; x++) {
+                    if (Biomes.getBiomeAt(biomeMap, x, y) == Biomes.FOREST) {
+                        float threshold = 0.2f;
+                        float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
+                        float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
+                        tutEngine.getEntityManager().addEntity(Entities.TREE_SMALL, x + xOff, y - 1 + yOff, true);
+                    }
+                }
+            }
         }, "WorldGenerator-Thread");
         generatorThread.start();
     }
