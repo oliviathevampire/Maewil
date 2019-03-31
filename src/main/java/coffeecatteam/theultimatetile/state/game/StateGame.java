@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.state.game;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UITitleRender;
@@ -45,7 +46,7 @@ public class StateGame extends State {
 
         int yOffset = 30;
         uiManagerPaused.addObject(new UITitleRender());
-        uiManagerPaused.addObject(new UIButton(tutEngine, true, tutEngine.getHeight() / 2 - yOffset, "Resume", new ClickListener() {
+        uiManagerPaused.addObject(new UIButton(tutEngine, true, TutLauncher.HEIGHT / 2 - yOffset, "Resume", new ClickListener() {
             @Override
             public void onClick() {
                 paused = false;
@@ -56,7 +57,7 @@ public class StateGame extends State {
             }
         }));
 
-        UIButton btnMainMenu = new UIButton(tutEngine, true, tutEngine.getHeight() / 2 + yOffset + 10, "Main Menu", new ClickListener() {
+        UIButton btnMainMenu = new UIButton(tutEngine, true, TutLauncher.HEIGHT / 2 + yOffset + 10, "Main Menu", new ClickListener() {
             @Override
             public void onClick() {
                 DiscordHandler.INSTANCE.updatePresence("Main Menu");
@@ -69,7 +70,7 @@ public class StateGame extends State {
             public void update(GameContainer container, int delta) {
             }
         });
-        UIButton btnQuit = new UIButton(tutEngine, true, tutEngine.getHeight() / 2 + yOffset * 3 + 20, "Quit", new ClickListener() {
+        UIButton btnQuit = new UIButton(tutEngine, true, TutLauncher.HEIGHT / 2 + yOffset * 3 + 20, "Quit", new ClickListener() {
             @Override
             public void onClick() {
                 saveWorld(true);
@@ -117,15 +118,15 @@ public class StateGame extends State {
         if (tutEngine.getPlayer().isDead) {
             Color tint = new Color(96, 96, 96, 127);
             g.setColor(tint);
-            g.fillRect(0, 0, tutEngine.getWidth(), tutEngine.getHeight());
-            Assets.DEAD_OVERLAY.draw(0, 0, tutEngine.getWidth(), tutEngine.getHeight());
+            g.fillRect(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
+            Assets.DEAD_OVERLAY.draw(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
 
             uiManagerDead.render(g);
         } else {
             if (paused) {
                 Color tint = new Color(96, 96, 96, 127);
                 g.setColor(tint);
-                g.fillRect(0, 0, tutEngine.getWidth(), tutEngine.getHeight());
+                g.fillRect(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
 
                 uiManagerPaused.render(g);
             }

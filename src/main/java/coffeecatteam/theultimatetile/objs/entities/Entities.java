@@ -4,6 +4,7 @@ import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.objs.EntityDataParser;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityCow;
@@ -131,7 +132,7 @@ public class Entities {
          */
         register(ITEM = parser.loadData(new EntityItem(tutEngine, (ItemStack) null))); // PLACE HOLDER IF NEEDED
 
-        TutEngine.getTutEngine().getLogger().info("Entities registered!");
+        TutLauncher.LOGGER.info("Entities registered!");
     }
 
     private static void register(Entity entity) {
@@ -160,7 +161,7 @@ public class Entities {
             JSONObject tagsJson = (JSONObject) json.get("tags");
             tags = JsonToTag.getTagFromJson(tagsJson.toString());
         } catch (TagException e) {
-            TutEngine.getTutEngine().getLogger().error(e);
+            TutLauncher.LOGGER.error(e);
             tags = new TagCompound();
         }
         entity.setTags(tags);
@@ -191,7 +192,7 @@ public class Entities {
         try {
             json.put("tags", new JSONParser().parse(entity.getTags().toString()));
         } catch (ParseException e) {
-            TutEngine.getTutEngine().getLogger().error(e);
+            TutLauncher.LOGGER.error(e);
             json.put("tags", new JSONObject());
         }
         json.put("health", entity.getCurrentHealth());

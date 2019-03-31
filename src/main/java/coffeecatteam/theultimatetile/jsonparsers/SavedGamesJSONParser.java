@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.jsonparsers;
 
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
 import org.json.simple.JSONObject;
@@ -45,7 +46,7 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
             }
         }
 
-        tutEngine.getLogger().info("Games loaded!");
+        TutLauncher.LOGGER.info("Games loaded!");
     }
 
     @Override
@@ -62,13 +63,13 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
                 jsonObject.put(tag, save);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            tutEngine.getLogger().error(e.getMessage());
+            TutLauncher.LOGGER.error(e.getMessage());
         }
 
         FileWriter file = new FileWriter(path);
         file.write(jsonObject.toJSONString());
         file.flush();
 
-        tutEngine.getLogger().info("Games saved!");
+        TutLauncher.LOGGER.info("Games saved!");
     }
 }

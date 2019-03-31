@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.objs.entities.ai;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.state.StateOptions;
@@ -27,7 +28,7 @@ public class AIWander extends AI {
         if (wanderTimer > wanderCooldown) {
             direction = MoveDirection.random();
             if (StateOptions.OPTIONS.debugMode())
-                tutEngine.getLogger().warn("Wander DIR for entity [" + entity.getId() + "] is [" + direction + "]");
+                TutLauncher.LOGGER.warn("Wander DIR for entity [" + entity.getId() + "] is [" + direction + "]");
             wanderCooldown = NumberUtils.getRandomBoolean() ? 1600 : 3200;
             wanderTimer = 0;
         }
@@ -45,7 +46,7 @@ public class AIWander extends AI {
                     break;
             }
             if (StateOptions.OPTIONS.debugMode())
-                tutEngine.getLogger().warn("Wander DIR for entity [" + entity.getId() + "] was swapped to [" + direction + "]");
+                TutLauncher.LOGGER.warn("Wander DIR for entity [" + entity.getId() + "] was swapped to [" + direction + "]");
         }
 
         switch (direction) {

@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
@@ -34,17 +35,17 @@ public abstract class State {
 
     public State(TutEngine tutEngine, Tile[] centre, Tile[] border) {
         this.tutEngine = tutEngine;
-        this.logger = tutEngine.getLogger();
+        this.logger = TutLauncher.LOGGER;
         this.uiManager = new UIManager(tutEngine);
 
         this.centre = centre;
         this.border = border;
 
-        this.bgWidth = tutEngine.getWidth() / Tile.TILE_SIZE;
-        this.bgHeight = tutEngine.getHeight() / Tile.TILE_SIZE;
+        this.bgWidth = TutLauncher.WIDTH / Tile.TILE_SIZE;
+        this.bgHeight = TutLauncher.HEIGHT / Tile.TILE_SIZE;
 
-        if (this.bgWidth * Tile.TILE_SIZE < tutEngine.getWidth()) this.bgWidth += 1;
-        if (this.bgHeight * Tile.TILE_SIZE < tutEngine.getHeight()) this.bgHeight += 1;
+        if (this.bgWidth * Tile.TILE_SIZE < TutLauncher.WIDTH) this.bgWidth += 1;
+        if (this.bgHeight * Tile.TILE_SIZE < TutLauncher.HEIGHT) this.bgHeight += 1;
 
         this.bgTiles = new TileList(this.bgWidth, this.bgHeight);
     }

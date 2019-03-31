@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -22,15 +22,15 @@ public class UITitleRender extends UIObject {
 
     @Override
     public void render(Graphics g) {
-        Image title = Assets.TITLE;
+        Image title = Assets.TITLE_BIG;
         float mult = 3.5f;
         float w = title.getWidth() * mult;
         float h = title.getHeight() * mult;
-        title.draw(TutEngine.getTutEngine().getWidth() / 2f - w / 2f, 20, w, h);
+        title.draw(TutLauncher.WIDTH / 2f - w / 2f, 20, w, h);
 
         float w1 = title_fg.getWidth() * mult;
         float h1 = title_fg.getHeight() * mult;
-        Vector2D pos = new Vector2D(TutEngine.getTutEngine().getWidth() / 2f - w1 / 2f + 1.5f * mult, 20 + 27 * mult);
+        Vector2D pos = new Vector2D(TutLauncher.WIDTH / 2f - w1 / 2f + 1.5f * mult, 20 + 27 * mult);
         title_fg.draw((float) pos.x, (float) pos.y, w1, h1);
 
         this.position = pos;

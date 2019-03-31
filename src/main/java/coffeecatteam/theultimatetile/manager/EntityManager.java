@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.EntityItem;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
@@ -37,10 +38,10 @@ public class EntityManager {
         entities = new ArrayList<>();
         entities.add(null);
 
-        if (tutEngine.getWidth() > tutEngine.getHeight()) {
-            RENDER_VIEW = tutEngine.getWidth() / Tile.TILE_SIZE + 1;
+        if (TutLauncher.WIDTH > TutLauncher.HEIGHT) {
+            RENDER_VIEW = TutLauncher.WIDTH / Tile.TILE_SIZE + 1;
         } else {
-            RENDER_VIEW = tutEngine.getHeight() / Tile.TILE_SIZE + 1;
+            RENDER_VIEW = TutLauncher.HEIGHT / Tile.TILE_SIZE + 1;
         }
     }
 

@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.objs.items;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.objs.ItemDataParser;
 import coffeecatteam.theultimatetile.objs.items.tool.*;
 import org.json.simple.parser.ParseException;
@@ -104,7 +105,7 @@ public class Items {
         register(RAW_STEAK = parser.loadData(new ItemFood(tutEngine, "raw_steak", 3)));
         register(COOKED_STEAK = parser.loadData(new ItemFood(tutEngine, "cooked_steak", 6)));
 
-        TutEngine.getTutEngine().getLogger().info("Items registered!");
+        TutLauncher.LOGGER.info("Items registered!");
     }
 
     private static void register(Item item) {

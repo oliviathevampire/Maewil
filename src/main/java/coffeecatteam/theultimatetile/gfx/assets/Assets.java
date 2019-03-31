@@ -48,8 +48,8 @@ public class Assets {
     public static Image[] GLUB_ORB;
     public static Image[] GLUB_METER;
 
-    public static Image TITLE;
-    public static Image[] TITLE_FG;
+    public static Image TITLE_SMALL, TITLE_BIG;
+    public static Image[] SPLASH_PLAYER, TITLE_FG;
     public static Image DEAD_OVERLAY;
 
     public static Image[] BUTTON_ENABLED = new Image[3];
@@ -148,7 +148,10 @@ public class Assets {
 
     /* GUI */
     private static void initGui() {
-        TITLE = getSpriteExact("/assets/textures/gui/title.png", 0, 0, 101, 84);
+        TITLE_SMALL = getSpriteExact("/assets/textures/splash/title.png", 0, 0, 6560, 928);
+        SPLASH_PLAYER = getFrames("/assets/textures/splash/player.png", 0, 0, 11, 512, 512);
+
+        TITLE_BIG = getSpriteExact("/assets/textures/gui/title.png", 0, 0, 101, 84);
         TITLE_FG = new Image[3];
         for (int i = 0; i < TITLE_FG.length; i++) {
             TITLE_FG[i] = getSpriteExact("/assets/textures/gui/title.png", 112, 64 * i, 112, 64);
@@ -287,7 +290,7 @@ public class Assets {
     public static Image getSpriteExact(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
         Image image = MISSING_TEXTURE;
         try {
-            image = sheet.crop(indexX, indexY, width, height); /* Assets.width * indexX, Assets.height * indexY <-- This caused so many problems! */
+            image = sheet.crop(indexX, indexY, width, height); /* Assets.WIDTH * indexX, Assets.HEIGHT * indexY <-- This caused so many problems! */
         } catch (RasterFormatException e) {
             logger.error(e + " - " + sheet.getPath() + " X: [" + indexX + "] Y: [" + indexY + "]");
         }

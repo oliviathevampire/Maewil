@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import org.newdawn.slick.Graphics;
@@ -19,8 +20,8 @@ public class InventoryPlayer extends InventoryAbstractPlayer {
             int multiplier = 6;
             int width = 57 * multiplier;
             int height = 41 * multiplier;
-            int x = tutEngine.getWidth() / 2 - width / 2;
-            int y = tutEngine.getHeight() / 2 - height / 2;
+            int x = TutLauncher.WIDTH / 2 - width / 2;
+            int y = TutLauncher.HEIGHT / 2 - height / 2;
 
             Assets.INVENTORY.draw(x, y, width, height);
             player.getTexture("idle").draw(x + player.getWidth() / 2f, y + player.getHeight() / 2f, player.getWidth(), player.getHeight());

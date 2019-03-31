@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.world.colormap;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -72,10 +72,10 @@ public class Biomes {
                 Exception incorrectValue = new Exception("Biome with id [" + id + "] has incorrect value: " + color[i]);
 
                 if (color[i] < 0) {
-                    TutEngine.getTutEngine().getLogger().error(incorrectValue);
+                    TutLauncher.LOGGER.error(incorrectValue);
                     color[i] = 0;
                 } else if (color[i] > 255) {
-                    TutEngine.getTutEngine().getLogger().error(incorrectValue);
+                    TutLauncher.LOGGER.error(incorrectValue);
                     color[i] = 255;
                 } else
                     color[i] = color[i];

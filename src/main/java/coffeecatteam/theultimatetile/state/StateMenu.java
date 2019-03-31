@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
@@ -27,8 +28,8 @@ public class StateMenu extends State {
         uiManager.addObject(new UITitleRender());
 
         float sizeP = 64;
-        float xp = tutEngine.getWidth() / 4f - sizeP / 2f;
-        float yp = tutEngine.getHeight() / 2f - sizeP / 2f;
+        float xp = TutLauncher.WIDTH / 4f - sizeP / 2f;
+        float yp = TutLauncher.HEIGHT / 2f - sizeP / 2f;
         uiManager.addObject(btnPlayer = new UIButton(tutEngineIn, new Vector2D(xp, yp), tutEngine.getPlayer().getTextures().get("idle"), 4.0f, 0, new ClickListener() {
             @Override
             public void onClick() {
@@ -42,7 +43,7 @@ public class StateMenu extends State {
         btnPlayer.setRenderBtnBG(false);
         btnPlayer.setRenderBtnHover(false);
 
-        uiManager.addObject(new UIButton(tutEngineIn, true, tutEngine.getHeight() / 2 - yOff, "Select Game", new ClickListener() {
+        uiManager.addObject(new UIButton(tutEngineIn, true, TutLauncher.HEIGHT / 2 - yOff, "Select Game", new ClickListener() {
             @Override
             public void onClick() {
 //                State.setState(((tutEngine) engine).stateSelectGame);
@@ -57,7 +58,7 @@ public class StateMenu extends State {
             }
         }));
 
-        uiManager.addObject(new UIButton(tutEngineIn, true, tutEngine.getHeight() / 2 - yOff + 80, "Options", new ClickListener() {
+        uiManager.addObject(new UIButton(tutEngineIn, true, TutLauncher.HEIGHT / 2 - yOff + 80, "Options", new ClickListener() {
             @Override
             public void onClick() {
                 StateManager.setCurrentState(tutEngine.stateOptions);
@@ -70,7 +71,7 @@ public class StateMenu extends State {
             }
         }));
 
-        uiManager.addObject(new UIButton(tutEngineIn, true, tutEngine.getHeight() / 2 - yOff + 160, "Quit", new ClickListener() {
+        uiManager.addObject(new UIButton(tutEngineIn, true, TutLauncher.HEIGHT / 2 - yOff + 160, "Quit", new ClickListener() {
             @Override
             public void onClick() {
                 tutEngine.close();
@@ -81,12 +82,12 @@ public class StateMenu extends State {
             }
         }));
 
-        int cy = tutEngine.getHeight() - 20;
+        int cy = TutLauncher.HEIGHT - 20;
         uiManager.addObject(new UIHyperlinkCopyright(new Vector2D(5, cy)));
         Font font = Assets.FONTS.get("30");
         String text = "Credits";
         int height = (int) Text.getHeight(text, font);
-        uiManager.addObject(new UIHyperlink(new Vector2D(tutEngine.getWidth() - 5 - Text.getWidth(text, font), cy - 10), height, text, font, new ClickListener() {
+        uiManager.addObject(new UIHyperlink(new Vector2D(TutLauncher.WIDTH - 5 - Text.getWidth(text, font), cy - 10), height, text, font, new ClickListener() {
             @Override
             public void onClick() {
                 StateManager.setCurrentState(tutEngine.stateCredits);
@@ -114,6 +115,6 @@ public class StateMenu extends State {
         Entities.ULTIMATE.getTextures().get("main").update();
         Image ultimate = Entities.ULTIMATE.getTexture("main");
         float sizeU = 96;
-        ultimate.draw((tutEngine.getWidth() / 4f) * 3 - sizeU / 2f, tutEngine.getHeight() / 2f - sizeU / 2f, sizeU, sizeU);
+        ultimate.draw((TutLauncher.WIDTH / 4f) * 3 - sizeU / 2f, TutLauncher.HEIGHT / 2f - sizeU / 2f, sizeU, sizeU);
     }
 }

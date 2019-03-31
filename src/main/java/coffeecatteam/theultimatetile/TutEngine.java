@@ -1,6 +1,5 @@
 package coffeecatteam.theultimatetile;
 
-import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.gfx.Text;
@@ -17,7 +16,6 @@ import coffeecatteam.theultimatetile.state.StateCredits;
 import coffeecatteam.theultimatetile.state.StateManager;
 import coffeecatteam.theultimatetile.state.StateMenu;
 import coffeecatteam.theultimatetile.state.StateOptions;
-import coffeecatteam.theultimatetile.state.game.StateGame;
 import coffeecatteam.theultimatetile.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.state.options.OptionsSounds;
 import coffeecatteam.theultimatetile.state.options.controls.OptionsControls;
@@ -26,20 +24,20 @@ import coffeecatteam.theultimatetile.world.World;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.*;
 import org.newdawn.slick.imageout.ImageOut;
+import org.newdawn.slick.state.BasicGameState;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TutEngine extends BasicGame {
-
-    protected CatLogger logger;
+public class TutEngine extends BasicGameState {
 
     private static TutEngine tutEngine;
 
     private String[] args;
-    private int width, height, fps;
+    private int fps;
 
     /*
      * Mouse & keyboard values
@@ -69,25 +67,23 @@ public class TutEngine extends BasicGame {
     private Camera camera;
     private World world;
 
-    public TutEngine(String[] args, String title, int width, int height) {
-        super(title);
+    public TutEngine(String[] args) {
         this.args = args;
-        this.width = width;
-        this.height = height;
-        this.logger = new CatLogger("Client-Thread");
         tutEngine = this;
     }
 
     @Override
-    public void init(GameContainer container) throws SlickException {
-        logger.warn("Fullscreen is set to [" + container.isFullscreen() + "]");
+    public int getID() {
+        return TutLauncher.ID_GAME;
+    }
 
-        Assets.init();
-        container.setShowFPS(false);
+    @Override
+    public void init(GameContainer container, StateBasedGame game) throws SlickException {
+//        container.setShowFPS(false);
+//        container.setDefaultFont(Assets.FONTS.get("10"));
+//        container.setMouseCursor(Assets.CURSOR, 0, 0);
         container.setDefaultFont(Assets.FONTS.get("10"));
         container.setMouseCursor(Assets.CURSOR, 0, 0);
-
-        Sounds.init();
 
         try {
             entityManager = new EntityManager(this);
@@ -117,7 +113,7 @@ public class TutEngine extends BasicGame {
     }
 
     @Override
-    public void update(GameContainer container, int delta) throws SlickException {
+    public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 //          TagBase.TEST();
         if (close) container.exit();
         keyManager.update(container, delta);
@@ -159,18 +155,18 @@ public class TutEngine extends BasicGame {
         File file = new File(filename);
         file.getParentFile().mkdirs();
 
-        Image target = new Image(width, height);
+        Image target = new Image(TutLauncher.WIDTH, TutLauncher.HEIGHT);
         container.getGraphics().copyArea(target, 0, 0);
         ImageOut.write(target, filename);
         target.destroy();
 
-        logger.info("Screenshot saved to [" + filename + "]");
+        TutLauncher.LOGGER.info("Screenshot saved to [" + filename + "]");
     }
 
     @Override
-    public void render(GameContainer container, Graphics g) throws SlickException {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         g.clear();
-        Assets.MISSING_TEXTURE.draw(0, 0, width, height);
+        Assets.MISSING_TEXTURE.draw(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
 
         if (StateManager.getCurrentState() != null) {
             StateManager.getCurrentState().render(g);
@@ -178,21 +174,6 @@ public class TutEngine extends BasicGame {
         }
         if (StateOptions.OPTIONS.fpsCounter())
             renderFPSCounter(g);
-    }
-
-    @Override
-    public boolean closeRequested() {
-        if (playBGMusic && Sounds.BG_MUSIC.playing())
-            Sounds.BG_MUSIC.stop();
-        logger.warn("Shutting down [" + this.getTitle() + "] engine!");
-        if (StateManager.getCurrentState() instanceof StateGame) {
-            logger.info("Saving world!");
-            ((StateGame) StateManager.getCurrentState()).saveWorld(true);
-            logger.info("World saved!");
-        }
-
-        logger.warn("Exiting [" + this.getTitle() + "]..");
-        return true;
     }
 
     @Override
@@ -226,20 +207,8 @@ public class TutEngine extends BasicGame {
         }
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
     public String[] getArgs() {
         return args;
-    }
-
-    public CatLogger getLogger() {
-        return logger;
     }
 
     public int getFps() {
@@ -304,6 +273,10 @@ public class TutEngine extends BasicGame {
 
     public void setWorld(World world) {
         this.world = world;
+    }
+
+    public boolean isPlayBGMusic() {
+        return playBGMusic;
     }
 
     /*

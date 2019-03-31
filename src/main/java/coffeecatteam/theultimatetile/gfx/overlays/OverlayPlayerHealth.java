@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.gfx.overlays;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
@@ -30,7 +31,7 @@ public class OverlayPlayerHealth extends Overlay {
         float to = Assets.HEARTS.length - 1;
         int hStage = (int) NumberUtils.map(player.getCurrentHealth(), 0, from, to, 0);
 
-        Text.drawString(g, "HP: " + player.getCurrentHealth(), 10, tutEngine.getHeight() - hHeight, false, false, Color.red, Assets.FONTS.get("20"));
-        Assets.HEARTS[hStage].draw(0, tutEngine.getHeight() - hHeight, hWidth, hHeight);
+        Text.drawString(g, "HP: " + player.getCurrentHealth(), 10, TutLauncher.HEIGHT - hHeight, false, false, Color.red, Assets.FONTS.get("20"));
+        Assets.HEARTS[hStage].draw(0, TutLauncher.HEIGHT - hHeight, hWidth, hHeight);
     }
 }

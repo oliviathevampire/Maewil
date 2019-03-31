@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.tags.supers;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.tags.TagCompound;
 import coffeecatteam.theultimatetile.tags.TagIntArray;
 import coffeecatteam.theultimatetile.tags.TagList;
@@ -94,7 +94,7 @@ public abstract class TagBase {
         entity.setTag("tags", tags);
         baseCompound.setTag("entity", entity);
 
-        TutEngine.getTutEngine().getLogger().error(baseCompound.toString());
+        TutLauncher.LOGGER.error(baseCompound.toString());
         System.exit(0);
     }
 

@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.items.IInteractable;
@@ -41,10 +42,10 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         }
 
         // Add hotbar slots
-        int hxd = (this.tutEngine.getWidth() / 2 - width / 2) - width - 6, hx;
+        int hxd = (TutLauncher.WIDTH / 2 - width / 2) - width - 6, hx;
         for (int i = 0; i < maxHotbarSize; i++) {
             hx = hxd + 54 * i;
-            Slot s = new Slot(i, hx, this.tutEngine.getHeight() - height - height / 2 + 13, width, height);
+            Slot s = new Slot(i, hx, TutLauncher.HEIGHT - height - height / 2 + 13, width, height);
             addSlot(s).setSelector(Assets.HOTBAR_SELECTER);
         }
     }
@@ -151,9 +152,9 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         int multiplier = 6;
         int width = barWidth * multiplier;
         int height = barHeight * multiplier;
-        int y = tutEngine.getHeight() - height - 5;
+        int y = TutLauncher.HEIGHT - height - 5;
 
-        Assets.HOTBAR.draw(tutEngine.getWidth() / 2f - width / 2f, y, width, height);
+        Assets.HOTBAR.draw(TutLauncher.WIDTH / 2f - width / 2f, y, width, height);
 
         // Render hotbar slots
         for (int i = maxSize; i < maxSize + maxHotbarSize; i++) {

@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.gfx.overlays;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
@@ -32,10 +33,10 @@ public class OverlayPlayerSprint extends Overlay {
         int sprint = (int) player.getSprintTimer();
         String text = "Sprint left: " + sprint;
         Font font = Assets.FONTS.get("20");
-        int x = tutEngine.getWidth() - width;
-        int y = tutEngine.getHeight() - height;
+        int x = TutLauncher.WIDTH - width;
+        int y = TutLauncher.HEIGHT - height;
 
-        Text.drawString(g, text, tutEngine.getWidth() - Text.getWidth(text, font) - 10, tutEngine.getHeight() - height, false, false, Color.white, font);
+        Text.drawString(g, text, TutLauncher.WIDTH - Text.getWidth(text, font) - 10, TutLauncher.HEIGHT - height, false, false, Color.white, font);
         Assets.SPRINT[0].draw(x, y, width, height);
 
         int sprintWidth = (int) NumberUtils.map(sprint - 1, 0, player.getMaxSprintTimer(), 0, sWidth);

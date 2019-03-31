@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.objs;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
@@ -30,7 +30,7 @@ public interface IHasData<E> {
             if (lang.containsKey(getUnlocalizedName()))
                 return String.valueOf(lang.get(getUnlocalizedName()));
         } catch (IOException | ParseException e) {
-            TutEngine.getTutEngine().getLogger().error(e.getMessage());
+            TutLauncher.LOGGER.error(e.getMessage());
         }
         return getUnlocalizedName();
     }

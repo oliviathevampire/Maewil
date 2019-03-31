@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
@@ -20,7 +21,7 @@ public class StateAbstractMenu extends State {
         super(tutEngine, centre);
 
         if (initUI) {
-            uiManager.addObject(new UIButton(tutEngine, new Vector2D(15, tutEngine.getHeight() - 95), "Main Menu", new ClickListener() {
+            uiManager.addObject(new UIButton(tutEngine, new Vector2D(15, TutLauncher.HEIGHT - 95), "Main Menu", new ClickListener() {
                 @Override
                 public void onClick() {
                     initBack();
@@ -34,7 +35,7 @@ public class StateAbstractMenu extends State {
                 }
             }));
 
-            uiManager.addObject(new UIHyperlinkCopyright(new Vector2D(5, tutEngine.getHeight() - 20)));
+            uiManager.addObject(new UIHyperlinkCopyright(new Vector2D(5, TutLauncher.HEIGHT - 20)));
         }
     }
 

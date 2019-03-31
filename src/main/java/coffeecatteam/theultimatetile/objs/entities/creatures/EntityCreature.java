@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.objs.entities.creatures;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.ai.AI;
 import coffeecatteam.theultimatetile.objs.items.Item;
@@ -129,8 +130,8 @@ public abstract class EntityCreature extends Entity {
 
     protected boolean isCollidingWithTile(int x, int y) {
         if (this.getId().equals("player") && StateOptions.OPTIONS.debugMode()) {
-            tutEngine.getLogger().warn("X: " + x + " Y: " + y);
-            tutEngine.getLogger().warn(tutEngine.getWorld().getFGTile(x, y).getId() + " - " + tutEngine.getWorld().getFGTile(x, y).isSolid());
+            TutLauncher.LOGGER.warn("X: " + x + " Y: " + y);
+            TutLauncher.LOGGER.warn(tutEngine.getWorld().getFGTile(x, y).getId() + " - " + tutEngine.getWorld().getFGTile(x, y).isSolid());
         }
         return tutEngine.getWorld().getFGTile(x, y).isSolid();
     }

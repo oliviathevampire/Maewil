@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.gfx.ui.button;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
@@ -183,9 +184,9 @@ public class UIButton extends UIObject {
         }
 
         if (centeredX)
-            this.position.x = tutEngine.getWidth() / 2d - this.width / 2d;
+            this.position.x = TutLauncher.WIDTH / 2d - this.width / 2d;
         if (centeredY)
-            this.position.y = tutEngine.getHeight() / 2d - this.height / 2d;
+            this.position.y = TutLauncher.HEIGHT / 2d - this.height / 2d;
     }
 
     @Override
@@ -194,8 +195,8 @@ public class UIButton extends UIObject {
             float x = (float) tutEngine.getMousePos().x, x1 = x + this.tooltip.getWidth(), xDiff = 0;
             float y = (float) tutEngine.getMousePos().y, y1 = y + this.tooltip.getHeight(), yDiff = 0;
 
-            if (x1 > tutEngine.getWidth()) xDiff = x1 - tutEngine.getWidth();
-            if (y1 > tutEngine.getHeight()) yDiff = y1 - tutEngine.getHeight();
+            if (x1 > TutLauncher.WIDTH) xDiff = x1 - TutLauncher.WIDTH;
+            if (y1 > TutLauncher.HEIGHT) yDiff = y1 - TutLauncher.HEIGHT;
 
             tooltip.setPosition(new Vector2D(x - xDiff, y - yDiff));
             tooltip.render(g);

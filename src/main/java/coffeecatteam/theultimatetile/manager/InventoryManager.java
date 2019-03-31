@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.inventory.Inventory;
 import coffeecatteam.theultimatetile.inventory.InventoryAbstractPlayer;
 
@@ -19,7 +20,7 @@ public class InventoryManager {
 
     public boolean openInventory(InventoryAbstractPlayer inventory) {
         if (!tutEngine.getPlayer().isGuiOpen()) {
-            tutEngine.getLogger().info(tutEngine.getPlayer().getUsername() + ": Opening inventory " + inventory.getInvName());
+            TutLauncher.LOGGER.info(tutEngine.getPlayer().getUsername() + ": Opening inventory " + inventory.getInvName());
             inventory.setActive(true);
             tutEngine.getPlayer().setGuiOpen(true);
             return true;
@@ -29,14 +30,14 @@ public class InventoryManager {
 
     public void closeAllInventories() {
         INVENTORIES.forEach(inventory -> {
-            tutEngine.getLogger().info(tutEngine.getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
+            TutLauncher.LOGGER.info(tutEngine.getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
             inventory.setActive(false);
             tutEngine.getPlayer().setGuiOpen(false);
         });
     }
 
     public void closeInventory(InventoryAbstractPlayer inventory) {
-        tutEngine.getLogger().info(tutEngine.getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
+        TutLauncher.LOGGER.info(tutEngine.getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
         inventory.setActive(false);
         tutEngine.getPlayer().setGuiOpen(false);
     }

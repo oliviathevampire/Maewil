@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.assets;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -39,7 +39,7 @@ public class Sounds {
 
         CLICK_1 = loadSound("click_1");
         CLICK_2 = loadSound("click_2");
-        TutEngine.getTutEngine().getLogger().info("Sounds loaded!");
+        TutLauncher.LOGGER.info("Sounds loaded!");
     }
 
     public static Sound loadSound(String name) throws SlickException {

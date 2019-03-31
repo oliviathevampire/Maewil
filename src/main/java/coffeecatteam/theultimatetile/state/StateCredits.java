@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.UITextBox;
 import coffeecatteam.theultimatetile.jsonparsers.JsonUtils;
@@ -57,7 +58,7 @@ public class StateCredits extends StateAbstractMenu {
     public void render(Graphics g) {
         super.render(g);
 
-        textBoxDev.setPosition(new Vector2D(tutEngine.getWidth() / 2d - textBoxDev.getWidth() / 2d, 100));
+        textBoxDev.setPosition(new Vector2D(TutLauncher.WIDTH / 2d - textBoxDev.getWidth() / 2d, 100));
         float tbDiff = textBoxDev.getWidth() - textBoxHelper.getWidth();
         textBoxHelper.setPosition(new Vector2D(textBoxDev.getPosition().x + tbDiff / 2d, textBoxDev.getPosition().y + textBoxDev.getHeight() + 10));
 

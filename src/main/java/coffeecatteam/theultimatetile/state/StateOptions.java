@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
@@ -29,16 +30,16 @@ public class StateOptions extends StateAbstractMenu {
     public StateOptions(TutEngine tutEngine, boolean initUI) {
         super(tutEngine, BG, initUI);
 
-        OPTIONS = new OptionsJsonParser("./options.json", tutEngine);
+        OPTIONS = new OptionsJsonParser("./options.json");
         try {
             OPTIONS.load();
         } catch (IOException | ParseException e) {
-            tutEngine.getLogger().error(e);
+            TutLauncher.LOGGER.error(e);
         }
 
         if (initUI) {
-            uiManager.addObject(debug = new UICheckBox(new Vector2D(tutEngine.getWidth() / 2f + 120, 20), 70, OPTIONS.debugMode()));
-            uiManager.addObject(fps = new UICheckBox(new Vector2D(tutEngine.getWidth() / 2f + 100, 90), 70, OPTIONS.fpsCounter()));
+            uiManager.addObject(debug = new UICheckBox(new Vector2D(TutLauncher.WIDTH / 2f + 120, 20), 70, OPTIONS.debugMode()));
+            uiManager.addObject(fps = new UICheckBox(new Vector2D(TutLauncher.WIDTH / 2f + 100, 90), 70, OPTIONS.fpsCounter()));
 
             uiManager.addObject(new UIButton(tutEngine, true, 173, "Controls", new ClickListener() {
                 @Override
@@ -105,6 +106,6 @@ public class StateOptions extends StateAbstractMenu {
         String fpsText = "Show FPS: ";
         Text.drawString(g, fpsText, (int) (fps.getPosition().x - Text.getWidth(fpsText, font)), (int) (fps.getPosition().y + Text.getHeight(fpsText, font)) + 25, false, Color.white, font);
 
-        Text.drawString(g, "EXPERIMENTAL!", tutEngine.getWidth() / 2, tutEngine.getHeight() / 2, true, true, Color.red, Assets.FONTS.get("80"));
+        Text.drawString(g, "EXPERIMENTAL!", TutLauncher.WIDTH / 2, TutLauncher.HEIGHT / 2, true, true, Color.red, Assets.FONTS.get("80"));
     }
 }

@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.utils;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 
 import javax.swing.*;
 import java.io.File;
@@ -91,7 +92,7 @@ public class Utils {
 
             fileOutputStream.close();
         } catch (IOException e) {
-            TutEngine.getTutEngine().getLogger().error(e);
+            TutLauncher.LOGGER.error(e);
         }
     }
 

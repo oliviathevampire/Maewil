@@ -4,6 +4,7 @@ import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
@@ -147,13 +148,13 @@ public class StateCreateWorld extends StateAbstractMenu {
             Text.drawStringCentered(g, "Generating world...", c, f);
         } else {
             super.render(g);
-            Text.drawStringCenteredX(g, worldName, tutEngine.getHeight() / 2 - Text.getHeight(worldName, f) / 2 - 90, c, f);
+            Text.drawStringCenteredX(g, worldName, TutLauncher.HEIGHT / 2 - Text.getHeight(worldName, f) / 2 - 90, c, f);
 
             String seedS = "Seed: " + String.valueOf(seed);
-            Text.drawStringCenteredX(g, seedS, tutEngine.getHeight() / 2 - Text.getHeight(seedS, f) / 2 - 55, c, f);
+            Text.drawStringCenteredX(g, seedS, TutLauncher.HEIGHT / 2 - Text.getHeight(seedS, f) / 2 - 55, c, f);
 
             String worldSizeS = "Size: " + String.valueOf(worldSize);
-            Text.drawStringCenteredX(g, worldSizeS, tutEngine.getHeight() / 2 - Text.getHeight(worldSizeS, f) / 2 - 20, c, f);
+            Text.drawStringCenteredX(g, worldSizeS, TutLauncher.HEIGHT / 2 - Text.getHeight(worldSizeS, f) / 2 - 20, c, f);
         }
     }
 }

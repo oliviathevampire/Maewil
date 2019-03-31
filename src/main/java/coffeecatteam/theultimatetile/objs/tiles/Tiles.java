@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.objs.tiles;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.objs.TileDataParser;
 import coffeecatteam.theultimatetile.objs.tiles.stone.*;
 import coffeecatteam.theultimatetile.objs.tiles.stone.ore.TileCoalOre;
@@ -100,7 +101,7 @@ public class Tiles {
         register(AIR = parser.loadData(new TileAir(tutEngine)));
         register(GLITCH = parser.loadData(new TileGlitch(tutEngine)));
 
-        TutEngine.getTutEngine().getLogger().info("Tiles registered!");
+        TutLauncher.LOGGER.info("Tiles registered!");
     }
 
     private static void register(Tile tile) {

@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.gfx;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 
@@ -22,17 +23,17 @@ public class Camera {
     public void checkBlankSpace() {
         if (xOffset < 0)
             xOffset = 0;
-        else if (xOffset > tutEngine.getWorld().getWidth() * Tile.TILE_SIZE - tutEngine.getWidth())
-            xOffset = tutEngine.getWorld().getWidth() * Tile.TILE_SIZE - tutEngine.getWidth();
+        else if (xOffset > tutEngine.getWorld().getWidth() * Tile.TILE_SIZE - TutLauncher.WIDTH)
+            xOffset = tutEngine.getWorld().getWidth() * Tile.TILE_SIZE - TutLauncher.WIDTH;
 
         if (yOffset < 0)
             yOffset = 0;
-        else if (yOffset > tutEngine.getWorld().getHeight() * Tile.TILE_SIZE - tutEngine.getHeight())
-            yOffset = tutEngine.getWorld().getHeight() * Tile.TILE_SIZE - tutEngine.getHeight();
+        else if (yOffset > tutEngine.getWorld().getHeight() * Tile.TILE_SIZE - TutLauncher.HEIGHT)
+            yOffset = tutEngine.getWorld().getHeight() * Tile.TILE_SIZE - TutLauncher.HEIGHT;
     }
 
     public void centerOnEntity(Entity e) {
-        changeOffset(e.getX() - tutEngine.getWidth() / 2f + e.getWidth() / 2f, e.getY() - tutEngine.getHeight() / 2f + e.getHeight() / 2f);
+        changeOffset(e.getX() - TutLauncher.WIDTH / 2f + e.getWidth() / 2f, e.getY() - TutLauncher.HEIGHT / 2f + e.getHeight() / 2f);
         checkBlankSpace();
     }
 

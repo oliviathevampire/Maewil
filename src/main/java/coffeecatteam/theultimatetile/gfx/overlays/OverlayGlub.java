@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.gfx.overlays;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
@@ -33,9 +34,9 @@ public class OverlayGlub extends Overlay {
         int lvl = player.getLvl();
         String text = "Level: " + lvl;
         Font font = Assets.FONTS.get("20");
-        int x = tutEngine.getWidth() / 2 - width / 2;
+        int x = TutLauncher.WIDTH / 2 - width / 2;
 
-        Text.drawString(g, text, tutEngine.getWidth() / 2, (int) (height + Text.getHeight(text, font) * 1.5f), true, false, new Color(4, 79, 163), font);
+        Text.drawString(g, text, TutLauncher.WIDTH / 2, (int) (height + Text.getHeight(text, font) * 1.5f), true, false, new Color(4, 79, 163), font);
         Assets.GLUB_METER[0].draw(x, 0, width, height);
 
         int glubWidth = (int) NumberUtils.map(glub - 1, 0, player.getMaxGludel(), 0, sWidth);

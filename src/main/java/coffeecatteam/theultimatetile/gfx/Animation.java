@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.Image;
 
@@ -61,7 +61,7 @@ public class Animation {
             if (frames[index] == null)
                 return Assets.MISSING_TEXTURE;
         } catch (ArrayIndexOutOfBoundsException e) {
-            TutEngine.getTutEngine().getLogger().error(e);
+            TutLauncher.LOGGER.error(e);
             return Assets.MISSING_TEXTURE;
         }
 

@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
 import coffeecatteam.coffeecatutils.io.FileUtils;
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,7 +16,7 @@ import java.io.IOException;
 public class JsonUtils {
 
     public static Object getValue(String key, String path, boolean inJar) throws IOException, ParseException {
-        TutEngine.getTutEngine().getLogger().info("Loading json value [" + key + "]");
+        TutLauncher.LOGGER.info("Loading json value [" + key + "]");
         JSONParser parser = new JSONParser();
         JSONObject jsonObject;
         if (inJar) jsonObject = (JSONObject) parser.parse(FileUtils.loadFileInSideJar(path));
@@ -25,7 +25,7 @@ public class JsonUtils {
     }
 
     public static JSONArray getArray(String key, String path, boolean inJar) throws IOException, ParseException {
-        TutEngine.getTutEngine().getLogger().info("Loading json array [" + key + "]");
+        TutLauncher.LOGGER.info("Loading json array [" + key + "]");
         JSONParser parser = new JSONParser();
         JSONObject jsonObject;
         if (inJar) jsonObject = (JSONObject) parser.parse(FileUtils.loadFileInSideJar(path));

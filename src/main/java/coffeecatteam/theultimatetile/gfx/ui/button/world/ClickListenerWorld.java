@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.gfx.ui.button.world;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
 import org.json.simple.parser.ParseException;
@@ -16,8 +17,6 @@ import java.io.IOException;
  */
 public class ClickListenerWorld implements ClickListener {
 
-    private TutEngine tutEngine;
-
     private String path, savesPath;
     private int index;
     private boolean isSaved = false;
@@ -25,7 +24,6 @@ public class ClickListenerWorld implements ClickListener {
     private SavedGamesJSONParser gamesJSONParser;
 
     public ClickListenerWorld(TutEngine tutEngine, String path, String savesPath, int index) {
-        this.tutEngine = tutEngine;
         this.path = path;
         this.savesPath = savesPath;
         this.index = index;
@@ -34,7 +32,7 @@ public class ClickListenerWorld implements ClickListener {
         try {
             gamesJSONParser.load();
         } catch (IOException | ParseException e) {
-            tutEngine.getLogger().error(e);
+            TutLauncher.LOGGER.error(e);
         }
     }
 

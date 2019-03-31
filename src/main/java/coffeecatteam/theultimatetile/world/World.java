@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.world;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.objs.items.Items;
@@ -41,7 +42,7 @@ public class World {
         try {
             loadWorld(path);
         } catch (IOException | ParseException e) {
-            tutEngine.getLogger().error(e);
+            TutLauncher.LOGGER.error(e);
         }
         tutEngine.getPlayer().setX(spawnX * Tile.TILE_SIZE);
         tutEngine.getPlayer().setY(spawnY * Tile.TILE_SIZE);
@@ -66,9 +67,9 @@ public class World {
 
     public void update(GameContainer container, int delta) {
         int xStart = (int) Math.max(0, tutEngine.getCamera().getxOffset() / Tile.TILE_SIZE);
-        int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + tutEngine.getWidth()) / Tile.TILE_SIZE + 1);
+        int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + TutLauncher.WIDTH) / Tile.TILE_SIZE + 1);
         int yStart = (int) Math.max(0, tutEngine.getCamera().getyOffset() / Tile.TILE_SIZE);
-        int yEnd = (int) Math.min(height, (tutEngine.getCamera().getyOffset() + tutEngine.getHeight()) / Tile.TILE_SIZE + 1);
+        int yEnd = (int) Math.min(height, (tutEngine.getCamera().getyOffset() + TutLauncher.HEIGHT) / Tile.TILE_SIZE + 1);
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
@@ -123,9 +124,9 @@ public class World {
 
     public void render(Graphics g) {
         int xStart = (int) Math.max(0, tutEngine.getCamera().getxOffset() / Tile.TILE_SIZE);
-        int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + tutEngine.getWidth()) / Tile.TILE_SIZE + 1);
+        int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + TutLauncher.WIDTH) / Tile.TILE_SIZE + 1);
         int yStart = (int) Math.max(0, tutEngine.getCamera().getyOffset() / Tile.TILE_SIZE);
-        int yEnd = (int) Math.min(height, (tutEngine.getCamera().getyOffset() + tutEngine.getHeight()) / Tile.TILE_SIZE + 1);
+        int yEnd = (int) Math.min(height, (tutEngine.getCamera().getyOffset() + TutLauncher.HEIGHT) / Tile.TILE_SIZE + 1);
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)
@@ -133,7 +134,7 @@ public class World {
 
         Color tint = new Color(63, 63, 63, 128);
         g.setColor(tint);
-        g.fillRect(0, 0, tutEngine.getWidth(), tutEngine.getHeight());
+        g.fillRect(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)
@@ -212,7 +213,7 @@ public class World {
         WorldJsonLoader worldJsonLoader = new WorldJsonLoader(path, tutEngine); // "/assets/worlds/dev_tests/json_format"
 
         worldJsonLoader.load();
-        tutEngine.getLogger().info("Loading world [" + worldJsonLoader.getName() + "]!");
+        TutLauncher.LOGGER.info("Loading world [" + worldJsonLoader.getName() + "]!");
 
         worldName = worldJsonLoader.getName();
 
@@ -239,7 +240,7 @@ public class World {
                 bg_tiles.setTile(x, y, tile);
             }
         }
-        tutEngine.getLogger().info("Loaded background tiles!");
+        TutLauncher.LOGGER.info("Loaded background tiles!");
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -251,7 +252,7 @@ public class World {
                 fg_tiles.setTile(x, y, tile);
             }
         }
-        tutEngine.getLogger().info("Loaded foreground tiles!");
+        TutLauncher.LOGGER.info("Loaded foreground tiles!");
     }
 
     public String getWorldName() {

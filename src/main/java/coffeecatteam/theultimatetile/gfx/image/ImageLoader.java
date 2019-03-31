@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.image;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -13,14 +13,14 @@ public class ImageLoader {
             InputStream file = ImageLoader.class.getResourceAsStream(path);
             if (file == null) {
                 file = ImageLoader.class.getResourceAsStream("/assets/textures/missing.png");
-                TutEngine.getTutEngine().getLogger().error(new Exception("Can't find texture: " + path));
+                TutLauncher.LOGGER.error(new Exception("Can't find texture: " + path));
             }
 
             Image image = new Image(file, path, false);
             image.setFilter(Image.FILTER_NEAREST);
             return image;
         } catch (SlickException e) {
-            TutEngine.getTutEngine().getLogger().error(e);
+            TutLauncher.LOGGER.error(e);
         }
         return null;
     }
