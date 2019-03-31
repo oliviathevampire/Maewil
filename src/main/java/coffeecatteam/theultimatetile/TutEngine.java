@@ -148,20 +148,23 @@ public class TutEngine extends BasicGame {
         /*
          * Take a screenshot
          */
-        if (container.getInput().isKeyPressed(Input.KEY_F2)) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
-            String dateAndTime = dateFormat.format(new Date());
-            String filename = "screenshots/" + dateAndTime + ".png";
-            File file = new File(filename);
-            file.getParentFile().mkdirs();
+        if (container.getInput().isKeyPressed(Input.KEY_F2))
+            takeScreenshot(container);
+    }
 
-            Image target = new Image(container.getWidth(), container.getHeight());
-            container.getGraphics().copyArea(target, 0, 0);
-            ImageOut.write(target, filename);
-            target.destroy();
+    public void takeScreenshot(GameContainer container) throws SlickException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
+        String dateAndTime = dateFormat.format(new Date());
+        String filename = "screenshots/" + dateAndTime + ".png";
+        File file = new File(filename);
+        file.getParentFile().mkdirs();
 
-            logger.info("Screenshot saved to [" + filename + "]");
-        }
+        Image target = new Image(width, height);
+        container.getGraphics().copyArea(target, 0, 0);
+        ImageOut.write(target, filename);
+        target.destroy();
+
+        logger.info("Screenshot saved to [" + filename + "]");
     }
 
     @Override
