@@ -10,7 +10,7 @@ import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.TutEngine;
 
 public class DiscordHandler {
-    
+
     private CatLogger logger;
     private static final String disbaleArg = "-disableDiscordRP";
 

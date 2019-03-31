@@ -124,7 +124,7 @@ public class WorldMapGenerator {
             for (int x = 0; x < width; x++) {
                 double value = noise.eval((float) ((x + xOff) / sizeBiome), (float) ((y + yOff) / sizeBiome));
                 Color c = Biomes.NONE.getColor();
-                if (landMap.getRGB(x, y) == WorldColors.GRASS.getRGB() && pathMap.getRGB(x, y) != WorldColors.DIRT.getRGB()) {
+                if (landMap.getRGB(x, y) == WorldColors.GRASS.getRGB() && pathMap.getRGB(x, y) != WorldColors.DIRT.getRGB() && landMap.getRGB(x, y) != WorldColors.DIRT.getRGB()) {
                     if (value > 0.15 && value < 0.55) {
                         c = Biomes.FOREST.getColor();
                     } else {
@@ -145,6 +145,7 @@ public class WorldMapGenerator {
                 image.setRGB(x, y, getRGBA(c.getRGB()));
             }
         }
+
         return image;
     }
 

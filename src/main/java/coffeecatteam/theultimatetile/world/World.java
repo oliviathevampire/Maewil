@@ -82,7 +82,7 @@ public class World {
 
         this.container = container;
         this.delta = delta;
-        forcedUpdateThreadInit();
+        updateThreadsInit();
 
         Items.UPDATABLE_TIEMS.forEach(i -> i.update(container, delta));
 
@@ -92,10 +92,7 @@ public class World {
         tutEngine.getCamera().centerOnEntity(tutEngine.getEntityManager().getPlayer());
     }
 
-    /*
-     * Update all tiles with a forcedUpdate method in-use/override
-     */
-    private void forcedUpdateThreadInit() {
+    private void updateThreadsInit() {
         if (!isForcedUpdateThread) {
             isForcedUpdateThread = true;
 
@@ -285,7 +282,7 @@ public class World {
         return fg_tiles;
     }
 
-    public void stopForcedUpdateThread() {
+    public void stopUpdateThreads() {
         this.isForcedUpdateThread = false;
     }
 

@@ -3,11 +3,10 @@ package coffeecatteam.theultimatetile.state.game;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
-import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.gfx.ui.UITitleRender;
+import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonSaver;
 import coffeecatteam.theultimatetile.manager.UIManager;
-import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.state.State;
 import coffeecatteam.theultimatetile.state.StateManager;
@@ -145,7 +144,7 @@ public class StateGame extends State {
 
     public void saveWorld(boolean stopWorldFU) {
         if (stopWorldFU)
-            world.stopForcedUpdateThread();
+            world.stopUpdateThreads();
 
         WorldJsonSaver saver = new WorldJsonSaver("./saves/" + worldName, world, tutEngine);
         try {

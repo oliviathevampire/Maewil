@@ -1,7 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.assets;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
-import coffeecatteam.theultimatetile.gfx.image.ImageLoader;
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Image;
