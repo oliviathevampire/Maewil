@@ -1,7 +1,8 @@
-package coffeecatteam.theultimatetile.objs.tiles;
+package coffeecatteam.theultimatetile.objs.tiles.stone;
 
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.items.Items;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 
 /**

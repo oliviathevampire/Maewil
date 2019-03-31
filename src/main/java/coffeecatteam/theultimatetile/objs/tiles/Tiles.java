@@ -2,7 +2,15 @@ package coffeecatteam.theultimatetile.objs.tiles;
 
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.TileDataParser;
-import coffeecatteam.theultimatetile.objs.items.Items;
+import coffeecatteam.theultimatetile.objs.tiles.stone.*;
+import coffeecatteam.theultimatetile.objs.tiles.stone.ore.TileCoalOre;
+import coffeecatteam.theultimatetile.objs.tiles.stone.ore.TileDiamondOre;
+import coffeecatteam.theultimatetile.objs.tiles.stone.ore.TileGoldOre;
+import coffeecatteam.theultimatetile.objs.tiles.stone.ore.TileIronOre;
+import coffeecatteam.theultimatetile.objs.tiles.wood.TileBookshelf;
+import coffeecatteam.theultimatetile.objs.tiles.wood.TileChest;
+import coffeecatteam.theultimatetile.objs.tiles.wood.TileLog;
+import coffeecatteam.theultimatetile.objs.tiles.wood.TilePlanks;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -38,7 +46,7 @@ public class Tiles {
     /*
      * Wood
      */
-    public static Tile PLANKS, CHEST;
+    public static Tile PLANKS, LOG, CHEST;
     public static Tile BOOKSHELF;
 
     /*
@@ -67,10 +75,10 @@ public class Tiles {
         register(DIORITE = parser.loadData(new TileDiorite(tutEngine)));
         register(OBSIDIAN = parser.loadData(new TileObsidian(tutEngine)));
 
-        register(COAL_ORE = parser.loadData(new TileOre(tutEngine, "coal_ore", Items.COAL)));
-        register(IRON_ORE = parser.loadData(new TileOre(tutEngine, "iron_ore", Items.IRON_INGOT)));
-        register(GOLD_ORE = parser.loadData(new TileOre(tutEngine, "gold_ore", Items.GOLD_INGOT)));
-        register(DIAMOND_ORE = parser.loadData(new TileOre(tutEngine, "diamond_ore", Items.DIAMOND)));
+        register(COAL_ORE = parser.loadData(new TileCoalOre(tutEngine)));
+        register(IRON_ORE = parser.loadData(new TileIronOre(tutEngine)));
+        register(GOLD_ORE = parser.loadData(new TileGoldOre(tutEngine)));
+        register(DIAMOND_ORE = parser.loadData(new TileDiamondOre(tutEngine)));
 
         /*
          * Fluid
@@ -81,9 +89,10 @@ public class Tiles {
         /*
          * Wood
          */
-        register(PLANKS = parser.loadData(new TileWood(tutEngine, "planks")));
+        register(PLANKS = parser.loadData(new TilePlanks(tutEngine)));
+        register(LOG = parser.loadData(new TileLog(tutEngine)));
         register(BOOKSHELF = parser.loadData(new TileBookshelf(tutEngine)));
-        register(CHEST = parser.loadData(new TileWood(tutEngine, "chest")));
+        register(CHEST = parser.loadData(new TileChest(tutEngine)));
 
         /*
          * Other

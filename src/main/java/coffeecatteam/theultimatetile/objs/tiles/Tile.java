@@ -44,7 +44,8 @@ public abstract class Tile implements IHasData<Tile> {
     protected TileType tileType;
 
     protected Item drop;
-    protected int health, maxHealth = 300;
+    private int health, maxHealth = 300;
+    private boolean beingDamaged = false;
 
     public Tile(TutEngine tutEngine, String id, boolean isSolid, TileType tileType) {
         this.tutEngine = tutEngine;
@@ -83,6 +84,12 @@ public abstract class Tile implements IHasData<Tile> {
 
     public void update(GameContainer container, int delta) {
         updateBounds();
+        if (!beingDamaged) {
+            this.health += NumberUtils.getRandomInt(1, 3);
+            if (this.health > this.maxHealth)
+                this.health = this.maxHealth;
+        }
+        beingDamaged = false;
     }
 
     public void forcedUpdate(GameContainer container, int delta) {
@@ -119,6 +126,7 @@ public abstract class Tile implements IHasData<Tile> {
                     tutEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), position.getX(), position.getY());
                     this.health = this.maxHealth;
                 }
+                beingDamaged = true;
             }
         }
     }
@@ -195,6 +203,11 @@ public abstract class Tile implements IHasData<Tile> {
     @Override
     public String getId() {
         return id;
+    }
+
+    @Override
+    public LangType getType() {
+        return LangType.TILE;
     }
 
     public AABB getBounds() {

@@ -12,7 +12,7 @@ import coffeecatteam.theultimatetile.inventory.Slot;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.items.IInteractable;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
-import coffeecatteam.theultimatetile.objs.items.ItemTool;
+import coffeecatteam.theultimatetile.objs.items.tool.ItemTool;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.state.StateOptions;
@@ -300,11 +300,14 @@ public class EntityPlayer extends EntityCreature {
 
         Tile tile = tutEngine.getWorld().getFGTile(tilePos.getX(), tilePos.getY());
         if (isAttacking) {
-            int dmg = NumberUtils.getRandomInt(1, 3);
+            int dmg = 2;
             if (equippedItem != null) {
                 if (equippedItem.getItem() instanceof ItemTool) {
                     ItemTool tool = (ItemTool) equippedItem.getItem();
-                    if (tool.getToolType() == ItemTool.ToolType.PICKAXE)
+                    if (((tool.getToolType() == ItemTool.ToolType.SHOVEL && tile.getTileType() == Tile.TileType.GROUND) ||
+                            (tool.getToolType() == ItemTool.ToolType.PICKAXE && tile.getTileType() == Tile.TileType.STONE) ||
+                            (tool.getToolType() == ItemTool.ToolType.AXE && tile.getTileType() == Tile.TileType.WOOD)) ||
+                            tool.getToolType() == ItemTool.ToolType.MULTI)
                         dmg += extraDmg;
                 }
             }

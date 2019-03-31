@@ -1,14 +1,11 @@
 package coffeecatteam.theultimatetile.world;
 
-import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
-import coffeecatteam.theultimatetile.objs.tiles.TileStone;
 import coffeecatteam.theultimatetile.objs.tiles.Tiles;
-import coffeecatteam.theultimatetile.world.colormap.Biomes;
+import coffeecatteam.theultimatetile.objs.tiles.stone.TileStone;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 import coffeecatteam.theultimatetile.world.colormap.WorldMapGenerator;
 import coffeecatteam.theultimatetile.world.noise.OpenSimplexNoise;
@@ -62,16 +59,17 @@ public class WorldGenerator {
 
             // Entities
             tutEngine.getEntityManager().reset();
-            for (int y = 0; y < worldSize; y += 2) {
-                for (int x = 0; x < worldSize; x++) {
-                    if (Biomes.getBiomeAt(biomeMap, x, y) == Biomes.FOREST) {
-                        float threshold = 0.2f;
-                        float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
-                        float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
-                        tutEngine.getEntityManager().addEntity(Entities.TREE_SMALL, x + xOff, y - 1 + yOff, true);
-                    }
-                }
-            }
+//            for (int y = 0; y < worldSize; y++) {
+//                for (int x = 0; x < worldSize; x++) {
+//                    Biomes.Biome biome = Biomes.getBiomeAt(biomeMap, x, y);
+//                    if (biome.equals(Biomes.FOREST)) {
+//                        float threshold = 0.2f;
+//                        float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
+//                        float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
+//                        tutEngine.getEntityManager().addEntity(Entities.BUSH_SMALL, x + xOff, y + yOff, true);
+//                    }
+//                }
+//            }
         }, "WorldGenerator-Thread");
         generatorThread.start();
     }
@@ -145,10 +143,10 @@ public class WorldGenerator {
         double oreSize = 1.0d;
         double stoneSize = 10.0d;
 
-        addOre(tiles, Tiles.COAL_ORE, -0.05d, 0.05d, oreSize, bg);
-        addOre(tiles, Tiles.IRON_ORE, -0.05d, 0.05d, oreSize, bg);
-        addOre(tiles, Tiles.GOLD_ORE, -0.02d, 0.02d, oreSize, bg);
-        addOre(tiles, Tiles.DIAMOND_ORE, -0.02d, 0.02d, oreSize, bg);
+        addOre(tiles, Tiles.COAL_ORE, -0.05d, 0.02d, oreSize, bg);
+        addOre(tiles, Tiles.IRON_ORE, -0.05d, 0.03d, oreSize, bg);
+        addOre(tiles, Tiles.GOLD_ORE, -0.05d, 0.04d, oreSize, bg);
+        addOre(tiles, Tiles.DIAMOND_ORE, -0.05d, 0.05d, oreSize, bg);
 
         addOre(tiles, Tiles.ANDESITE, 0.7d, 1.0d, stoneSize, bg);
         addOre(tiles, Tiles.DIORITE, 0.7d, 1.0d, stoneSize, bg);

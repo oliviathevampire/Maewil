@@ -1,6 +1,8 @@
-package coffeecatteam.theultimatetile.objs.tiles;
+package coffeecatteam.theultimatetile.objs.tiles.wood;
 
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.objs.items.ItemStack;
+import coffeecatteam.theultimatetile.objs.items.Items;
 
 /**
  * @author CoffeeCatRailway
@@ -15,8 +17,7 @@ public class TileBookshelf extends TileWood {
     @Override
     public void damage(int damage) {
         super.damage(damage);
-
-
+        tutEngine.getPlayer().getInventoryPlayer().addItem(new ItemStack(Items.BOOK.newCopy()));
     }
 
     @Override
