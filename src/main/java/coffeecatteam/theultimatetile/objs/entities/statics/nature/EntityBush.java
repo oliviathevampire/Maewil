@@ -21,6 +21,11 @@ public class EntityBush extends EntityNature {
     }
 
     @Override
+    public String getUnlocalizedName() {
+        return getId() + "_" + this.type.getId();
+    }
+
+    @Override
     public AABB getTileBounds() {
         return new AABB(width / 4f - (width / 4f) / 2, height / 2f + height / 3f, width / 4 + width / 2, height / 3);
     }

@@ -1,8 +1,6 @@
 package coffeecatteam.theultimatetile.objs;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.coffeecatutils.logger.CatLogger;
-import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
@@ -11,7 +9,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.newdawn.slick.Image;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -33,7 +30,7 @@ public class EntityDataParser extends DataParser<coffeecatteam.theultimatetile.o
         if (!LOADED.keySet().contains(entity.getId())) {
             DataTypes.Entity type = DataTypes.Entity.getByName(String.valueOf(data.get("type")));
             SpriteSheet texture = getTexture(data);
-            logger.info("Loading entity of type [" + type + "-" + type.typeName +  "] with id [" + entity.getId() + "]");
+            logger.info("Loading entity of type [" + type + "-" + type.typeName + "] with id [" + entity.getName() + "]");
 
             HashMap<String, Animation> textures = new HashMap<>();
             switch (type) {
@@ -74,7 +71,7 @@ public class EntityDataParser extends DataParser<coffeecatteam.theultimatetile.o
             entity.setTextures(textures);
             LOADED.put(entity.getId(), textures);
         } else {
-            logger.info("Getting textures for entity with id [" + entity.getId() + "]");
+            logger.info("Getting textures for entity with id [" + entity.getName() + "]");
             entity.setTextures(LOADED.get(entity.getId()));
         }
 

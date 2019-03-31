@@ -25,6 +25,11 @@ public class EntityTree extends EntityNature {
     }
 
     @Override
+    public String getUnlocalizedName() {
+        return getId() + "_" + this.type.getId();
+    }
+
+    @Override
     public void update(GameContainer container, int delta) {
         super.update(container, delta);
     }

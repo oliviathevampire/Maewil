@@ -35,6 +35,11 @@ public class EntityItem extends Entity {
     }
 
     @Override
+    public String getName() {
+        return stack != null ? stack.getItem().getName() : "Item";
+    }
+
+    @Override
     public void update(GameContainer container, int delta) {
         if (this.tutEngine.getPlayer().isActive()) {
             if (this.isTouching(this.tutEngine.getPlayer())) {

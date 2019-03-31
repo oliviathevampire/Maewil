@@ -194,8 +194,14 @@ public abstract class Entity implements IHasData<Entity> {
         return this.getEntityBounds().contains(entity.getPosition().x + entity.getWidth() / 2d, entity.getPosition().y + entity.getHeight() / 2d);
     }
 
+    @Override
     public String getId() {
         return this.id;
+    }
+
+    @Override
+    public LangType getType() {
+        return LangType.ENTITY;
     }
 
     public float getX() {

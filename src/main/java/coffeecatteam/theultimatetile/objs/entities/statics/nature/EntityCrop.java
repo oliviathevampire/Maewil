@@ -21,6 +21,11 @@ public class EntityCrop extends EntityNature {
     }
 
     @Override
+    public String getUnlocalizedName() {
+        return getId() + "_" + this.type.getId();
+    }
+
+    @Override
     public void render(Graphics g) {
         getTexture("ground").draw(this.renderX, this.renderY, width, height);
         super.render(g);

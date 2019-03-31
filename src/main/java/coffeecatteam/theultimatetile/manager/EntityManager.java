@@ -47,14 +47,15 @@ public class EntityManager {
     public void update(GameContainer container, int delta) {
         for (int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
-            if (isEntityInView(entity, (int) (RENDER_VIEW * 1.5f)))
+            if (isEntityInView(entity, (int) (RENDER_VIEW * 1.5f))) {
                 entity.updateA(container, delta);
 
-            if (!entity.isActive()) {
-                entity.die();
-                if (!(entity instanceof EntityPlayer)) {
-                    entities.remove(i);
-                    i--;
+                if (!entity.isActive()) {
+                    entity.die();
+                    if (!(entity instanceof EntityPlayer)) {
+                        entities.remove(i);
+                        i--;
+                    }
                 }
             }
         }

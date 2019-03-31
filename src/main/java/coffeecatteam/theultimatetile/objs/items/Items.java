@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.objs.items;
 
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.ItemDataParser;
+import coffeecatteam.theultimatetile.objs.items.tool.*;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class Items {
     /*
      * General
      */
-    public static Item STICK, LEAF, ROCK;
+    public static Item STICK, WOOD, BARK, LEAF, ROCK;
     public static Item ROTTEN_FLESH, BONE, BOUNCY_BALL, WOOL_BUNDLE;
     public static Item BOOK;
 
@@ -26,8 +27,8 @@ public class Items {
     /*
      * Tools/Weapons
      */
-    public static Item WOODEN_SWORD, WOODEN_PICK, WOODEN_HOE;
-    public static Item STONE_SWORD, STONE_PICK, STONE_HOE;
+    public static Item WOODEN_SWORD, WOODEN_AXE, WOODEN_PICK, WOODEN_SHOVEL, WOODEN_HOE;
+    public static Item STONE_SWORD, STONE_AXE, STONE_PICK, STONE_SHOVEL, STONE_HOE;
 
     /*
      * Minerals
@@ -48,6 +49,9 @@ public class Items {
          * General
          */
         register(STICK = parser.loadData(new ItemBasic(tutEngine, "stick")));
+        register(WOOD = parser.loadData(new ItemBasic(tutEngine, "wood")));
+        register(BARK = parser.loadData(new ItemBasic(tutEngine, "bark")));
+
         register(LEAF = parser.loadData(new ItemBasic(tutEngine, "leaf")));
         register(ROCK = parser.loadData(new ItemBasic(tutEngine, "rock")));
         register(ROTTEN_FLESH = parser.loadData(new ItemBasic(tutEngine, "rotten_flesh")));
@@ -63,13 +67,17 @@ public class Items {
         /*
          * Tools/Weapons
          */
-        register(WOODEN_SWORD = parser.loadData(new ItemTool(tutEngine, "wooden_sword", 5, ItemTool.ToolType.SOWRD)));
-        register(WOODEN_PICK = parser.loadData(new ItemTool(tutEngine, "wooden_pick", 7, ItemTool.ToolType.PICKAXE)));
-        register(WOODEN_HOE = parser.loadData(new ItemTool(tutEngine, "wooden_hoe", 4, ItemTool.ToolType.HOE)));
+        register(WOODEN_SWORD = parser.loadData(new ItemSword(tutEngine, "wooden_sword", 5)));
+        register(WOODEN_AXE = parser.loadData(new ItemAxe(tutEngine, "wooden_axe", 6)));
+        register(WOODEN_PICK = parser.loadData(new ItemPickaxe(tutEngine, "wooden_pick", 7)));
+        register(WOODEN_SHOVEL = parser.loadData(new ItemShovel(tutEngine, "wooden_shovel", 5)));
+        register(WOODEN_HOE = parser.loadData(new ItemHoe(tutEngine, "wooden_hoe", 4)));
 
-        register(STONE_SWORD = parser.loadData(new ItemTool(tutEngine, "stone_sword", 7, ItemTool.ToolType.SOWRD)));
-        register(STONE_PICK = parser.loadData(new ItemTool(tutEngine, "stone_pick", 9, ItemTool.ToolType.PICKAXE)));
-        register(STONE_HOE = parser.loadData(new ItemTool(tutEngine, "stone_hoe", 6, ItemTool.ToolType.HOE)));
+        register(STONE_SWORD = parser.loadData(new ItemSword(tutEngine, "stone_sword", 7)));
+        register(STONE_AXE = parser.loadData(new ItemAxe(tutEngine, "stone_axe", 8)));
+        register(STONE_PICK = parser.loadData(new ItemPickaxe(tutEngine, "stone_pick", 9)));
+        register(STONE_SHOVEL = parser.loadData(new ItemShovel(tutEngine, "stone_shovel", 7)));
+        register(STONE_HOE = parser.loadData(new ItemHoe(tutEngine, "stone_hoe", 6)));
 
         /*
          * Minerals

@@ -20,6 +20,11 @@ public class EntityRock extends EntityNature {
     }
 
     @Override
+    public String getUnlocalizedName() {
+        return getId() + "_" + this.type.getId();
+    }
+
+    @Override
     public AABB getTileBounds() {
         return new AABB(0, height / 2f + height / 3f, width, height / 3);
     }

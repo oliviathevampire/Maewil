@@ -34,7 +34,7 @@ public abstract class DataParser<E extends IHasData<E>> {
             DataTypes.TileItemTexture type = DataTypes.TileItemTexture.getByName(String.valueOf(data.get("type")));
             String texturePath = "/assets/textures/" + data.get("texture");
             int spriteSize = NumberUtils.parseInt(data.get("size"));
-            logger.info("Loading object of type [" + type + "-" + type.typeName +  "] with id [" + obj.getId() + "]");
+            logger.info("Loading object of type [" + type + "-" + type.typeName + "] with id [" + obj.getName() + "]");
 
             switch (type) {
                 default:

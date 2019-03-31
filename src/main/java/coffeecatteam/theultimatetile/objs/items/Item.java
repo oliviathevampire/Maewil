@@ -78,6 +78,11 @@ public abstract class Item implements IHasData<Item> {
         return this.id;
     }
 
+    @Override
+    public LangType getType() {
+        return LangType.ITEM;
+    }
+
     public boolean isStackable() {
         return stackable;
     }

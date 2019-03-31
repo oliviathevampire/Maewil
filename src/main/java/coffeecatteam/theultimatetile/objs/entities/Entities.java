@@ -4,7 +4,6 @@ import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.jsonparsers.JsonUtils;
 import coffeecatteam.theultimatetile.objs.EntityDataParser;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityCow;
@@ -23,7 +22,7 @@ import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityBush;
 import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityCrop;
 import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityRock;
 import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityTree;
-import coffeecatteam.theultimatetile.objs.items.Items;
+import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.tags.JsonToTag;
 import coffeecatteam.theultimatetile.tags.TagCompound;
 import coffeecatteam.theultimatetile.tags.TagException;
@@ -130,7 +129,7 @@ public class Entities {
         /*
          * Other
          */
-        register(ITEM = parser.loadData(new EntityItem(tutEngine, Items.STICK.newCopy()))); // PLACE HOLDER IF NEEDED
+        register(ITEM = parser.loadData(new EntityItem(tutEngine, (ItemStack) null))); // PLACE HOLDER IF NEEDED
 
         TutEngine.getTutEngine().getLogger().info("Entities registered!");
     }
