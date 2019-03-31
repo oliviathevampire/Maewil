@@ -148,7 +148,7 @@ public class Assets {
 
     /* GUI */
     private static void initGui() {
-        TITLE_SMALL = getSpriteExact("/assets/textures/splash/title.png", 0, 0, 6560, 928);
+        TITLE_SMALL = getSpriteExact("/assets/textures/splash/title.png", 0, 0, 6560, 1152);
         SPLASH_PLAYER = getFrames("/assets/textures/splash/player.png", 0, 0, 11, 512, 512);
 
         TITLE_BIG = getSpriteExact("/assets/textures/gui/title.png", 0, 0, 101, 84);
