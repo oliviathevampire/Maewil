@@ -11,6 +11,7 @@ public class Slot {
 
     private ItemStack stack;
     private int index, x, y, width, height;
+    private int xPos, yPos, itemWidth, itemHeight;
     private float scale;
 
     private boolean isSelected = false;
@@ -31,10 +32,10 @@ public class Slot {
 
     public void render(Graphics g) {
         Assets.SLOT.draw(x, y, width, height);
-        int itemWidth = (int) ((width / 2 + width / 4) * scale);
-        int itemHeight = (int) ((height / 2 + height / 4) * scale);
-        int xPos = x + itemWidth / 4;
-        int yPos = y + itemHeight / 4;
+        itemWidth = (int) ((width / 2 + width / 4) * scale);
+        itemHeight = (int) ((height / 2 + height / 4) * scale);
+        xPos = x + itemWidth / 4;
+        yPos = y + itemHeight / 4;
 
         if (stack != null) {
             stack.getTexture().draw(xPos, yPos, itemWidth, itemHeight);
@@ -44,8 +45,13 @@ public class Slot {
 
         if (isSelected) {
             int off = 12;
-            selector.draw(x - off / 2, y - off / 2, width + off, height + off);
+            selector.draw(x - off / 2f, y - off / 2f, width + off, height + off);
         }
+    }
+
+    public void postRender(Graphics g) {
+        if (isSelected && stack != null)
+            Text.drawString(g, stack.getItem().getName(), xPos + itemWidth / 2f, yPos + itemHeight, true, Color.white, Assets.FONTS.get("20"));
     }
 
     public Slot setScale(float scale) {

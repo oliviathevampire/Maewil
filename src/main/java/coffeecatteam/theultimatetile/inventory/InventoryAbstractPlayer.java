@@ -139,6 +139,8 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
             getSlot(i).render(g);
         }
+        for (int i = 0; i < maxSize; i++)
+            getSlot(i).postRender(g);
     }
 
     public void renderHotbar(Graphics g) {
@@ -161,6 +163,8 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
             getSlot(i).render(g);
         }
+        for (int i = maxSize; i < maxSize + maxHotbarSize; i++)
+            getSlot(i).postRender(g);
     }
 
     public void dropItem(boolean active, int inventorySelectedIndex, int hotbarSelectedIndex) {
@@ -175,7 +179,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         }
     }
 
-    public void addItem(ItemStack stackIn) {
+    public boolean addItem(ItemStack stackIn) {
         if (!isFull()) {
             for (Slot slot : getSlots()) {
                 if (slot.getStack() != null && stackIn != null) {
@@ -190,9 +194,10 @@ public abstract class InventoryAbstractPlayer extends Inventory {
                                         add(extraStack);
                                         slot.getStack().setCount(size);
                                     }
-                                } else
+                                } else {
                                     slot.getStack().setCount(size);
-                                return;
+                                }
+                                return true;
                             }
                         }
                     }
@@ -200,6 +205,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
             }
             add(stackIn);
         }
+        return false;
     }
 
     public void addStackToHotbar(ItemStack stack) {

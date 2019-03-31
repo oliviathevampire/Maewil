@@ -83,6 +83,7 @@ public abstract class Inventory {
 
     public void render(Graphics g) {
         slots.forEach(s -> s.render(g));
+        slots.forEach(s -> s.postRender(g));
     }
 
     public List<Slot> getSlots() {
