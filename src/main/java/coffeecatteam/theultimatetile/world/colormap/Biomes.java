@@ -20,7 +20,7 @@ public class Biomes {
     public static final Biome CAVE = new Biome("cave", true, 50, 50, 50);
     public static final Biome UNDERGROUND = new Biome("underground", false, 75, 75, 75);
 
-    public static final Biome NONE = new Biome("none", false, 0, 0, 0, 0);
+    public static final Biome NONE = new Biome("none", false, 255, 255, 255, 0);
 
     public static class Biome {
 
@@ -80,6 +80,14 @@ public class Biomes {
                 } else
                     color[i] = color[i];
             }
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof Biome) {
+                return ((Biome) obj).getId().equals(this.id);
+            } else
+                return false;
         }
     }
 
