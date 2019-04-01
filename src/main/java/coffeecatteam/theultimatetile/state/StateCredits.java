@@ -56,14 +56,14 @@ public class StateCredits extends StateAbstractMenu {
     }
 
     @Override
-    public void render(Graphics g) {
-        super.render(g);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        super.render(container, game, g);
 
         textBoxDev.setPosition(new Vector2D(TutLauncher.WIDTH / 2d - textBoxDev.getWidth() / 2d, 100));
         float tbDiff = textBoxDev.getWidth() - textBoxHelper.getWidth();
         textBoxHelper.setPosition(new Vector2D(textBoxDev.getPosition().x + tbDiff / 2d, textBoxDev.getPosition().y + textBoxDev.getHeight() + 10));
 
-        textBoxDev.render(g);
-        textBoxHelper.render(g);
+        textBoxDev.render(container, game, g);
+        textBoxHelper.render(container, game, g);
     }
 }

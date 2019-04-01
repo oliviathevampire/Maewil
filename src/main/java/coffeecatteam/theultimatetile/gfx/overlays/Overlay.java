@@ -18,5 +18,5 @@ public abstract class Overlay {
 
     public abstract void update(GameContainer container, StateBasedGame game, int delta);
 
-    public abstract void render(Graphics g);
+    public abstract void render(GameContainer container, StateBasedGame game, Graphics g);
 }

@@ -7,6 +7,7 @@ apply plugin: 'edu.sc.seis.launch4j'
 
 sourceCompatibility = 1.8
 
+def mainClassPath = 'coffeecatteam.theultimatetile.TutLauncher'
 def exeJarName = rootProject.name + "-" + version
 def buildPath = "build/" + version
 buildDir = file(buildPath)
@@ -33,7 +34,7 @@ launch4j {
     println("Generating exe file: " + outfile)
     outputDir = "libs"
     companyName = "CoffeeCatTeam"
-    mainClassName = 'coffeecatteam.theultimatetile.Launcher'
+    mainClassName = mainClassPath
     icon = "${projectDir}/icon.ico"
 }
 
@@ -54,7 +55,7 @@ dependencies {
 jar {
     from configurations.compile.collect { zipTree it }
     manifest {
-        attributes 'Main-Class': 'coffeecatteam.theultimatetile.Start'
+        attributes 'Main-Class': mainClassPath
     }
     exclude("META-INF/*.RSA", "META-INF/*.SF")
 }

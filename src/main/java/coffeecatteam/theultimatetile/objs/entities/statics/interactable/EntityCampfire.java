@@ -40,9 +40,9 @@ public class EntityCampfire extends EntityStatic {
     }
 
     @Override
-    public void postRender(Graphics g) {
-        super.postRender(g);
-        inventoryCampfire.render(g);
+    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
+        super.postRender(container, game, g);
+        inventoryCampfire.render(container, game, g);
     }
 
     @Override

@@ -49,8 +49,8 @@ public class StateAbstractMenu extends State {
     }
 
     @Override
-    public void render(Graphics g) {
-        this.renderBG(g);
-        uiManager.render(g);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        this.renderBG(container, game, g);
+        uiManager.render(container, game, g);
     }
 }

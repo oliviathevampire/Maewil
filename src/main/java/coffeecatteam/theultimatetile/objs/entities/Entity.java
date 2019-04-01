@@ -86,14 +86,14 @@ public abstract class Entity implements IHasData<Entity> {
             this.interact();
     }
 
-    public void preRender(Graphics g) {
+    public void preRender(GameContainer container, StateBasedGame game, Graphics g) {
     }
 
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height);
     }
 
-    public void postRender(Graphics g) {
+    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
         if (StateOptions.OPTIONS.debugMode()) {
             g.setColor(Color.red);
             g.drawRect(getEntityBounds().x - tutEngine.getCamera().getxOffset(), getEntityBounds().y - tutEngine.getCamera().getyOffset(), getEntityBounds().width, getEntityBounds().height);
@@ -103,7 +103,7 @@ public abstract class Entity implements IHasData<Entity> {
         }
     }
 
-    public void renderHealth(Graphics g) {
+    public void renderHealth(GameContainer container, StateBasedGame game, Graphics g) {
         Assets.HEALTH_BAR[1].draw(this.renderX, this.renderY - 8, width, 4);
         int ht = (int) NumberUtils.map(currentHealth, 0, maxHealth, 0, width); // (currentHealth * 100.0f) / 15
         Assets.HEALTH_BAR[0].draw(this.renderX, this.renderY - 8, ht, 4);
@@ -114,7 +114,7 @@ public abstract class Entity implements IHasData<Entity> {
         Text.drawString(g, textHealth, this.renderX - xOff, this.renderY - Text.getHeight(textHealth, font) / 2, false, false, new Color(0, 255, 0), font);
     }
 
-    public void renderEffect(Graphics g) {
+    public void renderEffect(GameContainer container, StateBasedGame game, Graphics g) {
         if (inWater())
             splashEffect.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
     }

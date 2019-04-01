@@ -1,13 +1,13 @@
 package coffeecatteam.theultimatetile;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeInTransition;
 
 /**
@@ -16,11 +16,11 @@ import org.newdawn.slick.state.transition.FadeInTransition;
  */
 public class SplashScreen extends BasicGameState {
 
-    private Animation player;
     private float titleScale = 0, smoothness = 0.05f;
     private float endTimer = 0, maxEndTimer = 2.5f;
 
     // Player movement steps
+    private Animation player;
     private float playerTimer = 0, maxPlayerTimer = 3.5f;
     private float psize = 150f, px, py, p1, p2;
     private boolean playerExit = false;
@@ -59,7 +59,7 @@ public class SplashScreen extends BasicGameState {
         if (p2 > TutLauncher.WIDTH)
             endTimer = NumberUtils.lerp(endTimer, maxEndTimer, smoothness / 5f);
         if (endTimer >= maxEndTimer - 0.5f)
-            game.enterState(TutLauncher.ID_GAME, new FadeInTransition(Color.black), new FadeInTransition(Color.black));
+            game.enterState(TutLauncher.ID_GAME, new EmptyTransition(), new FadeInTransition(Color.black));
     }
 
     @Override

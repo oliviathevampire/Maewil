@@ -113,8 +113,8 @@ public class StateGame extends State {
     }
 
     @Override
-    public void render(Graphics g) {
-        world.render(g);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        world.render(container, game, g);
 
         if (tutEngine.getPlayer().isDead) {
             Color tint = new Color(96, 96, 96, 127);
@@ -122,14 +122,14 @@ public class StateGame extends State {
             g.fillRect(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
             Assets.DEAD_OVERLAY.draw(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
 
-            uiManagerDead.render(g);
+            uiManagerDead.render(container, game, g);
         } else {
             if (paused) {
                 Color tint = new Color(96, 96, 96, 127);
                 g.setColor(tint);
                 g.fillRect(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
 
-                uiManagerPaused.render(g);
+                uiManagerPaused.render(container, game, g);
             }
         }
     }

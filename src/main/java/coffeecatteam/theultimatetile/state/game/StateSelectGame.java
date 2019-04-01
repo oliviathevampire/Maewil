@@ -6,7 +6,9 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.button.world.UIButtonWorld;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
 import coffeecatteam.theultimatetile.state.StateAbstractMenu;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class StateSelectGame extends StateAbstractMenu {
 
@@ -22,8 +24,8 @@ public class StateSelectGame extends StateAbstractMenu {
     }
 
     @Override
-    public void render(Graphics g) {
-        super.render(g);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        super.render(container, game, g);
 
         int w = 80 * 6;
         int h = 48 * 6;

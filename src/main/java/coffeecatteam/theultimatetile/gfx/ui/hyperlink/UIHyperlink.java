@@ -50,7 +50,7 @@ public class UIHyperlink extends UIObject {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         width = Text.getWidth(text, font);
         bounds.width = (int) width;
         Text.drawString(g, text, (int) this.position.x, (int) this.position.y + Text.getHeight(text, font), false, this.c, font);

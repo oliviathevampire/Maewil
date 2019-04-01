@@ -4,8 +4,10 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class Slot {
 
@@ -30,7 +32,7 @@ public class Slot {
         this.scale = scale;
     }
 
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         Assets.SLOT.draw(x, y, width, height);
         itemWidth = (int) ((width / 2 + width / 4) * scale);
         itemHeight = (int) ((height / 2 + height / 4) * scale);
@@ -49,7 +51,7 @@ public class Slot {
         }
     }
 
-    public void postRender(Graphics g) {
+    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
         if (isSelected && stack != null)
             Text.drawString(g, stack.getItem().getName(), xPos + itemWidth / 2f, yPos + itemHeight, true, Color.white, Assets.FONTS.get("20"));
     }

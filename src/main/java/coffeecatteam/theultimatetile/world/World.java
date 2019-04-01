@@ -123,7 +123,7 @@ public class World {
         }
     }
 
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         int xStart = (int) Math.max(0, tutEngine.getCamera().getxOffset() / Tile.TILE_SIZE);
         int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + TutLauncher.WIDTH) / Tile.TILE_SIZE + 1);
         int yStart = (int) Math.max(0, tutEngine.getCamera().getyOffset() / Tile.TILE_SIZE);
@@ -131,7 +131,7 @@ public class World {
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)
-                getBGTile(x, y).render(g);
+                getBGTile(x, y).render(container, game, g);
 
         Color tint = new Color(63, 63, 63, 128);
         g.setColor(tint);
@@ -139,10 +139,10 @@ public class World {
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)
-                getFGTile(x, y).render(g);
+                getFGTile(x, y).render(container, game, g);
 
-        tutEngine.getEntityManager().render(g);
-        overlayManager.render(g);
+        tutEngine.getEntityManager().render(container, game, g);
+        overlayManager.render(container, game, g);
 
         /*
          * Mini Map

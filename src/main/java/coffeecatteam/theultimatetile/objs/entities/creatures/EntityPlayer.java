@@ -318,25 +318,25 @@ public class EntityPlayer extends EntityCreature {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         if (Utils.isDate(3, 31) || Utils.isDate(4, (1 | 2)))
             getCurrentTexture().getCurrentFrame().rotate((float) Math.toRadians(180d)); // BROKEN, FIX ON A LATER DATE
         getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height);
 
-        this.renderEffect(g);
+        this.renderEffect(container, game, g);
     }
 
     @Override
-    public void renderEffect(Graphics g) {
-        super.renderEffect(g);
+    public void renderEffect(GameContainer container, StateBasedGame game, Graphics g) {
+        super.renderEffect(container, game, g);
 
         if (canSprint())
             sprintEffect.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
-        super.postRender(g);
+        super.postRender(container, game, g);
     }
 
     @Override
-    public void postRender(Graphics g) {
+    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
         Font font = Assets.FONTS.get("20");
         if (username != null) {
             float nameWidth = Text.getWidth(username, font);
@@ -352,8 +352,8 @@ public class EntityPlayer extends EntityCreature {
             Text.drawString(g, username, this.renderX - xOff + nameWidth / 2, this.renderY - yOff - nameHeight / 2 - add / 2f, true, Color.white, font);
         }
 
-        inventoryPlayer.render(g);
-        inventoryPlayer.renderHotbar(g);
+        inventoryPlayer.render(container, game, g);
+        inventoryPlayer.renderHotbar(container, game, g);
     }
 
     public InventoryPlayer getInventoryPlayer() {

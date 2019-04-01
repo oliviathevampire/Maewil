@@ -5,7 +5,9 @@ import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.items.Item;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +25,10 @@ public abstract class EntityNature extends EntityStatic {
     }
 
     @Override
-    public void render(Graphics g) {
-        super.render(g);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        super.render(container, game, g);
         if (this.currentHealth != this.maxHealth)
-            this.renderHealth(g);
+            this.renderHealth(container, game, g);
     }
 
     @Override

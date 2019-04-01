@@ -59,7 +59,7 @@ public class UISlider extends UIObject {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         Image bgSegStart = Assets.SLIDER_BAR.getSubImage(0, 0, 2, 6);
         Image bgSegMiddle = Assets.SLIDER_BAR.getSubImage(2, 0, 44, 6);
         Image bgSegEnd = Assets.SLIDER_BAR.getSubImage(46, 0, 2, 6);
@@ -68,7 +68,7 @@ public class UISlider extends UIObject {
         bgSegMiddle.draw(startX, (int) this.position.y, width, height);
         bgSegEnd.draw(endX, (int) this.position.y, segWidth, height);
 
-        slider.render(g);
+        slider.render(container, game, g);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class UISlider extends UIObject {
             bounds = new AABB(this.position, width, height);
         }
 
-        public void render(Graphics g) {
+        public void render(GameContainer container, StateBasedGame game, Graphics g) {
             Image sbtn = (isMouseHovering() ? Assets.SLIDER_BUTTON[1] : Assets.SLIDER_BUTTON[0]);
             sbtn.draw((int) this.position.x, (int) this.position.y, width, height);
         }

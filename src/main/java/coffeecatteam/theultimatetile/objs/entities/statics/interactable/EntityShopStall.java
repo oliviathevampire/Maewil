@@ -13,7 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class EntityShopStall extends EntityStatic {
 
     public EntityShopStall(TutEngine tutEngine) {
-        super(tutEngine, "shop_Stall", Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, HitType.WOOD);
+        super(tutEngine, "shop_stall", Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, HitType.WOOD);
         setCurrentTexture(pickRoof().getId());
     }
 
@@ -45,7 +45,7 @@ public class EntityShopStall extends EntityStatic {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         getTexture("stall").draw(this.renderX, this.renderY, width, height);
         getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height / 2f);
     }

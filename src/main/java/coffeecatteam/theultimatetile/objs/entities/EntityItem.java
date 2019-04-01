@@ -88,14 +88,14 @@ public class EntityItem extends Entity {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         stack.getTexture().draw(renderX, renderY, width, height);
         if (stack.getCount() > 1) {
             int xPos = (int) (this.position.x - this.tutEngine.getCamera().getxOffset());
             int yPos = (int) (this.position.y + 15 - this.tutEngine.getCamera().getyOffset());
             Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos, false, false, Color.white, Assets.FONTS.get("20"));
         }
-        this.renderEffect(g);
+        this.renderEffect(container, game, g);
     }
 
     public ItemStack getStack() {

@@ -69,17 +69,17 @@ public abstract class State {
 
     public abstract void update(GameContainer container, StateBasedGame game, int delta);
 
-    public abstract void render(Graphics g);
+    public abstract void render(GameContainer container, StateBasedGame game, Graphics g);
 
-    public void postRender(Graphics g) {
-        uiManager.postRender(g);
+    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
+        uiManager.postRender(container, game, g);
     }
 
-    protected void renderBG(Graphics g) {
+    protected void renderBG(GameContainer container, StateBasedGame game, Graphics g) {
         for (int y = 0; y < this.bgHeight; y++) {
             for (int x = 0; x < this.bgWidth; x++) {
                 this.bgTiles.getTile(x, y).forcedUpdate(null, 0);
-                this.bgTiles.getTile(x, y).render(g);
+                this.bgTiles.getTile(x, y).render(container, game, g);
             }
         }
     }

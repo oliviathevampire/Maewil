@@ -29,8 +29,8 @@ public class OverlayManager {
         overlays.forEach(overlay -> overlay.update(container, game, delta));
     }
 
-    public void render(Graphics g) {
-        overlays.forEach(overlay -> overlay.render(g));
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        overlays.forEach(overlay -> overlay.render(container, game, g));
     }
 
     public void addOverlay(Overlay overlay) {

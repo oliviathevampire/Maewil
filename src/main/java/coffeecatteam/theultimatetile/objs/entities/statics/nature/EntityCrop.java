@@ -5,7 +5,9 @@ import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.statics.EntityNature;
 import coffeecatteam.theultimatetile.objs.items.Item;
 import coffeecatteam.theultimatetile.objs.items.Items;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class EntityCrop extends EntityNature {
 
@@ -26,9 +28,9 @@ public class EntityCrop extends EntityNature {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         getTexture("ground").draw(this.renderX, this.renderY, width, height);
-        super.render(g);
+        super.render(container, game, g);
     }
 
     public enum CropType {

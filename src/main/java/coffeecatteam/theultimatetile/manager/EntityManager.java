@@ -65,18 +65,18 @@ public class EntityManager {
         entities.sort(renderSorter);
     }
 
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         for (Entity entity : entities)
             if (isEntityInView(entity, RENDER_VIEW))
-                entity.preRender(g);
+                entity.preRender(container, game, g);
 
         for (Entity entity : entities)
             if (isEntityInView(entity, RENDER_VIEW))
-                entity.render(g);
+                entity.render(container, game, g);
 
         for (Entity entity : entities)
             if (isEntityInView(entity, RENDER_VIEW))
-                entity.postRender(g);
+                entity.postRender(container, game, g);
     }
 
     public boolean isEntityInView(Entity entity, int view) {

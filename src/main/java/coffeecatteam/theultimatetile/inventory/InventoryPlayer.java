@@ -4,7 +4,9 @@ import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class InventoryPlayer extends InventoryAbstractPlayer {
 
@@ -14,7 +16,7 @@ public class InventoryPlayer extends InventoryAbstractPlayer {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         if (active) {
             // Render inventory backgorund
             int multiplier = 6;
@@ -26,7 +28,7 @@ public class InventoryPlayer extends InventoryAbstractPlayer {
             Assets.INVENTORY.draw(x, y, width, height);
             player.getTexture("idle").draw(x + player.getWidth() / 2f, y + player.getHeight() / 2f, player.getWidth(), player.getHeight());
 
-            super.renderInventorySlots(g);
+            super.renderInventorySlots(container, game, g);
         }
     }
 }

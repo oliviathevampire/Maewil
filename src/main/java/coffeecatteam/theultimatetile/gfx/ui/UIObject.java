@@ -30,9 +30,9 @@ public abstract class UIObject {
             onClick();
     }
 
-    public abstract void render(Graphics g);
+    public abstract void render(GameContainer container, StateBasedGame game, Graphics g);
 
-    public void postRender(Graphics g) {
+    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
     }
 
     public abstract void onClick();

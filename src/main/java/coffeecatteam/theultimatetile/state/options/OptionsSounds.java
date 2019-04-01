@@ -45,8 +45,8 @@ public class OptionsSounds extends StateAbstractOptions {
     }
 
     @Override
-    public void render(Graphics g) {
-        super.render(g);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        super.render(container, game, g);
 
         Font font = Assets.FONTS.get("30");
         Color c = Color.white;

@@ -140,22 +140,22 @@ public class StateCreateWorld extends StateAbstractMenu {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         Color c = Color.white;
         Font f = Assets.FONTS.get("40");
 
         if (generating) {
-            this.renderBG(g);
+            this.renderBG(container, game, g);
             Text.drawStringCentered(g, "Generating world...", c, f);
         } else {
-            super.render(g);
-            Text.drawStringCenteredX(g, worldName, TutLauncher.HEIGHT / 2 - Text.getHeight(worldName, f) / 2 - 90, c, f);
+            super.render(container, game, g);
+            Text.drawStringCenteredX(g, worldName, TutLauncher.HEIGHT / 2f - Text.getHeight(worldName, f) / 2 - 90, c, f);
 
             String seedS = "Seed: " + String.valueOf(seed);
-            Text.drawStringCenteredX(g, seedS, TutLauncher.HEIGHT / 2 - Text.getHeight(seedS, f) / 2 - 55, c, f);
+            Text.drawStringCenteredX(g, seedS, TutLauncher.HEIGHT / 2f - Text.getHeight(seedS, f) / 2 - 55, c, f);
 
             String worldSizeS = "Size: " + String.valueOf(worldSize);
-            Text.drawStringCenteredX(g, worldSizeS, TutLauncher.HEIGHT / 2 - Text.getHeight(worldSizeS, f) / 2 - 20, c, f);
+            Text.drawStringCenteredX(g, worldSizeS, TutLauncher.HEIGHT / 2f - Text.getHeight(worldSizeS, f) / 2 - 20, c, f);
         }
     }
 }

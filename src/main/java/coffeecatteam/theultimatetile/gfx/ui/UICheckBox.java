@@ -2,7 +2,9 @@ package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class UICheckBox extends UIObject {
 
@@ -27,7 +29,7 @@ public class UICheckBox extends UIObject {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         Assets.CHECK_BOX_BG.draw((int) position.x, (int) position.y, width, height);
         if (checked)
             Assets.CHECK_BOX_FG.draw((int) position.x, (int) position.y, width, height);

@@ -103,8 +103,8 @@ public class StateOptions extends StateAbstractMenu {
     }
 
     @Override
-    public void render(Graphics g) {
-        super.render(g);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        super.render(container, game, g);
         Font font = Assets.FONTS.get("40");
         String debugText = "Debug Mode: ";
         Text.drawString(g, debugText, (int) (debug.getPosition().x - Text.getWidth(debugText, font)), (int) (debug.getPosition().y + Text.getHeight(debugText, font)) + 25, false, Color.white, font);

@@ -166,8 +166,8 @@ public class TutEngine extends BasicGameState {
         Assets.MISSING_TEXTURE.draw(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
 
         if (StateManager.getCurrentState() != null) {
-            StateManager.getCurrentState().render(g);
-            StateManager.getCurrentState().postRender(g);
+            StateManager.getCurrentState().render(container, game, g);
+            StateManager.getCurrentState().postRender(container, game, g);
         }
         if (StateOptions.OPTIONS.fpsCounter())
             renderFPSCounter(g);

@@ -78,10 +78,10 @@ public abstract class EntityCreature extends Entity {
     }
 
     @Override
-    public void render(Graphics g) {
-        super.render(g);
-        this.renderEffect(g);
-        this.renderHealth(g);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        super.render(container, game, g);
+        this.renderEffect(container, game, g);
+        this.renderHealth(container, game, g);
     }
 
     @Override

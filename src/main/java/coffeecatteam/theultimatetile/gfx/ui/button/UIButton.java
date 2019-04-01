@@ -132,7 +132,7 @@ public class UIButton extends UIObject {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         int sectionWidth = 64;
         if (useImage) {
             Image current = image.getCurrentFrame();
@@ -191,7 +191,7 @@ public class UIButton extends UIObject {
     }
 
     @Override
-    public void postRender(Graphics g) {
+    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
         if (isHovering() && hasTooltip) {
             float x = (float) tutEngine.getMousePos().x, x1 = x + this.tooltip.getWidth(), xDiff = 0;
             float y = (float) tutEngine.getMousePos().y, y1 = y + this.tooltip.getHeight(), yDiff = 0;
@@ -200,7 +200,7 @@ public class UIButton extends UIObject {
             if (y1 > TutLauncher.HEIGHT) yDiff = y1 - TutLauncher.HEIGHT;
 
             tooltip.setPosition(new Vector2D(x - xDiff, y - yDiff));
-            tooltip.render(g);
+            tooltip.render(container, game, g);
         }
     }
 

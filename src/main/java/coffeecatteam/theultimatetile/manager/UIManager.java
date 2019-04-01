@@ -23,15 +23,15 @@ public class UIManager {
             obj.update(container, game, delta);
     }
 
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         for (UIObject obj : objects) {
-            obj.render(g);
+            obj.render(container, game, g);
         }
     }
 
-    public void postRender(Graphics g) {
+    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
         for (UIObject obj : objects) {
-            obj.postRender(g);
+            obj.postRender(container, game, g);
         }
     }
 

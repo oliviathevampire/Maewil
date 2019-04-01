@@ -22,7 +22,7 @@ public class OverlayPlayerHealth extends Overlay {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         int hWidth = 96;
         int hHeight = 96;
 

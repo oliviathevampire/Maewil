@@ -24,7 +24,7 @@ public class OverlayGlub extends Overlay {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         int multiplier = 6;
         int sWidth = (16 * 4) / 2;
         int sHeight = 8;

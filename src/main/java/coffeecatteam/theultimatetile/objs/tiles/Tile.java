@@ -98,7 +98,7 @@ public abstract class Tile implements IHasData<Tile> {
             texture.update();
     }
 
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         render(g, (int) (position.getX() * Tile.TILE_SIZE - tutEngine.getCamera().getxOffset()), (int) (position.getY() * Tile.TILE_SIZE - tutEngine.getCamera().getyOffset()), TILE_SIZE, TILE_SIZE);
     }
 

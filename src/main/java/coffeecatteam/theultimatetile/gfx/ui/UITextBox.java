@@ -5,7 +5,9 @@ import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +75,7 @@ public class UITextBox extends UIObject {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         int segWidth = 32, segHeight = 32;
         Assets.TEXTBOX[0].draw((int) position.x, (int) position.y, segWidth, segHeight);
         Assets.TEXTBOX[1].draw((int) position.x + segWidth, (int) position.y, getLongestString(), segHeight);
