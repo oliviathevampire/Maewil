@@ -23,7 +23,11 @@ import java.io.IOException;
 public class StateOptions extends StateAbstractMenu {
 
     public static OptionsJsonParser OPTIONS;
-    public static final Tile[] BG = new Tile[]{Tiles.STONE, Tiles.GLITCH, Tiles.BROKEN_STONE};
+    public static final Tile[] BG = new Tile[]{
+            Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE,
+            Tiles.BROKEN_STONE, Tiles.BROKEN_STONE, Tiles.BROKEN_STONE, Tiles.BROKEN_STONE, Tiles.BROKEN_STONE, Tiles.BROKEN_STONE, Tiles.BROKEN_STONE,
+            Tiles.COAL_ORE, Tiles.IRON_ORE, Tiles.GOLD_ORE, Tiles.DIAMOND_ORE
+    };
 
     private UICheckBox debug, fps;
 
