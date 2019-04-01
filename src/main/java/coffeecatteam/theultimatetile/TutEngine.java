@@ -79,9 +79,6 @@ public class TutEngine extends BasicGameState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-//        container.setShowFPS(false);
-//        container.setDefaultFont(Assets.FONTS.get("10"));
-//        container.setMouseCursor(Assets.CURSOR, 0, 0);
         container.setDefaultFont(Assets.FONTS.get("10"));
         container.setMouseCursor(Assets.CURSOR, 0, 0);
 
