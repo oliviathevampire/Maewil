@@ -113,11 +113,7 @@ public class Utils {
         Calendar cal = Calendar.getInstance();
         cal.setTime(today);
 
-        int curentMonth = cal.get(Calendar.MONTH);
-        int curentDay = cal.get(Calendar.DAY_OF_MONTH);
-        boolean inRange = curentDay == day;
-
-        return (curentMonth == month && inRange);
+        return (cal.get(Calendar.MONTH) == month && cal.get(Calendar.DAY_OF_MONTH) == day);
     }
 
     /**
