@@ -74,18 +74,22 @@ public class Assets {
     /* Fonts */
     private static void initFonts() {
         String fontPath = "/assets/fonts/LCD_Solid.ttf";
-        for (int i = 5; i <= 100; i += 5) {
-            /* PLAIN */
+        int sizeStep = 5, maxSize = 100;
+
+        /* PLAIN */
+        for (int i = sizeStep; i <= maxSize; i += sizeStep) {
             String pIndex = String.valueOf(i);
             FONTS.put(pIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.PLAIN));
             logger.info("Font [" + pIndex + "] loaded!");
-
-            /* BOLD */
+        }
+        /* BOLD */
+        for (int i = sizeStep; i <= maxSize; i += sizeStep) {
             String bIndex = String.valueOf(i) + "-bold";
             FONTS.put(bIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.BOLD));
             logger.info("Font [" + bIndex + "] loaded!");
-
-            /* ITALIC */
+        }
+        /* ITALIC */
+        for (int i = sizeStep; i <= maxSize; i += sizeStep) {
             String iIndex = String.valueOf(i) + "-italic";
             FONTS.put(iIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.ITALIC));
             logger.info("Font [" + iIndex + "] loaded!");
