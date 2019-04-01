@@ -16,10 +16,15 @@ import org.newdawn.slick.state.transition.FadeInTransition;
  */
 public class SplashScreen extends BasicGameState {
 
-    private Vector2D titleScale = new Vector2D(0, 0);
     private Animation player;
-    private float playerTimer = 0, maxPlayerTimer = 3.5f, py;
-    private float endTimer = 0, maxEndTimer = 6f;
+    private float titleScale = 0, smoothness = 0.05f;
+    private float endTimer = 0, maxEndTimer = 2.5f;
+
+    // Player movement steps
+    private float playerTimer = 0, maxPlayerTimer = 3.5f;
+    private float psize = 150f, px, py, p1, p2;
+    private boolean playerExit = false;
+
 
     public SplashScreen() {
     }
@@ -31,7 +36,7 @@ public class SplashScreen extends BasicGameState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        TutLauncher.LOGGER.warn("Fullscreen is set to [" + container.isFullscreen() + "]");
+        TutLauncher.LOGGER.warn("Fullscreen is set to [" + TutLauncher.FULLSCREEN + "]");
 
         Assets.init();
         Sounds.init();
@@ -39,15 +44,20 @@ public class SplashScreen extends BasicGameState {
         container.setMouseCursor(Assets.CURSOR, 0, 0);
 
         player = new Animation(135, Assets.SPLASH_PLAYER);
-        py = TutLauncher.HEIGHT;
+        p1 = TutLauncher.HEIGHT;
+        px = TutLauncher.WIDTH - psize * 2.5f;
+        py = TutLauncher.HEIGHT - psize / 2f;
+        p2 = px;
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-        titleScale.x = NumberUtils.lerp((float) titleScale.x, 1.0f, 0.05f);
-        playerTimer = NumberUtils.lerp(playerTimer, maxPlayerTimer, 0.05f);
+        titleScale = NumberUtils.lerp(titleScale, 1.0f, smoothness);
+        playerTimer = NumberUtils.lerp(playerTimer, maxPlayerTimer, smoothness);
         player.update();
 
+        if (p2 > TutLauncher.WIDTH)
+            endTimer = NumberUtils.lerp(endTimer, maxEndTimer, smoothness / 5f);
         if (endTimer >= maxEndTimer - 0.5f)
             game.enterState(TutLauncher.ID_GAME, new FadeInTransition(Color.black), new FadeInTransition(Color.black));
     }
@@ -56,17 +66,22 @@ public class SplashScreen extends BasicGameState {
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         Image title = Assets.TITLE_SMALL;
         float size = 10f;
-        float width = (float) ((title.getWidth() / size) * titleScale.x);
-        float height = (float) ((title.getHeight() / size) * titleScale.x);
+        float width = (title.getWidth() / size) * titleScale;
+        float height = (title.getHeight() / size) * titleScale;
         title.draw(TutLauncher.WIDTH / 2f - width / 2f, TutLauncher.HEIGHT / 2f - height / 2f, width, height);
 
         if (playerTimer >= maxPlayerTimer - 0.5f) {
             Image frame = player.getCurrentFrame();
-            float psize = 150f;
-            frame.draw(TutLauncher.WIDTH - psize * 2.5f, py, psize, psize);
-            py = NumberUtils.lerp(py, TutLauncher.HEIGHT - psize / 2f, 0.05f);
+            frame.draw(p2, p1, psize, psize);
 
-            endTimer = NumberUtils.lerp(endTimer, maxEndTimer, 0.01f);
+            p1 = NumberUtils.lerp(p1, py, smoothness);
+            float newX = px - 20f;
+            if (p1 <= py + 1f && !playerExit)
+                p2 = NumberUtils.lerp(p2, newX, smoothness);
+            if (p2 <= newX + 0.5f)
+                playerExit = true;
+            if (playerExit)
+                p2 = NumberUtils.lerp(p2, TutLauncher.WIDTH * 1.25f, smoothness);
         }
     }
 }
