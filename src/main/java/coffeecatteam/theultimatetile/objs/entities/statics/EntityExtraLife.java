@@ -4,6 +4,7 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * @author CoffeeCatRailway
@@ -22,7 +23,7 @@ public class EntityExtraLife extends EntityStatic {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         if (this.isTouching(tutEngine.getPlayer())) {
             tutEngine.getPlayer().heal(healAmt);
             this.hurt(getCurrentHealth());

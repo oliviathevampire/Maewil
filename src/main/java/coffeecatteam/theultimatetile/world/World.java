@@ -13,6 +13,7 @@ import org.json.simple.parser.ParseException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
 
@@ -65,7 +66,7 @@ public class World {
         overlayManager = new OverlayManager(tutEngine, tutEngine.getPlayer());
     }
 
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         int xStart = (int) Math.max(0, tutEngine.getCamera().getxOffset() / Tile.TILE_SIZE);
         int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + TutLauncher.WIDTH) / Tile.TILE_SIZE + 1);
         int yStart = (int) Math.max(0, tutEngine.getCamera().getyOffset() / Tile.TILE_SIZE);
@@ -76,7 +77,7 @@ public class World {
                 getBGTile(x, y).updateBounds();
                 getBGTile(x, y).setWorldLayer(bg_tiles);
 
-                getFGTile(x, y).update(container, delta);
+                getFGTile(x, y).update(container, game, delta);
                 getFGTile(x, y).setWorldLayer(fg_tiles);
             }
         }
@@ -85,10 +86,10 @@ public class World {
         this.delta = delta;
         updateThreadsInit();
 
-        Items.UPDATABLE_TIEMS.forEach(i -> i.update(container, delta));
+        Items.UPDATABLE_TIEMS.forEach(i -> i.update(container, game, delta));
 
-        tutEngine.getEntityManager().update(container, delta);
-        overlayManager.update(container, delta);
+        tutEngine.getEntityManager().update(container, game, delta);
+        overlayManager.update(container, game, delta);
 
         tutEngine.getCamera().centerOnEntity(tutEngine.getEntityManager().getPlayer());
     }

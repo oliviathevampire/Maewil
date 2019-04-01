@@ -10,6 +10,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class OverlayGlub extends Overlay {
 
@@ -18,7 +19,7 @@ public class OverlayGlub extends Overlay {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
 
     }
 
@@ -36,7 +37,7 @@ public class OverlayGlub extends Overlay {
         Font font = Assets.FONTS.get("20");
         int x = TutLauncher.WIDTH / 2 - width / 2;
 
-        Text.drawString(g, text, TutLauncher.WIDTH / 2, (int) (height + Text.getHeight(text, font) * 1.5f), true, false, new Color(4, 79, 163), font);
+        Text.drawString(g, text, TutLauncher.WIDTH / 2f, (int) (height + Text.getHeight(text, font) * 1.5f), true, false, new Color(4, 79, 163), font);
         Assets.GLUB_METER[0].draw(x, 0, width, height);
 
         int glubWidth = (int) NumberUtils.map(glub - 1, 0, player.getMaxGludel(), 0, sWidth);

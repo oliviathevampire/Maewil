@@ -11,6 +11,7 @@ import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class InventoryAbstractPlayer extends Inventory {
 
@@ -66,7 +67,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
 //        if (!isDefault)
 //            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode() | StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()))
 //                player.openCloseInventory(this);

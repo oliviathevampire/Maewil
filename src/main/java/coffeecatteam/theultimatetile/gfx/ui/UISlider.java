@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class UISlider extends UIObject {
 
@@ -42,9 +43,9 @@ public class UISlider extends UIObject {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
-        super.update(container, delta);
-        slider.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
+        slider.update(container, game, delta);
         if (slider.isMouseHovering()) {
             if (tutEngine.isLeftDown() || tutEngine.isLeftPressed()) {
                 slider.position.x = tutEngine.getMousePos().x - slider.getWidth() / 2d;
@@ -116,7 +117,7 @@ public class UISlider extends UIObject {
             bounds = new AABB(this.position, width, height);
         }
 
-        public void update(GameContainer container, int delta) {
+        public void update(GameContainer container, StateBasedGame game, int delta) {
             bounds = new AABB(this.position, width, height);
         }
 

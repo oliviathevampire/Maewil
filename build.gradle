@@ -54,7 +54,7 @@ dependencies {
 jar {
     from configurations.compile.collect { zipTree it }
     manifest {
-        attributes 'Main-Class': 'coffeecatteam.theultimatetile.Launcher'
+        attributes 'Main-Class': 'coffeecatteam.theultimatetile.Start'
     }
     exclude("META-INF/*.RSA", "META-INF/*.SF")
 }
@@ -62,32 +62,26 @@ jar {
 task copyOptions(type: Copy) {
     println("Copying options.json, saves folder & etc. to " + buildPath + "/libs")
     copy {
-        from "options.json"
-        from "LICENSE.md"
-        from "README.txt"
+        from "data/options.json"
         copy {
-            from  fileTree(dir: "icons", include: "*.png")
-            into buildPath + "/libs/icons"
+            from "data/LICENSE.md"
+            from "data/README.txt"
+            into buildPath + "/libs"
         }
         copy {
-            from "saves/saved_games.json"
-            into buildPath + "/libs/saves"
+            from  fileTree(dir: "data/icons", include: "*.png")
+            into buildPath + "/libs/data/icons"
         }
         copy {
-            from "export/example/tiles/background.json"
-            from "export/example/tiles/foreground.json"
-            into buildPath + "/libs/export/example/tiles"
-            copy {
-                from "export/example/world_info.json"
-                into buildPath + "/libs/export/example"
-            }
+            from "data/saves/saved_games.json"
+            into buildPath + "/libs/data/saves"
         }
         copy {
             from fileTree(dir: "libs/natives", include: "*.dll")
             from fileTree(dir: "libs/natives", include: "*.so")
             from fileTree(dir: "libs/natives", include: "*.dylib")
-            into buildPath + "/libs/natives"
+            into buildPath + "/libs/data/natives"
         }
-        into buildPath + "/libs"
+        into buildPath + "/libs/data"
     }
 }

@@ -4,6 +4,7 @@ import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityCreature;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class AI {
 
@@ -15,7 +16,7 @@ public abstract class AI {
         this.entity = entity;
     }
 
-    public abstract boolean update(GameContainer container, int delta);
+    public abstract boolean update(GameContainer container, StateBasedGame game, int delta);
 
     public EntityCreature getEntity() {
         return entity;

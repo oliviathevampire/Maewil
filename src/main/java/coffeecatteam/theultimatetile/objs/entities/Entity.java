@@ -16,6 +16,7 @@ import coffeecatteam.theultimatetile.objs.tiles.TileWater;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.tags.TagCompound;
 import org.newdawn.slick.*;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,11 +68,11 @@ public abstract class Entity implements IHasData<Entity> {
         return TAGS;
     }
 
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
     }
 
-    public void updateA(GameContainer container, int delta) {
-        update(container, delta);
+    public void updateA(GameContainer container, StateBasedGame game, int delta) {
+        update(container, game, delta);
 
         this.renderX = (int) (this.position.x - this.tutEngine.getCamera().getxOffset());
         this.renderY = (int) (this.position.y - this.tutEngine.getCamera().getyOffset());

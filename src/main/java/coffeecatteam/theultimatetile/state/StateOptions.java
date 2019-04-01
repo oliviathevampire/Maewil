@@ -17,6 +17,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
 
@@ -34,7 +35,7 @@ public class StateOptions extends StateAbstractMenu {
     public StateOptions(TutEngine tutEngine, boolean initUI) {
         super(tutEngine, BG, initUI);
 
-        OPTIONS = new OptionsJsonParser("./options.json");
+        OPTIONS = new OptionsJsonParser("./data/options.json");
         try {
             OPTIONS.load();
         } catch (IOException | ParseException e) {
@@ -58,7 +59,7 @@ public class StateOptions extends StateAbstractMenu {
                 }
 
                 @Override
-                public void update(GameContainer container, int delta) {
+                public void update(GameContainer container, StateBasedGame game, int delta) {
                 }
             }));
 
@@ -75,7 +76,7 @@ public class StateOptions extends StateAbstractMenu {
                 }
 
                 @Override
-                public void update(GameContainer container, int delta) {
+                public void update(GameContainer container, StateBasedGame game, int delta) {
                 }
             }));
         }
@@ -95,8 +96,8 @@ public class StateOptions extends StateAbstractMenu {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
         OPTIONS.setDebugMode(debug.isChecked());
         OPTIONS.setFpsCounter(fps.isChecked());
     }

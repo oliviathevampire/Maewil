@@ -10,6 +10,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class OptionsSounds extends StateAbstractOptions {
 
@@ -33,8 +34,8 @@ public class OptionsSounds extends StateAbstractOptions {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
 
         StateOptions.OPTIONS.setVolumeMusic(volMusic.getValue() / 10f);
         StateOptions.OPTIONS.setVolumePassive(volPassive.getValue() / 10f);

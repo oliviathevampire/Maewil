@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.objs.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityCrop;
 import coffeecatteam.theultimatetile.tags.TagList;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +51,7 @@ public class AIEatCrops extends AI {
     }
 
     @Override
-    public boolean update(GameContainer container, int delta) {
+    public boolean update(GameContainer container, StateBasedGame game, int delta) {
         EntityCrop closestCrop = getClosestCrop();
         if (closestCrop != null) {
             float x = closestCrop.getX() - entity.getX();

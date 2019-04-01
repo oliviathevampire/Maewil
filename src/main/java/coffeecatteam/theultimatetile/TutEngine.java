@@ -113,7 +113,7 @@ public class TutEngine extends BasicGameState {
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
 //          TagBase.TEST();
         if (close) container.exit();
-        keyManager.update(container, delta);
+        keyManager.update(container, game, delta);
 
         /*
          * Mouse values
@@ -136,7 +136,7 @@ public class TutEngine extends BasicGameState {
             }
         }
 
-        StateManager.getCurrentState().update(container, delta);
+        StateManager.getCurrentState().update(container, game, delta);
 
         /*
          * Take a screenshot
@@ -148,7 +148,7 @@ public class TutEngine extends BasicGameState {
     public void takeScreenshot(GameContainer container) throws SlickException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
         String dateAndTime = dateFormat.format(new Date());
-        String filename = "screenshots/" + dateAndTime + ".png";
+        String filename = "data/screenshots/" + dateAndTime + ".png";
         File file = new File(filename);
         file.getParentFile().mkdirs();
 

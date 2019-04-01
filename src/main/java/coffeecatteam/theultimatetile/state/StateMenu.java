@@ -16,6 +16,7 @@ import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class StateMenu extends State {
 
@@ -37,7 +38,7 @@ public class StateMenu extends State {
             }
 
             @Override
-            public void update(GameContainer container, int delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         }));
         btnPlayer.setRenderBtnBG(false);
@@ -48,13 +49,13 @@ public class StateMenu extends State {
             public void onClick() {
 //                State.setState(((tutEngine) engine).stateSelectGame);
                 StateManager.setCurrentState(new StateCreateWorld(tutEngine));
-//                State.setState(new StateGame(engine, "./saves/Test_World", "Test World"));
+//                State.setState(new StateGame(engine, "./data/saves/Test_World", "Test World"));
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu", "Selecting A Game");
             }
 
             @Override
-            public void update(GameContainer container, int delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         }));
 
@@ -67,7 +68,7 @@ public class StateMenu extends State {
             }
 
             @Override
-            public void update(GameContainer container, int delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         }));
 
@@ -78,7 +79,7 @@ public class StateMenu extends State {
             }
 
             @Override
-            public void update(GameContainer container, int delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         }));
 
@@ -96,14 +97,14 @@ public class StateMenu extends State {
             }
 
             @Override
-            public void update(GameContainer container, int delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         }));
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
-        uiManager.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        uiManager.update(container, game, delta);
     }
 
     @Override

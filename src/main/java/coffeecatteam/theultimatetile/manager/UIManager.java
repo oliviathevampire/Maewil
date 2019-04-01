@@ -4,6 +4,7 @@ import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.ui.UIObject;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 
@@ -17,9 +18,9 @@ public class UIManager {
         objects = new ArrayList<>();
     }
 
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         for (UIObject obj : objects)
-            obj.update(container, delta);
+            obj.update(container, game, delta);
     }
 
     public void render(Graphics g) {

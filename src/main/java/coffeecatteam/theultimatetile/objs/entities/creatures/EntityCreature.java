@@ -12,6 +12,7 @@ import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +45,10 @@ public abstract class EntityCreature extends Entity {
     }
 
     @Override
-    public void updateA(GameContainer container, int delta) {
-        super.updateA(container, delta);
+    public void updateA(GameContainer container, StateBasedGame game, int delta) {
+        super.updateA(container, game, delta);
 
-        ais.forEach(ai -> ai.update(container, delta));
+        ais.forEach(ai -> ai.update(container, game, delta));
 
         // Animation
         updateAnim();

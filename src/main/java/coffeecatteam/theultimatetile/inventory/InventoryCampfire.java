@@ -14,6 +14,7 @@ import coffeecatteam.theultimatetile.tags.TagCompound;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class InventoryCampfire extends InventoryAbstractPlayer {
 
@@ -56,8 +57,8 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
 
         if (active) {
             if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.X).getKeyCode())) {

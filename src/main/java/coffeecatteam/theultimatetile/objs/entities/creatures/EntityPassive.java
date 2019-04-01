@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.ai.AIWander;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class EntityPassive extends EntityCreature {
 
@@ -22,14 +23,13 @@ public abstract class EntityPassive extends EntityCreature {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         xMove = 0;
         yMove = 0;
 
         // Movement
-        if (tutEngine.getPlayer().isActive()) {
-            aiWander.update(container, delta);
-        }
+        if (tutEngine.getPlayer().isActive())
+            aiWander.update(container, game, delta);
         move();
     }
 }

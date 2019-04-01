@@ -16,7 +16,7 @@ import java.util.List;
 
 public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
 
-    private String path = "./saves/saved_games.json";
+    private String path = "./data/saves/saved_games.json";
     protected TutEngine tutEngine;
 
     public static int SAVE_CAPACITY = 3;

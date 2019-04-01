@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.gfx.overlays.OverlayPlayerSprint;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,8 @@ public class OverlayManager {
         addOverlay(new OverlayGlub(tutEngine, player));
     }
 
-    public void update(GameContainer container, int delta) {
-        overlays.forEach(overlay -> overlay.update(container, delta));
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        overlays.forEach(overlay -> overlay.update(container, game, delta));
     }
 
     public void render(Graphics g) {

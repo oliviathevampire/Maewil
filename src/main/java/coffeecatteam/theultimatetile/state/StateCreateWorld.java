@@ -20,6 +20,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -61,7 +62,7 @@ public class StateCreateWorld extends StateAbstractMenu {
             }
 
             @Override
-            public void update(GameContainer container, int delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         }));
     }
@@ -90,7 +91,7 @@ public class StateCreateWorld extends StateAbstractMenu {
          * Set world & username
          */
         World world = new World(tutEngine, worldName, worldSize, worldSize, getPlayerSpawn(), bgTiles, fgTiles).setSeed(seed);
-        StateManager.setCurrentState(new StateGame(tutEngine, "./saves/Test_World", worldName, world));
+        StateManager.setCurrentState(new StateGame(tutEngine, "./data/saves/Test_World", worldName, world));
 
         if (ArgUtils.hasArgument(tutEngine.getArgs(), "-username"))
             tutEngine.setUsername(ArgUtils.getArgument(tutEngine.getArgs(), "-username"));

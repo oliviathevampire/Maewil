@@ -5,6 +5,7 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.TutEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class UIObject {
 
@@ -23,7 +24,7 @@ public abstract class UIObject {
         bounds = new AABB(this.position, (int) width, (int) height);
     }
 
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         bounds = new AABB(this.position, (int) width, (int) height);
         if (this.bounds.contains(TutEngine.getTutEngine().getMousePos()) && TutEngine.getTutEngine().isLeftPressed())
             onClick();

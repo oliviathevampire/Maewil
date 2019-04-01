@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.manager;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.event.KeyEvent;
 
@@ -20,7 +21,7 @@ public class KeyManager {
         cantPress = new boolean[keys.length];
     }
 
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         for (int i = 0; i < keys.length; i++) {
             if (cantPress[i] && !keys[i])
                 cantPress[i] = false;

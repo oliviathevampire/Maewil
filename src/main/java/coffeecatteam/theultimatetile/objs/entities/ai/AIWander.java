@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.objs.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class AIWander extends AI {
 
@@ -21,7 +22,7 @@ public class AIWander extends AI {
     }
 
     @Override
-    public boolean update(GameContainer container, int delta) {
+    public boolean update(GameContainer container, StateBasedGame game, int delta) {
         wanderTimer += System.currentTimeMillis() - lastWanderTimer;
         lastWanderTimer = System.currentTimeMillis();
 

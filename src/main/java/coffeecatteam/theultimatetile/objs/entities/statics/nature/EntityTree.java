@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.objs.entities.statics.EntityNature;
 import coffeecatteam.theultimatetile.objs.items.Items;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class EntityTree extends EntityNature {
 
@@ -30,8 +31,8 @@ public class EntityTree extends EntityNature {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
     }
 
     @Override

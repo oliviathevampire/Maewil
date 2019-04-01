@@ -6,6 +6,7 @@ import coffeecatteam.theultimatetile.objs.entities.ai.AIFollowFlee;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPassive;
 import coffeecatteam.theultimatetile.objs.items.Items;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class EntitySheep extends EntityPassive {
 
@@ -18,17 +19,17 @@ public class EntitySheep extends EntityPassive {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         xMove = 0;
         yMove = 0;
 
         // Movement
         if (tutEngine.getPlayer().isActive()) {
             if (TAGS.hasKey("fleePlayer") && TAGS.getBoolean("fleePlayer")) {
-                if (!aiFollowFlee.update(container, delta))
-                    aiWander.update(container, delta);
+                if (!aiFollowFlee.update(container, game, delta))
+                    aiWander.update(container, game, delta);
             } else
-                aiWander.update(container, delta);
+                aiWander.update(container, game, delta);
         }
         move();
     }

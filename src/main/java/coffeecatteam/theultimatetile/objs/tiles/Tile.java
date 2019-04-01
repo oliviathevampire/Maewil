@@ -13,6 +13,7 @@ import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -82,7 +83,7 @@ public abstract class Tile implements IHasData<Tile> {
         return worldLayer.getTile(pos.getX(), pos.getY());
     }
 
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         updateBounds();
         if (!beingDamaged) {
             this.health += NumberUtils.getRandomInt(1, 3);

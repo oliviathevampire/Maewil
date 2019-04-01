@@ -10,6 +10,7 @@ import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import coffeecatteam.theultimatetile.world.TileList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.Random;
 
@@ -66,7 +67,7 @@ public abstract class State {
                 this.bgTiles.getTile(x, y).setWorldLayer(bgTiles);
     }
 
-    public abstract void update(GameContainer container, int delta);
+    public abstract void update(GameContainer container, StateBasedGame game, int delta);
 
     public abstract void render(Graphics g);
 

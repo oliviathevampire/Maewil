@@ -10,6 +10,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class OverlayPlayerSprint extends Overlay {
 
@@ -18,7 +19,7 @@ public class OverlayPlayerSprint extends Overlay {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
 
     }
 

@@ -3,6 +3,7 @@ package coffeecatteam.theultimatetile.objs.entities.creatures;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
@@ -19,6 +20,7 @@ import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.newdawn.slick.*;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class EntityPlayer extends EntityCreature {
 
@@ -58,7 +60,7 @@ public class EntityPlayer extends EntityCreature {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         this.prevX = (float) position.x;
         this.prevY = (float) position.y;
 
@@ -87,7 +89,7 @@ public class EntityPlayer extends EntityCreature {
                 tutEngine.getInventoryManager().closeAllInventories();
         }
 
-        inventoryPlayer.update(container, delta);
+        inventoryPlayer.update(container, game, delta);
 
         // Animation
         sprintEffect.update();
@@ -317,8 +319,8 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void render(Graphics g) {
-        if (Utils.isDate(4, 1))
-            getCurrentTexture().getCurrentFrame().rotate((float) Math.toRadians(180d));
+        if (Utils.isDate(3, 31) || Utils.isDate(4, (1 | 2)))
+            getCurrentTexture().getCurrentFrame().rotate((float) Math.toRadians(180d)); // BROKEN, FIX ON A LATER DATE
         getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height);
 
         this.renderEffect(g);

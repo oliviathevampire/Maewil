@@ -4,6 +4,7 @@ import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class Overlay {
 
@@ -15,7 +16,7 @@ public abstract class Overlay {
         this.player = player;
     }
 
-    public abstract void update(GameContainer container, int delta);
+    public abstract void update(GameContainer container, StateBasedGame game, int delta);
 
     public abstract void render(Graphics g);
 }

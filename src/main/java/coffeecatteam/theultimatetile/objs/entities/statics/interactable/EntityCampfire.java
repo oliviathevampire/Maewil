@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.statics.EntityStatic;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class EntityCampfire extends EntityStatic {
 
@@ -25,9 +26,9 @@ public class EntityCampfire extends EntityStatic {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         inventoryCampfire.setTAGS(TAGS);
-        inventoryCampfire.update(container, delta);
+        inventoryCampfire.update(container, game, delta);
     }
 
     @Override

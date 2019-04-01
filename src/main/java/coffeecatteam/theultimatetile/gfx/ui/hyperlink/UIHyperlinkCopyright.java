@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.*;
 import java.net.URI;
@@ -34,7 +35,7 @@ public class UIHyperlinkCopyright extends UIHyperlink {
             }
 
             @Override
-            public void update(GameContainer container, int delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
     }

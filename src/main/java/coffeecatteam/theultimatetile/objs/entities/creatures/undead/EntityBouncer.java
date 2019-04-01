@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.objs.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.objs.items.Items;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class EntityBouncer extends EntityUndead {
 
@@ -23,8 +24,8 @@ public class EntityBouncer extends EntityUndead {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
         moveSound();
     }
 

@@ -9,6 +9,7 @@ import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 /**
  * @author CoffeeCatRailway
@@ -40,7 +41,7 @@ public class EntityItem extends Entity {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         if (this.tutEngine.getPlayer().isActive()) {
             if (this.isTouching(this.tutEngine.getPlayer())) {
                 if (!this.tutEngine.getPlayer().getInventoryPlayer().isFull()) {

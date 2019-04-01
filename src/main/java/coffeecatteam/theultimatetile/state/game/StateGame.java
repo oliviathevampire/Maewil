@@ -18,6 +18,7 @@ import coffeecatteam.theultimatetile.world.World;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
 
@@ -53,7 +54,7 @@ public class StateGame extends State {
             }
 
             @Override
-            public void update(GameContainer container, int delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         }));
 
@@ -67,7 +68,7 @@ public class StateGame extends State {
             }
 
             @Override
-            public void update(GameContainer container, int delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
         UIButton btnQuit = new UIButton(tutEngine, true, TutLauncher.HEIGHT / 2 + yOffset * 3 + 20, "Quit", new ClickListener() {
@@ -78,7 +79,7 @@ public class StateGame extends State {
             }
 
             @Override
-            public void update(GameContainer container, int delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
 
@@ -98,7 +99,7 @@ public class StateGame extends State {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !tutEngine.getPlayer().isDead) {
             if (!tutEngine.getPlayer().isGuiOpen())
                 paused = !paused && !tutEngine.getPlayer().getInventoryPlayer().isActive();
@@ -106,9 +107,9 @@ public class StateGame extends State {
         }
 
         if (!paused)
-            world.update(container, delta);
+            world.update(container, game, delta);
         else
-            uiManagerPaused.update(container, delta);
+            uiManagerPaused.update(container, game, delta);
     }
 
     @Override
@@ -134,7 +135,7 @@ public class StateGame extends State {
     }
 
     public void saveWorld(String username) {
-        WorldJsonSaver saver = new WorldJsonSaver("./saves/" + worldName, world, tutEngine);
+        WorldJsonSaver saver = new WorldJsonSaver("./data/saves/" + worldName, world, tutEngine);
         try {
             saver.save(username);
         } catch (IOException e) {
@@ -147,7 +148,7 @@ public class StateGame extends State {
         if (stopWorldFU)
             world.stopUpdateThreads();
 
-        WorldJsonSaver saver = new WorldJsonSaver("./saves/" + worldName, world, tutEngine);
+        WorldJsonSaver saver = new WorldJsonSaver("./data/saves/" + worldName, world, tutEngine);
         try {
             saver.save();
         } catch (IOException e) {

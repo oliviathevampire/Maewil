@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -96,7 +97,7 @@ public class ClickListenerWorld implements ClickListener {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         String[] vals = SavedGamesJSONParser.GAMES.get(index).split(":");
         isSaved = Boolean.valueOf(vals[0]);
     }

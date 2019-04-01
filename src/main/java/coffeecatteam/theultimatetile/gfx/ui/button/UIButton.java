@@ -13,6 +13,7 @@ import coffeecatteam.theultimatetile.gfx.ui.UIObject;
 import coffeecatteam.theultimatetile.gfx.ui.UITextBox;
 import coffeecatteam.theultimatetile.state.StateOptions;
 import org.newdawn.slick.*;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class UIButton extends UIObject {
 
@@ -113,8 +114,8 @@ public class UIButton extends UIObject {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
         this.hovering = this.bounds.contains(tutEngine.getMousePos()) && !this.disabled;
         if (useImage) this.image.update();
 
@@ -126,7 +127,7 @@ public class UIButton extends UIObject {
         if (this.disabled)
             this.currentTexture = Assets.BUTTON_DISABLED;
 
-        listener.update(container, delta);
+        listener.update(container, game, delta);
         bounds = new AABB(position, (int) width, (int) height);
     }
 

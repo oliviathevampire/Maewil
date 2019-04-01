@@ -7,6 +7,7 @@ import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.ai.AIFollowFlee;
 import coffeecatteam.theultimatetile.objs.entities.ai.AIWander;
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class EntityUndead extends EntityCreature {
 
@@ -29,14 +30,14 @@ public abstract class EntityUndead extends EntityCreature {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         xMove = 0;
         yMove = 0;
 
         // Movement
         if (tutEngine.getPlayer().isActive()) {
-            if (!aiFollowFlee.update(container, delta)) {
-                aiWander.update(container, delta);
+            if (!aiFollowFlee.update(container, game, delta)) {
+                aiWander.update(container, game, delta);
             }
         }
         move();

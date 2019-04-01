@@ -10,6 +10,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class UIHyperlink extends UIObject {
 
@@ -38,8 +39,8 @@ public class UIHyperlink extends UIObject {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
         this.hovering = this.bounds.contains(TutEngine.getTutEngine().getMousePos());
 
         if (this.hovering)

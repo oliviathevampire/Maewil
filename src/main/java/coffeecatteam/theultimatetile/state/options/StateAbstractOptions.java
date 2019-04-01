@@ -12,6 +12,7 @@ import coffeecatteam.theultimatetile.state.StateOptions;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
 
@@ -34,7 +35,7 @@ public abstract class StateAbstractOptions extends State {
             }
 
             @Override
-            public void update(GameContainer container, int delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         }));
 
@@ -42,8 +43,8 @@ public abstract class StateAbstractOptions extends State {
     }
 
     @Override
-    public void update(GameContainer container, int delta) {
-        uiManager.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        uiManager.update(container, game, delta);
     }
 
     @Override
