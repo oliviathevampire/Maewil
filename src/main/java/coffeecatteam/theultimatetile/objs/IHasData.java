@@ -1,10 +1,6 @@
 package coffeecatteam.theultimatetile.objs;
 
-import coffeecatteam.theultimatetile.TutLauncher;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
 
 /**
  * @author CoffeeCatRailway
@@ -13,26 +9,12 @@ import java.io.IOException;
 public interface IHasData<E> {
 
     default String getName() {
-        try {
-            JSONObject lang = DataParser.getData("lang", true);
-            switch (getType()) {
-                case ITEM:
-                    lang = (JSONObject) lang.get("items");
-                    break;
-                case TILE:
-                    lang = (JSONObject) lang.get("tiles");
-                    break;
-                case ENTITY:
-                    lang = (JSONObject) lang.get("entities");
-                    break;
-            }
+        JSONObject lang = DataParser.getDataCatchException("lang", true);
 
-            if (lang.containsKey(getUnlocalizedName()))
-                return String.valueOf(lang.get(getUnlocalizedName()));
-        } catch (IOException | ParseException e) {
-            TutLauncher.LOGGER.error(e.getMessage());
-        }
-        return getUnlocalizedName();
+        if (lang.containsKey(getUnlocalizedName()))
+            return String.valueOf(lang.get(getUnlocalizedName()));
+        else
+            return getUnlocalizedName();
     }
 
     LangType getType();
@@ -40,7 +22,7 @@ public interface IHasData<E> {
     String getId();
 
     default String getUnlocalizedName() {
-        return getId();
+        return getType().getSuffix() + getId();
     }
 
     E newCopy();
@@ -48,6 +30,16 @@ public interface IHasData<E> {
     <T extends E> T newCopy(T obj);
 
     enum LangType {
-        ITEM, TILE, ENTITY
+        ITEM("item"), TILE("tile"), ENTITY("entity");
+
+        private String suffix;
+
+        LangType(String suffix) {
+            this.suffix = suffix + ".";
+        }
+
+        public String getSuffix() {
+            return suffix;
+        }
     }
 }
