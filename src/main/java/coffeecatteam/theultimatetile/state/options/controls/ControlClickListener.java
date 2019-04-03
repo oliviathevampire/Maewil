@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.state.options.controls;
 import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButtonControl;
-import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.options.StateOptions;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;

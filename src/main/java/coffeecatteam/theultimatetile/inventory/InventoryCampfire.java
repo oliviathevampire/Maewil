@@ -8,7 +8,7 @@ import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.items.Item;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.items.Items;
-import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.options.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import coffeecatteam.theultimatetile.tags.TagCompound;
 import org.newdawn.slick.GameContainer;

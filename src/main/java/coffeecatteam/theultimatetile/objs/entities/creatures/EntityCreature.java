@@ -9,7 +9,7 @@ import coffeecatteam.theultimatetile.objs.entities.ai.AI;
 import coffeecatteam.theultimatetile.objs.items.Item;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
-import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.options.StateOptions;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;

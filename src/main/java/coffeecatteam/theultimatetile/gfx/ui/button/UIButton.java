@@ -11,7 +11,7 @@ import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIObject;
 import coffeecatteam.theultimatetile.gfx.ui.UITextBox;
-import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.options.StateOptions;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 

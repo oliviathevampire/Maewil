@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityUndead;
 import coffeecatteam.theultimatetile.objs.items.Items;
-import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.options.StateOptions;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 

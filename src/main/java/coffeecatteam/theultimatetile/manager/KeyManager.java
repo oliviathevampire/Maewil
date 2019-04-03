@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.options.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;

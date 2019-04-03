@@ -13,7 +13,7 @@ import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TileLava;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.objs.tiles.TileWater;
-import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.options.StateOptions;
 import coffeecatteam.theultimatetile.tags.TagCompound;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;

@@ -5,7 +5,7 @@ import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.TutLauncher;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
-import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.options.StateOptions;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
