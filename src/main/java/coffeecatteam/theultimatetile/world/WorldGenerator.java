@@ -23,8 +23,7 @@ public class WorldGenerator {
     private int worldSize;
     private BufferedImage landMap, pathMap, biomeMap;
 
-    private long seed;
-    private long seedOreOffInc = seed / 4, seedOreOff = seedOreOffInc;
+    private long seed, seedOreOffInc, seedOreOff;
 
     private double blendSize = 25.0d;
 
@@ -38,6 +37,9 @@ public class WorldGenerator {
         this.tutEngine = tutEngine;
         this.seed = seed;
         this.worldSize = worldSize;
+
+        this.seedOreOffInc = this.seed / 4;
+        this.seedOreOff = this.seedOreOffInc;
     }
 
     public void generate() {
@@ -99,7 +101,7 @@ public class WorldGenerator {
                 tiles.setTile(x, y, tile.setPos(new TilePos(x, y)));
             }
         }
-        tiles = generateOres(tiles, true);
+        tiles = generateOres(tiles, seedOreOffInc, true);
         bgTilesGenerated = true;
         logger.info("Background tiles generated");
         return tiles;
@@ -133,31 +135,31 @@ public class WorldGenerator {
                 tiles.setTile(x, y, tile.setPos(new TilePos(x, y)));
             }
         }
-        tiles = generateOres(tiles, false);
+        tiles = generateOres(tiles, 0, false);
         fgTilesGenerated = true;
         logger.info("Foreground tiles generated");
         return tiles;
     }
 
-    private TileList generateOres(TileList tiles, boolean bg) {
+    private TileList generateOres(TileList tiles, long seedOff, boolean bg) {
         double oreSize = 1.0d;
         double stoneSize = 10.0d;
 
-        addOre(tiles, Tiles.COAL_ORE, -0.05d, 0.02d, oreSize, bg);
-        addOre(tiles, Tiles.IRON_ORE, -0.05d, 0.03d, oreSize, bg);
-        addOre(tiles, Tiles.GOLD_ORE, -0.05d, 0.04d, oreSize, bg);
-        addOre(tiles, Tiles.DIAMOND_ORE, -0.05d, 0.05d, oreSize, bg);
+        addOre(tiles, Tiles.COAL_ORE, -0.05d, 0.02d, oreSize, seedOff, bg);
+        addOre(tiles, Tiles.IRON_ORE, -0.05d, 0.03d, oreSize, seedOff, bg);
+        addOre(tiles, Tiles.GOLD_ORE, -0.05d, 0.04d, oreSize, seedOff, bg);
+        addOre(tiles, Tiles.DIAMOND_ORE, -0.05d, 0.05d, oreSize, seedOff, bg);
 
-        addOre(tiles, Tiles.ANDESITE, 0.7d, 1.0d, stoneSize, bg);
-        addOre(tiles, Tiles.DIORITE, 0.7d, 1.0d, stoneSize, bg);
+        addOre(tiles, Tiles.ANDESITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
+        addOre(tiles, Tiles.DIORITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
 
-        addOre(tiles, Tiles.BROKEN_STONE, -0.15d, 0.15d, stoneSize, bg);
+        addOre(tiles, Tiles.BROKEN_STONE, -0.15d, 0.15d, stoneSize, seedOff, bg);
 
         return tiles;
     }
 
-    private void addOre(TileList tiles, Tile ore, double minThreshold, double maxThreshold, double blendSize, boolean bg) {
-        OpenSimplexNoise noise = new OpenSimplexNoise(seed + seedOreOff);
+    private void addOre(TileList tiles, Tile ore, double minThreshold, double maxThreshold, double blendSize, long seedOff, boolean bg) {
+        OpenSimplexNoise noise = new OpenSimplexNoise(seed + seedOreOff + seedOff);
         seedOreOff += seedOreOffInc;
 
         for (int y = 0; y < worldSize; y++) {
