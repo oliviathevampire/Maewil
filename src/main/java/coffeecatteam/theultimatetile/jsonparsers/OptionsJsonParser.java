@@ -21,7 +21,7 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
     private String path;
 
     private Map<String, Keybind> CONTROLS = new HashMap<>();
-    private boolean DEBUG_MODE, FPS_COUNTER;
+    private boolean DEBUG_MODE, FPS_COUNTER, VSYNC;
 
     private DecimalFormat volumeFormat = new DecimalFormat("#.#");
     private float volumeMusic, volumePassive, volumeHostile, volumePlayer, volumeOther;
@@ -44,11 +44,12 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
             String description = k.get("description").toString();
             CONTROLS.put(jsonId.toString(), new Keybind(key_char, key_id, description));
         }
-        TutLauncher.LOGGER.info("Options [controls] loaded!");
+        TutLauncher.LOGGER.info("Control options loaded!");
 
         DEBUG_MODE = Boolean.valueOf(jsonObject.get("DEBUG_MODE").toString());
         FPS_COUNTER = Boolean.valueOf(jsonObject.get("FPS_COUNTER").toString());
-        TutLauncher.LOGGER.info("Options [FPS_COUNTER & DEBUG_MODE] loaded!");
+        VSYNC = Boolean.valueOf(jsonObject.get("VSYNC").toString());
+        TutLauncher.LOGGER.info("True/False options loaded!");
 
         JSONObject sounds = (JSONObject) jsonObject.get("sounds");
         volumeMusic = NumberUtils.parseFloat(sounds.get("volumeMusic"));
@@ -56,9 +57,9 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
         volumeHostile = NumberUtils.parseFloat(sounds.get("volumeHostile"));
         volumePlayer = NumberUtils.parseFloat(sounds.get("volumePlayer"));
         volumeOther = NumberUtils.parseFloat(sounds.get("volumeOther"));
-        TutLauncher.LOGGER.info("Options [sounds] loaded!");
+        TutLauncher.LOGGER.info("Sound options loaded!");
 
-        TutLauncher.LOGGER.info("Options loaded!");
+        TutLauncher.LOGGER.info("All options loaded!");
     }
 
     @Override
@@ -75,11 +76,12 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
             controls.put(jsonId, key);
         }
         jsonObject.put("controls", controls);
-        TutLauncher.LOGGER.info("Options [controls] saved!");
+        TutLauncher.LOGGER.info("Control options loaded!");
 
         jsonObject.put("DEBUG_MODE", DEBUG_MODE);
         jsonObject.put("FPS_COUNTER", FPS_COUNTER);
-        TutLauncher.LOGGER.info("Options [FPS_COUNTER & DEBUG_MODE] saved!");
+        jsonObject.put("VSYNC", VSYNC);
+        TutLauncher.LOGGER.info("True/False options loaded!");
 
         JSONObject sounds = new JSONObject();
         sounds.put("volumeMusic", String.valueOf(volumeMusic));
@@ -88,13 +90,13 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
         sounds.put("volumePlayer", String.valueOf(volumePlayer));
         sounds.put("volumeOther", String.valueOf(volumeOther));
         jsonObject.put("sounds", sounds);
-        TutLauncher.LOGGER.info("Options [sounds] saved!");
+        TutLauncher.LOGGER.info("Sound options loaded!");
 
         FileWriter file = new FileWriter(path);
         file.write(jsonObject.toJSONString());
         file.flush();
 
-        TutLauncher.LOGGER.info("Options saved!");
+        TutLauncher.LOGGER.info("All options saved!");
     }
 
     public Map<String, Keybind> controls() {
@@ -115,6 +117,14 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
 
     public void setFpsCounter(boolean FPS_COUNTER) {
         this.FPS_COUNTER = FPS_COUNTER;
+    }
+
+    public boolean vSync() {
+        return VSYNC;
+    }
+
+    public void setVSync(boolean VSYNC) {
+        this.VSYNC = VSYNC;
     }
 
     public float getVolumeMusic() {

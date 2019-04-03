@@ -94,7 +94,6 @@ public class TutLauncher extends StateBasedGame {
             app.setTargetFrameRate(100);
             app.setUpdateOnlyWhenVisible(false);
             app.setAlwaysRender(true);
-            app.setVSync(true);
             app.start();
         } catch (SlickException e) {
             e.printStackTrace();

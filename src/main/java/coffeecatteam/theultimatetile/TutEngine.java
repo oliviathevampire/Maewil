@@ -15,7 +15,7 @@ import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import coffeecatteam.theultimatetile.state.StateCredits;
 import coffeecatteam.theultimatetile.state.StateManager;
 import coffeecatteam.theultimatetile.state.StateMenu;
-import coffeecatteam.theultimatetile.state.StateOptions;
+import coffeecatteam.theultimatetile.state.options.StateOptions;
 import coffeecatteam.theultimatetile.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.state.options.OptionsSounds;
 import coffeecatteam.theultimatetile.state.options.controls.OptionsControls;
@@ -125,6 +125,9 @@ public class TutEngine extends BasicGameState {
         this.rightDown = container.getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON);
 
         this.fps = container.getFPS();
+        boolean vSync = StateOptions.OPTIONS.vSync();
+        if (container.isVSyncRequested() != vSync)
+            container.setVSync(vSync);
 
         // Background music
         if (playBGMusic) {
