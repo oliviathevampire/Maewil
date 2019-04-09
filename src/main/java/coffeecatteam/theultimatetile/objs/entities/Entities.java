@@ -83,7 +83,7 @@ public class Entities {
         /*
          * Player
          */
-        String username = ArgUtils.hasArgument(tutEngine.getArgs(), "-username") ? ArgUtils.getArgument(tutEngine.getArgs(), "-username") : "";
+        String username = ArgUtils.hasArgument(TutLauncher.ARGS, "-username") ? ArgUtils.getArgument(TutLauncher.ARGS, "-username") : "";
         register(PLAYER = (EntityPlayer) parser.loadData(new EntityPlayer(tutEngine, username)));
         tutEngine.getEntityManager().setPlayer(PLAYER);
 

@@ -35,8 +35,6 @@ import java.util.Date;
 public class TutEngine extends BasicGameState {
 
     private static TutEngine tutEngine;
-
-    private String[] args;
     private int fps;
 
     /*
@@ -67,8 +65,7 @@ public class TutEngine extends BasicGameState {
     private Camera camera;
     private World world;
 
-    public TutEngine(String[] args) {
-        this.args = args;
+    public TutEngine() {
         tutEngine = this;
     }
 
@@ -205,10 +202,6 @@ public class TutEngine extends BasicGameState {
             this.keyJustPressed = Character.UNASSIGNED;
             return c;
         }
-    }
-
-    public String[] getArgs() {
-        return args;
     }
 
     public int getFps() {

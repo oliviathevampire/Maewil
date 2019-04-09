@@ -93,8 +93,8 @@ public class StateCreateWorld extends StateAbstractMenu {
         World world = new World(tutEngine, worldName, worldSize, worldSize, getPlayerSpawn(), bgTiles, fgTiles).setSeed(seed);
         StateManager.setCurrentState(new StateGame(tutEngine, "./data/saves/Test_World", worldName, world));
 
-        if (ArgUtils.hasArgument(tutEngine.getArgs(), "-username"))
-            tutEngine.setUsername(ArgUtils.getArgument(tutEngine.getArgs(), "-username"));
+        if (ArgUtils.hasArgument(TutLauncher.ARGS, "-username"))
+            tutEngine.setUsername(ArgUtils.getArgument(TutLauncher.ARGS, "-username"));
         else
             tutEngine.setUsername("TEST"); // TODO: Add text box to enter username on startup
 

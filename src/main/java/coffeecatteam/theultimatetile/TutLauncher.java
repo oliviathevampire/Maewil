@@ -39,13 +39,20 @@ public class TutLauncher extends StateBasedGame {
 
     public TutLauncher() {
         super(TITLE);
-        LOGGER = new CatLogger("Client-Thread");
+        LOGGER = new CatLogger("TheUltimateTile-Main");
+
+        StringBuilder args = new StringBuilder();
+        for (String arg : ARGS)
+            args.append(arg).append((arg.equals(ARGS[ARGS.length - 1]) ? "" : ","));
+        LOGGER.info("System args [" + args.toString() + "]");
+        LOGGER.info("Window size set to [" + WIDTH + "x" + HEIGHT + "]");
+        LOGGER.info("Fullscreen set to [" + FULLSCREEN + "]");
     }
 
     @Override
     public void initStatesList(GameContainer gameContainer) throws SlickException {
         this.addState(new SplashScreen());
-        this.addState(new TutEngine(ARGS));
+        this.addState(new TutEngine());
 
         this.enterState(ID_SPLASHSCREEN, new FadeInTransition(Color.black), new EmptyTransition());
     }

@@ -36,8 +36,6 @@ public class SplashScreen extends BasicGameState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        TutLauncher.LOGGER.warn("Fullscreen is set to [" + TutLauncher.FULLSCREEN + "]");
-
         Assets.init();
         Sounds.init();
         container.setDefaultFont(Assets.FONTS.get("10"));

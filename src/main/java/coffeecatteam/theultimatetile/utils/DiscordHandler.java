@@ -8,6 +8,7 @@ import coffeecatteam.coffeecatutils.DevEnvUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.TutLauncher;
 
 public class DiscordHandler {
 
@@ -23,7 +24,7 @@ public class DiscordHandler {
     public static boolean READY = false;
 
     public void setup() {
-        if (!ArgUtils.hasArgument(TutEngine.getTutEngine().getArgs(), disbaleArg)) {
+        if (!ArgUtils.hasArgument(TutLauncher.ARGS, disbaleArg)) {
             logger = new CatLogger("TUT-DiscordRichPresence");
             logger.println();
             Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
@@ -69,7 +70,7 @@ public class DiscordHandler {
     }
 
     public void updatePresence(String details, String state, boolean inGame) {
-        if (!ArgUtils.hasArgument(TutEngine.getTutEngine().getArgs(), disbaleArg)) {
+        if (!ArgUtils.hasArgument(TutLauncher.ARGS, disbaleArg)) {
             DiscordRichPresence presence = new DiscordRichPresence();
             presence.details = (DevEnvUtils.isRunningFromDevEnviroment() ? "Developing TUT - " : "") + details;
             presence.state = state;
@@ -100,7 +101,7 @@ public class DiscordHandler {
     }
 
     public void shutdown() {
-        if (!ArgUtils.hasArgument(TutEngine.getTutEngine().getArgs(), disbaleArg)) {
+        if (!ArgUtils.hasArgument(TutLauncher.ARGS, disbaleArg)) {
             logger.warn("" + userId + " is disconnecting!");
             rpc.Discord_ClearPresence();
             logger.info("Cleared rich presence!");
