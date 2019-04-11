@@ -7,7 +7,6 @@ import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.DevEnvUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
-import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.TutLauncher;
 
 public class DiscordHandler {
