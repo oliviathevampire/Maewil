@@ -5,9 +5,9 @@ import coffeecatteam.coffeecatutils.DevEnvUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.coffeecatutils.logger.CatLoggerUtils;
 import coffeecatteam.theultimatetile.gfx.assets.Sounds;
+import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.state.StateManager;
 import coffeecatteam.theultimatetile.state.game.StateGame;
-import org.lwjgl.LWJGLUtil;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -32,7 +32,7 @@ public class TutLauncher extends StateBasedGame {
      */
     public static String[] ARGS;
     public static boolean FULLSCREEN;
-    public static int WIDTH = 912, HEIGHT = 768;
+    public static int WIDTH = 912, HEIGHT = 768, WIDTH_TILE_SIZE, HEIGHT_TILE_SIZE;
     public static final String TITLE = "The Ultimate Tile";
 
     public static CatLogger LOGGER;
@@ -87,6 +87,8 @@ public class TutLauncher extends StateBasedGame {
             WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
             HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
         }
+        WIDTH_TILE_SIZE = WIDTH / Tile.TILE_SIZE;
+        HEIGHT_TILE_SIZE = HEIGHT / Tile.TILE_SIZE;
 
         /* Initialize logger */
         CatLoggerUtils.setOutputLog(ArgUtils.hasArgument(ARGS, "-outputLog"));

@@ -21,7 +21,8 @@ public abstract class State {
     protected UIManager uiManager;
     protected TutEngine tutEngine;
 
-    private int bgWidth, bgHeight;
+    private int bgWidth = TutLauncher.WIDTH_TILE_SIZE + (TutLauncher.WIDTH_TILE_SIZE * Tile.TILE_SIZE < TutLauncher.WIDTH ? 1 : 0);
+    private int bgHeight = TutLauncher.HEIGHT_TILE_SIZE + (TutLauncher.HEIGHT_TILE_SIZE * Tile.TILE_SIZE < TutLauncher.HEIGHT ? 1 : 0);
     private TileList bgTiles;
     private Tile[] centre, border;
     protected static final Tile[] CENTRE_GRASS = new Tile[]{Tiles.GRASS}, BORDER_STONE_BROKEN = new Tile[]{Tiles.STONE, Tiles.BROKEN_STONE};
@@ -41,12 +42,6 @@ public abstract class State {
 
         this.centre = centre;
         this.border = border;
-
-        this.bgWidth = TutLauncher.WIDTH / Tile.TILE_SIZE;
-        this.bgHeight = TutLauncher.HEIGHT / Tile.TILE_SIZE;
-
-        if (this.bgWidth * Tile.TILE_SIZE < TutLauncher.WIDTH) this.bgWidth += 1;
-        if (this.bgHeight * Tile.TILE_SIZE < TutLauncher.HEIGHT) this.bgHeight += 1;
 
         this.bgTiles = new TileList(this.bgWidth, this.bgHeight);
     }
