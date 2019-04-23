@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.objs.entities.statics;
 
-import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
+import coffeecatteam.theultimatetile.start.TutEngine;
 
 public class EntityUltimateTile extends EntityStatic {
 

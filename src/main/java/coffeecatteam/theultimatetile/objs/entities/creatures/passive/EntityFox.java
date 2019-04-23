@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.objs.entities.creatures.passive;
 
-import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPassive;
+import coffeecatteam.theultimatetile.start.TutEngine;
 
 public class EntityFox extends EntityPassive {
 

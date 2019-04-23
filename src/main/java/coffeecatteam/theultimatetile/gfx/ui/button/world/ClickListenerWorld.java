@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.gfx.ui.button.world;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.theultimatetile.start.TutEngine;
-import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
@@ -76,8 +76,8 @@ public class ClickListenerWorld implements ClickListener {
 //        }
 //
 //        String username;
-//        if (ArgUtils.hasArgument(engine.getArgs(), "-username")) {
-//            username = ArgUtils.getArgument(engine.getArgs(), "-username");
+//        if (ArgUtils.hasArgument("-username")) {
+//            username = ArgUtils.getArgument("-username");
 //        } else {
 //            if (!isSaved) {
 //                username = Utils.getUsername();

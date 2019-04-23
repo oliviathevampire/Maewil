@@ -55,7 +55,7 @@ public class TutLauncher extends StateBasedGame {
         this.addState(new SplashScreen());
         this.addState(new TutEngine());
 
-        if (ArgUtils.hasArgument(ARGS, "-uiTest"))
+        if (ArgUtils.hasArgument("-uiTest"))
             this.enterState(ID_GAME, new EmptyTransition(), new EmptyTransition());
         else
             this.enterState(ID_SPLASHSCREEN, new FadeInTransition(Color.black), new EmptyTransition());
@@ -89,7 +89,8 @@ public class TutLauncher extends StateBasedGame {
         }
 
         ARGS = args;
-        FULLSCREEN = ArgUtils.hasArgument(ARGS, "-fullscreen");
+        ArgUtils.setARGS(ARGS);
+        FULLSCREEN = ArgUtils.hasArgument("-fullscreen");
         if (FULLSCREEN) {
             WIDTH = Toolkit.getDefaultToolkit().getScreenSize().width;
             HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -98,7 +99,7 @@ public class TutLauncher extends StateBasedGame {
         HEIGHT_TILE_SIZE = HEIGHT / Tile.TILE_SIZE;
 
         /* Initialize logger */
-        CatLoggerUtils.setOutputLog(!ArgUtils.hasArgument(ARGS, "-dontOutputLog"));
+        CatLoggerUtils.setOutputLog(!ArgUtils.hasArgument("-dontOutputLog"));
         CatLoggerUtils.init();
 
         /* Start game */

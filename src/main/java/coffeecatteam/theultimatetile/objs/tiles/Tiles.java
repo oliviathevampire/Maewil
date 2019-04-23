@@ -1,7 +1,5 @@
 package coffeecatteam.theultimatetile.objs.tiles;
 
-import coffeecatteam.theultimatetile.start.TutEngine;
-import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.objs.TileDataParser;
 import coffeecatteam.theultimatetile.objs.tiles.stone.*;
 import coffeecatteam.theultimatetile.objs.tiles.stone.ore.TileCoalOre;
@@ -12,6 +10,8 @@ import coffeecatteam.theultimatetile.objs.tiles.wood.TileBookshelf;
 import coffeecatteam.theultimatetile.objs.tiles.wood.TileChest;
 import coffeecatteam.theultimatetile.objs.tiles.wood.TileLog;
 import coffeecatteam.theultimatetile.objs.tiles.wood.TilePlanks;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;

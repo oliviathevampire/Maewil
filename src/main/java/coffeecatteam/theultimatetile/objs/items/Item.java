@@ -1,9 +1,9 @@
 package coffeecatteam.theultimatetile.objs.items;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.objs.IHasData;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;

@@ -3,8 +3,6 @@ package coffeecatteam.theultimatetile.state;
 import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.start.TutEngine;
-import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
@@ -12,6 +10,8 @@ import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.tiles.*;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.state.game.StateGame;
 import coffeecatteam.theultimatetile.world.TileList;
 import coffeecatteam.theultimatetile.world.World;
@@ -93,8 +93,8 @@ public class StateCreateWorld extends StateAbstractMenu {
         World world = new World(tutEngine, worldName, worldSize, worldSize, getPlayerSpawn(), bgTiles, fgTiles).setSeed(seed);
         StateManager.setCurrentState(new StateGame(tutEngine, "./data/saves/Test_World", worldName, world));
 
-        if (ArgUtils.hasArgument(TutLauncher.ARGS, "-username"))
-            tutEngine.setUsername(ArgUtils.getArgument(TutLauncher.ARGS, "-username"));
+        if (ArgUtils.hasArgument("-username"))
+            tutEngine.setUsername(ArgUtils.getArgument("-username"));
         else
             tutEngine.setUsername("TEST"); // TODO: Add text box to enter username on startup
 

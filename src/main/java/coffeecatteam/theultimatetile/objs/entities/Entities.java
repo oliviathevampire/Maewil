@@ -3,8 +3,6 @@ package coffeecatteam.theultimatetile.objs.entities;
 import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.start.TutEngine;
-import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.objs.EntityDataParser;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityCow;
@@ -24,6 +22,8 @@ import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityCrop;
 import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityRock;
 import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityTree;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.tags.JsonToTag;
 import coffeecatteam.theultimatetile.tags.TagCompound;
 import coffeecatteam.theultimatetile.tags.TagException;
@@ -83,7 +83,7 @@ public class Entities {
         /*
          * Player
          */
-        String username = ArgUtils.hasArgument(TutLauncher.ARGS, "-username") ? ArgUtils.getArgument(TutLauncher.ARGS, "-username") : "";
+        String username = ArgUtils.hasArgument("-username") ? ArgUtils.getArgument("-username") : "";
         register(PLAYER = (EntityPlayer) parser.loadData(new EntityPlayer(tutEngine, username)));
         tutEngine.getEntityManager().setPlayer(PLAYER);
 

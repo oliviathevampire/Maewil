@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.objs.items.tool;
 
-import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.items.IInteractable;
 import coffeecatteam.theultimatetile.objs.items.Item;
+import coffeecatteam.theultimatetile.start.TutEngine;
 
 public abstract class ItemTool extends Item implements IInteractable {
 

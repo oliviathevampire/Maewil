@@ -106,7 +106,7 @@ public class TutEngine extends BasicGameState {
         optionsControls = new OptionsControls(this);
         optionsSpounds = new OptionsSounds(this);
 
-        if (ArgUtils.hasArgument(TutLauncher.ARGS, "-uiTest"))
+        if (ArgUtils.hasArgument("-uiTest"))
             StateManager.setCurrentState(new StateUITesting(this));
         else
             StateManager.setCurrentState(stateMenu);

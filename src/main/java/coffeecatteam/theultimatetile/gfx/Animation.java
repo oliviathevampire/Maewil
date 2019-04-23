@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.gfx;
 
-import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import org.newdawn.slick.Image;
 
 import java.util.ArrayList;

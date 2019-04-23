@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.objs.entities.creatures.undead;
 
-import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityUndead;
+import coffeecatteam.theultimatetile.start.TutEngine;
 
 public class EntityThing extends EntityUndead {
 

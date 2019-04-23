@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.world;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.world.colormap.WorldMapGenerator;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;

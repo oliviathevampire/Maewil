@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.objs.entities.statics.interactable;
 
 import coffeecatteam.coffeecatutils.position.AABB;
-import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.inventory.InventoryCampfire;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.statics.EntityStatic;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;

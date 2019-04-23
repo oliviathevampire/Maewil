@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.objs.tiles;
 
-import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 

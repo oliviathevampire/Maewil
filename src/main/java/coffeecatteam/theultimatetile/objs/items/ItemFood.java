@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.objs.items;
 
-import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.start.TutEngine;
 
 public class ItemFood extends Item implements IInteractable {
 

@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.state.game;
 
-import coffeecatteam.theultimatetile.start.TutEngine;
-import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.button.world.UIButtonWorld;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.state.StateAbstractMenu;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

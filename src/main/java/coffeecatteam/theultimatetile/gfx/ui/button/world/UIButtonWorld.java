@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.gfx.ui.button.world;
 
-import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 

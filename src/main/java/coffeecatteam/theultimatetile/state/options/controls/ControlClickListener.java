@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.state.options.controls;
 
-import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButtonControl;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.state.options.StateOptions;
 import coffeecatteam.theultimatetile.utils.Utils;
 import org.newdawn.slick.GameContainer;

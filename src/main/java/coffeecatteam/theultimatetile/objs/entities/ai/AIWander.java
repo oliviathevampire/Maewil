@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.objs.entities.ai;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.theultimatetile.start.TutEngine;
-import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityCreature;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.state.options.StateOptions;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;

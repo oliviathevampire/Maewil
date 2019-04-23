@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.objs.items.tool;
 
-import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.start.TutEngine;
 
 /**
  * @author CoffeeCatRailway

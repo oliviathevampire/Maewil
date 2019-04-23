@@ -1,9 +1,9 @@
 package coffeecatteam.theultimatetile.objs.items;
 
-import coffeecatteam.theultimatetile.start.TutEngine;
-import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.objs.ItemDataParser;
 import coffeecatteam.theultimatetile.objs.items.tool.*;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;

@@ -1,9 +1,9 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.start.TutEngine;
-import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.inventory.Inventory;
 import coffeecatteam.theultimatetile.inventory.InventoryAbstractPlayer;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 
 import java.util.ArrayList;
 import java.util.List;

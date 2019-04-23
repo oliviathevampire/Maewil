@@ -1,10 +1,10 @@
 package coffeecatteam.theultimatetile.objs.entities.statics.nature;
 
 import coffeecatteam.coffeecatutils.position.AABB;
-import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.statics.EntityNature;
 import coffeecatteam.theultimatetile.objs.items.Items;
+import coffeecatteam.theultimatetile.start.TutEngine;
 
 public class EntityBush extends EntityNature {
 
