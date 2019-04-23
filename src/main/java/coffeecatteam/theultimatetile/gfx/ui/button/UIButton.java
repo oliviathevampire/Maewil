@@ -2,8 +2,8 @@ package coffeecatteam.theultimatetile.gfx.ui.button;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
@@ -30,8 +30,8 @@ public class UIButton extends UIObject {
     private boolean useImage, renderBtnBG = true, renderBtnHover = true;
 
     private Animation image = new Animation();
-    private float imgScale;
-    private int padding;
+    private float imgScale = 1.0f;
+    private int padding = 16;
 
     private Image[] currentTexture;
     protected boolean hasTooltip = false, hasCustomWidth = false;
@@ -107,7 +107,7 @@ public class UIButton extends UIObject {
         super(position, 0, 0);
         this.tutEngine = tutEngine;
         this.listener = listener;
-        this.currentTexture = Assets.BUTTON_ENABLED;
+        this.currentTexture = Assets.GUI_BUTTON_ENABLED;
 
         this.centeredX = centeredY = false;
         tooltip = new UITextBox(position);
@@ -117,15 +117,14 @@ public class UIButton extends UIObject {
     public void update(GameContainer container, StateBasedGame game, int delta) {
         super.update(container, game, delta);
         this.hovering = this.bounds.contains(tutEngine.getMousePos()) && !this.disabled;
-        if (useImage) this.image.update();
 
         if (this.hovering) {
-            this.currentTexture = Assets.BUTTON_HOVER;
+            this.currentTexture = Assets.GUI_BUTTON_HOVER;
         } else {
-            this.currentTexture = Assets.BUTTON_ENABLED;
+            this.currentTexture = Assets.GUI_BUTTON_ENABLED;
         }
         if (this.disabled)
-            this.currentTexture = Assets.BUTTON_DISABLED;
+            this.currentTexture = Assets.GUI_BUTTON_DISABLED;
 
         listener.update(container, game, delta);
         bounds = new AABB(position, (int) width, (int) height);
@@ -277,5 +276,29 @@ public class UIButton extends UIObject {
 
     public void setPadding(int padding) {
         this.padding = padding;
+    }
+
+    public boolean isUseImage() {
+        return useImage;
+    }
+
+    public void setUseImage(boolean useImage) {
+        this.useImage = useImage;
+    }
+
+    public boolean isHasTooltip() {
+        return hasTooltip;
+    }
+
+    public void setHasTooltip(boolean hasTooltip) {
+        this.hasTooltip = hasTooltip;
+    }
+
+    public UITextBox getTooltip() {
+        return tooltip;
+    }
+
+    public void setTooltip(UITextBox tooltip) {
+        this.tooltip = tooltip;
     }
 }

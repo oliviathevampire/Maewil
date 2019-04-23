@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx;
 
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;

@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.overlays;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;

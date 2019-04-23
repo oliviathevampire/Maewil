@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.objs.entities.creatures.undead;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityUndead;

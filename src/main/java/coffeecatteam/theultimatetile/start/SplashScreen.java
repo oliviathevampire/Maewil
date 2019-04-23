@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile;
+package coffeecatteam.theultimatetile.start;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.gfx.Animation;
@@ -25,10 +25,6 @@ public class SplashScreen extends BasicGameState {
     private float psize = 150f, px, py, p1, p2;
     private boolean playerExit = false;
 
-
-    public SplashScreen() {
-    }
-
     @Override
     public int getID() {
         return TutLauncher.ID_SPLASHSCREEN;
@@ -39,9 +35,9 @@ public class SplashScreen extends BasicGameState {
         Assets.init();
         Sounds.init();
         container.setDefaultFont(Assets.FONTS.get("10"));
-        container.setMouseCursor(Assets.CURSOR, 0, 0);
+        container.setMouseCursor(Assets.GUI_CURSOR, 0, 0);
 
-        player = new Animation(135, Assets.SPLASH_PLAYER);
+        player = new Animation(135, Assets.GUI_SPLASH_PLAYER);
         p1 = TutLauncher.HEIGHT;
         px = TutLauncher.WIDTH - psize * 2.5f;
         py = TutLauncher.HEIGHT - psize / 2f;
@@ -52,17 +48,17 @@ public class SplashScreen extends BasicGameState {
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
         titleScale = NumberUtils.lerp(titleScale, 1.0f, smoothness);
         playerTimer = NumberUtils.lerp(playerTimer, maxPlayerTimer, smoothness);
-        player.update();
 
         if (p2 > TutLauncher.WIDTH)
             endTimer = NumberUtils.lerp(endTimer, maxEndTimer, smoothness / 5f);
         if (endTimer >= maxEndTimer - 0.5f)
             game.enterState(TutLauncher.ID_GAME, new EmptyTransition(), new FadeInTransition(Color.black));
+        player.update();
     }
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
-        Image title = Assets.TITLE_SMALL;
+        Image title = Assets.GUI_TITLE_SMALL;
         float size = 10f;
         float width = (title.getWidth() / size) * titleScale;
         float height = (title.getHeight() / size) * titleScale;

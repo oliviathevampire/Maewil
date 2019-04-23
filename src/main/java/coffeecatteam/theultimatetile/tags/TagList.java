@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.tags;
 
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.tags.primitive.TagDouble;
 import coffeecatteam.theultimatetile.tags.primitive.TagFloat;
 import coffeecatteam.theultimatetile.tags.primitive.TagInt;

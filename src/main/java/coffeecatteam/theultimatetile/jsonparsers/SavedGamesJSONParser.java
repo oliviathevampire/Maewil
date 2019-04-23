@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
 import coffeecatteam.coffeecatutils.io.FileUtils;
-import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
 import org.json.simple.JSONObject;

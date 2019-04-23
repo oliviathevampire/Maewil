@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.tags.supers;
 
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.tags.TagCompound;
 import coffeecatteam.theultimatetile.tags.TagIntArray;
 import coffeecatteam.theultimatetile.tags.TagList;

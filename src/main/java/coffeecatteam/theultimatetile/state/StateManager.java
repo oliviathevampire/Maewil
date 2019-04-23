@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.state;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 
 /**
  * @author CoffeeCatRailway

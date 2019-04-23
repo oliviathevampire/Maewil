@@ -2,7 +2,9 @@ package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.state.options.StateOptions;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -25,7 +27,7 @@ public abstract class UIObject {
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) {
-        bounds = new AABB(this.position, (int) width, (int) height);
+        bounds = new AABB(this.position, (int) getWidth(), (int) getHeight());
         if (this.bounds.contains(TutEngine.getTutEngine().getMousePos()) && TutEngine.getTutEngine().isLeftPressed())
             onClick();
     }
@@ -33,6 +35,10 @@ public abstract class UIObject {
     public abstract void render(GameContainer container, StateBasedGame game, Graphics g);
 
     public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
+        if (StateOptions.OPTIONS.debugMode()) {
+            g.setColor(Color.red);
+            g.drawRect(bounds.x, bounds.y, bounds.width, bounds.y);
+        }
     }
 
     public abstract void onClick();

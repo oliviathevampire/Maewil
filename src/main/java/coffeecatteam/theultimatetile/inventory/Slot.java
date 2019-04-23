@@ -17,7 +17,7 @@ public class Slot {
     private float scale;
 
     private boolean isSelected = false;
-    private Image selector = Assets.SLOT_SELECTER;
+    private Image selector = Assets.GUI_SLOT_SELECTER;
 
     public Slot(int index, int x, int y, int width, int height) {
         this(index, x, y, width, height, 1f);
@@ -33,7 +33,7 @@ public class Slot {
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        Assets.SLOT.draw(x, y, width, height);
+        Assets.GUI_SLOT.draw(x, y, width, height);
         itemWidth = (int) ((width / 2 + width / 4) * scale);
         itemHeight = (int) ((height / 2 + height / 4) * scale);
         xPos = x + itemWidth / 4;

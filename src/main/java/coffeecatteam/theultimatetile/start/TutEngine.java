@@ -1,6 +1,8 @@
-package coffeecatteam.theultimatetile;
+package coffeecatteam.theultimatetile.start;
 
+import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
+import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Camera;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
@@ -15,6 +17,7 @@ import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import coffeecatteam.theultimatetile.state.StateCredits;
 import coffeecatteam.theultimatetile.state.StateManager;
 import coffeecatteam.theultimatetile.state.StateMenu;
+import coffeecatteam.theultimatetile.state.StateUITesting;
 import coffeecatteam.theultimatetile.state.game.StateSelectGame;
 import coffeecatteam.theultimatetile.state.options.OptionsSounds;
 import coffeecatteam.theultimatetile.state.options.StateOptions;
@@ -31,6 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 
 public class TutEngine extends BasicGameState {
 
@@ -77,7 +81,7 @@ public class TutEngine extends BasicGameState {
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
         container.setDefaultFont(Assets.FONTS.get("10"));
-        container.setMouseCursor(Assets.CURSOR, 0, 0);
+        container.setMouseCursor(Assets.GUI_CURSOR, 0, 0);
 
         try {
             entityManager = new EntityManager(this);
@@ -101,7 +105,11 @@ public class TutEngine extends BasicGameState {
 
         optionsControls = new OptionsControls(this);
         optionsSpounds = new OptionsSounds(this);
-        StateManager.setCurrentState(stateMenu);
+
+        if (ArgUtils.hasArgument(TutLauncher.ARGS, "-uiTest"))
+            StateManager.setCurrentState(new StateUITesting(this));
+        else
+            StateManager.setCurrentState(stateMenu);
 
         inventoryManager = new InventoryManager(this);
     }
@@ -111,6 +119,12 @@ public class TutEngine extends BasicGameState {
 //          TagBase.TEST();
         if (close) container.exit();
         keyManager.update(container, game, delta);
+
+        Iterator<Animation> animIterator = Animation.ANIMATIONS.iterator();
+        while (animIterator.hasNext()) {
+            Animation anim = animIterator.next();
+            anim.update();
+        }
 
         /*
          * Mouse values

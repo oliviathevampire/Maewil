@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.world.colormap;
 
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

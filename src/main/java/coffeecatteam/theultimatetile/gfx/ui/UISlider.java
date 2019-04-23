@@ -3,8 +3,8 @@ package coffeecatteam.theultimatetile.gfx.ui;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.TutEngine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -60,9 +60,9 @@ public class UISlider extends UIObject {
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        Image bgSegStart = Assets.SLIDER_BAR.getSubImage(0, 0, 2, 6);
-        Image bgSegMiddle = Assets.SLIDER_BAR.getSubImage(2, 0, 44, 6);
-        Image bgSegEnd = Assets.SLIDER_BAR.getSubImage(46, 0, 2, 6);
+        Image bgSegStart = Assets.GUI_SLIDER_BAR.getSubImage(0, 0, 2, 6);
+        Image bgSegMiddle = Assets.GUI_SLIDER_BAR.getSubImage(2, 0, 44, 6);
+        Image bgSegEnd = Assets.GUI_SLIDER_BAR.getSubImage(46, 0, 2, 6);
 
         bgSegStart.draw((int) this.position.x, (int) this.position.y, segWidth, height);
         bgSegMiddle.draw(startX, (int) this.position.y, width, height);
@@ -72,14 +72,19 @@ public class UISlider extends UIObject {
     }
 
     @Override
+    public float getHeight() {
+        return slider.getHeight();
+    }
+
+    @Override
     public void onClick() {
     }
 
-    protected void setMinValue(int minValue) {
+    public void setMinValue(int minValue) {
         this.minValue = minValue;
     }
 
-    protected void setMaxValue(int maxValue) {
+    public void setMaxValue(int maxValue) {
         this.maxValue = maxValue;
     }
 
@@ -122,7 +127,7 @@ public class UISlider extends UIObject {
         }
 
         public void render(GameContainer container, StateBasedGame game, Graphics g) {
-            Image sbtn = (isMouseHovering() ? Assets.SLIDER_BUTTON[1] : Assets.SLIDER_BUTTON[0]);
+            Image sbtn = (isMouseHovering() ? Assets.GUI_SLIDER_BUTTON[1] : Assets.GUI_SLIDER_BUTTON[0]);
             sbtn.draw((int) this.position.x, (int) this.position.y, width, height);
         }
 

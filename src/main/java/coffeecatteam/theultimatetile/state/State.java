@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
-import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.manager.UIManager;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
@@ -38,7 +38,7 @@ public abstract class State {
     public State(TutEngine tutEngine, Tile[] centre, Tile[] border) {
         this.tutEngine = tutEngine;
         this.logger = TutLauncher.LOGGER;
-        this.uiManager = new UIManager(tutEngine);
+        this.uiManager = new UIManager();
 
         this.centre = centre;
         this.border = border;

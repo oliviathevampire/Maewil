@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.objs.tiles;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 

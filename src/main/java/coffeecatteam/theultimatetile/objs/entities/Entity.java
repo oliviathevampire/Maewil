@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.objs.entities;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
@@ -76,11 +76,6 @@ public abstract class Entity implements IHasData<Entity> {
 
         this.renderX = (int) (this.position.x - this.tutEngine.getCamera().getxOffset());
         this.renderY = (int) (this.position.y - this.tutEngine.getCamera().getyOffset());
-        splashEffect.update();
-
-        if (currentTexture != null)
-            currentTexture.update();
-        textures.values().forEach(Animation::update);
 
         if (this.interacted)
             this.interact();

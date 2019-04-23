@@ -2,8 +2,8 @@ package coffeecatteam.theultimatetile.world;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.jsonparsers.world.WorldJsonLoader;
 import coffeecatteam.theultimatetile.manager.OverlayManager;
 import coffeecatteam.theultimatetile.objs.items.Items;

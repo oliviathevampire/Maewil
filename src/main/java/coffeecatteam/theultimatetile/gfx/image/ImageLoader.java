@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.gfx.image;
 
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 

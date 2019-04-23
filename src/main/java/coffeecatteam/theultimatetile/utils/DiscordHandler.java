@@ -7,7 +7,7 @@ import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.DevEnvUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 
 public class DiscordHandler {
 
@@ -26,7 +26,7 @@ public class DiscordHandler {
         if (!ArgUtils.hasArgument(TutLauncher.ARGS, disbaleArg)) {
             logger = new CatLogger("TUT-DiscordRichPresence");
             logger.println();
-            Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
+//            Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
             rpc = DiscordRPC.INSTANCE;
 
             DiscordEventHandlers handlers = new DiscordEventHandlers();

@@ -27,7 +27,7 @@ public class Assets {
     private static SpriteSheet glubSheet;
 
     /* GUI */
-    private static SpriteSheet menuSheet;
+    private static SpriteSheet guiSheet;
     private static SpriteSheet invSheet;
     private static SpriteSheet campfireInvSheet;
 
@@ -48,28 +48,32 @@ public class Assets {
     public static Image[] GLUB_ORB;
     public static Image[] GLUB_METER;
 
-    public static Image TITLE_SMALL, TITLE_BIG;
-    public static Image[] SPLASH_PLAYER, TITLE_FG;
-    public static Image DEAD_OVERLAY;
+    public static Image GUI_TITLE_SMALL, GUI_TITLE_BIG;
+    public static Image[] GUI_SPLASH_PLAYER, GUI_TITLE_FG;
+    public static Image GUI_DEAD_OVERLAY;
 
-    public static Image[] BUTTON_ENABLED = new Image[3];
-    public static Image[] BUTTON_HOVER = new Image[3];
-    public static Image[] BUTTON_DISABLED = new Image[3];
+    public static Image[] GUI_BUTTON_ENABLED = new Image[3];
+    public static Image[] GUI_BUTTON_HOVER = new Image[3];
+    public static Image[] GUI_BUTTON_DISABLED = new Image[3];
 
-    public static Image INVENTORY, CAMPFIRE_INVENTORY;
-    public static Image SLOT, SLOT_SELECTER;
-    public static Image HOTBAR, HOTBAR_SELECTER;
+    public static Image GUI_INVENTORY, GUI_CAMPFIRE_INVENTORY;
+    public static Image GUI_SLOT, GUI_SLOT_SELECTER;
+    public static Image GUI_HOTBAR, GUI_HOTBAR_SELECTER;
 
-    public static Image ICON_ON, ICON_OFF;
-    public static Image[] TEXTBOX = new Image[9];
+    public static Image GUI_ICON_ON, GUI_ICON_OFF;
+    public static Image[] GUI_TEXTBOX = new Image[9];
 
-    public static Image[] SLIDER_BUTTON;
-    public static Image SLIDER_BAR;
+    public static Image[] GUI_SLIDER_BUTTON;
+    public static Image GUI_SLIDER_BAR;
 
-    public static Image CHECK_BOX_BG, CHECK_BOX_FG;
+    public static Image GUI_CHECK_BOX_BG, GUI_CHECK_BOX_FG;
 
-    public static Image CURSOR, MAP_BORDER;
+    public static Image GUI_CURSOR, MAP_BORDER;
     public static Image[] MAP_CURSOR;
+
+    public static Image[] GUI_ARROW_ICONS = new Image[4];
+    public static Image[] GUI_LIST_GRAY = new Image[5];
+    public static Image[] GUI_LIST_BLUE = new Image[5];
 
     /* Fonts */
     private static void initFonts() {
@@ -152,58 +156,66 @@ public class Assets {
 
     /* GUI */
     private static void initGui() {
-        TITLE_SMALL = getSpriteExact("/assets/textures/splash/title.png", 0, 0, 6560, 1152);
-        SPLASH_PLAYER = getFrames("/assets/textures/splash/player.png", 0, 0, 11, 512, 512);
+        GUI_TITLE_SMALL = getSpriteExact("/assets/textures/splash/title.png", 0, 0, 6560, 1152);
+        GUI_SPLASH_PLAYER = getFrames("/assets/textures/splash/player.png", 0, 0, 11, 512, 512);
 
-        TITLE_BIG = getSpriteExact("/assets/textures/gui/title.png", 0, 0, 101, 84);
-        TITLE_FG = new Image[3];
-        for (int i = 0; i < TITLE_FG.length; i++) {
-            TITLE_FG[i] = getSpriteExact("/assets/textures/gui/title.png", 112, 64 * i, 112, 64);
+        GUI_TITLE_BIG = getSpriteExact("/assets/textures/gui/title.png", 0, 0, 101, 84);
+        GUI_TITLE_FG = new Image[3];
+        for (int i = 0; i < GUI_TITLE_FG.length; i++) {
+            GUI_TITLE_FG[i] = getSpriteExact("/assets/textures/gui/title.png", 112, 64 * i, 112, 64);
         }
-        DEAD_OVERLAY = getImage("/assets/textures/gui/dead_overlay.png");
+        GUI_DEAD_OVERLAY = getImage("/assets/textures/gui/dead_overlay.png");
 
-        BUTTON_ENABLED = getFrames(menuSheet, 0, 0, 2, width, height);
-        BUTTON_HOVER = getFrames(menuSheet, 1, 0, 2, width, height);
-        BUTTON_DISABLED = getFrames(menuSheet, 2, 0, 2, width, height);
+        GUI_BUTTON_ENABLED = getFrames(guiSheet, 0, 0, 2, width, height);
+        GUI_BUTTON_HOVER = getFrames(guiSheet, 1, 0, 2, width, height);
+        GUI_BUTTON_DISABLED = getFrames(guiSheet, 2, 0, 2, width, height);
 
-        INVENTORY = getSpriteExact(invSheet, 0, 0, 57, 41);
-        CAMPFIRE_INVENTORY = getSpriteExact(campfireInvSheet, 0, 0, 57, 44);
+        GUI_INVENTORY = getSpriteExact(invSheet, 0, 0, 57, 41);
+        GUI_CAMPFIRE_INVENTORY = getSpriteExact(campfireInvSheet, 0, 0, 57, 44);
 
-        SLOT = getSpriteExact(invSheet, 2, 22, 8, 8);
-        SLOT_SELECTER = getSpriteExact(invSheet, 48, 48, width, height);
-        HOTBAR = getSpriteExact(invSheet, 12, 54, 28, 10);
-        HOTBAR_SELECTER = getSpriteExact(invSheet, 0, 52, 12, 12);
+        GUI_SLOT = getSpriteExact(invSheet, 2, 22, 8, 8);
+        GUI_SLOT_SELECTER = getSpriteExact(invSheet, 48, 48, width, height);
+        GUI_HOTBAR = getSpriteExact(invSheet, 12, 54, 28, 10);
+        GUI_HOTBAR_SELECTER = getSpriteExact(invSheet, 0, 52, 12, 12);
 
-        ICON_ON = getSpriteInd(menuSheet, 0, 3, width, height);
-        ICON_OFF = getSpriteInd(menuSheet, 1, 3, width, height);
+        GUI_ICON_ON = getSpriteInd(guiSheet, 0, 3, width, height);
+        GUI_ICON_OFF = getSpriteInd(guiSheet, 1, 3, width, height);
 
-        TEXTBOX[0] = getSpriteInd(menuSheet, 0, 4, width, height);
-        TEXTBOX[1] = getSpriteInd(menuSheet, 1, 4, width, height);
-        TEXTBOX[2] = getSpriteInd(menuSheet, 2, 4, width, height);
-        TEXTBOX[3] = getSpriteInd(menuSheet, 0, 5, width, height);
-        TEXTBOX[4] = getSpriteInd(menuSheet, 1, 5, width, height);
-        TEXTBOX[5] = getSpriteInd(menuSheet, 2, 5, width, height);
-        TEXTBOX[6] = getSpriteInd(menuSheet, 0, 6, width, height);
-        TEXTBOX[7] = getSpriteInd(menuSheet, 1, 6, width, height);
-        TEXTBOX[8] = getSpriteInd(menuSheet, 2, 6, width, height);
+        GUI_TEXTBOX[0] = getSpriteInd(guiSheet, 0, 4, width, height);
+        GUI_TEXTBOX[1] = getSpriteInd(guiSheet, 1, 4, width, height);
+        GUI_TEXTBOX[2] = getSpriteInd(guiSheet, 2, 4, width, height);
+        GUI_TEXTBOX[3] = getSpriteInd(guiSheet, 0, 5, width, height);
+        GUI_TEXTBOX[4] = getSpriteInd(guiSheet, 1, 5, width, height);
+        GUI_TEXTBOX[5] = getSpriteInd(guiSheet, 2, 5, width, height);
+        GUI_TEXTBOX[6] = getSpriteInd(guiSheet, 0, 6, width, height);
+        GUI_TEXTBOX[7] = getSpriteInd(guiSheet, 1, 6, width, height);
+        GUI_TEXTBOX[8] = getSpriteInd(guiSheet, 2, 6, width, height);
 
-        SLIDER_BUTTON = new Image[2];
-        SLIDER_BUTTON[0] = getSpriteExact(menuSheet, 0, 120, 4, 8);
-        SLIDER_BUTTON[1] = getSpriteExact(menuSheet, 4, 120, 4, 8);
-        SLIDER_BAR = getSpriteExact(menuSheet, 0, 112, 48, 6);
+        GUI_SLIDER_BUTTON = new Image[2];
+        GUI_SLIDER_BUTTON[0] = getSpriteExact(guiSheet, 0, 120, 4, 8);
+        GUI_SLIDER_BUTTON[1] = getSpriteExact(guiSheet, 4, 120, 4, 8);
+        GUI_SLIDER_BAR = getSpriteExact(guiSheet, 0, 112, 48, 6);
 
-        CHECK_BOX_BG = getSpriteInd(menuSheet, 2, 3, width, height);
-        CHECK_BOX_FG = getSpriteInd(menuSheet, 3, 3, width, height);
+        GUI_CHECK_BOX_BG = getSpriteInd(guiSheet, 2, 3, width, height);
+        GUI_CHECK_BOX_FG = getSpriteInd(guiSheet, 3, 3, width, height);
 
-        CURSOR = getImage("/assets/textures/cursor.png");
+        GUI_CURSOR = getImage("/assets/textures/cursor.png");
         MAP_BORDER = getImage("/assets/textures/gui/map/border.png");
         MAP_CURSOR = new Image[8];
         for (int y = 0; y < 2; y++) {
             for (int x = 0; x < 4; x++) {
                 int index = x + (4 * y);
-                MAP_CURSOR[index] = getSpriteInd(new SpriteSheet("/assets/textures/gui/map/cursor.png"), x, y, 16, 16);
+                MAP_CURSOR[index] = getSpriteInd(new SpriteSheet("/assets/textures/gui/map/cursor.png"), x, y, width, height);
             }
         }
+
+        for (int x = 0; x < 4; x++)
+            GUI_ARROW_ICONS[x] = getSpriteInd(guiSheet, 3 + x, 2, width, height);
+
+        for (int x = 0; x < 5; x++)
+            GUI_LIST_GRAY[x] = getSpriteInd(guiSheet, 3 + x, 0, width, height);
+        for (int x = 0; x < 5; x++)
+            GUI_LIST_BLUE[x] = getSpriteInd(guiSheet, 3 + x, 1, width, height);
 
         logger.info("Assets [GUI] loaded!");
     }
@@ -219,7 +231,7 @@ public class Assets {
         glubSheet = new SpriteSheet("/assets/textures/glub.png");
 
         /* GUI */
-        menuSheet = new SpriteSheet("/assets/textures/gui/menu.png");
+        guiSheet = new SpriteSheet("/assets/textures/gui/gui.png");
         invSheet = new SpriteSheet("/assets/textures/gui/inventory/inventory.png");
         campfireInvSheet = new SpriteSheet("/assets/textures/gui/inventory/campfire.png");
 

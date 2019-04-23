@@ -1,11 +1,15 @@
 package coffeecatteam.theultimatetile.gfx;
 
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.Image;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Animation {
 
+    public static List<Animation> ANIMATIONS = new ArrayList<>();
     public static final int DEFAULT_SPEED = 50;
 
     private int speed, index;
@@ -34,6 +38,8 @@ public class Animation {
         index = 0;
         timer = 0;
         lastTime = System.currentTimeMillis();
+
+        ANIMATIONS.add(this);
     }
 
     public void setFrames(Image[] frames) {

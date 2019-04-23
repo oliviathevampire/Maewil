@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.objs.entities.creatures;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.ai.AIFollowFlee;
 import coffeecatteam.theultimatetile.objs.entities.ai.AIWander;

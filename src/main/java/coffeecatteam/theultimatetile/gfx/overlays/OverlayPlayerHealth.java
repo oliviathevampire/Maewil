@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.gfx.overlays;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;

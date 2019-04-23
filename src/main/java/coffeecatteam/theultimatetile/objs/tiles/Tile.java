@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.objs.tiles;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.IHasData;
@@ -94,8 +94,6 @@ public abstract class Tile implements IHasData<Tile> {
     }
 
     public void forcedUpdate(GameContainer container, int delta) {
-        if (texture != null)
-            texture.update();
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) {

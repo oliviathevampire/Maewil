@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.utils;
 
-import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 
 import javax.swing.*;
 import java.io.File;

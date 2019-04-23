@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.objs.items;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.objs.IHasData;
 import org.newdawn.slick.GameContainer;
@@ -37,7 +37,6 @@ public abstract class Item implements IHasData<Item> {
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) {
-        this.texture.update();
     }
 
     public Image getTexture() {

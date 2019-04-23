@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.objs.tiles.stone.ore;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.items.Items;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 

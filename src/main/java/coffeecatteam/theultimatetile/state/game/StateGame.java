@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.state.game;
 
-import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UITitleRender;
@@ -40,8 +40,8 @@ public class StateGame extends State {
         super(tutEngine);
         this.worldName = worldName;
 
-        uiManagerPaused = new UIManager(tutEngine);
-        uiManagerDead = new UIManager(tutEngine);
+        uiManagerPaused = new UIManager();
+        uiManagerDead = new UIManager();
         setWorld(worldPath, newWorld);
         init();
 
@@ -120,7 +120,7 @@ public class StateGame extends State {
             Color tint = new Color(96, 96, 96, 127);
             g.setColor(tint);
             g.fillRect(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
-            Assets.DEAD_OVERLAY.draw(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
+            Assets.GUI_DEAD_OVERLAY.draw(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
 
             uiManagerDead.render(container, game, g);
         } else {

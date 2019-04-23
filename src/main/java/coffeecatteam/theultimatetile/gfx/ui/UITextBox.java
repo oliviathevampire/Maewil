@@ -55,7 +55,7 @@ public class UITextBox extends UIObject {
         return len;
     }
 
-    private int getHeightOFStrings() {
+    private int getHeightOfStrings() {
         int height = 0;
         if (lines.size() > 0) {
             for (TextF textF : lines)
@@ -71,23 +71,23 @@ public class UITextBox extends UIObject {
 
     @Override
     public float getHeight() {
-        return 64 + getHeightOFStrings();
+        return 64 + getHeightOfStrings();
     }
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
         int segWidth = 32, segHeight = 32;
-        Assets.TEXTBOX[0].draw((int) position.x, (int) position.y, segWidth, segHeight);
-        Assets.TEXTBOX[1].draw((int) position.x + segWidth, (int) position.y, getLongestString(), segHeight);
-        Assets.TEXTBOX[2].draw((int) position.x + segWidth + getLongestString(), (int) position.y, segWidth, segHeight);
+        Assets.GUI_TEXTBOX[0].draw((int) position.x, (int) position.y, segWidth, segHeight);
+        Assets.GUI_TEXTBOX[1].draw((int) position.x + segWidth, (int) position.y, getLongestString(), segHeight);
+        Assets.GUI_TEXTBOX[2].draw((int) position.x + segWidth + getLongestString(), (int) position.y, segWidth, segHeight);
 
-        Assets.TEXTBOX[3].draw((int) position.x, (int) position.y + segHeight, segWidth, getHeightOFStrings());
-        Assets.TEXTBOX[4].draw((int) position.x + segWidth, (int) position.y + segHeight, getLongestString(), getHeightOFStrings());
-        Assets.TEXTBOX[5].draw((int) position.x + segWidth + getLongestString(), (int) position.y + segHeight, segWidth, getHeightOFStrings());
+        Assets.GUI_TEXTBOX[3].draw((int) position.x, (int) position.y + segHeight, segWidth, getHeightOfStrings());
+        Assets.GUI_TEXTBOX[4].draw((int) position.x + segWidth, (int) position.y + segHeight, getLongestString(), getHeightOfStrings());
+        Assets.GUI_TEXTBOX[5].draw((int) position.x + segWidth + getLongestString(), (int) position.y + segHeight, segWidth, getHeightOfStrings());
 
-        Assets.TEXTBOX[6].draw((int) position.x, (int) position.y + segHeight + getHeightOFStrings(), segWidth, segHeight);
-        Assets.TEXTBOX[7].draw((int) position.x + segWidth, (int) position.y + segHeight + getHeightOFStrings(), getLongestString(), segHeight);
-        Assets.TEXTBOX[8].draw((int) position.x + segWidth + getLongestString(), (int) position.y + segHeight + getHeightOFStrings(), segWidth, segHeight);
+        Assets.GUI_TEXTBOX[6].draw((int) position.x, (int) position.y + segHeight + getHeightOfStrings(), segWidth, segHeight);
+        Assets.GUI_TEXTBOX[7].draw((int) position.x + segWidth, (int) position.y + segHeight + getHeightOfStrings(), getLongestString(), segHeight);
+        Assets.GUI_TEXTBOX[8].draw((int) position.x + segWidth + getLongestString(), (int) position.y + segHeight + getHeightOfStrings(), segWidth, segHeight);
 
         int y = (int) position.y + segHeight;
         for (int i = 0; i < lines.size(); i++) {

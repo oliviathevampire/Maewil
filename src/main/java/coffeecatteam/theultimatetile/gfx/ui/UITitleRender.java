@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.gfx.ui;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -19,12 +19,12 @@ public class UITitleRender extends UIObject {
 
     public UITitleRender() {
         super(0, 0, 0, 0);
-        title_fg = Assets.TITLE_FG[0];
+        title_fg = Assets.GUI_TITLE_FG[0];
     }
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        Image title = Assets.TITLE_BIG;
+        Image title = Assets.GUI_TITLE_BIG;
         float mult = 3.5f;
         float w = title.getWidth() * mult;
         float h = title.getHeight() * mult;
@@ -42,6 +42,6 @@ public class UITitleRender extends UIObject {
 
     @Override
     public void onClick() {
-        title_fg = Assets.TITLE_FG[NumberUtils.getRandomInt(Assets.TITLE_FG.length - 1)];
+        title_fg = Assets.GUI_TITLE_FG[NumberUtils.getRandomInt(Assets.GUI_TITLE_FG.length - 1)];
     }
 }

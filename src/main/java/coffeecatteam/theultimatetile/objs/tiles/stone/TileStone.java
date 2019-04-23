@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.objs.tiles.stone;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.items.Items;
 import coffeecatteam.theultimatetile.objs.tiles.TileOverlap;

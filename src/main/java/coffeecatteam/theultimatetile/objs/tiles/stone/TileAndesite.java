@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.objs.tiles.stone;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 
 /**
  * @author CoffeeCatRailway

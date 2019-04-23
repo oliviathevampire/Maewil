@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.objs.entities.statics;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 
 public abstract class EntityStatic extends Entity {

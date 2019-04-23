@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.objs.entities.statics;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.items.Item;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;

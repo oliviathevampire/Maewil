@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.overlays.Overlay;
 import coffeecatteam.theultimatetile.gfx.overlays.OverlayGlub;
 import coffeecatteam.theultimatetile.gfx.overlays.OverlayPlayerHealth;

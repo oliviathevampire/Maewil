@@ -2,7 +2,8 @@ package coffeecatteam.theultimatetile.gfx.ui.hyperlink;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.gfx.assets.Sounds;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.UIObject;
@@ -17,7 +18,7 @@ public class UIHyperlink extends UIObject {
     private ClickListener listener;
 
     private boolean hovering = false;
-    public Color mainColor = Color.white, hoverColor = Color.cyan;
+    public static Color mainColor = Color.white, hoverColor = Color.cyan;
     private Color c = mainColor;
 
     private String text;
@@ -59,5 +60,6 @@ public class UIHyperlink extends UIObject {
     @Override
     public void onClick() {
         this.listener.onClick();
+        Sounds.CLICK_1.play(0.5f, 0.2f);
     }
 }

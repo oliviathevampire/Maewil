@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.objs.items.tool;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.items.IInteractable;
 import coffeecatteam.theultimatetile.objs.items.Item;
 

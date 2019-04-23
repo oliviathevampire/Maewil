@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.EntityItem;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;

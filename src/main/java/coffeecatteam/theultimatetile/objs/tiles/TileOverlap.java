@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.objs.tiles;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -37,7 +37,7 @@ public abstract class TileOverlap extends Tile {
         super.render(g, x, y, width, height);
 
         if (worldLayer != null) {
-            Image overlay = Assets.DEAD_OVERLAY;
+            Image overlay = Assets.GUI_DEAD_OVERLAY;
             if (topLeftCorner())
                 overlay = getOverlay(0);
             if (leftSide())

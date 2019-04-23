@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.objs.entities.ai;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityCreature;
 import org.newdawn.slick.GameContainer;

@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.objs.tiles;
 
-import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.objs.TileDataParser;
 import coffeecatteam.theultimatetile.objs.tiles.stone.*;
 import coffeecatteam.theultimatetile.objs.tiles.stone.ore.TileCoalOre;

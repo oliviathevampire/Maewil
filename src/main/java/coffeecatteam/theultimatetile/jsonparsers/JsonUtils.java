@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.jsonparsers;
 
 import coffeecatteam.coffeecatutils.io.FileUtils;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

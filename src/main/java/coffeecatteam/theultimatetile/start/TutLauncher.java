@@ -1,4 +1,4 @@
-package coffeecatteam.theultimatetile;
+package coffeecatteam.theultimatetile.start;
 
 import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.DevEnvUtils;
@@ -8,6 +8,7 @@ import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.state.StateManager;
 import coffeecatteam.theultimatetile.state.game.StateGame;
+import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -54,7 +55,10 @@ public class TutLauncher extends StateBasedGame {
         this.addState(new SplashScreen());
         this.addState(new TutEngine());
 
-        this.enterState(ID_SPLASHSCREEN, new FadeInTransition(Color.black), new EmptyTransition());
+        if (ArgUtils.hasArgument(ARGS, "-uiTest"))
+            this.enterState(ID_GAME, new EmptyTransition(), new EmptyTransition());
+        else
+            this.enterState(ID_SPLASHSCREEN, new FadeInTransition(Color.black), new EmptyTransition());
     }
 
     @Override
@@ -62,11 +66,14 @@ public class TutLauncher extends StateBasedGame {
         if (TutEngine.getTutEngine().isPlayBGMusic() && Sounds.BG_MUSIC.playing())
             Sounds.BG_MUSIC.stop();
         LOGGER.warn("Shutting down [" + TITLE + "] engine!");
+
         if (StateManager.getCurrentState() instanceof StateGame) {
             LOGGER.info("Saving world!");
             ((StateGame) StateManager.getCurrentState()).saveWorld(true);
             LOGGER.info("World saved!");
         }
+
+        DiscordHandler.INSTANCE.shutdown();
 
         LOGGER.warn("Exiting [" + TITLE + "]..");
         return true;
@@ -91,7 +98,7 @@ public class TutLauncher extends StateBasedGame {
         HEIGHT_TILE_SIZE = HEIGHT / Tile.TILE_SIZE;
 
         /* Initialize logger */
-        CatLoggerUtils.setOutputLog(ArgUtils.hasArgument(ARGS, "-outputLog"));
+        CatLoggerUtils.setOutputLog(!ArgUtils.hasArgument(ARGS, "-dontOutputLog"));
         CatLoggerUtils.init();
 
         /* Start game */
@@ -100,7 +107,7 @@ public class TutLauncher extends StateBasedGame {
             app.setShowFPS(false);
             app.setDisplayMode(WIDTH, HEIGHT, FULLSCREEN);
             app.setIcons(new String[]{"data/icons/32.png", "data/icons/64.png"});
-            app.setTargetFrameRate(100);
+            app.setTargetFrameRate(100); // TODO: Remove target frame rate & add (* delta / 1000f) support!
             app.setUpdateOnlyWhenVisible(false);
             app.setAlwaysRender(true);
             app.start();

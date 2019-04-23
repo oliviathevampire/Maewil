@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.objs.entities.creatures;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
@@ -89,9 +89,6 @@ public class EntityPlayer extends EntityCreature {
         }
 
         inventoryPlayer.update(container, game, delta);
-
-        // Animation
-        sprintEffect.update();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.objs.items;
 
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 
 public class ItemCoin extends Item {
 

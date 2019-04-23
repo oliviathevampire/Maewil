@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.objs.entities.statics;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;

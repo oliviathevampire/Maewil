@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.state.game;
 
-import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.button.world.UIButtonWorld;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
@@ -29,6 +29,6 @@ public class StateSelectGame extends StateAbstractMenu {
 
         int w = 80 * 6;
         int h = 48 * 6;
-        Assets.TITLE_BIG.draw(TutLauncher.WIDTH / 2f - w / 2f, 20, w, h);
+        Assets.GUI_TITLE_BIG.draw(TutLauncher.WIDTH / 2f - w / 2f, 20, w, h);
     }
 }

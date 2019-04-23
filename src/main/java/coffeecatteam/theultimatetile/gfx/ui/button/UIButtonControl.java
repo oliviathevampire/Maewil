@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.gfx.ui.button;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.TutEngine;
+import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
 

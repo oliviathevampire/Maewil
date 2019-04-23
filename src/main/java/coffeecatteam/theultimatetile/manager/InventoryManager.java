@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.inventory.Inventory;
 import coffeecatteam.theultimatetile.inventory.InventoryAbstractPlayer;
 

@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.state;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
@@ -112,8 +112,6 @@ public class StateMenu extends State {
         this.renderBG(container, game, g);
         uiManager.render(container, game, g);
 
-
-        Entities.ULTIMATE.getTextures().get("main").update();
         Image ultimate = Entities.ULTIMATE.getTexture("main");
         float sizeU = 96;
         ultimate.draw((TutLauncher.WIDTH / 4f) * 3 - sizeU / 2f, TutLauncher.HEIGHT / 2f - sizeU / 2f, sizeU, sizeU);

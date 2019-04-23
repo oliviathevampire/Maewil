@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import coffeecatteam.theultimatetile.TutEngine;
-import coffeecatteam.theultimatetile.TutLauncher;
+import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
 import coffeecatteam.theultimatetile.objs.items.Item;
@@ -26,7 +26,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
         this.TAGS = TAGS;
 
         int y = 266;
-        addSlot(0, 270, y).setSelector(Assets.SLOT_SELECTER);
+        addSlot(0, 270, y).setSelector(Assets.GUI_SLOT_SELECTER);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
             int x = TutLauncher.WIDTH / 2 - width / 2;
             int y = TutLauncher.HEIGHT / 2 - height / 2;
 
-            Assets.CAMPFIRE_INVENTORY.draw(x, y, width, height);
+            Assets.GUI_CAMPFIRE_INVENTORY.draw(x, y, width, height);
 
             int dfWidth = 16;
             int dfHeight = 15;
