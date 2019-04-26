@@ -128,7 +128,7 @@ public abstract class UIAbstractList extends UIObject {
         public void update(GameContainer container, StateBasedGame game, int delta) {
             listener.update(container, game, delta);
             bounds = new AABB(pos, (int) UIListOBJ.SIZE, (int) UIListOBJ.SIZE);
-            hovering = bounds.contains(TutEngine.getTutEngine().getMousePos());
+            hovering = bounds.contains(TutEngine.INSTANCE.getMousePos());
         }
 
         public void render(GameContainer container, StateBasedGame game, Graphics g) {
@@ -184,7 +184,7 @@ public abstract class UIAbstractList extends UIObject {
         }
 
         public void onClick() {
-            if (this.bounds.contains(TutEngine.getTutEngine().getMousePos()) && rendering) {
+            if (this.bounds.contains(TutEngine.INSTANCE.getMousePos()) && rendering) {
                 listener.onClick();
                 Sounds.CLICK_1.play(0.5f, 0.2f);
             }
@@ -217,7 +217,7 @@ public abstract class UIAbstractList extends UIObject {
                 icon.getCurrentFrame().draw((float) (pos.x + padding / 2f), (float) (pos.y + padding / 2f), iconSize, iconSize);
             }
 
-            Color color = bounds.contains(TutEngine.getTutEngine().getMousePos()) ? UIHyperlink.hoverColor : UIHyperlink.mainColor;
+            Color color = bounds.contains(TutEngine.INSTANCE.getMousePos()) ? UIHyperlink.hoverColor : UIHyperlink.mainColor;
             Font font = getCorrectFont(label, SIZE - padding * 3f);
             boolean toLong = false;
 

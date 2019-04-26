@@ -3,8 +3,10 @@ package coffeecatteam.theultimatetile.gfx.ui;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlink;
-import coffeecatteam.theultimatetile.start.TutEngine;
-import org.newdawn.slick.*;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 /**

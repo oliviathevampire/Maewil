@@ -54,6 +54,18 @@ public class SplashScreen extends BasicGameState {
         if (endTimer >= maxEndTimer - 0.5f)
             game.enterState(TutLauncher.ID_GAME, new EmptyTransition(), new FadeInTransition(Color.black));
         player.update();
+
+
+        if (playerTimer >= maxPlayerTimer - 0.5f) {
+            p1 = NumberUtils.lerp(p1, py, smoothness);
+            float newX = px - 20f;
+            if (p1 <= py + 1f && !playerExit)
+                p2 = NumberUtils.lerp(p2, newX, smoothness);
+            if (p2 <= newX + 0.5f)
+                playerExit = true;
+            if (playerExit)
+                p2 = NumberUtils.lerp(p2, TutLauncher.WIDTH * 1.25f, smoothness);
+        }
     }
 
     @Override
@@ -67,15 +79,6 @@ public class SplashScreen extends BasicGameState {
         if (playerTimer >= maxPlayerTimer - 0.5f) {
             Image frame = player.getCurrentFrame();
             frame.draw(p2, p1, psize, psize);
-
-            p1 = NumberUtils.lerp(p1, py, smoothness);
-            float newX = px - 20f;
-            if (p1 <= py + 1f && !playerExit)
-                p2 = NumberUtils.lerp(p2, newX, smoothness);
-            if (p2 <= newX + 0.5f)
-                playerExit = true;
-            if (playerExit)
-                p2 = NumberUtils.lerp(p2, TutLauncher.WIDTH * 1.25f, smoothness);
         }
     }
 }

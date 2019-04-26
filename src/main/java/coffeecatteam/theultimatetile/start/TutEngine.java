@@ -38,7 +38,7 @@ import java.util.Iterator;
 
 public class TutEngine extends BasicGameState {
 
-    private static TutEngine tutEngine;
+    public static TutEngine INSTANCE;
     private int fps;
 
     /*
@@ -70,7 +70,7 @@ public class TutEngine extends BasicGameState {
     private World world;
 
     public TutEngine() {
-        tutEngine = this;
+        INSTANCE = this;
     }
 
     @Override
@@ -284,12 +284,5 @@ public class TutEngine extends BasicGameState {
 
     public boolean isPlayBGMusic() {
         return playBGMusic;
-    }
-
-    /*
-     * Get an instance of this
-     */
-    public static TutEngine getTutEngine() {
-        return tutEngine;
     }
 }

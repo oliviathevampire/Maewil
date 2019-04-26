@@ -63,7 +63,7 @@ public class TutLauncher extends StateBasedGame {
 
     @Override
     public boolean closeRequested() {
-        if (TutEngine.getTutEngine().isPlayBGMusic() && Sounds.BG_MUSIC.playing())
+        if (TutEngine.INSTANCE.isPlayBGMusic() && Sounds.BG_MUSIC.playing())
             Sounds.BG_MUSIC.stop();
         LOGGER.warn("Shutting down [" + TITLE + "] engine!");
 
@@ -108,7 +108,7 @@ public class TutLauncher extends StateBasedGame {
             app.setShowFPS(false);
             app.setDisplayMode(WIDTH, HEIGHT, FULLSCREEN);
             app.setIcons(new String[]{"data/icons/32.png", "data/icons/64.png"});
-            app.setTargetFrameRate(100); // TODO: Remove target frame rate & add (* delta / 1000f) support!
+            app.setTargetFrameRate(100);
             app.setUpdateOnlyWhenVisible(false);
             app.setAlwaysRender(true);
             app.start();

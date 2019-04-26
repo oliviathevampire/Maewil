@@ -28,7 +28,7 @@ public abstract class UIObject {
 
     public void update(GameContainer container, StateBasedGame game, int delta) {
         bounds = new AABB(this.position, (int) getWidth(), (int) getHeight());
-        if (this.bounds.contains(TutEngine.getTutEngine().getMousePos()) && TutEngine.getTutEngine().isLeftPressed())
+        if (this.bounds.contains(TutEngine.INSTANCE.getMousePos()) && TutEngine.INSTANCE.isLeftPressed())
             onClick();
     }
 

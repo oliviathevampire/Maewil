@@ -42,7 +42,7 @@ public class UIHyperlink extends UIObject {
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
         super.update(container, game, delta);
-        this.hovering = this.bounds.contains(TutEngine.getTutEngine().getMousePos());
+        this.hovering = this.bounds.contains(TutEngine.INSTANCE.getMousePos());
 
         if (this.hovering)
             this.c = hoverColor;
