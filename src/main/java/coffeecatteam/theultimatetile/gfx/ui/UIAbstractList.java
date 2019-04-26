@@ -63,7 +63,7 @@ public abstract class UIAbstractList extends UIObject {
     /*
      * Other code
      */
-    private boolean useBlueTheme = false;
+    private boolean useGrayTheme = false;
     protected Image[] THEME;
     protected float itemWidth;
 
@@ -78,10 +78,10 @@ public abstract class UIAbstractList extends UIObject {
 
     public void update(GameContainer container, StateBasedGame game, int delta) {
         super.update(container, game, delta);
-        if (useBlueTheme)
-            THEME = Assets.GUI_LIST_BLUE;
-        else
+        if (useGrayTheme)
             THEME = Assets.GUI_LIST_GRAY;
+        else
+            THEME = Assets.GUI_LIST_BLUE;
 
         for (UIListOBJ ITEM : ITEMS) ITEM.update(container, game, delta);
     }
@@ -91,12 +91,8 @@ public abstract class UIAbstractList extends UIObject {
         for (int i = 0; i < size; i++) ITEMS.get(i).onClick();
     }
 
-    public boolean isUseBlueTheme() {
-        return useBlueTheme;
-    }
-
-    public void setUseBlueTheme(boolean useBlueTheme) {
-        this.useBlueTheme = useBlueTheme;
+    public void swapTheme() {
+        this.useGrayTheme = !useGrayTheme;
     }
 
     protected Font getCorrectFont(String text, float height) {

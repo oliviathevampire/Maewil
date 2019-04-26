@@ -107,7 +107,7 @@ public class StateUITesting extends State {
         uiList.add("Meow2", new ClickListener() {
             @Override
             public void onClick() {
-                uiList.setUseBlueTheme(!uiList.isUseBlueTheme());
+                uiList.swapTheme();
             }
 
             @Override
@@ -124,7 +124,8 @@ public class StateUITesting extends State {
             public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
-        uiList.add("Meow4", new ClickListener() {
+
+        ClickListener NEW_LIST_CLICK = new ClickListener() {
             @Override
             public void onClick() {
                 int value = 1000000000;
@@ -143,25 +144,17 @@ public class StateUITesting extends State {
             @Override
             public void update(GameContainer container, StateBasedGame game, int delta) {
             }
-        });
+        };
+        uiList.add("Meow4", NEW_LIST_CLICK);
 
         uiManager.addObject(uiDropDown = new UIDropDown(10, (float) (uiTextBox.getPosition().y + uiTextBox.getHeight() + 10), 350, "Dropdown Menu"));
         uiDropDown.add("Item1");
         uiDropDown.add("Item2", Tiles.GLITCH.getAnimation());
-        uiDropDown.add("Item3", Entities.PIG.getTextures().get("idle"), new ClickListener() {
+        uiDropDown.add("Item3", Entities.PIG.getTextures().get("idle"), NEW_LIST_CLICK);
+        uiDropDown.add("Item4", Entities.FOX.getTextures().get("idle"), new ClickListener() {
             @Override
             public void onClick() {
-                int value = 1000000000;
-                uiList.add("ListOBJ-" + NumberUtils.getRandomInt(-value, value), NumberUtils.getRandomBoolean() ? Tiles.AIR.getAnimation() : Tiles.WATER.getAnimation(), new ClickListener() {
-                    @Override
-                    public void onClick() {
-                        uiCheckBox.setChecked(!uiCheckBox.isChecked());
-                    }
-
-                    @Override
-                    public void update(GameContainer container, StateBasedGame game, int delta) {
-                    }
-                });
+                uiDropDown.swapTheme();
             }
 
             @Override

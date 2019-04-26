@@ -54,8 +54,7 @@ public class UIDropDown extends UIAbstractList {
         secMid.draw((float) position.x + padding, (float) position.y, midLength, UIListOBJ.SIZE);
         secRight.draw((float) position.x + itemWidth - UIListOBJ.SIZE, (float) position.y, UIListOBJ.SIZE, UIListOBJ.SIZE);
 
-        Color color = bounds.contains(TutEngine.getTutEngine().getMousePos()) ? UIHyperlink.hoverColor : UIHyperlink.mainColor;
-        Text.drawString(g, title, (float) (position.x + padding), (float) (position.y + Text.getHeight(title, font) + padding), false, color, font);
+        Text.drawString(g, title, (float) (position.x + padding), (float) (position.y + Text.getHeight(title, font) + padding), false, UIHyperlink.mainColor, font);
 
         if (isDown) {
             for (int i = 0; i < size(); i++) {
