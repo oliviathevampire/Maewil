@@ -5,11 +5,12 @@ import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class UICheckBox extends UIObject {
 
-    private boolean checked;
+    private boolean checked, useTick = true;
     private static int size = 30;
 
     public UICheckBox(Vector2D position) {
@@ -32,8 +33,10 @@ public class UICheckBox extends UIObject {
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
         Assets.GUI_CHECK_BOX_BG.draw((int) position.x, (int) position.y, width, height);
-        if (checked)
-            Assets.GUI_CHECK_BOX_FG.draw((int) position.x, (int) position.y, width, height);
+        if (checked) {
+            Image check = useTick ? Assets.GUI_CHECK_BOX_TICK : Assets.GUI_CHECK_BOX_CROSS;
+            check.draw((int) position.x, (int) position.y, width, height);
+        }
     }
 
     @Override
@@ -48,5 +51,13 @@ public class UICheckBox extends UIObject {
 
     public void setChecked(boolean checked) {
         this.checked = checked;
+    }
+
+    public boolean isUseTick() {
+        return useTick;
+    }
+
+    public void setUseTick(boolean useTick) {
+        this.useTick = useTick;
     }
 }

@@ -66,7 +66,7 @@ public class Assets {
     public static Image[] GUI_SLIDER_BUTTON;
     public static Image GUI_SLIDER_BAR;
 
-    public static Image GUI_CHECK_BOX_BG, GUI_CHECK_BOX_FG;
+    public static Image GUI_CHECK_BOX_BG, GUI_CHECK_BOX_TICK, GUI_CHECK_BOX_CROSS;
 
     public static Image GUI_CURSOR, MAP_BORDER;
     public static Image[] MAP_CURSOR;
@@ -197,7 +197,8 @@ public class Assets {
         GUI_SLIDER_BAR = getSpriteExact(guiSheet, 0, 112, 48, 6);
 
         GUI_CHECK_BOX_BG = getSpriteInd(guiSheet, 2, 3, width, height);
-        GUI_CHECK_BOX_FG = getSpriteInd(guiSheet, 3, 3, width, height);
+        GUI_CHECK_BOX_TICK = getSpriteInd(guiSheet, 3, 3, width, height);
+        GUI_CHECK_BOX_CROSS = getSpriteInd(guiSheet, 4, 3, width, height);
 
         GUI_CURSOR = getImage("/assets/textures/cursor.png");
         MAP_BORDER = getImage("/assets/textures/gui/map/border.png");
