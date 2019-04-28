@@ -14,6 +14,7 @@ public abstract class UIObject {
     protected Vector2D position;
     protected float width, height;
     protected AABB bounds;
+    protected boolean showBounds = false;
 
     public UIObject(float x, float y, float width, float height) {
         this(new Vector2D(x, y), width, height);
@@ -28,20 +29,26 @@ public abstract class UIObject {
 
     public void update(GameContainer container, StateBasedGame game, int delta) {
         bounds = new AABB(this.position, (int) getWidth(), (int) getHeight());
-        if (this.bounds.contains(TutEngine.INSTANCE.getMousePos()) && TutEngine.INSTANCE.isLeftPressed())
-            onClick();
+        if (TutEngine.INSTANCE.isLeftPressed()) {
+            if (this.bounds.contains(TutEngine.INSTANCE.getMousePos()))
+                onClick();
+            onClickOutBounds();
+        }
     }
 
     public abstract void render(GameContainer container, StateBasedGame game, Graphics g);
 
     public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
-        if (StateOptions.OPTIONS.debugMode()) {
+        if (StateOptions.OPTIONS.debugMode() || showBounds) {
             g.setColor(Color.red);
-            g.drawRect(bounds.x, bounds.y, bounds.width, bounds.y);
+            g.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
         }
     }
 
     public abstract void onClick();
+
+    public void onClickOutBounds() {
+    }
 
     public Vector2D getPosition() {
         return position;
