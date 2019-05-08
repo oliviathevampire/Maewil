@@ -20,7 +20,7 @@ public class UIDropDown extends UIAbstractList {
     private boolean isDown = false;
 
     public UIDropDown(float x, float y, float width, String title) {
-        super(x, y, width, width + UIListOBJ.SIZE, UIListOBJ.SIZE);
+        super(x, y, width, width + SIZE, SIZE);
         this.title = title;
         this.dropdownArrow = new ArrowButton(new Vector2D(x + width, y), false, new ClickListener() {
             @Override
@@ -49,12 +49,12 @@ public class UIDropDown extends UIAbstractList {
         Image secRight = THEME[2];
 
         float padding = 10f;
-        Font font = getCorrectFont(title, UIListOBJ.SIZE - padding * 2f);
-        float midLength = itemWidth - UIListOBJ.SIZE;
+        Font font = Text.getCorrectFont(title, SIZE - padding * 2f);
+        float midLength = itemWidth - SIZE;
 
-        secLeft.draw((float) position.x, (float) position.y, UIListOBJ.SIZE, UIListOBJ.SIZE);
-        secMid.draw((float) position.x + padding, (float) position.y, midLength, UIListOBJ.SIZE);
-        secRight.draw((float) position.x + itemWidth - UIListOBJ.SIZE, (float) position.y, UIListOBJ.SIZE, UIListOBJ.SIZE);
+        secLeft.draw((float) position.x, (float) position.y, SIZE, SIZE);
+        secMid.draw((float) position.x + padding, (float) position.y, midLength, SIZE);
+        secRight.draw((float) position.x + itemWidth - SIZE, (float) position.y, SIZE, SIZE);
 
         Text.drawString(g, title, (float) (position.x + padding), (float) (position.y + Text.getHeight(title, font) + padding), false, UIHyperlink.mainColor, font);
 
@@ -62,12 +62,12 @@ public class UIDropDown extends UIAbstractList {
             for (int i = 0; i < size(); i++) {
                 UIListOBJ obj = get(i);
                 obj.setRendering(true);
-                Vector2D pos = new Vector2D(position.x, position.y + UIListOBJ.SIZE * (i + 1));
+                Vector2D pos = new Vector2D(position.x, position.y + SIZE * (i + 1));
                 obj.render(container, game, g, pos);
             }
 
-            THEME[4].draw((float) (position.x + itemWidth), (float) position.y, UIListOBJ.SIZE, UIListOBJ.SIZE * size());
-            THEME[3].draw((float) (position.x + itemWidth), (float) (position.y + UIListOBJ.SIZE * size()), UIListOBJ.SIZE, UIListOBJ.SIZE);
+            THEME[4].draw((float) (position.x + itemWidth), (float) position.y, SIZE, SIZE * size());
+            THEME[3].draw((float) (position.x + itemWidth), (float) (position.y + SIZE * size()), SIZE, SIZE);
         }
 
         dropdownArrow.render(container, game, g);
@@ -85,6 +85,6 @@ public class UIDropDown extends UIAbstractList {
 
     @Override
     public float getHeight() {
-        return isDown ? UIListOBJ.SIZE * (size() + 1) : UIListOBJ.SIZE;
+        return isDown ? SIZE * (size() + 1) : SIZE;
     }
 }

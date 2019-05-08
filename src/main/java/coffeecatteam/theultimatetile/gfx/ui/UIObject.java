@@ -32,7 +32,8 @@ public abstract class UIObject {
         if (TutEngine.INSTANCE.isLeftPressed()) {
             if (this.bounds.contains(TutEngine.INSTANCE.getMousePos()))
                 onClick();
-            onClickOutBounds();
+            else
+                onClickOutBounds();
         }
     }
 
