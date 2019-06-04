@@ -8,7 +8,7 @@ import coffeecatteam.theultimatetile.objs.tiles.stone.TileStone;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 import coffeecatteam.theultimatetile.world.colormap.WorldMapGenerator;
-import coffeecatteam.theultimatetile.world.noise.OpenSimplexNoise;
+import coffeecatteam.theultimatetile.world.noise.PerlinNoise;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -161,12 +161,12 @@ public class WorldGenerator {
     }
 
     private void addOre(TileList tiles, Tile ore, double minThreshold, double maxThreshold, double blendSize, long seedOff, boolean bg) {
-        OpenSimplexNoise noise = new OpenSimplexNoise(seed + seedOreOff + seedOff);
+        PerlinNoise noise = new PerlinNoise(seed + seedOreOff + seedOff);
         seedOreOff += seedOreOffInc;
 
         for (int y = 0; y < worldSize; y++) {
             for (int x = 0; x < worldSize; x++) {
-                double value = noise.eval((float) (x / blendSize), (float) (y / blendSize));
+                double value = noise.getPerlinNoise((float) (x / blendSize), (float) (y / blendSize));
                 if (tiles.getTile(x, y) instanceof TileStone) {
                     Tile tile = tiles.getTile(x, y);
 

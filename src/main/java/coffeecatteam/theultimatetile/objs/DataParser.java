@@ -72,7 +72,7 @@ public abstract class DataParser<E extends IHasData<E>> {
         return null;
     }
 
-    public static JSONObject getData(String fileName, boolean inJar) throws IOException, ParseException {
+    private static JSONObject getData(String fileName, boolean inJar) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         String path = "/assets/data/" + fileName + ".json";
         if (inJar) {
@@ -82,7 +82,7 @@ public abstract class DataParser<E extends IHasData<E>> {
         }
     }
 
-    public static JSONObject getDataCatchException(String fileName, boolean inJar) {
+    static JSONObject getDataCatchException(String fileName, boolean inJar) {
         try {
             return getData(fileName, inJar);
         } catch (IOException | ParseException e) {
