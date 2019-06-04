@@ -35,6 +35,7 @@ public class StateUITesting extends State {
     private UISlider uiSlider;
     private UIList uiList;
     private UIDropDown uiDropDown;
+    private UIInputBox uiInputBox;
 
     public StateUITesting(TutEngine tutEngine) {
         super(tutEngine, new Tile[]{Tiles.AIR}, new Tile[]{Tiles.AIR});
@@ -161,6 +162,8 @@ public class StateUITesting extends State {
             public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
+
+        uiManager.addObject(uiInputBox = new UIInputBox(new Vector2D(20 + uiDropDown.getWidth(), 500), 300));
     }
 
     @Override
@@ -176,5 +179,6 @@ public class StateUITesting extends State {
         if (uiCheckBox.isChecked())
             Assets.GUI_TITLE_SMALL.draw(uiCheckBox.getWidth() + 20, 10, 0.075f);
         Text.drawString(g, String.valueOf(uiSlider.getValue()), 10, (float) (uiSlider.getPosition().y + uiSlider.getHeight() + 40), false, Color.white, Assets.FONTS.get("35"));
+        Text.drawString(g, uiInputBox.getText(), (float) uiInputBox.getPosition().x, (float) (uiInputBox.getPosition().y + uiInputBox.getHeight() + 10), false, Color.white, Assets.FONTS.get("35"));
     }
 }

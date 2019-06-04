@@ -46,6 +46,8 @@ public class UISlider extends UIObject {
     public void update(GameContainer container, StateBasedGame game, int delta) {
         super.update(container, game, delta);
         slider.update(container, game, delta);
+        bounds.y = slider.bounds.y;
+
         if (slider.isMouseHovering()) {
             if (tutEngine.isLeftDown() || tutEngine.isLeftPressed()) {
                 slider.position.x = tutEngine.getMousePos().x - slider.getWidth() / 2d;

@@ -1,9 +1,13 @@
 package coffeecatteam.theultimatetile.gfx;
 
+import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.start.TutLauncher;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Text {
 
@@ -50,5 +54,31 @@ public class Text {
 
     public static float getAscent(Font font) {
         return font.getLineHeight();
+    }
+
+    public static Font getCorrectFont(String text, float height) {
+        List<Font> fonts = new ArrayList<>();
+        for (int i = 5; i <= 100; i += 5) {
+            Font current = Assets.FONTS.get(String.valueOf(i));
+            if (getHeight(text, current) <= height)
+                fonts.add(current);
+        }
+        return fonts.get(fonts.size() - 1);
+    }
+
+    public static Object[] fitTextInWidth(String baseText, Font baseFont, float width, float height, boolean addDots) {
+        String newText = baseText;
+        Font newFont = baseFont;
+        boolean toLong = false;
+
+        while (getWidth(newText, newFont) > width) {
+            newText = newText.substring(0, newText.length() - 1);
+            newFont = getCorrectFont(newText, height);
+            toLong = true;
+        }
+        if (toLong && addDots)
+            newText = newText.substring(0, newText.length() - 2) + "..";
+
+        return new Object[] {newText, newFont, toLong};
     }
 }

@@ -19,7 +19,7 @@ import java.util.List;
  * @author CoffeeCatRailway
  * Created: 20/04/2019
  */
-public abstract class UIAbstractList extends UIObject {
+public abstract class UIAbstractList extends AbstractListTheme {
 
     /*
      * List code
@@ -63,8 +63,6 @@ public abstract class UIAbstractList extends UIObject {
     /*
      * Other code
      */
-    private boolean useGrayTheme = false;
-    protected Image[] THEME;
     protected float itemWidth;
 
     UIAbstractList(float x, float y, float itemWidthIn, float width, float height) {
@@ -78,10 +76,6 @@ public abstract class UIAbstractList extends UIObject {
 
     public void update(GameContainer container, StateBasedGame game, int delta) {
         super.update(container, game, delta);
-        if (useGrayTheme)
-            THEME = Assets.GUI_LIST_GRAY;
-        else
-            THEME = Assets.GUI_LIST_BLUE;
 
         for (UIListOBJ ITEM : ITEMS) ITEM.update(container, game, delta);
     }
@@ -89,20 +83,6 @@ public abstract class UIAbstractList extends UIObject {
     @Override
     public void onClick() {
         for (int i = 0; i < size; i++) ITEMS.get(i).onClick();
-    }
-
-    public void swapTheme() {
-        this.useGrayTheme = !useGrayTheme;
-    }
-
-    protected Font getCorrectFont(String text, float height) {
-        List<Font> fonts = new ArrayList<>();
-        for (int i = 5; i <= 100; i += 5) {
-            Font current = Assets.FONTS.get(String.valueOf(i));
-            if (Text.getHeight(text, current) <= height)
-                fonts.add(current);
-        }
-        return fonts.get(fonts.size() - 1);
     }
 
     public class ArrowButton {
@@ -127,15 +107,15 @@ public abstract class UIAbstractList extends UIObject {
 
         public void update(GameContainer container, StateBasedGame game, int delta) {
             listener.update(container, game, delta);
-            bounds = new AABB(pos, (int) UIListOBJ.SIZE, (int) UIListOBJ.SIZE);
+            bounds = new AABB(pos, (int) SIZE, (int) SIZE);
             hovering = bounds.contains(TutEngine.INSTANCE.getMousePos());
         }
 
         public void render(GameContainer container, StateBasedGame game, Graphics g) {
-            THEME[3].draw((float) pos.x, (float) pos.y, UIListOBJ.SIZE, UIListOBJ.SIZE);
+            THEME[3].draw((float) pos.x, (float) pos.y, SIZE, SIZE);
 
             Image arrow = Assets.GUI_ARROW_ICONS[(iconUpArrow ? 0 : 2) + (hovering ? 1 : 0)];
-            arrow.draw((float) pos.x, (float) pos.y, UIListOBJ.SIZE, UIListOBJ.SIZE);
+            arrow.draw((float) pos.x, (float) pos.y, SIZE, SIZE);
         }
 
         public void setPos(Vector2D pos) {
@@ -148,8 +128,6 @@ public abstract class UIAbstractList extends UIObject {
     }
 
     public class UIListOBJ {
-
-        static final float SIZE = 51;
 
         private String label;
         private Animation icon;
@@ -197,7 +175,7 @@ public abstract class UIAbstractList extends UIObject {
         }
 
         public void render(GameContainer container, StateBasedGame game, Graphics g, Vector2D pos) {
-            bounds = new AABB(pos, (int) itemWidth, (int) UIListOBJ.SIZE);
+            bounds = new AABB(pos, (int) itemWidth, (int) SIZE);
 
             Image secLeft = THEME[0];
             Image secMid = THEME[1];
@@ -218,18 +196,10 @@ public abstract class UIAbstractList extends UIObject {
             }
 
             Color color = bounds.contains(TutEngine.INSTANCE.getMousePos()) ? UIHyperlink.hoverColor : UIHyperlink.mainColor;
-            Font font = getCorrectFont(label, SIZE - padding * 3f);
-            boolean toLong = false;
+            Font font = Text.getCorrectFont(label, SIZE - padding * 3f);
+            Object[] textFont = Text.fitTextInWidth(label, font, itemWidth - padding * 2 - (hasIcon ? textIconOff : 0), SIZE - padding * 3f, true);
 
-            while (Text.getWidth(label, font) > itemWidth - padding * 2 - (hasIcon ? textIconOff : 0)) {
-                label = label.substring(0, label.length() - 1);
-                font = getCorrectFont(label, SIZE - padding * 3f);
-                toLong = true;
-            }
-            if (toLong)
-                label = label.substring(0, label.length() - 2) + "..";
-
-            Text.drawString(g, label, (float) textPos.x, (float) textPos.y, false, color, font);
+            Text.drawString(g, String.valueOf(textFont[0]), (float) textPos.x, (float) textPos.y, false, color, (Font) textFont[1]);
         }
 
         public AABB getBounds() {
