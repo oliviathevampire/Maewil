@@ -11,7 +11,8 @@
   "size": 16,
   "overlap": {
     "connect": [
-      "grass"
+      "grass",
+      "dirt"
     ],
     "ignore": [
       "sand"

@@ -1,14 +1,13 @@
 {
   "type": "normal",
-  "texture": "tiles/dirt.png",
-  "size": 32,
+  "texture": "tiles/stone_tiles.png",
+  "size": 16,
   "overlap": {
     "connect": [
-      "grass",
-      "sand"
+      "broken_stone"
     ],
     "ignore": [
-      "dirt"
+      "stone"
     ]
   }
 }

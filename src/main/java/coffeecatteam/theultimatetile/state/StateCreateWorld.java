@@ -6,6 +6,7 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
+import coffeecatteam.theultimatetile.gfx.ui.UITextBox;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButton;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
@@ -55,6 +56,7 @@ public class StateCreateWorld extends StateAbstractMenu {
             sizeModExtra = NumberUtils.getRandomInt(sizeMax, sizeMin);
         worldSize = minWorldSize + sizeModExtra;
 
+        uiManager.addObject(new UITextBox());
         uiManager.addObject(new UIButton(tutEngine, true, "Create World", new ClickListener() {
             @Override
             public void onClick() {

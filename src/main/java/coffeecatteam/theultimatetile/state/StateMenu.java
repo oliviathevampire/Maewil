@@ -11,6 +11,7 @@ import coffeecatteam.theultimatetile.gfx.ui.hyperlink.UIHyperlinkCopyright;
 import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.start.TutLauncher;
+import coffeecatteam.theultimatetile.state.options.StateCharacterCustomization;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -35,6 +36,7 @@ public class StateMenu extends State {
             @Override
             public void onClick() {
                 // TODO: Add entity texture data alt support
+                StateManager.setCurrentState(new StateCharacterCustomization(tutEngine));
             }
 
             @Override

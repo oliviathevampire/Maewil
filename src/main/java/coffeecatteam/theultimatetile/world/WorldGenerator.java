@@ -87,7 +87,7 @@ public class WorldGenerator {
                 if (lc.getRGB() == WorldColors.DIRT.getRGB()
                         || pc.getRGB() == WorldColors.DIRT.getRGB()
                         || lc.getRGB() == WorldColors.GRASS.getRGB()
-                        || lc.getRGB() == WorldColors.DEAP_OCEAN.getRGB())
+                        || lc.getRGB() == WorldColors.DEEP_OCEAN.getRGB())
                     tile = Tiles.DIRT;
 
                 if (lc.getRGB() == WorldColors.SAND.getRGB() || lc.getRGB() == WorldColors.WATER.getRGB())
@@ -95,6 +95,8 @@ public class WorldGenerator {
 
                 if (lc.getRGB() == WorldColors.STONE.getRGB())
                     tile = Tiles.STONE;
+                if(lc.getRGB() == WorldColors.STONE_TILES.getRGB())
+                    tile = Tiles.STONE_TILE;
 
                 tile = tile.newCopy();
                 checkBorderTilePos(tile, x, y, true);
@@ -118,7 +120,7 @@ public class WorldGenerator {
                 if (lc.getRGB() == WorldColors.GRASS.getRGB())
                     tile = Tiles.GRASS;
 
-                if (lc.getRGB() == WorldColors.DEAP_OCEAN.getRGB() || lc.getRGB() == WorldColors.WATER.getRGB())
+                if (lc.getRGB() == WorldColors.DEEP_OCEAN.getRGB() || lc.getRGB() == WorldColors.WATER.getRGB())
                     tile = Tiles.WATER;
 
                 if (lc.getRGB() == WorldColors.SAND.getRGB())

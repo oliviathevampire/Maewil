@@ -43,7 +43,7 @@ public class WorldMapGenerator {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 double value = noise.eval((float) ((x + xOff) / sizeLand), (float) ((y + yOff) / sizeLand));
-                Color c = WorldColors.DEAP_OCEAN;
+                Color c = WorldColors.DEEP_OCEAN;
                 if (value > -0.3 && value < -0.1) {
                     c = WorldColors.WATER;
                 } else {
@@ -76,6 +76,7 @@ public class WorldMapGenerator {
 
         addSpots(xOff, yOff, image, 0.65d, 1.0d, 10.0d, WorldColors.STONE, WorldColors.DIRT, seedExtra1);
         addSpots(xOff, yOff, image, 0.7d, 1.0d, 10.0d, WorldColors.STONE, WorldColors.DIRT, seedExtra2);
+        addSpots(xOff, yOff, image, 0.65d, 1.0d, 10.0d, WorldColors.STONE, WorldColors.STONE_TILES, seedExtra3);
         return image;
     }
 
