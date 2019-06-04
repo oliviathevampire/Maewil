@@ -16,7 +16,7 @@ public class UIList extends UIAbstractList {
     private ArrowButton arrowUp, arrowDown;
 
     public UIList(float x, float y, float width, int maxShownItems) {
-        super(x, y, width - UIListOBJ.SIZE, width, UIListOBJ.SIZE * maxShownItems);
+        super(x, y, width - SIZE, width, SIZE * maxShownItems + 1);
         this.maxShownItems = maxShownItems;
 
         arrowUp = new ArrowButton(new Vector2D(position.x + itemWidth, position.y), true, new ClickListener() {
@@ -49,7 +49,7 @@ public class UIList extends UIAbstractList {
 
         arrowUp.update(container, game, delta);
         arrowDown.update(container, game, delta);
-        arrowDown.setPos(new Vector2D(position.x + itemWidth, position.y + UIListOBJ.SIZE * (maxShownItems - 1)));
+        arrowDown.setPos(new Vector2D(position.x + itemWidth, position.y + SIZE * (maxShownItems - 1)));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class UIList extends UIAbstractList {
         for (int i = 0; i < maxShownItems; i++) {
             UIListOBJ obj = getItem(i);
             obj.setRendering(true);
-            Vector2D pos = new Vector2D(position.x, position.y + UIListOBJ.SIZE * i);
+            Vector2D pos = new Vector2D(position.x, position.y + SIZE * i);
             if (obj.equals(get(size() - 1)) && i + shownItemChange >= size())
                 new UIListOBJ("").render(container, game, g, pos);
             else
@@ -65,7 +65,7 @@ public class UIList extends UIAbstractList {
         }
 
         if (maxShownItems > 2)
-            THEME[4].draw((float) (position.x + itemWidth), (float) position.y, UIListOBJ.SIZE, UIListOBJ.SIZE * maxShownItems);
+            THEME[4].draw((float) (position.x + itemWidth), (float) position.y, SIZE, SIZE * maxShownItems);
         arrowUp.render(container, game, g);
         arrowDown.render(container, game, g);
     }

@@ -127,7 +127,7 @@ public class UIButton extends UIObject {
             this.currentTexture = Assets.GUI_BUTTON_DISABLED;
 
         listener.update(container, game, delta);
-        bounds = new AABB(position, (int) width, (int) height);
+        bounds = new AABB(position, (int) getWidth(), (int) getHeight());
     }
 
     @Override
@@ -191,6 +191,7 @@ public class UIButton extends UIObject {
 
     @Override
     public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
+        super.postRender(container, game, g);
         if (isHovering() && hasTooltip) {
             float x = (float) tutEngine.getMousePos().x, x1 = x + this.tooltip.getWidth(), xDiff = 0;
             float y = (float) tutEngine.getMousePos().y, y1 = y + this.tooltip.getHeight(), yDiff = 0;
