@@ -22,6 +22,6 @@ public class StateCharacterCustomization extends StateAbstractMenu {
         Text.drawStringCenteredX(g, "Customize your character", 70, c, font);
 
         Image current = tutEngine.getPlayer().getTextures().get("idle").getCurrentFrame();
-        current.draw(10, 70, 30, 30);
+        current.draw(10, 70, 50, 50);
     }
 }
