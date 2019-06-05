@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.world.noise.PerlinNoise;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 public class WorldMapGenerator {
 
@@ -102,6 +103,50 @@ public class WorldMapGenerator {
         return image;
     }
 
+    public BufferedImage generateBush(float xOff, float yOff, BufferedImage landMap) {
+        PerlinNoise noise = new PerlinNoise(seedPath);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                double value = noise.getPerlinNoise((float) ((x + xOff) / sizePath), (float) ((y + yOff) / sizePath));
+                Color c = new Color(255, 255, 255, 0);
+                if (value > -path_threshold && value < path_threshold) {
+                    if (landMap.getRGB(x, y) == WorldColors.GRASS.getRGB()) {
+                        c = WorldColors.BUSH;
+                    }
+                }
+                image.setRGB(x, y, getRGBA(c.getRGB()));
+            }
+        }
+        addSpots(xOff, yOff, image, 0.65d, 1.0d, 10.0d, WorldColors.BUSH, WorldColors.GRASS, seedExtra1);
+        addSpots(xOff, yOff, image, 0.7d, 1.0d, 10.0d, WorldColors.BUSH, WorldColors.GRASS, seedExtra2);
+        addSpots(xOff, yOff, image, 0.75d, 1.0d, 10.0d, WorldColors.BUSH, WorldColors.GRASS, seedExtra3);
+        return image;
+    }
+
+    public BufferedImage generateTree(float xOff, float yOff, BufferedImage landMap) {
+        PerlinNoise noise = new PerlinNoise(seedPath);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                double value = noise.getPerlinNoise((float) ((x + xOff) / sizePath), (float) ((y + yOff) / sizePath));
+                Color c = new Color(255, 255, 255, 0);
+                if (value > -path_threshold && value < path_threshold) {
+                    if (landMap.getRGB(x, y) == WorldColors.GRASS.getRGB()) {
+                        c = WorldColors.TREE;
+                    }
+                }
+                image.setRGB(x, y, getRGBA(c.getRGB()));
+            }
+        }
+        addSpots(xOff, yOff, image, 0.65d, 1.0d, 10.0d, WorldColors.TREE, WorldColors.GRASS, seedExtra1);
+        addSpots(xOff, yOff, image, 0.7d, 1.0d, 10.0d, WorldColors.TREE, WorldColors.GRASS, seedExtra2);
+        addSpots(xOff, yOff, image, 0.75d, 1.0d, 10.0d, WorldColors.TREE, WorldColors.GRASS, seedExtra3);
+        return image;
+    }
+
     private void addSpots(float xOff, float yOff, BufferedImage pathMap, double minThreshold, double maxThreshold, double blendSize, Color replace, Color spot, long seed) {
         PerlinNoise noise = new PerlinNoise(seed);
 
@@ -126,10 +171,24 @@ public class WorldMapGenerator {
                 double value = noise.getPerlinNoise((float) ((x + xOff) / sizeBiome), (float) ((y + yOff) / sizeBiome));
                 Color c = Biomes.NONE.getColor();
                 if (landMap.getRGB(x, y) == WorldColors.GRASS.getRGB() && pathMap.getRGB(x, y) != WorldColors.DIRT.getRGB() && landMap.getRGB(x, y) != WorldColors.DIRT.getRGB()) {
-                    if (value > 0.15 && value < 0.55) {
-                        c = Biomes.FOREST.getColor();
-                    } else {
-                        c = Biomes.PLAINS.getColor();
+                    Random random = new Random();
+                    int randomInt = random.nextInt(5);
+                    switch (randomInt) {
+                        case 0:
+                            c = Biomes.FOREST.getColor();
+                            break;
+                        case 1:
+                            c = Biomes.DESERT.getColor();
+                            break;
+                        case 2:
+                            c = Biomes.SAVANNA.getColor();
+                            break;
+                        case 3:
+                            c = Biomes.OCEAN.getColor();
+                            break;
+                        case 4:
+                            c = Biomes.PLAINS.getColor();
+                            break;
                     }
                 } else {
                     if (landMap.getRGB(x, y) == WorldColors.DIRT.getRGB()) {

@@ -80,7 +80,7 @@ public class ClickListenerWorld implements ClickListener {
 //            username = ArgUtils.getArgument("-username");
 //        } else {
 //            if (!isSaved) {
-//                username = Utils.getUsername();
+//                username = UtilsIdk.getUsername();
 //            } else {
 //                username = "HAKUNA MATATA!";
 //            }

@@ -15,8 +15,8 @@ public class StateManager {
     }
 
     public static void setCurrentState(State newState) {
-        TutEngine.INSTANCE.getCamera().setxOffset(0);
-        TutEngine.INSTANCE.getCamera().setyOffset(0);
+        TutEngine.INSTANCE.getCamera().setXOffset(0);
+        TutEngine.INSTANCE.getCamera().setYOffset(0);
 
         StateManager.currentState = newState;
         StateManager.currentState.init();

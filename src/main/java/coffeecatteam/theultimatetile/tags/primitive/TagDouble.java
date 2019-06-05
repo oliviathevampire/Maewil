@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.tags.primitive;
 
 import coffeecatteam.theultimatetile.tags.supers.TagBase;
 import coffeecatteam.theultimatetile.tags.supers.TagPrimitive;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.theultimatetile.utils.UtilsIdk;
 
 /**
  * @author CoffeeCatRailway
@@ -47,7 +47,7 @@ public class TagDouble extends TagPrimitive {
 
     @Override
     public int getInt() {
-        return Utils.floorD(this.data);
+        return UtilsIdk.floorD(this.data);
     }
 
     @Override

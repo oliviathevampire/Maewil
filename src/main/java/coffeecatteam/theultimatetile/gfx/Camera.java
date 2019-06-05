@@ -52,7 +52,7 @@ public class Camera {
         return xOffset;
     }
 
-    public void setxOffset(float xOffset) {
+    public void setXOffset(float xOffset) {
         this.xOffset = xOffset;
     }
 
@@ -60,7 +60,7 @@ public class Camera {
         return yOffset;
     }
 
-    public void setyOffset(float yOffset) {
+    public void setYOffset(float yOffset) {
         this.yOffset = yOffset;
     }
 

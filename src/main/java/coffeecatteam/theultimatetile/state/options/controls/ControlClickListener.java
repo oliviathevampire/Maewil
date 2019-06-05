@@ -4,7 +4,7 @@ import coffeecatteam.theultimatetile.gfx.ui.ClickListener;
 import coffeecatteam.theultimatetile.gfx.ui.button.UIButtonControl;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.state.options.StateOptions;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.theultimatetile.utils.UtilsIdk;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -32,7 +32,7 @@ public class ControlClickListener implements ClickListener {
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
         int newKeyCode = tutEngine.getKeyManager().getCurrentKeyPressedCode();
-        String newId = Utils.getKeyPressed(tutEngine);
+        String newId = UtilsIdk.getKeyPressed(tutEngine);
         Keybind keybind = StateOptions.OPTIONS.controls().get(jsonId);
 
         if (listening) {

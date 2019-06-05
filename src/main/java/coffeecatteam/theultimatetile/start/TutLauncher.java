@@ -32,7 +32,7 @@ public class TutLauncher extends StateBasedGame {
      */
     public static String[] ARGS;
     public static boolean FULLSCREEN;
-    public static int WIDTH = 912, HEIGHT = 768, WIDTH_TILE_SIZE, HEIGHT_TILE_SIZE;
+    public static int WIDTH = 854, HEIGHT = 480, WIDTH_TILE_SIZE, HEIGHT_TILE_SIZE;
     public static final String TITLE = "The Ultimate Tile";
 
     public static CatLogger LOGGER;

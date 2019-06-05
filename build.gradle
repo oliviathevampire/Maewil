@@ -1,3 +1,5 @@
+import org.gradle.internal.os.OperatingSystem
+
 group 'coffeecatteam.theultimatetile'
 version '0.6-alpha-pre4'
 
@@ -11,6 +13,24 @@ def mainClassPath = 'coffeecatteam.theultimatetile.start.TutLauncher'
 def exeJarName = rootProject.name + "-" + version
 def buildPath = "build/" + version
 buildDir = file(buildPath)
+
+project.ext.lwjglVersion = "3.2.2"
+project.ext.jomlVersion = "1.9.15"
+
+switch (OperatingSystem.current()) {
+	case OperatingSystem.LINUX:
+		def osArch = System.getProperty("os.arch")
+		project.ext.lwjglNatives = osArch.startsWith("arm") || osArch.startsWith("aarch64")
+			? "natives-linux-${osArch.contains("64") || osArch.startsWith("armv8") ? "arm64" : "arm32"}"
+			: "natives-linux"
+		break
+	case OperatingSystem.MAC_OS:
+		project.ext.lwjglNatives = "natives-macos"
+		break
+	case OperatingSystem.WINDOWS:
+		project.ext.lwjglNatives = "natives-windows"
+		break
+}
 
 buildscript {
     repositories {
@@ -27,6 +47,9 @@ repositories {
     maven {
         url 'https://jitpack.io'
     }
+    maven { url "http://b2s-repo.googlecode.com/svn/trunk/mvn-repo" }
+    maven { url "http://java.freehep.org/maven2" }
+    maven { url "http://download.java.net/maven/2" }
 }
 
 launch4j {
@@ -46,10 +69,37 @@ configurations {
 dependencies {
     compile 'club.minnced:java-discord-rpc:2.0.1'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
+    compile group: 'org.slick2d', name: 'slick2d-core', version: '1.0.2'
 
-    compile fileTree(dir: "libs/jars", include: "*.jar")
+    implementation 'com.github.CoffeeCatRailway:CoffeeCatUtils:master-SNAPSHOT'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    implementation "org.lwjgl:lwjgl:$lwjglVersion"
+	implementation "org.lwjgl:lwjgl-bgfx:$lwjglVersion"
+	implementation "org.lwjgl:lwjgl-cuda:$lwjglVersion"
+	implementation "org.lwjgl:lwjgl-egl:$lwjglVersion"
+	implementation "org.lwjgl:lwjgl-glfw:$lwjglVersion"
+	implementation "org.lwjgl:lwjgl-jawt:$lwjglVersion"
+	implementation "org.lwjgl:lwjgl-nanovg:$lwjglVersion"
+	implementation "org.lwjgl:lwjgl-nuklear:$lwjglVersion"
+	implementation "org.lwjgl:lwjgl-openal:$lwjglVersion"
+	implementation "org.lwjgl:lwjgl-opencl:$lwjglVersion"
+	implementation "org.lwjgl:lwjgl-opengl:$lwjglVersion"
+	implementation "org.lwjgl:lwjgl-opengles:$lwjglVersion"
+	implementation "org.lwjgl:lwjgl-openvr:$lwjglVersion"
+	implementation "org.lwjgl:lwjgl-vulkan:$lwjglVersion"
+	runtimeOnly "org.lwjgl:lwjgl:$lwjglVersion:$lwjglNatives"
+	runtimeOnly "org.lwjgl:lwjgl-bgfx:$lwjglVersion:$lwjglNatives"
+	runtimeOnly "org.lwjgl:lwjgl-glfw:$lwjglVersion:$lwjglNatives"
+	runtimeOnly "org.lwjgl:lwjgl-nanovg:$lwjglVersion:$lwjglNatives"
+	runtimeOnly "org.lwjgl:lwjgl-nuklear:$lwjglVersion:$lwjglNatives"
+	runtimeOnly "org.lwjgl:lwjgl-openal:$lwjglVersion:$lwjglNatives"
+	runtimeOnly "org.lwjgl:lwjgl-opengl:$lwjglVersion:$lwjglNatives"
+	runtimeOnly "org.lwjgl:lwjgl-opengles:$lwjglVersion:$lwjglNatives"
+	runtimeOnly "org.lwjgl:lwjgl-openvr:$lwjglVersion:$lwjglNatives"
+	if (lwjglNatives == "natives-macos") runtimeOnly "org.lwjgl:lwjgl-vulkan:$lwjglVersion:$lwjglNatives"
+	implementation "org.joml:joml:${jomlVersion}"
 }
 
 jar {
@@ -76,12 +126,6 @@ task copyOptions(type: Copy) {
         copy {
             from "data/saves/saved_games.json"
             into buildPath + "/libs/data/saves"
-        }
-        copy {
-            from fileTree(dir: "libs/natives", include: "*.dll")
-            from fileTree(dir: "libs/natives", include: "*.so")
-            from fileTree(dir: "libs/natives", include: "*.dylib")
-            into buildPath + "/libs/data/natives"
         }
         into buildPath + "/libs/data"
     }

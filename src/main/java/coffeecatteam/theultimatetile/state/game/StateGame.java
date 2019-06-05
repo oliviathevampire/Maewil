@@ -58,7 +58,20 @@ public class StateGame extends State {
             }
         }));
 
-        UIButton btnMainMenu = new UIButton(tutEngine, true, TutLauncher.HEIGHT / 2 + yOffset + 10, "Main Menu", new ClickListener() {
+        UIButton btnSettings = new UIButton(tutEngine, true, TutLauncher.HEIGHT / 2 - yOffset + 30, "Options", new ClickListener() {
+            @Override
+            public void onClick() {
+                StateManager.setCurrentState(tutEngine.stateOptions);
+
+                DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options");
+            }
+
+            @Override
+            public void update(GameContainer container, StateBasedGame game, int delta) {
+            }
+        });
+
+        UIButton btnMainMenu = new UIButton(tutEngine, true, TutLauncher.HEIGHT / 2 + yOffset + 20, "Main Menu", new ClickListener() {
             @Override
             public void onClick() {
                 DiscordHandler.INSTANCE.updatePresence("Main Menu");
@@ -71,7 +84,7 @@ public class StateGame extends State {
             public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
-        UIButton btnQuit = new UIButton(tutEngine, true, TutLauncher.HEIGHT / 2 + yOffset * 3 + 20, "Quit", new ClickListener() {
+        UIButton btnQuit = new UIButton(tutEngine, true, TutLauncher.HEIGHT / 2 + yOffset * 3 + 30, "Quit", new ClickListener() {
             @Override
             public void onClick() {
                 saveWorld(true);
@@ -84,6 +97,7 @@ public class StateGame extends State {
         });
 
         uiManagerPaused.addObject(btnMainMenu);
+        uiManagerPaused.addObject(btnSettings);
         uiManagerPaused.addObject(btnQuit);
         uiManagerDead.addObject(btnMainMenu);
         uiManagerDead.addObject(btnQuit);

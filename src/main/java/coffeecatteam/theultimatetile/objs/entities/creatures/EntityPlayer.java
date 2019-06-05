@@ -17,7 +17,7 @@ import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.state.options.StateOptions;
 import coffeecatteam.theultimatetile.state.options.controls.Keybind;
-import coffeecatteam.theultimatetile.utils.Utils;
+import coffeecatteam.theultimatetile.utils.UtilsIdk;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -315,7 +315,7 @@ public class EntityPlayer extends EntityCreature {
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        if (Utils.isDate(3, 31) || Utils.isDate(4, (1 | 2)))
+        if (UtilsIdk.isDate(3, 31) || UtilsIdk.isDate(4, (1 | 2)))
             getCurrentTexture().getCurrentFrame().rotate((float) Math.toRadians(180d)); // BROKEN, FIX ON A LATER DATE
         getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height);
 

@@ -1,11 +1,14 @@
 package coffeecatteam.theultimatetile.world;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
+import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import coffeecatteam.theultimatetile.objs.tiles.stone.TileStone;
 import coffeecatteam.theultimatetile.start.TutEngine;
+import coffeecatteam.theultimatetile.world.colormap.Biomes;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 import coffeecatteam.theultimatetile.world.colormap.WorldMapGenerator;
 import coffeecatteam.theultimatetile.world.noise.PerlinNoise;
@@ -61,17 +64,41 @@ public class WorldGenerator {
 
             // Entities
             tutEngine.getEntityManager().reset();
-//            for (int y = 0; y < worldSize; y++) {
-//                for (int x = 0; x < worldSize; x++) {
-//                    Biomes.Biome biome = Biomes.getBiomeAt(biomeMap, x, y);
-//                    if (biome.equals(Biomes.FOREST)) {
-//                        float threshold = 0.2f;
-//                        float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
-//                        float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
-//                        tutEngine.getEntityManager().addEntity(Entities.BUSH_SMALL, x + xOff, y + yOff, true);
-//                    }
-//                }
-//            }
+            for (int y = 0; y < worldSize; y++) {
+                for (int x = 0; x < worldSize; x++) {
+                    Biomes.Biome biome = Biomes.getBiomeAt(biomeMap, x, y);
+                    if (biome.equals(Biomes.FOREST)) {
+                        float threshold = 0.2f;
+                        float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
+                        float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
+                        tutEngine.getEntityManager().addEntity(Entities.BUSH_SMALL, x + xOff, y + yOff, true);
+                    }
+                }
+            }
+
+            /*for (int y = 0; y < worldSize; y++) {
+                for (int x = 0; x < worldSize; x++) {
+                    Biomes.Biome biome = Biomes.getBiomeAt(biomeMap, x, y);
+                    if (biome.equals(Biomes.FOREST)) {
+                        float threshold = 0.2f;
+                        float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
+                        float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
+                        tutEngine.getEntityManager().addEntity(Entities.BUSH_MEDIUM, x + xOff, y + yOff, true);
+                    }
+                }
+            }
+
+            for (int y = 0; y < worldSize; y++) {
+                for (int x = 0; x < worldSize; x++) {
+                    Biomes.Biome biome = Biomes.getBiomeAt(biomeMap, x, y);
+                    if (biome.equals(Biomes.FOREST)) {
+                        float threshold = 0.2f;
+                        float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
+                        float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
+                        tutEngine.getEntityManager().addEntity(Entities.TREE_EXTRA_LARGE, x + xOff, y + yOff, true);
+                    }
+                }
+            }*/
         }, "WorldGenerator-Thread");
         generatorThread.start();
     }
@@ -103,7 +130,7 @@ public class WorldGenerator {
                 tiles.setTile(x, y, tile.setPos(new TilePos(x, y)));
             }
         }
-        tiles = generateOres(tiles, seedOreOffInc, true);
+        generateOres(tiles, seedOreOffInc, true);
         bgTilesGenerated = true;
         logger.info("Background tiles generated");
         return tiles;
@@ -137,13 +164,13 @@ public class WorldGenerator {
                 tiles.setTile(x, y, tile.setPos(new TilePos(x, y)));
             }
         }
-        tiles = generateOres(tiles, 0, false);
+        generateOres(tiles, 0, false);
         fgTilesGenerated = true;
         logger.info("Foreground tiles generated");
         return tiles;
     }
 
-    private TileList generateOres(TileList tiles, long seedOff, boolean bg) {
+    private void generateOres(TileList tiles, long seedOff, boolean bg) {
         double oreSize = 1.0d;
         double stoneSize = 10.0d;
 
@@ -156,8 +183,6 @@ public class WorldGenerator {
         addOre(tiles, Tiles.DIORITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
 
         addOre(tiles, Tiles.BROKEN_STONE, -0.15d, 0.15d, stoneSize, seedOff, bg);
-
-        return tiles;
     }
 
     private void addOre(TileList tiles, Tile ore, double minThreshold, double maxThreshold, double blendSize, long seedOff, boolean bg) {
@@ -200,10 +225,6 @@ public class WorldGenerator {
 
     public TileList getFgTiles() {
         return fgTiles;
-    }
-
-    public BufferedImage getBiomeMap() {
-        return biomeMap;
     }
 
     public boolean isGenerated() {

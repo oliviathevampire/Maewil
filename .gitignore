@@ -39,3 +39,4 @@ saves/saved_games.json
 *.tutlog
 logs/*
 screenshots/
+run/
