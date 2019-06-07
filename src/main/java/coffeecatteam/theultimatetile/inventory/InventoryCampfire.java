@@ -2,15 +2,15 @@ package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
 import coffeecatteam.theultimatetile.objs.items.Item;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.items.Items;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.start.TutLauncher;
-import coffeecatteam.theultimatetile.state.options.StateOptions;
-import coffeecatteam.theultimatetile.state.options.controls.Keybind;
-import coffeecatteam.theultimatetile.tags.TagCompound;
+import coffeecatteam.theultimatetile.screen.options.OptionsScreen;
+import coffeecatteam.theultimatetile.screen.options.controls.Keybind;
+import coffeecatteam.theultimatetile.tags.CompoundTag;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -19,9 +19,9 @@ import org.newdawn.slick.state.StateBasedGame;
 public class InventoryCampfire extends InventoryAbstractPlayer {
 
     private Image flame = Assets.getSpriteExact("/assets/textures/gui/inventory/campfire.png", 57, 0, 16, 15);
-    private TagCompound TAGS;
+    private CompoundTag TAGS;
 
-    public InventoryCampfire(TutEngine tutEngine, EntityPlayer player, TagCompound TAGS) {
+    public InventoryCampfire(TutEngine tutEngine, PlayerEntity player, CompoundTag TAGS) {
         super(tutEngine, player, "Campfire", 190, 370);
         this.TAGS = TAGS;
 
@@ -61,8 +61,8 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
         super.update(container, game, delta);
 
         if (active) {
-            if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.X).getKeyCode())) {
-                //if (slots.get(getInventorySelectedIndex()).getStack() == null || slots.get(getInventorySelectedIndex()).getStack().getItem() instanceof ItemFood) {
+            if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.X).getKeyCode())) {
+                //if (slots.get(getInventorySelectedIndex()).getStack() == null || slots.get(getInventorySelectedIndex()).getStack().getItem() instanceof FoodItem) {
                 swapSlots(slots.get(slots.size() - 1), slots.get(getInventorySelectedIndex()));
                 //}
             }
@@ -93,7 +93,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
         }
     }
 
-    public void setTAGS(TagCompound TAGS) {
+    public void setTAGS(CompoundTag TAGS) {
         this.TAGS = TAGS;
     }
 }

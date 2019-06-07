@@ -28,7 +28,7 @@ public class UtilsIdk {
         String username;
         int nameLength = 16;
         try {
-            username = JOptionPane.showInputDialog("Please enter a usernameMust be max " + nameLength + " characters", defaultName);
+            username = JOptionPane.showInputDialog("Please enter a username! Must be max " + nameLength + " characters", defaultName);
             if (username.length() > nameLength || username.equalsIgnoreCase(""))
                 username = getUsername(username);
             //username = username.substring(0, nameLength);

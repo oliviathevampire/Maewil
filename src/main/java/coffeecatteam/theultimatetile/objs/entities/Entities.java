@@ -4,28 +4,28 @@ import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.objs.EntityDataParser;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityCow;
-import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityFox;
-import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntityPig;
-import coffeecatteam.theultimatetile.objs.entities.creatures.passive.EntitySheep;
-import coffeecatteam.theultimatetile.objs.entities.creatures.undead.EntityBouncer;
-import coffeecatteam.theultimatetile.objs.entities.creatures.undead.EntitySkeleton;
-import coffeecatteam.theultimatetile.objs.entities.creatures.undead.EntityThing;
-import coffeecatteam.theultimatetile.objs.entities.creatures.undead.EntityZombie;
-import coffeecatteam.theultimatetile.objs.entities.statics.EntityExtraLife;
-import coffeecatteam.theultimatetile.objs.entities.statics.EntityUltimateTile;
-import coffeecatteam.theultimatetile.objs.entities.statics.interactable.EntityCampfire;
-import coffeecatteam.theultimatetile.objs.entities.statics.interactable.EntityShopStall;
-import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityBush;
-import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityCrop;
-import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityRock;
-import coffeecatteam.theultimatetile.objs.entities.statics.nature.EntityTree;
+import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.passive.CowEntity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.passive.FoxEntity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.passive.PigEntity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.passive.SheepEntity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.undead.BouncerEntity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.undead.SkeletonEntity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.undead.ThingEntity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.undead.ZombieEntity;
+import coffeecatteam.theultimatetile.objs.entities.statics.ExtraLifeEntity;
+import coffeecatteam.theultimatetile.objs.entities.statics.UltimateTileEntity;
+import coffeecatteam.theultimatetile.objs.entities.statics.interactable.CampfireEntity;
+import coffeecatteam.theultimatetile.objs.entities.statics.interactable.ShopStallEntity;
+import coffeecatteam.theultimatetile.objs.entities.statics.nature.BushEntity;
+import coffeecatteam.theultimatetile.objs.entities.statics.nature.CropEntity;
+import coffeecatteam.theultimatetile.objs.entities.statics.nature.RockEntity;
+import coffeecatteam.theultimatetile.objs.entities.statics.nature.TreeEntity;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.tags.JsonToTag;
-import coffeecatteam.theultimatetile.tags.TagCompound;
+import coffeecatteam.theultimatetile.tags.CompoundTag;
 import coffeecatteam.theultimatetile.tags.TagException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -47,7 +47,7 @@ public class Entities {
     /*
      * Player
      */
-    public static EntityPlayer PLAYER;
+    public static PlayerEntity PLAYER;
 
     /*
      * Static
@@ -84,53 +84,53 @@ public class Entities {
          * Player
          */
         String username = ArgUtils.hasArgument("-username") ? ArgUtils.getArgument("-username") : "";
-        register(PLAYER = (EntityPlayer) parser.loadData(new EntityPlayer(tutEngine, username)));
+        register(PLAYER = (PlayerEntity) parser.loadData(new PlayerEntity(tutEngine, username)));
         tutEngine.getEntityManager().setPlayer(PLAYER);
 
         /*
          * Static
          */
-        register(TREE_SMALL = parser.loadData(new EntityTree(tutEngine, EntityTree.TreeType.SMALL)));
-        register(TREE_MEDIUM = parser.loadData(new EntityTree(tutEngine, EntityTree.TreeType.MEDIUM)));
-        register(TREE_LARGE = parser.loadData(new EntityTree(tutEngine, EntityTree.TreeType.LARGE)));
-        register(TREE_EXTRA_LARGE = parser.loadData(new EntityTree(tutEngine, EntityTree.TreeType.EXTRA_LARGE)));
+        register(TREE_SMALL = parser.loadData(new TreeEntity(tutEngine, TreeEntity.TreeType.SMALL)));
+        register(TREE_MEDIUM = parser.loadData(new TreeEntity(tutEngine, TreeEntity.TreeType.MEDIUM)));
+        register(TREE_LARGE = parser.loadData(new TreeEntity(tutEngine, TreeEntity.TreeType.LARGE)));
+        register(TREE_EXTRA_LARGE = parser.loadData(new TreeEntity(tutEngine, TreeEntity.TreeType.EXTRA_LARGE)));
 
-        register(ROCK_SMALL = parser.loadData(new EntityRock(tutEngine, EntityRock.RockType.SMALL)));
-        register(ROCK_MEDIUM = parser.loadData(new EntityRock(tutEngine, EntityRock.RockType.MEDIUM)));
+        register(ROCK_SMALL = parser.loadData(new RockEntity(tutEngine, RockEntity.RockType.SMALL)));
+        register(ROCK_MEDIUM = parser.loadData(new RockEntity(tutEngine, RockEntity.RockType.MEDIUM)));
 
-        register(BUSH_SMALL = parser.loadData(new EntityBush(tutEngine, EntityRock.RockType.SMALL)));
-        register(BUSH_MEDIUM = parser.loadData(new EntityBush(tutEngine, EntityRock.RockType.MEDIUM)));
+        register(BUSH_SMALL = parser.loadData(new BushEntity(tutEngine, RockEntity.RockType.SMALL)));
+        register(BUSH_MEDIUM = parser.loadData(new BushEntity(tutEngine, RockEntity.RockType.MEDIUM)));
 
-        register(CROP_CARROT = parser.loadData(new EntityCrop(tutEngine, EntityCrop.CropType.CARROT)));
-        register(CROP_WHEAT = parser.loadData(new EntityCrop(tutEngine, EntityCrop.CropType.WHEAT)));
-        register(CROP_POTATO = parser.loadData(new EntityCrop(tutEngine, EntityCrop.CropType.POTATO)));
-        register(CROP_TOMATO = parser.loadData(new EntityCrop(tutEngine, EntityCrop.CropType.TOMATO)));
-        register(CROP_CORN = parser.loadData(new EntityCrop(tutEngine, EntityCrop.CropType.CORN)));
+        register(CROP_CARROT = parser.loadData(new CropEntity(tutEngine, CropEntity.CropType.CARROT)));
+        register(CROP_WHEAT = parser.loadData(new CropEntity(tutEngine, CropEntity.CropType.WHEAT)));
+        register(CROP_POTATO = parser.loadData(new CropEntity(tutEngine, CropEntity.CropType.POTATO)));
+        register(CROP_TOMATO = parser.loadData(new CropEntity(tutEngine, CropEntity.CropType.TOMATO)));
+        register(CROP_CORN = parser.loadData(new CropEntity(tutEngine, CropEntity.CropType.CORN)));
 
-        register(ULTIMATE = parser.loadData(new EntityUltimateTile(tutEngine)));
-        register(EXTRA_LIFE = parser.loadData(new EntityExtraLife(tutEngine)));
-        register(SHOP = parser.loadData(new EntityShopStall(tutEngine)));
-        register(CAMPFIRE = parser.loadData(new EntityCampfire(tutEngine)));
+        register(ULTIMATE = parser.loadData(new UltimateTileEntity(tutEngine)));
+        register(EXTRA_LIFE = parser.loadData(new ExtraLifeEntity(tutEngine)));
+        register(SHOP = parser.loadData(new ShopStallEntity(tutEngine)));
+        register(CAMPFIRE = parser.loadData(new CampfireEntity(tutEngine)));
 
         /*
          * Creature
          */
         // Undead
-        register(ZOMBIE = parser.loadData(new EntityZombie(tutEngine)));
-        register(SKELETON = parser.loadData(new EntitySkeleton(tutEngine)));
-        register(BOUNCER = parser.loadData(new EntityBouncer(tutEngine)));
-        register(THING = parser.loadData(new EntityThing(tutEngine)));
+        register(ZOMBIE = parser.loadData(new ZombieEntity(tutEngine)));
+        register(SKELETON = parser.loadData(new SkeletonEntity(tutEngine)));
+        register(BOUNCER = parser.loadData(new BouncerEntity(tutEngine)));
+        register(THING = parser.loadData(new ThingEntity(tutEngine)));
 
         // Living
-        register(PIG = parser.loadData(new EntityPig(tutEngine)));
-        register(COW = parser.loadData(new EntityCow(tutEngine)));
-        register(SHEEP = parser.loadData(new EntitySheep(tutEngine)));
-        register(FOX = parser.loadData(new EntityFox(tutEngine)));
+        register(PIG = parser.loadData(new PigEntity(tutEngine)));
+        register(COW = parser.loadData(new CowEntity(tutEngine)));
+        register(SHEEP = parser.loadData(new SheepEntity(tutEngine)));
+        register(FOX = parser.loadData(new FoxEntity(tutEngine)));
 
         /*
          * Other
          */
-        register(ITEM = parser.loadData(new EntityItem(tutEngine, (ItemStack) null))); // PLACE HOLDER IF NEEDED
+        register(ITEM = parser.loadData(new ItemEntity(tutEngine, (ItemStack) null))); // PLACE HOLDER IF NEEDED
 
         TutLauncher.LOGGER.info("Entities registered!");
     }
@@ -156,13 +156,13 @@ public class Entities {
         position.y = NumberUtils.parseDouble(posObj.get("y"));
         entity.setPosition(position);
 
-        TagCompound tags;
+        CompoundTag tags;
         try {
             JSONObject tagsJson = (JSONObject) json.get("tags");
             tags = JsonToTag.getTagFromJson(tagsJson.toString());
         } catch (TagException e) {
             TutLauncher.LOGGER.error(e);
-            tags = new TagCompound();
+            tags = new CompoundTag();
         }
         entity.setTags(tags);
 

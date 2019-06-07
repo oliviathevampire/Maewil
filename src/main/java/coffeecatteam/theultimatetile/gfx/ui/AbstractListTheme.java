@@ -10,7 +10,7 @@ import org.newdawn.slick.state.StateBasedGame;
  * @author CoffeeCatRailway
  * Created: 28/04/2019
  */
-public abstract class AbstractListTheme extends UIObject {
+public abstract class AbstractListTheme extends WidgetObject {
 
     public static final float SIZE = 51;
 

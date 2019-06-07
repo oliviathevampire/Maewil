@@ -1,14 +1,14 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
 import coffeecatteam.theultimatetile.objs.items.IInteractable;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.start.TutLauncher;
-import coffeecatteam.theultimatetile.state.options.StateOptions;
-import coffeecatteam.theultimatetile.state.options.controls.Keybind;
+import coffeecatteam.theultimatetile.screen.options.OptionsScreen;
+import coffeecatteam.theultimatetile.screen.options.controls.Keybind;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -21,11 +21,11 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
     protected boolean isDefault = false;
 
-    public InventoryAbstractPlayer(TutEngine tutEngine, EntityPlayer player, String invName) {
+    public InventoryAbstractPlayer(TutEngine tutEngine, PlayerEntity player, String invName) {
         this(tutEngine, player, invName, 190, 360);
     }
 
-    public InventoryAbstractPlayer(TutEngine tutEngine, EntityPlayer player, String invName, int xOff, int yOff) {
+    public InventoryAbstractPlayer(TutEngine tutEngine, PlayerEntity player, String invName, int xOff, int yOff) {
         super(tutEngine, player, invName);
 
         // Add inventory slots
@@ -69,16 +69,16 @@ public abstract class InventoryAbstractPlayer extends Inventory {
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
 //        if (!isDefault)
-//            if (theUltimateTile.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.E).getKeyCode() | StateOptions.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()))
+//            if (theUltimateTile.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.E).getKeyCode() | OptionsScreen.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()))
 //                player.openCloseInventory(this);
 //                //player.closeAllInventories();
 
         if (active) {
             // Change select item
-            boolean up = tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.W).getKeyCode());
-            boolean down = tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.S).getKeyCode());
-            boolean left = tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.A).getKeyCode());
-            boolean right = tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.D).getKeyCode());
+            boolean up = tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.W).getKeyCode());
+            boolean down = tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.S).getKeyCode());
+            boolean left = tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.A).getKeyCode());
+            boolean right = tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.D).getKeyCode());
 
             if (up || down) {
                 inventorySelectedIndex += 6;
@@ -100,7 +100,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
                 if (stack != null) {
                     // Check if item was interacted with
-                    if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.R).getKeyCode())) {
+                    if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.R).getKeyCode())) {
                         if (stack.getItem() instanceof IInteractable)
                             if (((IInteractable) stack.getItem()).onInteracted(player))
                                 stack.setCount(stack.getCount() - 1);
@@ -113,18 +113,18 @@ public abstract class InventoryAbstractPlayer extends Inventory {
             }
 
             // Swap selected stacks
-            if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Z).getKeyCode()))
+            if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.Z).getKeyCode()))
                 swapSlots(getSlot(inventorySelectedIndex), getSlot(maxSize + hotbarSelectedIndex));
         }
         if (this.active)
-            if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.Q).getKeyCode()))
+            if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.Q).getKeyCode()))
                 dropItem(active, inventorySelectedIndex, hotbarSelectedIndex);
 
-        if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.ONE).getKeyCode()))
+        if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.ONE).getKeyCode()))
             hotbarSelectedIndex = 0;
-        if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.TWO).getKeyCode()))
+        if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.TWO).getKeyCode()))
             hotbarSelectedIndex = 1;
-        if (tutEngine.getKeyManager().keyJustPressed(StateOptions.OPTIONS.controls().get(Keybind.THREE).getKeyCode()))
+        if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.THREE).getKeyCode()))
             hotbarSelectedIndex = 2;
         if (hotbarSelectedIndex < maxSize + maxHotbarSize) {
             player.setEquippedItem(getSlot(maxSize + hotbarSelectedIndex).getStack());

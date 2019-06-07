@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.gfx.overlays;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.start.TutLauncher;
 import org.newdawn.slick.Color;
@@ -14,7 +14,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class OverlayGlub extends Overlay {
 
-    public OverlayGlub(TutEngine tutEngine, EntityPlayer player) {
+    public OverlayGlub(TutEngine tutEngine, PlayerEntity player) {
         super(tutEngine, player);
     }
 

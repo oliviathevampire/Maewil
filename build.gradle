@@ -50,6 +50,7 @@ repositories {
     maven { url "http://b2s-repo.googlecode.com/svn/trunk/mvn-repo" }
     maven { url "http://java.freehep.org/maven2" }
     maven { url "http://download.java.net/maven/2" }
+    maven { url "http://maven.fabricmc.net"}
 }
 
 launch4j {
@@ -72,34 +73,10 @@ dependencies {
     compile group: 'org.slick2d', name: 'slick2d-core', version: '1.0.2'
 
     implementation 'com.github.CoffeeCatRailway:CoffeeCatUtils:master-SNAPSHOT'
+    compile "net.fabricmc:fabric-loader:0.4.8+build.154"
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
-
-    implementation "org.lwjgl:lwjgl:$lwjglVersion"
-	implementation "org.lwjgl:lwjgl-bgfx:$lwjglVersion"
-	implementation "org.lwjgl:lwjgl-cuda:$lwjglVersion"
-	implementation "org.lwjgl:lwjgl-egl:$lwjglVersion"
-	implementation "org.lwjgl:lwjgl-glfw:$lwjglVersion"
-	implementation "org.lwjgl:lwjgl-jawt:$lwjglVersion"
-	implementation "org.lwjgl:lwjgl-nanovg:$lwjglVersion"
-	implementation "org.lwjgl:lwjgl-nuklear:$lwjglVersion"
-	implementation "org.lwjgl:lwjgl-openal:$lwjglVersion"
-	implementation "org.lwjgl:lwjgl-opencl:$lwjglVersion"
-	implementation "org.lwjgl:lwjgl-opengl:$lwjglVersion"
-	implementation "org.lwjgl:lwjgl-opengles:$lwjglVersion"
-	implementation "org.lwjgl:lwjgl-openvr:$lwjglVersion"
-	implementation "org.lwjgl:lwjgl-vulkan:$lwjglVersion"
-	runtimeOnly "org.lwjgl:lwjgl:$lwjglVersion:$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-bgfx:$lwjglVersion:$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-glfw:$lwjglVersion:$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-nanovg:$lwjglVersion:$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-nuklear:$lwjglVersion:$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-openal:$lwjglVersion:$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-opengl:$lwjglVersion:$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-opengles:$lwjglVersion:$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-openvr:$lwjglVersion:$lwjglNatives"
-	if (lwjglNatives == "natives-macos") runtimeOnly "org.lwjgl:lwjgl-vulkan:$lwjglVersion:$lwjglNatives"
-	implementation "org.joml:joml:${jomlVersion}"
+    implementation "org.joml:joml:${jomlVersion}"
 }
 
 jar {

@@ -23,13 +23,13 @@ public class Camera {
     public void checkBlankSpace() {
         if (xOffset < 0)
             xOffset = 0;
-        else if (xOffset > tutEngine.getWorld().getWidth() * Tile.TILE_SIZE - TutLauncher.WIDTH)
-            xOffset = tutEngine.getWorld().getWidth() * Tile.TILE_SIZE - TutLauncher.WIDTH;
+        else if (xOffset > tutEngine.getWorld().getWorldWidth() * Tile.TILE_SIZE - TutLauncher.WIDTH)
+            xOffset = tutEngine.getWorld().getWorldWidth() * Tile.TILE_SIZE - TutLauncher.WIDTH;
 
         if (yOffset < 0)
             yOffset = 0;
-        else if (yOffset > tutEngine.getWorld().getHeight() * Tile.TILE_SIZE - TutLauncher.HEIGHT)
-            yOffset = tutEngine.getWorld().getHeight() * Tile.TILE_SIZE - TutLauncher.HEIGHT;
+        else if (yOffset > tutEngine.getWorld().getWorldHeight() * Tile.TILE_SIZE - TutLauncher.HEIGHT)
+            yOffset = tutEngine.getWorld().getWorldHeight() * Tile.TILE_SIZE - TutLauncher.HEIGHT;
     }
 
     public void centerOnEntity(Entity e) {

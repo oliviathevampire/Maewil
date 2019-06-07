@@ -11,9 +11,9 @@ import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.Tiles;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.start.TutLauncher;
-import coffeecatteam.theultimatetile.state.game.StateSelectGame;
+import coffeecatteam.theultimatetile.screen.game.SelectGameScreen;
 import coffeecatteam.theultimatetile.tags.JsonToTag;
-import coffeecatteam.theultimatetile.tags.TagCompound;
+import coffeecatteam.theultimatetile.tags.CompoundTag;
 import coffeecatteam.theultimatetile.tags.TagException;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.world.TileList;
@@ -139,9 +139,9 @@ public class WorldJsonLoader implements IJSONLoader {
         int ty = NumberUtils.parseInt(tileObj.get("y"));
 
         if (bg)
-            bg_tiles.setTile(tx, ty, tile);
+            bg_tiles.setTileAtPos(tx, ty, tile);
         else
-            fg_tiles.setTile(tx, ty, tile);
+            fg_tiles.setTileAtPos(tx, ty, tile);
     }
 
     public void loadEntities() throws IOException, ParseException {
@@ -288,7 +288,7 @@ public class WorldJsonLoader implements IJSONLoader {
     private void loadEntityObj(JSONObject entityObj) {
         String id = (String) entityObj.get("id");
 
-        TagCompound tags = new TagCompound();
+        CompoundTag tags = new CompoundTag();
         if (entityObj.containsKey("tags")) {
             JSONObject tagsJson = (JSONObject) entityObj.get("tags");
             try {
@@ -320,7 +320,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
     public static void copyFiles(TutEngine tutEngine, String from, String dest) {
         for (String file : BASE_FILES.values())
-            copy(tutEngine, StateSelectGame.class.getResourceAsStream(from + "/" + file + ".json"), dest + "/" + file + ".json");
+            copy(tutEngine, SelectGameScreen.class.getResourceAsStream(from + "/" + file + ".json"), dest + "/" + file + ".json");
     }
 
 
@@ -362,11 +362,11 @@ public class WorldJsonLoader implements IJSONLoader {
         return spawnY;
     }
 
-    public TileList getBg_tiles() {
+    public TileList getBGTiles() {
         return bg_tiles;
     }
 
-    public TileList getFg_tiles() {
+    public TileList getFGTiles() {
         return fg_tiles;
     }
 

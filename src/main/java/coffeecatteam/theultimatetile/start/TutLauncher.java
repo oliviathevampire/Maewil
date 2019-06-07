@@ -5,8 +5,8 @@ import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.coffeecatutils.logger.CatLoggerUtils;
 import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
-import coffeecatteam.theultimatetile.state.StateManager;
-import coffeecatteam.theultimatetile.state.game.StateGame;
+import coffeecatteam.theultimatetile.screen.ScreenManager;
+import coffeecatteam.theultimatetile.screen.game.GameScreen;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
@@ -22,7 +22,7 @@ import java.io.File;
 public class TutLauncher extends StateBasedGame {
 
     /*
-     * State Ids
+     * Screen Ids
      */
     public static final int ID_SPLASHSCREEN = 0;
     public static final int ID_GAME = 1;
@@ -50,7 +50,7 @@ public class TutLauncher extends StateBasedGame {
     }
 
     @Override
-    public void initStatesList(GameContainer gameContainer) throws SlickException {
+    public void initStatesList(GameContainer gameContainer) {
         this.addState(new SplashScreen());
         this.addState(new TutEngine());
 
@@ -66,9 +66,9 @@ public class TutLauncher extends StateBasedGame {
             Sounds.BG_MUSIC.stop();
         LOGGER.warn("Shutting down [" + TITLE + "] engine!");
 
-        if (StateManager.getCurrentState() instanceof StateGame) {
+        if (ScreenManager.getCurrentScreen() instanceof GameScreen) {
             LOGGER.info("Saving world!");
-            ((StateGame) StateManager.getCurrentState()).saveWorld(true);
+            ((GameScreen) ScreenManager.getCurrentScreen()).saveWorld(true);
             LOGGER.info("World saved!");
         }
 

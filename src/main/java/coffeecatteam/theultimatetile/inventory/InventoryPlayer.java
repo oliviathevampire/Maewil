@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.start.TutLauncher;
 import org.newdawn.slick.GameContainer;
@@ -10,8 +10,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class InventoryPlayer extends InventoryAbstractPlayer {
 
-    public InventoryPlayer(TutEngine tutEngine, EntityPlayer player) {
-        super(tutEngine, player, "Player");
+    public InventoryPlayer(TutEngine tutEngine, PlayerEntity player) {
+        super(tutEngine, player, "Player", TutLauncher.WIDTH / 2 - 57 * 6 / 2, TutLauncher.HEIGHT / 2 - 31 * 6 / 2);
         isDefault = true;
     }
 

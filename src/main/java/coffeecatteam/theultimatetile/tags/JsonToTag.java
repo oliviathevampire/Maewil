@@ -1,9 +1,9 @@
 package coffeecatteam.theultimatetile.tags;
 
-import coffeecatteam.theultimatetile.tags.primitive.TagDouble;
-import coffeecatteam.theultimatetile.tags.primitive.TagFloat;
-import coffeecatteam.theultimatetile.tags.primitive.TagInt;
-import coffeecatteam.theultimatetile.tags.supers.TagBase;
+import coffeecatteam.theultimatetile.tags.primitive.DoubleTag;
+import coffeecatteam.theultimatetile.tags.primitive.FloatTag;
+import coffeecatteam.theultimatetile.tags.primitive.IntTag;
+import coffeecatteam.theultimatetile.tags.supers.BaseTag;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -25,12 +25,12 @@ public class JsonToTag {
     private final String string;
     private int cursor;
 
-    public static TagCompound getTagFromJson(String jsonString) throws TagException {
+    public static CompoundTag getTagFromJson(String jsonString) throws TagException {
         return (new JsonToTag(jsonString)).readSingleStruct();
     }
 
-    TagCompound readSingleStruct() throws TagException {
-        TagCompound nbttagcompound = this.readStruct();
+    CompoundTag readSingleStruct() throws TagException {
+        CompoundTag nbttagcompound = this.readStruct();
         this.skipWhitespace();
 
         if (this.canRead()) {
@@ -59,11 +59,11 @@ public class JsonToTag {
         return new TagException(message, this.string, this.cursor);
     }
 
-    protected TagBase readTypedValue() throws TagException {
+    protected BaseTag readTypedValue() throws TagException {
         this.skipWhitespace();
 
         if (this.peek() == '"') {
-            return new TagString(this.readQuotedString());
+            return new StringTag(this.readQuotedString());
         } else {
             String s = this.readString();
 
@@ -75,36 +75,36 @@ public class JsonToTag {
         }
     }
 
-    private TagBase type(String stringIn) {
+    private BaseTag type(String stringIn) {
         try {
             if (FLOAT_PATTERN.matcher(stringIn).matches()) {
-                return new TagFloat(Float.parseFloat(stringIn.substring(0, stringIn.length() - 1)));
+                return new FloatTag(Float.parseFloat(stringIn.substring(0, stringIn.length() - 1)));
             }
 
             if (INT_PATTERN.matcher(stringIn).matches()) {
-                return new TagInt(Integer.parseInt(stringIn));
+                return new IntTag(Integer.parseInt(stringIn));
             }
 
             if (DOUBLE_PATTERN.matcher(stringIn).matches()) {
-                return new TagDouble(Double.parseDouble(stringIn.substring(0, stringIn.length() - 1)));
+                return new DoubleTag(Double.parseDouble(stringIn.substring(0, stringIn.length() - 1)));
             }
 
             if (DOUBLE_PATTERN_NOSUFFIX.matcher(stringIn).matches()) {
-                return new TagDouble(Double.parseDouble(stringIn));
+                return new DoubleTag(Double.parseDouble(stringIn));
             }
 
             if ("true".equalsIgnoreCase(stringIn)) {
-                return new TagBoolean(true);
+                return new BooleanTag(true);
             }
 
             if ("false".equalsIgnoreCase(stringIn)) {
-                return new TagBoolean(false);
+                return new BooleanTag(false);
             }
         } catch (NumberFormatException var3) {
             ;
         }
 
-        return new TagString(stringIn);
+        return new StringTag(stringIn);
     }
 
     private String readQuotedString() throws TagException {
@@ -155,7 +155,7 @@ public class JsonToTag {
         return this.string.substring(i, this.cursor);
     }
 
-    protected TagBase readValue() throws TagException {
+    protected BaseTag readValue() throws TagException {
         this.skipWhitespace();
 
         if (!this.canRead()) {
@@ -171,13 +171,13 @@ public class JsonToTag {
         }
     }
 
-    protected TagBase readList() throws TagException {
+    protected BaseTag readList() throws TagException {
         return this.canRead(2) ? this.readArrayTag() : this.readListTag();
     }
 
-    protected TagCompound readStruct() throws TagException {
+    protected CompoundTag readStruct() throws TagException {
         this.expect('{');
-        TagCompound nbttagcompound = new TagCompound();
+        CompoundTag nbttagcompound = new CompoundTag();
         this.skipWhitespace();
 
         while (this.canRead() && this.peek() != '}') {
@@ -203,24 +203,24 @@ public class JsonToTag {
         return nbttagcompound;
     }
 
-    private TagBase readListTag() throws TagException {
+    private BaseTag readListTag() throws TagException {
         this.expect('[');
         this.skipWhitespace();
 
         if (!this.canRead()) {
             throw this.exception("Expected value");
         } else {
-            TagList nbttaglist = new TagList();
+            ListTag nbttaglist = new ListTag();
             int i = -1;
 
             while (this.peek() != ']') {
-                TagBase nbtbase = this.readValue();
+                BaseTag nbtbase = this.readValue();
                 int j = nbtbase.getId();
 
                 if (i < 0) {
                     i = j;
                 } else if (j != i) {
-                    throw this.exception("Unable to insert " + TagBase.getTagTypeName(j) + " into ListTag of type " + TagBase.getTagTypeName(i));
+                    throw this.exception("Unable to insert " + BaseTag.getTagTypeName(j) + " into ListTag of type " + BaseTag.getTagTypeName(i));
                 }
 
                 nbttaglist.appendTag(nbtbase);
@@ -239,7 +239,7 @@ public class JsonToTag {
         }
     }
 
-    private TagBase readArrayTag() throws TagException {
+    private BaseTag readArrayTag() throws TagException {
         this.expect('[');
         this.pop();
         this.skipWhitespace();
@@ -247,12 +247,12 @@ public class JsonToTag {
         if (!this.canRead()) {
             throw this.exception("Expected value");
         } else {
-            return new TagList(readArray());
+            return new ListTag(readArray());
         }
     }
 
-    private List<TagBase> readArray() throws TagException {
-        List<TagBase> list = new ArrayList<>();
+    private List<BaseTag> readArray() throws TagException {
+        List<BaseTag> list = new ArrayList<>();
         StringBuilder json = new StringBuilder("{\"array\":[\"");
 
         while (this.peek() != ']') {
@@ -275,7 +275,7 @@ public class JsonToTag {
             JSONParser parser = new JSONParser();
             JSONObject jsonObj = (JSONObject) parser.parse(json.toString());
             JSONArray array = (JSONArray) jsonObj.get("array");
-            for (int i = 0; i < array.size(); i++) list.add(new TagString((String) array.get(i)));
+            for (int i = 0; i < array.size(); i++) list.add(new StringTag((String) array.get(i)));
         } catch (ParseException e) {
             e.printStackTrace();
         }

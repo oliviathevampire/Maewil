@@ -6,7 +6,7 @@ import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
 import coffeecatteam.theultimatetile.objs.tiles.Tiles;
-import coffeecatteam.theultimatetile.objs.tiles.stone.TileStone;
+import coffeecatteam.theultimatetile.objs.tiles.stone.StoneTile;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.world.colormap.Biomes;
 import coffeecatteam.theultimatetile.world.colormap.WorldColors;
@@ -68,37 +68,13 @@ public class WorldGenerator {
                 for (int x = 0; x < worldSize; x++) {
                     Biomes.Biome biome = Biomes.getBiomeAt(biomeMap, x, y);
                     if (biome.equals(Biomes.FOREST)) {
-                        float threshold = 0.2f;
+                        float threshold = 0.1f;
                         float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
                         float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
-                        tutEngine.getEntityManager().addEntity(Entities.BUSH_SMALL, x + xOff, y + yOff, true);
+                        tutEngine.getEntityManager().addEntity(Entities.BUSH_SMALL, x + xOff, y + yOff, false);
                     }
                 }
             }
-
-            /*for (int y = 0; y < worldSize; y++) {
-                for (int x = 0; x < worldSize; x++) {
-                    Biomes.Biome biome = Biomes.getBiomeAt(biomeMap, x, y);
-                    if (biome.equals(Biomes.FOREST)) {
-                        float threshold = 0.2f;
-                        float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
-                        float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
-                        tutEngine.getEntityManager().addEntity(Entities.BUSH_MEDIUM, x + xOff, y + yOff, true);
-                    }
-                }
-            }
-
-            for (int y = 0; y < worldSize; y++) {
-                for (int x = 0; x < worldSize; x++) {
-                    Biomes.Biome biome = Biomes.getBiomeAt(biomeMap, x, y);
-                    if (biome.equals(Biomes.FOREST)) {
-                        float threshold = 0.2f;
-                        float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
-                        float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
-                        tutEngine.getEntityManager().addEntity(Entities.TREE_EXTRA_LARGE, x + xOff, y + yOff, true);
-                    }
-                }
-            }*/
         }, "WorldGenerator-Thread");
         generatorThread.start();
     }
@@ -127,7 +103,7 @@ public class WorldGenerator {
 
                 tile = tile.newCopy();
                 checkBorderTilePos(tile, x, y, true);
-                tiles.setTile(x, y, tile.setPos(new TilePos(x, y)));
+                tiles.setTileAtPos(x, y, tile.pos(new TilePos(x, y)));
             }
         }
         generateOres(tiles, seedOreOffInc, true);
@@ -161,7 +137,7 @@ public class WorldGenerator {
 
                 tile = tile.newCopy();
                 checkBorderTilePos(tile, x, y, false);
-                tiles.setTile(x, y, tile.setPos(new TilePos(x, y)));
+                tiles.setTileAtPos(x, y, tile.pos(new TilePos(x, y)));
             }
         }
         generateOres(tiles, 0, false);
@@ -192,15 +168,15 @@ public class WorldGenerator {
         for (int y = 0; y < worldSize; y++) {
             for (int x = 0; x < worldSize; x++) {
                 double value = noise.getPerlinNoise((float) (x / blendSize), (float) (y / blendSize));
-                if (tiles.getTile(x, y) instanceof TileStone) {
-                    Tile tile = tiles.getTile(x, y);
+                if (tiles.getTileAtPos(x, y) instanceof StoneTile) {
+                    Tile tile = tiles.getTileAtPos(x, y);
 
                     if (value > minThreshold && value < maxThreshold) {
                         tile = ore.newCopy();
                     }
 
                     checkBorderTilePos(tile, x, y, bg);
-                    tiles.setTile(x, y, tile.setPos(new TilePos(x, y)));
+                    tiles.setTileAtPos(x, y, tile.pos(new TilePos(x, y)));
                 }
             }
         }
@@ -208,10 +184,10 @@ public class WorldGenerator {
 
     private void checkBorderTilePos(Tile tile, int x, int y, boolean bg) {
         if (bg)
-            tile.setSolid(false);
+            tile.isSolid(false);
         if (x == 0 || y == 0 || x >= worldSize - 1 || y >= worldSize - 1) {
-            tile.setSolid(true);
-            tile.setUnbreakable(true);
+            tile.isSolid(true);
+            tile.isUnbreakable(true);
         }
     }
 

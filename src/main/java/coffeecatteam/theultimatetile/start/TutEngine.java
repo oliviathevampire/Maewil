@@ -11,17 +11,16 @@ import coffeecatteam.theultimatetile.manager.EntityManager;
 import coffeecatteam.theultimatetile.manager.InventoryManager;
 import coffeecatteam.theultimatetile.manager.KeyManager;
 import coffeecatteam.theultimatetile.objs.entities.Entities;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
 import coffeecatteam.theultimatetile.objs.items.Items;
 import coffeecatteam.theultimatetile.objs.tiles.Tiles;
-import coffeecatteam.theultimatetile.state.StateCredits;
-import coffeecatteam.theultimatetile.state.StateManager;
-import coffeecatteam.theultimatetile.state.StateMenu;
-import coffeecatteam.theultimatetile.state.StateUITesting;
-import coffeecatteam.theultimatetile.state.game.StateSelectGame;
-import coffeecatteam.theultimatetile.state.options.OptionsSounds;
-import coffeecatteam.theultimatetile.state.options.StateOptions;
-import coffeecatteam.theultimatetile.state.options.controls.OptionsControls;
+import coffeecatteam.theultimatetile.screen.*;
+import coffeecatteam.theultimatetile.screen.CreditsScreen;
+import coffeecatteam.theultimatetile.screen.TitleScreen;
+import coffeecatteam.theultimatetile.screen.game.SelectGameScreen;
+import coffeecatteam.theultimatetile.screen.options.OptionsScreen;
+import coffeecatteam.theultimatetile.screen.options.SoundOptions;
+import coffeecatteam.theultimatetile.screen.options.controls.ControlOptions;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.world.World;
 import org.json.simple.parser.ParseException;
@@ -34,7 +33,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 
 public class TutEngine extends BasicGameState {
 
@@ -54,14 +52,14 @@ public class TutEngine extends BasicGameState {
     private boolean initOptionsUI = true, playBGMusic = true, close = false;
 
     // States
-    public StateMenu stateMenu;
-    public StateSelectGame stateSelectGame;
-    public StateCredits stateCredits;
+    public TitleScreen stateMenu;
+    public SelectGameScreen stateSelectGame;
+    public CreditsScreen stateCredits;
 
     // Option states
-    public StateOptions stateOptions;
-    public OptionsControls optionsControls;
-    public OptionsSounds optionsSpounds;
+    public OptionsScreen stateOptions;
+    public ControlOptions controlOptions;
+    public SoundOptions optionsSpounds;
 
     private EntityManager entityManager;
     private InventoryManager inventoryManager;
@@ -94,35 +92,32 @@ public class TutEngine extends BasicGameState {
         }
 
         keyManager = new KeyManager();
-        stateOptions = new StateOptions(this, initOptionsUI);
+        stateOptions = new OptionsScreen(this, initOptionsUI);
 
         DiscordHandler.INSTANCE.setup();
         camera = new Camera(this, 0, 0);
 
-        stateMenu = new StateMenu(this);
-        stateSelectGame = new StateSelectGame(this);
-        stateCredits = new StateCredits(this);
+        stateMenu = new TitleScreen(this);
+        stateSelectGame = new SelectGameScreen(this);
+        stateCredits = new CreditsScreen(this);
 
-        optionsControls = new OptionsControls(this);
-        optionsSpounds = new OptionsSounds(this);
+        controlOptions = new ControlOptions(this);
+        optionsSpounds = new SoundOptions(this);
 
         if (ArgUtils.hasArgument("-uiTest"))
-            StateManager.setCurrentState(new StateUITesting(this));
+            ScreenManager.setCurrentScreen(new UITestingScreen(this));
         else
-            StateManager.setCurrentState(stateMenu);
+            ScreenManager.setCurrentScreen(stateMenu);
 
         inventoryManager = new InventoryManager(this);
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
-//          TagBase.TEST();
         if (close) container.exit();
         keyManager.update(container, game, delta);
 
-        Iterator<Animation> animIterator = Animation.ANIMATIONS.iterator();
-        while (animIterator.hasNext()) {
-            Animation anim = animIterator.next();
+        for (Animation anim : Animation.ANIMATIONS) {
             anim.update();
         }
 
@@ -136,21 +131,21 @@ public class TutEngine extends BasicGameState {
         this.rightDown = container.getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON);
 
         this.fps = container.getFPS();
-        boolean vSync = StateOptions.OPTIONS.vSync();
+        boolean vSync = OptionsScreen.OPTIONS.vSync();
         if (container.isVSyncRequested() != vSync)
             container.setVSync(vSync);
 
         // Background music
         if (playBGMusic) {
             if (Sounds.BG_MUSIC.playing())
-                Sounds.BG_MUSIC.setVolume(StateOptions.OPTIONS.getVolumeMusic());
+                Sounds.BG_MUSIC.setVolume(OptionsScreen.OPTIONS.getVolumeMusic());
             else {
                 Sounds.BG_MUSIC.loop();
                 Sounds.BG_MUSIC.play();
             }
         }
 
-        StateManager.getCurrentState().update(container, game, delta);
+        ScreenManager.getCurrentScreen().update(container, game, delta);
 
         /*
          * Take a screenshot
@@ -159,7 +154,7 @@ public class TutEngine extends BasicGameState {
             takeScreenshot(container);
     }
 
-    public void takeScreenshot(GameContainer container) throws SlickException {
+    private void takeScreenshot(GameContainer container) throws SlickException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
         String dateAndTime = dateFormat.format(new Date());
         String filename = "data/screenshots/" + dateAndTime + ".png";
@@ -179,11 +174,11 @@ public class TutEngine extends BasicGameState {
         g.clear();
         Assets.MISSING_TEXTURE.draw(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
 
-        if (StateManager.getCurrentState() != null) {
-            StateManager.getCurrentState().render(container, game, g);
-            StateManager.getCurrentState().postRender(container, game, g);
+        if (ScreenManager.getCurrentScreen() != null) {
+            ScreenManager.getCurrentScreen().render(container, game, g);
+            ScreenManager.getCurrentScreen().postRender(container, game, g);
         }
-        if (StateOptions.OPTIONS.fpsCounter())
+        if (OptionsScreen.OPTIONS.fpsCounter())
             renderFPSCounter(g);
     }
 
@@ -266,7 +261,7 @@ public class TutEngine extends BasicGameState {
         return entityManager;
     }
 
-    public EntityPlayer getPlayer() {
+    public PlayerEntity getPlayer() {
         return entityManager.getPlayer();
     }
 

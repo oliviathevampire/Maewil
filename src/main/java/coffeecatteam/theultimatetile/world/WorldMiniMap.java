@@ -2,7 +2,7 @@ package coffeecatteam.theultimatetile.world;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.world.colormap.WorldMapGenerator;
@@ -65,13 +65,13 @@ public class WorldMiniMap {
         for (int my = myStart; my < myEnd; my++) {
             for (int mx = mxStart; mx < mxEnd; mx++) {
                 /* BG */
-                int cbg = WorldMapGenerator.getRGBA(tutEngine.getWorld().getBGTile(mx, my).getMapColor().getRGB());
+                int cbg = WorldMapGenerator.getRGBA(tutEngine.getWorld().getBackgroundTile(mx, my).getMapColor().getRGB());
                 int pixelXbg = (int) NumberUtils.map(mx, mxStart, mxEnd, 0, viewSize - 1);
                 int pixelYbg = (int) NumberUtils.map(my, myStart, myEnd, 0, viewSize - 1);
                 mapbg.setRGB(pixelXbg, pixelYbg, cbg);
 
                 /* FG */
-                int cfg = WorldMapGenerator.getRGBA(tutEngine.getWorld().getFGTile(mx, my).getMapColor().getRGB());
+                int cfg = WorldMapGenerator.getRGBA(tutEngine.getWorld().getForegroundTile(mx, my).getMapColor().getRGB());
                 int pixelXfg = (int) NumberUtils.map(mx, mxStart, mxEnd, 0, viewSize - 1);
                 int pixelYfg = (int) NumberUtils.map(my, myStart, myEnd, 0, viewSize - 1);
                 mapfg.setRGB(pixelXfg, pixelYfg, cfg);
@@ -80,7 +80,7 @@ public class WorldMiniMap {
 
         int mapSizeOff = 14;
         float mapBorderSize = mapSize + padding;
-        EntityPlayer player = tutEngine.getPlayer();
+        PlayerEntity player = tutEngine.getPlayer();
         Color trans = ((player.getPosition().x + player.getWidth() / 2f < mapBorderSize && player.getPosition().y + player.getHeight() / 2f < mapBorderSize) ? halfTransparent : Color.white);
         try {
             /* BG */

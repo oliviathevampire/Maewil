@@ -2,19 +2,19 @@ package coffeecatteam.theultimatetile.objs.entities.creatures;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
-import coffeecatteam.theultimatetile.objs.entities.ai.AIWander;
+import coffeecatteam.theultimatetile.objs.entities.ai.WanderGoal;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
-public abstract class EntityPassive extends EntityCreature {
+public abstract class EntityPassive extends LivingEntity {
 
-    // AI
-    protected AIWander aiWander;
+    // Goal
+    protected WanderGoal aiWander;
 
     public EntityPassive(TutEngine tutEngine, String id) {
         super(tutEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
-        aiWander = new AIWander(tutEngine, this, 1.5f);
+        aiWander = new WanderGoal(tutEngine, this, 1.5f);
     }
 
     @Override

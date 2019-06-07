@@ -3,25 +3,25 @@ package coffeecatteam.theultimatetile.objs.entities.creatures;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
-import coffeecatteam.theultimatetile.objs.entities.ai.AIFollowFlee;
-import coffeecatteam.theultimatetile.objs.entities.ai.AIWander;
+import coffeecatteam.theultimatetile.objs.entities.ai.FollowFleeGoal;
+import coffeecatteam.theultimatetile.objs.entities.ai.WanderGoal;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
-public abstract class EntityUndead extends EntityCreature {
+public abstract class EntityUndead extends LivingEntity {
 
     private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
     protected int dmgModifier = 0;
 
-    // AI
-    private AIWander aiWander;
-    private AIFollowFlee aiFollowFlee;
+    // Goal
+    private WanderGoal aiWander;
+    private FollowFleeGoal aiFollowFlee;
 
     public EntityUndead(TutEngine tutEngine, String id) {
         super(tutEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
-        aiWander = new AIWander(tutEngine, this, 1.5f);
-        aiFollowFlee = new AIFollowFlee(tutEngine, this, tutEngine.getPlayer());
+        aiWander = new WanderGoal(tutEngine, this, 1.5f);
+        aiFollowFlee = new FollowFleeGoal(tutEngine, this, tutEngine.getPlayer());
     }
 
     @Override

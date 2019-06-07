@@ -2,8 +2,8 @@ package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
-import coffeecatteam.theultimatetile.objs.entities.EntityItem;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.ItemEntity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.start.TutEngine;
@@ -20,7 +20,7 @@ public class EntityManager {
     public static int RENDER_VIEW;
 
     private TutEngine tutEngine;
-    private EntityPlayer player;
+    private PlayerEntity player;
     private ArrayList<Entity> entities;
     private Comparator<Entity> renderSorter = (a, b) -> {
         float y1 = a.getY() + a.getHeight();
@@ -54,7 +54,7 @@ public class EntityManager {
 
                 if (!entity.isActive()) {
                     entity.die();
-                    if (!(entity instanceof EntityPlayer)) {
+                    if (!(entity instanceof PlayerEntity)) {
                         entities.remove(i);
                         i--;
                     }
@@ -66,9 +66,9 @@ public class EntityManager {
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        for (Entity entity : entities)
+        /*for (Entity entity : entities)
             if (isEntityInView(entity, RENDER_VIEW))
-                entity.preRender(container, game, g);
+                entity.preRender(container, game, g);*/
 
         for (Entity entity : entities)
             if (isEntityInView(entity, RENDER_VIEW))
@@ -102,14 +102,14 @@ public class EntityManager {
     }
 
     public void addItem(ItemStack item, float x, float y) {
-        addEntity(new EntityItem(tutEngine, item), x, y, true);
+        addEntity(new ItemEntity(tutEngine, item), x, y, true);
     }
 
-    public EntityPlayer getPlayer() {
+    public PlayerEntity getPlayer() {
         return player;
     }
 
-    public void setPlayer(EntityPlayer player) {
+    public void setPlayer(PlayerEntity player) {
         this.player = player;
         entities.set(0, player);
     }
