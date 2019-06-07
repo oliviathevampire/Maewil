@@ -14,15 +14,17 @@ import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
 import coffeecatteam.theultimatetile.objs.items.Items;
 import coffeecatteam.theultimatetile.objs.tiles.Tiles;
-import coffeecatteam.theultimatetile.screen.*;
 import coffeecatteam.theultimatetile.screen.CreditsScreen;
+import coffeecatteam.theultimatetile.screen.ScreenManager;
 import coffeecatteam.theultimatetile.screen.TitleScreen;
+import coffeecatteam.theultimatetile.screen.UITestingScreen;
 import coffeecatteam.theultimatetile.screen.game.SelectGameScreen;
 import coffeecatteam.theultimatetile.screen.options.OptionsScreen;
 import coffeecatteam.theultimatetile.screen.options.SoundOptions;
 import coffeecatteam.theultimatetile.screen.options.controls.ControlOptions;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.world.World;
+import net.fabricmc.loader.game.GameProviders;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.*;
 import org.newdawn.slick.imageout.ImageOut;
@@ -78,6 +80,7 @@ public class TutEngine extends BasicGameState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
+        GameProviders.create().add(new TutGameProvider());
         container.setDefaultFont(Assets.FONTS.get("10"));
         container.setMouseCursor(Assets.GUI_CURSOR, 0, 0);
 

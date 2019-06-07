@@ -1,9 +1,9 @@
 package coffeecatteam.theultimatetile.manager;
 
 import coffeecatteam.theultimatetile.gfx.overlays.Overlay;
-import coffeecatteam.theultimatetile.gfx.overlays.OverlayGlub;
-import coffeecatteam.theultimatetile.gfx.overlays.OverlayPlayerHealth;
-import coffeecatteam.theultimatetile.gfx.overlays.OverlayPlayerSprint;
+import coffeecatteam.theultimatetile.gfx.overlays.GlubOverlay;
+import coffeecatteam.theultimatetile.gfx.overlays.PlayerHealthOverlay;
+import coffeecatteam.theultimatetile.gfx.overlays.PlayerSprintOverlay;
 import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import org.newdawn.slick.GameContainer;
@@ -20,9 +20,9 @@ public class OverlayManager {
     public OverlayManager(TutEngine tutEngine, PlayerEntity player) {
         overlays = new ArrayList<>();
 
-        addOverlay(new OverlayPlayerHealth(tutEngine, player));
-        addOverlay(new OverlayPlayerSprint(tutEngine, player));
-        addOverlay(new OverlayGlub(tutEngine, player));
+        addOverlay(new PlayerHealthOverlay(tutEngine, player));
+        addOverlay(new PlayerSprintOverlay(tutEngine, player));
+        addOverlay(new GlubOverlay(tutEngine, player));
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) {

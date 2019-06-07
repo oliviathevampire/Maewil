@@ -49,8 +49,8 @@ public class TitleScreen extends Screen {
         uiManager.addObject(new WidgetButton(tutEngineIn, true, TutLauncher.HEIGHT / 2 - yOff, "Select Game", new ClickListener() {
             @Override
             public void onClick() {
-                ScreenManager.setCurrentScreen(tutEngineIn.stateSelectGame);
-//                ScreenManager.setCurrentScreen(new CreateWorldScreen(tutEngine));
+//                ScreenManager.setCurrentScreen(tutEngineIn.stateSelectGame);
+                ScreenManager.setCurrentScreen(new CreateWorldScreen(tutEngine));
 //                Screen.setState(new GameScreen(engine, "./data/saves/Test_World", "Test World"));
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu", "Selecting A Game");

@@ -12,9 +12,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class OverlayPlayerSprint extends Overlay {
+public class PlayerSprintOverlay extends Overlay {
 
-    public OverlayPlayerSprint(TutEngine tutEngine, PlayerEntity player) {
+    public PlayerSprintOverlay(TutEngine tutEngine, PlayerEntity player) {
         super(tutEngine, player);
     }
 

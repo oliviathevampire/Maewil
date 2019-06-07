@@ -11,9 +11,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class OverlayPlayerHealth extends Overlay {
+public class PlayerHealthOverlay extends Overlay {
 
-    public OverlayPlayerHealth(TutEngine tutEngine, PlayerEntity player) {
+    public PlayerHealthOverlay(TutEngine tutEngine, PlayerEntity player) {
         super(tutEngine, player);
     }
 

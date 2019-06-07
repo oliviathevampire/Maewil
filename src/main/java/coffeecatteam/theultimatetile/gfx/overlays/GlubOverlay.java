@@ -12,9 +12,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class OverlayGlub extends Overlay {
+public class GlubOverlay extends Overlay {
 
-    public OverlayGlub(TutEngine tutEngine, PlayerEntity player) {
+    public GlubOverlay(TutEngine tutEngine, PlayerEntity player) {
         super(tutEngine, player);
     }
 

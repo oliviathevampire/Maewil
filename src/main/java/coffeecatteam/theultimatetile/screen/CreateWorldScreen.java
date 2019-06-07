@@ -23,6 +23,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
+import javax.swing.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -61,7 +62,7 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         uiManager.addObject(new WidgetButton(tutEngine, true, "Create World", new ClickListener() {
             @Override
             public void onClick() {
-                generateWorld();
+                generateWorld(getWorldname());
             }
 
             @Override
@@ -70,7 +71,23 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         }));
     }
 
-    private void generateWorld() {
+    private String getWorldname() {
+        String defaultName = "New World";
+        String username;
+        int nameLength = 16;
+        defaultName += "_" + NumberUtils.getRandomInt(1000);
+        try {
+            username = JOptionPane.showInputDialog("Please enter a world name\nMust be max " + nameLength + " characters", defaultName);
+            if (username.length() > nameLength || username.equalsIgnoreCase(""))
+                username = defaultName;
+        } catch (NullPointerException e) {
+            username = defaultName;
+        }
+        worldName = username.replaceAll(" ", "_").replaceAll("[^a-zA-Z0-9_]+", "");
+        return worldName;
+    }
+
+    private void generateWorld(String worldName) {
         /*
          * Tiles, entities, etc..
          */
