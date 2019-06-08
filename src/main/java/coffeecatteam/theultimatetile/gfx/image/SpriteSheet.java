@@ -14,8 +14,8 @@ public class SpriteSheet {
     }
 
     public SpriteSheet(Image sheet) {
-        System.out.println(new Identifier("tut", sheet.getName()).toAssetsString());
-        this.identifier = new Identifier("tut", sheet.getName());
+        System.out.println(new Identifier("tut", sheet.getResourceReference()).toAssetsString());
+        this.identifier = new Identifier("tut", sheet.getResourceReference());
         this.sheet = sheet;
     }
 
