@@ -1,0 +1,58 @@
+{
+  "health": 100,
+  "glubel": 0,
+  "lvl": 1,
+  "selected_slots": [
+    0,
+    0
+  ],
+  "inventory": {
+    "slot_0": {
+      "id": "null"
+    },
+    "slot_1": {
+      "id": "null"
+    },
+    "slot_2": {
+      "id": "null"
+    },
+    "slot_3": {
+      "id": "null"
+    },
+    "slot_4": {
+      "id": "null"
+    },
+    "slot_5": {
+      "id": "null"
+    },
+    "slot_6": {
+      "id": "null"
+    },
+    "slot_7": {
+      "id": "null"
+    },
+    "slot_8": {
+      "id": "null"
+    },
+    "slot_9": {
+      "id": "null"
+    },
+    "slot_10": {
+      "id": "null"
+    },
+    "slot_11": {
+      "id": "null"
+    }
+  },
+  "hotbar": {
+    "slot_0": {
+      "id": "null"
+    },
+    "slot_1": {
+      "id": "null"
+    },
+    "slot_2": {
+      "id": "null"
+    }
+  }
+}

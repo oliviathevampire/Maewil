@@ -1,0 +1,15 @@
+{
+  "type": "alts",
+  "texture": "tiles/grass.png",
+  "texture-overlap": "tiles/overlap/grass.png",
+  "textures": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "size": 16
+}

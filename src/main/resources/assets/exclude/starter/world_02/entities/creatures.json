@@ -1,0 +1,62 @@
+{
+  "creatures": [
+    {
+      "id": "zombie",
+      "pos": [
+        "5f",
+        "3f"
+      ]
+    },
+    {
+      "id": "zombie",
+      "pos": [
+        "8f",
+        "6f"
+      ]
+    },
+    {
+      "id": "zombie",
+      "pos": [
+        "14f",
+        "5f"
+      ]
+    },
+    {
+      "id": "skeleton",
+      "pos": [
+        "10f",
+        "4f"
+      ]
+    },
+    {
+      "id": "bouncer",
+      "pos": [
+        "18f",
+        "6f"
+      ]
+    },
+    {
+      "id": "fox",
+      "pos": [
+        "16f",
+        "13f"
+      ],
+      "count": "2"
+    },
+    {
+      "id": "pig",
+      "pos": [
+        "7f",
+        "18f"
+      ],
+      "count": "2"
+    },
+    {
+      "id": "sheep",
+      "pos": [
+        "1f",
+        "17f"
+      ]
+    }
+  ]
+}

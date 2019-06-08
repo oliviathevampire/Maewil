@@ -1,0 +1,10 @@
+{
+  "type": "alts",
+  "texture": "tiles/broken_stone.png",
+  "texture-overlap": "tiles/overlap/broken_stone.png",
+  "textures": [
+    0,
+    1
+  ],
+  "size": 16
+}

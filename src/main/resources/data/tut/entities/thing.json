@@ -1,0 +1,32 @@
+{
+  "type": "creature",
+  "texture": "entities/living/undead/thing.png",
+  "spriteSize": [16, 16],
+  "animations": {
+    "idle": {
+      "length": 10,
+      "speed": 135,
+      "startPos": [0, 0]
+    },
+    "walkUp": {
+      "length": 10,
+      "speed": 250,
+      "startPos": [0, 1]
+    },
+    "walkDown": {
+      "length": 10,
+      "speed": 250,
+      "startPos": [0, 2]
+    },
+    "walkLeft": {
+      "length": 10,
+      "speed": 135,
+      "startPos": [0, 3]
+    },
+    "walkRight": {
+      "length": 10,
+      "speed": 135,
+      "startPos": [0, 4]
+    }
+  }
+}

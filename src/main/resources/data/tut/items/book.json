@@ -1,0 +1,11 @@
+{
+  "type": "alts",
+  "texture": "items/book.png",
+  "textures": [
+    0,
+    1,
+	2,
+	3
+  ],
+  "size": 16
+}

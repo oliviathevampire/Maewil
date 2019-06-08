@@ -1,0 +1,30 @@
+{
+  "type": "static",
+  "texture": "entities/static/nature/crops.png",
+  "sprites": {
+    "ground": {
+      "spritePos": [0, 16],
+      "spriteSize": [16, 16]
+    },
+    "carrot": {
+      "spritePos": [0, 0],
+      "spriteSize": [16, 16]
+    },
+    "wheat": {
+      "spritePos": [16, 0],
+      "spriteSize": [16, 16]
+    },
+    "potato": {
+      "spritePos": [32, 0],
+      "spriteSize": [16, 16]
+    },
+    "tomato": {
+      "spritePos": [48, 0],
+      "spriteSize": [16, 16]
+    },
+    "corn": {
+      "spritePos": [64, 0],
+      "spriteSize": [16, 16]
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "alts",
+  "texture": "tiles/sand.png",
+  "texture-overlap": "tiles/overlap/sand.png",
+  "textures": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "size": 16,
+  "overlap": {
+    "connect": [
+      "grass",
+      "dirt"
+    ],
+    "ignore": [
+      "sand"
+    ]
+  }
+}
