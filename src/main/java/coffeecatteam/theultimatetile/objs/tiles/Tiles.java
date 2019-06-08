@@ -27,7 +27,7 @@ public class Tiles {
      * Ground
      */
     public static Tile GRASS, DIRT;
-    public static Tile SAND;
+    public static Tile SAND, RED_SAND;
 
     /*
      * Stone
@@ -66,6 +66,7 @@ public class Tiles {
         register(GRASS = parser.loadData(new GrassTile(tutEngine)));
         register(DIRT = parser.loadData(new DirtTile(tutEngine)));
         register(SAND = parser.loadData(new SandTile(tutEngine)));
+        register(RED_SAND = parser.loadData(new RedSandTile(tutEngine)));
 
         /*
          * Stone

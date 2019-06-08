@@ -11,10 +11,10 @@ import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 public class SandTile extends OverlapTile {
 
     public SandTile(TutEngine tutEngine) {
-        super(tutEngine, Assets.GRASS, "sand", false, TileType.GROUND, Assets.GRASS_ALTS);
+        super(tutEngine, Assets.SAND, "sand", false, TileType.GROUND, Assets.SAND_ALTS);
         this.setMapColor(WorldColors.SAND);
-        this.setConnect("grass");
-        this.setIgnore("sand");
+        this.setConnect("grass", "dirt");
+        this.setIgnore("sand", "red_sand");
     }
 
     @Override

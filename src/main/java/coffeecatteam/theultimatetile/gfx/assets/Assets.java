@@ -36,8 +36,8 @@ public class Assets {
     public static Map<String, Font> FONTS = new HashMap<>();
 
     /* Tiles */ //TODO: Change these to json
-    public static int GRASS_ALTS, SAND_ALTS, BROKEN_STONE_ALTS;
-    public static Image[] GRASS, SAND, BROKEN_STONE;
+    public static int GRASS_ALTS, SAND_ALTS, RED_SAND_ALTS, BROKEN_STONE_ALTS;
+    public static Image[] GRASS, SAND, RED_SAND, BROKEN_STONE;
 
     /* Special Tiles */
     public static Image[] SPLASH_EFFECT, SPRINT_EFFECT;

@@ -1,7 +1,7 @@
 {
   "type": "alts",
-  "texture": "tiles/sand.png",
-  "texture-overlap": "tiles/overlap/sand.png",
+  "texture": "tiles/red_sand.png",
+  "texture-overlap": "tiles/overlap/red_sand.png",
   "textures": [
     0,
     1,

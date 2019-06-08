@@ -14,6 +14,7 @@ public class WorldColors {
     public static final Color DEEP_OCEAN = new Color(0, 0, 216);
     public static final Color WATER = Color.blue;
     public static final Color SAND = Color.orange;
+    public static final Color RED_SAND = Color.red;
     public static final Color GRASS = Color.green;
     public static final Color STONE = Color.gray;
     public static final Color DIRT = new Color(145, 74, 36);
