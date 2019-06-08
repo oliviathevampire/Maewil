@@ -96,9 +96,6 @@ public class WorldGenerator {
                 if (lc.getRGB() == WorldColors.SAND.getRGB() || lc.getRGB() == WorldColors.WATER.getRGB())
                     tile = Tiles.SAND;
 
-                if (lc.getRGB() == WorldColors.RED_SAND.getRGB() || lc.getRGB() == WorldColors.WATER.getRGB())
-                    tile = Tiles.RED_SAND;
-
                 if (lc.getRGB() == WorldColors.STONE.getRGB())
                     tile = Tiles.STONE;
 

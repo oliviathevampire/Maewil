@@ -293,7 +293,6 @@ public class Assets {
     }
 
     public static Image getImage(Identifier identifier) {
-        System.out.println(identifier.toAssetsString());
         SpriteSheet sheet = new SpriteSheet(identifier);
         return getSpriteExact(sheet, 0, 0, sheet.getWidth(), sheet.getHeight());
     }

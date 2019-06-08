@@ -23,7 +23,6 @@ import coffeecatteam.theultimatetile.screen.options.SoundOptions;
 import coffeecatteam.theultimatetile.screen.options.controls.ControlOptions;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import coffeecatteam.theultimatetile.world.World;
-import net.fabricmc.loader.game.GameProviders;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.*;
 import org.newdawn.slick.imageout.ImageOut;
@@ -79,7 +78,6 @@ public class TutEngine extends BasicGameState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        GameProviders.create().add(new TutGameProvider());
         container.setDefaultFont(Assets.FONTS.get("10"));
         container.setMouseCursor(Assets.GUI_CURSOR, 0, 0);
 

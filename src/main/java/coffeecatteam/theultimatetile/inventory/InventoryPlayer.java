@@ -11,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class InventoryPlayer extends InventoryAbstractPlayer {
 
     public InventoryPlayer(TutEngine tutEngine, PlayerEntity player) {
-        super(tutEngine, player, "Player", TutLauncher.WIDTH / 2 - 57 * 6 / 2, TutLauncher.HEIGHT / 2 - 1 * 6 / 2);
+        super(tutEngine, player, "Player", TutLauncher.WIDTH / 2 - 56 * 6 / 2, TutLauncher.HEIGHT / 2 - 7 / 2);
         isDefault = true;
     }
 
@@ -26,7 +26,7 @@ public class InventoryPlayer extends InventoryAbstractPlayer {
             int y = TutLauncher.HEIGHT / 2 - height / 2;
 
             Assets.GUI_INVENTORY.draw(x, y, width, height);
-            player.getTexture("idle").draw(x + player.getWidth() / 2f, y + player.getHeight() / 2f, player.getWidth(), player.getHeight());
+            player.getTexture("idle").draw(x + player.getWidth() / 2.3f, y + player.getHeight() / 2f, player.getWidth(), player.getHeight());
 
             super.renderInventorySlots(container, game, g);
         }

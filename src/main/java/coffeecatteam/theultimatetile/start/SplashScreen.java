@@ -4,6 +4,7 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.assets.Sounds;
+import net.fabricmc.loader.game.GameProviders;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -32,6 +33,7 @@ public class SplashScreen extends BasicGameState {
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
+        GameProviders.create().add(new TutGameProvider());
         Assets.init();
         Sounds.init();
         container.setDefaultFont(Assets.FONTS.get("10"));
@@ -45,7 +47,7 @@ public class SplashScreen extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         titleScale = NumberUtils.lerp(titleScale, 1.0f, smoothness);
         playerTimer = NumberUtils.lerp(playerTimer, maxPlayerTimer, smoothness);
 
@@ -69,7 +71,7 @@ public class SplashScreen extends BasicGameState {
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         Image title = Assets.GUI_TITLE_SMALL;
         float size = 10f;
         float width = (title.getWidth() / size) * titleScale;

@@ -49,6 +49,8 @@ public class TutGameProvider implements GameProvider {
             }
         }
 
+        System.out.println("Testing");
+
         return "tut";
     }
 

@@ -123,7 +123,6 @@ public final class PerlinNoise implements Serializable, Cloneable {
         // initialise with a static initialiser. It generates a "code too large"
         // error.
         try {
-            System.out.println(PerlinNoise.class.getResourceAsStream("noiselevels.txt").toString());
             try (BufferedReader in = new BufferedReader(new InputStreamReader(PerlinNoise.class.getResourceAsStream("noiselevels.txt")))) {
                 int index = 0;
                 String line;

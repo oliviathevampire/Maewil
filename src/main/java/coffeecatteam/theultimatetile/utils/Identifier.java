@@ -53,12 +53,10 @@ public class Identifier {
     }
 
     public String toAssetsString() {
-        System.out.println(String.format("/assets/%s/%s", namespace, path));
         return String.format("/assets/%s/%s", namespace, path);
     }
 
     public String toDataString() {
-        System.out.println(String.format("/data/%s/%s", namespace, path));
         return String.format("/data/%s/%s", namespace, path);
     }
 
