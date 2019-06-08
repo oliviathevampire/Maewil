@@ -3,7 +3,7 @@ package coffeecatteam.theultimatetile.jsonparsers;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.start.TutLauncher;
-import coffeecatteam.theultimatetile.state.options.controls.Keybind;
+import coffeecatteam.theultimatetile.screen.options.controls.Keybind;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
 import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
 import org.json.simple.JSONObject;

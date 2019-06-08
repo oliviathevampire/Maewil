@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.manager;
 
-import coffeecatteam.theultimatetile.state.options.StateOptions;
-import coffeecatteam.theultimatetile.state.options.controls.Keybind;
+import coffeecatteam.theultimatetile.screen.options.OptionsScreen;
+import coffeecatteam.theultimatetile.screen.options.controls.Keybind;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -33,12 +33,12 @@ public class KeyManager {
                 justPressed[i] = true;
         }
 
-        moveUp = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.W).getKeyCode());
-        moveDown = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.S).getKeyCode());
-        moveLeft = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.A).getKeyCode());
-        moveRight = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.D).getKeyCode());
-        useSprint = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.CONTROL).getKeyCode());
-        useAttack = container.getInput().isKeyDown(StateOptions.OPTIONS.controls().get(Keybind.SPACE).getKeyCode());
+        moveUp = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.W).getKeyCode());
+        moveDown = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.S).getKeyCode());
+        moveLeft = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.A).getKeyCode());
+        moveRight = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.D).getKeyCode());
+        useSprint = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.CONTROL).getKeyCode());
+        useAttack = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.SPACE).getKeyCode());
     }
 
     public boolean keyJustPressed(int key) {

@@ -7,14 +7,14 @@ import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.objs.IHasData;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
-import coffeecatteam.theultimatetile.objs.tiles.TileLava;
+import coffeecatteam.theultimatetile.objs.tiles.LavaTile;
 import coffeecatteam.theultimatetile.objs.tiles.TilePos;
-import coffeecatteam.theultimatetile.objs.tiles.TileWater;
+import coffeecatteam.theultimatetile.objs.tiles.WaterTile;
 import coffeecatteam.theultimatetile.start.TutEngine;
-import coffeecatteam.theultimatetile.state.options.StateOptions;
-import coffeecatteam.theultimatetile.tags.TagCompound;
+import coffeecatteam.theultimatetile.screen.options.OptionsScreen;
+import coffeecatteam.theultimatetile.tags.CompoundTag;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -32,12 +32,12 @@ public abstract class Entity implements IHasData<Entity> {
 
     protected int width, height;
     protected int currentHealth, maxHealth = DEFAULT_HEALTH;
-    protected boolean active = true;
+    private boolean active = true;
 
     protected boolean isCollidable = true, interacted = false;
     private int extraDmg = 0;
 
-    protected TagCompound TAGS = new TagCompound();
+    protected CompoundTag TAGS = new CompoundTag();
     private HitType hitType;
 
     protected float renderX, renderY;
@@ -59,12 +59,12 @@ public abstract class Entity implements IHasData<Entity> {
         splashEffect = new Animation(50, Assets.SPLASH_EFFECT);
     }
 
-    public Entity setTags(TagCompound tags) {
+    public Entity setTags(CompoundTag tags) {
         this.TAGS = tags.copy();
         return this;
     }
 
-    public TagCompound getTags() {
+    public CompoundTag getTags() {
         return TAGS;
     }
 
@@ -81,15 +81,12 @@ public abstract class Entity implements IHasData<Entity> {
             this.interact();
     }
 
-    public void preRender(GameContainer container, StateBasedGame game, Graphics g) {
-    }
-
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
         getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height);
     }
 
     public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
-        if (StateOptions.OPTIONS.debugMode()) {
+        if (OptionsScreen.OPTIONS.debugMode()) {
             g.setColor(Color.red);
             g.drawRect(getEntityBounds().x - tutEngine.getCamera().getxOffset(), getEntityBounds().y - tutEngine.getCamera().getyOffset(), getEntityBounds().width, getEntityBounds().height);
 
@@ -98,7 +95,7 @@ public abstract class Entity implements IHasData<Entity> {
         }
     }
 
-    public void renderHealth(GameContainer container, StateBasedGame game, Graphics g) {
+    protected void renderHealth(Graphics g) {
         Assets.HEALTH_BAR[1].draw(this.renderX, this.renderY - 8, width, 4);
         int ht = (int) NumberUtils.map(currentHealth, 0, maxHealth, 0, width); // (currentHealth * 100.0f) / 15
         Assets.HEALTH_BAR[0].draw(this.renderX, this.renderY - 8, ht, 4);
@@ -120,17 +117,16 @@ public abstract class Entity implements IHasData<Entity> {
         return new TilePos((int) x, (int) y);
     }
 
-    public Tile getTileAtMid() {
-        Tile t = tutEngine.getWorld().getFGTile(getTilePosAtMid().getX(), getTilePosAtMid().getY());
-        return t;
+    private Tile getTileAtMid() {
+        return tutEngine.getWorld().getForegroundTile(getTilePosAtMid().getX(), getTilePosAtMid().getY());
     }
 
-    public boolean inWater() {
-        return getTileAtMid() instanceof TileWater;
+    protected boolean inWater() {
+        return getTileAtMid() instanceof WaterTile;
     }
 
-    public boolean inLava() {
-        return getTileAtMid() instanceof TileLava;
+    protected boolean inLava() {
+        return getTileAtMid() instanceof LavaTile;
     }
 
     public void die() {
@@ -159,24 +155,24 @@ public abstract class Entity implements IHasData<Entity> {
         currentHealth += health;
     }
 
-    public boolean checkEntityCollisions(float xOffset, float yOffset) {
+    protected boolean checkEntityCollisions(float xOffset, float yOffset) {
         for (Entity e : tutEngine.getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
-            if (e instanceof EntityPlayer && this instanceof EntityPlayer)
+            if (e instanceof PlayerEntity && this instanceof PlayerEntity)
                 continue;
             if (e.isCollidable)
                 if (e.getCollisionBounds(0.0f, 0.0f).intersects(getCollisionBounds(xOffset, yOffset)))
-                    return true;
+                    return false;
         }
-        return false;
+        return true;
     }
 
     public AABB getTileBounds() {
         return new AABB(new Vector2D(), width, height);
     }
 
-    public AABB getEntityBounds() {
+    private AABB getEntityBounds() {
         float x = (float) (position.x + getTileBounds().x);
         float y = (float) (position.y + getTileBounds().y);
         return new AABB(x, y, getTileBounds().width, getTileBounds().height);
@@ -244,30 +240,23 @@ public abstract class Entity implements IHasData<Entity> {
         return currentHealth;
     }
 
-    public Entity setCurrentHealth(int currentHealth) {
+    public void setCurrentHealth(int currentHealth) {
         this.currentHealth = currentHealth;
-        return this;
     }
 
     public boolean isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    void setActive(boolean active) {
         this.active = active;
-    }
-
-    public Entity setPos(int x, int y) {
-        setX(x);
-        setY(y);
-        return this;
     }
 
     public int getMaxHealth() {
         return maxHealth;
     }
 
-    public void setMaxHealth(int maxHealth) {
+    protected void setMaxHealth(int maxHealth) {
         this.maxHealth = maxHealth;
         this.currentHealth = this.maxHealth;
     }
@@ -276,7 +265,7 @@ public abstract class Entity implements IHasData<Entity> {
         return hitType;
     }
 
-    public void setHitType(HitType hitType) {
+    void setHitType(HitType hitType) {
         this.hitType = hitType;
     }
 
@@ -313,7 +302,7 @@ public abstract class Entity implements IHasData<Entity> {
         this.textures = textures;
     }
 
-    public Animation getCurrentTexture() {
+    protected Animation getCurrentTexture() {
         if (currentTexture == null || currentTexture.getCurrentFrame() == null)
             return new Animation(Assets.MISSING_TEXTURE);
         return currentTexture;
@@ -324,11 +313,11 @@ public abstract class Entity implements IHasData<Entity> {
         currentTextureId = id;
     }
 
-    public String getCurrentTextureId() {
+    String getCurrentTextureId() {
         return currentTextureId;
     }
 
-    public void setCurrentTextureId(String currentTextureId) {
+    void setCurrentTextureId(String currentTextureId) {
         this.currentTextureId = currentTextureId;
     }
 
@@ -338,16 +327,15 @@ public abstract class Entity implements IHasData<Entity> {
 
     @Override
     public <T extends Entity> T newCopy(T obj) {
-        T entity = obj;
-        entity.setActive(active);
-        entity.setCurrentHealth(currentHealth);
-        entity.setMaxHealth(maxHealth);
-        entity.setHitType(hitType);
-        entity.setPosition(position);
-        entity.setTags(TAGS);
-        entity.setTextures(textures);
-        entity.setCurrentTexture(currentTextureId);
-        entity.setCurrentTextureId(currentTextureId);
-        return entity;
+        obj.setActive(active);
+        obj.setCurrentHealth(currentHealth);
+        obj.setMaxHealth(maxHealth);
+        obj.setHitType(hitType);
+        obj.setPosition(position);
+        obj.setTags(TAGS);
+        obj.setTextures(textures);
+        obj.setCurrentTexture(currentTextureId);
+        obj.setCurrentTextureId(currentTextureId);
+        return obj;
     }
 }

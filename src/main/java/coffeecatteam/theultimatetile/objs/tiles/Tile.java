@@ -80,7 +80,7 @@ public abstract class Tile implements IHasData<Tile> {
         if (pos.getX() > worldLayer.getWidth() - 1) pos.setX(worldLayer.getWidth() - 1);
         if (pos.getY() > worldLayer.getHeight() - 1) pos.setY(worldLayer.getHeight() - 1);
 //        return worldLayer[pos.getX()][pos.getY()];
-        return worldLayer.getTile(pos.getX(), pos.getY());
+        return worldLayer.getTileAtPos(pos.getX(), pos.getY());
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) {
@@ -119,7 +119,7 @@ public abstract class Tile implements IHasData<Tile> {
             if (isSolid && !unbreakable) {
                 this.health -= damage;
                 if (this.health <= 0) {
-                    if (position.getX() == 0 || position.getX() == tutEngine.getWorld().getWidth() || position.getY() == 0 || position.getY() == tutEngine.getWorld().getHeight())
+                    if (position.getX() == 0 || position.getX() == tutEngine.getWorld().getWorldWidth() || position.getY() == 0 || position.getY() == tutEngine.getWorld().getWorldHeight())
                         return;
                     tutEngine.getWorld().setFGTile(position.getX(), position.getY(), Tiles.AIR);
                     tutEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), position.getX(), position.getY());
@@ -142,7 +142,7 @@ public abstract class Tile implements IHasData<Tile> {
         return unbreakable;
     }
 
-    public Tile setUnbreakable(boolean unbreakable) {
+    public Tile isUnbreakable(boolean unbreakable) {
         this.unbreakable = unbreakable;
         return this;
     }
@@ -172,7 +172,7 @@ public abstract class Tile implements IHasData<Tile> {
         this.maxHealth = maxHealth;
     }
 
-    public Tile setPos(TilePos position) {
+    public Tile pos(TilePos position) {
         this.position.setX(position.getX());
         this.position.setY(position.getY());
         return this;
@@ -194,7 +194,7 @@ public abstract class Tile implements IHasData<Tile> {
         return isSolid;
     }
 
-    public Tile setSolid(boolean solid) {
+    public Tile isSolid(boolean solid) {
         isSolid = solid;
         return this;
     }
@@ -316,9 +316,9 @@ public abstract class Tile implements IHasData<Tile> {
     public <T extends Tile> T newCopy(T tile) {
         T t = tile;
         t.setMapColor(mapColor);
-        t.setPos(position);
-        t.setSolid(isSolid);
-        t.setUnbreakable(unbreakable);
+        t.pos(position);
+        t.isSolid(isSolid);
+        t.isUnbreakable(unbreakable);
         t.setAnimation(texture);
         t.setHasAlts(hasAlts);
         t.setTextureAlts(textureAlts);

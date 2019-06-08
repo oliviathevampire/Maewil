@@ -1,7 +1,7 @@
 package coffeecatteam.theultimatetile.inventory;
 
 import coffeecatteam.theultimatetile.manager.InventoryManager;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.start.TutEngine;
@@ -15,7 +15,7 @@ import java.util.List;
 public abstract class Inventory {
 
     protected TutEngine tutEngine;
-    protected EntityPlayer player;
+    protected PlayerEntity player;
     protected String invName;
 
     protected List<Slot> slots;
@@ -23,7 +23,7 @@ public abstract class Inventory {
 
     protected boolean active = false;
 
-    public Inventory(TutEngine tutEngine, EntityPlayer player, String invName) {
+    public Inventory(TutEngine tutEngine, PlayerEntity player, String invName) {
         this.tutEngine = tutEngine;
         this.player = player;
         this.invName = invName;

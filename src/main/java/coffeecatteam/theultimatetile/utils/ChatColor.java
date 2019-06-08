@@ -123,7 +123,7 @@ public enum ChatColor
 
 	public static String stripColor(String message)
 	{
-		String s = "";
+		StringBuilder s = new StringBuilder();
 
 		char[] chars = message.toCharArray();
 		for (int i = 0; i < chars.length; i++)
@@ -133,10 +133,10 @@ public enum ChatColor
 				i++;
 				continue;
 			}
-			s += chars[i];
+			s.append(chars[i]);
 		}
 
-		return s;
+		return s.toString();
 	}
 
 	private final Vector4f color;

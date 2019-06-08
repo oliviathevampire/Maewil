@@ -10,35 +10,35 @@ import coffeecatteam.theultimatetile.objs.items.ItemStack;
 public class TagUtils {
 
     /**
-     * Creates a Vector2D object from the data stored in the passed TagCompound.
+     * Creates a Vector2D object from the data stored in the passed CompoundTag.
      */
-    public static Vector2D getPosFromTag(TagCompound compound) {
+    public static Vector2D getPosFromTag(CompoundTag compound) {
         return new Vector2D(compound.getDouble("x"), compound.getDouble("y"));
     }
 
     /**
-     * Creates a new TagCompound from a Vector2D.
+     * Creates a new CompoundTag from a Vector2D.
      */
-    public static TagCompound createPosTag(Vector2D pos) {
-        TagCompound compound = new TagCompound();
+    public static CompoundTag createPosTag(Vector2D pos) {
+        CompoundTag compound = new CompoundTag();
         compound.setDouble("x", pos.x);
         compound.setDouble("y", pos.y);
         return compound;
     }
 
     /**
-     * Creates a Item object from the data stored in the passed TagCompound.
+     * Creates a Item object from the data stored in the passed CompoundTag.
      */
-    public static ItemStack getItemFromTag(TagCompound compound) {
+    public static ItemStack getItemFromTag(CompoundTag compound) {
         ItemStack stack = new ItemStack(compound);
         return stack;
     }
 
     /**
-     * Creates a new TagCompound from a Item.
+     * Creates a new CompoundTag from a Item.
      */
-    public static TagCompound createItemTag(ItemStack stack) {
-        TagCompound compound = new TagCompound();
+    public static CompoundTag createItemTag(ItemStack stack) {
+        CompoundTag compound = new CompoundTag();
         stack.saveToTagCompound(compound);
         return compound;
     }

@@ -21,12 +21,11 @@ public class World {
 
     private TutEngine tutEngine;
     private String worldName;
-    private int width, height;
+    private int worldWidth, worldHeight;
     private float spawnX;
     private float spawnY;
-    private long seed = 0;
 
-    private TileList bg_tiles, fg_tiles;
+    private TileList bgTiles, fgTiles;
 
     private OverlayManager overlayManager;
 
@@ -49,36 +48,36 @@ public class World {
         tutEngine.getPlayer().setY(spawnY * Tile.TILE_SIZE);
     }
 
-    public World(TutEngine tutEngine, String worldName, int width, int height, Vector2D spawn, TileList bg_tiles, TileList fg_tiles) {
-        this(tutEngine, worldName, width, height, (int) spawn.x, (int) spawn.y, bg_tiles, fg_tiles);
+    public World(TutEngine tutEngine, String worldName, int worldWidth, int worldHeight, Vector2D spawn, TileList bgTiles, TileList fgTiles) {
+        this(tutEngine, worldName, worldWidth, worldHeight, (int) spawn.x, (int) spawn.y, bgTiles, fgTiles);
     }
 
-    public World(TutEngine tutEngine, String worldName, int width, int height, int spawnX, int spawnY, TileList bg_tiles, TileList fg_tiles) {
+    public World(TutEngine tutEngine, String worldName, int worldWidth, int worldHeight, int spawnX, int spawnY, TileList bgTiles, TileList fgTiles) {
         this.tutEngine = tutEngine;
         this.worldName = worldName;
-        this.width = width;
-        this.height = height;
+        this.worldWidth = worldWidth;
+        this.worldHeight = worldHeight;
         this.spawnX = spawnX;
         this.spawnY = spawnY;
-        this.bg_tiles = bg_tiles;
-        this.fg_tiles = fg_tiles;
+        this.bgTiles = bgTiles;
+        this.fgTiles = fgTiles;
 
         overlayManager = new OverlayManager(tutEngine, tutEngine.getPlayer());
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) {
         int xStart = (int) Math.max(0, tutEngine.getCamera().getxOffset() / Tile.TILE_SIZE);
-        int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + TutLauncher.WIDTH) / Tile.TILE_SIZE + 1);
+        int xEnd = (int) Math.min(worldWidth, (tutEngine.getCamera().getxOffset() + TutLauncher.WIDTH) / Tile.TILE_SIZE + 1);
         int yStart = (int) Math.max(0, tutEngine.getCamera().getyOffset() / Tile.TILE_SIZE);
-        int yEnd = (int) Math.min(height, (tutEngine.getCamera().getyOffset() + TutLauncher.HEIGHT) / Tile.TILE_SIZE + 1);
+        int yEnd = (int) Math.min(worldHeight, (tutEngine.getCamera().getyOffset() + TutLauncher.HEIGHT) / Tile.TILE_SIZE + 1);
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
-                getBGTile(x, y).updateBounds();
-                getBGTile(x, y).setWorldLayer(bg_tiles);
+                getBackgroundTile(x, y).updateBounds();
+                getBackgroundTile(x, y).setWorldLayer(bgTiles);
 
-                getFGTile(x, y).update(container, game, delta);
-                getFGTile(x, y).setWorldLayer(fg_tiles);
+                getForegroundTile(x, y).update(container, game, delta);
+                getForegroundTile(x, y).setWorldLayer(fgTiles);
             }
         }
 
@@ -103,10 +102,10 @@ public class World {
                 logger.info("Forced update thread initialized");
 
                 while (isForcedUpdateThread) {
-                    for (int y = 0; y < height; y++) {
-                        for (int x = 0; x < width; x++) {
-                            getBGTile(x, y).forcedUpdate(container, delta);
-                            getFGTile(x, y).forcedUpdate(container, delta);
+                    for (int y = 0; y < worldHeight; y++) {
+                        for (int x = 0; x < worldWidth; x++) {
+                            getBackgroundTile(x, y).forcedUpdate(container, delta);
+                            getForegroundTile(x, y).forcedUpdate(container, delta);
                         }
                     }
                 }
@@ -123,134 +122,123 @@ public class World {
         }
     }
 
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics graphics) {
         int xStart = (int) Math.max(0, tutEngine.getCamera().getxOffset() / Tile.TILE_SIZE);
-        int xEnd = (int) Math.min(width, (tutEngine.getCamera().getxOffset() + TutLauncher.WIDTH) / Tile.TILE_SIZE + 1);
+        int xEnd = (int) Math.min(worldWidth, (tutEngine.getCamera().getxOffset() + TutLauncher.WIDTH) / Tile.TILE_SIZE + 1);
         int yStart = (int) Math.max(0, tutEngine.getCamera().getyOffset() / Tile.TILE_SIZE);
-        int yEnd = (int) Math.min(height, (tutEngine.getCamera().getyOffset() + TutLauncher.HEIGHT) / Tile.TILE_SIZE + 1);
+        int yEnd = (int) Math.min(worldHeight, (tutEngine.getCamera().getyOffset() + TutLauncher.HEIGHT) / Tile.TILE_SIZE + 1);
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)
-                getBGTile(x, y).render(container, game, g);
+                getBackgroundTile(x, y).render(container, game, graphics);
 
         Color tint = new Color(63, 63, 63, 128);
-        g.setColor(tint);
-        g.fillRect(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
+        graphics.setColor(tint);
+        graphics.fillRect(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)
-                getFGTile(x, y).render(container, game, g);
+                getForegroundTile(x, y).render(container, game, graphics);
 
-        tutEngine.getEntityManager().render(container, game, g);
-        overlayManager.render(container, game, g);
+        tutEngine.getEntityManager().render(container, game, graphics);
+        overlayManager.render(container, game, graphics);
 
         /*
          * Mini Map
          */
-        WorldMiniMap.render(g, tutEngine, width, height, tint);
+        WorldMiniMap.render(graphics, tutEngine, worldWidth, worldHeight, tint);
     }
 
-    public Tile getBGTile(int x, int y) {
-        return getBGTile(new TilePos(x, y));
+    public Tile getBackgroundTile(int x, int y) {
+        return getBackgroundTile(new TilePos(x, y));
     }
 
-    public Tile getBGTile(TilePos pos) {
-        pos = checkTilePos(pos, false);
+    private Tile getBackgroundTile(TilePos pos) {
+        checkTilePos(pos, false);
 
-        return bg_tiles.getTile(pos);
+        return bgTiles.getTileAtPos(pos);
     }
 
-    public void setBGTile(int x, int y, Tile tile) {
-        setBGTile(new TilePos(x, y), tile);
+    public Tile getForegroundTile(int x, int y) {
+        return getForegroundTile(new TilePos(x, y));
     }
 
-    public void setBGTile(TilePos pos, Tile tile) {
-        pos = checkTilePos(pos, true);
+    public Tile getForegroundTile(TilePos pos) {
+        checkTilePos(pos, false);
 
-        bg_tiles.setTile(pos, tile.setPos(pos));
-    }
-
-    public Tile getFGTile(int x, int y) {
-        return getFGTile(new TilePos(x, y));
-    }
-
-    public Tile getFGTile(TilePos pos) {
-        pos = checkTilePos(pos, false);
-
-        return fg_tiles.getTile(pos);
+        return fgTiles.getTileAtPos(pos);
     }
 
     public void setFGTile(int x, int y, Tile tile) {
         setFGTile(new TilePos(x, y), tile);
     }
 
-    public void setFGTile(TilePos pos, Tile tile) {
-        pos = checkTilePos(pos, true);
+    private void setFGTile(TilePos pos, Tile tile) {
+        checkTilePos(pos, true);
 
-        fg_tiles.setTile(pos, tile.setPos(pos));
+        fgTiles.setTileAtPos(pos, tile.pos(pos));
     }
 
-    private TilePos checkTilePos(TilePos pos, boolean wh_exact) {
+    private void checkTilePos(TilePos pos, boolean wh_exact) {
         if (pos.getX() < 0)
             pos.setX(0);
         if (pos.getY() < 0)
             pos.setY(0);
 
         if (wh_exact) {
-            if (pos.getX() >= width)
-                pos.setX(width);
-            if (pos.getY() >= height)
-                pos.setY(height);
+            if (pos.getX() >= worldWidth)
+                pos.setX(worldWidth);
+            if (pos.getY() >= worldHeight)
+                pos.setY(worldHeight);
         } else {
-            if (pos.getX() > width)
-                pos.setX(width);
-            if (pos.getY() > height)
-                pos.setY(height);
+            if (pos.getX() > worldWidth)
+                pos.setX(worldWidth);
+            if (pos.getY() > worldHeight)
+                pos.setY(worldHeight);
         }
-        return pos;
     }
 
     private void loadWorld(String path) throws IOException, ParseException {
-        WorldJsonLoader worldJsonLoader = new WorldJsonLoader(path, tutEngine); // "/assets/worlds/dev_tests/json_format"
+        WorldJsonLoader worldJsonLoader = new WorldJsonLoader(path, tutEngine);
 
         worldJsonLoader.load();
         TutLauncher.LOGGER.info("Loading world [" + worldJsonLoader.getName() + "]!");
 
         worldName = worldJsonLoader.getName();
 
-        width = worldJsonLoader.getWidth();
-        height = worldJsonLoader.getHeight();
+        worldWidth = worldJsonLoader.getWidth();
+        worldHeight = worldJsonLoader.getHeight();
         spawnX = worldJsonLoader.getSpawnX();
         spawnY = worldJsonLoader.getSpawnY();
 
-        TileList bg_tile_ids = worldJsonLoader.getBg_tiles();
-        TileList fg_tile_ids = worldJsonLoader.getFg_tiles();
+        TileList bgTileIDs = worldJsonLoader.getBGTiles();
+        TileList fgTileIDs = worldJsonLoader.getFGTiles();
 
-        bg_tiles = new TileList(width, height);
-        fg_tiles = new TileList(width, height);
+        bgTiles = new TileList(worldWidth, worldHeight);
+        fgTiles = new TileList(worldWidth, worldHeight);
 
         tutEngine.setUsername(worldJsonLoader.getUsername());
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                Tile tile = bg_tile_ids.getTile(x, y).setPos(new TilePos(x, y)).setSolid(false);
-                if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
-                    tile.setSolid(true);
-                    tile.setUnbreakable(true);
+        for (int y = 0; y < worldHeight; y++) {
+            for (int x = 0; x < worldWidth; x++) {
+                Tile tile = bgTileIDs.getTileAtPos(x, y).pos(new TilePos(x, y)).isSolid(false);
+                if (x <= 0 || y <= 0 || x >= worldWidth - 1 || y >= worldHeight - 1) {
+                    tile.isSolid(true);
+                    tile.isUnbreakable(true);
                 }
-                bg_tiles.setTile(x, y, tile);
+                bgTiles.setTileAtPos(x, y, tile);
             }
         }
         TutLauncher.LOGGER.info("Loaded background tiles!");
 
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                Tile tile = fg_tile_ids.getTile(x, y).setPos(new TilePos(x, y));
-                if (x <= 0 || y <= 0 || x >= width - 1 || y >= height - 1) {
-                    tile.setSolid(true);
-                    tile.setUnbreakable(true);
+        for (int y = 0; y < worldHeight; y++) {
+            for (int x = 0; x < worldWidth; x++) {
+                Tile tile = fgTileIDs.getTileAtPos(x, y).pos(new TilePos(x, y));
+                if (x <= 0 || y <= 0 || x >= worldWidth - 1 || y >= worldHeight - 1) {
+                    tile.isSolid(true);
+                    tile.isUnbreakable(true);
                 }
-                fg_tiles.setTile(x, y, tile);
+                fgTiles.setTileAtPos(x, y, tile);
             }
         }
         TutLauncher.LOGGER.info("Loaded foreground tiles!");
@@ -260,12 +248,12 @@ public class World {
         return worldName;
     }
 
-    public int getWidth() {
-        return width;
+    public int getWorldWidth() {
+        return worldWidth;
     }
 
-    public int getHeight() {
-        return height;
+    public int getWorldHeight() {
+        return worldHeight;
     }
 
     public float getSpawnX() {
@@ -276,24 +264,16 @@ public class World {
         return spawnY;
     }
 
-    public TileList getBg_tiles() {
-        return bg_tiles;
+    public TileList getBGTiles() {
+        return bgTiles;
     }
 
-    public TileList getFg_tiles() {
-        return fg_tiles;
+    public TileList getFgTiles() {
+        return fgTiles;
     }
 
     public void stopUpdateThreads() {
         this.isForcedUpdateThread = false;
     }
 
-    public long getSeed() {
-        return seed;
-    }
-
-    public World setSeed(long seed) {
-        this.seed = seed;
-        return this;
-    }
 }

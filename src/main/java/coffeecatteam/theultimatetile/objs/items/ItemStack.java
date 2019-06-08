@@ -1,6 +1,6 @@
 package coffeecatteam.theultimatetile.objs.items;
 
-import coffeecatteam.theultimatetile.tags.TagCompound;
+import coffeecatteam.theultimatetile.tags.CompoundTag;
 import org.newdawn.slick.Image;
 
 public class ItemStack {
@@ -10,7 +10,7 @@ public class ItemStack {
     private Item item;
     private int count;
 
-    public ItemStack(TagCompound compound) {
+    public ItemStack(CompoundTag compound) {
         this(Items.getItemById(compound.getString("id")), compound.getInteger("count"));
     }
 
@@ -23,7 +23,7 @@ public class ItemStack {
         setCount(count);
     }
 
-    public void saveToTagCompound(TagCompound compound) {
+    public void saveToTagCompound(CompoundTag compound) {
         compound.setString("id", this.getId());
         compound.setInteger("count", this.getCount());
     }

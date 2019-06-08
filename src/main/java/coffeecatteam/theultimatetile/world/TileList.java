@@ -33,11 +33,11 @@ public class TileList {
         }
     }
 
-    public void setTile(TilePos pos, Tile tile) {
-        setTile(pos.getX(), pos.getY(), tile);
+    public void setTileAtPos(TilePos pos, Tile tile) {
+        setTileAtPos(pos.getX(), pos.getY(), tile);
     }
 
-    public void setTile(int x, int y, Tile tile) {
+    public void setTileAtPos(int x, int y, Tile tile) {
         if (x < 0) x = 0;
         if (y < 0) y = 0;
         if (x >= width) x = width - 1;
@@ -46,11 +46,11 @@ public class TileList {
         TILES.get(y).set(x, tile);
     }
 
-    public Tile getTile(TilePos pos) {
-        return getTile(pos.getX(), pos.getY());
+    public Tile getTileAtPos(TilePos pos) {
+        return getTileAtPos(pos.getX(), pos.getY());
     }
 
-    public Tile getTile(int x, int y) {
+    public Tile getTileAtPos(int x, int y) {
         if (x < 0) x = 0;
         if (y < 0) y = 0;
         if (x >= width) x = width - 1;

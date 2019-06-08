@@ -53,10 +53,6 @@ public class Biomes {
             return color;
         }
 
-        public boolean canSpawnEntities() {
-            return canSpawnEntities;
-        }
-
         private void throwInvalidColor(String id, int... color) {
             try {
                 StringBuilder msg = new StringBuilder("Invalid biome color [");

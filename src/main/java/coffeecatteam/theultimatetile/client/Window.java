@@ -1,3 +1,4 @@
+/*
 package coffeecatteam.theultimatetile.client;
 
 import org.lwjgl.Version;
@@ -90,3 +91,4 @@ public class Window {
     }
 
 }
+*/

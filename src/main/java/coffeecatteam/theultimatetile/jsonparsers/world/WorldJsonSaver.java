@@ -2,10 +2,10 @@ package coffeecatteam.theultimatetile.jsonparsers.world;
 
 import coffeecatteam.theultimatetile.objs.entities.Entities;
 import coffeecatteam.theultimatetile.objs.entities.Entity;
-import coffeecatteam.theultimatetile.objs.entities.EntityItem;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityCreature;
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
-import coffeecatteam.theultimatetile.objs.entities.statics.EntityStatic;
+import coffeecatteam.theultimatetile.objs.entities.ItemEntity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.LivingEntity;
+import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
+import coffeecatteam.theultimatetile.objs.entities.statics.StaticEntity;
 import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.start.TutEngine;
@@ -36,7 +36,7 @@ public class WorldJsonSaver implements IJSONSaver {
         saveWorldInfo(world);
         TutLauncher.LOGGER.info("World [" + world.getWorldName() + "] info saved!");
 
-        saveTiles(world.getWidth(), world.getHeight(), world.getBg_tiles(), world.getFg_tiles(), path, WorldJsonLoader.BASE_FILES.get("tile_bg"), WorldJsonLoader.BASE_FILES.get("tile_fg"));
+        saveTiles(world.getWorldWidth(), world.getWorldHeight(), world.getBGTiles(), world.getFgTiles(), path, WorldJsonLoader.BASE_FILES.get("tile_bg"), WorldJsonLoader.BASE_FILES.get("tile_fg"));
         TutLauncher.LOGGER.info("World [" + world.getWorldName() + "] tiles saved!");
 
         saveEntities();
@@ -60,8 +60,8 @@ public class WorldJsonSaver implements IJSONSaver {
         jsonObject.put("name", world.getWorldName());
 
         JSONArray size = new JSONArray();
-        size.add(0, world.getWidth());
-        size.add(1, world.getHeight());
+        size.add(0, world.getWorldWidth());
+        size.add(1, world.getWorldHeight());
         jsonObject.put("size", size);
 
         JSONArray spawn = new JSONArray();
@@ -83,7 +83,7 @@ public class WorldJsonSaver implements IJSONSaver {
         for (int y = 0; y < height; y++) {
             JSONArray chunk = new JSONArray();
             for (int x = 0; x < width; x++)
-                saveTile(chunk, bgTiles.getTile(x, y), x, y);
+                saveTile(chunk, bgTiles.getTileAtPos(x, y), x, y);
             bg_tile.put("chunk" + y, chunk);
         }
         jsonObjectBG.put("bg_tile", bg_tile);
@@ -93,7 +93,7 @@ public class WorldJsonSaver implements IJSONSaver {
         for (int y = 0; y < height; y++) {
             JSONArray chunk = new JSONArray();
             for (int x = 0; x < width; x++)
-                saveTile(chunk, fgTiles.getTile(x, y), x, y);
+                saveTile(chunk, fgTiles.getTileAtPos(x, y), x, y);
             fg_tile.put("chunk" + y, chunk);
         }
         jsonObjectFG.put("fg_tile", fg_tile);
@@ -117,17 +117,17 @@ public class WorldJsonSaver implements IJSONSaver {
 
         int entAmt = 0;
         for (Entity entity : tutEngine.getEntityManager().getEntities())
-            if (!(entity instanceof EntityPlayer))
+            if (!(entity instanceof PlayerEntity))
                 entAmt++;
         if (entAmt > 0) {
             int staticAmt = 0;
             int creatureAmt = 0;
             for (Entity entity : tutEngine.getEntityManager().getEntities()) {
-                if (!(entity instanceof EntityPlayer)) {
-                    if (entity instanceof EntityStatic) {
+                if (!(entity instanceof PlayerEntity)) {
+                    if (entity instanceof StaticEntity) {
                         staticAmt++;
                     }
-                    if (entity instanceof EntityCreature) {
+                    if (entity instanceof LivingEntity) {
                         creatureAmt++;
                     }
                 }
@@ -137,8 +137,8 @@ public class WorldJsonSaver implements IJSONSaver {
             JSONArray statics = new JSONArray();
             if (staticAmt > 0) {
                 for (Entity entity : tutEngine.getEntityManager().getEntities())
-                    if (!(entity instanceof EntityPlayer))
-                        if (entity instanceof EntityStatic)
+                    if (!(entity instanceof PlayerEntity))
+                        if (entity instanceof StaticEntity)
                             statics.add(Entities.entityToJson(entity));
                 TutLauncher.LOGGER.info("World [" + path + "] static entities saved!");
             }
@@ -149,8 +149,8 @@ public class WorldJsonSaver implements IJSONSaver {
             if (creatureAmt > 0) {
 
                 for (Entity entity : tutEngine.getEntityManager().getEntities())
-                    if (!(entity instanceof EntityPlayer))
-                        if (entity instanceof EntityCreature)
+                    if (!(entity instanceof PlayerEntity))
+                        if (entity instanceof LivingEntity)
                             creatures.add(Entities.entityToJson(entity));
                 TutLauncher.LOGGER.info("World [" + path + "] creature entities saved!");
             }
@@ -167,8 +167,8 @@ public class WorldJsonSaver implements IJSONSaver {
 
         JSONArray items = new JSONArray();
         for (Entity entity : tutEngine.getEntityManager().getEntities()) {
-            if (entity instanceof EntityItem) {
-                ItemStack stack = ((EntityItem) entity).getStack();
+            if (entity instanceof ItemEntity) {
+                ItemStack stack = ((ItemEntity) entity).getStack();
                 JSONObject itemObj = new JSONObject();
                 itemObj.put("id", stack.getId());
 

@@ -1,8 +1,8 @@
 package coffeecatteam.theultimatetile.objs.items;
 
-import coffeecatteam.theultimatetile.objs.entities.creatures.EntityPlayer;
+import coffeecatteam.theultimatetile.objs.entities.creatures.PlayerEntity;
 
 public interface IInteractable {
 
-    boolean onInteracted(EntityPlayer player);
+    boolean onInteracted(PlayerEntity player);
 }
