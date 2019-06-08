@@ -127,7 +127,7 @@ public class WorldMapGenerator {
                 Color c = Biomes.NONE.getColor();
                 if (landMap.getRGB(x, y) == WorldColors.GRASS.getRGB() && pathMap.getRGB(x, y) != WorldColors.DIRT.getRGB() && landMap.getRGB(x, y) != WorldColors.DIRT.getRGB()) {
                     Random random = new Random();
-                    int randomInt = random.nextInt(5);
+                    int randomInt = random.nextInt(6);
                     switch (randomInt) {
                         case 0:
                             c = Biomes.FOREST.getColor();
@@ -136,12 +136,15 @@ public class WorldMapGenerator {
                             c = Biomes.DESERT.getColor();
                             break;
                         case 2:
-                            c = Biomes.SAVANNA.getColor();
+                            c = Biomes.RED_DESERT.getColor();
                             break;
                         case 3:
-                            c = Biomes.OCEAN.getColor();
+                            c = Biomes.SAVANNA.getColor();
                             break;
                         case 4:
+                            c = Biomes.OCEAN.getColor();
+                            break;
+                        case 5:
                             c = Biomes.PLAINS.getColor();
                             break;
                     }

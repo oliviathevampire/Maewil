@@ -20,6 +20,7 @@ public class Biomes {
     public static final Biome OCEAN = new Biome("ocean", false, 3, 0, 166);
     public static final Biome SAVANNA = new Biome("savanna", true, 166, 86, 0);
     public static final Biome DESERT = new Biome("desert", true, 166, 124, 0);
+    public static final Biome RED_DESERT = new Biome("red_desert", true, 166, 124, 0);
     public static final Biome CAVE = new Biome("cave", true, 50, 50, 50);
     public static final Biome UNDERGROUND = new Biome("underground", false, 75, 75, 75);
 
