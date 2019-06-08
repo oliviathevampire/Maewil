@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
 import coffeecatteam.theultimatetile.objs.items.Item;
+import coffeecatteam.theultimatetile.utils.Identifier;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.newdawn.slick.Image;
@@ -20,14 +21,14 @@ public class ItemDataParser extends DataParser<Item> {
     }
 
     @Override
-    Item singleData(JSONObject data, Item obj, String texturePath, int spriteSize) {
+    Item singleData(JSONObject data, Item obj, Identifier texturePath, int spriteSize) {
         Image texture = Assets.getSpriteExact(texturePath, 0, 0, spriteSize, spriteSize);
         obj.setTexture(texture);
         return obj;
     }
 
     @Override
-    Item multipleData(JSONObject data, Item obj, String texturePath, int spriteSize) {
+    Item multipleData(JSONObject data, Item obj, Identifier texturePath, int spriteSize) {
         JSONArray textures = (JSONArray) data.get("textures");
         Image[] alts = new Image[textures.size()];
         SpriteSheet altSheet = new SpriteSheet(texturePath);
@@ -43,7 +44,7 @@ public class ItemDataParser extends DataParser<Item> {
     }
 
     @Override
-    Item animatedData(JSONObject data, Item obj, String texturePath, int spriteSize) {
+    Item animatedData(JSONObject data, Item obj, Identifier texturePath, int spriteSize) {
         int animSpeed = NumberUtils.parseInt(data.get("speed"));
         JSONArray frameIndexes = (JSONArray) data.get("frames");
         SpriteSheet animSheet = new SpriteSheet(texturePath);

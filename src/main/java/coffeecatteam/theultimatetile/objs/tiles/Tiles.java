@@ -35,7 +35,6 @@ public class Tiles {
     public static Tile STONE, BROKEN_STONE;
     public static Tile ANDESITE, DIORITE;
     public static Tile OBSIDIAN;
-    public static Tile STONE_BRICKS, STONE_TILE;
 
     public static Tile COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE;
 
@@ -76,8 +75,6 @@ public class Tiles {
         register(ANDESITE = parser.loadData(new AndesiteTile(tutEngine)));
         register(DIORITE = parser.loadData(new DioriteTile(tutEngine)));
         register(OBSIDIAN = parser.loadData(new ObsidianTile(tutEngine)));
-        register(STONE_BRICKS = parser.loadData(new StoneBricksTile(tutEngine)));
-        register(STONE_TILE = parser.loadData(new StoneTilesTile(tutEngine)));
 
         register(COAL_ORE = parser.loadData(new CoalOreTile(tutEngine)));
         register(IRON_ORE = parser.loadData(new IronOreTile(tutEngine)));

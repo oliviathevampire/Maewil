@@ -5,6 +5,7 @@ import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
+import coffeecatteam.theultimatetile.utils.Identifier;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.newdawn.slick.Image;
@@ -20,14 +21,14 @@ public class TileDataParser extends DataParser<Tile> {
     }
 
     @Override
-    Tile singleData(JSONObject data, Tile obj, String texturePath, int spriteSize) {
+    Tile singleData(JSONObject data, Tile obj, Identifier texturePath, int spriteSize) {
         Image texture = Assets.getSpriteExact(texturePath, 0, 0, spriteSize, spriteSize);
         obj.setTexture(texture);
         return obj;
     }
 
     @Override
-    Tile multipleData(JSONObject data, Tile obj, String texturePath, int spriteSize) {
+    Tile multipleData(JSONObject data, Tile obj, Identifier texturePath, int spriteSize) {
         JSONArray textures = (JSONArray) data.get("textures");
         Image[] alts = new Image[textures.size()];
         SpriteSheet altSheet = new SpriteSheet(texturePath);
@@ -47,7 +48,7 @@ public class TileDataParser extends DataParser<Tile> {
     }
 
     @Override
-    Tile animatedData(JSONObject data, Tile obj, String texturePath, int spriteSize) {
+    Tile animatedData(JSONObject data, Tile obj, Identifier texturePath, int spriteSize) {
         int animSpeed = NumberUtils.parseInt(data.get("speed"));
         JSONArray frameIndexes = (JSONArray) data.get("frames");
         SpriteSheet animSheet = new SpriteSheet(texturePath);

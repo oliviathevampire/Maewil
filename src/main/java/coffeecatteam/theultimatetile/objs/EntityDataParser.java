@@ -4,7 +4,9 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
+import coffeecatteam.theultimatetile.objs.entities.Entity;
 import coffeecatteam.theultimatetile.objs.tiles.Tiles;
+import coffeecatteam.theultimatetile.utils.Identifier;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.newdawn.slick.Image;
@@ -15,7 +17,7 @@ import java.util.HashMap;
  * @author CoffeeCatRailway
  * Created: 24/02/2019
  */
-public class EntityDataParser extends DataParser<coffeecatteam.theultimatetile.objs.entities.Entity> {
+public class EntityDataParser extends DataParser<Entity> {
 
     private HashMap<String, HashMap<String, Animation>> LOADED = new HashMap<>();
 
@@ -24,8 +26,8 @@ public class EntityDataParser extends DataParser<coffeecatteam.theultimatetile.o
     }
 
     @Override
-    coffeecatteam.theultimatetile.objs.entities.Entity customLoadData(JSONObject data, coffeecatteam.theultimatetile.objs.entities.Entity obj) {
-        coffeecatteam.theultimatetile.objs.entities.Entity entity = obj.newCopy();
+    Entity customLoadData(JSONObject data, Entity obj) {
+        Entity entity = obj.newCopy();
 
         if (!LOADED.keySet().contains(entity.getId())) {
             DataTypes.Entity type = DataTypes.Entity.getByName(String.valueOf(data.get("type")));
@@ -81,13 +83,13 @@ public class EntityDataParser extends DataParser<coffeecatteam.theultimatetile.o
     private SpriteSheet getTexture(JSONObject data) {
         SpriteSheet texture = new SpriteSheet(Assets.MISSING_TEXTURE);
         if (data.containsKey("texture")) {
-            String texturePath = "/assets/textures/";
+            Identifier texturePath;
 
             if (data.get("texture") instanceof JSONArray) {
                 JSONArray texturePaths = (JSONArray) data.get("texture");
-                texturePath += String.valueOf(texturePaths.get(NumberUtils.getRandomInt(0, texturePaths.size() - 1)));
+                texturePath = new Identifier("tut", "textures/" + texturePaths.get(NumberUtils.getRandomInt(0, texturePaths.size() - 1)));
             } else {
-                texturePath += data.get("texture");
+                texturePath = new Identifier("tut", "textures/" + data.get("texture"));
             }
 
             texture = new SpriteSheet(texturePath);

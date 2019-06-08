@@ -17,7 +17,6 @@ public class WorldColors {
     public static final Color GRASS = Color.green;
     public static final Color STONE = Color.gray;
     public static final Color DIRT = new Color(145, 74, 36);
-    public static final Color STONE_TILES = Color.black;
 
     /**
      * Used for mini-map

@@ -1,24 +1,26 @@
 package coffeecatteam.theultimatetile.gfx.image;
 
+import coffeecatteam.theultimatetile.utils.Identifier;
 import org.newdawn.slick.Image;
 
 public class SpriteSheet {
 
-    private String path;
+    private Identifier identifier;
     private Image sheet;
 
-    public SpriteSheet(String path) {
-        this.path = path;
-        this.sheet = ImageLoader.loadImage(path);
+    public SpriteSheet(Identifier identifier) {
+        this.identifier = identifier;
+        this.sheet = ImageLoader.loadImage(identifier);
     }
 
     public SpriteSheet(Image sheet) {
-        this.path = sheet.getName();
+        System.out.println(new Identifier("tut", sheet.getName()).toAssetsString());
+        this.identifier = new Identifier("tut", sheet.getName());
         this.sheet = sheet;
     }
 
-    public SpriteSheet(String path, Image sheet) {
-        this.path = path;
+    public SpriteSheet(Identifier identifier, Image sheet) {
+        this.identifier = identifier;
         this.sheet = sheet;
     }
 
@@ -30,8 +32,8 @@ public class SpriteSheet {
         return sheet;
     }
 
-    public String getPath() {
-        return path;
+    public Identifier getIdentifier() {
+        return identifier;
     }
 
     public int getWidth() {
@@ -43,6 +45,6 @@ public class SpriteSheet {
     }
 
     public SpriteSheet copy() {
-        return new SpriteSheet(path, sheet.copy());
+        return new SpriteSheet(identifier, sheet.copy());
     }
 }

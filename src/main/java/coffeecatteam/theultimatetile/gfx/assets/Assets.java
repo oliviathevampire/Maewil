@@ -2,6 +2,7 @@ package coffeecatteam.theultimatetile.gfx.assets;
 
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.gfx.image.SpriteSheet;
+import coffeecatteam.theultimatetile.utils.Identifier;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -77,7 +78,7 @@ public class Assets {
 
     /* Fonts */
     private static void initFonts() {
-        String fontPath = "/assets/fonts/LCD_Solid.ttf";
+        Identifier fontPath = new Identifier("tut", "fonts/lcd_solid.ttf");
         int sizeStep = 5, maxSize = 100;
 
         /* PLAIN */
@@ -88,13 +89,13 @@ public class Assets {
         }
         /* BOLD */
         for (int i = sizeStep; i <= maxSize; i += sizeStep) {
-            String bIndex = String.valueOf(i) + "-bold";
+            String bIndex = i + "-bold";
             FONTS.put(bIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.BOLD));
             logger.info("Font [" + bIndex + "] loaded!");
         }
         /* ITALIC */
         for (int i = sizeStep; i <= maxSize; i += sizeStep) {
-            String iIndex = String.valueOf(i) + "-italic";
+            String iIndex = i + "-italic";
             FONTS.put(iIndex, loadTrueTypeFont(fontPath, i, java.awt.Font.ITALIC));
             logger.info("Font [" + iIndex + "] loaded!");
         }
@@ -102,13 +103,13 @@ public class Assets {
         logger.info("Assets [Fonts] loaded!");
     }
 
-    private static Font loadTrueTypeFont(String path, float size, final int style) {
+    private static Font loadTrueTypeFont(Identifier path, float size, final int style) {
         try {
-            java.awt.Font awtFont = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, Assets.class.getResourceAsStream(path)).deriveFont(style, size);
+            java.awt.Font awtFont = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, Assets.class.getResourceAsStream(path.toAssetsString())).deriveFont(style, size);
 
-            UnicodeFont font = new org.newdawn.slick.UnicodeFont(awtFont);
+            UnicodeFont font = new UnicodeFont(awtFont);
             font.addAsciiGlyphs();
-            font.getEffects().add(new ColorEffect(java.awt.Color.white));
+            font.getEffects().add(new ColorEffect(Color.white));
             font.addAsciiGlyphs();
             font.loadGlyphs();
 
@@ -141,10 +142,10 @@ public class Assets {
 
     /* Entities */
     private static void initEntities() {
-        HEARTS = getFrames("/assets/textures/gui/overlay/player_health.png", 0, 0, 24);
-        SPRINT = getFrames("/assets/textures/gui/overlay/player_stats.png", 1, 0, 1, width * 2, height);
+        HEARTS = getFrames(new Identifier("tut", "textures/gui/overlay/player_health.png"), 0, 0, 24);
+        SPRINT = getFrames(new Identifier("tut", "textures/gui/overlay/player_stats.png"), 1, 0, 1, width * 2, height);
         HEALTH_BAR = new Image[2];
-        SpriteSheet hb = new SpriteSheet("/assets/textures/gui/overlay/health_bar.png");
+        SpriteSheet hb = new SpriteSheet(new Identifier("tut", "textures/gui/overlay/health_bar.png"));
         HEALTH_BAR[0] = hb.crop(0, 0, hb.getSheet().getWidth(), hb.getSheet().getHeight() / 2);
         HEALTH_BAR[1] = hb.crop(0, hb.getSheet().getHeight() / 2, hb.getSheet().getWidth(), hb.getSheet().getHeight() / 2);
 
@@ -156,15 +157,15 @@ public class Assets {
 
     /* GUI */
     private static void initGui() {
-        GUI_TITLE_SMALL = getSpriteExact("/assets/textures/splash/title.png", 0, 0, 6560, 1152);
-        GUI_SPLASH_PLAYER = getFrames("/assets/textures/splash/player.png", 0, 0, 11, 512, 512);
+        GUI_TITLE_SMALL = getSpriteExact(new Identifier("tut", "textures/splash/title.png"), 0, 0, 6560, 1152);
+        GUI_SPLASH_PLAYER = getFrames(new Identifier("tut", "textures/splash/player.png"), 0, 0, 11, 512, 512);
 
-        GUI_TITLE_BIG = getSpriteExact("/assets/textures/gui/title.png", 0, 0, 101, 84);
+        GUI_TITLE_BIG = getSpriteExact(new Identifier("tut", "textures/gui/title.png"), 0, 0, 101, 84);
         GUI_TITLE_FG = new Image[3];
         for (int i = 0; i < GUI_TITLE_FG.length; i++) {
-            GUI_TITLE_FG[i] = getSpriteExact("/assets/textures/gui/title.png", 112, 64 * i, 112, 64);
+            GUI_TITLE_FG[i] = getSpriteExact(new Identifier("tut", "textures/gui/title.png"), 112, 64 * i, 112, 64);
         }
-        GUI_DEAD_OVERLAY = getImage("/assets/textures/gui/dead_overlay.png");
+        GUI_DEAD_OVERLAY = getImage(new Identifier("tut", "textures/gui/dead_overlay.png"));
 
         GUI_BUTTON_ENABLED = getFrames(guiSheet, 0, 0, 2, width, height);
         GUI_BUTTON_HOVER = getFrames(guiSheet, 1, 0, 2, width, height);
@@ -200,13 +201,13 @@ public class Assets {
         GUI_CHECK_BOX_TICK = getSpriteInd(guiSheet, 3, 3, width, height);
         GUI_CHECK_BOX_CROSS = getSpriteInd(guiSheet, 4, 3, width, height);
 
-        GUI_CURSOR = getImage("/assets/textures/cursor.png");
-        MAP_BORDER = getImage("/assets/textures/gui/map/border.png");
+        GUI_CURSOR = getImage(new Identifier("tut", "textures/cursor.png"));
+        MAP_BORDER = getImage(new Identifier("tut", "textures/gui/map/border.png"));
         MAP_CURSOR = new Image[8];
         for (int y = 0; y < 2; y++) {
             for (int x = 0; x < 4; x++) {
                 int index = x + (4 * y);
-                MAP_CURSOR[index] = getSpriteInd(new SpriteSheet("/assets/textures/gui/map/cursor.png"), x, y, width, height);
+                MAP_CURSOR[index] = getSpriteInd(new SpriteSheet(new Identifier("tut", "textures/gui/map/cursor.png")), x, y, width, height);
             }
         }
 
@@ -224,17 +225,17 @@ public class Assets {
     public static void init() {
         logger = new CatLogger("TUT-Assets");
 
-        MISSING_TEXTURE = getImage("/assets/textures/missing.png");
+        MISSING_TEXTURE = getImage(new Identifier("tut", "textures/missing.png"));
 
         /* Sprite Sheets */
-        effectSheet = new SpriteSheet("/assets/textures/effect.png");
+        effectSheet = new SpriteSheet(new Identifier("tut", "textures/effect.png"));
 
-        glubSheet = new SpriteSheet("/assets/textures/glub.png");
+        glubSheet = new SpriteSheet(new Identifier("tut", "textures/glub.png"));
 
         /* GUI */
-        guiSheet = new SpriteSheet("/assets/textures/gui/gui.png");
-        invSheet = new SpriteSheet("/assets/textures/gui/inventory/inventory.png");
-        campfireInvSheet = new SpriteSheet("/assets/textures/gui/inventory/campfire.png");
+        guiSheet = new SpriteSheet(new Identifier("tut", "textures/gui/gui.png"));
+        invSheet = new SpriteSheet(new Identifier("tut", "textures/gui/inventory/inventory.png"));
+        campfireInvSheet = new SpriteSheet(new Identifier("tut", "textures/gui/inventory/campfire.png"));
 
         initFonts();
         initTiles();
@@ -245,7 +246,7 @@ public class Assets {
     }
 
     public static Image getTileTexture(String tile, int xOff) {
-        return getSpriteExact("/assets/textures/tiles/" + tile + ".png", width * xOff, 0, width, height);
+        return getSpriteExact(new Identifier("tut", "textures/tiles/" + tile + ".png"), width * xOff, 0, width, height);
     }
 
     public static Image[] getTileFrames(String tile, int frameCount) {
@@ -253,19 +254,19 @@ public class Assets {
     }
 
     public static Image[] getTileFrames(String tile, int frameCount, int sizeMod) {
-        return getFrames("/assets/textures/tiles/" + tile + ".png", 0, 0, frameCount - 1, width * sizeMod, height * sizeMod);
+        return getFrames(new Identifier("tut", "textures/tiles/" + tile + ".png"), 0, 0, frameCount - 1, width * sizeMod, height * sizeMod);
     }
 
-    public static Image[] getFrames(String sheet, int xStart, int xEnd) {
-        return getFrames(sheet, 0, xStart, xEnd);
+    public static Image[] getFrames(Identifier identifier, int xStart, int xEnd) {
+        return getFrames(identifier, 0, xStart, xEnd);
     }
 
-    public static Image[] getFrames(String sheet, int y, int xStart, int xEnd) {
-        return getFrames(new SpriteSheet(sheet), y, xStart, xEnd, width, height);
+    public static Image[] getFrames(Identifier identifier, int y, int xStart, int xEnd) {
+        return getFrames(new SpriteSheet(identifier), y, xStart, xEnd, width, height);
     }
 
-    public static Image[] getFrames(String sheet, int y, int xStart, int xEnd, int width, int height) {
-        return getFrames(new SpriteSheet(sheet), y, xStart, xEnd, width, height);
+    public static Image[] getFrames(Identifier identifier, int y, int xStart, int xEnd, int width, int height) {
+        return getFrames(new SpriteSheet(identifier), y, xStart, xEnd, width, height);
     }
 
     public static Image[] getFrames(SpriteSheet sheet, int xStart, int xEnd) {
@@ -283,7 +284,7 @@ public class Assets {
             try {
                 frames[index] = sheet.crop(x * width, y * height, width, height);
             } catch (RasterFormatException e) {
-                logger.error(e + " - " + sheet.getPath());
+                logger.error(e + " - " + sheet.getIdentifier().toAssetsString());
                 frames[index] = MISSING_TEXTURE;
             }
             index++;
@@ -291,13 +292,14 @@ public class Assets {
         return frames;
     }
 
-    public static Image getImage(String path) {
-        SpriteSheet sheet = new SpriteSheet(path);
+    public static Image getImage(Identifier identifier) {
+        System.out.println(identifier.toAssetsString());
+        SpriteSheet sheet = new SpriteSheet(identifier);
         return getSpriteExact(sheet, 0, 0, sheet.getWidth(), sheet.getHeight());
     }
 
-    public static Image getSpriteExact(String sheet, int indexX, int indexY, int width, int height) {
-        return getSpriteExact(new SpriteSheet(sheet), indexX, indexY, width, height);
+    public static Image getSpriteExact(Identifier identifier, int indexX, int indexY, int width, int height) {
+        return getSpriteExact(new SpriteSheet(identifier), indexX, indexY, width, height);
     }
 
     public static Image getSpriteInd(SpriteSheet sheet, int indexX, int indexY, int width, int height) {
@@ -309,7 +311,7 @@ public class Assets {
         try {
             image = sheet.crop(indexX, indexY, width, height); /* Assets.WIDTH * indexX, Assets.HEIGHT * indexY <-- This caused so many problems! */
         } catch (RasterFormatException e) {
-            logger.error(e + " - " + sheet.getPath() + " X: [" + indexX + "] Y: [" + indexY + "]");
+            logger.error(e + " - " + sheet.getIdentifier().toAssetsString() + " X: [" + indexX + "] Y: [" + indexY + "]");
         }
         return image;
     }

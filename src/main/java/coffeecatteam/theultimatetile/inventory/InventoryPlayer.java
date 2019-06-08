@@ -11,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class InventoryPlayer extends InventoryAbstractPlayer {
 
     public InventoryPlayer(TutEngine tutEngine, PlayerEntity player) {
-        super(tutEngine, player, "Player", TutLauncher.WIDTH / 2 - 57 * 6 / 2, TutLauncher.HEIGHT / 2 - 31 * 6 / 2);
+        super(tutEngine, player, "Player", TutLauncher.WIDTH / 2 - 57 * 6 / 2, TutLauncher.HEIGHT / 2 - 1 * 6 / 2);
         isDefault = true;
     }
 

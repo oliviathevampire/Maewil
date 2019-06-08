@@ -4,7 +4,6 @@ import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import coffeecatteam.theultimatetile.gfx.Animation;
 import coffeecatteam.theultimatetile.gfx.Camera;
-import coffeecatteam.theultimatetile.gfx.Text;
 import coffeecatteam.theultimatetile.gfx.assets.Assets;
 import coffeecatteam.theultimatetile.gfx.assets.Sounds;
 import coffeecatteam.theultimatetile.manager.EntityManager;
@@ -181,8 +180,6 @@ public class TutEngine extends BasicGameState {
             ScreenManager.getCurrentScreen().render(container, game, g);
             ScreenManager.getCurrentScreen().postRender(container, game, g);
         }
-        if (OptionsScreen.OPTIONS.fpsCounter())
-            renderFPSCounter(g);
     }
 
     @Override
@@ -198,12 +195,6 @@ public class TutEngine extends BasicGameState {
     @Override
     public void keyReleased(int key, char c) {
         keyManager.keyReleased(key, c);
-    }
-
-    protected void renderFPSCounter(Graphics g) {
-        Font font = Assets.FONTS.get("25-bold");
-        String t = "FPS: " + this.fps;
-        Text.drawString(g, t, 5, 5 + Text.getHeight(t, font), false, false, Color.orange, font);
     }
 
     public String getKeyJustPressed() {

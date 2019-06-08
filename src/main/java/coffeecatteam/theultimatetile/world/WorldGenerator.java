@@ -98,8 +98,6 @@ public class WorldGenerator {
 
                 if (lc.getRGB() == WorldColors.STONE.getRGB())
                     tile = Tiles.STONE;
-                if(lc.getRGB() == WorldColors.STONE_TILES.getRGB())
-                    tile = Tiles.STONE_TILE;
 
                 tile = tile.newCopy();
                 checkBorderTilePos(tile, x, y, true);
