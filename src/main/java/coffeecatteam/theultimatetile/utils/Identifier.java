@@ -19,6 +19,10 @@ public class Identifier {
         }
     }
 
+    public Identifier(String string) {
+        this(split(string, ':'));
+    }
+
     public Identifier(String string_1, String string_2) {
         this(new String[]{string_1, string_2});
     }
