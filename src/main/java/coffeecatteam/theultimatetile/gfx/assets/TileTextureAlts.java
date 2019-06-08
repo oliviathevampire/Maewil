@@ -13,7 +13,7 @@ public class TileTextureAlts {
     public static Image[] getTextureAlts(int tileAlts, int tileOverlaps, String id, int tileWidth, int tileHeight) {
         Image[] textures = new Image[tileAlts + tileOverlaps + 1];
 
-        SpriteSheet sheet = new SpriteSheet(new Identifier("tut", "textures/tiles/overlap/" + id + ".png"));
+        SpriteSheet sheet = new SpriteSheet(new Identifier("textures/tiles/overlap/" + id + ".png"));
 
         for (int i = 0; i < tileAlts; i++)
             textures[i] = Assets.getTileTexture(id, i);

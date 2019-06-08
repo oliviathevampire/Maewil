@@ -83,16 +83,16 @@ public class EntityDataParser extends DataParser<Entity> {
     private SpriteSheet getTexture(JSONObject data) {
         SpriteSheet texture = new SpriteSheet(Assets.MISSING_TEXTURE);
         if (data.containsKey("texture")) {
-            Identifier texturePath;
+            String texturePath = "textures/";
 
             if (data.get("texture") instanceof JSONArray) {
                 JSONArray texturePaths = (JSONArray) data.get("texture");
-                texturePath = new Identifier("tut", "textures/" + texturePaths.get(NumberUtils.getRandomInt(0, texturePaths.size() - 1)));
+                texturePath += String.valueOf(texturePaths.get(NumberUtils.getRandomInt(0, texturePaths.size() - 1)));
             } else {
-                texturePath = new Identifier("tut", "textures/" + data.get("texture"));
+                texturePath += data.get("texture");
             }
 
-            texture = new SpriteSheet(texturePath);
+            texture = new SpriteSheet(new Identifier("tut", texturePath));
         }
         return texture;
     }

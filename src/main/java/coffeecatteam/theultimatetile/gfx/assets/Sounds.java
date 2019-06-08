@@ -1,6 +1,7 @@
 package coffeecatteam.theultimatetile.gfx.assets;
 
 import coffeecatteam.theultimatetile.start.TutLauncher;
+import coffeecatteam.theultimatetile.utils.Identifier;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -43,18 +44,18 @@ public class Sounds {
     }
 
     public static Sound loadSound(String name) throws SlickException {
-        String path = "/assets/sounds/" + name + ".ogg";
-        URL file = Sounds.class.getResource(path);
+        Identifier path = new Identifier("sounds/" + name + ".ogg");
+        URL file = Sounds.class.getResource(path.toAssetsString());
         if (file == null)
             throw new SlickException("Missing sound: " + path);
         return new Sound(file);
     }
 
     public static Music loadMusic(String name) throws SlickException {
-        String path = "/assets/sounds/" + name + ".ogg";
-        URL file = Sounds.class.getResource(path);
+        Identifier path = new Identifier("sounds/" + name + ".ogg");
+        URL file = Sounds.class.getResource(path.toAssetsString());
         if (file == null)
-            throw new SlickException("Missing sound: " + path);
+            throw new SlickException("Missing sound: " + path.toAssetsString());
         return new Music(file);
     }
 
