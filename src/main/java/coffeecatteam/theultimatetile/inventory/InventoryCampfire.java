@@ -11,6 +11,7 @@ import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.screen.options.OptionsScreen;
 import coffeecatteam.theultimatetile.screen.options.controls.Keybind;
 import coffeecatteam.theultimatetile.tags.CompoundTag;
+import coffeecatteam.theultimatetile.utils.Identifier;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -18,7 +19,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class InventoryCampfire extends InventoryAbstractPlayer {
 
-    private Image flame = Assets.getSpriteExact("/assets/textures/gui/inventory/campfire.png", 57, 0, 16, 15);
+    private Image flame = Assets.getSpriteExact(new Identifier("tut", "textures/gui/inventory/campfire.png"), 57, 0, 16, 15);
     private CompoundTag TAGS;
 
     public InventoryCampfire(TutEngine tutEngine, PlayerEntity player, CompoundTag TAGS) {

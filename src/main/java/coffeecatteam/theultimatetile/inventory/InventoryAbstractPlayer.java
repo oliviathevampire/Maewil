@@ -29,11 +29,11 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         super(tutEngine, player, invName);
 
         // Add inventory slots
-        int xd = xOff, yd = yOff, x, y;
+        int x, y;
         int width = 48, height = 48;
         for (int i = 0; i < maxSize; i++) {
-            x = xd + 54 * i;
-            y = yd;
+            x = xOff + 54 * i;
+            y = yOff;
             if (i > maxSize / 2 - 1) {
                 x -= width * 7 - 12;
                 y += height + 5;

@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.objs;
 
+import coffeecatteam.theultimatetile.utils.Identifier;
 import org.json.simple.JSONObject;
 
 /**
@@ -9,7 +10,7 @@ import org.json.simple.JSONObject;
 public interface IHasData<E> {
 
     default String getName() {
-        JSONObject lang = DataParser.getDataCatchException("lang", true);
+        JSONObject lang = DataParser.getDataCatchException(new Identifier("tut", "lang"), true);
 
         if (lang.containsKey(getUnlocalizedName()))
             return String.valueOf(lang.get(getUnlocalizedName()));

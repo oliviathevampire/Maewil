@@ -4,6 +4,7 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.theultimatetile.start.TutLauncher;
+import coffeecatteam.theultimatetile.utils.Identifier;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -26,14 +27,14 @@ public abstract class DataParser<E extends IHasData<E>> {
     }
 
     public E loadData(E obj) throws IOException, ParseException {
-        JSONObject data = getData(dataFolderName + "/" + obj.getId(), true);
+        JSONObject data = getData(new Identifier("tut", dataFolderName + "/" + obj.getId()), true);
 
         E custom = customLoadData(data, obj);
         if (custom != null) {
             return custom;
         } else {
             DataTypes.TileItemTexture type = DataTypes.TileItemTexture.getByName(String.valueOf(data.get("type")));
-            String texturePath = "/assets/textures/" + data.get("texture");
+            Identifier texturePath = new Identifier("tut", "textures/" + data.get("texture"));
             int spriteSize = NumberUtils.parseInt(data.get("size"));
             logger.info("Loading object of type [" + type + "-" + type.typeName + "] with id [" + obj.getName() + "]");
 
@@ -60,29 +61,29 @@ public abstract class DataParser<E extends IHasData<E>> {
         return null;
     }
 
-    E singleData(JSONObject data, E obj, String texturePath, int spriteSize) {
+    E singleData(JSONObject data, E obj, Identifier texturePath, int spriteSize) {
         return null;
     }
 
-    E multipleData(JSONObject data, E obj, String texturePath, int spriteSize) {
+    E multipleData(JSONObject data, E obj, Identifier texturePath, int spriteSize) {
         return null;
     }
 
-    E animatedData(JSONObject data, E obj, String texturePath, int spriteSize) {
+    E animatedData(JSONObject data, E obj, Identifier texturePath, int spriteSize) {
         return null;
     }
 
-    private static JSONObject getData(String fileName, boolean inJar) throws IOException, ParseException {
+    private static JSONObject getData(Identifier fileName, boolean inJar) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        String path = "/assets/data/" + fileName + ".json";
+        Identifier path = new Identifier("tut", fileName.getPath() + ".json");
         if (inJar) {
-            return (JSONObject) parser.parse(FileUtils.loadFileInSideJar(path));
+            return (JSONObject) parser.parse(FileUtils.loadFileInSideJar(path.toDataString()));
         } else {
-            return (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path));
+            return (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path.toDataString()));
         }
     }
 
-    static JSONObject getDataCatchException(String fileName, boolean inJar) {
+    static JSONObject getDataCatchException(Identifier fileName, boolean inJar) {
         try {
             return getData(fileName, inJar);
         } catch (IOException | ParseException e) {

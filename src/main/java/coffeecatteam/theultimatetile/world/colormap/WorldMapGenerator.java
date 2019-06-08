@@ -77,7 +77,6 @@ public class WorldMapGenerator {
 
         addSpots(xOff, yOff, image, 0.65d, 1.0d, 10.0d, WorldColors.STONE, WorldColors.DIRT, seedExtra1);
         addSpots(xOff, yOff, image, 0.7d, 1.0d, 10.0d, WorldColors.STONE, WorldColors.DIRT, seedExtra2);
-        addSpots(xOff, yOff, image, 0.65d, 1.0d, 10.0d, WorldColors.STONE, WorldColors.STONE_TILES, seedExtra3);
         return image;
     }
 
