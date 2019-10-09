@@ -201,7 +201,7 @@ public class World {
     private void loadWorld(String path) throws IOException, ParseException {
         WorldJsonLoader worldJsonLoader = new WorldJsonLoader(path, tutEngine);
 
-        worldJsonLoader.load();
+        worldJsonLoader.loadJson();
         TutLauncher.LOGGER.info("Loading world [" + worldJsonLoader.getName() + "]!");
 
         worldName = worldJsonLoader.getName();

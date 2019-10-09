@@ -2,184 +2,157 @@ package coffeecatteam.theultimatetile.utils;
 
 import org.joml.Vector4f;
 
-public enum ChatColor
-{
-	WHITE('0', 1f, 1f, 1f, 1f),
-	RED('1', 1f, 0f, 0f, 1f),
-	GREEN('2', 0f, 1f, 0f, 1f),
-	BLUE('3', 0f, 0f, 1f, 1f),
-	YELLOW('4', 1f, 1f, 0f, 1f),
-	CYAN('5', 0f, 1f, 1f, 1f),
-	PURPLE('6', 1f, 0f, 1f, 1f),
-	BLACK('7', 0f, 0f, 0f, 1f),
-	ORANGE('8', 1f, 0.5f, 0f, 1f),
-	GRAY('9', 0.5f, 0.5f, 0.5f, 1f),
-	LIGHT_GRAY('a', 0.75f, 0.75f, 0.75f, 1f),
-	DARK_GRAY('b', 0.25f, 0.25f, 0.25f, 1f),
-	OLIVE('c', 0.5f, 0.5f, 0f, 1f),
-	DARK_GREEN('d', 0f, 0.5f, 0f, 1f),
-	DARK_RED('e', 0.5f, 0f, 0f, 1f),
-	DARK_BLUE('f', 0f, 0f, 0.5f, 1f),
-	TEAL('g', 0f, 0.5f, 0.5f, 1f),
-	TRANSPARENT('h', 1f, 1f, 1f, 0.5f),
-	INDIGO('i', 0.35f, 0f, 0.5f, 1f),
-	BROWN('j', 0.7f, 0.25f, 0.25f, 1f),
-	PINK('k', 1f, 0.85f, 0.9f, 1f),
-	HOT_PINK('l', 1f, 0.45f, 0.75f, 1f);
+public enum ChatColor {
 
-	public static final char CHAT_COLOR_PREFIX = '¥';
+    WHITE('0', 1f, 1f, 1f, 1f),
+    RED('1', 1f, 0f, 0f, 1f),
+    GREEN('2', 0f, 1f, 0f, 1f),
+    BLUE('3', 0f, 0f, 1f, 1f),
+    YELLOW('4', 1f, 1f, 0f, 1f),
+    CYAN('5', 0f, 1f, 1f, 1f),
+    PURPLE('6', 1f, 0f, 1f, 1f),
+    BLACK('7', 0f, 0f, 0f, 1f),
+    ORANGE('8', 1f, 0.5f, 0f, 1f),
+    GRAY('9', 0.5f, 0.5f, 0.5f, 1f),
+    LIGHT_GRAY('a', 0.75f, 0.75f, 0.75f, 1f),
+    DARK_GRAY('b', 0.25f, 0.25f, 0.25f, 1f),
+    OLIVE('c', 0.5f, 0.5f, 0f, 1f),
+    DARK_GREEN('d', 0f, 0.5f, 0f, 1f),
+    DARK_RED('e', 0.5f, 0f, 0f, 1f),
+    DARK_BLUE('f', 0f, 0f, 0.5f, 1f),
+    TEAL('g', 0f, 0.5f, 0.5f, 1f),
+    TRANSPARENT('h', 1f, 1f, 1f, 0.5f),
+    INDIGO('i', 0.35f, 0f, 0.5f, 1f),
+    BROWN('j', 0.7f, 0.25f, 0.25f, 1f),
+    PINK('k', 1f, 0.85f, 0.9f, 1f),
+    HOT_PINK('l', 1f, 0.45f, 0.75f, 1f);
 
-	public static String fixColorWrapping(String text)
-	{
-		StringBuilder out = new StringBuilder(text.length());
-		char[] c = text.toCharArray();
-		ChatColor color = ChatColor.WHITE;
-		boolean listenForColor = false;
-		for (char element : c)
-		{
-			if (listenForColor)
-			{
-				listenForColor = false;
-				color = getById(element);
-				out.append(color);
-				continue;
-			}
-			if (element == '\n')
-			{
-				out.append(element);
-				out.append(color);
-				continue;
-			}
-			if (element == CHAT_COLOR_PREFIX)
-			{
-				listenForColor = true;
-				continue;
-			}
-			out.append(element);
-		}
-		return out.toString();
-	}
+    public static final char CHAT_COLOR_PREFIX = '¥';
+    private final Vector4f color;
+    private final char id;
+    private final String fullName;
 
-	public static ChatColor getById(char id)
-	{
-		for (ChatColor cc : values())
-			if (cc.id == id)
-				return cc;
-		return ChatColor.WHITE;
-	}
+    ChatColor(char id, float r, float g, float b, float a) {
+        color = new Vector4f(r, g, b, a);
+        this.id = id;
 
-	public static ChatColor getEndingChatColor(String text)
-	{
-		ChatColor color = ChatColor.WHITE;
-		char[] chars = text.toCharArray();
-		for (int i = 0; i < chars.length; i++)
-		{
-			if (chars[i] == CHAT_COLOR_PREFIX && i + 1 < chars.length)
-				color = getById(chars[i + 1]);
-		}
+        fullName = CHAT_COLOR_PREFIX + "" + id;
+    }
 
-		return color;
-	}
+    public static String fixColorWrapping(String text) {
+        StringBuilder out = new StringBuilder(text.length());
+        char[] c = text.toCharArray();
+        ChatColor color = ChatColor.WHITE;
+        boolean listenForColor = false;
+        for (char element : c) {
+            if (listenForColor) {
+                listenForColor = false;
+                color = getById(element);
+                out.append(color);
+                continue;
+            }
+            if (element == '\n') {
+                out.append(element);
+                out.append(color);
+                continue;
+            }
+            if (element == CHAT_COLOR_PREFIX) {
+                listenForColor = true;
+                continue;
+            }
+            out.append(element);
+        }
+        return out.toString();
+    }
 
-	public static String removeUnusedColors(String text)
-	{
-		StringBuilder out = new StringBuilder(text.length());
-		boolean listenForColor = false;
-		ChatColor color = ChatColor.WHITE;
-		String sinceLast = "";
-		for (char c : text.toCharArray())
-		{
-			if (listenForColor)
-			{
-				if (!sinceLast.isEmpty())
-				{
-					out.append(color);
-					out.append(sinceLast);
-					sinceLast = "";
-				}
-				listenForColor = false;
-				color = getById(c);
-				continue;
-			}
-			if (c == CHAT_COLOR_PREFIX)
-			{
-				listenForColor = true;
-				continue;
-			}
-			sinceLast += c;
-		}
-		if (!sinceLast.isEmpty())
-		{
-			out.append(color);
-			out.append(sinceLast);
-		}
-		return out.toString();
-	}
+    public static ChatColor getById(char id) {
+        for (ChatColor cc : values())
+            if (cc.id == id)
+                return cc;
+        return ChatColor.WHITE;
+    }
 
-	public static String replaceColorCharacter(String message, char oldPrefix, char newPrefix)
-	{
-		return message.replace(oldPrefix, newPrefix);
-	}
+    public static ChatColor getEndingChatColor(String text) {
+        ChatColor color = ChatColor.WHITE;
+        char[] chars = text.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == CHAT_COLOR_PREFIX && i + 1 < chars.length)
+                color = getById(chars[i + 1]);
+        }
 
-	public static String stripColor(String message)
-	{
-		StringBuilder s = new StringBuilder();
+        return color;
+    }
 
-		char[] chars = message.toCharArray();
-		for (int i = 0; i < chars.length; i++)
-		{
-			if (chars[i] == CHAT_COLOR_PREFIX)
-			{
-				i++;
-				continue;
-			}
-			s.append(chars[i]);
-		}
+    public static String removeUnusedColors(String text) {
+        StringBuilder out = new StringBuilder(text.length());
+        boolean listenForColor = false;
+        ChatColor color = ChatColor.WHITE;
+        StringBuilder sinceLast = new StringBuilder();
+        for (char c : text.toCharArray()) {
+            if (listenForColor) {
+                if (sinceLast.length() > 0) {
+                    out.append(color);
+                    out.append(sinceLast);
+                    sinceLast = new StringBuilder();
+                }
+                listenForColor = false;
+                color = getById(c);
+                continue;
+            }
+            if (c == CHAT_COLOR_PREFIX) {
+                listenForColor = true;
+                continue;
+            }
+            sinceLast.append(c);
+        }
+        if (sinceLast.length() > 0) {
+            out.append(color);
+            out.append(sinceLast);
+        }
+        return out.toString();
+    }
 
-		return s.toString();
-	}
+    public static String replaceColorCharacter(String message, char oldPrefix, char newPrefix) {
+        return message.replace(oldPrefix, newPrefix);
+    }
 
-	private final Vector4f color;
-	private final char id;
+    public static String stripColor(String message) {
+        StringBuilder s = new StringBuilder();
 
-	private final String fullName;
+        char[] chars = message.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == CHAT_COLOR_PREFIX) {
+                i++;
+                continue;
+            }
+            s.append(chars[i]);
+        }
 
-	private ChatColor(char id, float r, float g, float b, float a)
-	{
-		color = new Vector4f(r, g, b, a);
-		this.id = id;
+        return s.toString();
+    }
 
-		fullName = CHAT_COLOR_PREFIX + "" + id;
-	}
+    public float getAlpha() {
+        return color.w;
+    }
 
-	public float getAlpha()
-	{
-		return color.w;
-	}
+    public float getBlue() {
+        return color.z;
+    }
 
-	public float getBlue()
-	{
-		return color.z;
-	}
+    public float getGreen() {
+        return color.y;
+    }
 
-	public float getGreen()
-	{
-		return color.y;
-	}
+    public char getId() {
+        return id;
+    }
 
-	public char getId()
-	{
-		return id;
-	}
+    public float getRed() {
+        return color.x;
+    }
 
-	public float getRed()
-	{
-		return color.x;
-	}
-
-	@Override
-	public String toString()
-	{
-		return fullName;
-	}
+    @Override
+    public String toString() {
+        return fullName;
+    }
 }

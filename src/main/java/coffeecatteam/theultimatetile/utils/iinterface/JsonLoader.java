@@ -4,7 +4,8 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 
-public interface IJSONLoader {
+public interface JsonLoader {
 
-    void load() throws IOException, ParseException;
+    void loadJson() throws IOException, ParseException;
+
 }

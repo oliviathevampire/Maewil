@@ -64,7 +64,7 @@ public class WorldButtonClickListener implements ClickListener {
 
         SavedGamesJSONParser gamesJSONParser = new SavedGamesJSONParser(tutEngine);
         try {
-            gamesJSONParser.load();
+            gamesJSONParser.loadJson();
         } catch (IOException | ParseException e) {
             TutLauncher.LOGGER.error(e);
         }

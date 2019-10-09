@@ -4,8 +4,8 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.start.TutLauncher;
 import coffeecatteam.theultimatetile.screen.options.controls.Keybind;
-import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
-import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
+import coffeecatteam.theultimatetile.utils.iinterface.JsonLoader;
+import coffeecatteam.theultimatetile.utils.iinterface.JsonSaver;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -16,7 +16,7 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
+public class OptionsJsonParser implements JsonLoader, JsonSaver {
 
     private String path;
 
@@ -31,7 +31,7 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
     }
 
     @Override
-    public void load() throws IOException, ParseException {
+    public void loadJson() throws IOException, ParseException {
         TutLauncher.LOGGER.info("Loading options!");
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path));
@@ -63,7 +63,7 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
     }
 
     @Override
-    public void save() throws IOException {
+    public void saveJson() throws IOException {
         TutLauncher.LOGGER.info("Saving options!");
         JSONObject jsonObject = new JSONObject();
 

@@ -3,8 +3,8 @@ package coffeecatteam.theultimatetile.jsonparsers;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.start.TutLauncher;
-import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
-import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
+import coffeecatteam.theultimatetile.utils.iinterface.JsonLoader;
+import coffeecatteam.theultimatetile.utils.iinterface.JsonSaver;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
+public class SavedGamesJSONParser implements JsonLoader, JsonSaver {
 
     private String path = "./data/saves/saved_games.json";
     protected TutEngine tutEngine;
@@ -33,7 +33,7 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
     }
 
     @Override
-    public void load() throws IOException, ParseException {
+    public void loadJson() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path));
 
@@ -50,7 +50,7 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
     }
 
     @Override
-    public void save() throws IOException {
+    public void saveJson() throws IOException {
         JSONObject jsonObject = new JSONObject();
 
         try {

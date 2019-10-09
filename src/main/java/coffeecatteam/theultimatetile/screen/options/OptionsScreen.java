@@ -39,7 +39,7 @@ public class OptionsScreen extends AbstractMenuScreen {
 
         OPTIONS = new OptionsJsonParser("./data/options.json");
         try {
-            OPTIONS.load();
+            OPTIONS.loadJson();
         } catch (IOException | ParseException e) {
             TutLauncher.LOGGER.error(e);
         }
@@ -54,7 +54,7 @@ public class OptionsScreen extends AbstractMenuScreen {
                 public void onClick() {
                     ScreenManager.setCurrentScreen(tutEngine.controlOptions);
                     try {
-                        OPTIONS.load();
+                        OPTIONS.loadJson();
                     } catch (IOException | ParseException e) {
                         logger.error(e);
                     }
@@ -71,7 +71,7 @@ public class OptionsScreen extends AbstractMenuScreen {
                 public void onClick() {
                     ScreenManager.setCurrentScreen(tutEngine.optionsSpounds);
                     try {
-                        OPTIONS.load();
+                        OPTIONS.loadJson();
                     } catch (IOException | ParseException e) {
                         logger.error(e);
                     }
@@ -92,7 +92,7 @@ public class OptionsScreen extends AbstractMenuScreen {
     @Override
     public void initBack() {
         try {
-            OPTIONS.save();
+            OPTIONS.saveJson();
         } catch (IOException e) {
             logger.error(e);
         }

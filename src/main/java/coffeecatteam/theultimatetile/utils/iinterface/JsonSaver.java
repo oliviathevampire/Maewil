@@ -2,7 +2,8 @@ package coffeecatteam.theultimatetile.utils.iinterface;
 
 import java.io.IOException;
 
-public interface IJSONSaver {
+public interface JsonSaver {
 
-    void save() throws IOException;
+    void saveJson() throws IOException;
+
 }

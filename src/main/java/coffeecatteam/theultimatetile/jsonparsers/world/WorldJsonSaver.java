@@ -10,7 +10,7 @@ import coffeecatteam.theultimatetile.objs.items.ItemStack;
 import coffeecatteam.theultimatetile.objs.tiles.Tile;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.start.TutLauncher;
-import coffeecatteam.theultimatetile.utils.iinterface.IJSONSaver;
+import coffeecatteam.theultimatetile.utils.iinterface.JsonSaver;
 import coffeecatteam.theultimatetile.world.TileList;
 import coffeecatteam.theultimatetile.world.World;
 import org.json.simple.JSONArray;
@@ -19,7 +19,7 @@ import org.json.simple.JSONObject;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class WorldJsonSaver implements IJSONSaver {
+public class WorldJsonSaver implements JsonSaver {
 
     private String path;
     private World world;
@@ -50,7 +50,7 @@ public class WorldJsonSaver implements IJSONSaver {
     }
 
     @Override
-    public void save() throws IOException {
+    public void saveJson() throws IOException {
         save(tutEngine.getUsername());
     }
 

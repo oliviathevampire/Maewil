@@ -167,7 +167,7 @@ public class GameScreen extends Screen {
 
         WorldJsonSaver saver = new WorldJsonSaver("./data/saves/" + worldName, world, tutEngine);
         try {
-            saver.save();
+            saver.saveJson();
         } catch (IOException e) {
             logger.error(e);
         }

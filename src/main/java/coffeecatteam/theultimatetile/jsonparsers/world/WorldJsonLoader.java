@@ -15,7 +15,7 @@ import coffeecatteam.theultimatetile.screen.game.SelectGameScreen;
 import coffeecatteam.theultimatetile.tags.JsonToTag;
 import coffeecatteam.theultimatetile.tags.CompoundTag;
 import coffeecatteam.theultimatetile.tags.TagException;
-import coffeecatteam.theultimatetile.utils.iinterface.IJSONLoader;
+import coffeecatteam.theultimatetile.utils.iinterface.JsonLoader;
 import coffeecatteam.theultimatetile.world.TileList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -31,7 +31,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WorldJsonLoader implements IJSONLoader {
+public class WorldJsonLoader implements JsonLoader {
 
     public static final Map<String, String> BASE_FILES = new HashMap<>();
 
@@ -68,7 +68,7 @@ public class WorldJsonLoader implements IJSONLoader {
     }
 
     @Override
-    public void load() throws IOException, ParseException {
+    public void loadJson() throws IOException, ParseException {
         loadWorldInfo();
         TutLauncher.LOGGER.info("World [" + name + "] info loaded!");
 

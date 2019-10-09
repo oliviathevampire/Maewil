@@ -104,7 +104,7 @@ public class Assets {
     }
 
     private static Font loadTrueTypeFont(Identifier path, float size, final int style) {
-        try {
+        /*try {
             java.awt.Font awtFont = java.awt.Font.createFont(java.awt.Font.TRUETYPE_FONT, Assets.class.getResourceAsStream(path.toAssetsString())).deriveFont(style, size);
 
             UnicodeFont font = new UnicodeFont(awtFont);
@@ -117,7 +117,8 @@ public class Assets {
         } catch (IOException | FontFormatException | SlickException e) {
             e.printStackTrace();
             return null;
-        }
+        }*/
+        return null;
     }
 
     // TODO: CHANGE TO JSON SYSTEM

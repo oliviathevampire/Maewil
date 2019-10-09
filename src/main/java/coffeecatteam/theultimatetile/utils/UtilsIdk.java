@@ -41,21 +41,21 @@ public class UtilsIdk {
     public static String getKeyPressed(TutEngine tutEngine) {
         switch (tutEngine.getKeyManager().getCurrentKeyPressedCode()) {
             case 8:
-                return "BACKSPACE";
+                return "backspace";
             case 9:
-                return "TAB";
+                return "tab";
             case 16:
-                return "SHIFT";
+                return "shift";
             case 17:
-                return "CONTROL";
+                return "control";
             case 18:
-                return "ALT";
+                return "alt";
             case 20:
-                return "CAPS LOCK";
+                return "caps_lock";
             case 27:
-                return "ESCAPE";
+                return "escape";
             case 32:
-                return "SPACE";
+                return "space";
             default:
                 return String.valueOf(tutEngine.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
         }

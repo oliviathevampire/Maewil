@@ -25,7 +25,7 @@ public abstract class AbstractOptions extends Screen {
             public void onClick() {
                 ScreenManager.setCurrentScreen(tutEngine.stateOptions);
                 try {
-                    OptionsScreen.OPTIONS.save();
+                    OptionsScreen.OPTIONS.saveJson();
                 } catch (IOException e) {
                     logger.error(e);
                 }
