@@ -10,12 +10,12 @@ import coffeecatteam.theultimatetile.world.colormap.WorldColors;
 public class AirTile extends Tile {
 
     public AirTile(TutEngine tutEngine) {
-        super(tutEngine, "air", false, Tile.TileType.AIR);
-        this.setMapColor(WorldColors.AIR);
+        super(tutEngine, TileSettings.Builder.create().air(true).id("air").solid(false).mapColor(WorldColors.AIR).tileType(TileType.AIR).unbreakable(true).build());
     }
 
     @Override
     public AirTile newCopy() {
         return super.newCopy(new AirTile(tutEngine));
     }
+
 }

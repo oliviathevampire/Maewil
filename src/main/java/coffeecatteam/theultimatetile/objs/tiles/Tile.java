@@ -41,7 +41,7 @@ public abstract class Tile implements IHasData<Tile> {
     protected TileList worldLayer;
     protected int worldWidth;
 
-    protected boolean isSolid, unbreakable = false;
+    protected boolean isSolid, unbreakable = false, isAir = false;
     protected TileType tileType;
 
     protected Item drop;
@@ -58,6 +58,20 @@ public abstract class Tile implements IHasData<Tile> {
 
         this.health = this.maxHealth;
     }
+
+    public Tile(TutEngine engine, TileSettings tileSettings) {
+        this.tutEngine = engine;
+
+        bounds = new AABB(this.position.toVector2D(), TILE_SIZE, TILE_SIZE);
+        this.mapColor = tileSettings.getMapColor();
+        this.isSolid = tileSettings.isSolid();
+        this.isAir = tileSettings.isAir();
+        this.unbreakable = tileSettings.isUnbreakable();
+        this.id = tileSettings.getId();
+        this.tileType = tileSettings.getTileType();
+    }
+
+
 
     protected void chooseAltTexture() {
         if (hasAlts) {
@@ -79,7 +93,6 @@ public abstract class Tile implements IHasData<Tile> {
         if (pos.getY() < 0) pos.setY(0);
         if (pos.getX() > worldLayer.getWidth() - 1) pos.setX(worldLayer.getWidth() - 1);
         if (pos.getY() > worldLayer.getHeight() - 1) pos.setY(worldLayer.getHeight() - 1);
-//        return worldLayer[pos.getX()][pos.getY()];
         return worldLayer.getTileAtPos(pos.getX(), pos.getY());
     }
 
