@@ -1,7 +1,5 @@
 package io.github.vampirestudios.tdg.jsonparsers.world;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import io.github.vampirestudios.tdg.objs.entities.Entities;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.ItemEntity;
@@ -20,6 +18,9 @@ import org.json.simple.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class WorldJsonSaver implements IJSONSaver {
 
@@ -57,22 +58,22 @@ public class WorldJsonSaver implements IJSONSaver {
     }
 
     public void saveWorldInfo(World world) throws IOException {
-        JsonObject jsonObject = new JsonObject();
+        JSONObject jsonObject = new JSONObject();
 
-        jsonObject.addProperty("name", world.getWorldName());
+        jsonObject.put("name", world.getWorldName());
 
-        JsonArray size = new JsonArray();
-        size.add(world.getWorldWidth());
-        size.add(world.getWorldHeight());
-        jsonObject.add("size", size);
+        JSONArray size = new JSONArray();
+        size.add(0, world.getWorldWidth());
+        size.add(1, world.getWorldHeight());
+        jsonObject.put("size", size);
 
-        JsonArray spawn = new JsonArray();
+        JSONArray spawn = new JSONArray();
         float spawnX, spawnY;
         spawnX = tutEngine.getPlayer().getX() / Tile.TILE_SIZE;
         spawnY = tutEngine.getPlayer().getY() / Tile.TILE_SIZE;
-        spawn.add(spawnX);
-        spawn.add(spawnY);
-        jsonObject.add("spawn", spawn);
+        spawn.add(0, spawnX);
+        spawn.add(1, spawnY);
+        jsonObject.put("spawn", spawn);
 
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("world"), jsonObject);
     }
@@ -101,8 +102,8 @@ public class WorldJsonSaver implements IJSONSaver {
         jsonObjectFG.put("fg_tile", fg_tile);
         TutLauncher.LOGGER.info("Saved fg tiles");
 
-//        saveJSONFileToPath(savePath, bgFileName, jsonObjectBG);
-//        saveJSONFileToPath(savePath, fgFileName, jsonObjectFG);
+        saveJSONFileToPath(savePath, bgFileName, jsonObjectBG);
+        saveJSONFileToPath(savePath, fgFileName, jsonObjectFG);
     }
 
     private void saveTile(JSONArray chunk, Tile tile, int x, int y) {
@@ -114,8 +115,8 @@ public class WorldJsonSaver implements IJSONSaver {
     }
 
     public void saveEntities() throws IOException {
-        JsonObject jsonObjectStatic = new JsonObject();
-        JsonObject jsonObjectCreature = new JsonObject();
+        JSONObject jsonObjectStatic = new JSONObject();
+        JSONObject jsonObjectCreature = new JSONObject();
 
         int entAmt = 0;
         for (Entity entity : tutEngine.getEntityManager().getEntities())
@@ -136,7 +137,7 @@ public class WorldJsonSaver implements IJSONSaver {
             }
 
             // Static
-            JsonArray statics = new JsonArray();
+            JSONArray statics = new JSONArray();
             if (staticAmt > 0) {
                 for (Entity entity : tutEngine.getEntityManager().getEntities())
                     if (!(entity instanceof PlayerEntity))
@@ -144,10 +145,10 @@ public class WorldJsonSaver implements IJSONSaver {
                             statics.add(Entities.entityToJson(entity));
                 TutLauncher.LOGGER.info("World [" + path + "] static entities saved!");
             }
-            jsonObjectStatic.add("statics", statics);
+            jsonObjectStatic.put("statics", statics);
 
             // Creature
-            JsonArray creatures = new JsonArray();
+            JSONArray creatures = new JSONArray();
             if (creatureAmt > 0) {
 
                 for (Entity entity : tutEngine.getEntityManager().getEntities())
@@ -156,7 +157,7 @@ public class WorldJsonSaver implements IJSONSaver {
                             creatures.add(Entities.entityToJson(entity));
                 TutLauncher.LOGGER.info("World [" + path + "] creature entities saved!");
             }
-            jsonObjectCreature.add("creatures", creatures);
+            jsonObjectCreature.put("creatures", creatures);
         }
         TutLauncher.LOGGER.info("World [" + path + "] entities saved!");
 
@@ -165,91 +166,91 @@ public class WorldJsonSaver implements IJSONSaver {
     }
 
     public void saveItems() throws IOException {
-        JsonObject jsonObject = new JsonObject();
+        JSONObject jsonObject = new JSONObject();
 
-        JsonArray items = new JsonArray();
+        JSONArray items = new JSONArray();
         for (Entity entity : tutEngine.getEntityManager().getEntities()) {
             if (entity instanceof ItemEntity) {
                 ItemStack stack = ((ItemEntity) entity).getStack();
-                JsonObject itemObj = new JsonObject();
-                itemObj.addProperty("id", stack.getId());
+                JSONObject itemObj = new JSONObject();
+                itemObj.put("id", stack.getId());
 
-                JsonArray pos = new JsonArray();
-                pos.add(entity.getPosition().x / Tile.TILE_SIZE);
-                pos.add(entity.getPosition().y / Tile.TILE_SIZE);
-                itemObj.add("pos", pos);
+                JSONArray pos = new JSONArray();
+                pos.add(0, entity.getPosition().x / Tile.TILE_SIZE);
+                pos.add(1, entity.getPosition().y / Tile.TILE_SIZE);
+                itemObj.put("pos", pos);
 
                 if (stack.getCount() > 1) {
-                    itemObj.addProperty("count", stack.getCount());
+                    itemObj.put("count", stack.getCount());
                 }
                 items.add(itemObj);
             }
         }
-        jsonObject.add("ITEMS", items);
+        jsonObject.put("ITEMS", items);
         TutLauncher.LOGGER.info("World [" + path + "] ITEMS saved!");
 
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("ITEMS"), jsonObject);
     }
 
     public void savePlayerInfo(String username) throws IOException {
-        JsonObject jsonObject = new JsonObject();
+        JSONObject jsonObject = new JSONObject();
 
-        jsonObject.addProperty("username", username);
+        jsonObject.put("username", username);
         TutLauncher.LOGGER.info("Player username saved [" + tutEngine.getUsername() + "]");
-        jsonObject.addProperty("health", tutEngine.getPlayer().getCurrentHealth());
-        jsonObject.addProperty("glubel", tutEngine.getPlayer().getGlubel());
-        jsonObject.addProperty("lvl", tutEngine.getPlayer().getLvl());
+        jsonObject.put("health", tutEngine.getPlayer().getCurrentHealth());
+        jsonObject.put("glubel", tutEngine.getPlayer().getGlubel());
+        jsonObject.put("lvl", tutEngine.getPlayer().getLvl());
 
-        JsonArray selected_slots = new JsonArray();
-        JsonObject object = new JsonObject();
-        object.addProperty("0", tutEngine.getPlayer().getInventoryPlayer().getInventorySelectedIndex());
-        selected_slots.add(object);
-        JsonObject object2 = new JsonObject();
-        object2.addProperty("1", tutEngine.getPlayer().getInventoryPlayer().getHotbarSelectedIndex());
-        selected_slots.add(object2);
-        jsonObject.add("selected_slots", selected_slots);
+        JSONArray selected_slots = new JSONArray();
+        selected_slots.add(0, tutEngine.getPlayer().getInventoryPlayer().getInventorySelectedIndex());
+        selected_slots.add(1, tutEngine.getPlayer().getInventoryPlayer().getHotbarSelectedIndex());
+        jsonObject.put("selected_slots", selected_slots);
 
-        JsonObject inventory = new JsonObject();
+        JSONObject inventory = new JSONObject();
         for (int i = 0; i < 12; i++) {
-            JsonObject slot = new JsonObject();
+            JSONObject slot = new JSONObject();
             ItemStack stack = tutEngine.getPlayer().getInventoryPlayer().getSlot(i).getStack();
             if (stack == null)
-                slot.addProperty("id", "null");
+                slot.put("id", "null");
             else {
-                slot.addProperty("id", stack.getId());
+                slot.put("id", stack.getId());
                 if (stack.getCount() > 1)
-                    slot.addProperty("count", stack.getCount());
+                    slot.put("count", stack.getCount());
             }
-            inventory.add("slot_" + i, slot);
+            inventory.put("slot_" + i, slot);
         }
-        jsonObject.add("inventory", inventory);
+        jsonObject.put("inventory", inventory);
 
-        JsonObject hotbar = new JsonObject();
+        JSONObject hotbar = new JSONObject();
         for (int i = 12; i < 15; i++) {
-            JsonObject slot = new JsonObject();
+            JSONObject slot = new JSONObject();
             ItemStack stack = tutEngine.getPlayer().getInventoryPlayer().getSlot(i).getStack();
             if (stack == null)
-                slot.addProperty("id", "null");
+                slot.put("id", "null");
             else {
-                slot.addProperty("id", stack.getId());
+                slot.put("id", stack.getId());
                 if (stack.getCount() > 1)
-                    slot.addProperty("count", stack.getCount());
+                    slot.put("count", stack.getCount());
             }
-            hotbar.add("slot_" + (i - 12), slot);
+            hotbar.put("slot_" + (i - 12), slot);
         }
-        jsonObject.add("hotbar", hotbar);
+        jsonObject.put("hotbar", hotbar);
 
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("player"), jsonObject);
     }
 
-    private void saveJSONFileToSave(String path, String fileName, JsonObject data) throws IOException {
+    private void saveJSONFileToSave(String path, String fileName, JSONObject data) throws IOException {
         saveJSONFileToPath(path, fileName, data);
     }
 
-    private void saveJSONFileToPath(String path, String fileName, JsonObject data) throws IOException {
+    private void saveJSONFileToPath(String path, String fileName, JSONObject data) throws IOException {
+        Path parentPath = Paths.get(path);
+        if(!Files.exists(parentPath)) {
+            Files.createDirectories(parentPath);
+        }
         String trueFilePath = path + "/" + fileName + ".json";
         FileWriter writer = new FileWriter(trueFilePath);
-        writer.write(data.toString());
+        writer.write(data.toJSONString());
         writer.flush();
     }
 }

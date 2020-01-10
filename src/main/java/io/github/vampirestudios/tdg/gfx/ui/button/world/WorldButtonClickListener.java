@@ -16,6 +16,7 @@ import io.github.vampirestudios.tdg.utils.UtilsIdk;
 import io.github.vampirestudios.tdg.world.TileList;
 import io.github.vampirestudios.tdg.world.World;
 import io.github.vampirestudios.tdg.world.WorldGenerator;
+import org.json.simple.parser.ParseException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -63,7 +64,7 @@ public class WorldButtonClickListener implements ClickListener {
         SavedGamesJSONParser gamesJSONParser = new SavedGamesJSONParser(tutEngine);
         try {
             gamesJSONParser.load();
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             TutLauncher.LOGGER.error(e);
         }
     }
