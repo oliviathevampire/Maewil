@@ -1,4 +1,76 @@
 {
   "creatures": [
+    {
+      "id": "zombie",
+      "pos": [
+        2,
+        1
+      ],
+      "count": 2
+    },
+    {
+      "id": "skeleton",
+      "pos": [
+        4,
+        3
+      ]
+    },
+    {
+      "id": "bouncer",
+      "pos": [
+        17,
+        3
+      ]
+    },
+    {
+      "id": "thing",
+      "pos": [
+        18,
+        4
+      ]
+    },
+    {
+      "id": "pig",
+      "pos": [
+        7,
+        10
+      ],
+      "count": 3,
+      "tags": {
+        "eatCrops": [
+          "crop_corn",
+          "crop_wheat",
+          "crop_potato",
+          "crop_carrot",
+          "crop_tomato"
+        ]
+      }
+    },
+    {
+      "id": "cow",
+      "pos": [
+        8,
+        7
+      ],
+      "count": 2
+    },
+    {
+      "id": "sheep",
+      "pos": [
+        8,
+        12
+      ],
+      "count": 2,
+      "tags": {
+        "fleePlayer": "true"
+      }
+    },
+    {
+      "id": "fox",
+      "pos": [
+        8,
+        11
+      ]
+    }
   ]
 }

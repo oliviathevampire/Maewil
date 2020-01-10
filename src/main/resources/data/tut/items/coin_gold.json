@@ -1,14 +1,5 @@
 {
-  "type": "animated",
+  "type": "normal",
   "texture": "items/coin_gold.png",
-  "frames": [
-    0,
-    1,
-    2,
-    3,
-    4,
-    5
-  ],
-  "size": 16,
-  "speed": 75
+  "size": 16
 }

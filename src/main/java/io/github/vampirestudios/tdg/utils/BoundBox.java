@@ -1,0 +1,210 @@
+package io.github.vampirestudios.tdg.utils;
+
+import java.util.List;
+
+public final class BoundBox {
+
+    public static final BoundBox NULL_BOUNDS = new BoundBox();
+
+    private double minX;
+    private double minY;
+
+    private double maxX;
+    private double maxY;
+
+    public BoundBox() {
+        this(0, 0, 0, 0);
+    }
+
+    public BoundBox(double minX, double minY, double maxX, double maxY) {
+        this.set(minX, minY, maxX, maxY);
+    }
+
+    public static BoundBox getCombinedBoundBox(List<BoundBox> boxes) {
+        if (boxes.isEmpty())
+            return BoundBox.NULL_BOUNDS;
+        double minAreaX = Double.MAX_VALUE;
+        double minAreaY = Double.MAX_VALUE;
+        double maxAreaX = Double.MIN_VALUE;
+        double maxAreaY = Double.MIN_VALUE;
+
+        for (BoundBox box : boxes) {
+            if (box.minX < minAreaX)
+                minAreaX = box.minX;
+            if (box.minY < minAreaY)
+                minAreaY = box.minY;
+            if (box.maxX > maxAreaX)
+                maxAreaX = box.maxX;
+            if (box.maxY > maxAreaY)
+                maxAreaY = box.maxY;
+        }
+
+        return new BoundBox(minAreaX, minAreaY, maxAreaX, maxAreaY);
+    }
+
+    public BoundBox set(BoundBox box) {
+        return this.set(box.minX, box.minY, box.maxX, box.maxY);
+    }
+
+    public BoundBox set(double minX, double minY, double maxX, double maxY) {
+        this.minX = Math.min(minX, maxX);
+        this.minY = Math.min(minY, maxY);
+
+        this.maxX = Math.max(maxX, minX);
+        this.maxY = Math.max(maxY, minY);
+
+        return this;
+    }
+
+    public BoundBox add(double x, double y) {
+        this.minX += x;
+        this.minY += y;
+
+        this.maxX += x;
+        this.maxY += y;
+
+        return this;
+    }
+
+    public BoundBox expand(double x, double y) {
+        this.minX -= x;
+        this.maxX += x;
+
+        this.minY -= y;
+        this.maxY += y;
+
+        return this;
+    }
+
+    public BoundBox expand(double amount) {
+        return this.expand(amount, amount);
+    }
+
+    public boolean intersects(BoundBox other) {
+        return this.intersects(other.minX, other.minY, other.maxX, other.maxY);
+    }
+
+    public boolean intersects(double minX, double minY, double maxX, double maxY) {
+        return this.minX < maxX && this.maxX > minX && this.minY < maxY && this.maxY > minY;
+    }
+
+    public boolean contains(double x, double y) {
+        return this.minX <= x && this.minY <= y && this.maxX >= x && this.maxY >= y;
+    }
+
+    public BoundBox getIntersection(BoundBox other) {
+        if (other == null)
+            return NULL_BOUNDS;
+        return new BoundBox(
+                Math.max(this.getMinX(), other.getMinX()),
+                Math.max(this.getMinY(), other.getMinY()),
+                Math.min(this.getMaxX(), other.getMaxX()),
+                Math.min(this.getMaxY(), other.getMaxY()));
+    }
+
+    public BoundBox getUnion(BoundBox other) {
+        if (other == null)
+            return this.copy();
+        return new BoundBox(
+                Math.min(this.getMinX(), other.getMinX()),
+                Math.min(this.getMinX(), other.getMinY()),
+                Math.max(this.getMaxX(), other.getMaxX()),
+                Math.max(this.getMaxY(), other.getMaxY()));
+    }
+
+    public boolean isEmpty() {
+        return this.getWidth() <= 0 || this.getHeight() <= 0;
+    }
+
+	/**
+	 * Gets the position of an edge based on the direction.
+	 * For example:
+	 * box = BoundBox(-2.8, 0.2, 10.2, 11.5)
+	 * box.getBoundEdge(Direction.UP) is 11.5.
+	 * box.getBoundEdge(Direction.LEFT) is -2.8.
+	 * @param direction The (CARDINAL) direction towards the edge
+	 * @return The position value at that edge if direction is cardinal, 0 otherwise.
+	 */
+	public double getBoundEdge(Direction direction) {
+    	switch (direction) {
+			case LEFT: return minX;
+			case RIGHT: return maxX;
+			case DOWN: return minY;
+			case UP: return maxY;
+			default: return 0;
+		}
+	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || this.getClass() != o.getClass()) {
+            return false;
+        }
+
+        BoundBox boundBox = (BoundBox) o;
+        return Double.compare(boundBox.minX, this.minX) == 0 && Double.compare(boundBox.minY, this.minY) == 0 && Double.compare(boundBox.maxX, this.maxX) == 0 && Double.compare(boundBox.maxY, this.maxY) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(this.minX);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(this.minY);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(this.maxX);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(this.maxY);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + this.minX + ", " + this.minY + " -> " + this.maxX + ", " + this.maxY + '}';
+    }
+
+    public double getMinX() {
+        return this.minX;
+    }
+
+    public double getMinY() {
+        return this.minY;
+    }
+
+    public double getMaxX() {
+        return this.maxX;
+    }
+
+    public double getMaxY() {
+        return this.maxY;
+    }
+
+    public double getWidth() {
+        return this.maxX - this.minX;
+    }
+
+    public double getHeight() {
+        return this.maxY - this.minY;
+    }
+
+    public double getArea() {
+	    return this.getWidth() * this.getHeight();
+    }
+
+    public double getCenterX() {
+        return this.minX + this.getWidth() / 2D;
+    }
+
+    public double getCenterY() {
+        return this.minY + this.getHeight() / 2D;
+    }
+
+    public BoundBox copy() {
+        return new BoundBox(this.minX, this.minY, this.maxX, this.maxY);
+    }
+}

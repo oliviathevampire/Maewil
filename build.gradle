@@ -1,7 +1,7 @@
 import org.gradle.internal.os.OperatingSystem
 
-group 'coffeecatteam.theultimatetile'
-version '0.6-alpha-pre4'
+group 'io.github.vampirestudios.tdg'
+version '0.1.0-indev'
 
 apply plugin: 'idea'
 apply plugin: 'java'
@@ -9,7 +9,7 @@ apply plugin: 'edu.sc.seis.launch4j'
 
 sourceCompatibility = 1.8
 
-def mainClassPath = 'coffeecatteam.theultimatetile.start.TutLauncher'
+def mainClassPath = 'io.github.vampirestudios.tdg.start.TutLauncher'
 def exeJarName = rootProject.name + "-" + version
 def buildPath = "build/" + version
 buildDir = file(buildPath)
@@ -101,12 +101,18 @@ task copyOptions(type: Copy) {
             into buildPath + "/libs"
         }
         copy {
-            from  fileTree(dir: "data/icons", include: "*.png")
+            from fileTree(dir: "data/icons", include: "*.png")
             into buildPath + "/libs/data/icons"
         }
         copy {
             from "data/saves/saved_games.json"
             into buildPath + "/libs/data/saves"
+        }
+        copy {
+            from fileTree(dir: "libs/natives", include: "*.dll")
+            from fileTree(dir: "libs/natives", include: "*.so")
+            from fileTree(dir: "libs/natives", include: "*.dylib")
+            into buildPath + "/libs/data/natives"
         }
         into buildPath + "/libs/data"
     }
