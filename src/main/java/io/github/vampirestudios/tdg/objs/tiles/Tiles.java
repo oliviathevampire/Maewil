@@ -12,16 +12,13 @@ import io.github.vampirestudios.tdg.objs.tiles.wood.LogTile;
 import io.github.vampirestudios.tdg.objs.tiles.wood.PlanksTile;
 import io.github.vampirestudios.tdg.start.TutEngine;
 import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.utils.Identifier;
+import io.github.vampirestudios.tdg.utils.registry.Registries;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class Tiles {
-
-    private static final HashMap<String, Tile> TILES = new HashMap<>();
 
     /*
      * Ground
@@ -106,14 +103,11 @@ public class Tiles {
     }
 
     private static void register(Tile tile) {
-        TILES.put(tile.getId(), tile);
+        Registries.TILES.register(new Identifier(tile.getId()), tile);
     }
 
     public static Tile getTileById(String id) {
-        return TILES.get(id).newCopy();
+        return Registries.TILES.get(new Identifier(id)).newCopy();
     }
 
-    public static List<Tile> getTiles() {
-        return new ArrayList<>(TILES.values());
-    }
 }

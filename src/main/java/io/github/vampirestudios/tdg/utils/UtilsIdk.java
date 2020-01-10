@@ -31,7 +31,6 @@ public class UtilsIdk {
             username = JOptionPane.showInputDialog("Please enter a username! Must be max " + nameLength + " characters", defaultName);
             if (username.length() > nameLength || username.equalsIgnoreCase(""))
                 username = getUsername(username);
-            //username = username.substring(0, nameLength);
         } catch (NullPointerException e) {
             username = "you_clicked_cancel";
         }

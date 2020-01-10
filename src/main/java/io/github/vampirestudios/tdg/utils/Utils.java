@@ -35,7 +35,7 @@ public class Utils
 		}
 
 		if (data.length > maxSize)
-			sb.append(", ..." + (data.length - maxSize) + " more");
+			sb.append(", ...").append(data.length - maxSize).append(" more");
 		sb.append(']');
 
 		return sb.toString();
@@ -54,7 +54,7 @@ public class Utils
 		}
 
 		if (array.length > maxSize)
-			sb.append(", ..." + (array.length - maxSize) + " more");
+			sb.append(", ...").append(array.length - maxSize).append(" more");
 		sb.append(']');
 
 		return sb.toString();
@@ -73,7 +73,7 @@ public class Utils
 		}
 
 		if (array.length > maxSize)
-			sb.append(", ..." + (array.length - maxSize) + " more");
+			sb.append(", ...").append(array.length - maxSize).append(" more");
 		sb.append(']');
 
 		return sb.toString();
@@ -92,7 +92,7 @@ public class Utils
 		}
 
 		if (array.length > maxSize)
-			sb.append(", ..." + (array.length - maxSize) + " more");
+			sb.append(", ...").append(array.length - maxSize).append(" more");
 		sb.append(']');
 
 		return sb.toString();
@@ -111,7 +111,7 @@ public class Utils
 		}
 
 		if (array.length > maxSize)
-			sb.append(", ..." + (array.length - maxSize) + " more");
+			sb.append(", ...").append(array.length - maxSize).append(" more");
 		sb.append(']');
 
 		return sb.toString();
@@ -130,7 +130,7 @@ public class Utils
 		}
 
 		if (array.length > maxSize)
-			sb.append(", ..." + (array.length - maxSize) + " more");
+			sb.append(", ...").append(array.length - maxSize).append(" more");
 		sb.append(']');
 
 		return sb.toString();
@@ -149,7 +149,7 @@ public class Utils
 		}
 
 		if (array.length > maxSize)
-			sb.append(", ..." + (array.length - maxSize) + " more");
+			sb.append(", ...").append(array.length - maxSize).append(" more");
 		sb.append(']');
 
 		return sb.toString();
@@ -168,7 +168,7 @@ public class Utils
 		}
 
 		if (array.length > maxSize)
-			sb.append(", ..." + (array.length - maxSize) + " more");
+			sb.append(", ...").append(array.length - maxSize).append(" more");
 		sb.append(']');
 
 		return sb.toString();

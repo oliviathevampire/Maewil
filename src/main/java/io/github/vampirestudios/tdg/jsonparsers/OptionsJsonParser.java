@@ -39,16 +39,16 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
         JSONObject controls = (JSONObject) jsonObject.get("controls");
         for (Object jsonId : controls.keySet()) {
             JSONObject k = (JSONObject) controls.get(jsonId.toString());
-            int key_id = NumberUtils.parseInt(k.get("key_id").toString());
-            String key_char = k.get("key_char").toString();
+            int key_id = NumberUtils.parseInt(k.get("id").toString());
+            String key_char = k.get("char").toString();
             String description = k.get("description").toString();
             CONTROLS.put(jsonId.toString(), new Keybind(key_char, key_id, description));
         }
         TutLauncher.LOGGER.info("Control options loaded!");
 
-        DEBUG_MODE = Boolean.valueOf(jsonObject.get("DEBUG_MODE").toString());
-        FPS_COUNTER = Boolean.valueOf(jsonObject.get("FPS_COUNTER").toString());
-        VSYNC = Boolean.valueOf(jsonObject.get("VSYNC").toString());
+        DEBUG_MODE = Boolean.parseBoolean(jsonObject.get("debugMode").toString());
+        FPS_COUNTER = Boolean.parseBoolean(jsonObject.get("fpsCounter").toString());
+        VSYNC = Boolean.parseBoolean(jsonObject.get("vSync").toString());
         TutLauncher.LOGGER.info("True/False options loaded!");
 
         JSONObject sounds = (JSONObject) jsonObject.get("sounds");

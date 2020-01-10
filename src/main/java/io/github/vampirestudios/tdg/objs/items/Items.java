@@ -4,6 +4,8 @@ import io.github.vampirestudios.tdg.objs.ItemDataParser;
 import io.github.vampirestudios.tdg.objs.items.tool.*;
 import io.github.vampirestudios.tdg.start.TutEngine;
 import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.utils.Identifier;
+import io.github.vampirestudios.tdg.utils.registry.Registries;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -108,14 +110,11 @@ public class Items {
     }
 
     private static void register(Item item) {
-        ITEMS.put(item.getId(), item);
+        Registries.ITEMS.register(new Identifier(item.getId()), item);
     }
 
     public static Item getItemById(String id) {
-        return ITEMS.get(id).newCopy();
+        return Registries.ITEMS.get(new Identifier(id)).newCopy();
     }
 
-    public static List<Item> getItems() {
-        return new ArrayList<>(ITEMS.values());
-    }
 }

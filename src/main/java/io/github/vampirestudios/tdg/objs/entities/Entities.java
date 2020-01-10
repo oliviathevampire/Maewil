@@ -29,7 +29,6 @@ import io.github.vampirestudios.tdg.start.TutLauncher;
 import io.github.vampirestudios.tdg.tags.CompoundTag;
 import io.github.vampirestudios.tdg.tags.JsonToTag;
 import io.github.vampirestudios.tdg.tags.TagException;
-import io.github.vampirestudios.tdg.utils.JsonUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
@@ -182,24 +181,24 @@ public class Entities {
         return entity.newCopy();
     }
 
-    public static JsonObject entityToJson(Entity entity) {
-        JsonObject json = new JsonObject();
+    public static JSONObject entityToJson(Entity entity) {
+        JSONObject json = new JSONObject();
 
-        json.addProperty("id", entity.getId());
-        JsonObject pos = new JsonObject();
-        pos.addProperty("x", entity.getPosition().x);
-        pos.addProperty("y", entity.getPosition().y);
-        json.add("pos", pos);
+        json.put("id", entity.getId());
+        JSONObject pos = new JSONObject();
+        pos.put("x", entity.getPosition().x);
+        pos.put("y", entity.getPosition().y);
+        json.put("pos", pos);
         try {
-            json.addProperty("tags", JsonUtils.GSON.fromJson(entity.getTags().toString(), CompoundTag.class).toString());
+            json.put("tags", entity.getTags().toString());
         } catch (JsonParseException e) {
             TutLauncher.LOGGER.error(e);
-            json.add("tags", new JsonObject());
+            json.put("tags", new JsonObject());
         }
-        json.addProperty("health", entity.getCurrentHealth());
-        json.addProperty("maxHealth", entity.getMaxHealth());
-        json.addProperty("hitType", entity.getHitType().getIndex());
-        json.addProperty("currentTextureId", entity.getCurrentTextureId());
+        json.put("health", entity.getCurrentHealth());
+        json.put("maxHealth", entity.getMaxHealth());
+        json.put("hitType", entity.getHitType().getIndex());
+        json.put("currentTextureId", entity.getCurrentTextureId());
 
         return json;
     }

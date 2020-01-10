@@ -10,6 +10,7 @@ import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.start.TutEngine;
 import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.utils.JsonUtils;
 import io.github.vampirestudios.tdg.utils.iinterface.IJSONSaver;
 import io.github.vampirestudios.tdg.world.TileList;
 import io.github.vampirestudios.tdg.world.World;
@@ -46,7 +47,7 @@ public class WorldJsonSaver implements IJSONSaver {
         TutLauncher.LOGGER.info("World [" + world.getWorldName() + "] entities saved!");
 
         saveItems();
-        TutLauncher.LOGGER.info("World [" + world.getWorldName() + "] ITEMS saved!");
+        TutLauncher.LOGGER.info("World [" + world.getWorldName() + "] items saved!");
 
         savePlayerInfo(username);
         TutLauncher.LOGGER.info("World [" + world.getWorldName() + "] player info saved!");
@@ -186,10 +187,10 @@ public class WorldJsonSaver implements IJSONSaver {
                 items.add(itemObj);
             }
         }
-        jsonObject.put("ITEMS", items);
-        TutLauncher.LOGGER.info("World [" + path + "] ITEMS saved!");
+        jsonObject.put("items", items);
+        TutLauncher.LOGGER.info("World [" + path + "] items saved!");
 
-        saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("ITEMS"), jsonObject);
+        saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("items"), jsonObject);
     }
 
     public void savePlayerInfo(String username) throws IOException {
@@ -244,13 +245,14 @@ public class WorldJsonSaver implements IJSONSaver {
     }
 
     private void saveJSONFileToPath(String path, String fileName, JSONObject data) throws IOException {
-        Path parentPath = Paths.get(path);
+        Path parentPath = Paths.get(path, fileName).getParent();
         if(!Files.exists(parentPath)) {
             Files.createDirectories(parentPath);
         }
         String trueFilePath = path + "/" + fileName + ".json";
         FileWriter writer = new FileWriter(trueFilePath);
-        writer.write(data.toJSONString());
+        writer.write(JsonUtils.prettyPrintJSON(data.toJSONString()));
         writer.flush();
+        writer.close();
     }
 }

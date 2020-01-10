@@ -31,11 +31,14 @@ public class Assets {
     private static SpriteSheet guiSheet;
     private static SpriteSheet invSheet;
     private static SpriteSheet campfireInvSheet;
+    private static SpriteSheet cursorSheet;
+    private static SpriteSheet iconSheet;
 
     /* Fonts */
     public static Map<String, Font> FONTS = new HashMap<>();
 
-    /* Tiles */ //TODO: Change these to json
+    /* Tiles */
+    //TODO: Change these to json
     public static int GRASS_ALTS, SAND_ALTS, RED_SAND_ALTS, BROKEN_STONE_ALTS;
     public static Image[] GRASS, SAND, RED_SAND, BROKEN_STONE;
 
@@ -75,6 +78,8 @@ public class Assets {
     public static Image[] GUI_ARROW_ICONS = new Image[4];
     public static Image[] GUI_LIST_GRAY = new Image[5];
     public static Image[] GUI_LIST_BLUE = new Image[5];
+
+    public static Image GUI_SETTINGS_ICON;
 
     /* Fonts */
     private static void initFonts() {
@@ -236,6 +241,9 @@ public class Assets {
         guiSheet = new SpriteSheet(new Identifier("tut:textures/gui/gui.png"));
         invSheet = new SpriteSheet(new Identifier("tut:textures/gui/inventory/inventory.png"));
         campfireInvSheet = new SpriteSheet(new Identifier("tut:textures/gui/inventory/campfire.png"));
+
+        cursorSheet = new SpriteSheet(new Identifier("tut:textures/cursors.png"));
+        iconSheet = new SpriteSheet(new Identifier("tut:textures/icons.png"));
 
         initFonts();
         initTiles();

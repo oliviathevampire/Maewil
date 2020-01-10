@@ -79,6 +79,18 @@ dependencies {
     compile group: 'com.google.common', name: 'google-collect', version: '1.0'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
 
+    compile "org.lwjgl:lwjgl:$lwjglVersion"
+    compile "org.lwjgl:lwjgl-glfw:$lwjglVersion"
+    compile "org.lwjgl:lwjgl:$lwjglVersion:natives-windows"
+    compile "org.lwjgl:lwjgl-glfw:$lwjglVersion:natives-windows"
+    compile "org.lwjgl:lwjgl:$lwjglVersion:natives-linux"
+    compile "org.lwjgl:lwjgl-glfw:$lwjglVersion:natives-linux"
+    compile "org.lwjgl:lwjgl:$lwjglVersion:natives-macos"
+    compile "org.lwjgl:lwjgl-glfw:$lwjglVersion:natives-macos"
+
+    // Netty
+    compile group: 'io.netty', name: 'netty-all', version: '4.1.29.Final'
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation "org.joml:joml:${jomlVersion}"
 }

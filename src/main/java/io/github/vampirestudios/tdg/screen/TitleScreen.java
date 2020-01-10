@@ -48,8 +48,8 @@ public class TitleScreen extends Screen {
         uiManager.addObject(new WidgetButton(tutEngineIn, true, TutLauncher.HEIGHT / 2 - yOff, "Select Game", new ClickListener() {
             @Override
             public void onClick() {
-//                ScreenManager.setCurrentScreen(tutEngineIn.stateSelectGame);
-                ScreenManager.setCurrentScreen(new CreateWorldScreen(tutEngine));
+                ScreenManager.setCurrentScreen(tutEngineIn.stateSelectGame);
+//                ScreenManager.setCurrentScreen(new CreateWorldScreen(tutEngine));
 //                String worldName = "New_World_" + NumberUtils.getRandomInt(1000);
 //                ScreenManager.setCurrentScreen(new GameScreen(tutEngineIn, "./data/saves/" + worldName, worldName));
 

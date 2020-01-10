@@ -38,7 +38,7 @@ public class WorldJsonLoader implements IJSONLoader {
     static {
         BASE_FILES.put("world", "world_info");
         BASE_FILES.put("player", "player_info");
-        BASE_FILES.put("ITEMS", "items");
+        BASE_FILES.put("items", "items");
         BASE_FILES.put("entity_s", "entities/statics");
         BASE_FILES.put("entity_c", "entities/creatures");
         BASE_FILES.put("tile_bg", "tiles/background");
@@ -114,6 +114,7 @@ public class WorldJsonLoader implements IJSONLoader {
         this.fg_tiles = new TileList(width, height);
 
         JSONObject bgTiles = (JSONObject) jsonObjectBG.get("bg_tile");
+//        System.out.println("Background Tile: " + bgTiles.toJSONString());
         for (int y = 0; y < height; y++) {
             JSONArray chunk = (JSONArray) bgTiles.get("chunk" + y);
             for (int x = 0; x < width; x++) {
@@ -123,6 +124,7 @@ public class WorldJsonLoader implements IJSONLoader {
         TutLauncher.LOGGER.info("Loaded world background tiles");
 
         JSONObject fgTiles = (JSONObject) jsonObjectFG.get("fg_tile");
+//        System.out.println("Foreground Tile: " + bgTiles.toJSONString());
         for (int y = 0; y < height; y++) {
             JSONArray chunk = (JSONArray) fgTiles.get("chunk" + y);
             for (int x = 0; x < width; x++) {
@@ -137,6 +139,10 @@ public class WorldJsonLoader implements IJSONLoader {
         Tile tile = Tiles.getTileById((String) tileObj.get("id"));
         int tx = NumberUtils.parseInt(tileObj.get("x"));
         int ty = NumberUtils.parseInt(tileObj.get("y"));
+
+        System.out.println("Id: " + tileObj.get("id"));
+        System.out.println("X: " + NumberUtils.parseInt(tileObj.get("x")));
+        System.out.println("Y: " + NumberUtils.parseInt(tileObj.get("y")));
 
         if (bg)
             bg_tiles.setTileAtPos(tx, ty, tile);
@@ -173,10 +179,10 @@ public class WorldJsonLoader implements IJSONLoader {
 
     public void loadItems() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObjectItems = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path + "/" + BASE_FILES.get("ITEMS") + ".json"));
+        JSONObject jsonObjectItems = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path + "/" + BASE_FILES.get("items") + ".json"));
 
-        if (jsonObjectItems.containsKey("ITEMS")) {
-            JSONArray items = (JSONArray) jsonObjectItems.get("ITEMS");
+        if (jsonObjectItems.containsKey("items")) {
+            JSONArray items = (JSONArray) jsonObjectItems.get("items");
             for (Object item1 : items) {
                 JSONObject itemObj = (JSONObject) item1;
                 String id = (String) itemObj.get("id");
@@ -192,7 +198,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
                 tutEngine.getEntityManager().addItem(new ItemStack(item, count), x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
             }
-            TutLauncher.LOGGER.info("Loaded world ITEMS");
+            TutLauncher.LOGGER.info("Loaded world items");
         }
     }
 
