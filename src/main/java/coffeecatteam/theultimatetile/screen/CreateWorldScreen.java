@@ -46,7 +46,7 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         worldName = "ADD TEXT BOX";
         long range = 1000000000L;
         seed = generateSeed(-range, range);
-        sizeMod = NumberUtils.getRandomFloat(0.0f, 100.0f);
+        sizeMod = NumberUtils.getRandomFloat(0.0f, 70.0f);
 
         int sizeMin = Math.min((int) -(sizeMod * 2), (int) (sizeMod * 2));
         int sizeMax = Math.max((int) -(sizeMod * 2), (int) (sizeMod * 2));
@@ -55,7 +55,7 @@ public class CreateWorldScreen extends AbstractMenuScreen {
             sizeModExtra = NumberUtils.getRandomInt(sizeMin, sizeMax);
         else
             sizeModExtra = NumberUtils.getRandomInt(sizeMax, sizeMin);
-        int minWorldSize = 10000;
+        int minWorldSize = 1000;
         worldSize = minWorldSize + sizeModExtra;
 
         uiManager.addObject(new WidgetTextBox());

@@ -1,5 +1,6 @@
 package coffeecatteam.theultimatetile.screen.game;
 
+import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.theultimatetile.gfx.ui.button.world.WidgetButtonWorld;
 import coffeecatteam.theultimatetile.jsonparsers.SavedGamesJSONParser;
 import coffeecatteam.theultimatetile.screen.AbstractMenuScreen;
@@ -18,8 +19,10 @@ public class SelectGameScreen extends AbstractMenuScreen {
         int y = TutLauncher.HEIGHT / 2 - btnHeight / 2 + 25;
         float yOff = 25 * 3f;
 
-        for (int i = 0; i < SavedGamesJSONParser.SAVE_CAPACITY; i++)
-            uiManager.addObject(new WidgetButtonWorld(tutEngine, y + yOff * i, i));
+        for (int i = 0; i < SavedGamesJSONParser.SAVE_CAPACITY; i++) {
+            String worldName = "New_World_" + NumberUtils.getRandomInt(1000);
+            uiManager.addObject(new WidgetButtonWorld(tutEngine, y + yOff * i, i, worldName));
+        }
     }
 
     @Override

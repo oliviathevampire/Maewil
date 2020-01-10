@@ -9,9 +9,9 @@ import coffeecatteam.theultimatetile.gfx.ui.button.WidgetButton;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.WidgetHyperlink;
 import coffeecatteam.theultimatetile.gfx.ui.hyperlink.WidgetHyperlinkCopyright;
 import coffeecatteam.theultimatetile.objs.entities.Entities;
+import coffeecatteam.theultimatetile.screen.options.CharacterCustomizationScreen;
 import coffeecatteam.theultimatetile.start.TutEngine;
 import coffeecatteam.theultimatetile.start.TutLauncher;
-import coffeecatteam.theultimatetile.screen.options.CharacterCustomizationScreen;
 import coffeecatteam.theultimatetile.utils.DiscordHandler;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -51,7 +51,8 @@ public class TitleScreen extends Screen {
             public void onClick() {
 //                ScreenManager.setCurrentScreen(tutEngineIn.stateSelectGame);
                 ScreenManager.setCurrentScreen(new CreateWorldScreen(tutEngine));
-//                Screen.setState(new GameScreen(engine, "./data/saves/Test_World", "Test World"));
+//                String worldName = "New_World_" + NumberUtils.getRandomInt(1000);
+//                ScreenManager.setCurrentScreen(new GameScreen(tutEngineIn, "./data/saves/" + worldName, worldName));
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu", "Selecting A Game");
             }

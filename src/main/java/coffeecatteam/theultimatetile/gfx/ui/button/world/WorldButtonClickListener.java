@@ -136,7 +136,7 @@ public class WorldButtonClickListener implements ClickListener {
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
         String[] vals = SavedGamesJSONParser.GAMES.get(index).split(":");
-        isSaved = Boolean.valueOf(vals[0]);
+        isSaved = Boolean.parseBoolean(vals[0]);
     }
 
     public String getPath() {
@@ -144,7 +144,7 @@ public class WorldButtonClickListener implements ClickListener {
     }
 
     public void setText(WidgetButtonWorld button) {
-        boolean isSaved = Boolean.valueOf(SavedGamesJSONParser.GAMES.get(index).split(":")[0]);
+        boolean isSaved = Boolean.parseBoolean(SavedGamesJSONParser.GAMES.get(index).split(":")[0]);
         if (isSaved)
             button.setText(SavedGamesJSONParser.GAMES.get(index).split(":")[1].replace("_", " "));
     }
@@ -189,7 +189,7 @@ public class WorldButtonClickListener implements ClickListener {
 
 
     public String getText() {
-        boolean isSaved = Boolean.valueOf(SavedGamesJSONParser.GAMES.get(index).split(":")[0]);
+        boolean isSaved = Boolean.parseBoolean(SavedGamesJSONParser.GAMES.get(index).split(":")[0]);
         if (isSaved)
             return SavedGamesJSONParser.GAMES.get(index).split(":")[1].replace("_", " ");
         return "";
