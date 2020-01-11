@@ -1,20 +1,17 @@
 package io.github.vampirestudios.tdg.world.colormap;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import io.github.vampirestudios.tdg.world.noise.PerlinNoise;
+import io.github.vampirestudios.tdg.world.noise.SuperSimplexNoise;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 public class WorldMapGenerator {
-
-    private static float path_threshold = 0.07f;
 
     /*
      * Seeds
      */
-    private final long seedLand, seedPath, seedBiome;
+    private final long seedLand, seedLand2, seedPath, seedPath2, seedBiome, seedBiome2;
     private final long seedExtra1, seedExtra2, seedExtra3;
 
     private int width, height;
@@ -22,8 +19,11 @@ public class WorldMapGenerator {
 
     public WorldMapGenerator(long seedLand, int width, int height, double sizeLand) {
         this.seedLand = seedLand;
+        this.seedLand2 = seedLand + NumberUtils.getRandomInt(1, 5);
         this.seedPath = seedLand + NumberUtils.getRandomInt(1, 5);
+        this.seedPath2 = seedLand2 + NumberUtils.getRandomInt(1, 5);
         this.seedBiome = seedLand + NumberUtils.getRandomInt(1, 5);
+        this.seedBiome2 = seedLand2 + NumberUtils.getRandomInt(1, 5);
 
         this.seedExtra1 = this.seedLand + NumberUtils.getRandomInt(100);
         this.seedExtra2 = this.seedExtra1 + NumberUtils.getRandomInt(100);
@@ -38,12 +38,14 @@ public class WorldMapGenerator {
     }
 
     public BufferedImage generateLand(float xOff, float yOff, boolean hollowCaves) {
-        PerlinNoise noise = new PerlinNoise(seedLand);
+        SuperSimplexNoise noise = new SuperSimplexNoise(seedLand);
+        SuperSimplexNoise noise2 = new SuperSimplexNoise(seedLand2);
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                double value = noise.getPerlinNoise((float) ((x + xOff) / sizeLand), (float) ((y + yOff) / sizeLand));
+                double value = noise.noise2(((x + xOff) / sizeLand), ((y + yOff) / sizeLand)) +
+                        noise2.noise2(((x + xOff * 2) / sizeLand), ((y + yOff * 2) / sizeLand)) / 2;
                 Color c = WorldColors.DEEP_OCEAN;
                 if (value > -0.3 && value < -0.1) {
                     c = WorldColors.WATER;
@@ -71,23 +73,26 @@ public class WorldMapGenerator {
                 image.setRGB(x, y, c.getRGB());
             }
         }
-        addSpots(xOff, yOff, image, 0.65d, 1.0d, 10.0d, WorldColors.DIRT, WorldColors.GRASS, seedExtra1);
-        addSpots(xOff, yOff, image, 0.7d, 1.0d, 10.0d, WorldColors.DIRT, WorldColors.GRASS, seedExtra2);
-        addSpots(xOff, yOff, image, 0.75d, 1.0d, 10.0d, WorldColors.DIRT, WorldColors.GRASS, seedExtra3);
+        addSpots(xOff, yOff, image, 0.65d, WorldColors.DIRT, WorldColors.GRASS, seedExtra1);
+        addSpots(xOff, yOff, image, 0.7d, WorldColors.DIRT, WorldColors.GRASS, seedExtra2);
+        addSpots(xOff, yOff, image, 0.75d, WorldColors.DIRT, WorldColors.GRASS, seedExtra3);
 
-        addSpots(xOff, yOff, image, 0.65d, 1.0d, 10.0d, WorldColors.STONE, WorldColors.DIRT, seedExtra1);
-        addSpots(xOff, yOff, image, 0.7d, 1.0d, 10.0d, WorldColors.STONE, WorldColors.DIRT, seedExtra2);
+        addSpots(xOff, yOff, image, 0.65d, WorldColors.STONE, WorldColors.DIRT, seedExtra1);
+        addSpots(xOff, yOff, image, 0.7d, WorldColors.STONE, WorldColors.DIRT, seedExtra2);
         return image;
     }
 
     public BufferedImage generatePaths(float xOff, float yOff, BufferedImage landMap) {
-        PerlinNoise noise = new PerlinNoise(seedPath);
+        SuperSimplexNoise noise = new SuperSimplexNoise(seedPath);
+        SuperSimplexNoise noise2 = new SuperSimplexNoise(seedPath2);
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                double value = noise.getPerlinNoise((float) ((x + xOff) / sizePath), (float) ((y + yOff) / sizePath));
+                double value = noise.noise2(((x + xOff) / sizePath), ((y + yOff) / sizePath)) +
+                        noise2.noise2(((x + xOff * 2) / sizePath), ((y + yOff * 2) / sizePath)) / 2;
                 Color c = new Color(255, 255, 255, 0);
+                float path_threshold = 0.07f;
                 if (value > -path_threshold && value < path_threshold) {
                     if (landMap.getRGB(x, y) == WorldColors.GRASS.getRGB() || landMap.getRGB(x, y) == WorldColors.STONE.getRGB()) {
                         c = WorldColors.DIRT;
@@ -96,20 +101,22 @@ public class WorldMapGenerator {
                 image.setRGB(x, y, getRGBA(c.getRGB()));
             }
         }
-        addSpots(xOff, yOff, image, 0.65d, 1.0d, 10.0d, WorldColors.DIRT, WorldColors.GRASS, seedExtra1);
-        addSpots(xOff, yOff, image, 0.7d, 1.0d, 10.0d, WorldColors.DIRT, WorldColors.GRASS, seedExtra2);
-        addSpots(xOff, yOff, image, 0.75d, 1.0d, 10.0d, WorldColors.DIRT, WorldColors.GRASS, seedExtra3);
+        addSpots(xOff, yOff, image, 0.65d, WorldColors.DIRT, WorldColors.GRASS, seedExtra1);
+        addSpots(xOff, yOff, image, 0.7d, WorldColors.DIRT, WorldColors.GRASS, seedExtra2);
+        addSpots(xOff, yOff, image, 0.75d, WorldColors.DIRT, WorldColors.GRASS, seedExtra3);
         return image;
     }
 
-    private void addSpots(float xOff, float yOff, BufferedImage pathMap, double minThreshold, double maxThreshold, double blendSize, Color replace, Color spot, long seed) {
-        PerlinNoise noise = new PerlinNoise(seed);
+    private void addSpots(float xOff, float yOff, BufferedImage pathMap, double minThreshold, Color replace, Color spot, long seed) {
+        SuperSimplexNoise noise = new SuperSimplexNoise(seed);
+        SuperSimplexNoise noise2 = new SuperSimplexNoise(seed);
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                double value = noise.getPerlinNoise((float) ((x + xOff) / blendSize), (float) ((y + yOff) / blendSize));
+                double value = noise.noise2(((x + xOff) / sizeBiome), ((y + yOff) / sizeBiome)) +
+                        noise2.noise2(((x + xOff * 2) / sizeBiome), ((y + yOff * 2) / sizeBiome)) / 2;
                 if (pathMap.getRGB(x, y) == replace.getRGB()) {
-                    if (value > minThreshold && value < maxThreshold) {
+                    if (value > minThreshold && value < 1.0) {
                         pathMap.setRGB(x, y, getRGBA(spot.getRGB()));
                     }
                 }
@@ -118,35 +125,20 @@ public class WorldMapGenerator {
     }
 
     public BufferedImage generateBiomes(float xOff, float yOff, BufferedImage landMap, BufferedImage pathMap) {
-        PerlinNoise noise = new PerlinNoise(seedBiome);
+        SuperSimplexNoise noise = new SuperSimplexNoise(seedBiome);
+        SuperSimplexNoise noise2 = new SuperSimplexNoise(seedBiome2);
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                double value = noise.getPerlinNoise((float) ((x + xOff) / sizeBiome), (float) ((y + yOff) / sizeBiome));
+                double value = noise.noise2(((x + xOff) / sizeBiome), ((y + yOff) / sizeBiome)) +
+                        noise2.noise2(((x + xOff * 2) / sizeBiome), ((y + yOff * 2) / sizeBiome)) / 2;
                 Color c = Biomes.NONE.getColor();
                 if (landMap.getRGB(x, y) == WorldColors.GRASS.getRGB() && pathMap.getRGB(x, y) != WorldColors.DIRT.getRGB() && landMap.getRGB(x, y) != WorldColors.DIRT.getRGB()) {
-                    Random random = new Random();
-                    int randomInt = random.nextInt(6);
-                    switch (randomInt) {
-                        case 0:
-                            c = Biomes.FOREST.getColor();
-                            break;
-                        case 1:
-                            c = Biomes.DESERT.getColor();
-                            break;
-                        case 2:
-                            c = Biomes.RED_DESERT.getColor();
-                            break;
-                        case 3:
-                            c = Biomes.SAVANNA.getColor();
-                            break;
-                        case 4:
-                            c = Biomes.OCEAN.getColor();
-                            break;
-                        case 5:
-                            c = Biomes.PLAINS.getColor();
-                            break;
+                    if (value > 0.15 && value < 0.55) {
+                        c = Biomes.FOREST.getColor();
+                    } else {
+                        c = Biomes.PLAINS.getColor();
                     }
                 } else {
                     if (landMap.getRGB(x, y) == WorldColors.DIRT.getRGB()) {

@@ -1,6 +1,7 @@
 package io.github.vampirestudios.tdg.start;
 
 import coffeecatteam.coffeecatutils.ArgUtils;
+import coffeecatteam.coffeecatutils.DevEnvUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.coffeecatutils.logger.CatLoggerUtils;
 import io.github.vampirestudios.tdg.gfx.assets.Sounds;
@@ -79,9 +80,15 @@ public class TutLauncher extends StateBasedGame {
 
     public static void main(String[] args) {
         /* Set natives path */
-        final String nativesPath = new File("data/natives").getAbsolutePath();
-        System.setProperty("org.lwjgl.librarypath", nativesPath);
-        System.setProperty("java.library.path", nativesPath);
+        if (!DevEnvUtils.isRunningFromDevEnviroment()) {
+            final String nativesPath = new File("data/natives").getAbsolutePath();
+            System.setProperty("org.lwjgl.librarypath", nativesPath);
+            System.setProperty("java.library.path", nativesPath);
+        } else {
+            final String nativesPath = new File("../libs/natives").getAbsolutePath();
+            System.setProperty("org.lwjgl.librarypath", nativesPath);
+            System.setProperty("java.library.path", nativesPath);
+        }
 
         ARGS = args;
         ArgUtils.setARGS(ARGS);

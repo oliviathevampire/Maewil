@@ -2,7 +2,6 @@ package io.github.vampirestudios.tdg.utils;
 
 import io.github.vampirestudios.tdg.gfx.IInputHandler;
 import io.github.vampirestudios.tdg.utils.registry.Registries;
-import org.lwjgl.glfw.GLFW;
 
 public final class Keybind {
 
@@ -15,7 +14,7 @@ public final class Keybind {
     }
 
     public static boolean isMouse(int key) {
-        return key <= GLFW.GLFW_MOUSE_BUTTON_8;
+        return /*key <= GLFW.GLFW_MOUSE_BUTTON_8*/false;
     }
 
     public void setBind(int key) {

@@ -1,8 +1,6 @@
 package io.github.vampirestudios.tdg.gfx;
 
 
-import org.lwjgl.glfw.GLFW;
-
 /**
  * This class handles all of the keyboard and mouse input. To access these
  * methods

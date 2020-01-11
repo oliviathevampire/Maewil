@@ -116,6 +116,6 @@ public class OptionsScreen extends AbstractMenuScreen {
         String vSyncText = "Use VSync: ";
         Text.drawString(g, vSyncText, (int) (vsync.getPosition().x - Text.getWidth(fpsText, font)), (int) (vsync.getPosition().y + Text.getHeight(fpsText, font)) + 25, false, Color.white, font);
 
-        Text.drawString(g, "EXPERIMENTAL!", TutLauncher.WIDTH / 2f, TutLauncher.HEIGHT / 2f, true, true, Color.red, Assets.FONTS.get("80"));
+//        Text.drawString(g, "EXPERIMENTAL!", TutLauncher.WIDTH / 2f, TutLauncher.HEIGHT / 2f, true, true, Color.red, Assets.FONTS.get("80"));
     }
 }

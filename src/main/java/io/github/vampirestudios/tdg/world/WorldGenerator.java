@@ -11,7 +11,7 @@ import io.github.vampirestudios.tdg.start.TutEngine;
 import io.github.vampirestudios.tdg.world.colormap.Biomes;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 import io.github.vampirestudios.tdg.world.colormap.WorldMapGenerator;
-import io.github.vampirestudios.tdg.world.noise.PerlinNoise;
+import io.github.vampirestudios.tdg.world.noise.SuperSimplexNoise;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -163,12 +163,12 @@ public class WorldGenerator {
     }
 
     private void addOre(TileList tiles, Tile ore, double minThreshold, double maxThreshold, double blendSize, long seedOff, boolean bg) {
-        PerlinNoise noise = new PerlinNoise(seed + seedOreOff + seedOff);
+        SuperSimplexNoise noise = new SuperSimplexNoise(seed + seedOreOff + seedOff);
         seedOreOff += seedOreOffInc;
 
         for (int y = 0; y < worldSize; y++) {
             for (int x = 0; x < worldSize; x++) {
-                double value = noise.getPerlinNoise((float) (x / blendSize), (float) (y / blendSize));
+                double value = noise.noise2((float) (x / blendSize), (float) (y / blendSize));
                 if (tiles.getTileAtPos(x, y) instanceof StoneTile) {
                     Tile tile = tiles.getTileAtPos(x, y);
 
