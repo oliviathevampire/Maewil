@@ -26,7 +26,7 @@ public class InventoryPlayer extends InventoryAbstractPlayer {
             int y = TutLauncher.HEIGHT / 2 - height / 2;
 
             Assets.GUI_INVENTORY.draw(x, y, width, height);
-            player.getTexture("idle").draw(x + player.getWidth() / 6.3f, y + player.getHeight() / 2f, player.getWidth(), player.getHeight());
+            player.getTexture("idle").draw(x + player.getWidth() / 0.75F, y + player.getHeight() / 1.4f, player.getWidth(), player.getHeight());
 
             super.renderInventorySlots(container, game, g);
         }

@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 public class KeyManager {
 
     private boolean[] keys, justPressed, cantPress;
-    public boolean moveUp, moveDown, moveLeft, moveRight, useSprint, useAttack;
+    public boolean moveUp, moveDown, moveLeft, moveRight, useSprint, useAttack, screenshot, fullscreen;
 
     private int currentKeyPressedCode;
     private char currentKeyPressedChar = '~';
@@ -39,6 +39,8 @@ public class KeyManager {
         moveRight = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.D).getKeyCode());
         useSprint = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.CONTROL).getKeyCode());
         useAttack = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.SPACE).getKeyCode());
+        screenshot = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.F2).getKeyCode());
+        fullscreen = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.F11).getKeyCode());
     }
 
     public boolean keyJustPressed(int key) {

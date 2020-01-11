@@ -33,13 +33,13 @@ public class TutLauncher extends StateBasedGame {
     public static String[] ARGS;
     public static boolean FULLSCREEN;
     public static int WIDTH = 854, HEIGHT = 480, WIDTH_TILE_SIZE, HEIGHT_TILE_SIZE;
-    public static final String TITLE = "Top-Down Game";
+    public static final String TITLE = "Maewil";
 
     public static CatLogger LOGGER;
 
     public TutLauncher() {
         super(TITLE);
-        LOGGER = new CatLogger("TopDownGame-Main");
+        LOGGER = new CatLogger("Maewil-Main");
 
         StringBuilder args = new StringBuilder();
         for (String arg : ARGS)
@@ -109,7 +109,7 @@ public class TutLauncher extends StateBasedGame {
             AppGameContainer app = new AppGameContainer(new TutLauncher());
             app.setShowFPS(false);
             app.setDisplayMode(WIDTH, HEIGHT, FULLSCREEN);
-            app.setIcons(new String[]{"data/icons/32.png", "data/icons/64.png"});
+            app.setIcons(new String[]{"data/icons/32_new.png", "data/icons/64_new.png"});
             app.setTargetFrameRate(100);
             app.setUpdateOnlyWhenVisible(false);
             app.setAlwaysRender(true);

@@ -68,11 +68,6 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
-//        if (!isDefault)
-//            if (theUltimateTile.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.E).getKeyCode() | OptionsScreen.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()))
-//                player.openCloseInventory(this);
-//                //player.closeAllInventories();
-
         if (active) {
             // Change select item
             boolean up = tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.W).getKeyCode());

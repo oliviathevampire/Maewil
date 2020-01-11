@@ -18,7 +18,7 @@ import java.net.URI;
  */
 public class WidgetHyperlinkCopyright extends WidgetHyperlink {
 
-    private static String text = "Copyright (C) CoffeeCatTeam 2019";
+    private static String text = "Copyright (C) Vampire Studios 2020";
     private static Font font = Assets.FONTS.get("20");
 
     public WidgetHyperlinkCopyright(Vector2D position) {
@@ -27,7 +27,7 @@ public class WidgetHyperlinkCopyright extends WidgetHyperlink {
             public void onClick() {
                 try {
                     Desktop desktop = Desktop.getDesktop();
-                    URI link = new URI("https://github.com/CoffeeCatRailway/TheUltimateTile/blob/master/LICENSE.md");
+                    URI link = new URI("https://github.com/oliviathevampire/TheUltimateTile/blob/master/LICENSE.md");
                     desktop.browse(link);
                 } catch (Exception e) {
                     TutLauncher.LOGGER.error(e);

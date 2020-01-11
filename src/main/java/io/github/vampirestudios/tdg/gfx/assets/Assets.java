@@ -162,10 +162,10 @@ public class Assets {
 
     /* GUI */
     private static void initGui() {
-        GUI_TITLE_SMALL = getSpriteExact(new Identifier("tut:textures/splash/title.png"), 0, 0, 6560, 1152);
+        GUI_TITLE_SMALL = getSpriteExact(new Identifier("tut:textures/splash/cover.png"), 0, 0, 3500, 1440);
         GUI_SPLASH_PLAYER = getFrames(new Identifier("tut:textures/splash/player.png"), 0, 0, 11, 512, 512);
 
-        GUI_TITLE_BIG = getSpriteExact(new Identifier("tut:textures/gui/title.png"), 0, 0, 101, 84);
+        GUI_TITLE_BIG = getSpriteExact(new Identifier("tut:textures/splash/cover.png"), 0, 0, 101, 84);
         GUI_TITLE_FG = new Image[3];
         for (int i = 0; i < GUI_TITLE_FG.length; i++) {
             GUI_TITLE_FG[i] = getSpriteExact(new Identifier("tut:textures/gui/title.png"), 112, 64 * i, 112, 64);
@@ -173,15 +173,15 @@ public class Assets {
         GUI_DEAD_OVERLAY = getImage(new Identifier("tut:textures/gui/dead_overlay.png"));
 
         GUI_BUTTON_ENABLED = getFrames(guiSheet, 0, 0, 2, width, height);
-        GUI_BUTTON_HOVER = getFrames(guiSheet, 1, 0, 2, width, height);
+        GUI_BUTTON_HOVER = getFrames(guiSheet, 2, 0, 2, width, height);
         GUI_BUTTON_DISABLED = getFrames(guiSheet, 2, 0, 2, width, height);
 
-        GUI_INVENTORY = getSpriteExact(invSheet, 0, 0, 57, 41);
+        GUI_INVENTORY = getSpriteExact(invSheet, 0, 0, 114, 82);
         GUI_CAMPFIRE_INVENTORY = getSpriteExact(campfireInvSheet, 0, 0, 57, 44);
 
         GUI_SLOT = getSpriteExact(invSheet, 2, 22, 8, 8);
         GUI_SLOT_SELECTER = getSpriteExact(invSheet, 48, 48, width, height);
-        GUI_HOTBAR = getSpriteExact(invSheet, 12, 54, 28, 10);
+        GUI_HOTBAR = getSpriteExact(invSheet, 24, 108, 56, 20);
         GUI_HOTBAR_SELECTER = getSpriteExact(invSheet, 0, 52, 12, 12);
 
         GUI_ICON_ON = getSpriteInd(guiSheet, 0, 3, width, height);

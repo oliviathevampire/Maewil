@@ -199,8 +199,6 @@ public class WorldJsonSaver implements IJSONSaver {
         jsonObject.put("username", username);
         TutLauncher.LOGGER.info("Player username saved [" + tutEngine.getUsername() + "]");
         jsonObject.put("health", tutEngine.getPlayer().getCurrentHealth());
-        jsonObject.put("glubel", tutEngine.getPlayer().getGlubel());
-        jsonObject.put("lvl", tutEngine.getPlayer().getLvl());
 
         JSONArray selected_slots = new JSONArray();
         selected_slots.add(0, tutEngine.getPlayer().getInventoryPlayer().getInventorySelectedIndex());

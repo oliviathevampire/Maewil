@@ -1,9 +1,7 @@
 package io.github.vampirestudios.tdg.manager;
 
 import io.github.vampirestudios.tdg.gfx.overlays.Overlay;
-import io.github.vampirestudios.tdg.gfx.overlays.GlubOverlay;
 import io.github.vampirestudios.tdg.gfx.overlays.PlayerHealthOverlay;
-import io.github.vampirestudios.tdg.gfx.overlays.PlayerSprintOverlay;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.start.TutEngine;
 import org.newdawn.slick.GameContainer;
@@ -21,8 +19,6 @@ public class OverlayManager {
         overlays = new ArrayList<>();
 
         addOverlay(new PlayerHealthOverlay(tutEngine, player));
-        addOverlay(new PlayerSprintOverlay(tutEngine, player));
-        addOverlay(new GlubOverlay(tutEngine, player));
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) {

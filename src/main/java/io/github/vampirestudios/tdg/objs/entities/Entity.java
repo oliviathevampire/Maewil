@@ -130,7 +130,7 @@ public abstract class Entity implements IHasData<Entity> {
     }
 
     public void die() {
-        tutEngine.getPlayer().setGlubel(tutEngine.getPlayer().getGlubel() + NumberUtils.getRandomInt(1, 5));
+
     }
 
     public void interact() {

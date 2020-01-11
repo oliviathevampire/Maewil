@@ -5,24 +5,27 @@ public class Keybind {
     /*
      * KEYS
      */
-    public static final String Z = "Z";
-    public static final String R = "R";
-    public static final String E = "E";
-    public static final String Q = "Q";
-    public static final String X = "X";
+    public static final String Z = "z";
+    public static final String R = "r";
+    public static final String E = "e";
+    public static final String Q = "q";
+    public static final String X = "x";
 
-    public static final String W = "W";
-    public static final String A = "A";
-    public static final String S = "S";
-    public static final String D = "D";
+    public static final String W = "w";
+    public static final String A = "a";
+    public static final String S = "s";
+    public static final String D = "d";
 
     public static final String ONE = "1";
     public static final String TWO = "2";
     public static final String THREE = "3";
 
-    public static final String CONTROL = "CONTROL";
-    public static final String SPACE = "SPACE";
-    public static final String ESCAPE = "ESCAPE";
+    public static final String CONTROL = "control";
+    public static final String SPACE = "space";
+    public static final String ESCAPE = "escape";
+
+    public static final String F2 = "F2";
+    public static final String F11 = "F11";
 
     /*
      * CLASS

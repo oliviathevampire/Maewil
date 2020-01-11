@@ -26,16 +26,12 @@ public class PlayerEntity extends LivingEntity {
     private Animation sprintEffect;
 
     private long lastAttackTimer, attackCooldown = 400, attackTimer = attackCooldown;
-    private float maxSprintTimer = 100f;
-    private float sprintTimer = maxSprintTimer;
-    private float sprintStartOver = maxSprintTimer;
     private long lastWalkSoundTimer, walkSoundCooldown = 1100, walkSoundTimer = walkSoundCooldown;
     private boolean isAttacking = false;
 
     private InventoryPlayer inventoryPlayer;
     private ItemStack equippedItem;
     private int extraDmg = 0;
-    private int glubel = 0, maxGludel = 100, lvl = 1;
     private String username;
 
     public boolean isDead, guiOpen = false;
@@ -43,7 +39,7 @@ public class PlayerEntity extends LivingEntity {
     private float prevX, prevY;
 
     public PlayerEntity(TutEngine tutEngine, String username) {
-        super(tutEngine, "player", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+        super(tutEngine, "player", 34, 62);
         this.username = username;
         isDead = false;
 
@@ -68,7 +64,7 @@ public class PlayerEntity extends LivingEntity {
         if (isActive()) {
             if (!guiOpen) {
                 // Movement
-                getInput(container, delta);
+                getInput();
                 move();
 
                 // Interact
@@ -256,26 +252,16 @@ public class PlayerEntity extends LivingEntity {
         tutEngine.getEntityManager().addItem(stack.copy(), (x) / Tile.TILE_SIZE, (y) / Tile.TILE_SIZE);
     }
 
-    private void getInput(GameContainer container, int delta) {
+    private void getInput() {
         xMove = 0;
         yMove = 0;
 
         if (!this.inWater() || !this.inLava()) {
-            float sprintDecent = 0.15f;
-            if (sprintTimer <= 0)
-                sprintStartOver -= sprintDecent;
-            if (sprintStartOver <= 0) {
-                sprintTimer = maxSprintTimer;
-                sprintStartOver = maxSprintTimer;
-            }
             if (canSprint()) {
                 speed = LivingEntity.DEFAULT_SPEED * 6f;
-                sprintTimer -= sprintDecent;
             } else {
                 speed = LivingEntity.DEFAULT_SPEED;
             }
-            if (!tutEngine.getKeyManager().useSprint)
-                sprintTimer = maxSprintTimer;
         }
 
         if (tutEngine.getKeyManager().moveUp)
@@ -367,16 +353,8 @@ public class PlayerEntity extends LivingEntity {
         this.equippedItem = equippedItem;
     }
 
-    public float getSprintTimer() {
-        return sprintTimer;
-    }
-
-    public float getMaxSprintTimer() {
-        return maxSprintTimer;
-    }
-
     public boolean canSprint() {
-        return tutEngine.getKeyManager().useSprint && !inWater() && getCurrentTexture() != getTextures().get("idle") && sprintTimer > 0;
+        return tutEngine.getKeyManager().useSprint && !inWater() && getCurrentTexture() != getTextures().get("idle");
     }
 
     public String getUsername() {
@@ -387,38 +365,12 @@ public class PlayerEntity extends LivingEntity {
         this.username = username;
     }
 
-    public int getGlubel() {
-        return glubel;
-    }
-
-    public void setGlubel(int glubel) {
-        this.glubel = glubel;
-        if (this.glubel >= maxGludel) {
-            this.glubel = 0;
-            lvl++;
-        }
-    }
-
-    public int getMaxGludel() {
-        return maxGludel;
-    }
-
-    public int getLvl() {
-        return lvl;
-    }
-
-    public void setLvl(int lvl) {
-        this.lvl = lvl;
-    }
-
     public boolean isMoving() {
         return (this.xMove != 0 || this.yMove != 0) && (this.prevX != position.x || this.prevY != position.y);
     }
 
     public void reset() {
         inventoryPlayer.clearInventory();
-        glubel = 0;
-        lvl = 0;
         equippedItem = null;
         extraDmg = 0;
         currentHealth = maxHealth;
@@ -430,14 +382,6 @@ public class PlayerEntity extends LivingEntity {
 
     public void setGuiOpen(boolean guiOpen) {
         this.guiOpen = guiOpen;
-    }
-
-    public boolean isDead() {
-        return isDead;
-    }
-
-    public void setIsDead(boolean dead) {
-        isDead = dead;
     }
 
     @Override

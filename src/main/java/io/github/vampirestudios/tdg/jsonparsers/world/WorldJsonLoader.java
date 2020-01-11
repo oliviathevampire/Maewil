@@ -216,14 +216,6 @@ public class WorldJsonLoader implements IJSONLoader {
         tutEngine.getPlayer().setCurrentHealth(health);
         TutLauncher.LOGGER.info("loaded player health!");
 
-        glubel = NumberUtils.parseInt(jsonObject.get("glubel"));
-        tutEngine.getPlayer().setGlubel(glubel);
-        TutLauncher.LOGGER.info("loaded player glubel!");
-
-        lvl = NumberUtils.parseInt(jsonObject.get("lvl"));
-        tutEngine.getPlayer().setLvl(lvl);
-        TutLauncher.LOGGER.info("loaded player lvl!");
-
         selected_slots = new int[2];
         JSONArray selected_slotsJ = (JSONArray) jsonObject.get("selected_slots");
         selected_slots[0] = NumberUtils.parseInt(selected_slotsJ.get(0));

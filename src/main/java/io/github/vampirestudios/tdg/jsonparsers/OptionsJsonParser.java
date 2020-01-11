@@ -70,17 +70,17 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
         JSONObject controls = new JSONObject();
         for (String jsonId : CONTROLS.keySet()) {
             JSONObject key = new JSONObject();
-            key.put("key_id", String.valueOf(CONTROLS.get(jsonId).getKeyCode()));
-            key.put("key_char", CONTROLS.get(jsonId).getId());
+            key.put("id", CONTROLS.get(jsonId).getKeyCode());
+            key.put("char", CONTROLS.get(jsonId).getId());
             key.put("description", CONTROLS.get(jsonId).getDescription());
             controls.put(jsonId, key);
         }
         jsonObject.put("controls", controls);
         TutLauncher.LOGGER.info("Control options loaded!");
 
-        jsonObject.put("DEBUG_MODE", DEBUG_MODE);
-        jsonObject.put("FPS_COUNTER", FPS_COUNTER);
-        jsonObject.put("VSYNC", VSYNC);
+        jsonObject.put("debugMode", DEBUG_MODE);
+        jsonObject.put("fpsCounter", FPS_COUNTER);
+        jsonObject.put("vSync", VSYNC);
         TutLauncher.LOGGER.info("True/False options loaded!");
 
         JSONObject sounds = new JSONObject();

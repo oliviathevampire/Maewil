@@ -33,7 +33,7 @@ public class Slot {
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        Assets.GUI_SLOT.draw(x, y, width, height);
+//        Assets.GUI_SLOT.draw(x, y, width, height);
         itemWidth = (int) ((width / 2 + width / 4) * scale);
         itemHeight = (int) ((height / 2 + height / 4) * scale);
         xPos = x + itemWidth / 4;
@@ -97,7 +97,6 @@ public class Slot {
     }
 
     public Slot copy() {
-        Slot slot = new Slot(this.index, this.x, this.y, this.width, this.height, this.scale);
-        return slot;
+        return new Slot(this.index, this.x, this.y, this.width, this.height, this.scale);
     }
 }

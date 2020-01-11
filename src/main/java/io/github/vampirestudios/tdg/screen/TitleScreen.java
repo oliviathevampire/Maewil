@@ -8,14 +8,12 @@ import io.github.vampirestudios.tdg.gfx.ui.WidgetTitleRender;
 import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButton;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlink;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlinkCopyright;
-import io.github.vampirestudios.tdg.objs.entities.Entities;
 import io.github.vampirestudios.tdg.screen.options.CharacterCustomizationScreen;
 import io.github.vampirestudios.tdg.start.TutEngine;
 import io.github.vampirestudios.tdg.start.TutLauncher;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class TitleScreen extends Screen {
@@ -114,8 +112,8 @@ public class TitleScreen extends Screen {
         this.renderBG(container, game, g);
         uiManager.render(container, game, g);
 
-        Image ultimate = Entities.ULTIMATE.getTexture("main");
+        /*Image ultimate = Entities.ULTIMATE.getTexture("main");
         float sizeU = 96;
-        ultimate.draw((TutLauncher.WIDTH / 4f) * 3 - sizeU / 2f, TutLauncher.HEIGHT / 2f - sizeU / 2f, sizeU, sizeU);
+        ultimate.draw((TutLauncher.WIDTH / 4f) * 3 - sizeU / 2f, TutLauncher.HEIGHT / 2f - sizeU / 2f, sizeU, sizeU);*/
     }
 }

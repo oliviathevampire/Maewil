@@ -21,15 +21,23 @@ import io.github.vampirestudios.tdg.screen.game.SelectGameScreen;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.screen.options.SoundOptions;
 import io.github.vampirestudios.tdg.screen.options.controls.ControlOptions;
+import io.github.vampirestudios.tdg.utils.Colors;
 import io.github.vampirestudios.tdg.world.World;
 import org.json.simple.parser.ParseException;
-import org.newdawn.slick.*;
-import org.newdawn.slick.imageout.ImageOut;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -153,10 +161,13 @@ public class TutEngine extends BasicGameState {
          */
         if (container.getInput().isKeyPressed(Input.KEY_F2))
             takeScreenshot(container);
+
+        if (container.getInput().isKeyPressed(Input.KEY_F11))
+            System.out.println("Testing");
     }
 
     private void takeScreenshot(GameContainer container) throws SlickException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
+        /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
         String dateAndTime = dateFormat.format(new Date());
         String filename = "data/screenshots/" + dateAndTime + ".png";
         File file = new File(filename);
@@ -167,7 +178,41 @@ public class TutEngine extends BasicGameState {
         ImageOut.write(target, filename);
         target.destroy();
 
-        TutLauncher.LOGGER.info("Screenshot saved to [" + filename + "]");
+        TutLauncher.LOGGER.info("Screenshot saved to [" + filename + "]");*/
+
+        try {
+            GL11.glReadBuffer(GL11.GL_FRONT);
+            int colors = 4;
+
+            ByteBuffer buf = BufferUtils.createByteBuffer(TutLauncher.WIDTH * TutLauncher.HEIGHT * colors);
+            GL11.glReadPixels(0, 0,TutLauncher.WIDTH, TutLauncher.HEIGHT, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buf);
+
+            BufferedImage image = new BufferedImage(TutLauncher.WIDTH, TutLauncher.HEIGHT, BufferedImage.TYPE_INT_RGB);
+
+            for (int x = 0; x < TutLauncher.WIDTH; x++) {
+                for (int y = 0; y < TutLauncher.HEIGHT; y++) {
+                    int i = (x + (y * TutLauncher.WIDTH)) * colors;
+
+                    int r = buf.get(i) & 0xFF;
+                    int g = buf.get(i + 1) & 0xFF;
+                    int b = buf.get(i + 2) & 0xFF;
+
+                    image.setRGB(x, TutLauncher.HEIGHT - (y + 1), Colors.rgb(r, g, b));
+                }
+            }
+
+            File dir = new File("data/screenshots");
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            File file = new File(dir, new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date()) + ".png");
+            ImageIO.write(image, "png", file);
+
+            TutLauncher.LOGGER.info("Saved screenshot to " + file);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
