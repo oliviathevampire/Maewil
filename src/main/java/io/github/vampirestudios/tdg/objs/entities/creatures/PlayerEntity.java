@@ -14,7 +14,7 @@ import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.items.tool.ToolItem;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.TilePos;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.screen.options.controls.Keybind;
 import io.github.vampirestudios.tdg.utils.UtilsIdk;
@@ -38,12 +38,12 @@ public class PlayerEntity extends LivingEntity {
 
     private float prevX, prevY;
 
-    public PlayerEntity(TutEngine tutEngine, String username) {
-        super(tutEngine, "player", 34, 62);
+    public PlayerEntity(MaewilEngine maewilEngine, String username) {
+        super(maewilEngine, "player", 34, 62);
         this.username = username;
         isDead = false;
 
-        inventoryPlayer = new InventoryPlayer(tutEngine, this);
+        inventoryPlayer = new InventoryPlayer(maewilEngine, this);
     }
 
     @Override
@@ -76,14 +76,14 @@ public class PlayerEntity extends LivingEntity {
             checkAttacks();
 
             // Open/close inventory
-            if (tutEngine.keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.E).getKeyCode())) {
+            if (maewilEngine.keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.E).getKeyCode())) {
                 if (guiOpen && !inventoryPlayer.isActive())
-                    tutEngine.getInventoryManager().closeAllInventories();
+                    maewilEngine.getInventoryManager().closeAllInventories();
                 else
-                    tutEngine.getInventoryManager().openCloseInventory(inventoryPlayer);
+                    maewilEngine.getInventoryManager().openCloseInventory(inventoryPlayer);
             }
-            if (tutEngine.keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && inventoryPlayer.isActive())
-                tutEngine.getInventoryManager().closeAllInventories();
+            if (maewilEngine.keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && inventoryPlayer.isActive())
+                maewilEngine.getInventoryManager().closeAllInventories();
         }
 
         inventoryPlayer.update(container, game, delta);
@@ -97,8 +97,8 @@ public class PlayerEntity extends LivingEntity {
         int tileX = (int) (position.x + 0.5f) / Tile.TILE_SIZE;
         int tileY = (int) (position.y + 0.5f) / Tile.TILE_SIZE;
 
-        Tile bgTile = tutEngine.getWorld().getBackgroundTile(tileX, tileY);
-        Tile fgTile = tutEngine.getWorld().getForegroundTile(tileX, tileY);
+        Tile bgTile = maewilEngine.getWorld().getBackgroundTile(tileX, tileY);
+        Tile fgTile = maewilEngine.getWorld().getForegroundTile(tileX, tileY);
         if (fgTile.getTileType() == Tile.TileType.AIR) {
             switch (bgTile.getTileType()) {
                 default:
@@ -158,19 +158,19 @@ public class PlayerEntity extends LivingEntity {
         ar.width = arSize;
         ar.height = arSize;
 
-        if (tutEngine.getKeyManager().moveUp && tutEngine.getKeyManager().useAttack) {
+        if (maewilEngine.getKeyManager().moveUp && maewilEngine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x + cb.width / 2f - arSize / 2f;
             ar.y = cb.y - arSize;
-        } else if (tutEngine.getKeyManager().moveDown && tutEngine.getKeyManager().useAttack) {
+        } else if (maewilEngine.getKeyManager().moveDown && maewilEngine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x + cb.width / 2f - arSize / 2f;
             ar.y = cb.y + cb.height;
-        } else if (tutEngine.getKeyManager().moveLeft && tutEngine.getKeyManager().useAttack) {
+        } else if (maewilEngine.getKeyManager().moveLeft && maewilEngine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x - arSize;
             ar.y = cb.y + cb.height / 2f - arSize / 2f;
-        } else if (tutEngine.getKeyManager().moveRight && tutEngine.getKeyManager().useAttack) {
+        } else if (maewilEngine.getKeyManager().moveRight && maewilEngine.getKeyManager().useAttack) {
             isAttacking = true;
             ar.x = cb.x + cb.width;
             ar.y = cb.y + cb.height / 2f - arSize / 2f;
@@ -181,7 +181,7 @@ public class PlayerEntity extends LivingEntity {
 
         attackTimer = 0;
 
-        for (Entity e : tutEngine.getEntityManager().getEntities()) {
+        for (Entity e : maewilEngine.getEntityManager().getEntities()) {
             if (e.equals(this)) {
                 continue;
             }
@@ -217,7 +217,7 @@ public class PlayerEntity extends LivingEntity {
                     extraDmg = ((ToolItem) equippedItem.getItem()).getDamage();
                 else
                     extraDmg = 0;
-                if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.R).getKeyCode()))
+                if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.R).getKeyCode()))
                     if (equippedItem.getItem() instanceof IInteractable)
                         if (((IInteractable) equippedItem.getItem()).onInteracted(this))
                             equippedItem.setCount(equippedItem.getCount() - 1);
@@ -249,7 +249,7 @@ public class PlayerEntity extends LivingEntity {
     }
 
     private void dropItem(ItemStack stack, float x, float y) {
-        tutEngine.getEntityManager().addItem(stack.copy(), (x) / Tile.TILE_SIZE, (y) / Tile.TILE_SIZE);
+        maewilEngine.getEntityManager().addItem(stack.copy(), (x) / Tile.TILE_SIZE, (y) / Tile.TILE_SIZE);
     }
 
     private void getInput() {
@@ -264,28 +264,28 @@ public class PlayerEntity extends LivingEntity {
             }
         }
 
-        if (tutEngine.getKeyManager().moveUp)
+        if (maewilEngine.getKeyManager().moveUp)
             yMove = -speed;
-        if (tutEngine.getKeyManager().moveDown)
+        if (maewilEngine.getKeyManager().moveDown)
             yMove = speed;
-        if (tutEngine.getKeyManager().moveLeft)
+        if (maewilEngine.getKeyManager().moveLeft)
             xMove = -speed;
-        if (tutEngine.getKeyManager().moveRight)
+        if (maewilEngine.getKeyManager().moveRight)
             xMove = speed;
     }
 
     private void tileInteract() {
         TilePos tilePos = getTilePosAtMid();
-        if (tutEngine.getKeyManager().moveUp)
+        if (maewilEngine.getKeyManager().moveUp)
             tilePos = getTilePosAtMid().up();
-        if (tutEngine.getKeyManager().moveDown)
+        if (maewilEngine.getKeyManager().moveDown)
             tilePos = getTilePosAtMid().down();
-        if (tutEngine.getKeyManager().moveLeft)
+        if (maewilEngine.getKeyManager().moveLeft)
             tilePos = getTilePosAtMid().left();
-        if (tutEngine.getKeyManager().moveRight)
+        if (maewilEngine.getKeyManager().moveRight)
             tilePos = getTilePosAtMid().right();
 
-        Tile tile = tutEngine.getWorld().getForegroundTile(tilePos.getX(), tilePos.getY());
+        Tile tile = maewilEngine.getWorld().getForegroundTile(tilePos.getX(), tilePos.getY());
         if (isAttacking) {
             int dmg = 2;
             if (equippedItem != null) {
@@ -354,7 +354,7 @@ public class PlayerEntity extends LivingEntity {
     }
 
     public boolean canSprint() {
-        return tutEngine.getKeyManager().useSprint && !inWater() && getCurrentTexture() != getTextures().get("idle");
+        return maewilEngine.getKeyManager().useSprint && !inWater() && getCurrentTexture() != getTextures().get("idle");
     }
 
     public String getUsername() {
@@ -386,6 +386,6 @@ public class PlayerEntity extends LivingEntity {
 
     @Override
     public PlayerEntity newCopy() {
-        return super.newCopy(new PlayerEntity(tutEngine, username));
+        return super.newCopy(new PlayerEntity(maewilEngine, username));
     }
 }

@@ -7,8 +7,8 @@ import io.github.vampirestudios.tdg.manager.OverlayManager;
 import io.github.vampirestudios.tdg.objs.items.Items;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.TilePos;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -19,7 +19,7 @@ import java.io.IOException;
 
 public class World {
 
-    private TutEngine tutEngine;
+    private MaewilEngine maewilEngine;
     private String worldName;
     private int worldWidth, worldHeight;
     private float spawnX;
@@ -34,26 +34,26 @@ public class World {
     private GameContainer container;
     private int delta;
 
-    public World(TutEngine tutEngine, String path, String worldName) {
-        this.tutEngine = tutEngine;
+    public World(MaewilEngine maewilEngine, String path, String worldName) {
+        this.maewilEngine = maewilEngine;
         this.worldName = worldName;
-        overlayManager = new OverlayManager(tutEngine, tutEngine.getPlayer());
+        overlayManager = new OverlayManager(maewilEngine, maewilEngine.getPlayer());
 
         try {
             loadWorld(path);
         } catch (IOException | ParseException e) {
-            TutLauncher.LOGGER.error(e);
+            MaewilLauncher.LOGGER.error(e);
         }
-        tutEngine.getPlayer().setX(spawnX * Tile.TILE_SIZE);
-        tutEngine.getPlayer().setY(spawnY * Tile.TILE_SIZE);
+        maewilEngine.getPlayer().setX(spawnX * Tile.TILE_SIZE);
+        maewilEngine.getPlayer().setY(spawnY * Tile.TILE_SIZE);
     }
 
-    public World(TutEngine tutEngine, String worldName, int worldWidth, int worldHeight, Vector2D spawn, TileList bgTiles, TileList fgTiles) {
-        this(tutEngine, worldName, worldWidth, worldHeight, (int) spawn.x, (int) spawn.y, bgTiles, fgTiles);
+    public World(MaewilEngine maewilEngine, String worldName, int worldWidth, int worldHeight, Vector2D spawn, TileList bgTiles, TileList fgTiles) {
+        this(maewilEngine, worldName, worldWidth, worldHeight, (int) spawn.x, (int) spawn.y, bgTiles, fgTiles);
     }
 
-    public World(TutEngine tutEngine, String worldName, int worldWidth, int worldHeight, int spawnX, int spawnY, TileList bgTiles, TileList fgTiles) {
-        this.tutEngine = tutEngine;
+    public World(MaewilEngine maewilEngine, String worldName, int worldWidth, int worldHeight, int spawnX, int spawnY, TileList bgTiles, TileList fgTiles) {
+        this.maewilEngine = maewilEngine;
         this.worldName = worldName;
         this.worldWidth = worldWidth;
         this.worldHeight = worldHeight;
@@ -62,14 +62,14 @@ public class World {
         this.bgTiles = bgTiles;
         this.fgTiles = fgTiles;
 
-        overlayManager = new OverlayManager(tutEngine, tutEngine.getPlayer());
+        overlayManager = new OverlayManager(maewilEngine, maewilEngine.getPlayer());
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) {
-        int xStart = (int) Math.max(0, tutEngine.getCamera().getXOffset() / Tile.TILE_SIZE);
-        int xEnd = (int) Math.min(worldWidth, (tutEngine.getCamera().getXOffset() + TutLauncher.WIDTH) / Tile.TILE_SIZE + 1);
-        int yStart = (int) Math.max(0, tutEngine.getCamera().getYOffset() / Tile.TILE_SIZE);
-        int yEnd = (int) Math.min(worldHeight, (tutEngine.getCamera().getYOffset() + TutLauncher.HEIGHT) / Tile.TILE_SIZE + 1);
+        int xStart = (int) Math.max(0, maewilEngine.getCamera().getXOffset() / Tile.TILE_SIZE);
+        int xEnd = (int) Math.min(worldWidth, (maewilEngine.getCamera().getXOffset() + MaewilLauncher.WIDTH) / Tile.TILE_SIZE + 1);
+        int yStart = (int) Math.max(0, maewilEngine.getCamera().getYOffset() / Tile.TILE_SIZE);
+        int yEnd = (int) Math.min(worldHeight, (maewilEngine.getCamera().getYOffset() + MaewilLauncher.HEIGHT) / Tile.TILE_SIZE + 1);
 
         for (int y = yStart; y < yEnd; y++) {
             for (int x = xStart; x < xEnd; x++) {
@@ -87,10 +87,10 @@ public class World {
 
         Items.UPDATABLE_TIEMS.forEach(i -> i.update(container, game, delta));
 
-        tutEngine.getEntityManager().update(container, game, delta);
+        maewilEngine.getEntityManager().update(container, game, delta);
         overlayManager.update(container, game, delta);
 
-        tutEngine.getCamera().centerOnEntity(tutEngine.getEntityManager().getPlayer());
+        maewilEngine.getCamera().centerOnEntity(maewilEngine.getEntityManager().getPlayer());
     }
 
     private void updateThreadsInit() {
@@ -123,10 +123,10 @@ public class World {
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics graphics) {
-        int xStart = (int) Math.max(0, tutEngine.getCamera().getXOffset() / Tile.TILE_SIZE);
-        int xEnd = (int) Math.min(worldWidth, (tutEngine.getCamera().getXOffset() + TutLauncher.WIDTH) / Tile.TILE_SIZE + 1);
-        int yStart = (int) Math.max(0, tutEngine.getCamera().getYOffset() / Tile.TILE_SIZE);
-        int yEnd = (int) Math.min(worldHeight, (tutEngine.getCamera().getYOffset() + TutLauncher.HEIGHT) / Tile.TILE_SIZE + 1);
+        int xStart = (int) Math.max(0, maewilEngine.getCamera().getXOffset() / Tile.TILE_SIZE);
+        int xEnd = (int) Math.min(worldWidth, (maewilEngine.getCamera().getXOffset() + MaewilLauncher.WIDTH) / Tile.TILE_SIZE + 1);
+        int yStart = (int) Math.max(0, maewilEngine.getCamera().getYOffset() / Tile.TILE_SIZE);
+        int yEnd = (int) Math.min(worldHeight, (maewilEngine.getCamera().getYOffset() + MaewilLauncher.HEIGHT) / Tile.TILE_SIZE + 1);
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)
@@ -134,19 +134,19 @@ public class World {
 
         Color tint = new Color(63, 63, 63, 128);
         graphics.setColor(tint);
-        graphics.fillRect(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
+        graphics.fillRect(0, 0, MaewilLauncher.WIDTH, MaewilLauncher.HEIGHT);
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)
                 getForegroundTile(x, y).render(container, game, graphics);
 
-        tutEngine.getEntityManager().render(container, game, graphics);
+        maewilEngine.getEntityManager().render(container, game, graphics);
         overlayManager.render(container, game, graphics);
 
         /*
          * Mini Map
          */
-        WorldMiniMap.render(graphics, tutEngine, worldWidth, worldHeight, tint);
+        WorldMiniMap.render(graphics, maewilEngine, worldWidth, worldHeight, tint);
     }
 
     public Tile getBackgroundTile(int x, int y) {
@@ -199,10 +199,10 @@ public class World {
     }
 
     private void loadWorld(String path) throws IOException, ParseException {
-        WorldJsonLoader worldJsonLoader = new WorldJsonLoader(path, tutEngine);
+        WorldJsonLoader worldJsonLoader = new WorldJsonLoader(path, maewilEngine);
 
         worldJsonLoader.load();
-        TutLauncher.LOGGER.info("Loading world [" + worldJsonLoader.getName() + "]!");
+        MaewilLauncher.LOGGER.info("Loading world [" + worldJsonLoader.getName() + "]!");
 
         worldName = worldJsonLoader.getName();
 
@@ -217,7 +217,7 @@ public class World {
         bgTiles = new TileList(worldWidth, worldHeight);
         fgTiles = new TileList(worldWidth, worldHeight);
 
-        tutEngine.setUsername(worldJsonLoader.getUsername());
+        maewilEngine.setUsername(worldJsonLoader.getUsername());
 
         for (int y = 0; y < worldHeight; y++) {
             for (int x = 0; x < worldWidth; x++) {
@@ -229,7 +229,7 @@ public class World {
                 bgTiles.setTileAtPos(x, y, tile);
             }
         }
-        TutLauncher.LOGGER.info("Loaded background tiles!");
+        MaewilLauncher.LOGGER.info("Loaded background tiles!");
 
         for (int y = 0; y < worldHeight; y++) {
             for (int x = 0; x < worldWidth; x++) {
@@ -241,7 +241,7 @@ public class World {
                 fgTiles.setTileAtPos(x, y, tile);
             }
         }
-        TutLauncher.LOGGER.info("Loaded foreground tiles!");
+        MaewilLauncher.LOGGER.info("Loaded foreground tiles!");
     }
 
     public String getWorldName() {

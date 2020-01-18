@@ -7,7 +7,7 @@ import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.TilePos;
 import io.github.vampirestudios.tdg.objs.tiles.Tiles;
 import io.github.vampirestudios.tdg.objs.tiles.stone.StoneTile;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.colormap.Biomes;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 import io.github.vampirestudios.tdg.world.colormap.WorldMapGenerator;
@@ -22,7 +22,7 @@ import java.awt.image.BufferedImage;
  */
 public class WorldGenerator {
 
-    private TutEngine tutEngine;
+    private MaewilEngine maewilEngine;
     private int worldSize;
     private BufferedImage landMap, pathMap, biomeMap;
 
@@ -36,8 +36,8 @@ public class WorldGenerator {
     private boolean imageMapsGenerated = false, bgTilesGenerated = false, fgTilesGenerated = false;
     private Thread generatorThread;
 
-    public WorldGenerator(TutEngine tutEngine, long seed, int worldSize) {
-        this.tutEngine = tutEngine;
+    public WorldGenerator(MaewilEngine maewilEngine, long seed, int worldSize) {
+        this.maewilEngine = maewilEngine;
         this.seed = seed;
         this.worldSize = worldSize;
 
@@ -63,7 +63,7 @@ public class WorldGenerator {
             logger.info("Tiles generated");
 
             // Entities
-            tutEngine.getEntityManager().reset();
+            maewilEngine.getEntityManager().reset();
             for (int y = 0; y < worldSize; y++) {
                 for (int x = 0; x < worldSize; x++) {
                     Biomes.Biome biome = Biomes.getBiomeAt(biomeMap, x, y);
@@ -71,7 +71,7 @@ public class WorldGenerator {
                         float threshold = 0.1f;
                         float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
                         float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
-                        tutEngine.getEntityManager().addEntity(Entities.BUSH_SMALL, x + xOff, y + yOff, false);
+                        maewilEngine.getEntityManager().addEntity(Entities.BUSH_SMALL, x + xOff, y + yOff, false);
                     }
                 }
             }

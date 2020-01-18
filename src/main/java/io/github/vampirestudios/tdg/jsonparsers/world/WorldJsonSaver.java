@@ -8,8 +8,8 @@ import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.entities.statics.StaticEntity;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.JsonUtils;
 import io.github.vampirestudios.tdg.utils.iinterface.IJSONSaver;
 import io.github.vampirestudios.tdg.world.TileList;
@@ -27,35 +27,35 @@ public class WorldJsonSaver implements IJSONSaver {
 
     private String path;
     private World world;
-    private TutEngine tutEngine;
+    private MaewilEngine maewilEngine;
 
-    public WorldJsonSaver(String path, World world, TutEngine tutEngine) {
+    public WorldJsonSaver(String path, World world, MaewilEngine maewilEngine) {
         this.path = path;
         this.world = world;
-        this.tutEngine = tutEngine;
+        this.maewilEngine = maewilEngine;
     }
 
     public void save(String username) throws IOException {
-        TutLauncher.LOGGER.info("Saving current world!");
+        MaewilLauncher.LOGGER.info("Saving current world!");
         saveWorldInfo(world);
-        TutLauncher.LOGGER.info("World [" + world.getWorldName() + "] info saved!");
+        MaewilLauncher.LOGGER.info("World [" + world.getWorldName() + "] info saved!");
 
         saveTiles(world.getWorldWidth(), world.getWorldHeight(), world.getBGTiles(), world.getFgTiles(), path, WorldJsonLoader.BASE_FILES.get("tile_bg"), WorldJsonLoader.BASE_FILES.get("tile_fg"));
-        TutLauncher.LOGGER.info("World [" + world.getWorldName() + "] tiles saved!");
+        MaewilLauncher.LOGGER.info("World [" + world.getWorldName() + "] tiles saved!");
 
         saveEntities();
-        TutLauncher.LOGGER.info("World [" + world.getWorldName() + "] entities saved!");
+        MaewilLauncher.LOGGER.info("World [" + world.getWorldName() + "] entities saved!");
 
         saveItems();
-        TutLauncher.LOGGER.info("World [" + world.getWorldName() + "] items saved!");
+        MaewilLauncher.LOGGER.info("World [" + world.getWorldName() + "] items saved!");
 
         savePlayerInfo(username);
-        TutLauncher.LOGGER.info("World [" + world.getWorldName() + "] player info saved!");
+        MaewilLauncher.LOGGER.info("World [" + world.getWorldName() + "] player info saved!");
     }
 
     @Override
     public void save() throws IOException {
-        save(tutEngine.getUsername());
+        save(maewilEngine.getUsername());
     }
 
     public void saveWorldInfo(World world) throws IOException {
@@ -70,8 +70,8 @@ public class WorldJsonSaver implements IJSONSaver {
 
         JSONArray spawn = new JSONArray();
         float spawnX, spawnY;
-        spawnX = tutEngine.getPlayer().getX() / Tile.TILE_SIZE;
-        spawnY = tutEngine.getPlayer().getY() / Tile.TILE_SIZE;
+        spawnX = maewilEngine.getPlayer().getX() / Tile.TILE_SIZE;
+        spawnY = maewilEngine.getPlayer().getY() / Tile.TILE_SIZE;
         spawn.add(0, spawnX);
         spawn.add(1, spawnY);
         jsonObject.put("spawn", spawn);
@@ -91,7 +91,7 @@ public class WorldJsonSaver implements IJSONSaver {
             bg_tile.put("chunk" + y, chunk);
         }
         jsonObjectBG.put("bg_tile", bg_tile);
-        TutLauncher.LOGGER.info("Saved bg tiles");
+        MaewilLauncher.LOGGER.info("Saved bg tiles");
 
         JSONObject fg_tile = new JSONObject();
         for (int y = 0; y < height; y++) {
@@ -101,7 +101,7 @@ public class WorldJsonSaver implements IJSONSaver {
             fg_tile.put("chunk" + y, chunk);
         }
         jsonObjectFG.put("fg_tile", fg_tile);
-        TutLauncher.LOGGER.info("Saved fg tiles");
+        MaewilLauncher.LOGGER.info("Saved fg tiles");
 
         saveJSONFileToPath(savePath, bgFileName, jsonObjectBG);
         saveJSONFileToPath(savePath, fgFileName, jsonObjectFG);
@@ -120,13 +120,13 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject jsonObjectCreature = new JSONObject();
 
         int entAmt = 0;
-        for (Entity entity : tutEngine.getEntityManager().getEntities())
+        for (Entity entity : maewilEngine.getEntityManager().getEntities())
             if (!(entity instanceof PlayerEntity))
                 entAmt++;
         if (entAmt > 0) {
             int staticAmt = 0;
             int creatureAmt = 0;
-            for (Entity entity : tutEngine.getEntityManager().getEntities()) {
+            for (Entity entity : maewilEngine.getEntityManager().getEntities()) {
                 if (!(entity instanceof PlayerEntity)) {
                     if (entity instanceof StaticEntity) {
                         staticAmt++;
@@ -140,11 +140,11 @@ public class WorldJsonSaver implements IJSONSaver {
             // Static
             JSONArray statics = new JSONArray();
             if (staticAmt > 0) {
-                for (Entity entity : tutEngine.getEntityManager().getEntities())
+                for (Entity entity : maewilEngine.getEntityManager().getEntities())
                     if (!(entity instanceof PlayerEntity))
                         if (entity instanceof StaticEntity)
                             statics.add(Entities.entityToJson(entity));
-                TutLauncher.LOGGER.info("World [" + path + "] static entities saved!");
+                MaewilLauncher.LOGGER.info("World [" + path + "] static entities saved!");
             }
             jsonObjectStatic.put("statics", statics);
 
@@ -152,15 +152,15 @@ public class WorldJsonSaver implements IJSONSaver {
             JSONArray creatures = new JSONArray();
             if (creatureAmt > 0) {
 
-                for (Entity entity : tutEngine.getEntityManager().getEntities())
+                for (Entity entity : maewilEngine.getEntityManager().getEntities())
                     if (!(entity instanceof PlayerEntity))
                         if (entity instanceof LivingEntity)
                             creatures.add(Entities.entityToJson(entity));
-                TutLauncher.LOGGER.info("World [" + path + "] creature entities saved!");
+                MaewilLauncher.LOGGER.info("World [" + path + "] creature entities saved!");
             }
             jsonObjectCreature.put("creatures", creatures);
         }
-        TutLauncher.LOGGER.info("World [" + path + "] entities saved!");
+        MaewilLauncher.LOGGER.info("World [" + path + "] entities saved!");
 
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("entity_s"), jsonObjectStatic);
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("entity_c"), jsonObjectCreature);
@@ -170,7 +170,7 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject jsonObject = new JSONObject();
 
         JSONArray items = new JSONArray();
-        for (Entity entity : tutEngine.getEntityManager().getEntities()) {
+        for (Entity entity : maewilEngine.getEntityManager().getEntities()) {
             if (entity instanceof ItemEntity) {
                 ItemStack stack = ((ItemEntity) entity).getStack();
                 JSONObject itemObj = new JSONObject();
@@ -188,7 +188,7 @@ public class WorldJsonSaver implements IJSONSaver {
             }
         }
         jsonObject.put("items", items);
-        TutLauncher.LOGGER.info("World [" + path + "] items saved!");
+        MaewilLauncher.LOGGER.info("World [" + path + "] items saved!");
 
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("items"), jsonObject);
     }
@@ -197,18 +197,18 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("username", username);
-        TutLauncher.LOGGER.info("Player username saved [" + tutEngine.getUsername() + "]");
-        jsonObject.put("health", tutEngine.getPlayer().getCurrentHealth());
+        MaewilLauncher.LOGGER.info("Player username saved [" + maewilEngine.getUsername() + "]");
+        jsonObject.put("health", maewilEngine.getPlayer().getCurrentHealth());
 
         JSONArray selected_slots = new JSONArray();
-        selected_slots.add(0, tutEngine.getPlayer().getInventoryPlayer().getInventorySelectedIndex());
-        selected_slots.add(1, tutEngine.getPlayer().getInventoryPlayer().getHotbarSelectedIndex());
+        selected_slots.add(0, maewilEngine.getPlayer().getInventoryPlayer().getInventorySelectedIndex());
+        selected_slots.add(1, maewilEngine.getPlayer().getInventoryPlayer().getHotbarSelectedIndex());
         jsonObject.put("selected_slots", selected_slots);
 
         JSONObject inventory = new JSONObject();
         for (int i = 0; i < 12; i++) {
             JSONObject slot = new JSONObject();
-            ItemStack stack = tutEngine.getPlayer().getInventoryPlayer().getSlot(i).getStack();
+            ItemStack stack = maewilEngine.getPlayer().getInventoryPlayer().getSlot(i).getStack();
             if (stack == null)
                 slot.put("id", "null");
             else {
@@ -223,7 +223,7 @@ public class WorldJsonSaver implements IJSONSaver {
         JSONObject hotbar = new JSONObject();
         for (int i = 12; i < 15; i++) {
             JSONObject slot = new JSONObject();
-            ItemStack stack = tutEngine.getPlayer().getInventoryPlayer().getSlot(i).getStack();
+            ItemStack stack = maewilEngine.getPlayer().getInventoryPlayer().getSlot(i).getStack();
             if (stack == null)
                 slot.put("id", "null");
             else {

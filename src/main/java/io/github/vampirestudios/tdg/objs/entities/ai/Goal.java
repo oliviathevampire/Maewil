@@ -2,17 +2,17 @@ package io.github.vampirestudios.tdg.objs.entities.ai;
 
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.creatures.LivingEntity;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class Goal {
 
     protected LivingEntity entity;
-    protected TutEngine tutEngine;
+    protected MaewilEngine maewilEngine;
 
-    public Goal(TutEngine tutEngine, LivingEntity entity) {
-        this.tutEngine = tutEngine;
+    public Goal(MaewilEngine maewilEngine, LivingEntity entity) {
+        this.maewilEngine = maewilEngine;
         this.entity = entity;
     }
 

@@ -13,8 +13,12 @@ public class SpriteSheet {
         this.sheet = ImageLoader.loadImage(identifier);
     }
 
+    public SpriteSheet(String path) {
+        this.sheet = ImageLoader.loadImage(path);
+    }
+
     public SpriteSheet(Image sheet) {
-        this.identifier = new Identifier("tut", sheet.getResourceReference());
+        this.identifier = new Identifier("maewil", sheet.getResourceReference());
         this.sheet = sheet;
     }
 

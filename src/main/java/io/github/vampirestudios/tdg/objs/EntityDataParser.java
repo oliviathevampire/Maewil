@@ -92,7 +92,7 @@ public class EntityDataParser extends DataParser<Entity> {
                 texturePath += data.get("texture");
             }
 
-            texture = new SpriteSheet(new Identifier("tut", texturePath));
+            texture = new SpriteSheet(new Identifier("maewil", texturePath));
         }
         return texture;
     }

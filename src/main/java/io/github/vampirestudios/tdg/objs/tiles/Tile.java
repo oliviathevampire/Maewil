@@ -7,7 +7,7 @@ import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.objs.IHasData;
 import io.github.vampirestudios.tdg.objs.items.Item;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.TileList;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 import org.newdawn.slick.GameContainer;
@@ -25,7 +25,7 @@ public abstract class Tile implements IHasData<Tile> {
     public static final int TILE_SIZE = 48;
     public static final int DEFAULT_ALT_CHANCE = 850;
 
-    protected TutEngine tutEngine;
+    protected MaewilEngine maewilEngine;
 
     protected Animation texture;
     protected ArrayList<Image> textureAlts = new ArrayList<>();
@@ -48,8 +48,8 @@ public abstract class Tile implements IHasData<Tile> {
     private int health, maxHealth = 300;
     private boolean beingDamaged = false;
 
-    public Tile(TutEngine tutEngine, String id, boolean isSolid, TileType tileType) {
-        this.tutEngine = tutEngine;
+    public Tile(MaewilEngine maewilEngine, String id, boolean isSolid, TileType tileType) {
+        this.maewilEngine = maewilEngine;
         this.id = id;
 
         bounds = new AABB(this.position.toVector2D(), TILE_SIZE, TILE_SIZE);
@@ -59,8 +59,8 @@ public abstract class Tile implements IHasData<Tile> {
         this.health = this.maxHealth;
     }
 
-    public Tile(TutEngine engine, TileSettings tileSettings) {
-        this.tutEngine = engine;
+    public Tile(MaewilEngine engine, TileSettings tileSettings) {
+        this.maewilEngine = engine;
 
         bounds = new AABB(this.position.toVector2D(), TILE_SIZE, TILE_SIZE);
         this.mapColor = tileSettings.getMapColor();
@@ -85,7 +85,7 @@ public abstract class Tile implements IHasData<Tile> {
     }
 
     public void updateBounds() {
-        bounds = new AABB((int) (position.getX() * Tile.TILE_SIZE - tutEngine.getCamera().getXOffset()), (int) (position.getY() * Tile.TILE_SIZE - tutEngine.getCamera().getYOffset()), TILE_SIZE, TILE_SIZE);
+        bounds = new AABB((int) (position.getX() * Tile.TILE_SIZE - maewilEngine.getCamera().getXOffset()), (int) (position.getY() * Tile.TILE_SIZE - maewilEngine.getCamera().getYOffset()), TILE_SIZE, TILE_SIZE);
     }
 
     protected Tile getTileAt(TilePos pos) {
@@ -110,7 +110,7 @@ public abstract class Tile implements IHasData<Tile> {
     }
 
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        render(g, (int) (position.getX() * Tile.TILE_SIZE - tutEngine.getCamera().getXOffset()), (int) (position.getY() * Tile.TILE_SIZE - tutEngine.getCamera().getYOffset()), TILE_SIZE, TILE_SIZE);
+        render(g, (int) (position.getX() * Tile.TILE_SIZE - maewilEngine.getCamera().getXOffset()), (int) (position.getY() * Tile.TILE_SIZE - maewilEngine.getCamera().getYOffset()), TILE_SIZE, TILE_SIZE);
     }
 
     public void render(Graphics g, int x, int y, int width, int height) {
@@ -132,10 +132,10 @@ public abstract class Tile implements IHasData<Tile> {
             if (isSolid && !unbreakable) {
                 this.health -= damage;
                 if (this.health <= 0) {
-                    if (position.getX() == 0 || position.getX() == tutEngine.getWorld().getWorldWidth() || position.getY() == 0 || position.getY() == tutEngine.getWorld().getWorldHeight())
+                    if (position.getX() == 0 || position.getX() == maewilEngine.getWorld().getWorldWidth() || position.getY() == 0 || position.getY() == maewilEngine.getWorld().getWorldHeight())
                         return;
-                    tutEngine.getWorld().setFGTile(position.getX(), position.getY(), Tiles.AIR);
-                    tutEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), position.getX(), position.getY());
+                    maewilEngine.getWorld().setFGTile(position.getX(), position.getY(), Tiles.AIR);
+                    maewilEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), position.getX(), position.getY());
                     this.health = this.maxHealth;
                 }
                 beingDamaged = true;

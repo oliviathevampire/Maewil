@@ -1,18 +1,18 @@
 package io.github.vampirestudios.tdg.gfx.overlays;
 
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class Overlay {
 
-    protected TutEngine tutEngine;
+    protected MaewilEngine maewilEngine;
     protected PlayerEntity player;
 
-    public Overlay(TutEngine tutEngine, PlayerEntity player) {
-        this.tutEngine = tutEngine;
+    public Overlay(MaewilEngine maewilEngine, PlayerEntity player) {
+        this.maewilEngine = maewilEngine;
         this.player = player;
     }
 

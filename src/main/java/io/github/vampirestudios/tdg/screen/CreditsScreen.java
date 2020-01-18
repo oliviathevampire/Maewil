@@ -4,8 +4,8 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.ui.WidgetTextBox;
 import io.github.vampirestudios.tdg.jsonparsers.JsonUtils;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -19,11 +19,11 @@ import java.io.IOException;
  */
 public class CreditsScreen extends AbstractMenuScreen {
 
-    private String[] devs, helpers;
-    private WidgetTextBox textBoxDev, textBoxHelper;
+    private String[] devs, helpers, other;
+    private WidgetTextBox textBoxDev, textBoxHelper, textBoxOther;
 
-    public CreditsScreen(TutEngine tutEngine) {
-        super(tutEngine, CENTRE_GRASS);
+    public CreditsScreen(MaewilEngine maewilEngine) {
+        super(maewilEngine, CENTRE_GRASS);
 
         try {
             Object[] devs = JsonUtils.getArray("devs", "/assets/credits.json", true).toArray();
@@ -35,6 +35,11 @@ public class CreditsScreen extends AbstractMenuScreen {
             this.helpers = new String[helpers.length];
             for (int i = 0; i < helpers.length; i++)
                 this.helpers[i] = (String) helpers[i];
+
+            Object[] other = JsonUtils.getArray("other", "/assets/credits.json", true).toArray();
+            this.other = new String[other.length];
+            for (int i = 0; i < other.length; i++)
+                this.other[i] = (String) other[i];
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -48,6 +53,11 @@ public class CreditsScreen extends AbstractMenuScreen {
         textBoxHelper.addText("Helpers", Assets.FONTS.get("40"));
         for (String helper : helpers)
             textBoxHelper.addText(helper);
+
+        textBoxOther = new WidgetTextBox();
+        textBoxOther.addText("Other", Assets.FONTS.get("40"));
+        for (String other : other)
+            textBoxOther.addText(other);
     }
 
     @Override
@@ -59,11 +69,14 @@ public class CreditsScreen extends AbstractMenuScreen {
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
         super.render(container, game, g);
 
-        textBoxDev.setPosition(new Vector2D(TutLauncher.WIDTH / 2d - textBoxDev.getWidth() / 2d, 100));
+        textBoxDev.setPosition(new Vector2D(MaewilLauncher.WIDTH / 2d - textBoxDev.getWidth() / 2d, 100));
         float tbDiff = textBoxDev.getWidth() - textBoxHelper.getWidth();
         textBoxHelper.setPosition(new Vector2D(textBoxDev.getPosition().x + tbDiff / 2d, textBoxDev.getPosition().y + textBoxDev.getHeight() + 10));
+        float tbDiff2 = textBoxHelper.getWidth() - textBoxOther.getWidth();
+        textBoxOther.setPosition(new Vector2D(textBoxHelper.getPosition().x + tbDiff2 / 2d, textBoxHelper.getPosition().y + textBoxHelper.getHeight() + 10));
 
         textBoxDev.render(container, game, g);
         textBoxHelper.render(container, game, g);
+        textBoxOther.render(container, game, g);
     }
 }

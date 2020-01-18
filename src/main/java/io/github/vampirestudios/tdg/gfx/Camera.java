@@ -3,19 +3,19 @@ package io.github.vampirestudios.tdg.gfx;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 
 import static coffeecatteam.coffeecatutils.NumberUtils.lerp;
 
 public class Camera {
 
-    private TutEngine tutEngine;
+    private MaewilEngine maewilEngine;
     private float xOffset, yOffset;
     private float smoothness = 0.1f; // (0.05 - Super Smooth) (0.1 - Smooth) (1 - Sharp)
 
-    public Camera(TutEngine tutEngine, float xOffset, float yOffset) {
-        this.tutEngine = tutEngine;
+    public Camera(MaewilEngine maewilEngine, float xOffset, float yOffset) {
+        this.maewilEngine = maewilEngine;
         this.xOffset = xOffset;
         this.yOffset = yOffset;
     }
@@ -23,17 +23,17 @@ public class Camera {
     public void checkBlankSpace() {
         if (xOffset < 0)
             xOffset = 0;
-        else if (xOffset > tutEngine.getWorld().getWorldWidth() * Tile.TILE_SIZE - TutLauncher.WIDTH)
-            xOffset = tutEngine.getWorld().getWorldWidth() * Tile.TILE_SIZE - TutLauncher.WIDTH;
+        else if (xOffset > maewilEngine.getWorld().getWorldWidth() * Tile.TILE_SIZE - MaewilLauncher.WIDTH)
+            xOffset = maewilEngine.getWorld().getWorldWidth() * Tile.TILE_SIZE - MaewilLauncher.WIDTH;
 
         if (yOffset < 0)
             yOffset = 0;
-        else if (yOffset > tutEngine.getWorld().getWorldHeight() * Tile.TILE_SIZE - TutLauncher.HEIGHT)
-            yOffset = tutEngine.getWorld().getWorldHeight() * Tile.TILE_SIZE - TutLauncher.HEIGHT;
+        else if (yOffset > maewilEngine.getWorld().getWorldHeight() * Tile.TILE_SIZE - MaewilLauncher.HEIGHT)
+            yOffset = maewilEngine.getWorld().getWorldHeight() * Tile.TILE_SIZE - MaewilLauncher.HEIGHT;
     }
 
     public void centerOnEntity(Entity e) {
-        changeOffset(e.getX() - TutLauncher.WIDTH / 2f + e.getWidth() / 2f, e.getY() - TutLauncher.HEIGHT / 2f + e.getHeight() / 2f);
+        changeOffset(e.getX() - MaewilLauncher.WIDTH / 2f + e.getWidth() / 2f, e.getY() - MaewilLauncher.HEIGHT / 2f + e.getHeight() / 2f);
         checkBlankSpace();
     }
 

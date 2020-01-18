@@ -8,6 +8,7 @@ import io.github.vampirestudios.tdg.gfx.assets.Sounds;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.screen.ScreenManager;
 import io.github.vampirestudios.tdg.screen.game.GameScreen;
+import io.github.vampirestudios.tdg.utils.DiscordHandler;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -19,7 +20,7 @@ import org.newdawn.slick.state.transition.FadeInTransition;
 import java.awt.*;
 import java.io.File;
 
-public class TutLauncher extends StateBasedGame {
+public class MaewilLauncher extends StateBasedGame {
 
     /*
      * Screen Ids
@@ -37,7 +38,7 @@ public class TutLauncher extends StateBasedGame {
 
     public static CatLogger LOGGER;
 
-    public TutLauncher() {
+    public MaewilLauncher() {
         super(TITLE);
         LOGGER = new CatLogger("Maewil-Main");
 
@@ -52,7 +53,7 @@ public class TutLauncher extends StateBasedGame {
     @Override
     public void initStatesList(GameContainer gameContainer) {
         this.addState(new SplashScreen());
-        this.addState(new TutEngine());
+        this.addState(new MaewilEngine());
 
         if (ArgUtils.hasArgument("-uiTest"))
             this.enterState(ID_GAME, new EmptyTransition(), new EmptyTransition());
@@ -62,7 +63,7 @@ public class TutLauncher extends StateBasedGame {
 
     @Override
     public boolean closeRequested() {
-        if (TutEngine.INSTANCE.isPlayBGMusic() && Sounds.BG_MUSIC.playing())
+        if (MaewilEngine.INSTANCE.isPlayBGMusic() && Sounds.BG_MUSIC.playing())
             Sounds.BG_MUSIC.stop();
         LOGGER.warn("Shutting down [" + TITLE + "] engine!");
 
@@ -72,7 +73,7 @@ public class TutLauncher extends StateBasedGame {
             LOGGER.info("World saved!");
         }
 
-//        DiscordHandler.INSTANCE.shutdown();
+        DiscordHandler.INSTANCE.shutdown();
 
         LOGGER.warn("Exiting [" + TITLE + "]..");
         return true;
@@ -106,7 +107,7 @@ public class TutLauncher extends StateBasedGame {
 
         /* Start game */
         try {
-            AppGameContainer app = new AppGameContainer(new TutLauncher());
+            AppGameContainer app = new AppGameContainer(new MaewilLauncher());
             app.setShowFPS(false);
             app.setDisplayMode(WIDTH, HEIGHT, FULLSCREEN);
             app.setIcons(new String[]{"data/icons/32_new.png", "data/icons/64_new.png"});

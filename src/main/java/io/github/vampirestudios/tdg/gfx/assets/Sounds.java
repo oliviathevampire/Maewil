@@ -1,6 +1,6 @@
 package io.github.vampirestudios.tdg.gfx.assets;
 
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.Identifier;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
@@ -40,7 +40,7 @@ public class Sounds {
 
         CLICK_1 = loadSound("click_1");
         CLICK_2 = loadSound("click_2");
-        TutLauncher.LOGGER.info("Sounds loaded!");
+        MaewilLauncher.LOGGER.info("Sounds loaded!");
     }
 
     public static Sound loadSound(String name) throws SlickException {

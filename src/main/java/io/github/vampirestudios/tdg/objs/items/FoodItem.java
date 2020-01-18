@@ -2,14 +2,14 @@ package io.github.vampirestudios.tdg.objs.items;
 
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 
 public class FoodItem extends Item implements IInteractable {
 
     private int healAmt;
 
-    public FoodItem(TutEngine tutEngine, String id, int healAmt) {
-        super(tutEngine, id);
+    public FoodItem(MaewilEngine maewilEngine, String id, int healAmt) {
+        super(maewilEngine, id);
         this.healAmt = healAmt;
     }
 
@@ -31,6 +31,6 @@ public class FoodItem extends Item implements IInteractable {
 
     @Override
     public FoodItem newCopy() {
-        return super.newCopy(new FoodItem(tutEngine, id, healAmt));
+        return super.newCopy(new FoodItem(maewilEngine, id, healAmt));
     }
 }

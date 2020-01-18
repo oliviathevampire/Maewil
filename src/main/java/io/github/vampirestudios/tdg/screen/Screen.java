@@ -5,8 +5,8 @@ import io.github.vampirestudios.tdg.manager.UIManager;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.TilePos;
 import io.github.vampirestudios.tdg.objs.tiles.Tiles;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.world.TileList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -19,25 +19,25 @@ public abstract class Screen {
     protected CatLogger logger;
 
     protected UIManager uiManager;
-    protected TutEngine tutEngine;
+    protected MaewilEngine maewilEngine;
 
-    private int bgWidth = TutLauncher.WIDTH_TILE_SIZE + (TutLauncher.WIDTH_TILE_SIZE * Tile.TILE_SIZE < TutLauncher.WIDTH ? 1 : 0);
-    private int bgHeight = TutLauncher.HEIGHT_TILE_SIZE + (TutLauncher.HEIGHT_TILE_SIZE * Tile.TILE_SIZE < TutLauncher.HEIGHT ? 1 : 0);
+    private int bgWidth = MaewilLauncher.WIDTH_TILE_SIZE + (MaewilLauncher.WIDTH_TILE_SIZE * Tile.TILE_SIZE < MaewilLauncher.WIDTH ? 1 : 0);
+    private int bgHeight = MaewilLauncher.HEIGHT_TILE_SIZE + (MaewilLauncher.HEIGHT_TILE_SIZE * Tile.TILE_SIZE < MaewilLauncher.HEIGHT ? 1 : 0);
     private TileList bgTiles;
     private Tile[] centre, border;
     protected static final Tile[] CENTRE_GRASS = new Tile[]{Tiles.GRASS}, BORDER_STONE_BROKEN = new Tile[]{Tiles.STONE, Tiles.BROKEN_STONE};
 
-    public Screen(TutEngine tutEngine) {
-        this(tutEngine, CENTRE_GRASS);
+    public Screen(MaewilEngine maewilEngine) {
+        this(maewilEngine, CENTRE_GRASS);
     }
 
-    public Screen(TutEngine tutEngine, Tile[] centre) {
-        this(tutEngine, centre, BORDER_STONE_BROKEN);
+    public Screen(MaewilEngine maewilEngine, Tile[] centre) {
+        this(maewilEngine, centre, BORDER_STONE_BROKEN);
     }
 
-    public Screen(TutEngine tutEngine, Tile[] centre, Tile[] border) {
-        this.tutEngine = tutEngine;
-        this.logger = TutLauncher.LOGGER;
+    public Screen(MaewilEngine maewilEngine, Tile[] centre, Tile[] border) {
+        this.maewilEngine = maewilEngine;
+        this.logger = MaewilLauncher.LOGGER;
         this.uiManager = new UIManager();
 
         this.centre = centre;

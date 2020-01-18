@@ -1,6 +1,6 @@
 package io.github.vampirestudios.tdg.objs.tiles.stone;
 
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 
 /**
  * @author CoffeeCatRailway
@@ -8,12 +8,12 @@ import io.github.vampirestudios.tdg.start.TutEngine;
  */
 public class DioriteTile extends StoneTile {
 
-    public DioriteTile(TutEngine tutEngine) {
-        super(tutEngine, "diorite", true);
+    public DioriteTile(MaewilEngine maewilEngine) {
+        super(maewilEngine, "diorite", true);
     }
 
     @Override
     public DioriteTile newCopy() {
-        return super.newCopy(new DioriteTile(tutEngine));
+        return super.newCopy(new DioriteTile(maewilEngine));
     }
 }

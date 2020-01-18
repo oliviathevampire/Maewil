@@ -1,7 +1,7 @@
 package io.github.vampirestudios.tdg.objs.tiles.wood;
 
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 
 /**
  * @author CoffeeCatRailway
@@ -9,12 +9,12 @@ import io.github.vampirestudios.tdg.start.TutEngine;
  */
 public class ChestTile extends WoodTile {
 
-    public ChestTile(TutEngine tutEngine) {
-        super(tutEngine, "chest");
+    public ChestTile(MaewilEngine maewilEngine) {
+        super(maewilEngine, "chest");
     }
 
     @Override
     public Tile newCopy() {
-        return super.newCopy(new ChestTile(tutEngine));
+        return super.newCopy(new ChestTile(maewilEngine));
     }
 }

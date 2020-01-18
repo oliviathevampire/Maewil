@@ -5,7 +5,6 @@ import club.minnced.discord.rpc.DiscordRPC;
 import club.minnced.discord.rpc.DiscordRichPresence;
 import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.DevEnvUtils;
-import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 
 public class DiscordHandler {
@@ -23,7 +22,7 @@ public class DiscordHandler {
 
     public void setup() {
         if (!ArgUtils.hasArgument(disbaleArg)) {
-            logger = new CatLogger("TUT-DiscordRichPresence");
+            logger = new CatLogger("Maewil-DiscordRichPresence");
             logger.println();
 //            Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
             rpc = DiscordRPC.INSTANCE;
@@ -37,7 +36,7 @@ public class DiscordHandler {
                 logger.info("Ready: " + READY);
                 logger.println();
             };
-            rpc.Discord_Initialize("502962688733741056", handlers, true, "");
+            rpc.Discord_Initialize("665912914280054785", handlers, true, "");
 
             new Thread(() -> {
                 logger.warn("Started RPC Callback Handler");
@@ -70,31 +69,12 @@ public class DiscordHandler {
     public void updatePresence(String details, String state, boolean inGame) {
         if (!ArgUtils.hasArgument(disbaleArg)) {
             DiscordRichPresence presence = new DiscordRichPresence();
-            presence.details = (DevEnvUtils.isRunningFromDevEnviroment() ? "Developing TUT - " : "") + details;
+            presence.details = (DevEnvUtils.isRunningFromDevEnviroment() ? "Developing Maewil - " : "") + details;
             presence.state = state;
-            presence.largeImageKey = "ultimatebg";
-            if (inGame)
-                presence.smallImageKey = getSmallImage(NumberUtils.getRandomInt(5));
+            presence.largeImageKey = "default_1024";
+            presence.smallImageKey = "profile_1024";
             presence.startTimestamp = timeStamp;
             rpc.Discord_UpdatePresence(presence);
-        }
-    }
-
-    private String getSmallImage(int id) {
-        switch (id) {
-            default:
-            case 0:
-                return "cow";
-            case 1:
-                return "fox";
-            case 2:
-                return "pig";
-            case 3:
-                return "player";
-            case 4:
-                return "sheep";
-            case 5:
-                return "tree";
         }
     }
 

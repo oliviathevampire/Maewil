@@ -2,7 +2,7 @@ package io.github.vampirestudios.tdg.gfx.ui;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -29,8 +29,8 @@ public abstract class WidgetObject {
 
     public void update(GameContainer container, StateBasedGame game, int delta) {
         bounds = new AABB(this.position, (int) getWidth(), (int) getHeight());
-        if (TutEngine.INSTANCE.isLeftPressed()) {
-            if (this.bounds.contains(TutEngine.INSTANCE.getMousePos()))
+        if (MaewilEngine.INSTANCE.isLeftPressed()) {
+            if (this.bounds.contains(MaewilEngine.INSTANCE.getMousePos()))
                 onClick();
             else
                 onClickOutBounds();

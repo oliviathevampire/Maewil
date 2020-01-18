@@ -5,27 +5,27 @@ import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
 import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButton;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlinkCopyright;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class AbstractMenuScreen extends Screen {
 
-    public AbstractMenuScreen(TutEngine tutEngine, Tile[] centre) {
-        this(tutEngine, centre, true);
+    public AbstractMenuScreen(MaewilEngine maewilEngine, Tile[] centre) {
+        this(maewilEngine, centre, true);
     }
 
-    public AbstractMenuScreen(TutEngine tutEngine, Tile[] centre, boolean initUI) {
-        super(tutEngine, centre);
+    public AbstractMenuScreen(MaewilEngine maewilEngine, Tile[] centre, boolean initUI) {
+        super(maewilEngine, centre);
 
         if (initUI) {
-            uiManager.addObject(new WidgetButton(tutEngine, new Vector2D(15, TutLauncher.HEIGHT - 95), "Main Menu", new ClickListener() {
+            uiManager.addObject(new WidgetButton(maewilEngine, new Vector2D(15, MaewilLauncher.HEIGHT - 95), "Main Menu", new ClickListener() {
                 @Override
                 public void onClick() {
                     initBack();
-                    ScreenManager.setCurrentScreen(tutEngine.stateMenu);
+                    ScreenManager.setCurrentScreen(maewilEngine.stateMenu);
 
 //                    DiscordHandler.INSTANCE.updatePresence("Main Menu");
                 }
@@ -35,7 +35,7 @@ public class AbstractMenuScreen extends Screen {
                 }
             }));
 
-            uiManager.addObject(new WidgetHyperlinkCopyright(new Vector2D(5, TutLauncher.HEIGHT - 20)));
+            uiManager.addObject(new WidgetHyperlinkCopyright(new Vector2D(5, MaewilLauncher.HEIGHT - 20)));
         }
     }
 

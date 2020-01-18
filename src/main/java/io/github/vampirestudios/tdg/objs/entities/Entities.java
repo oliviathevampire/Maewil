@@ -24,8 +24,8 @@ import io.github.vampirestudios.tdg.objs.entities.statics.nature.CropEntity;
 import io.github.vampirestudios.tdg.objs.entities.statics.nature.RockEntity;
 import io.github.vampirestudios.tdg.objs.entities.statics.nature.TreeEntity;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.tags.CompoundTag;
 import io.github.vampirestudios.tdg.tags.JsonToTag;
 import io.github.vampirestudios.tdg.tags.TagException;
@@ -78,61 +78,61 @@ public class Entities {
      */
     public static Entity ITEM;
 
-    public static void init(TutEngine tutEngine) throws IOException, ParseException {
+    public static void init(MaewilEngine maewilEngine) throws IOException, ParseException {
         EntityDataParser parser = new EntityDataParser();
 
         /*
          * Player
          */
         String username = ArgUtils.hasArgument("-username") ? ArgUtils.getArgument("-username") : "";
-        register(PLAYER = (PlayerEntity) parser.loadData(new PlayerEntity(tutEngine, username)));
-        tutEngine.getEntityManager().setPlayer(PLAYER);
+        register(PLAYER = (PlayerEntity) parser.loadData(new PlayerEntity(maewilEngine, username)));
+        maewilEngine.getEntityManager().setPlayer(PLAYER);
 
         /*
          * Static
          */
-        register(TREE_SMALL = parser.loadData(new TreeEntity(tutEngine, TreeEntity.TreeType.SMALL)));
-        register(TREE_MEDIUM = parser.loadData(new TreeEntity(tutEngine, TreeEntity.TreeType.MEDIUM)));
-        register(TREE_LARGE = parser.loadData(new TreeEntity(tutEngine, TreeEntity.TreeType.LARGE)));
-        register(TREE_EXTRA_LARGE = parser.loadData(new TreeEntity(tutEngine, TreeEntity.TreeType.EXTRA_LARGE)));
+        register(TREE_SMALL = parser.loadData(new TreeEntity(maewilEngine, TreeEntity.TreeType.SMALL)));
+        register(TREE_MEDIUM = parser.loadData(new TreeEntity(maewilEngine, TreeEntity.TreeType.MEDIUM)));
+        register(TREE_LARGE = parser.loadData(new TreeEntity(maewilEngine, TreeEntity.TreeType.LARGE)));
+        register(TREE_EXTRA_LARGE = parser.loadData(new TreeEntity(maewilEngine, TreeEntity.TreeType.EXTRA_LARGE)));
 
-        register(ROCK_SMALL = parser.loadData(new RockEntity(tutEngine, RockEntity.RockType.SMALL)));
-        register(ROCK_MEDIUM = parser.loadData(new RockEntity(tutEngine, RockEntity.RockType.MEDIUM)));
+        register(ROCK_SMALL = parser.loadData(new RockEntity(maewilEngine, RockEntity.RockType.SMALL)));
+        register(ROCK_MEDIUM = parser.loadData(new RockEntity(maewilEngine, RockEntity.RockType.MEDIUM)));
 
-        register(BUSH_SMALL = parser.loadData(new BushEntity(tutEngine, RockEntity.RockType.SMALL)));
-        register(BUSH_MEDIUM = parser.loadData(new BushEntity(tutEngine, RockEntity.RockType.MEDIUM)));
+        register(BUSH_SMALL = parser.loadData(new BushEntity(maewilEngine, RockEntity.RockType.SMALL)));
+        register(BUSH_MEDIUM = parser.loadData(new BushEntity(maewilEngine, RockEntity.RockType.MEDIUM)));
 
-        register(CROP_CARROT = parser.loadData(new CropEntity(tutEngine, CropEntity.CropType.CARROT)));
-        register(CROP_WHEAT = parser.loadData(new CropEntity(tutEngine, CropEntity.CropType.WHEAT)));
-        register(CROP_POTATO = parser.loadData(new CropEntity(tutEngine, CropEntity.CropType.POTATO)));
-        register(CROP_CORN = parser.loadData(new CropEntity(tutEngine, CropEntity.CropType.CORN)));
+        register(CROP_CARROT = parser.loadData(new CropEntity(maewilEngine, CropEntity.CropType.CARROT)));
+        register(CROP_WHEAT = parser.loadData(new CropEntity(maewilEngine, CropEntity.CropType.WHEAT)));
+        register(CROP_POTATO = parser.loadData(new CropEntity(maewilEngine, CropEntity.CropType.POTATO)));
+        register(CROP_CORN = parser.loadData(new CropEntity(maewilEngine, CropEntity.CropType.CORN)));
 
-        register(ULTIMATE = parser.loadData(new UltimateTileEntity(tutEngine)));
-        register(EXTRA_LIFE = parser.loadData(new ExtraLifeEntity(tutEngine)));
-        register(SHOP = parser.loadData(new ShopStallEntity(tutEngine)));
-        register(CAMPFIRE = parser.loadData(new CampfireEntity(tutEngine)));
+        register(ULTIMATE = parser.loadData(new UltimateTileEntity(maewilEngine)));
+        register(EXTRA_LIFE = parser.loadData(new ExtraLifeEntity(maewilEngine)));
+        register(SHOP = parser.loadData(new ShopStallEntity(maewilEngine)));
+        register(CAMPFIRE = parser.loadData(new CampfireEntity(maewilEngine)));
 
         /*
          * Creature
          */
         // Undead
-        register(ZOMBIE = parser.loadData(new ZombieEntity(tutEngine)));
-        register(SKELETON = parser.loadData(new SkeletonEntity(tutEngine)));
-        register(BOUNCER = parser.loadData(new BouncerEntity(tutEngine)));
-        register(THING = parser.loadData(new ThingEntity(tutEngine)));
+        register(ZOMBIE = parser.loadData(new ZombieEntity(maewilEngine)));
+        register(SKELETON = parser.loadData(new SkeletonEntity(maewilEngine)));
+        register(BOUNCER = parser.loadData(new BouncerEntity(maewilEngine)));
+        register(THING = parser.loadData(new ThingEntity(maewilEngine)));
 
         // Living
-        register(PIG = parser.loadData(new PigEntity(tutEngine)));
-        register(COW = parser.loadData(new CowEntity(tutEngine)));
-        register(SHEEP = parser.loadData(new SheepEntity(tutEngine)));
-        register(FOX = parser.loadData(new FoxEntity(tutEngine)));
+        register(PIG = parser.loadData(new PigEntity(maewilEngine)));
+        register(COW = parser.loadData(new CowEntity(maewilEngine)));
+        register(SHEEP = parser.loadData(new SheepEntity(maewilEngine)));
+        register(FOX = parser.loadData(new FoxEntity(maewilEngine)));
 
         /*
          * Other
          */
-        register(ITEM = parser.loadData(new ItemEntity(tutEngine, (ItemStack) null))); // PLACE HOLDER IF NEEDED
+        register(ITEM = parser.loadData(new ItemEntity(maewilEngine, (ItemStack) null))); // PLACE HOLDER IF NEEDED
 
-        TutLauncher.LOGGER.info("Entities registered!");
+        MaewilLauncher.LOGGER.info("Entities registered!");
     }
 
     private static void register(Entity entity) {
@@ -161,7 +161,7 @@ public class Entities {
             JSONObject tagsJson = (JSONObject) json.get("tags");
             tags = JsonToTag.getTagFromJson(tagsJson.toString());
         } catch (TagException e) {
-            TutLauncher.LOGGER.error(e);
+            MaewilLauncher.LOGGER.error(e);
             tags = new CompoundTag();
         }
         entity.setTags(tags);
@@ -192,7 +192,7 @@ public class Entities {
         try {
             json.put("tags", entity.getTags().toString());
         } catch (JsonParseException e) {
-            TutLauncher.LOGGER.error(e);
+            MaewilLauncher.LOGGER.error(e);
             json.put("tags", new JsonObject());
         }
         json.put("health", entity.getCurrentHealth());

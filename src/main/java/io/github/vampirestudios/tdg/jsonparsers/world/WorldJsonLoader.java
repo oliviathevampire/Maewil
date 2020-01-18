@@ -9,8 +9,8 @@ import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.items.Items;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.Tiles;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.screen.game.SelectGameScreen;
 import io.github.vampirestudios.tdg.tags.JsonToTag;
 import io.github.vampirestudios.tdg.tags.CompoundTag;
@@ -46,7 +46,7 @@ public class WorldJsonLoader implements IJSONLoader {
     }
 
     private String path;
-    private TutEngine tutEngine;
+    private MaewilEngine maewilEngine;
 
     // World
     private String name;
@@ -62,29 +62,29 @@ public class WorldJsonLoader implements IJSONLoader {
     private int[] selected_slots;
     private ItemStack[] inventory, hotbar;
 
-    public WorldJsonLoader(String path, TutEngine tutEngine) {
+    public WorldJsonLoader(String path, MaewilEngine maewilEngine) {
         this.path = path;
-        this.tutEngine = tutEngine;
+        this.maewilEngine = maewilEngine;
     }
 
     @Override
     public void load() throws IOException, ParseException {
         loadWorldInfo();
-        TutLauncher.LOGGER.info("World [" + name + "] info loaded!");
+        MaewilLauncher.LOGGER.info("World [" + name + "] info loaded!");
 
         String bgLoadPath = path + "/" + BASE_FILES.get("tile_bg") + ".json";
         String fgLoadPath = path + "/" + BASE_FILES.get("tile_fg") + ".json";
         loadTiles(width, height, bgLoadPath, fgLoadPath, bg_tiles, fg_tiles);
-        TutLauncher.LOGGER.info("World [" + name + "] tiles loaded!");
+        MaewilLauncher.LOGGER.info("World [" + name + "] tiles loaded!");
 
         loadEntities();
-        TutLauncher.LOGGER.info("World [" + name + "] entities loaded!");
+        MaewilLauncher.LOGGER.info("World [" + name + "] entities loaded!");
 
         loadItems();
-        TutLauncher.LOGGER.info("World [" + name + "] ITEMS loaded!");
+        MaewilLauncher.LOGGER.info("World [" + name + "] ITEMS loaded!");
 
         loadPlayerInfo();
-        TutLauncher.LOGGER.info("World [" + name + "] player info loaded!");
+        MaewilLauncher.LOGGER.info("World [" + name + "] player info loaded!");
     }
 
     public void loadWorldInfo() throws IOException, ParseException {
@@ -92,17 +92,17 @@ public class WorldJsonLoader implements IJSONLoader {
         JSONObject jsonObject = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path + "/" + BASE_FILES.get("world") + ".json"));
 
         name = (String) jsonObject.get("name");
-        TutLauncher.LOGGER.info("Loaded world name");
+        MaewilLauncher.LOGGER.info("Loaded world name");
 
         JSONArray size = (JSONArray) jsonObject.get("size");
         width = NumberUtils.parseInt(size.get(0));
         height = NumberUtils.parseInt(size.get(1));
-        TutLauncher.LOGGER.info("Loaded world size");
+        MaewilLauncher.LOGGER.info("Loaded world size");
 
         JSONArray spawn = (JSONArray) jsonObject.get("spawn");
         spawnX = NumberUtils.parseFloat(spawn.get(0));
         spawnY = NumberUtils.parseFloat(spawn.get(1));
-        TutLauncher.LOGGER.info("Loaded world player spawn");
+        MaewilLauncher.LOGGER.info("Loaded world player spawn");
     }
 
     public void loadTiles(int width, int height, String bgLoadPath, String fgLoadPath, TileList bg_tiles, TileList fg_tiles) throws IOException, ParseException {
@@ -121,7 +121,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 loadTile(chunk, true, x, bg_tiles, fg_tiles);
             }
         }
-        TutLauncher.LOGGER.info("Loaded world background tiles");
+        MaewilLauncher.LOGGER.info("Loaded world background tiles");
 
         JSONObject fgTiles = (JSONObject) jsonObjectFG.get("fg_tile");
 //        System.out.println("Foreground Tile: " + bgTiles.toJSONString());
@@ -131,7 +131,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 loadTile(chunk, false, x, bg_tiles, fg_tiles);
             }
         }
-        TutLauncher.LOGGER.info("Loaded world foreground tiles");
+        MaewilLauncher.LOGGER.info("Loaded world foreground tiles");
     }
 
     private void loadTile(JSONArray chunk, boolean bg, int x, TileList bg_tiles, TileList fg_tiles) {
@@ -162,7 +162,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 JSONObject entity = (JSONObject) aStatic;
                 loadEntityObj(entity);
             }
-            TutLauncher.LOGGER.info("Loaded world static entities");
+            MaewilLauncher.LOGGER.info("Loaded world static entities");
         }
 
         // Creatures
@@ -172,9 +172,9 @@ public class WorldJsonLoader implements IJSONLoader {
                 JSONObject entity = (JSONObject) creature;
                 loadEntityObj(entity);
             }
-            TutLauncher.LOGGER.info("Loaded world creature entities");
+            MaewilLauncher.LOGGER.info("Loaded world creature entities");
         }
-        TutLauncher.LOGGER.info("Loaded world entities");
+        MaewilLauncher.LOGGER.info("Loaded world entities");
     }
 
     public void loadItems() throws IOException, ParseException {
@@ -196,9 +196,9 @@ public class WorldJsonLoader implements IJSONLoader {
                 if (!item.isStackable())
                     count = 1;
 
-                tutEngine.getEntityManager().addItem(new ItemStack(item, count), x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
+                maewilEngine.getEntityManager().addItem(new ItemStack(item, count), x * Tile.TILE_SIZE, y * Tile.TILE_SIZE);
             }
-            TutLauncher.LOGGER.info("Loaded world items");
+            MaewilLauncher.LOGGER.info("Loaded world items");
         }
     }
 
@@ -208,20 +208,20 @@ public class WorldJsonLoader implements IJSONLoader {
 
         if (jsonObject.containsKey("username")) {
             username = (String) jsonObject.get("username");
-            tutEngine.getPlayer().setUsername(username);
-            TutLauncher.LOGGER.info("loaded player username!");
+            maewilEngine.getPlayer().setUsername(username);
+            MaewilLauncher.LOGGER.info("loaded player username!");
         }
 
         health = NumberUtils.parseInt(jsonObject.get("health"));
-        tutEngine.getPlayer().setCurrentHealth(health);
-        TutLauncher.LOGGER.info("loaded player health!");
+        maewilEngine.getPlayer().setCurrentHealth(health);
+        MaewilLauncher.LOGGER.info("loaded player health!");
 
         selected_slots = new int[2];
         JSONArray selected_slotsJ = (JSONArray) jsonObject.get("selected_slots");
         selected_slots[0] = NumberUtils.parseInt(selected_slotsJ.get(0));
         selected_slots[1] = NumberUtils.parseInt(selected_slotsJ.get(1));
-        tutEngine.getPlayer().getInventoryPlayer().setInventorySelectedIndex(selected_slots[0]);
-        tutEngine.getPlayer().getInventoryPlayer().setHotbarSelectedIndex(selected_slots[1]);
+        maewilEngine.getPlayer().getInventoryPlayer().setInventorySelectedIndex(selected_slots[0]);
+        maewilEngine.getPlayer().getInventoryPlayer().setHotbarSelectedIndex(selected_slots[1]);
 
         inventory = new ItemStack[12];
         JSONObject inventoryJ = (JSONObject) jsonObject.get("inventory");
@@ -241,7 +241,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 inventory[i] = new ItemStack(item, count);
             }
         }
-        TutLauncher.LOGGER.info("loaded player inventory!");
+        MaewilLauncher.LOGGER.info("loaded player inventory!");
 
         hotbar = new ItemStack[3];
         JSONObject hotbarJ = (JSONObject) jsonObject.get("hotbar");
@@ -261,11 +261,11 @@ public class WorldJsonLoader implements IJSONLoader {
                 hotbar[i - 12] = new ItemStack(item, count);
             }
         }
-        TutLauncher.LOGGER.info("loaded player hotbar!");
+        MaewilLauncher.LOGGER.info("loaded player hotbar!");
 
         int invIndex = 0;
         for (int i = 0; i < inventory.length; i++) {
-            tutEngine.getPlayer().getInventoryPlayer().getSlots().get(invIndex).setStack(inventory[invIndex]);
+            maewilEngine.getPlayer().getInventoryPlayer().getSlots().get(invIndex).setStack(inventory[invIndex]);
             invIndex++;
             if (invIndex >= inventory.length)
                 break;
@@ -273,7 +273,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
         int hotbarIndex = 12;
         for (int i = 0; i < hotbar.length; i++) {
-            tutEngine.getPlayer().getInventoryPlayer().getSlots().get(hotbarIndex).setStack(hotbar[hotbarIndex - 12]);
+            maewilEngine.getPlayer().getInventoryPlayer().getSlots().get(hotbarIndex).setStack(hotbar[hotbarIndex - 12]);
             hotbarIndex++;
             if (hotbarIndex >= hotbar.length + 12)
                 break;
@@ -313,19 +313,19 @@ public class WorldJsonLoader implements IJSONLoader {
         Entity entity = Entities.getEntityById(id).newCopy();
         entity.setTags(tags);
         entity.setCurrentHealth(health);
-        tutEngine.getEntityManager().addEntity(entity, x, y, true);
+        maewilEngine.getEntityManager().addEntity(entity, x, y, true);
     }
 
-    public static void copyFiles(TutEngine tutEngine, String from, String dest) {
+    public static void copyFiles(MaewilEngine maewilEngine, String from, String dest) {
         for (String file : BASE_FILES.values())
-            copy(tutEngine, SelectGameScreen.class.getResourceAsStream(from + "/" + file + ".json"), dest + "/" + file + ".json");
+            copy(maewilEngine, SelectGameScreen.class.getResourceAsStream(from + "/" + file + ".json"), dest + "/" + file + ".json");
     }
 
 
-    public static boolean copy(TutEngine tutEngine, InputStream source, String destination) {
+    public static boolean copy(MaewilEngine maewilEngine, InputStream source, String destination) {
         boolean success = true;
 
-        TutLauncher.LOGGER.warn("Copying ->" + source + "\tto ->" + destination);
+        MaewilLauncher.LOGGER.warn("Copying ->" + source + "\tto ->" + destination);
 
         try {
             if (!new File(destination).exists())

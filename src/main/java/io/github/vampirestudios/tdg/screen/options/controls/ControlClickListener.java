@@ -2,7 +2,7 @@ package io.github.vampirestudios.tdg.screen.options.controls;
 
 import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
 import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButtonControl;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.utils.UtilsIdk;
 import org.newdawn.slick.GameContainer;
@@ -12,14 +12,14 @@ import javax.swing.*;
 
 public class ControlClickListener implements ClickListener {
 
-    private TutEngine tutEngine;
+    private MaewilEngine maewilEngine;
     private WidgetButtonControl button;
     private String jsonId;
 
     private boolean listening = false;
 
-    public ControlClickListener(TutEngine tutEngine, WidgetButtonControl button, String jsonId) {
-        this.tutEngine = tutEngine;
+    public ControlClickListener(MaewilEngine maewilEngine, WidgetButtonControl button, String jsonId) {
+        this.maewilEngine = maewilEngine;
         this.button = button;
         this.jsonId = jsonId;
     }
@@ -31,8 +31,8 @@ public class ControlClickListener implements ClickListener {
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
-        int newKeyCode = tutEngine.getKeyManager().getCurrentKeyPressedCode();
-        String newId = UtilsIdk.getKeyPressed(tutEngine);
+        int newKeyCode = maewilEngine.getKeyManager().getCurrentKeyPressedCode();
+        String newId = UtilsIdk.getKeyPressed(maewilEngine);
         Keybind keybind = OptionsScreen.OPTIONS.controls().get(jsonId);
 
         if (listening) {
@@ -43,8 +43,8 @@ public class ControlClickListener implements ClickListener {
             }
             if (button.getText().equals("> " + newId + " <") && !newId.contains("~")) {
                 OptionsScreen.OPTIONS.controls().replace(jsonId, new Keybind(newId, newKeyCode, keybind.getDescription()));
-                tutEngine.getKeyManager().setCurrentKeyPressedCode(KeyStroke.getKeyStroke('~').getKeyCode());
-                tutEngine.getKeyManager().setCurrentKeyPressedChar('~');
+                maewilEngine.getKeyManager().setCurrentKeyPressedCode(KeyStroke.getKeyStroke('~').getKeyCode());
+                maewilEngine.getKeyManager().setCurrentKeyPressedChar('~');
                 listening = false;
             }
         } else {

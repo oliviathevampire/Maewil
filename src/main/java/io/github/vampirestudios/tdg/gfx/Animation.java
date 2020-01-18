@@ -1,7 +1,7 @@
 package io.github.vampirestudios.tdg.gfx;
 
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.newdawn.slick.Image;
 
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ public class Animation {
             if (frames[index] == null)
                 return Assets.MISSING_TEXTURE;
         } catch (ArrayIndexOutOfBoundsException e) {
-            TutLauncher.LOGGER.error(e);
+            MaewilLauncher.LOGGER.error(e);
             return Assets.MISSING_TEXTURE;
         }
 

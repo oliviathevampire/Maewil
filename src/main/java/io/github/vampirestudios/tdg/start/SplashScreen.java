@@ -4,7 +4,6 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import io.github.vampirestudios.tdg.gfx.Animation;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.assets.Sounds;
-import net.fabricmc.loader.game.GameProviders;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
@@ -28,21 +27,20 @@ public class SplashScreen extends BasicGameState {
 
     @Override
     public int getID() {
-        return TutLauncher.ID_SPLASHSCREEN;
+        return MaewilLauncher.ID_SPLASHSCREEN;
     }
 
     @Override
     public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        GameProviders.create().add(new TutGameProvider());
         Assets.init();
         Sounds.init();
         container.setDefaultFont(Assets.FONTS.get("10"));
         container.setMouseCursor(Assets.GUI_CURSOR, 0, 0);
 
         player = new Animation(135, Assets.GUI_SPLASH_PLAYER);
-        p1 = TutLauncher.HEIGHT;
-        px = TutLauncher.WIDTH - psize * 2.5f;
-        py = TutLauncher.HEIGHT - psize / 2f;
+        p1 = MaewilLauncher.HEIGHT;
+        px = MaewilLauncher.WIDTH - psize * 2.5f;
+        py = MaewilLauncher.HEIGHT - psize / 2f;
         p2 = px;
     }
 
@@ -51,10 +49,10 @@ public class SplashScreen extends BasicGameState {
         titleScale = NumberUtils.lerp(titleScale, 1.0f, smoothness);
         playerTimer = NumberUtils.lerp(playerTimer, maxPlayerTimer, smoothness);
 
-        if (p2 > TutLauncher.WIDTH)
+        if (p2 > MaewilLauncher.WIDTH)
             endTimer = NumberUtils.lerp(endTimer, maxEndTimer, smoothness / 5f);
         if (endTimer >= maxEndTimer - 0.5f)
-            game.enterState(TutLauncher.ID_GAME, new EmptyTransition(), new FadeInTransition(Color.black));
+            game.enterState(MaewilLauncher.ID_GAME, new EmptyTransition(), new FadeInTransition(Color.black));
         player.update();
 
 
@@ -66,7 +64,7 @@ public class SplashScreen extends BasicGameState {
             if (p2 <= newX + 0.5f)
                 playerExit = true;
             if (playerExit)
-                p2 = NumberUtils.lerp(p2, TutLauncher.WIDTH * 1.25f, smoothness);
+                p2 = NumberUtils.lerp(p2, MaewilLauncher.WIDTH * 1.25f, smoothness);
         }
     }
 
@@ -76,7 +74,7 @@ public class SplashScreen extends BasicGameState {
         float size = 10f;
         float width = (title.getWidth() / size) * titleScale;
         float height = (title.getHeight() / size) * titleScale;
-        title.draw(TutLauncher.WIDTH / 2f - width / 2f, TutLauncher.HEIGHT / 2f - height / 2f, width, height);
+        title.draw(MaewilLauncher.WIDTH / 2f - width / 2f, MaewilLauncher.HEIGHT / 2f - height / 2f, width, height);
 
         if (playerTimer >= maxPlayerTimer - 0.5f) {
             Image frame = player.getCurrentFrame();

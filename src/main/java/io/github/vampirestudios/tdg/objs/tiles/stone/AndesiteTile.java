@@ -1,6 +1,6 @@
 package io.github.vampirestudios.tdg.objs.tiles.stone;
 
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 
 /**
  * @author CoffeeCatRailway
@@ -8,12 +8,12 @@ import io.github.vampirestudios.tdg.start.TutEngine;
  */
 public class AndesiteTile extends StoneTile {
 
-    public AndesiteTile(TutEngine tutEngine) {
-        super(tutEngine, "andesite", true);
+    public AndesiteTile(MaewilEngine maewilEngine) {
+        super(maewilEngine, "andesite", true);
     }
 
     @Override
     public AndesiteTile newCopy() {
-        return super.newCopy(new AndesiteTile(tutEngine));
+        return super.newCopy(new AndesiteTile(maewilEngine));
     }
 }

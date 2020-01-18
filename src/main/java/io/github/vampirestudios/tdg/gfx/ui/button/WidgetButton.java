@@ -9,15 +9,15 @@ import io.github.vampirestudios.tdg.gfx.assets.Sounds;
 import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
 import io.github.vampirestudios.tdg.gfx.ui.WidgetObject;
 import io.github.vampirestudios.tdg.gfx.ui.WidgetTextBox;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class WidgetButton extends WidgetObject {
 
-    protected TutEngine tutEngine;
+    protected MaewilEngine maewilEngine;
     protected ClickListener listener;
 
     private boolean disabled = false;
@@ -42,28 +42,28 @@ public class WidgetButton extends WidgetObject {
     /*
      * Button - Image/Animation
      */
-    public WidgetButton(TutEngine tutEngine, Vector2D position, Image image, ClickListener listener) {
-        this(tutEngine, position, new Animation(image), listener);
+    public WidgetButton(MaewilEngine maewilEngine, Vector2D position, Image image, ClickListener listener) {
+        this(maewilEngine, position, new Animation(image), listener);
     }
 
-    public WidgetButton(TutEngine tutEngine, Vector2D position, Image image, float imgScale, ClickListener listener) {
-        this(tutEngine, position, new Animation(image), imgScale, listener);
+    public WidgetButton(MaewilEngine maewilEngine, Vector2D position, Image image, float imgScale, ClickListener listener) {
+        this(maewilEngine, position, new Animation(image), imgScale, listener);
     }
 
-    public WidgetButton(TutEngine tutEngine, Vector2D position, Image image, float imgScale, int padding, ClickListener listener) {
-        this(tutEngine, position, new Animation(image), imgScale, padding, listener);
+    public WidgetButton(MaewilEngine maewilEngine, Vector2D position, Image image, float imgScale, int padding, ClickListener listener) {
+        this(maewilEngine, position, new Animation(image), imgScale, padding, listener);
     }
 
-    public WidgetButton(TutEngine tutEngine, Vector2D position, Animation animation, ClickListener listener) {
-        this(tutEngine, position, animation, 1.0f, listener);
+    public WidgetButton(MaewilEngine maewilEngine, Vector2D position, Animation animation, ClickListener listener) {
+        this(maewilEngine, position, animation, 1.0f, listener);
     }
 
-    public WidgetButton(TutEngine tutEngine, Vector2D position, Animation animation, float imgScale, ClickListener listener) {
-        this(tutEngine, position, animation, imgScale, 16, listener);
+    public WidgetButton(MaewilEngine maewilEngine, Vector2D position, Animation animation, float imgScale, ClickListener listener) {
+        this(maewilEngine, position, animation, imgScale, 16, listener);
     }
 
-    public WidgetButton(TutEngine tutEngine, Vector2D position, Animation animation, float imgScale, int padding, ClickListener listener) {
-        this(tutEngine, position, listener);
+    public WidgetButton(MaewilEngine maewilEngine, Vector2D position, Animation animation, float imgScale, int padding, ClickListener listener) {
+        this(maewilEngine, position, listener);
         this.useImage = true;
         this.image = animation;
         this.imgScale = imgScale;
@@ -73,27 +73,27 @@ public class WidgetButton extends WidgetObject {
     /*
      * Button - Text
      */
-    public WidgetButton(TutEngine tutEngine, boolean centered, String text, ClickListener listener) {
-        this(tutEngine, new Vector2D(), text, false, Assets.FONTS.get("40"), listener);
+    public WidgetButton(MaewilEngine maewilEngine, boolean centered, String text, ClickListener listener) {
+        this(maewilEngine, new Vector2D(), text, false, Assets.FONTS.get("40"), listener);
         this.centeredX = centeredY = centered;
     }
 
-    public WidgetButton(TutEngine tutEngine, boolean centeredX, int y, String text, ClickListener listener) {
-        this(tutEngine, new Vector2D(0, y), text, false, Assets.FONTS.get("40"), listener);
+    public WidgetButton(MaewilEngine maewilEngine, boolean centeredX, int y, String text, ClickListener listener) {
+        this(maewilEngine, new Vector2D(0, y), text, false, Assets.FONTS.get("40"), listener);
         this.centeredX = centeredX;
     }
 
-    public WidgetButton(TutEngine tutEngine, int x, boolean centeredY, String text, ClickListener listener) {
-        this(tutEngine, new Vector2D(x, 0), text, false, Assets.FONTS.get("40"), listener);
+    public WidgetButton(MaewilEngine maewilEngine, int x, boolean centeredY, String text, ClickListener listener) {
+        this(maewilEngine, new Vector2D(x, 0), text, false, Assets.FONTS.get("40"), listener);
         this.centeredY = centeredY;
     }
 
-    public WidgetButton(TutEngine tutEngine, Vector2D position, String text, ClickListener listener) {
-        this(tutEngine, position, text, false, Assets.FONTS.get("40"), listener);
+    public WidgetButton(MaewilEngine maewilEngine, Vector2D position, String text, ClickListener listener) {
+        this(maewilEngine, position, text, false, Assets.FONTS.get("40"), listener);
     }
 
-    public WidgetButton(TutEngine tutEngine, Vector2D position, String text, boolean underlined, Font font, ClickListener listener) {
-        this(tutEngine, position, listener);
+    public WidgetButton(MaewilEngine maewilEngine, Vector2D position, String text, boolean underlined, Font font, ClickListener listener) {
+        this(maewilEngine, position, listener);
         this.useImage = false;
         this.text = text;
         this.underlined = underlined;
@@ -103,9 +103,9 @@ public class WidgetButton extends WidgetObject {
     /*
      * Button - Base
      */
-    WidgetButton(TutEngine tutEngine, Vector2D position, ClickListener listener) {
+    WidgetButton(MaewilEngine maewilEngine, Vector2D position, ClickListener listener) {
         super(position, 0, 0);
-        this.tutEngine = tutEngine;
+        this.maewilEngine = maewilEngine;
         this.listener = listener;
         this.currentTexture = Assets.GUI_BUTTON_ENABLED;
 
@@ -116,7 +116,7 @@ public class WidgetButton extends WidgetObject {
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
         super.update(container, game, delta);
-        this.hovering = this.bounds.contains(tutEngine.getMousePos()) && !this.disabled;
+        this.hovering = this.bounds.contains(maewilEngine.getMousePos()) && !this.disabled;
 
         if (this.hovering) {
             this.currentTexture = Assets.GUI_BUTTON_HOVER;
@@ -184,20 +184,20 @@ public class WidgetButton extends WidgetObject {
         }
 
         if (centeredX)
-            this.position.x = TutLauncher.WIDTH / 2d - this.width / 2d;
+            this.position.x = MaewilLauncher.WIDTH / 2d - this.width / 2d;
         if (centeredY)
-            this.position.y = TutLauncher.HEIGHT / 2d - this.height / 2d;
+            this.position.y = MaewilLauncher.HEIGHT / 2d - this.height / 2d;
     }
 
     @Override
     public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
         super.postRender(container, game, g);
         if (isHovering() && hasTooltip) {
-            float x = (float) tutEngine.getMousePos().x, x1 = x + this.tooltip.getWidth(), xDiff = 0;
-            float y = (float) tutEngine.getMousePos().y, y1 = y + this.tooltip.getHeight(), yDiff = 0;
+            float x = (float) maewilEngine.getMousePos().x, x1 = x + this.tooltip.getWidth(), xDiff = 0;
+            float y = (float) maewilEngine.getMousePos().y, y1 = y + this.tooltip.getHeight(), yDiff = 0;
 
-            if (x1 > TutLauncher.WIDTH) xDiff = x1 - TutLauncher.WIDTH;
-            if (y1 > TutLauncher.HEIGHT) yDiff = y1 - TutLauncher.HEIGHT;
+            if (x1 > MaewilLauncher.WIDTH) xDiff = x1 - MaewilLauncher.WIDTH;
+            if (y1 > MaewilLauncher.HEIGHT) yDiff = y1 - MaewilLauncher.HEIGHT;
 
             tooltip.setPosition(new Vector2D(x - xDiff, y - yDiff));
             tooltip.render(container, game, g);

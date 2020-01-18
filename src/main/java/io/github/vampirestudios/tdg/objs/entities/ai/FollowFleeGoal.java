@@ -1,7 +1,7 @@
 package io.github.vampirestudios.tdg.objs.entities.ai;
 
 import io.github.vampirestudios.tdg.objs.entities.creatures.LivingEntity;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -11,12 +11,12 @@ public class FollowFleeGoal extends Goal {
     private float maxDistance, speed;
     private boolean flee = false;
 
-    public FollowFleeGoal(TutEngine tutEngine, LivingEntity entity, LivingEntity target) {
-        this(tutEngine, entity, target, 200f, 2.0f);
+    public FollowFleeGoal(MaewilEngine maewilEngine, LivingEntity entity, LivingEntity target) {
+        this(maewilEngine, entity, target, 200f, 2.0f);
     }
 
-    public FollowFleeGoal(TutEngine tutEngine, LivingEntity entity, LivingEntity target, float maxDistance, float speed) {
-        super(tutEngine, entity);
+    public FollowFleeGoal(MaewilEngine maewilEngine, LivingEntity entity, LivingEntity target, float maxDistance, float speed) {
+        super(maewilEngine, entity);
         this.target = target;
         this.maxDistance = maxDistance;
         this.speed = speed;

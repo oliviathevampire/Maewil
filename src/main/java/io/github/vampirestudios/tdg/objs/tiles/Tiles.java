@@ -10,8 +10,8 @@ import io.github.vampirestudios.tdg.objs.tiles.wood.BookshelfTile;
 import io.github.vampirestudios.tdg.objs.tiles.wood.ChestTile;
 import io.github.vampirestudios.tdg.objs.tiles.wood.LogTile;
 import io.github.vampirestudios.tdg.objs.tiles.wood.PlanksTile;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.Identifier;
 import io.github.vampirestudios.tdg.utils.registry.Registries;
 import org.json.simple.parser.ParseException;
@@ -53,51 +53,51 @@ public class Tiles {
     public static Tile AIR;
 
 
-    public static void init(TutEngine tutEngine) throws IOException, ParseException {
+    public static void init(MaewilEngine maewilEngine) throws IOException, ParseException {
         TileDataParser parser = new TileDataParser();
 
         /*
          * Ground
          */
-        register(GRASS = parser.loadData(new GrassTile(tutEngine)));
-        register(DIRT = parser.loadData(new DirtTile(tutEngine)));
-        register(SAND = parser.loadData(new SandTile(tutEngine)));
-        register(RED_SAND = parser.loadData(new RedSandTile(tutEngine)));
+        register(GRASS = parser.loadData(new GrassTile(maewilEngine)));
+        register(DIRT = parser.loadData(new DirtTile(maewilEngine)));
+        register(SAND = parser.loadData(new SandTile(maewilEngine)));
+        register(RED_SAND = parser.loadData(new RedSandTile(maewilEngine)));
 
         /*
          * Stone
          */
-        register(STONE = parser.loadData(new StoneTile(tutEngine)));
-        register(BROKEN_STONE = parser.loadData(new BrokenStoneTile(tutEngine)));
-        register(ANDESITE = parser.loadData(new AndesiteTile(tutEngine)));
-        register(DIORITE = parser.loadData(new DioriteTile(tutEngine)));
-        register(OBSIDIAN = parser.loadData(new ObsidianTile(tutEngine)));
+        register(STONE = parser.loadData(new StoneTile(maewilEngine)));
+        register(BROKEN_STONE = parser.loadData(new BrokenStoneTile(maewilEngine)));
+        register(ANDESITE = parser.loadData(new AndesiteTile(maewilEngine)));
+        register(DIORITE = parser.loadData(new DioriteTile(maewilEngine)));
+        register(OBSIDIAN = parser.loadData(new ObsidianTile(maewilEngine)));
 
-        register(COAL_ORE = parser.loadData(new CoalOreTile(tutEngine)));
-        register(IRON_ORE = parser.loadData(new IronOreTile(tutEngine)));
-        register(GOLD_ORE = parser.loadData(new GoldOreTile(tutEngine)));
-        register(DIAMOND_ORE = parser.loadData(new DiamondOreTile(tutEngine)));
+        register(COAL_ORE = parser.loadData(new CoalOreTile(maewilEngine)));
+        register(IRON_ORE = parser.loadData(new IronOreTile(maewilEngine)));
+        register(GOLD_ORE = parser.loadData(new GoldOreTile(maewilEngine)));
+        register(DIAMOND_ORE = parser.loadData(new DiamondOreTile(maewilEngine)));
 
         /*
          * Fluid
          */
-        register(WATER = parser.loadData(new WaterTile(tutEngine)));
-        register(LAVA = parser.loadData(new LavaTile(tutEngine)));
+        register(WATER = parser.loadData(new WaterTile(maewilEngine)));
+        register(LAVA = parser.loadData(new LavaTile(maewilEngine)));
 
         /*
          * Wood
          */
-        register(PLANKS = parser.loadData(new PlanksTile(tutEngine)));
-        register(LOG = parser.loadData(new LogTile(tutEngine)));
-        register(BOOKSHELF = parser.loadData(new BookshelfTile(tutEngine)));
-        register(CHEST = parser.loadData(new ChestTile(tutEngine)));
+        register(PLANKS = parser.loadData(new PlanksTile(maewilEngine)));
+        register(LOG = parser.loadData(new LogTile(maewilEngine)));
+        register(BOOKSHELF = parser.loadData(new BookshelfTile(maewilEngine)));
+        register(CHEST = parser.loadData(new ChestTile(maewilEngine)));
 
         /*
          * Other
          */
         register(AIR = parser.loadData(new AirTile(tutEngine)));
 
-        TutLauncher.LOGGER.info("Tiles registered!");
+        MaewilLauncher.LOGGER.info("Tiles registered!");
     }
 
     private static void register(Tile tile) {

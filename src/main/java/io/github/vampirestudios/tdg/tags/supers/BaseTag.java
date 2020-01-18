@@ -1,6 +1,6 @@
 package io.github.vampirestudios.tdg.tags.supers;
 
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.tags.CompoundTag;
 import io.github.vampirestudios.tdg.tags.IntArrayTag;
 import io.github.vampirestudios.tdg.tags.ListTag;
@@ -84,7 +84,7 @@ public abstract class BaseTag {
         entity.setTag("tags", tags);
         baseCompound.setTag("entity", entity);
 
-        TutLauncher.LOGGER.error(baseCompound.toString());
+        MaewilLauncher.LOGGER.error(baseCompound.toString());
         System.exit(0);
     }
 

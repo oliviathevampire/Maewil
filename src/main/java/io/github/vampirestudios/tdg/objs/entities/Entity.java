@@ -12,7 +12,7 @@ import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.LavaTile;
 import io.github.vampirestudios.tdg.objs.tiles.TilePos;
 import io.github.vampirestudios.tdg.objs.tiles.WaterTile;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.tags.CompoundTag;
 import org.newdawn.slick.*;
@@ -27,7 +27,7 @@ public abstract class Entity implements IHasData<Entity> {
     public static final int DEFAULT_WIDTH = 48, DEFAULT_HEIGHT = 48;
 
     private String id;
-    protected TutEngine tutEngine;
+    protected MaewilEngine maewilEngine;
     protected Vector2D position = new Vector2D();
 
     protected int width, height;
@@ -47,8 +47,8 @@ public abstract class Entity implements IHasData<Entity> {
 
     private Animation splashEffect;
 
-    public Entity(TutEngine tutEngine, String id, int width, int height, HitType hitType) {
-        this.tutEngine = tutEngine;
+    public Entity(MaewilEngine maewilEngine, String id, int width, int height, HitType hitType) {
+        this.maewilEngine = maewilEngine;
         this.id = id;
 
         this.width = width;
@@ -74,8 +74,8 @@ public abstract class Entity implements IHasData<Entity> {
     public void updateA(GameContainer container, StateBasedGame game, int delta) {
         update(container, game, delta);
 
-        this.renderX = (int) (this.position.x - this.tutEngine.getCamera().getXOffset());
-        this.renderY = (int) (this.position.y - this.tutEngine.getCamera().getYOffset());
+        this.renderX = (int) (this.position.x - this.maewilEngine.getCamera().getXOffset());
+        this.renderY = (int) (this.position.y - this.maewilEngine.getCamera().getYOffset());
 
         if (this.interacted)
             this.interact();
@@ -88,10 +88,10 @@ public abstract class Entity implements IHasData<Entity> {
     public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
         if (OptionsScreen.OPTIONS.debugMode()) {
             g.setColor(Color.red);
-            g.drawRect(getEntityBounds().x - tutEngine.getCamera().getXOffset(), getEntityBounds().y - tutEngine.getCamera().getYOffset(), getEntityBounds().width, getEntityBounds().height);
+            g.drawRect(getEntityBounds().x - maewilEngine.getCamera().getXOffset(), getEntityBounds().y - maewilEngine.getCamera().getYOffset(), getEntityBounds().width, getEntityBounds().height);
 
             g.setColor(Color.blue);
-            g.drawRect((int) (position.x + getTileBounds().x - tutEngine.getCamera().getXOffset()), (int) (position.y + getTileBounds().y - tutEngine.getCamera().getYOffset()), getTileBounds().width, getTileBounds().height);
+            g.drawRect((int) (position.x + getTileBounds().x - maewilEngine.getCamera().getXOffset()), (int) (position.y + getTileBounds().y - maewilEngine.getCamera().getYOffset()), getTileBounds().width, getTileBounds().height);
         }
     }
 
@@ -118,7 +118,7 @@ public abstract class Entity implements IHasData<Entity> {
     }
 
     private Tile getTileAtMid() {
-        return tutEngine.getWorld().getForegroundTile(getTilePosAtMid().getX(), getTilePosAtMid().getY());
+        return maewilEngine.getWorld().getForegroundTile(getTilePosAtMid().getX(), getTilePosAtMid().getY());
     }
 
     protected boolean inWater() {
@@ -156,7 +156,7 @@ public abstract class Entity implements IHasData<Entity> {
     }
 
     protected boolean checkEntityCollisions(float xOffset, float yOffset) {
-        for (Entity e : tutEngine.getEntityManager().getEntities()) {
+        for (Entity e : maewilEngine.getEntityManager().getEntities()) {
             if (e.equals(this))
                 continue;
             if (e instanceof PlayerEntity && this instanceof PlayerEntity)

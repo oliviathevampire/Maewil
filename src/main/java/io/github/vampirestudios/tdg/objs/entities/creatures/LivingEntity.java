@@ -7,8 +7,8 @@ import io.github.vampirestudios.tdg.objs.entities.ai.Goal;
 import io.github.vampirestudios.tdg.objs.items.Item;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -31,8 +31,8 @@ public abstract class LivingEntity extends Entity {
 
     protected List<Goal> goals = new ArrayList<>();
 
-    public LivingEntity(TutEngine tutEngine, String id, int width, int height) {
-        super(tutEngine, id, width, height, HitType.CREATURE);
+    public LivingEntity(MaewilEngine maewilEngine, String id, int width, int height) {
+        super(maewilEngine, id, width, height, HitType.CREATURE);
         init();
         setCurrentTexture("idle");
 
@@ -89,7 +89,7 @@ public abstract class LivingEntity extends Entity {
         if (drop != null) {
             int amt = NumberUtils.getRandomInt(4);
             for (int i = 0; i < amt; i++)
-                tutEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), (float) (position.x + NumberUtils.getRandomInt(width)) / Tile.TILE_SIZE, (float) (position.y + NumberUtils.getRandomInt(height)) / Tile.TILE_SIZE);
+                maewilEngine.getEntityManager().addItem(new ItemStack(drop.newCopy()), (float) (position.x + NumberUtils.getRandomInt(width)) / Tile.TILE_SIZE, (float) (position.y + NumberUtils.getRandomInt(height)) / Tile.TILE_SIZE);
         }
     }
 
@@ -131,10 +131,10 @@ public abstract class LivingEntity extends Entity {
 
     protected boolean isCollidingWithTile(int x, int y) {
         if (this.getId().equals("player") && OptionsScreen.OPTIONS.debugMode()) {
-            TutLauncher.LOGGER.warn("X: " + x + " Y: " + y);
-            TutLauncher.LOGGER.warn(tutEngine.getWorld().getForegroundTile(x, y).getId() + " - " + tutEngine.getWorld().getForegroundTile(x, y).isSolid());
+            MaewilLauncher.LOGGER.warn("X: " + x + " Y: " + y);
+            MaewilLauncher.LOGGER.warn(maewilEngine.getWorld().getForegroundTile(x, y).getId() + " - " + maewilEngine.getWorld().getForegroundTile(x, y).isSolid());
         }
-        return tutEngine.getWorld().getForegroundTile(x, y).isSolid();
+        return maewilEngine.getWorld().getForegroundTile(x, y).isSolid();
     }
 
     public float getSpeed() {

@@ -6,7 +6,7 @@ import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.statics.NatureEntity;
 import io.github.vampirestudios.tdg.objs.items.Items;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -14,8 +14,8 @@ public class TreeEntity extends NatureEntity {
 
     private TreeType type;
 
-    public TreeEntity(TutEngine tutEngine, TreeType type) {
-        super(tutEngine, "tree", type.getWidth(), type.getHeight(), HitType.WOOD);
+    public TreeEntity(MaewilEngine maewilEngine, TreeType type) {
+        super(maewilEngine, "tree", type.getWidth(), type.getHeight(), HitType.WOOD);
         this.type = type;
         setCurrentTexture(this.type.getId());
 //        setCurrentTextureId(this.type.getId());
@@ -71,6 +71,6 @@ public class TreeEntity extends NatureEntity {
 
     @Override
     public Entity newCopy() {
-        return super.newCopy(new TreeEntity(tutEngine, type));
+        return super.newCopy(new TreeEntity(maewilEngine, type));
     }
 }

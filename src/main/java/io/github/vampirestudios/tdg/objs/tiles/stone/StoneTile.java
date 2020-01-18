@@ -3,7 +3,7 @@ package io.github.vampirestudios.tdg.objs.tiles.stone;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.objs.items.Items;
 import io.github.vampirestudios.tdg.objs.tiles.OverlapTile;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 
 /**
@@ -12,12 +12,12 @@ import io.github.vampirestudios.tdg.world.colormap.WorldColors;
  */
 public class StoneTile extends OverlapTile {
 
-    public StoneTile(TutEngine tutEngine) {
-        this(tutEngine, "stone", true);
+    public StoneTile(MaewilEngine maewilEngine) {
+        this(maewilEngine, "stone", true);
     }
 
-    public StoneTile(TutEngine tutEngine, String id, boolean overlap) {
-        super(tutEngine, Assets.BROKEN_STONE, id, true, TileType.STONE, Assets.BROKEN_STONE_ALTS);
+    public StoneTile(MaewilEngine maewilEngine, String id, boolean overlap) {
+        super(maewilEngine, Assets.BROKEN_STONE, id, true, TileType.STONE, Assets.BROKEN_STONE_ALTS);
         this.setMapColor(WorldColors.STONE);
 
         if (overlap) {
@@ -30,6 +30,6 @@ public class StoneTile extends OverlapTile {
 
     @Override
     public StoneTile newCopy() {
-        return super.newCopy(new StoneTile(tutEngine));
+        return super.newCopy(new StoneTile(maewilEngine));
     }
 }

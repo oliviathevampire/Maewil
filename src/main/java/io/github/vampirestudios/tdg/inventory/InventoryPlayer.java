@@ -2,16 +2,16 @@ package io.github.vampirestudios.tdg.inventory;
 
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class InventoryPlayer extends InventoryAbstractPlayer {
 
-    public InventoryPlayer(TutEngine tutEngine, PlayerEntity player) {
-        super(tutEngine, player, player.getName(), TutLauncher.WIDTH / 2 - 56 * 6 / 2, TutLauncher.HEIGHT / 2 - 7 / 2);
+    public InventoryPlayer(MaewilEngine maewilEngine, PlayerEntity player) {
+        super(maewilEngine, player, player.getName(), MaewilLauncher.WIDTH / 2 - 56 * 6 / 2, MaewilLauncher.HEIGHT / 2 - 7 / 2);
         isDefault = true;
     }
 
@@ -22,8 +22,8 @@ public class InventoryPlayer extends InventoryAbstractPlayer {
             int multiplier = 6;
             int width = 57 * multiplier;
             int height = 41 * multiplier;
-            int x = TutLauncher.WIDTH / 2 - width / 2;
-            int y = TutLauncher.HEIGHT / 2 - height / 2;
+            int x = MaewilLauncher.WIDTH / 2 - width / 2;
+            int y = MaewilLauncher.HEIGHT / 2 - height / 2;
 
             Assets.GUI_INVENTORY.draw(x, y, width, height);
             player.getTexture("idle").draw(x + player.getWidth() / 0.75F, y + player.getHeight() / 1.4f, player.getWidth(), player.getHeight());

@@ -11,8 +11,8 @@ import io.github.vampirestudios.tdg.screen.Screen;
 import io.github.vampirestudios.tdg.screen.ScreenManager;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.screen.options.controls.Keybind;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.world.World;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -31,12 +31,12 @@ public class GameScreen extends Screen {
     private UIManager uiManagerPaused;
     private UIManager uiManagerDead;
 
-    public GameScreen(TutEngine tutEngine, String worldPath, String worldName) {
-        this(tutEngine, worldPath, worldName, null);
+    public GameScreen(MaewilEngine maewilEngine, String worldPath, String worldName) {
+        this(maewilEngine, worldPath, worldName, null);
     }
 
-    public GameScreen(TutEngine tutEngine, String worldPath, String worldName, World newWorld) {
-        super(tutEngine);
+    public GameScreen(MaewilEngine maewilEngine, String worldPath, String worldName, World newWorld) {
+        super(maewilEngine);
         this.worldName = worldName;
 
         uiManagerPaused = new UIManager();
@@ -46,7 +46,7 @@ public class GameScreen extends Screen {
 
         int yOffset = 30;
         uiManagerPaused.addObject(new WidgetTitleRender());
-        uiManagerPaused.addObject(new WidgetButton(tutEngine, true, TutLauncher.HEIGHT / 2 - yOffset, "Resume", new ClickListener() {
+        uiManagerPaused.addObject(new WidgetButton(maewilEngine, true, MaewilLauncher.HEIGHT / 2 - yOffset, "Resume", new ClickListener() {
             @Override
             public void onClick() {
                 paused = false;
@@ -57,10 +57,10 @@ public class GameScreen extends Screen {
             }
         }));
 
-        WidgetButton btnSettings = new WidgetButton(tutEngine, true, TutLauncher.HEIGHT / 2 - yOffset + 30, "Options", new ClickListener() {
+        WidgetButton btnSettings = new WidgetButton(maewilEngine, true, MaewilLauncher.HEIGHT / 2 - yOffset + 30, "Options", new ClickListener() {
             @Override
             public void onClick() {
-                ScreenManager.setCurrentScreen(tutEngine.stateOptions);
+                ScreenManager.setCurrentScreen(maewilEngine.stateOptions);
 
 //                DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options");
             }
@@ -70,24 +70,24 @@ public class GameScreen extends Screen {
             }
         });
 
-        WidgetButton btnMainMenu = new WidgetButton(tutEngine, true, TutLauncher.HEIGHT / 2 + yOffset + 20, "Main Menu", new ClickListener() {
+        WidgetButton btnMainMenu = new WidgetButton(maewilEngine, true, MaewilLauncher.HEIGHT / 2 + yOffset + 20, "Main Menu", new ClickListener() {
             @Override
             public void onClick() {
 //                DiscordHandler.INSTANCE.updatePresence("Main Menu");
                 saveWorld(true);
 
-                ScreenManager.setCurrentScreen(tutEngine.stateMenu);
+                ScreenManager.setCurrentScreen(maewilEngine.stateMenu);
             }
 
             @Override
             public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
-        WidgetButton btnQuit = new WidgetButton(tutEngine, true, TutLauncher.HEIGHT / 2 + yOffset * 3 + 30, "Quit", new ClickListener() {
+        WidgetButton btnQuit = new WidgetButton(maewilEngine, true, MaewilLauncher.HEIGHT / 2 + yOffset * 3 + 30, "Quit", new ClickListener() {
             @Override
             public void onClick() {
                 saveWorld(true);
-                tutEngine.close();
+                maewilEngine.close();
             }
 
             @Override
@@ -107,15 +107,15 @@ public class GameScreen extends Screen {
     @Override
     public void init() {
         paused = false;
-        tutEngine.getPlayer().setX(world.getSpawnX() * Tile.TILE_SIZE);
-        tutEngine.getPlayer().setY(world.getSpawnY() * Tile.TILE_SIZE);
+        maewilEngine.getPlayer().setX(world.getSpawnX() * Tile.TILE_SIZE);
+        maewilEngine.getPlayer().setY(world.getSpawnY() * Tile.TILE_SIZE);
     }
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
-        if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !tutEngine.getPlayer().isDead) {
-            if (!tutEngine.getPlayer().isGuiOpen())
-                paused = !paused && !tutEngine.getPlayer().getInventoryPlayer().isActive();
+        if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !maewilEngine.getPlayer().isDead) {
+            if (!maewilEngine.getPlayer().isGuiOpen())
+                paused = !paused && !maewilEngine.getPlayer().getInventoryPlayer().isActive();
             saveWorld(false);
         }
 
@@ -125,25 +125,25 @@ public class GameScreen extends Screen {
             uiManagerPaused.update(container, game, delta);
 
         if(paused)
-            saveWorld(tutEngine.getUsername());
+            saveWorld(maewilEngine.getUsername());
     }
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
         world.render(container, game, g);
 
-        if (tutEngine.getPlayer().isDead) {
+        if (maewilEngine.getPlayer().isDead) {
             Color tint = new Color(96, 96, 96, 127);
             g.setColor(tint);
-            g.fillRect(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
-            Assets.GUI_DEAD_OVERLAY.draw(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
+            g.fillRect(0, 0, MaewilLauncher.WIDTH, MaewilLauncher.HEIGHT);
+            Assets.GUI_DEAD_OVERLAY.draw(0, 0, MaewilLauncher.WIDTH, MaewilLauncher.HEIGHT);
 
             uiManagerDead.render(container, game, g);
         } else {
             if (paused) {
                 Color tint = new Color(96, 96, 96, 127);
                 g.setColor(tint);
-                g.fillRect(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
+                g.fillRect(0, 0, MaewilLauncher.WIDTH, MaewilLauncher.HEIGHT);
 
                 uiManagerPaused.render(container, game, g);
             }
@@ -151,20 +151,20 @@ public class GameScreen extends Screen {
     }
 
     public void saveWorld(String username) {
-        WorldJsonSaver saver = new WorldJsonSaver("./data/saves/" + worldName, world, tutEngine);
+        WorldJsonSaver saver = new WorldJsonSaver("./data/saves/" + worldName, world, maewilEngine);
         try {
             saver.save(username);
         } catch (IOException e) {
             logger.error(e);
         }
-        tutEngine.setUsername(username);
+        maewilEngine.setUsername(username);
     }
 
     public void saveWorld(boolean stopWorldFU) {
         if (stopWorldFU)
             world.stopUpdateThreads();
 
-        WorldJsonSaver saver = new WorldJsonSaver("./data/saves/" + worldName, world, tutEngine);
+        WorldJsonSaver saver = new WorldJsonSaver("./data/saves/" + worldName, world, maewilEngine);
         try {
             saver.save();
         } catch (IOException e) {
@@ -174,13 +174,13 @@ public class GameScreen extends Screen {
 
     private void setWorld(World world) {
         this.world = world;
-        tutEngine.setWorld(world);
+        maewilEngine.setWorld(world);
         init();
     }
 
     private void setWorld(String worldPath, World newWorld) {
         if (newWorld == null)
-            setWorld(new World(tutEngine, worldPath, worldName));
+            setWorld(new World(maewilEngine, worldPath, worldName));
         else
             setWorld(newWorld);
     }

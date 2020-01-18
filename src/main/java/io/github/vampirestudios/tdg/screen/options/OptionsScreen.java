@@ -11,8 +11,8 @@ import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.Tiles;
 import io.github.vampirestudios.tdg.screen.AbstractMenuScreen;
 import io.github.vampirestudios.tdg.screen.ScreenManager;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -33,25 +33,25 @@ public class OptionsScreen extends AbstractMenuScreen {
 
     private WidgetCheckBox debug, fps, vsync;
 
-    public OptionsScreen(TutEngine tutEngine, boolean initUI) {
-        super(tutEngine, BG, initUI);
+    public OptionsScreen(MaewilEngine maewilEngine, boolean initUI) {
+        super(maewilEngine, BG, initUI);
 
         OPTIONS = new OptionsJsonParser("./data/options.json");
         try {
             OPTIONS.load();
         } catch (IOException | ParseException e) {
-            TutLauncher.LOGGER.error(e);
+            MaewilLauncher.LOGGER.error(e);
         }
 
         if (initUI) {
-            uiManager.addObject(debug = new WidgetCheckBox(new Vector2D(TutLauncher.WIDTH / 2f + 120, 20), 70, OPTIONS.debugMode()));
-            uiManager.addObject(fps = new WidgetCheckBox(new Vector2D(TutLauncher.WIDTH / 2f + 100, 90), 70, OPTIONS.fpsCounter()));
-            uiManager.addObject(vsync = new WidgetCheckBox(new Vector2D(TutLauncher.WIDTH / 2f + 100, 160), 70, OPTIONS.vSync()));
+            uiManager.addObject(debug = new WidgetCheckBox(new Vector2D(MaewilLauncher.WIDTH / 2f + 120, 20), 70, OPTIONS.debugMode()));
+            uiManager.addObject(fps = new WidgetCheckBox(new Vector2D(MaewilLauncher.WIDTH / 2f + 100, 90), 70, OPTIONS.fpsCounter()));
+            uiManager.addObject(vsync = new WidgetCheckBox(new Vector2D(MaewilLauncher.WIDTH / 2f + 100, 160), 70, OPTIONS.vSync()));
 
-            uiManager.addObject(new WidgetButton(tutEngine, true, 243, "Controls", new ClickListener() {
+            uiManager.addObject(new WidgetButton(maewilEngine, true, 243, "Controls", new ClickListener() {
                 @Override
                 public void onClick() {
-                    ScreenManager.setCurrentScreen(tutEngine.controlOptions);
+                    ScreenManager.setCurrentScreen(maewilEngine.controlOptions);
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {
@@ -65,10 +65,10 @@ public class OptionsScreen extends AbstractMenuScreen {
                 }
             }));
 
-            uiManager.addObject(new WidgetButton(tutEngine, true, 322, "Sounds", new ClickListener() {
+            uiManager.addObject(new WidgetButton(maewilEngine, true, 322, "Sounds", new ClickListener() {
                 @Override
                 public void onClick() {
-                    ScreenManager.setCurrentScreen(tutEngine.optionsSpounds);
+                    ScreenManager.setCurrentScreen(maewilEngine.optionsSpounds);
                     try {
                         OPTIONS.load();
                     } catch (IOException | ParseException e) {

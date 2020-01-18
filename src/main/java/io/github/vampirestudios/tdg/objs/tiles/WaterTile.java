@@ -1,7 +1,7 @@
 package io.github.vampirestudios.tdg.objs.tiles;
 
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 
 /**
@@ -10,8 +10,8 @@ import io.github.vampirestudios.tdg.world.colormap.WorldColors;
  */
 public class WaterTile extends OverlapTile {
 
-    public WaterTile(TutEngine tutEngine) {
-        super(tutEngine, Assets.SAND, "water", false, TileType.FLUID, Assets.SAND_ALTS);
+    public WaterTile(MaewilEngine maewilEngine) {
+        super(maewilEngine, Assets.SAND, "water", false, TileType.FLUID, Assets.SAND_ALTS);
         this.setMapColor(WorldColors.WATER);
         this.setConnect("sand", "grass");
         this.setIgnore("water");
@@ -19,6 +19,6 @@ public class WaterTile extends OverlapTile {
 
     @Override
     public WaterTile newCopy() {
-        return super.newCopy(new WaterTile(tutEngine));
+        return super.newCopy(new WaterTile(maewilEngine));
     }
 }

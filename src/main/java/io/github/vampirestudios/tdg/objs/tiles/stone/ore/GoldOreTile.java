@@ -2,7 +2,7 @@ package io.github.vampirestudios.tdg.objs.tiles.stone.ore;
 
 import io.github.vampirestudios.tdg.objs.items.Items;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 
 /**
  * @author CoffeeCatRailway
@@ -10,12 +10,12 @@ import io.github.vampirestudios.tdg.start.TutEngine;
  */
 public class GoldOreTile extends OreTile {
 
-    public GoldOreTile(TutEngine tutEngine) {
-        super(tutEngine, "gold_ore", Items.GOLD_INGOT);
+    public GoldOreTile(MaewilEngine maewilEngine) {
+        super(maewilEngine, "gold_ore", Items.GOLD_INGOT);
     }
 
     @Override
     public Tile newCopy() {
-        return super.newCopy(new GoldOreTile(tutEngine));
+        return super.newCopy(new GoldOreTile(maewilEngine));
     }
 }

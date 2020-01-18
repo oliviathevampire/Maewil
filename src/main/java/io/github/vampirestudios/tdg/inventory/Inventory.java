@@ -4,7 +4,7 @@ import io.github.vampirestudios.tdg.manager.InventoryManager;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public abstract class Inventory {
 
-    protected TutEngine tutEngine;
+    protected MaewilEngine maewilEngine;
     protected PlayerEntity player;
     protected String invName;
 
@@ -23,8 +23,8 @@ public abstract class Inventory {
 
     protected boolean active = false;
 
-    public Inventory(TutEngine tutEngine, PlayerEntity player, String invName) {
-        this.tutEngine = tutEngine;
+    public Inventory(MaewilEngine maewilEngine, PlayerEntity player, String invName) {
+        this.maewilEngine = maewilEngine;
         this.player = player;
         this.invName = invName;
         slots = new ArrayList<>();
@@ -44,7 +44,7 @@ public abstract class Inventory {
         float yOff = Tile.TILE_SIZE + Tile.TILE_SIZE / 4f;
         if (getSlot(selectedIndex).getStack() != null) {
             if (active) {
-                tutEngine.getEntityManager().addItem(getSlot(selectedIndex).remove(), (player.getX() + xOff) / Tile.TILE_SIZE, (player.getY() + yOff) / Tile.TILE_SIZE);
+                maewilEngine.getEntityManager().addItem(getSlot(selectedIndex).remove(), (player.getX() + xOff) / Tile.TILE_SIZE, (player.getY() + yOff) / Tile.TILE_SIZE);
             }
         }
     }

@@ -4,7 +4,7 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.Text;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.ui.WidgetSlider;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -15,21 +15,21 @@ public class SoundOptions extends AbstractOptions {
 
     private WidgetSlider volMusic, volPassive, volHostile, volPlayer, volOther;
 
-    public SoundOptions(TutEngine tutEngineIn) {
-        super(tutEngineIn);
+    public SoundOptions(MaewilEngine maewilEngineIn) {
+        super(maewilEngineIn);
         int width = 200;
         int x = 80, xOff = width + 120;
         int y = 100, yOff = 130;
 
-        uiManager.addObject(volMusic = new WidgetSlider(tutEngineIn, new Vector2D(x, y), width, (int) (OptionsScreen.OPTIONS.getVolumeMusic() * 10)));
+        uiManager.addObject(volMusic = new WidgetSlider(maewilEngineIn, new Vector2D(x, y), width, (int) (OptionsScreen.OPTIONS.getVolumeMusic() * 10)));
 
-        uiManager.addObject(volPassive = new WidgetSlider(tutEngineIn, new Vector2D(x, y + yOff), width, (int) (OptionsScreen.OPTIONS.getVolumePassive() * 10)));
+        uiManager.addObject(volPassive = new WidgetSlider(maewilEngineIn, new Vector2D(x, y + yOff), width, (int) (OptionsScreen.OPTIONS.getVolumePassive() * 10)));
 
-        uiManager.addObject(volHostile = new WidgetSlider(tutEngineIn, new Vector2D(x, y + yOff * 2), width, (int) (OptionsScreen.OPTIONS.getVolumeHostile() * 10)));
+        uiManager.addObject(volHostile = new WidgetSlider(maewilEngineIn, new Vector2D(x, y + yOff * 2), width, (int) (OptionsScreen.OPTIONS.getVolumeHostile() * 10)));
 
-        uiManager.addObject(volPlayer = new WidgetSlider(tutEngineIn, new Vector2D(x + xOff, y), width, (int) (OptionsScreen.OPTIONS.getVolumePlayer() * 10)));
+        uiManager.addObject(volPlayer = new WidgetSlider(maewilEngineIn, new Vector2D(x + xOff, y), width, (int) (OptionsScreen.OPTIONS.getVolumePlayer() * 10)));
 
-        uiManager.addObject(volOther = new WidgetSlider(tutEngineIn, new Vector2D(x + xOff, y + yOff), width, (int) (OptionsScreen.OPTIONS.getVolumeOther() * 10)));
+        uiManager.addObject(volOther = new WidgetSlider(maewilEngineIn, new Vector2D(x + xOff, y + yOff), width, (int) (OptionsScreen.OPTIONS.getVolumeOther() * 10)));
     }
 
     @Override

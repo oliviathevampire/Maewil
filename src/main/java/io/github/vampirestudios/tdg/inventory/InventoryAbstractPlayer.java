@@ -5,8 +5,8 @@ import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.items.IInteractable;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.screen.options.controls.Keybind;
 import org.newdawn.slick.GameContainer;
@@ -21,12 +21,12 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
     protected boolean isDefault = false;
 
-    public InventoryAbstractPlayer(TutEngine tutEngine, PlayerEntity player, String invName) {
-        this(tutEngine, player, invName, 190, 360);
+    public InventoryAbstractPlayer(MaewilEngine maewilEngine, PlayerEntity player, String invName) {
+        this(maewilEngine, player, invName, 190, 360);
     }
 
-    public InventoryAbstractPlayer(TutEngine tutEngine, PlayerEntity player, String invName, int xOff, int yOff) {
-        super(tutEngine, player, invName);
+    public InventoryAbstractPlayer(MaewilEngine maewilEngine, PlayerEntity player, String invName, int xOff, int yOff) {
+        super(maewilEngine, player, invName);
 
         // Add inventory slots
         int x, y;
@@ -43,10 +43,10 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         }
 
         // Add hotbar slots
-        int hxd = (TutLauncher.WIDTH / 2 - width / 2) - width - 6, hx;
+        int hxd = (MaewilLauncher.WIDTH / 2 - width / 2) - width - 6, hx;
         for (int i = 0; i < maxHotbarSize; i++) {
             hx = hxd + 54 * i;
-            Slot s = new Slot(i, hx, TutLauncher.HEIGHT - height - height / 2 + 13, width, height);
+            Slot s = new Slot(i, hx, MaewilLauncher.HEIGHT - height - height / 2 + 13, width, height);
             addSlot(s).setSelector(Assets.GUI_HOTBAR_SELECTER);
         }
     }
@@ -70,10 +70,10 @@ public abstract class InventoryAbstractPlayer extends Inventory {
     public void update(GameContainer container, StateBasedGame game, int delta) {
         if (active) {
             // Change select item
-            boolean up = tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.W).getKeyCode());
-            boolean down = tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.S).getKeyCode());
-            boolean left = tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.A).getKeyCode());
-            boolean right = tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.D).getKeyCode());
+            boolean up = maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.W).getKeyCode());
+            boolean down = maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.S).getKeyCode());
+            boolean left = maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.A).getKeyCode());
+            boolean right = maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.D).getKeyCode());
 
             if (up || down) {
                 inventorySelectedIndex += 6;
@@ -95,7 +95,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
                 if (stack != null) {
                     // Check if item was interacted with
-                    if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.R).getKeyCode())) {
+                    if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.R).getKeyCode())) {
                         if (stack.getItem() instanceof IInteractable)
                             if (((IInteractable) stack.getItem()).onInteracted(player))
                                 stack.setCount(stack.getCount() - 1);
@@ -108,18 +108,18 @@ public abstract class InventoryAbstractPlayer extends Inventory {
             }
 
             // Swap selected stacks
-            if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.Z).getKeyCode()))
+            if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.Z).getKeyCode()))
                 swapSlots(getSlot(inventorySelectedIndex), getSlot(maxSize + hotbarSelectedIndex));
         }
         if (this.active)
-            if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.Q).getKeyCode()))
+            if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.Q).getKeyCode()))
                 dropItem(active, inventorySelectedIndex, hotbarSelectedIndex);
 
-        if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.ONE).getKeyCode()))
+        if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.ONE).getKeyCode()))
             hotbarSelectedIndex = 0;
-        if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.TWO).getKeyCode()))
+        if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.TWO).getKeyCode()))
             hotbarSelectedIndex = 1;
-        if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.THREE).getKeyCode()))
+        if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.THREE).getKeyCode()))
             hotbarSelectedIndex = 2;
         if (hotbarSelectedIndex < maxSize + maxHotbarSize) {
             player.setEquippedItem(getSlot(maxSize + hotbarSelectedIndex).getStack());
@@ -148,9 +148,9 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         int multiplier = 6;
         int width = barWidth * multiplier;
         int height = barHeight * multiplier;
-        int y = TutLauncher.HEIGHT - height - 5;
+        int y = MaewilLauncher.HEIGHT - height - 5;
 
-        Assets.GUI_HOTBAR.draw(TutLauncher.WIDTH / 2f - width / 2f, y, width, height);
+        Assets.GUI_HOTBAR.draw(MaewilLauncher.WIDTH / 2f - width / 2f, y, width, height);
 
         // Render hotbar slots
         for (int i = maxSize; i < maxSize + maxHotbarSize; i++) {
@@ -169,9 +169,9 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         float yOff = Tile.TILE_SIZE + Tile.TILE_SIZE / 4f;
         if (getSlot(inventorySelectedIndex).getStack() != null) {
             if (active) {
-                tutEngine.getEntityManager().addItem(getSlot(inventorySelectedIndex).remove(), (player.getX() + xOff) / Tile.TILE_SIZE, (player.getY() + yOff) / Tile.TILE_SIZE);
+                maewilEngine.getEntityManager().addItem(getSlot(inventorySelectedIndex).remove(), (player.getX() + xOff) / Tile.TILE_SIZE, (player.getY() + yOff) / Tile.TILE_SIZE);
             } else {
-                tutEngine.getEntityManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), (player.getX() + xOff) / Tile.TILE_SIZE, (player.getY() + yOff) / Tile.TILE_SIZE);
+                maewilEngine.getEntityManager().addItem(getSlot(hotbarSelectedIndex + maxHotbarSize).remove(), (player.getX() + xOff) / Tile.TILE_SIZE, (player.getY() + yOff) / Tile.TILE_SIZE);
             }
         }
     }
@@ -288,11 +288,11 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
     @Override
     public void onOpen() {
-        copyItems(tutEngine.getPlayer().getInventoryPlayer(), this, false);
+        copyItems(maewilEngine.getPlayer().getInventoryPlayer(), this, false);
     }
 
     @Override
     public void onClose() {
-        copyItems(this, tutEngine.getPlayer().getInventoryPlayer(), false);
+        copyItems(this, maewilEngine.getPlayer().getInventoryPlayer(), false);
     }
 }

@@ -1,17 +1,21 @@
 package io.github.vampirestudios.tdg.utils;
 
+import com.google.gson.*;
+import com.sun.istack.internal.Nullable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.apache.commons.lang3.StringUtils;
+
+import java.lang.reflect.Type;
 
 public class Identifier {
 
     protected final String namespace;
     protected final String path;
 
-    protected Identifier(String[] strings_1) {
-        this.namespace = StringUtils.isEmpty(strings_1[0]) ? "tut" : strings_1[0];
-        this.path = strings_1[1];
+    protected Identifier(String[] id) {
+        this.namespace = StringUtils.isEmpty(id[0]) ? "maewil" : id[0];
+        this.path = id[1];
         if (!isNamespaceValid(this.namespace)) {
             throw new InvalidIdentifierException("Non [a-z0-9_.-] character in namespace of location: " + this.namespace + ':' + this.path);
         } else if (!isPathValid(this.path)) {
@@ -19,29 +23,38 @@ public class Identifier {
         }
     }
 
-    public Identifier(String string) {
-        this(split(string, ':'));
+    public Identifier(String id) {
+        this(split(id, ':'));
     }
 
-    public Identifier(String string_1, String string_2) {
-        this(new String[]{string_1, string_2});
+    public Identifier(String namespace, String path) {
+        this(new String[]{namespace, path});
     }
 
-    public static Identifier splitOn(String string_1, char char_1) {
-        return new Identifier(split(string_1, char_1));
+    public static Identifier splitOn(String id, char delimiter) {
+        return new Identifier(split(id, delimiter));
     }
 
-    private static String[] split(String string_1, char char_1) {
-        String[] strings_1 = new String[]{"tut", string_1};
-        int int_1 = string_1.indexOf(char_1);
-        if (int_1 >= 0) {
-            strings_1[1] = string_1.substring(int_1 + 1);
-            if (int_1 >= 1) {
-                strings_1[0] = string_1.substring(0, int_1);
+    @Nullable
+    public static Identifier tryParse(String id) {
+        try {
+            return new Identifier(id);
+        } catch (InvalidIdentifierException var2) {
+            return null;
+        }
+    }
+
+    protected static String[] split(String id, char delimiter) {
+        String[] strings = new String[]{"maewil", id};
+        int i = id.indexOf(delimiter);
+        if (i >= 0) {
+            strings[1] = id.substring(i + 1);
+            if (i >= 1) {
+                strings[0] = id.substring(0, i);
             }
         }
 
-        return strings_1;
+        return strings;
     }
 
     public String getPath() {
@@ -52,22 +65,26 @@ public class Identifier {
         return this.namespace;
     }
 
+    public String toString() {
+        return this.namespace + ':' + this.path;
+    }
+
     public String toAssetsString() {
-        return String.format("/assets/%s/%s", namespace, path);
+        return "/assets/" + this.namespace + "/" + this.path;
     }
 
     public String toDataString() {
-        return String.format("/data/%s/%s", namespace, path);
+        return "/data/" + this.namespace + "/" + this.path;
     }
 
-    public boolean equals(Object object_1) {
-        if (this == object_1) {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
-        } else if (!(object_1 instanceof Identifier)) {
+        } else if (!(object instanceof Identifier)) {
             return false;
         } else {
-            Identifier identifier_1 = (Identifier)object_1;
-            return this.namespace.equals(identifier_1.namespace) && this.path.equals(identifier_1.path);
+            Identifier identifier = (Identifier)object;
+            return this.namespace.equals(identifier.namespace) && this.path.equals(identifier.path);
         }
     }
 
@@ -75,31 +92,41 @@ public class Identifier {
         return 31 * this.namespace.hashCode() + this.path.hashCode();
     }
 
-    public int method_12833(Identifier identifier_1) {
-        int int_1 = this.path.compareTo(identifier_1.path);
-        if (int_1 == 0) {
-            int_1 = this.namespace.compareTo(identifier_1.namespace);
+    public int compareTo(Identifier identifier) {
+        int i = this.path.compareTo(identifier.path);
+        if (i == 0) {
+            i = this.namespace.compareTo(identifier.namespace);
         }
 
-        return int_1;
+        return i;
     }
 
-    public static boolean isCharValid(char char_1) {
-        return char_1 >= '0' && char_1 <= '9' || char_1 >= 'a' && char_1 <= 'z' || char_1 == '_' || char_1 == ':' || char_1 == '/' || char_1 == '.' || char_1 == '-';
+    public static boolean isCharValid(char c) {
+        return c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c == '_' || c == ':' || c == '/' || c == '.' || c == '-';
     }
 
-    private static boolean isPathValid(String string_1) {
-        return string_1.chars().allMatch((int_1) -> int_1 == 95 || int_1 == 45 || int_1 >= 97 && int_1 <= 122 || int_1 >= 48 && int_1 <= 57 || int_1 == 47 || int_1 == 46);
+    private static boolean isPathValid(String path) {
+        return path.chars().allMatch((c) -> c == 95 || c == 45 || c >= 97 && c <= 122 || c >= 48 && c <= 57 || c == 47 || c == 46);
     }
 
-    private static boolean isNamespaceValid(String string_1) {
-        return string_1.chars().allMatch((int_1) -> int_1 == 95 || int_1 == 45 || int_1 >= 97 && int_1 <= 122 || int_1 >= 48 && int_1 <= 57 || int_1 == 46);
+    private static boolean isNamespaceValid(String namespace) {
+        return namespace.chars().allMatch((c) -> c == 95 || c == 45 || c >= 97 && c <= 122 || c >= 48 && c <= 57 || c == 46);
     }
 
     @Environment(EnvType.CLIENT)
-    public static boolean isValid(String string_1) {
-        String[] strings_1 = split(string_1, ':');
-        return isNamespaceValid(StringUtils.isEmpty(strings_1[0]) ? "tut" : strings_1[0]) && isPathValid(strings_1[1]);
+    public static boolean isValid(String id) {
+        String[] strings = split(id, ':');
+        return isNamespaceValid(StringUtils.isEmpty(strings[0]) ? "maewil" : strings[0]) && isPathValid(strings[1]);
+    }
+
+    public static class Serializer implements JsonDeserializer<Identifier>, JsonSerializer<Identifier> {
+        public Identifier deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+            return new Identifier(JsonHelper.asString(jsonElement, "location"));
+        }
+
+        public JsonElement serialize(Identifier identifier, Type type, JsonSerializationContext jsonSerializationContext) {
+            return new JsonPrimitive(identifier.toString());
+        }
     }
 
 }

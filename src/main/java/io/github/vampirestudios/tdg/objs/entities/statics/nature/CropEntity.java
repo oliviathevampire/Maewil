@@ -4,7 +4,7 @@ import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.statics.NatureEntity;
 import io.github.vampirestudios.tdg.objs.items.Item;
 import io.github.vampirestudios.tdg.objs.items.Items;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -13,8 +13,8 @@ public class CropEntity extends NatureEntity {
 
     private CropType type;
 
-    public CropEntity(TutEngine tutEngine, CropType type) {
-        super(tutEngine, "crop", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, HitType.BUSH);
+    public CropEntity(MaewilEngine maewilEngine, CropType type) {
+        super(maewilEngine, "crop", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, HitType.BUSH);
         isCollidable = false;
         setCurrentTexture(type.getId());
         this.type = type;
@@ -59,6 +59,6 @@ public class CropEntity extends NatureEntity {
 
     @Override
     public Entity newCopy() {
-        return super.newCopy(new CropEntity(tutEngine, type));
+        return super.newCopy(new CropEntity(maewilEngine, type));
     }
 }

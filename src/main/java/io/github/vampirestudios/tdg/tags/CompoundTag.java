@@ -1,6 +1,6 @@
 package io.github.vampirestudios.tdg.tags;
 
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.tags.primitive.IntTag;
 import io.github.vampirestudios.tdg.tags.primitive.DoubleTag;
 import io.github.vampirestudios.tdg.tags.primitive.FloatTag;
@@ -149,7 +149,7 @@ public class CompoundTag extends BaseTag {
                 return ((PrimitiveTag) this.tagMap.get(key)).getInt();
             }
         } catch (ClassCastException classcastexception) {
-            TutLauncher.LOGGER.error(classcastexception);
+            MaewilLauncher.LOGGER.error(classcastexception);
             throw classcastexception;
         }
 
@@ -165,7 +165,7 @@ public class CompoundTag extends BaseTag {
                 return ((PrimitiveTag) this.tagMap.get(key)).getFloat();
             }
         } catch (ClassCastException classcastexception) {
-            TutLauncher.LOGGER.error(classcastexception);
+            MaewilLauncher.LOGGER.error(classcastexception);
             throw classcastexception;
         }
 
@@ -181,7 +181,7 @@ public class CompoundTag extends BaseTag {
                 return ((PrimitiveTag) this.tagMap.get(key)).getDouble();
             }
         } catch (ClassCastException classcastexception) {
-            TutLauncher.LOGGER.error(classcastexception);
+            MaewilLauncher.LOGGER.error(classcastexception);
             throw classcastexception;
         }
 
@@ -197,7 +197,7 @@ public class CompoundTag extends BaseTag {
                 return this.tagMap.get(key).getString();
             }
         } catch (ClassCastException classcastexception) {
-            TutLauncher.LOGGER.error(classcastexception);
+            MaewilLauncher.LOGGER.error(classcastexception);
             throw classcastexception;
         }
 
@@ -213,7 +213,7 @@ public class CompoundTag extends BaseTag {
                 return ((IntArrayTag) this.tagMap.get(key)).getIntArray();
             }
         } catch (ClassCastException classcastexception) {
-            TutLauncher.LOGGER.error(classcastexception);
+            MaewilLauncher.LOGGER.error(classcastexception);
             throw classcastexception;
         }
 
@@ -229,7 +229,7 @@ public class CompoundTag extends BaseTag {
                 return ((FloatArrayTag) this.tagMap.get(key)).getFloatArray();
             }
         } catch (ClassCastException classcastexception) {
-            TutLauncher.LOGGER.error(classcastexception);
+            MaewilLauncher.LOGGER.error(classcastexception);
             throw classcastexception;
         }
 
@@ -245,7 +245,7 @@ public class CompoundTag extends BaseTag {
                 return ((DoubleArrayTag) this.tagMap.get(key)).getDoubleArray();
             }
         } catch (ClassCastException classcastexception) {
-            TutLauncher.LOGGER.error(classcastexception);
+            MaewilLauncher.LOGGER.error(classcastexception);
             throw classcastexception;
         }
 
@@ -262,7 +262,7 @@ public class CompoundTag extends BaseTag {
                 return (CompoundTag) this.tagMap.get(key);
             }
         } catch (ClassCastException classcastexception) {
-            TutLauncher.LOGGER.error(classcastexception);
+            MaewilLauncher.LOGGER.error(classcastexception);
             throw classcastexception;
         }
 
@@ -284,7 +284,7 @@ public class CompoundTag extends BaseTag {
                 return tagList;
             }
         } catch (ClassCastException classcastexception) {
-            TutLauncher.LOGGER.error(classcastexception);
+            MaewilLauncher.LOGGER.error(classcastexception);
             throw classcastexception;
         }
 
@@ -301,7 +301,7 @@ public class CompoundTag extends BaseTag {
                 return ((BooleanTag) this.tagMap.get(key)).isData();
             }
         } catch (ClassCastException classcastexception) {
-            TutLauncher.LOGGER.error(classcastexception);
+            MaewilLauncher.LOGGER.error(classcastexception);
             throw classcastexception;
         }
 

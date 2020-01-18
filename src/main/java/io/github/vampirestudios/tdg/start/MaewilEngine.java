@@ -22,6 +22,7 @@ import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.screen.options.SoundOptions;
 import io.github.vampirestudios.tdg.screen.options.controls.ControlOptions;
 import io.github.vampirestudios.tdg.utils.Colors;
+import io.github.vampirestudios.tdg.utils.DiscordHandler;
 import io.github.vampirestudios.tdg.world.World;
 import org.json.simple.parser.ParseException;
 import org.lwjgl.BufferUtils;
@@ -41,9 +42,9 @@ import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TutEngine extends BasicGameState {
+public class MaewilEngine extends BasicGameState {
 
-    public static TutEngine INSTANCE;
+    public static MaewilEngine INSTANCE;
     private int fps;
 
     /*
@@ -75,13 +76,13 @@ public class TutEngine extends BasicGameState {
     private Camera camera;
     private World world;
 
-    public TutEngine() {
+    public MaewilEngine() {
         INSTANCE = this;
     }
 
     @Override
     public int getID() {
-        return TutLauncher.ID_GAME;
+        return MaewilLauncher.ID_GAME;
     }
 
     @Override
@@ -100,10 +101,9 @@ public class TutEngine extends BasicGameState {
         }
 
         keyManager = new KeyManager();
-        boolean initOptionsUI = true;
-        stateOptions = new OptionsScreen(this, initOptionsUI);
+        stateOptions = new OptionsScreen(this, true);
 
-//        DiscordHandler.INSTANCE.setup();
+        DiscordHandler.INSTANCE.setup();
         camera = new Camera(this, 0, 0);
 
         stateMenu = new TitleScreen(this);
@@ -184,20 +184,20 @@ public class TutEngine extends BasicGameState {
             GL11.glReadBuffer(GL11.GL_FRONT);
             int colors = 4;
 
-            ByteBuffer buf = BufferUtils.createByteBuffer(TutLauncher.WIDTH * TutLauncher.HEIGHT * colors);
-            GL11.glReadPixels(0, 0,TutLauncher.WIDTH, TutLauncher.HEIGHT, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buf);
+            ByteBuffer buf = BufferUtils.createByteBuffer(MaewilLauncher.WIDTH * MaewilLauncher.HEIGHT * colors);
+            GL11.glReadPixels(0, 0, MaewilLauncher.WIDTH, MaewilLauncher.HEIGHT, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buf);
 
-            BufferedImage image = new BufferedImage(TutLauncher.WIDTH, TutLauncher.HEIGHT, BufferedImage.TYPE_INT_RGB);
+            BufferedImage image = new BufferedImage(MaewilLauncher.WIDTH, MaewilLauncher.HEIGHT, BufferedImage.TYPE_INT_RGB);
 
-            for (int x = 0; x < TutLauncher.WIDTH; x++) {
-                for (int y = 0; y < TutLauncher.HEIGHT; y++) {
-                    int i = (x + (y * TutLauncher.WIDTH)) * colors;
+            for (int x = 0; x < MaewilLauncher.WIDTH; x++) {
+                for (int y = 0; y < MaewilLauncher.HEIGHT; y++) {
+                    int i = (x + (y * MaewilLauncher.WIDTH)) * colors;
 
                     int r = buf.get(i) & 0xFF;
                     int g = buf.get(i + 1) & 0xFF;
                     int b = buf.get(i + 2) & 0xFF;
 
-                    image.setRGB(x, TutLauncher.HEIGHT - (y + 1), Colors.rgb(r, g, b));
+                    image.setRGB(x, MaewilLauncher.HEIGHT - (y + 1), Colors.rgb(r, g, b));
                 }
             }
 
@@ -209,7 +209,7 @@ public class TutEngine extends BasicGameState {
             File file = new File(dir, new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss").format(new Date()) + ".png");
             ImageIO.write(image, "png", file);
 
-            TutLauncher.LOGGER.info("Saved screenshot to " + file);
+            MaewilLauncher.LOGGER.info("Saved screenshot to " + file);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -218,7 +218,7 @@ public class TutEngine extends BasicGameState {
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
         g.clear();
-        Assets.MISSING_TEXTURE.draw(0, 0, TutLauncher.WIDTH, TutLauncher.HEIGHT);
+        Assets.MISSING_TEXTURE.draw(0, 0, MaewilLauncher.WIDTH, MaewilLauncher.HEIGHT);
 
         if (ScreenManager.getCurrentScreen() != null) {
             ScreenManager.getCurrentScreen().render(container, game, g);
