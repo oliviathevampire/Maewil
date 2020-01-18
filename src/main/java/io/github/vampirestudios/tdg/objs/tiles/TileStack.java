@@ -9,8 +9,7 @@ public class TileStack {
     }
 
     public TileStack copy() {
-        TileStack tileStack = new TileStack(this.tile);
-        return tileStack;
+        return new TileStack(this.tile);
     }
 
     public Tile getTile() {

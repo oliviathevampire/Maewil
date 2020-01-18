@@ -150,9 +150,8 @@ public class UITestingScreen extends Screen {
 
         uiManager.addObject(uiDropDown = new WidgetDropDown(10, (float) (uiTextBox.getPosition().y + uiTextBox.getHeight() + 10), 350, "Dropdown Menu"));
         uiDropDown.add("Item1");
-        uiDropDown.add("Item2", Tiles.GLITCH.getAnimation());
-        uiDropDown.add("Item3", Entities.PIG.getTextures().get("idle"), NEW_LIST_CLICK);
-        uiDropDown.add("Item4", Entities.FOX.getTextures().get("idle"), new ClickListener() {
+        uiDropDown.add("Item2", Entities.PIG.getTextures().get("idle"), NEW_LIST_CLICK);
+        uiDropDown.add("Item3", Entities.FOX.getTextures().get("idle"), new ClickListener() {
             @Override
             public void onClick() {
                 uiDropDown.swapTheme();

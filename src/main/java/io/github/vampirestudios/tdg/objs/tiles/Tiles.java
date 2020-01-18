@@ -51,7 +51,6 @@ public class Tiles {
      * Other
      */
     public static Tile AIR;
-    public static Tile GLITCH;
 
 
     public static void init(TutEngine tutEngine) throws IOException, ParseException {
@@ -97,7 +96,6 @@ public class Tiles {
          * Other
          */
         register(AIR = parser.loadData(new AirTile(tutEngine)));
-        register(GLITCH = parser.loadData(new GlitchTile(tutEngine)));
 
         TutLauncher.LOGGER.info("Tiles registered!");
     }
