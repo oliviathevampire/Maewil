@@ -230,7 +230,7 @@ public class Assets {
     public static void init() {
         logger = new CatLogger("Maewil-Assets");
 
-        MISSING_TEXTURE = getImage("/assets/maewil/textures/missing.png");
+        MISSING_TEXTURE = getImage(new Identifier("maewil:textures/missing.png"));
 
         /* Sprite Sheets */
         effectSheet = new SpriteSheet(new Identifier("maewil:textures/effect.png"));
@@ -304,12 +304,6 @@ public class Assets {
         SpriteSheet sheet = new SpriteSheet(identifier);
         return getSpriteExact(sheet, 0, 0, sheet.getWidth(), sheet.getHeight());
     }
-
-    public static Image getImage(String identifier) {
-        SpriteSheet sheet = new SpriteSheet(identifier);
-        return getSpriteExact(sheet, 0, 0, sheet.getWidth(), sheet.getHeight());
-    }
-
     public static Image getSpriteExact(Identifier identifier, int indexX, int indexY, int width, int height) {
         return getSpriteExact(new SpriteSheet(identifier), indexX, indexY, width, height);
     }

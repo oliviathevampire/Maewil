@@ -66,8 +66,8 @@
     "entity.cow": "Moo Cow",
     "entity.crop_carrot": "Carrots",
     "entity.crop_wheat": "Wheat Crop",
-    "entity.crop_potato": "Potatos",
-    "entity.crop_tomato": "Tamato Plant",
+    "entity.crop_potato": "Potatoes",
+    "entity.crop_tomato": "Tomato Plant",
     "entity.crop_corn": "Corn Crop",
     "entity.extra_life": "Heart",
     "entity.fox": "Fox (Corgi)",
@@ -83,5 +83,5 @@
     "entity.tree_large": "Fat Tree",
     "entity.tree_extra_large": "Giant Tree",
     "entity.ultimate": "The Ultimate",
-    "entity.zombie": "Zombo"
+    "entity.zombie": "Zombie"
 }

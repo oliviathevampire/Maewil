@@ -17,13 +17,14 @@ public class ImageLoader {
                 MaewilLauncher.LOGGER.error(new Exception("Can't find texture: " + identifier.toAssetsString()));
             }
 
-            Image image = new Image(file, "/assets/maewil/" + identifier.getPath(), false);
+            Image image = new Image(file, "/assets/" + identifier.getNamespace() + "/" + identifier.getPath(), false);
             image.setFilter(Image.FILTER_NEAREST);
             return image;
         } catch (SlickException e) {
+            System.out.println("Can't find " + identifier.toAssetsString());
             MaewilLauncher.LOGGER.error(e);
+            return null;
         }
-        return null;
     }
 
     public static Image loadImage(String path) {
@@ -39,7 +40,7 @@ public class ImageLoader {
             return image;
         } catch (SlickException e) {
             MaewilLauncher.LOGGER.error(e);
+            return null;
         }
-        return null;
     }
 }
