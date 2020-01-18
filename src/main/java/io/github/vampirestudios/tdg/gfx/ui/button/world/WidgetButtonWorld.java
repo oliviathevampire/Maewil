@@ -1,7 +1,7 @@
 package io.github.vampirestudios.tdg.gfx.ui.button.world;
 
 import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButton;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -11,15 +11,15 @@ import org.newdawn.slick.state.StateBasedGame;
  */
 public class WidgetButtonWorld extends WidgetButton {
 
-    public WidgetButtonWorld(TutEngine tutEngine, float y, int index) {
-        this(tutEngine, y, index, "");
+    public WidgetButtonWorld(MaewilEngine maewilEngine, float y, int index) {
+        this(maewilEngine, y, index, "");
     }
 
-    public WidgetButtonWorld(TutEngine tutEngine, float y, int index, String path) {
-        super(tutEngine, true, (int) y, "New Game", null);
+    public WidgetButtonWorld(MaewilEngine maewilEngine, float y, int index, String path) {
+        super(maewilEngine, true, (int) y, "New Game", null);
         String savesPath = "./data/saves/";
         String path1 = savesPath + path;
-        this.listener = new WorldButtonClickListener(tutEngine, path1, savesPath, index);
+        this.listener = new WorldButtonClickListener(maewilEngine, path1, savesPath, index);
     }
 
     @Override

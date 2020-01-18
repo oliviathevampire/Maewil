@@ -4,24 +4,24 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import io.github.vampirestudios.tdg.gfx.ui.button.world.WidgetButtonWorld;
 import io.github.vampirestudios.tdg.jsonparsers.SavedGamesJSONParser;
 import io.github.vampirestudios.tdg.screen.AbstractMenuScreen;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class SelectGameScreen extends AbstractMenuScreen {
 
-    public SelectGameScreen(TutEngine tutEngine) {
-        super(tutEngine, CENTRE_GRASS);
+    public SelectGameScreen(MaewilEngine maewilEngine) {
+        super(maewilEngine, CENTRE_GRASS);
 
         int btnHeight = 64;
-        int y = TutLauncher.HEIGHT / 2 - btnHeight / 2 + 25;
+        int y = MaewilLauncher.HEIGHT / 2 - btnHeight / 2 + 25;
         float yOff = 25 * 3f;
 
         for (int i = 0; i < SavedGamesJSONParser.SAVE_CAPACITY; i++) {
             String worldName = "New_World_" + NumberUtils.getRandomInt(1000);
-            uiManager.addObject(new WidgetButtonWorld(tutEngine, y + yOff * i, i, worldName));
+            uiManager.addObject(new WidgetButtonWorld(maewilEngine, y + yOff * i, i, worldName));
         }
     }
 

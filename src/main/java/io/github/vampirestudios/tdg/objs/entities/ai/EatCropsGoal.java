@@ -4,7 +4,7 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.creatures.LivingEntity;
 import io.github.vampirestudios.tdg.objs.entities.statics.nature.CropEntity;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.tags.ListTag;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
@@ -22,12 +22,12 @@ public class EatCropsGoal extends Goal {
     private float maxDistance, speed;
     private List<String> cropIds = new ArrayList<>();
 
-    public EatCropsGoal(TutEngine tutEngine, LivingEntity entity) {
-        this(tutEngine, entity, 300f, 2.0f);
+    public EatCropsGoal(MaewilEngine maewilEngine, LivingEntity entity) {
+        this(maewilEngine, entity, 300f, 2.0f);
     }
 
-    public EatCropsGoal(TutEngine tutEngine, LivingEntity entity, float maxDistance, float speed) {
-        super(tutEngine, entity);
+    public EatCropsGoal(MaewilEngine maewilEngine, LivingEntity entity, float maxDistance, float speed) {
+        super(maewilEngine, entity);
         this.maxDistance = maxDistance;
         this.speed = speed;
     }
@@ -86,7 +86,7 @@ public class EatCropsGoal extends Goal {
         CropEntity closest = null;
         float lastDistance = maxDistance;
 
-        for (Entity e : tutEngine.getEntityManager().getEntities()) {
+        for (Entity e : maewilEngine.getEntityManager().getEntities()) {
             if (e instanceof CropEntity) {
                 CropEntity crop = (CropEntity) e;
                 float dist = getDistance(entity, crop);

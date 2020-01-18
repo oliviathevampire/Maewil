@@ -3,7 +3,7 @@ package io.github.vampirestudios.tdg.objs;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.Identifier;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -27,14 +27,14 @@ public abstract class DataParser<E extends IHasData<E>> {
     }
 
     public E loadData(E obj) throws IOException, ParseException {
-        JSONObject data = getData(new Identifier("tut", dataFolderName + "/" + obj.getId()), true);
+        JSONObject data = getData(new Identifier("maewil", dataFolderName + "/" + obj.getId()), true);
 
         E custom = customLoadData(data, obj);
         if (custom != null) {
             return custom;
         } else {
             DataTypes.TileItemTexture type = DataTypes.TileItemTexture.getByName(String.valueOf(data.get("type")));
-            Identifier texturePath = new Identifier("tut", "textures/" + data.get("texture"));
+            Identifier texturePath = new Identifier("maewil", "textures/" + data.get("texture"));
             int spriteSize = NumberUtils.parseInt(data.get("size"));
             logger.info("Loading object of type [" + type + "-" + type.typeName + "] with id [" + obj.getName() + "]");
 
@@ -75,7 +75,7 @@ public abstract class DataParser<E extends IHasData<E>> {
 
     private static JSONObject getData(Identifier fileName, boolean inJar) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        Identifier path = new Identifier("tut", fileName.getPath() + ".json");
+        Identifier path = new Identifier("maewil", fileName.getPath() + ".json");
         if (inJar) {
             return (JSONObject) parser.parse(FileUtils.loadFileInSideJar(path.toDataString()));
         } else {
@@ -87,7 +87,7 @@ public abstract class DataParser<E extends IHasData<E>> {
         try {
             return getData(fileName, inJar);
         } catch (IOException | ParseException e) {
-            TutLauncher.LOGGER.error(e.getMessage());
+            MaewilLauncher.LOGGER.error(e.getMessage());
             return new JSONObject();
         }
     }

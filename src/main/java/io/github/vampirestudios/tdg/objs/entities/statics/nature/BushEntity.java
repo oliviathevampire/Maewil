@@ -4,14 +4,14 @@ import coffeecatteam.coffeecatutils.position.AABB;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.statics.NatureEntity;
 import io.github.vampirestudios.tdg.objs.items.Items;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 
 public class BushEntity extends NatureEntity {
 
     private RockEntity.RockType type;
 
-    public BushEntity(TutEngine tutEngine, RockEntity.RockType type) {
-        super(tutEngine, "bush", type.getWidth(), type.getHeight(), HitType.BUSH);
+    public BushEntity(MaewilEngine maewilEngine, RockEntity.RockType type) {
+        super(maewilEngine, "bush", type.getWidth(), type.getHeight(), HitType.BUSH);
         setCurrentTexture(type.getId());
         this.type = type;
         this.isCollidable = false;
@@ -32,6 +32,6 @@ public class BushEntity extends NatureEntity {
 
     @Override
     public Entity newCopy() {
-        return super.newCopy(new BushEntity(tutEngine, type));
+        return super.newCopy(new BushEntity(maewilEngine, type));
     }
 }

@@ -1,17 +1,17 @@
 package io.github.vampirestudios.tdg.objs.items;
 
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 
 public class CoinItem extends Item {
 
     private float worth;
 
-    public CoinItem(TutEngine tutEngine, String id) {
-        this(tutEngine, id, 0.00f);
+    public CoinItem(MaewilEngine maewilEngine, String id) {
+        this(maewilEngine, id, 0.00f);
     }
 
-    public CoinItem(TutEngine tutEngine, String id, float worth) {
-        super(tutEngine, id);
+    public CoinItem(MaewilEngine maewilEngine, String id, float worth) {
+        super(maewilEngine, id);
         this.worth = worth;
     }
 
@@ -35,6 +35,6 @@ public class CoinItem extends Item {
 
     @Override
     public CoinItem newCopy() {
-        return super.newCopy(new CoinItem(tutEngine, id, worth));
+        return super.newCopy(new CoinItem(maewilEngine, id, worth));
     }
 }

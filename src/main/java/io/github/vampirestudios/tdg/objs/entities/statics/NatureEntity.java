@@ -4,7 +4,7 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import io.github.vampirestudios.tdg.objs.items.Item;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -20,8 +20,8 @@ public abstract class NatureEntity extends StaticEntity {
 
     protected List<Item> drops = new ArrayList<>();
 
-    public NatureEntity(TutEngine tutEngine, String id, int width, int height, HitType hitType) {
-        super(tutEngine, id, width, height, hitType);
+    public NatureEntity(MaewilEngine maewilEngine, String id, int width, int height, HitType hitType) {
+        super(maewilEngine, id, width, height, hitType);
     }
 
     @Override
@@ -36,7 +36,7 @@ public abstract class NatureEntity extends StaticEntity {
         for (Item item : drops) {
             int amt = NumberUtils.getRandomInt(3);
             for (int i = 0; i < amt; i++)
-                tutEngine.getEntityManager().addItem(new ItemStack(item.newCopy()), (float) (position.x + NumberUtils.getRandomInt(width)) / Tile.TILE_SIZE, (float) (position.y + NumberUtils.getRandomInt(height)) / Tile.TILE_SIZE);
+                maewilEngine.getEntityManager().addItem(new ItemStack(item.newCopy()), (float) (position.x + NumberUtils.getRandomInt(width)) / Tile.TILE_SIZE, (float) (position.y + NumberUtils.getRandomInt(height)) / Tile.TILE_SIZE);
         }
     }
 

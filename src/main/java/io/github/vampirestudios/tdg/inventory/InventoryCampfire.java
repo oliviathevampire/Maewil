@@ -6,8 +6,8 @@ import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.items.Item;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.items.Items;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.screen.options.controls.Keybind;
 import io.github.vampirestudios.tdg.tags.CompoundTag;
@@ -19,11 +19,11 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class InventoryCampfire extends InventoryAbstractPlayer {
 
-    private Image flame = Assets.getSpriteExact(new Identifier("tut", "textures/gui/inventory/campfire.png"), 57, 0, 16, 15);
+    private Image flame = Assets.getSpriteExact(new Identifier("maewil", "textures/gui/inventory/campfire.png"), 57, 0, 16, 15);
     private CompoundTag TAGS;
 
-    public InventoryCampfire(TutEngine tutEngine, PlayerEntity player, CompoundTag TAGS) {
-        super(tutEngine, player, "Campfire", 190, 370);
+    public InventoryCampfire(MaewilEngine maewilEngine, PlayerEntity player, CompoundTag TAGS) {
+        super(maewilEngine, player, "Campfire", 190, 370);
         this.TAGS = TAGS;
 
         int y = 266;
@@ -62,7 +62,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
         super.update(container, game, delta);
 
         if (active) {
-            if (tutEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.X).getKeyCode())) {
+            if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.X).getKeyCode())) {
                 //if (slots.get(getInventorySelectedIndex()).getStack() == null || slots.get(getInventorySelectedIndex()).getStack().getItem() instanceof FoodItem) {
                 swapSlots(slots.get(slots.size() - 1), slots.get(getInventorySelectedIndex()));
                 //}
@@ -76,8 +76,8 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
             int multiplier = 6;
             int width = 57 * multiplier;
             int height = 44 * multiplier;
-            int x = TutLauncher.WIDTH / 2 - width / 2;
-            int y = TutLauncher.HEIGHT / 2 - height / 2;
+            int x = MaewilLauncher.WIDTH / 2 - width / 2;
+            int y = MaewilLauncher.HEIGHT / 2 - height / 2;
 
             Assets.GUI_CAMPFIRE_INVENTORY.draw(x, y, width, height);
 

@@ -4,7 +4,7 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -12,20 +12,20 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class WidgetSlider extends WidgetObject {
 
-    private TutEngine tutEngine;
+    private MaewilEngine maewilEngine;
     private int minValue = 0, maxValue = 10, value;
 
     private int segWidth, startX, endX;
     private int slMinX, slMaxX;
     private Slider slider;
 
-    public WidgetSlider(TutEngine tutEngine, Vector2D position, int width) {
-        this(tutEngine, position, width, 0);
+    public WidgetSlider(MaewilEngine maewilEngine, Vector2D position, int width) {
+        this(maewilEngine, position, width, 0);
     }
 
-    public WidgetSlider(TutEngine tutEngine, Vector2D position, int width, int defaultValue) {
+    public WidgetSlider(MaewilEngine maewilEngine, Vector2D position, int width, int defaultValue) {
         super(position, width, 20);
-        this.tutEngine = tutEngine;
+        this.maewilEngine = maewilEngine;
         if (defaultValue < minValue) defaultValue = minValue;
         if (defaultValue > maxValue) defaultValue = maxValue;
         this.value = defaultValue;
@@ -39,7 +39,7 @@ public class WidgetSlider extends WidgetObject {
         slMinX = (int) (startX - slWidth / 2);
         slMaxX = slMinX + width;
 
-        slider = new Slider(tutEngine, new Vector2D(valueToX(defaultValue), (int) (this.position.y - slHeight / 4)), (int) slWidth, (int) slHeight);
+        slider = new Slider(maewilEngine, new Vector2D(valueToX(defaultValue), (int) (this.position.y - slHeight / 4)), (int) slWidth, (int) slHeight);
     }
 
     @Override
@@ -49,8 +49,8 @@ public class WidgetSlider extends WidgetObject {
         bounds.y = slider.bounds.y;
 
         if (slider.isMouseHovering()) {
-            if (tutEngine.isLeftDown() || tutEngine.isLeftPressed()) {
-                slider.position.x = tutEngine.getMousePos().x - slider.getWidth() / 2d;
+            if (maewilEngine.isLeftDown() || maewilEngine.isLeftPressed()) {
+                slider.position.x = maewilEngine.getMousePos().x - slider.getWidth() / 2d;
 
                 if (slider.position.x < slMinX) slider.position.x = slMinX;
                 if (slider.position.x > slMaxX) slider.position.x = slMaxX;
@@ -109,14 +109,14 @@ public class WidgetSlider extends WidgetObject {
 
     class Slider {
 
-        private TutEngine tutEngine;
+        private MaewilEngine maewilEngine;
         public Vector2D position;
         private int width, height;
 
         private AABB bounds;
 
-        public Slider(TutEngine tutEngine, Vector2D position, int width, int height) {
-            this.tutEngine = tutEngine;
+        public Slider(MaewilEngine maewilEngine, Vector2D position, int width, int height) {
+            this.maewilEngine = maewilEngine;
             this.position = position;
             this.width = width;
             this.height = height;
@@ -134,7 +134,7 @@ public class WidgetSlider extends WidgetObject {
         }
 
         public boolean isMouseHovering() {
-            return bounds.contains(tutEngine.getMousePos());
+            return bounds.contains(maewilEngine.getMousePos());
         }
 
         public int getWidth() {

@@ -8,7 +8,7 @@ import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.assets.Sounds;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlink;
 import io.github.vampirestudios.tdg.objs.tiles.Tiles;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -108,7 +108,7 @@ public abstract class WidgetAbstractList extends AbstractListTheme {
         public void update(GameContainer container, StateBasedGame game, int delta) {
             listener.update(container, game, delta);
             bounds = new AABB(pos, (int) SIZE, (int) SIZE);
-            hovering = bounds.contains(TutEngine.INSTANCE.getMousePos());
+            hovering = bounds.contains(MaewilEngine.INSTANCE.getMousePos());
         }
 
         public void render(GameContainer container, StateBasedGame game, Graphics g) {
@@ -162,7 +162,7 @@ public abstract class WidgetAbstractList extends AbstractListTheme {
         }
 
         public void onClick() {
-            if (this.bounds.contains(TutEngine.INSTANCE.getMousePos()) && rendering) {
+            if (this.bounds.contains(MaewilEngine.INSTANCE.getMousePos()) && rendering) {
                 listener.onClick();
                 Sounds.CLICK_1.play(0.5f, 0.2f);
             }
@@ -195,7 +195,7 @@ public abstract class WidgetAbstractList extends AbstractListTheme {
                 icon.getCurrentFrame().draw((float) (pos.x + padding / 2f), (float) (pos.y + padding / 2f), iconSize, iconSize);
             }
 
-            Color color = bounds.contains(TutEngine.INSTANCE.getMousePos()) ? WidgetHyperlink.hoverColor : WidgetHyperlink.mainColor;
+            Color color = bounds.contains(MaewilEngine.INSTANCE.getMousePos()) ? WidgetHyperlink.hoverColor : WidgetHyperlink.mainColor;
             Font font = Text.getCorrectFont(label, SIZE - padding * 3f);
             Object[] textFont = Text.fitTextInWidth(label, font, itemWidth - padding * 2 - (hasIcon ? textIconOff : 0), SIZE - padding * 3f, true);
 

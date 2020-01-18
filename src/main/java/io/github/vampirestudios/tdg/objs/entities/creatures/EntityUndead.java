@@ -5,7 +5,7 @@ import coffeecatteam.coffeecatutils.position.AABB;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.ai.FollowFleeGoal;
 import io.github.vampirestudios.tdg.objs.entities.ai.WanderGoal;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -18,10 +18,10 @@ public abstract class EntityUndead extends LivingEntity {
     private WanderGoal aiWander;
     private FollowFleeGoal aiFollowFlee;
 
-    public EntityUndead(TutEngine tutEngine, String id) {
-        super(tutEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
-        aiWander = new WanderGoal(tutEngine, this, 1.5f);
-        aiFollowFlee = new FollowFleeGoal(tutEngine, this, tutEngine.getPlayer());
+    public EntityUndead(MaewilEngine maewilEngine, String id) {
+        super(maewilEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+        aiWander = new WanderGoal(maewilEngine, this, 1.5f);
+        aiFollowFlee = new FollowFleeGoal(maewilEngine, this, maewilEngine.getPlayer());
     }
 
     @Override
@@ -35,7 +35,7 @@ public abstract class EntityUndead extends LivingEntity {
         yMove = 0;
 
         // Movement
-        if (tutEngine.getPlayer().isActive()) {
+        if (maewilEngine.getPlayer().isActive()) {
             if (!aiFollowFlee.update(container, game, delta)) {
                 aiWander.update(container, game, delta);
             }
@@ -62,8 +62,8 @@ public abstract class EntityUndead extends LivingEntity {
 
         attackTimer = 0;
 
-        for (Entity e : tutEngine.getEntityManager().getEntities())
-            if (e.equals(tutEngine.getPlayer()))
+        for (Entity e : maewilEngine.getEntityManager().getEntities())
+            if (e.equals(maewilEngine.getPlayer()))
                 if (e.getCollisionBounds(0, 0).intersects(ar))
                     e.hurt(NumberUtils.getRandomInt(1, 3) + dmgModifier);
     }

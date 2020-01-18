@@ -1,6 +1,6 @@
 package io.github.vampirestudios.tdg.tags;
 
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.tags.primitive.DoubleTag;
 import io.github.vampirestudios.tdg.tags.primitive.FloatTag;
 import io.github.vampirestudios.tdg.tags.primitive.IntTag;
@@ -59,12 +59,12 @@ public class ListTag extends BaseTag implements java.lang.Iterable<BaseTag> {
      */
     public void appendTag(BaseTag tag) {
         if (tag.getId() == 0) {
-            TutLauncher.LOGGER.warn("Invalid EndTag added to ListTag");
+            MaewilLauncher.LOGGER.warn("Invalid EndTag added to ListTag");
         } else {
             if (this.tagType == 0) {
                 this.tagType = tag.getId();
             } else if (this.tagType != tag.getId()) {
-                TutLauncher.LOGGER.warn("Adding mismatching tag types to tag list");
+                MaewilLauncher.LOGGER.warn("Adding mismatching tag types to tag list");
                 return;
             }
 
@@ -77,18 +77,18 @@ public class ListTag extends BaseTag implements java.lang.Iterable<BaseTag> {
      */
     public void set(int idx, BaseTag tag) {
         if (tag.getId() == 0) {
-            TutLauncher.LOGGER.warn("Invalid EndTag added to ListTag");
+            MaewilLauncher.LOGGER.warn("Invalid EndTag added to ListTag");
         } else if (idx >= 0 && idx < this.tagList.size()) {
             if (this.tagType == 0) {
                 this.tagType = tag.getId();
             } else if (this.tagType != tag.getId()) {
-                TutLauncher.LOGGER.warn("Adding mismatching tag types to tag list");
+                MaewilLauncher.LOGGER.warn("Adding mismatching tag types to tag list");
                 return;
             }
 
             this.tagList.set(idx, tag);
         } else {
-            TutLauncher.LOGGER.warn("index out of bounds to set tag in tag list");
+            MaewilLauncher.LOGGER.warn("index out of bounds to set tag in tag list");
         }
     }
 

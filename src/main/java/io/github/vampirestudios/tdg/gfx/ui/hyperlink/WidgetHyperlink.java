@@ -6,7 +6,7 @@ import io.github.vampirestudios.tdg.gfx.Text;
 import io.github.vampirestudios.tdg.gfx.assets.Sounds;
 import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
 import io.github.vampirestudios.tdg.gfx.ui.WidgetObject;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -42,7 +42,7 @@ public class WidgetHyperlink extends WidgetObject {
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
         super.update(container, game, delta);
-        this.hovering = this.bounds.contains(TutEngine.INSTANCE.getMousePos());
+        this.hovering = this.bounds.contains(MaewilEngine.INSTANCE.getMousePos());
 
         if (this.hovering)
             this.c = hoverColor;

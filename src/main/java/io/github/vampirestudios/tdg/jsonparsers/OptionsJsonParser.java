@@ -2,7 +2,7 @@ package io.github.vampirestudios.tdg.jsonparsers;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.screen.options.controls.Keybind;
 import io.github.vampirestudios.tdg.utils.iinterface.IJSONLoader;
 import io.github.vampirestudios.tdg.utils.iinterface.IJSONSaver;
@@ -32,7 +32,7 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
 
     @Override
     public void load() throws IOException, ParseException {
-        TutLauncher.LOGGER.info("Loading options!");
+        MaewilLauncher.LOGGER.info("Loading options!");
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path));
 
@@ -44,12 +44,12 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
             String description = k.get("description").toString();
             CONTROLS.put(jsonId.toString(), new Keybind(key_char, key_id, description));
         }
-        TutLauncher.LOGGER.info("Control options loaded!");
+        MaewilLauncher.LOGGER.info("Control options loaded!");
 
         DEBUG_MODE = Boolean.parseBoolean(jsonObject.get("debugMode").toString());
         FPS_COUNTER = Boolean.parseBoolean(jsonObject.get("fpsCounter").toString());
         VSYNC = Boolean.parseBoolean(jsonObject.get("vSync").toString());
-        TutLauncher.LOGGER.info("True/False options loaded!");
+        MaewilLauncher.LOGGER.info("True/False options loaded!");
 
         JSONObject sounds = (JSONObject) jsonObject.get("sounds");
         volumeMusic = NumberUtils.parseFloat(sounds.get("volumeMusic"));
@@ -57,14 +57,14 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
         volumeHostile = NumberUtils.parseFloat(sounds.get("volumeHostile"));
         volumePlayer = NumberUtils.parseFloat(sounds.get("volumePlayer"));
         volumeOther = NumberUtils.parseFloat(sounds.get("volumeOther"));
-        TutLauncher.LOGGER.info("Sound options loaded!");
+        MaewilLauncher.LOGGER.info("Sound options loaded!");
 
-        TutLauncher.LOGGER.info("All options loaded!");
+        MaewilLauncher.LOGGER.info("All options loaded!");
     }
 
     @Override
     public void save() throws IOException {
-        TutLauncher.LOGGER.info("Saving options!");
+        MaewilLauncher.LOGGER.info("Saving options!");
         JSONObject jsonObject = new JSONObject();
 
         JSONObject controls = new JSONObject();
@@ -76,12 +76,12 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
             controls.put(jsonId, key);
         }
         jsonObject.put("controls", controls);
-        TutLauncher.LOGGER.info("Control options loaded!");
+        MaewilLauncher.LOGGER.info("Control options loaded!");
 
         jsonObject.put("debugMode", DEBUG_MODE);
         jsonObject.put("fpsCounter", FPS_COUNTER);
         jsonObject.put("vSync", VSYNC);
-        TutLauncher.LOGGER.info("True/False options loaded!");
+        MaewilLauncher.LOGGER.info("True/False options loaded!");
 
         JSONObject sounds = new JSONObject();
         sounds.put("volumeMusic", String.valueOf(volumeMusic));
@@ -90,13 +90,13 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
         sounds.put("volumePlayer", String.valueOf(volumePlayer));
         sounds.put("volumeOther", String.valueOf(volumeOther));
         jsonObject.put("sounds", sounds);
-        TutLauncher.LOGGER.info("Sound options loaded!");
+        MaewilLauncher.LOGGER.info("Sound options loaded!");
 
         FileWriter file = new FileWriter(path);
         file.write(jsonObject.toJSONString());
         file.flush();
 
-        TutLauncher.LOGGER.info("All options saved!");
+        MaewilLauncher.LOGGER.info("All options saved!");
     }
 
     public Map<String, Keybind> controls() {

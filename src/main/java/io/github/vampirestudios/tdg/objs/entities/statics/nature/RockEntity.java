@@ -5,14 +5,14 @@ import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.statics.NatureEntity;
 import io.github.vampirestudios.tdg.objs.items.Items;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 
 public class RockEntity extends NatureEntity {
 
     private RockType type;
 
-    public RockEntity(TutEngine tutEngine, RockType type) {
-        super(tutEngine, "rock", type.getWidth(), type.getHeight(), HitType.STONE);
+    public RockEntity(MaewilEngine maewilEngine, RockType type) {
+        super(maewilEngine, "rock", type.getWidth(), type.getHeight(), HitType.STONE);
         setCurrentTexture(type.getId());
         this.type = type;
 
@@ -58,6 +58,6 @@ public class RockEntity extends NatureEntity {
 
     @Override
     public Entity newCopy() {
-        return super.newCopy(new RockEntity(tutEngine, type));
+        return super.newCopy(new RockEntity(maewilEngine, type));
     }
 }

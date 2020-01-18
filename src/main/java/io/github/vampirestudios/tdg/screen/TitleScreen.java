@@ -9,8 +9,9 @@ import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButton;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlink;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlinkCopyright;
 import io.github.vampirestudios.tdg.screen.options.CharacterCustomizationScreen;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
+import io.github.vampirestudios.tdg.utils.DiscordHandler;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -20,20 +21,20 @@ public class TitleScreen extends Screen {
 
     private WidgetButton btnPlayer;
 
-    public TitleScreen(TutEngine tutEngineIn) {
-        super(tutEngineIn);
+    public TitleScreen(MaewilEngine maewilEngineIn) {
+        super(maewilEngineIn);
 
         int yOff = 20;
         uiManager.addObject(new WidgetTitleRender());
 
         float sizeP = 64;
-        float xp = TutLauncher.WIDTH / 4f - sizeP / 2f;
-        float yp = TutLauncher.HEIGHT / 2f - sizeP / 2f;
-        uiManager.addObject(btnPlayer = new WidgetButton(tutEngineIn, new Vector2D(xp, yp), tutEngine.getPlayer().getTextures().get("idle"), 4.0f, 0, new ClickListener() {
+        float xp = MaewilLauncher.WIDTH / 4f - sizeP / 2f;
+        float yp = MaewilLauncher.HEIGHT / 2f - sizeP / 2f;
+        uiManager.addObject(btnPlayer = new WidgetButton(maewilEngineIn, new Vector2D(xp, yp), maewilEngine.getPlayer().getTextures().get("idle"), 4.0f, 0, new ClickListener() {
             @Override
             public void onClick() {
                 // TODO: Add entity texture data alt support
-                ScreenManager.setCurrentScreen(new CharacterCustomizationScreen(tutEngine));
+                ScreenManager.setCurrentScreen(new CharacterCustomizationScreen(maewilEngine));
             }
 
             @Override
@@ -43,15 +44,15 @@ public class TitleScreen extends Screen {
         btnPlayer.setRenderBtnBG(false);
         btnPlayer.setRenderBtnHover(false);
 
-        uiManager.addObject(new WidgetButton(tutEngineIn, true, TutLauncher.HEIGHT / 2 - yOff, "Select Game", new ClickListener() {
+        uiManager.addObject(new WidgetButton(maewilEngineIn, true, MaewilLauncher.HEIGHT / 2 - yOff, "Select Game", new ClickListener() {
             @Override
             public void onClick() {
 //                ScreenManager.setCurrentScreen(tutEngineIn.stateSelectGame);
-                ScreenManager.setCurrentScreen(new CreateWorldScreen(tutEngine));
+                ScreenManager.setCurrentScreen(new CreateWorldScreen(maewilEngine));
 //                String worldName = "New_World_" + NumberUtils.getRandomInt(1000);
 //                ScreenManager.setCurrentScreen(new GameScreen(tutEngineIn, "./data/saves/" + worldName, worldName));
 
-//                DiscordHandler.INSTANCE.updatePresence("Main Menu", "Selecting A Game");
+                DiscordHandler.INSTANCE.updatePresence("Main Menu", "Selecting A Game");
             }
 
             @Override
@@ -59,12 +60,12 @@ public class TitleScreen extends Screen {
             }
         }));
 
-        uiManager.addObject(new WidgetButton(tutEngineIn, true, TutLauncher.HEIGHT / 2 - yOff + 80, "Options", new ClickListener() {
+        uiManager.addObject(new WidgetButton(maewilEngineIn, true, MaewilLauncher.HEIGHT / 2 - yOff + 80, "Options", new ClickListener() {
             @Override
             public void onClick() {
-                ScreenManager.setCurrentScreen(tutEngine.stateOptions);
+                ScreenManager.setCurrentScreen(maewilEngine.stateOptions);
 
-//                DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options");
+                DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options");
             }
 
             @Override
@@ -72,10 +73,10 @@ public class TitleScreen extends Screen {
             }
         }));
 
-        uiManager.addObject(new WidgetButton(tutEngineIn, true, TutLauncher.HEIGHT / 2 - yOff + 160, "Quit", new ClickListener() {
+        uiManager.addObject(new WidgetButton(maewilEngineIn, true, MaewilLauncher.HEIGHT / 2 - yOff + 160, "Quit", new ClickListener() {
             @Override
             public void onClick() {
-                tutEngine.close();
+                maewilEngine.close();
             }
 
             @Override
@@ -83,17 +84,17 @@ public class TitleScreen extends Screen {
             }
         }));
 
-        int cy = TutLauncher.HEIGHT - 20;
+        int cy = MaewilLauncher.HEIGHT - 20;
         uiManager.addObject(new WidgetHyperlinkCopyright(new Vector2D(5, cy)));
         Font font = Assets.FONTS.get("30");
         String text = "Credits";
         int height = (int) Text.getHeight(text, font);
-        uiManager.addObject(new WidgetHyperlink(new Vector2D(TutLauncher.WIDTH - 5 - Text.getWidth(text, font), cy - 10), height, text, font, new ClickListener() {
+        uiManager.addObject(new WidgetHyperlink(new Vector2D(MaewilLauncher.WIDTH - 5 - Text.getWidth(text, font), cy - 10), height, text, font, new ClickListener() {
             @Override
             public void onClick() {
-                ScreenManager.setCurrentScreen(tutEngine.stateCredits);
+                ScreenManager.setCurrentScreen(maewilEngine.stateCredits);
 
-//                DiscordHandler.INSTANCE.updatePresence("Viewing credits");
+                DiscordHandler.INSTANCE.updatePresence("Viewing credits");
             }
 
             @Override

@@ -10,7 +10,7 @@ import org.json.simple.JSONObject;
 public interface IHasData<E> {
 
     default String getName() {
-        JSONObject lang = DataParser.getDataCatchException(new Identifier("tut", "lang"), true);
+        JSONObject lang = DataParser.getDataCatchException(new Identifier("maewil", "lang"), true);
 
         if (lang.containsKey(getUnlocalizedName()))
             return String.valueOf(lang.get(getUnlocalizedName()));

@@ -12,8 +12,8 @@ import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.tiles.*;
 import io.github.vampirestudios.tdg.screen.game.GameScreen;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.world.TileList;
 import io.github.vampirestudios.tdg.world.World;
 import io.github.vampirestudios.tdg.world.WorldGenerator;
@@ -40,8 +40,8 @@ public class CreateWorldScreen extends AbstractMenuScreen {
     private TileList bgTiles, fgTiles;
     private boolean generating = false;
 
-    public CreateWorldScreen(TutEngine tutEngine) {
-        super(tutEngine, CENTRE_GRASS);
+    public CreateWorldScreen(MaewilEngine maewilEngine) {
+        super(maewilEngine, CENTRE_GRASS);
 
         worldName = "ADD TEXT BOX";
         long range = 1000000000L;
@@ -59,7 +59,7 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         worldSize = minWorldSize + sizeModExtra;
 
         uiManager.addObject(new WidgetTextBox());
-        uiManager.addObject(new WidgetButton(tutEngine, true, "Create World", new ClickListener() {
+        uiManager.addObject(new WidgetButton(maewilEngine, true, "Create World", new ClickListener() {
             @Override
             public void onClick() {
                 generateWorld(getWorldname());
@@ -92,10 +92,10 @@ public class CreateWorldScreen extends AbstractMenuScreen {
          * Tiles, entities, etc..
          */
         logger.info("Generating world...");
-        tutEngine.getPlayer().reset();
+        maewilEngine.getPlayer().reset();
 
         double blendSize = 25.0d + sizeMod;
-        WorldGenerator generator = new WorldGenerator(tutEngine, seed, worldSize);
+        WorldGenerator generator = new WorldGenerator(maewilEngine, seed, worldSize);
         generator.setBlendSize(blendSize);
         generator.generate();
 
@@ -110,13 +110,13 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         /*
          * Set world & username
          */
-        World world = new World(tutEngine, worldName, worldSize, worldSize, getPlayerSpawn(), bgTiles, fgTiles);
-        ScreenManager.setCurrentScreen(new GameScreen(tutEngine, "./data/saves/Test_World", worldName, world));
+        World world = new World(maewilEngine, worldName, worldSize, worldSize, getPlayerSpawn(), bgTiles, fgTiles);
+        ScreenManager.setCurrentScreen(new GameScreen(maewilEngine, "./data/saves/Test_World", worldName, world));
 
         if (ArgUtils.hasArgument("-username"))
-            tutEngine.setUsername(ArgUtils.getArgument("-username"));
+            maewilEngine.setUsername(ArgUtils.getArgument("-username"));
         else
-            tutEngine.setUsername("TEST"); // TODO: Add text box to enter username on startup
+            maewilEngine.setUsername("TEST"); // TODO: Add text box to enter username on startup
 
         generating = false;
     }
@@ -126,11 +126,11 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         int y = NumberUtils.getRandomInt(worldSize - 1);
         Tile tile = fgTiles.getTileAtPos(x, y);
 
-        for (Entity entity : tutEngine.getEntityManager().getEntities()) {
+        for (Entity entity : maewilEngine.getEntityManager().getEntities()) {
             if (!(entity instanceof PlayerEntity)) {
                 int nx = x * Tile.TILE_SIZE;
                 int ny = y * Tile.TILE_SIZE;
-                if (tutEngine.getEntityManager().isEntityInView(new Vector2D(nx, ny), entity.getPosition(), 2))
+                if (maewilEngine.getEntityManager().isEntityInView(new Vector2D(nx, ny), entity.getPosition(), 2))
                     return getPlayerSpawn();
             }
         }
@@ -169,13 +169,13 @@ public class CreateWorldScreen extends AbstractMenuScreen {
             Text.drawStringCentered(g, "Generating world...", c, f);
         } else {
             super.render(container, game, g);
-            Text.drawStringCenteredX(g, worldName, TutLauncher.HEIGHT / 2f - Text.getHeight(worldName, f) / 2 - 90, c, f);
+            Text.drawStringCenteredX(g, worldName, MaewilLauncher.HEIGHT / 2f - Text.getHeight(worldName, f) / 2 - 90, c, f);
 
             String seedS = "Seed: " + seed;
-            Text.drawStringCenteredX(g, seedS, TutLauncher.HEIGHT / 2f - Text.getHeight(seedS, f) / 2 - 55, c, f);
+            Text.drawStringCenteredX(g, seedS, MaewilLauncher.HEIGHT / 2f - Text.getHeight(seedS, f) / 2 - 55, c, f);
 
             String worldSizeS = "Size: " + worldSize;
-            Text.drawStringCenteredX(g, worldSizeS, TutLauncher.HEIGHT / 2f - Text.getHeight(worldSizeS, f) / 2 - 20, c, f);
+            Text.drawStringCenteredX(g, worldSizeS, MaewilLauncher.HEIGHT / 2f - Text.getHeight(worldSizeS, f) / 2 - 20, c, f);
         }
     }
 }

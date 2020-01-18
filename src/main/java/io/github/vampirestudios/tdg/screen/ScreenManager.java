@@ -1,6 +1,6 @@
 package io.github.vampirestudios.tdg.screen;
 
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 
 /**
  * @author CoffeeCatRailway
@@ -15,8 +15,8 @@ public class ScreenManager {
     }
 
     public static void setCurrentScreen(Screen newScreen) {
-        TutEngine.INSTANCE.getCamera().setXOffset(0);
-        TutEngine.INSTANCE.getCamera().setYOffset(0);
+        MaewilEngine.INSTANCE.getCamera().setXOffset(0);
+        MaewilEngine.INSTANCE.getCamera().setYOffset(0);
 
         ScreenManager.currentScreen = newScreen;
         ScreenManager.currentScreen.init();

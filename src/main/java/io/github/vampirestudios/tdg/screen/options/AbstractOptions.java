@@ -6,8 +6,8 @@ import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButton;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlinkCopyright;
 import io.github.vampirestudios.tdg.screen.Screen;
 import io.github.vampirestudios.tdg.screen.ScreenManager;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -16,13 +16,13 @@ import java.io.IOException;
 
 public abstract class AbstractOptions extends Screen {
 
-    public AbstractOptions(TutEngine tutEngineIn) {
-        super(tutEngineIn, OptionsScreen.BG);
+    public AbstractOptions(MaewilEngine maewilEngineIn) {
+        super(maewilEngineIn, OptionsScreen.BG);
 
-        uiManager.addObject(new WidgetButton(tutEngineIn, new Vector2D(15, TutLauncher.HEIGHT - 95), "Back", new ClickListener() {
+        uiManager.addObject(new WidgetButton(maewilEngineIn, new Vector2D(15, MaewilLauncher.HEIGHT - 95), "Back", new ClickListener() {
             @Override
             public void onClick() {
-                ScreenManager.setCurrentScreen(tutEngine.stateOptions);
+                ScreenManager.setCurrentScreen(maewilEngine.stateOptions);
                 try {
                     OptionsScreen.OPTIONS.save();
                 } catch (IOException e) {
@@ -37,7 +37,7 @@ public abstract class AbstractOptions extends Screen {
             }
         }));
 
-        uiManager.addObject(new WidgetHyperlinkCopyright(new Vector2D(5, TutLauncher.HEIGHT - 20)));
+        uiManager.addObject(new WidgetHyperlinkCopyright(new Vector2D(5, MaewilLauncher.HEIGHT - 20)));
     }
 
     @Override

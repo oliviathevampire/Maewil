@@ -3,7 +3,7 @@ package io.github.vampirestudios.tdg.manager;
 import io.github.vampirestudios.tdg.gfx.overlays.Overlay;
 import io.github.vampirestudios.tdg.gfx.overlays.PlayerHealthOverlay;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -15,10 +15,10 @@ public class OverlayManager {
 
     private List<Overlay> overlays;
 
-    public OverlayManager(TutEngine tutEngine, PlayerEntity player) {
+    public OverlayManager(MaewilEngine maewilEngine, PlayerEntity player) {
         overlays = new ArrayList<>();
 
-        addOverlay(new PlayerHealthOverlay(tutEngine, player));
+        addOverlay(new PlayerHealthOverlay(maewilEngine, player));
     }
 
     public void update(GameContainer container, StateBasedGame game, int delta) {

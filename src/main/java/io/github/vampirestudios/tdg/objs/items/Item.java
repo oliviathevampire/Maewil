@@ -3,7 +3,7 @@ package io.github.vampirestudios.tdg.objs.items;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import io.github.vampirestudios.tdg.gfx.Animation;
 import io.github.vampirestudios.tdg.objs.IHasData;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
@@ -16,7 +16,7 @@ public abstract class Item implements IHasData<Item> {
 
     public static final int WIDTH = 32, HEIGHT = 32;
 
-    protected TutEngine tutEngine;
+    protected MaewilEngine maewilEngine;
 
     protected Animation texture;
     protected ArrayList<Image> textureAlts = new ArrayList<>();
@@ -25,8 +25,8 @@ public abstract class Item implements IHasData<Item> {
     protected final String id;
     protected boolean stackable = true;
 
-    public Item(TutEngine tutEngine, String id) {
-        this.tutEngine = tutEngine;
+    public Item(MaewilEngine maewilEngine, String id) {
+        this.maewilEngine = maewilEngine;
         this.id = id;
         Items.UPDATABLE_TIEMS.add(this);
     }

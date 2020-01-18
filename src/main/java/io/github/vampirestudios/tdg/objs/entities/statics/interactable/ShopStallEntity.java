@@ -4,16 +4,16 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.statics.StaticEntity;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class ShopStallEntity extends StaticEntity {
 
-    public ShopStallEntity(TutEngine tutEngine) {
-        super(tutEngine, "shop_stall", Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, HitType.WOOD);
+    public ShopStallEntity(MaewilEngine maewilEngine) {
+        super(maewilEngine, "shop_stall", Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, HitType.WOOD);
         setCurrentTexture(pickRoof().getId());
     }
 
@@ -40,7 +40,7 @@ public class ShopStallEntity extends StaticEntity {
 
     @Override
     public void interact() {
-        TutLauncher.LOGGER.warn("Shop shop, shoppy time!");
+        MaewilLauncher.LOGGER.warn("Shop shop, shoppy time!");
         this.interacted = false;
     }
 
@@ -52,7 +52,7 @@ public class ShopStallEntity extends StaticEntity {
 
     @Override
     public Entity newCopy() {
-        ShopStallEntity stall = super.newCopy(new ShopStallEntity(tutEngine));
+        ShopStallEntity stall = super.newCopy(new ShopStallEntity(maewilEngine));
         stall.setCurrentTexture(pickRoof().getId());
         return stall;
     }

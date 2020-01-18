@@ -3,7 +3,7 @@ package io.github.vampirestudios.tdg.gfx.ui;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.Text;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlink;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -28,7 +28,7 @@ public class WidgetInputBox extends AbstractListTheme {
     public void update(GameContainer container, StateBasedGame game, int delta) {
         super.update(container, game, delta);
         if (selected) {
-            text += TutEngine.INSTANCE.getKeyJustPressed();
+            text += MaewilEngine.INSTANCE.getKeyJustPressed();
             swapTheme();
         }
     }
@@ -46,7 +46,7 @@ public class WidgetInputBox extends AbstractListTheme {
         String renderText = text;
         float padding = 10f;
         Vector2D textPos = new Vector2D(position.x + padding, position.y + SIZE - padding * 1.5f);
-        Color color = bounds.contains(TutEngine.INSTANCE.getMousePos()) ? WidgetHyperlink.hoverColor : WidgetHyperlink.mainColor;
+        Color color = bounds.contains(MaewilEngine.INSTANCE.getMousePos()) ? WidgetHyperlink.hoverColor : WidgetHyperlink.mainColor;
 
         Font font = Text.getCorrectFont(renderText, SIZE - padding * 3f);
         float fullTextWidth = width - padding * 2f;

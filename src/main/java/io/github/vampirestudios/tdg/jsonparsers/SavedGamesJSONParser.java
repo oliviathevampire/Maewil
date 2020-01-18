@@ -1,8 +1,8 @@
 package io.github.vampirestudios.tdg.jsonparsers;
 
 import coffeecatteam.coffeecatutils.io.FileUtils;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.JsonUtils;
 import io.github.vampirestudios.tdg.utils.iinterface.IJSONLoader;
 import io.github.vampirestudios.tdg.utils.iinterface.IJSONSaver;
@@ -21,7 +21,7 @@ import java.util.List;
 public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
 
     private String path = "./data/saves/saved_games.json";
-    protected TutEngine tutEngine;
+    protected MaewilEngine maewilEngine;
 
     public static int SAVE_CAPACITY = 3;
     public static final String DEFAULT_NAME = "UNSAVED";
@@ -32,8 +32,8 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
             GAMES.add("false:" + DEFAULT_NAME);
     }
 
-    public SavedGamesJSONParser(TutEngine tutEngine) {
-        this.tutEngine = tutEngine;
+    public SavedGamesJSONParser(MaewilEngine maewilEngine) {
+        this.maewilEngine = maewilEngine;
     }
 
     @Override
@@ -60,7 +60,7 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
             }
         }
 
-        TutLauncher.LOGGER.info("Games loaded!");
+        MaewilLauncher.LOGGER.info("Games loaded!");
     }
 
     @Override
@@ -77,13 +77,13 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
                 jsonObject.put(tag, save);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            TutLauncher.LOGGER.error(e.getMessage());
+            MaewilLauncher.LOGGER.error(e.getMessage());
         }
 
         FileWriter file = new FileWriter(path);
         file.write(JsonUtils.prettyPrintJSON(jsonObject.toJSONString()));
         file.flush();
 
-        TutLauncher.LOGGER.info("Games saved!");
+        MaewilLauncher.LOGGER.info("Games saved!");
     }
 }

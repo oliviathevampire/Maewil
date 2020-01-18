@@ -1,6 +1,6 @@
 package io.github.vampirestudios.tdg.world.colormap;
 
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -72,10 +72,10 @@ public class Biomes {
                 Exception incorrectValue = new Exception("Biome with id [" + id + "] has incorrect value: " + color[i]);
 
                 if (color[i] < 0) {
-                    TutLauncher.LOGGER.error(incorrectValue);
+                    MaewilLauncher.LOGGER.error(incorrectValue);
                     color[i] = 0;
                 } else if (color[i] > 255) {
-                    TutLauncher.LOGGER.error(incorrectValue);
+                    MaewilLauncher.LOGGER.error(incorrectValue);
                     color[i] = 255;
                 } else
                     color[i] = color[i];

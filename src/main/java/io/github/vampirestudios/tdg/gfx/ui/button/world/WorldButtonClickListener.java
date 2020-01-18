@@ -10,8 +10,8 @@ import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.tiles.*;
 import io.github.vampirestudios.tdg.screen.ScreenManager;
 import io.github.vampirestudios.tdg.screen.game.GameScreen;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.UtilsIdk;
 import io.github.vampirestudios.tdg.world.TileList;
 import io.github.vampirestudios.tdg.world.World;
@@ -33,7 +33,7 @@ public class WorldButtonClickListener implements ClickListener {
     private String path, savesPath;
     private int index;
     private boolean isSaved = false;
-    private TutEngine engine;
+    private MaewilEngine engine;
 
     private long seed;
     private float sizeMod;
@@ -41,11 +41,11 @@ public class WorldButtonClickListener implements ClickListener {
 
     private TileList bgTiles, fgTiles;
 
-    WorldButtonClickListener(TutEngine tutEngine, String path, String savesPath, int index) {
+    WorldButtonClickListener(MaewilEngine maewilEngine, String path, String savesPath, int index) {
         this.path = path;
         this.savesPath = savesPath;
         this.index = index;
-        this.engine = tutEngine;
+        this.engine = maewilEngine;
 
         long range = 1000000000L;
         seed = generateSeed(-range, range);
@@ -61,11 +61,11 @@ public class WorldButtonClickListener implements ClickListener {
         int minWorldSize = 400;
         worldSize = minWorldSize + sizeModExtra;
 
-        SavedGamesJSONParser gamesJSONParser = new SavedGamesJSONParser(tutEngine);
+        SavedGamesJSONParser gamesJSONParser = new SavedGamesJSONParser(maewilEngine);
         try {
             gamesJSONParser.load();
         } catch (IOException | ParseException e) {
-            TutLauncher.LOGGER.error(e);
+            MaewilLauncher.LOGGER.error(e);
         }
     }
 
@@ -90,9 +90,9 @@ public class WorldButtonClickListener implements ClickListener {
             }
         }
         engine.setUsername(username);
-        TutLauncher.LOGGER.info("Set username: " + engine.getUsername());
+        MaewilLauncher.LOGGER.info("Set username: " + engine.getUsername());
 
-        TutLauncher.LOGGER.info("Loading game [" + path + "]!");
+        MaewilLauncher.LOGGER.info("Loading game [" + path + "]!");
 
 //        DiscordHandler.INSTANCE.updatePresence("In Game - " + engine.getUsername(), "World: " + worldName, true);
         GameScreen game = new GameScreen(engine, path, worldName);
@@ -104,7 +104,7 @@ public class WorldButtonClickListener implements ClickListener {
         /*
          * Tiles, entities, etc..
          */
-        TutLauncher.LOGGER.info("Generating world...");
+        MaewilLauncher.LOGGER.info("Generating world...");
         engine.getPlayer().reset();
 
         double blendSize = 25.0d + sizeMod;

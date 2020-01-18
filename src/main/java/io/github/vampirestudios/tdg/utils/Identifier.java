@@ -10,7 +10,7 @@ public class Identifier {
     protected final String path;
 
     protected Identifier(String[] strings_1) {
-        this.namespace = StringUtils.isEmpty(strings_1[0]) ? "tut" : strings_1[0];
+        this.namespace = StringUtils.isEmpty(strings_1[0]) ? "maewil" : strings_1[0];
         this.path = strings_1[1];
         if (!isNamespaceValid(this.namespace)) {
             throw new InvalidIdentifierException("Non [a-z0-9_.-] character in namespace of location: " + this.namespace + ':' + this.path);
@@ -32,7 +32,7 @@ public class Identifier {
     }
 
     private static String[] split(String string_1, char char_1) {
-        String[] strings_1 = new String[]{"tut", string_1};
+        String[] strings_1 = new String[]{"maewil", string_1};
         int int_1 = string_1.indexOf(char_1);
         if (int_1 >= 0) {
             strings_1[1] = string_1.substring(int_1 + 1);
@@ -99,7 +99,7 @@ public class Identifier {
     @Environment(EnvType.CLIENT)
     public static boolean isValid(String string_1) {
         String[] strings_1 = split(string_1, ':');
-        return isNamespaceValid(StringUtils.isEmpty(strings_1[0]) ? "tut" : strings_1[0]) && isPathValid(strings_1[1]);
+        return isNamespaceValid(StringUtils.isEmpty(strings_1[0]) ? "maewil" : strings_1[0]) && isPathValid(strings_1[1]);
     }
 
 }

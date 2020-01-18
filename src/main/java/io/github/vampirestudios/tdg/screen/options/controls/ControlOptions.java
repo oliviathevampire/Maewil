@@ -2,14 +2,14 @@ package io.github.vampirestudios.tdg.screen.options.controls;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButtonControl;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.screen.options.AbstractOptions;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 
 public class ControlOptions extends AbstractOptions {
 
-    public ControlOptions(TutEngine tutEngineIn) {
-        super(tutEngineIn);
+    public ControlOptions(MaewilEngine maewilEngineIn) {
+        super(maewilEngineIn);
         initControlsButtons();
     }
 
@@ -22,9 +22,9 @@ public class ControlOptions extends AbstractOptions {
 
         int x = 0, y = 0;
         for (String jsonId : OptionsScreen.OPTIONS.controls().keySet()) {
-            WidgetButtonControl button = new WidgetButtonControl(tutEngine, new Vector2D(15 + xOff * x, 15 + yOff * y), OptionsScreen.OPTIONS.controls().get(jsonId), null);
+            WidgetButtonControl button = new WidgetButtonControl(maewilEngine, new Vector2D(15 + xOff * x, 15 + yOff * y), OptionsScreen.OPTIONS.controls().get(jsonId), null);
             button.setCustomWidth(160);
-            button.setListener(new ControlClickListener(tutEngine, button, jsonId));
+            button.setListener(new ControlClickListener(maewilEngine, button, jsonId));
             uiManager.addObject(button);
 
             x++;

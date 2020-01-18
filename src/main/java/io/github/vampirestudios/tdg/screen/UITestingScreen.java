@@ -11,8 +11,8 @@ import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlink;
 import io.github.vampirestudios.tdg.objs.entities.Entities;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.Tiles;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -37,12 +37,12 @@ public class UITestingScreen extends Screen {
     private WidgetDropDown uiDropDown;
     private WidgetInputBox uiInputBox;
 
-    public UITestingScreen(TutEngine tutEngine) {
-        super(tutEngine, new Tile[]{Tiles.AIR}, new Tile[]{Tiles.AIR});
+    public UITestingScreen(MaewilEngine maewilEngine) {
+        super(maewilEngine, new Tile[]{Tiles.AIR}, new Tile[]{Tiles.AIR});
 
         uiManager.addObject(widgetCheckBox = new WidgetCheckBox(new Vector2D(10, 10), 60, true));
 
-        uiManager.addObject(widgetButton = new WidgetButton(tutEngine, new Vector2D(80, 10), "Test Button", new ClickListener() {
+        uiManager.addObject(widgetButton = new WidgetButton(maewilEngine, new Vector2D(80, 10), "Test Button", new ClickListener() {
             @Override
             public void onClick() {
                 if (widgetButton.getText().equals("Test Button")) {
@@ -74,7 +74,7 @@ public class UITestingScreen extends Screen {
                 try {
                     Desktop.getDesktop().browse(new URI("https://coffeecatrailway.itch.io/the-ultimate-tile"));
                 } catch (Exception e) {
-                    TutLauncher.LOGGER.error(e);
+                    MaewilLauncher.LOGGER.error(e);
                 }
             }
 
@@ -83,7 +83,7 @@ public class UITestingScreen extends Screen {
             }
         }));
 
-        uiManager.addObject(uiSlider = new WidgetSlider(tutEngine, new Vector2D(10, uiHyperlink.getPosition().y + uiHyperlink.getHeight() + 20), TutLauncher.WIDTH - 40));
+        uiManager.addObject(uiSlider = new WidgetSlider(maewilEngine, new Vector2D(10, uiHyperlink.getPosition().y + uiHyperlink.getHeight() + 20), MaewilLauncher.WIDTH - 40));
         uiSlider.setMinValue(-10);
         uiSlider.setMaxValue(10);
 
@@ -91,7 +91,7 @@ public class UITestingScreen extends Screen {
         uiTextBox.addText("This be a text box!", Assets.FONTS.get("30"), Color.green);
 
         Vector2D listPos = new Vector2D(uiTextBox.getPosition().x + uiTextBox.getWidth() + 20d, uiTextBox.getPosition().y);
-        uiManager.addObject(uiList = new WidgetList((float) listPos.x, (float) listPos.y, (float) (TutLauncher.WIDTH - listPos.x - 10), 5));
+        uiManager.addObject(uiList = new WidgetList((float) listPos.x, (float) listPos.y, (float) (MaewilLauncher.WIDTH - listPos.x - 10), 5));
         uiList.add("Meow1", new ClickListener() {
             @Override
             public void onClick() {
@@ -169,7 +169,7 @@ public class UITestingScreen extends Screen {
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
         uiManager.update(container, game, delta);
-        widgetButton.setPosition(new Vector2D(TutLauncher.WIDTH - widgetButton.getWidth() - 10, 10));
+        widgetButton.setPosition(new Vector2D(MaewilLauncher.WIDTH - widgetButton.getWidth() - 10, 10));
     }
 
     @Override

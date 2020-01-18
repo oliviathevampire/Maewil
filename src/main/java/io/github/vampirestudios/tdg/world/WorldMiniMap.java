@@ -4,7 +4,7 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.colormap.WorldMapGenerator;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -23,7 +23,7 @@ public class WorldMiniMap {
     private static Image mapCursor = Assets.MAP_CURSOR[0];
     private static final Color halfTransparent = new Color(1.0f, 1.0f, 1.0f, 0.5f);
 
-    public static void render(Graphics g, TutEngine tutEngine, int width, int height, Color tint) {
+    public static void render(Graphics g, MaewilEngine maewilEngine, int width, int height, Color tint) {
         float padding = 10;
         float x = padding, y = padding, mapSize = 180;
         g.setColor(Color.white);
@@ -31,8 +31,8 @@ public class WorldMiniMap {
         int viewSize = 100;
         BufferedImage mapbg = new BufferedImage(viewSize, viewSize, BufferedImage.TYPE_INT_ARGB); /* BG */
         BufferedImage mapfg = new BufferedImage(viewSize, viewSize, BufferedImage.TYPE_INT_ARGB); /* FG */
-        int pwx = (int) (tutEngine.getPlayer().getPosition().x / Tile.TILE_SIZE);
-        int pwy = (int) (tutEngine.getPlayer().getPosition().y / Tile.TILE_SIZE);
+        int pwx = (int) (maewilEngine.getPlayer().getPosition().x / Tile.TILE_SIZE);
+        int pwy = (int) (maewilEngine.getPlayer().getPosition().y / Tile.TILE_SIZE);
 
         /*
          * Get world viewing coords
@@ -65,13 +65,13 @@ public class WorldMiniMap {
         for (int my = myStart; my < myEnd; my++) {
             for (int mx = mxStart; mx < mxEnd; mx++) {
                 /* BG */
-                int cbg = WorldMapGenerator.getRGBA(tutEngine.getWorld().getBackgroundTile(mx, my).getMapColor().getRGB());
+                int cbg = WorldMapGenerator.getRGBA(maewilEngine.getWorld().getBackgroundTile(mx, my).getMapColor().getRGB());
                 int pixelXbg = (int) NumberUtils.map(mx, mxStart, mxEnd, 0, viewSize - 1);
                 int pixelYbg = (int) NumberUtils.map(my, myStart, myEnd, 0, viewSize - 1);
                 mapbg.setRGB(pixelXbg, pixelYbg, cbg);
 
                 /* FG */
-                int cfg = WorldMapGenerator.getRGBA(tutEngine.getWorld().getForegroundTile(mx, my).getMapColor().getRGB());
+                int cfg = WorldMapGenerator.getRGBA(maewilEngine.getWorld().getForegroundTile(mx, my).getMapColor().getRGB());
                 int pixelXfg = (int) NumberUtils.map(mx, mxStart, mxEnd, 0, viewSize - 1);
                 int pixelYfg = (int) NumberUtils.map(my, myStart, myEnd, 0, viewSize - 1);
                 mapfg.setRGB(pixelXfg, pixelYfg, cfg);
@@ -80,7 +80,7 @@ public class WorldMiniMap {
 
         int mapSizeOff = 14;
         float mapBorderSize = mapSize + padding;
-        PlayerEntity player = tutEngine.getPlayer();
+        PlayerEntity player = maewilEngine.getPlayer();
         Color trans = ((player.getPosition().x + player.getWidth() / 2f < mapBorderSize && player.getPosition().y + player.getHeight() / 2f < mapBorderSize) ? halfTransparent : Color.white);
         try {
             /* BG */
@@ -111,40 +111,40 @@ public class WorldMiniMap {
         float py = pyd;
 
         if (mxStart <= 0)
-            px = NumberUtils.map((float) tutEngine.getPlayer().getPosition().x, 0, (viewSize + cursorSize) * Tile.TILE_SIZE, x, x + mapSize);
+            px = NumberUtils.map((float) maewilEngine.getPlayer().getPosition().x, 0, (viewSize + cursorSize) * Tile.TILE_SIZE, x, x + mapSize);
         if (mxEnd >= width - 1)
-            px = NumberUtils.map((float) tutEngine.getPlayer().getPosition().x, (width - (viewSize - cursorSize / 2)) * Tile.TILE_SIZE, width * Tile.TILE_SIZE, x, x + mapSize - cursorSize / 2);
+            px = NumberUtils.map((float) maewilEngine.getPlayer().getPosition().x, (width - (viewSize - cursorSize / 2)) * Tile.TILE_SIZE, width * Tile.TILE_SIZE, x, x + mapSize - cursorSize / 2);
         if (myStart <= 0)
-            py = NumberUtils.map((float) tutEngine.getPlayer().getPosition().y, 0, (viewSize + cursorSize) * Tile.TILE_SIZE, y, y + mapSize);
+            py = NumberUtils.map((float) maewilEngine.getPlayer().getPosition().y, 0, (viewSize + cursorSize) * Tile.TILE_SIZE, y, y + mapSize);
         if (myEnd >= height - 1)
-            py = NumberUtils.map((float) tutEngine.getPlayer().getPosition().y, (height - (viewSize - cursorSize / 2)) * Tile.TILE_SIZE, height * Tile.TILE_SIZE, y, y + mapSize - cursorSize / 2);
+            py = NumberUtils.map((float) maewilEngine.getPlayer().getPosition().y, (height - (viewSize - cursorSize / 2)) * Tile.TILE_SIZE, height * Tile.TILE_SIZE, y, y + mapSize - cursorSize / 2);
 
         /*
          * Draw cursor (arrow) and border
          */
-        updateMapCursor(tutEngine);
+        updateMapCursor(maewilEngine);
         mapCursor.draw(px, py, cursorSize, cursorSize);
 
         Assets.MAP_BORDER.draw(x - padding / 2, y - padding / 2, mapBorderSize, mapBorderSize, trans);
     }
 
-    private static void updateMapCursor(TutEngine tutEngine) {
-        if (tutEngine.getKeyManager().moveUp)
+    private static void updateMapCursor(MaewilEngine maewilEngine) {
+        if (maewilEngine.getKeyManager().moveUp)
             mapCursor = Assets.MAP_CURSOR[0];
-        if (tutEngine.getKeyManager().moveRight)
+        if (maewilEngine.getKeyManager().moveRight)
             mapCursor = Assets.MAP_CURSOR[1];
-        if (tutEngine.getKeyManager().moveDown)
+        if (maewilEngine.getKeyManager().moveDown)
             mapCursor = Assets.MAP_CURSOR[2];
-        if (tutEngine.getKeyManager().moveLeft)
+        if (maewilEngine.getKeyManager().moveLeft)
             mapCursor = Assets.MAP_CURSOR[3];
 
-        if (tutEngine.getKeyManager().moveUp && tutEngine.getKeyManager().moveRight)
+        if (maewilEngine.getKeyManager().moveUp && maewilEngine.getKeyManager().moveRight)
             mapCursor = Assets.MAP_CURSOR[4];
-        if (tutEngine.getKeyManager().moveRight && tutEngine.getKeyManager().moveDown)
+        if (maewilEngine.getKeyManager().moveRight && maewilEngine.getKeyManager().moveDown)
             mapCursor = Assets.MAP_CURSOR[5];
-        if (tutEngine.getKeyManager().moveDown && tutEngine.getKeyManager().moveLeft)
+        if (maewilEngine.getKeyManager().moveDown && maewilEngine.getKeyManager().moveLeft)
             mapCursor = Assets.MAP_CURSOR[6];
-        if (tutEngine.getKeyManager().moveLeft && tutEngine.getKeyManager().moveUp)
+        if (maewilEngine.getKeyManager().moveLeft && maewilEngine.getKeyManager().moveUp)
             mapCursor = Assets.MAP_CURSOR[7];
     }
 }

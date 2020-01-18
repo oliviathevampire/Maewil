@@ -4,7 +4,7 @@ import io.github.vampirestudios.tdg.gfx.assets.Sounds;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.creatures.EntityUndead;
 import io.github.vampirestudios.tdg.objs.items.Items;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
@@ -13,14 +13,14 @@ public class BouncerEntity extends EntityUndead {
 
     private long lastSoundTimer, soundCooldown = 800, soundTimer = soundCooldown;
 
-    public BouncerEntity(TutEngine tutEngine) {
-        super(tutEngine, "bouncer");
+    public BouncerEntity(MaewilEngine maewilEngine) {
+        super(maewilEngine, "bouncer");
         this.drop = Items.BOUNCY_BALL;
     }
 
     @Override
     public Entity newCopy() {
-        return super.newCopy(new BouncerEntity(tutEngine));
+        return super.newCopy(new BouncerEntity(maewilEngine));
     }
 
     @Override

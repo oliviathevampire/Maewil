@@ -4,7 +4,7 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.Text;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
@@ -30,7 +30,7 @@ public class WidgetHyperlinkCopyright extends WidgetHyperlink {
                     URI link = new URI("https://github.com/oliviathevampire/TheUltimateTile/blob/master/LICENSE.md");
                     desktop.browse(link);
                 } catch (Exception e) {
-                    TutLauncher.LOGGER.error(e);
+                    MaewilLauncher.LOGGER.error(e);
                 }
             }
 

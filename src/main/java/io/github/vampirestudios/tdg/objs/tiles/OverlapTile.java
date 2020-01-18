@@ -1,7 +1,7 @@
 package io.github.vampirestudios.tdg.objs.tiles;
 
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -18,8 +18,8 @@ public abstract class OverlapTile extends Tile {
     private ArrayList<String> connect = new ArrayList<>(), ignore = new ArrayList<>();
     protected int alts;
 
-    public OverlapTile(TutEngine tutEngine, Image[] overlap, String id, boolean isSolid, TileType tileType, int alts) {
-        super(tutEngine, id, isSolid, tileType);
+    public OverlapTile(MaewilEngine maewilEngine, Image[] overlap, String id, boolean isSolid, TileType tileType, int alts) {
+        super(maewilEngine, id, isSolid, tileType);
         this.overlap = overlap;
         this.alts = alts;
     }

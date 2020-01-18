@@ -1,7 +1,7 @@
 package io.github.vampirestudios.tdg.objs.items.tool;
 
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 
 /**
  * @author CoffeeCatRailway
@@ -9,8 +9,8 @@ import io.github.vampirestudios.tdg.start.TutEngine;
  */
 public class HoeItem extends ToolItem {
 
-    public HoeItem(TutEngine tutEngine, String id, int damage) {
-        super(tutEngine, id, damage, ToolType.HOE);
+    public HoeItem(MaewilEngine maewilEngine, String id, int damage) {
+        super(maewilEngine, id, damage, ToolType.HOE);
     }
 
     @Override
@@ -20,6 +20,6 @@ public class HoeItem extends ToolItem {
 
     @Override
     public ToolItem newCopy() {
-        return super.newCopy(new HoeItem(tutEngine, id, damage));
+        return super.newCopy(new HoeItem(maewilEngine, id, damage));
     }
 }

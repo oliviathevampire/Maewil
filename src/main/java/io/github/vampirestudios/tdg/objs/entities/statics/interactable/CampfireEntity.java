@@ -4,7 +4,7 @@ import coffeecatteam.coffeecatutils.position.AABB;
 import io.github.vampirestudios.tdg.inventory.InventoryCampfire;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.statics.StaticEntity;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -13,11 +13,11 @@ public class CampfireEntity extends StaticEntity {
 
     private InventoryCampfire inventoryCampfire;
 
-    public CampfireEntity(TutEngine tutEngine) {
-        super(tutEngine, "campfire", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, HitType.WOOD);
+    public CampfireEntity(MaewilEngine maewilEngine) {
+        super(maewilEngine, "campfire", Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT, HitType.WOOD);
         setCurrentTexture("main");
 
-        inventoryCampfire = new InventoryCampfire(tutEngine, tutEngine.getPlayer(), TAGS);
+        inventoryCampfire = new InventoryCampfire(maewilEngine, maewilEngine.getPlayer(), TAGS);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class CampfireEntity extends StaticEntity {
     @Override
     public void interact() {
         if (!inventoryCampfire.isActive())
-            tutEngine.getInventoryManager().openCloseInventory(inventoryCampfire);
+            maewilEngine.getInventoryManager().openCloseInventory(inventoryCampfire);
 
         this.interacted = false;
     }
@@ -47,6 +47,6 @@ public class CampfireEntity extends StaticEntity {
 
     @Override
     public Entity newCopy() {
-        return super.newCopy(new CampfireEntity(tutEngine));
+        return super.newCopy(new CampfireEntity(maewilEngine));
     }
 }

@@ -1,7 +1,7 @@
 package io.github.vampirestudios.tdg.utils;
 
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 
 import javax.swing.*;
 import java.io.File;
@@ -37,8 +37,8 @@ public class UtilsIdk {
         return username.replaceAll(" ", "_").replaceAll("[^a-zA-Z0-9_]+", ""); // I'ma Cat
     }
 
-    public static String getKeyPressed(TutEngine tutEngine) {
-        switch (tutEngine.getKeyManager().getCurrentKeyPressedCode()) {
+    public static String getKeyPressed(MaewilEngine maewilEngine) {
+        switch (maewilEngine.getKeyManager().getCurrentKeyPressedCode()) {
             case 8:
                 return "BACKSPACE";
             case 9:
@@ -56,7 +56,7 @@ public class UtilsIdk {
             case 32:
                 return "SPACE";
             default:
-                return String.valueOf(tutEngine.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
+                return String.valueOf(maewilEngine.getKeyManager().getCurrentKeyPressedChar()).toUpperCase();
         }
     }
 
@@ -91,7 +91,7 @@ public class UtilsIdk {
 
             fileOutputStream.close();
         } catch (IOException e) {
-            TutLauncher.LOGGER.error(e);
+            MaewilLauncher.LOGGER.error(e);
         }
     }
 

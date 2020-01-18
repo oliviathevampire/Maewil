@@ -2,8 +2,8 @@ package io.github.vampirestudios.tdg.manager;
 
 import io.github.vampirestudios.tdg.inventory.Inventory;
 import io.github.vampirestudios.tdg.inventory.InventoryAbstractPlayer;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,17 +12,17 @@ public class InventoryManager {
 
     public static final List<Inventory> INVENTORIES = new ArrayList<>();
 
-    private TutEngine tutEngine;
+    private MaewilEngine maewilEngine;
 
-    public InventoryManager(TutEngine tutEngine) {
-        this.tutEngine = tutEngine;
+    public InventoryManager(MaewilEngine maewilEngine) {
+        this.maewilEngine = maewilEngine;
     }
 
     public boolean openInventory(InventoryAbstractPlayer inventory) {
-        if (!tutEngine.getPlayer().isGuiOpen()) {
-            TutLauncher.LOGGER.info(tutEngine.getPlayer().getUsername() + ": Opening inventory " + inventory.getInvName());
+        if (!maewilEngine.getPlayer().isGuiOpen()) {
+            MaewilLauncher.LOGGER.info(maewilEngine.getPlayer().getUsername() + ": Opening inventory " + inventory.getInvName());
             inventory.setActive(true);
-            tutEngine.getPlayer().setGuiOpen(true);
+            maewilEngine.getPlayer().setGuiOpen(true);
             return true;
         }
         return false;
@@ -30,16 +30,16 @@ public class InventoryManager {
 
     public void closeAllInventories() {
         INVENTORIES.forEach(inventory -> {
-            TutLauncher.LOGGER.info(tutEngine.getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
+            MaewilLauncher.LOGGER.info(maewilEngine.getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
             inventory.setActive(false);
-            tutEngine.getPlayer().setGuiOpen(false);
+            maewilEngine.getPlayer().setGuiOpen(false);
         });
     }
 
     public void closeInventory(InventoryAbstractPlayer inventory) {
-        TutLauncher.LOGGER.info(tutEngine.getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
+        MaewilLauncher.LOGGER.info(maewilEngine.getPlayer().getUsername() + ": Closing inventory " + inventory.getInvName());
         inventory.setActive(false);
-        tutEngine.getPlayer().setGuiOpen(false);
+        maewilEngine.getPlayer().setGuiOpen(false);
     }
 
     public void openCloseInventory(InventoryAbstractPlayer inventory) {

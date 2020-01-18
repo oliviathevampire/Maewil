@@ -2,7 +2,7 @@ package io.github.vampirestudios.tdg.objs.tiles.wood;
 
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.items.Items;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 
 /**
  * @author CoffeeCatRailway
@@ -10,18 +10,18 @@ import io.github.vampirestudios.tdg.start.TutEngine;
  */
 public class BookshelfTile extends WoodTile {
 
-    public BookshelfTile(TutEngine tutEngine) {
-        super(tutEngine, "bookshelf");
+    public BookshelfTile(MaewilEngine maewilEngine) {
+        super(maewilEngine, "bookshelf");
     }
 
     @Override
     public void damage(int damage) {
         super.damage(damage);
-        tutEngine.getPlayer().getInventoryPlayer().addItem(new ItemStack(Items.BOOK.newCopy()));
+        maewilEngine.getPlayer().getInventoryPlayer().addItem(new ItemStack(Items.BOOK.newCopy()));
     }
 
     @Override
     public WoodTile newCopy() {
-        return super.newCopy(new BookshelfTile(tutEngine));
+        return super.newCopy(new BookshelfTile(maewilEngine));
     }
 }

@@ -3,7 +3,7 @@ package io.github.vampirestudios.tdg.objs.entities.creatures;
 import coffeecatteam.coffeecatutils.position.AABB;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.ai.WanderGoal;
-import io.github.vampirestudios.tdg.start.TutEngine;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -12,9 +12,9 @@ public abstract class EntityPassive extends LivingEntity {
     // Goal
     protected WanderGoal aiWander;
 
-    public EntityPassive(TutEngine tutEngine, String id) {
-        super(tutEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
-        aiWander = new WanderGoal(tutEngine, this, 1.5f);
+    public EntityPassive(MaewilEngine maewilEngine, String id) {
+        super(maewilEngine, id, Entity.DEFAULT_WIDTH, Entity.DEFAULT_HEIGHT);
+        aiWander = new WanderGoal(maewilEngine, this, 1.5f);
     }
 
     @Override
@@ -28,7 +28,7 @@ public abstract class EntityPassive extends LivingEntity {
         yMove = 0;
 
         // Movement
-        if (tutEngine.getPlayer().isActive())
+        if (maewilEngine.getPlayer().isActive())
             aiWander.update(container, game, delta);
         move();
     }

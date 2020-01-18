@@ -6,8 +6,8 @@ import io.github.vampirestudios.tdg.objs.entities.ItemEntity;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -19,7 +19,7 @@ public class EntityManager {
 
     public static int RENDER_VIEW;
 
-    private TutEngine tutEngine;
+    private MaewilEngine maewilEngine;
     private PlayerEntity player;
     private ArrayList<Entity> entities;
     private Comparator<Entity> renderSorter = (a, b) -> {
@@ -34,15 +34,15 @@ public class EntityManager {
         }
     };
 
-    public EntityManager(TutEngine tutEngine) {
-        this.tutEngine = tutEngine;
+    public EntityManager(MaewilEngine maewilEngine) {
+        this.maewilEngine = maewilEngine;
         entities = new ArrayList<>();
         entities.add(null);
 
-        if (TutLauncher.WIDTH > TutLauncher.HEIGHT) {
-            RENDER_VIEW = TutLauncher.WIDTH / Tile.TILE_SIZE + 1;
+        if (MaewilLauncher.WIDTH > MaewilLauncher.HEIGHT) {
+            RENDER_VIEW = MaewilLauncher.WIDTH / Tile.TILE_SIZE + 1;
         } else {
-            RENDER_VIEW = TutLauncher.HEIGHT / Tile.TILE_SIZE + 1;
+            RENDER_VIEW = MaewilLauncher.HEIGHT / Tile.TILE_SIZE + 1;
         }
     }
 
@@ -98,7 +98,7 @@ public class EntityManager {
     }
 
     public void addItem(ItemStack item, float x, float y) {
-        addEntity(new ItemEntity(tutEngine, item), x, y, true);
+        addEntity(new ItemEntity(maewilEngine, item), x, y, true);
     }
 
     public PlayerEntity getPlayer() {

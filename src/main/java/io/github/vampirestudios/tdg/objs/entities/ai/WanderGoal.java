@@ -3,8 +3,8 @@ package io.github.vampirestudios.tdg.objs.entities.ai;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import io.github.vampirestudios.tdg.objs.entities.creatures.LivingEntity;
 import io.github.vampirestudios.tdg.objs.tiles.TilePos;
-import io.github.vampirestudios.tdg.start.TutEngine;
-import io.github.vampirestudios.tdg.start.TutLauncher;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
@@ -15,8 +15,8 @@ public class WanderGoal extends Goal {
     private float speed;
     private MoveDirection direction;
 
-    public WanderGoal(TutEngine tutEngine, LivingEntity entity, float speed) {
-        super(tutEngine, entity);
+    public WanderGoal(MaewilEngine maewilEngine, LivingEntity entity, float speed) {
+        super(maewilEngine, entity);
         this.speed = speed;
         direction = MoveDirection.STOP;
     }
@@ -29,7 +29,7 @@ public class WanderGoal extends Goal {
         if (wanderTimer > wanderCooldown) {
             direction = MoveDirection.random();
             if (OptionsScreen.OPTIONS.debugMode())
-                TutLauncher.LOGGER.warn("Wander DIR for entity [" + entity.getId() + "] is [" + direction + "]");
+                MaewilLauncher.LOGGER.warn("Wander DIR for entity [" + entity.getId() + "] is [" + direction + "]");
             wanderCooldown = NumberUtils.getRandomBoolean() ? 1600 : 3200;
             wanderTimer = 0;
         }
@@ -47,7 +47,7 @@ public class WanderGoal extends Goal {
                     break;
             }
             if (OptionsScreen.OPTIONS.debugMode())
-                TutLauncher.LOGGER.warn("Wander DIR for entity [" + entity.getId() + "] was swapped to [" + direction + "]");
+                MaewilLauncher.LOGGER.warn("Wander DIR for entity [" + entity.getId() + "] was swapped to [" + direction + "]");
         }
 
         switch (direction) {
@@ -122,7 +122,7 @@ public class WanderGoal extends Goal {
                 currentTile = currentTile.upLeft();
                 break;
         }
-        return tutEngine.getWorld().getForegroundTile(currentTile).isSolid();
+        return maewilEngine.getWorld().getForegroundTile(currentTile).isSolid();
     }
 
     public float getSpeed() {
