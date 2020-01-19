@@ -17,11 +17,19 @@ public class AbstractMenuScreen extends Screen {
         this(maewilEngine, centre, true);
     }
 
+    public AbstractMenuScreen(MaewilEngine maewilEngine, Tile[] centre, Tile[] border) {
+        this(maewilEngine, centre, border, true);
+    }
+
     public AbstractMenuScreen(MaewilEngine maewilEngine, Tile[] centre, boolean initUI) {
-        super(maewilEngine, centre);
+        this(maewilEngine, centre, BORDER_STONE_BROKEN, initUI);
+    }
+
+    public AbstractMenuScreen(MaewilEngine maewilEngine, Tile[] centre, Tile[] border, boolean initUI) {
+        super(maewilEngine, centre, border);
 
         if (initUI) {
-            uiManager.addObject(new WidgetButton(maewilEngine, new Vector2D(15, MaewilLauncher.HEIGHT - 95), "Main Menu", new ClickListener() {
+            uiManager.addObject(new WidgetButton(maewilEngine, new Vector2D(15, 20), "Back", new ClickListener() {
                 @Override
                 public void onClick() {
                     initBack();

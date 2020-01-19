@@ -7,6 +7,7 @@ import io.github.vampirestudios.tdg.jsonparsers.JsonUtils;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.json.simple.parser.ParseException;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -23,7 +24,7 @@ public class CreditsScreen extends AbstractMenuScreen {
     private WidgetTextBox textBoxDev, textBoxHelper, textBoxOther;
 
     public CreditsScreen(MaewilEngine maewilEngine) {
-        super(maewilEngine, CENTRE_GRASS);
+        super(maewilEngine, CENTRE_GRASS, CENTRE_GRASS);
 
         try {
             Object[] devs = JsonUtils.getArray("devs", "/assets/credits.json", true).toArray();
@@ -45,19 +46,19 @@ public class CreditsScreen extends AbstractMenuScreen {
         }
 
         textBoxDev = new WidgetTextBox();
-        textBoxDev.addText("Developers", Assets.FONTS.get("40"));
+        textBoxDev.addText("Developers", Assets.FONTS.get("40"), Color.black);
         for (String dev : devs)
-            textBoxDev.addText(dev);
+            textBoxDev.addText(dev, Assets.FONTS.get("20"), Color.darkGray);
 
         textBoxHelper = new WidgetTextBox();
-        textBoxHelper.addText("Helpers", Assets.FONTS.get("40"));
+        textBoxHelper.addText("Helpers", Assets.FONTS.get("40"), Color.black);
         for (String helper : helpers)
-            textBoxHelper.addText(helper);
+            textBoxHelper.addText(helper, Assets.FONTS.get("20"), Color.darkGray);
 
         textBoxOther = new WidgetTextBox();
-        textBoxOther.addText("Other", Assets.FONTS.get("40"));
+        textBoxOther.addText("Other", Assets.FONTS.get("40"), Color.black);
         for (String other : other)
-            textBoxOther.addText(other);
+            textBoxOther.addText(other, Assets.FONTS.get("20"), Color.darkGray);
     }
 
     @Override
@@ -69,7 +70,7 @@ public class CreditsScreen extends AbstractMenuScreen {
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
         super.render(container, game, g);
 
-        textBoxDev.setPosition(new Vector2D(MaewilLauncher.WIDTH / 2d - textBoxDev.getWidth() / 2d, 100));
+        textBoxDev.setPosition(new Vector2D(MaewilLauncher.WIDTH / 2d - textBoxDev.getWidth() / 2d, 80));
         float tbDiff = textBoxDev.getWidth() - textBoxHelper.getWidth();
         textBoxHelper.setPosition(new Vector2D(textBoxDev.getPosition().x + tbDiff / 2d, textBoxDev.getPosition().y + textBoxDev.getHeight() + 10));
         float tbDiff2 = textBoxHelper.getWidth() - textBoxOther.getWidth();

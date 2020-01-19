@@ -173,7 +173,7 @@ public class Assets {
         GUI_DEAD_OVERLAY = getImage(new Identifier("maewil:textures/gui/dead_overlay.png"));
 
         GUI_BUTTON_ENABLED = getFrames(guiSheet, 0, 0, 2, width, height);
-        GUI_BUTTON_HOVER = getFrames(guiSheet, 2, 0, 2, width, height);
+        GUI_BUTTON_HOVER = getFrames(guiSheet, 1, 0, 2, width, height);
         GUI_BUTTON_DISABLED = getFrames(guiSheet, 2, 0, 2, width, height);
 
         GUI_INVENTORY = getSpriteExact(invSheet, 0, 0, 114, 82);
@@ -187,15 +187,15 @@ public class Assets {
         GUI_ICON_ON = getSpriteInd(guiSheet, 0, 3, width, height);
         GUI_ICON_OFF = getSpriteInd(guiSheet, 1, 3, width, height);
 
-        GUI_TEXTBOX[0] = getSpriteInd(guiSheet, 0, 4, width, height);
-        GUI_TEXTBOX[1] = getSpriteInd(guiSheet, 1, 4, width, height);
-        GUI_TEXTBOX[2] = getSpriteInd(guiSheet, 2, 4, width, height);
-        GUI_TEXTBOX[3] = getSpriteInd(guiSheet, 0, 5, width, height);
-        GUI_TEXTBOX[4] = getSpriteInd(guiSheet, 1, 5, width, height);
-        GUI_TEXTBOX[5] = getSpriteInd(guiSheet, 2, 5, width, height);
-        GUI_TEXTBOX[6] = getSpriteInd(guiSheet, 0, 6, width, height);
-        GUI_TEXTBOX[7] = getSpriteInd(guiSheet, 1, 6, width, height);
-        GUI_TEXTBOX[8] = getSpriteInd(guiSheet, 2, 6, width, height);
+        GUI_TEXTBOX[0] = getSpriteInd(guiSheet, 5, 5, width, height);
+        GUI_TEXTBOX[1] = getSpriteInd(guiSheet, 6, 5, width, height);
+        GUI_TEXTBOX[2] = getSpriteInd(guiSheet, 7, 5, width, height);
+        GUI_TEXTBOX[3] = getSpriteInd(guiSheet, 5, 6, width, height);
+        GUI_TEXTBOX[4] = getSpriteInd(guiSheet, 6, 6, width, height);
+        GUI_TEXTBOX[5] = getSpriteInd(guiSheet, 7, 6, width, height);
+        GUI_TEXTBOX[6] = getSpriteInd(guiSheet, 5, 7, width, height);
+        GUI_TEXTBOX[7] = getSpriteInd(guiSheet, 6, 7, width, height);
+        GUI_TEXTBOX[8] = getSpriteInd(guiSheet, 7, 7, width, height);
 
         GUI_SLIDER_BUTTON = new Image[2];
         GUI_SLIDER_BUTTON[0] = getSpriteExact(guiSheet, 0, 120, 4, 8);
@@ -230,7 +230,7 @@ public class Assets {
     public static void init() {
         logger = new CatLogger("Maewil-Assets");
 
-        MISSING_TEXTURE = getImage(new Identifier("maewil:textures/missing.png"));
+        MISSING_TEXTURE = getImage("/assets/maewil/textures/missing.png");
 
         /* Sprite Sheets */
         effectSheet = new SpriteSheet(new Identifier("maewil:textures/effect.png"));
@@ -304,6 +304,12 @@ public class Assets {
         SpriteSheet sheet = new SpriteSheet(identifier);
         return getSpriteExact(sheet, 0, 0, sheet.getWidth(), sheet.getHeight());
     }
+
+    public static Image getImage(String identifier) {
+        SpriteSheet sheet = new SpriteSheet(identifier);
+        return getSpriteExact(sheet, 0, 0, sheet.getWidth(), sheet.getHeight());
+    }
+
     public static Image getSpriteExact(Identifier identifier, int indexX, int indexY, int width, int height) {
         return getSpriteExact(new SpriteSheet(identifier), indexX, indexY, width, height);
     }

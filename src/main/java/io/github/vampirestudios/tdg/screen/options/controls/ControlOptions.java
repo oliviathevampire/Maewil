@@ -9,7 +9,7 @@ import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 public class ControlOptions extends AbstractOptions {
 
     public ControlOptions(MaewilEngine maewilEngineIn) {
-        super(maewilEngineIn);
+        super(maewilEngineIn, false);
         initControlsButtons();
     }
 

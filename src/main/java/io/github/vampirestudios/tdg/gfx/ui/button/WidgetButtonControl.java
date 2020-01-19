@@ -4,6 +4,7 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.screen.options.controls.Keybind;
+import org.newdawn.slick.Color;
 
 public class WidgetButtonControl extends WidgetButton {
 
@@ -11,12 +12,12 @@ public class WidgetButtonControl extends WidgetButton {
     private String description;
 
     public WidgetButtonControl(MaewilEngine maewilEngine, Vector2D position, Keybind keybind, ClickListener listener) {
-        super(maewilEngine, position, keybind.getId(), listener);
+        super(maewilEngine, position, keybind.getId(), 3, listener);
         this.keybind = keybind;
         this.description = keybind.getDescription();
 
         hasTooltip = true;
-        tooltip.addText(description);
+        tooltip.addText(description, Color.darkGray);
     }
 
     public Keybind getKeybind() {

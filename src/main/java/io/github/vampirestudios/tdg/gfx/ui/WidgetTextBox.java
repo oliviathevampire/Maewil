@@ -32,6 +32,10 @@ public class WidgetTextBox extends WidgetObject {
         addText(text, Assets.FONTS.get("20"));
     }
 
+    public void addText(String text, Color color) {
+        addText(text, Assets.FONTS.get("20"), color);
+    }
+
     public void addText(String text, Font font) {
         addText(text, font, Color.white);
     }

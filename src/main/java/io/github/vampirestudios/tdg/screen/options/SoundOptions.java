@@ -16,7 +16,7 @@ public class SoundOptions extends AbstractOptions {
     private WidgetSlider volMusic, volPassive, volHostile, volPlayer, volOther;
 
     public SoundOptions(MaewilEngine maewilEngineIn) {
-        super(maewilEngineIn);
+        super(maewilEngineIn, true);
         int width = 200;
         int x = 80, xOff = width + 120;
         int y = 100, yOff = 130;

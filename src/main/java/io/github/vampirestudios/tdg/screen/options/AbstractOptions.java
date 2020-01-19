@@ -4,10 +4,13 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
 import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButton;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlinkCopyright;
+import io.github.vampirestudios.tdg.objs.tiles.Tile;
+import io.github.vampirestudios.tdg.objs.tiles.Tiles;
 import io.github.vampirestudios.tdg.screen.Screen;
 import io.github.vampirestudios.tdg.screen.ScreenManager;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
+import io.github.vampirestudios.tdg.utils.DiscordHandler;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
@@ -16,10 +19,11 @@ import java.io.IOException;
 
 public abstract class AbstractOptions extends Screen {
 
-    public AbstractOptions(MaewilEngine maewilEngineIn) {
-        super(maewilEngineIn, OptionsScreen.BG);
+    public AbstractOptions(MaewilEngine maewilEngineIn, boolean leftButton) {
+        super(maewilEngineIn, OptionsScreen.BG, new Tile[]{Tiles.STONE});
 
-        uiManager.addObject(new WidgetButton(maewilEngineIn, new Vector2D(15, MaewilLauncher.HEIGHT - 95), "Back", new ClickListener() {
+        Vector2D pos = leftButton ? new Vector2D(MaewilLauncher.WIDTH - 120, 20) : new Vector2D(15, 20);
+        uiManager.addObject(new WidgetButton(maewilEngineIn, pos, "Back", new ClickListener() {
             @Override
             public void onClick() {
                 ScreenManager.setCurrentScreen(maewilEngine.stateOptions);
@@ -29,7 +33,7 @@ public abstract class AbstractOptions extends Screen {
                     logger.error(e);
                 }
 
-//                DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options");
+                DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options");
             }
 
             @Override

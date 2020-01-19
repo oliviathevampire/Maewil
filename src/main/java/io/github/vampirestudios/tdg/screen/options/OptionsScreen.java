@@ -13,6 +13,7 @@ import io.github.vampirestudios.tdg.screen.AbstractMenuScreen;
 import io.github.vampirestudios.tdg.screen.ScreenManager;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
+import io.github.vampirestudios.tdg.utils.DiscordHandler;
 import org.json.simple.parser.ParseException;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -26,9 +27,7 @@ public class OptionsScreen extends AbstractMenuScreen {
 
     public static OptionsJsonParser OPTIONS;
     static final Tile[] BG = new Tile[]{
-            Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE, Tiles.STONE,
-            Tiles.BROKEN_STONE, Tiles.BROKEN_STONE, Tiles.BROKEN_STONE, Tiles.BROKEN_STONE, Tiles.BROKEN_STONE, Tiles.BROKEN_STONE, Tiles.BROKEN_STONE,
-            Tiles.COAL_ORE, Tiles.IRON_ORE, Tiles.GOLD_ORE, Tiles.DIAMOND_ORE
+            Tiles.DIRT
     };
 
     private WidgetCheckBox debug, fps, vsync;
@@ -85,7 +84,7 @@ public class OptionsScreen extends AbstractMenuScreen {
     }
 
     private void setPresence(String presence) {
-//        DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options/" + presence);
+        DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options/" + presence);
     }
 
     @Override
@@ -115,7 +114,5 @@ public class OptionsScreen extends AbstractMenuScreen {
         Text.drawString(g, fpsText, (int) (fps.getPosition().x - Text.getWidth(fpsText, font)), (int) (fps.getPosition().y + Text.getHeight(fpsText, font)) + 25, false, Color.white, font);
         String vSyncText = "Use VSync: ";
         Text.drawString(g, vSyncText, (int) (vsync.getPosition().x - Text.getWidth(fpsText, font)), (int) (vsync.getPosition().y + Text.getHeight(fpsText, font)) + 25, false, Color.white, font);
-
-//        Text.drawString(g, "EXPERIMENTAL!", TutLauncher.WIDTH / 2f, TutLauncher.HEIGHT / 2f, true, true, Color.red, Assets.FONTS.get("80"));
     }
 }

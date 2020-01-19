@@ -50,4 +50,5 @@ public class SpriteSheet {
     public SpriteSheet copy() {
         return new SpriteSheet(identifier, sheet.copy());
     }
+
 }

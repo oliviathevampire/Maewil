@@ -159,7 +159,7 @@ public class WorldGenerator {
         addOre(tiles, Tiles.ANDESITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
         addOre(tiles, Tiles.DIORITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
 
-        addOre(tiles, Tiles.BROKEN_STONE, -0.15d, 0.15d, stoneSize, seedOff, bg);
+//        addOre(tiles, Tiles.BROKEN_STONE, -0.15d, 0.15d, stoneSize, seedOff, bg);
     }
 
     private void addOre(TileList tiles, Tile ore, double minThreshold, double maxThreshold, double blendSize, long seedOff, boolean bg) {

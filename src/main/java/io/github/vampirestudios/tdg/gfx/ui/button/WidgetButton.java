@@ -62,6 +62,10 @@ public class WidgetButton extends WidgetObject {
         this(maewilEngine, position, animation, imgScale, 16, listener);
     }
 
+    public WidgetButton(MaewilEngine maewilEngine, Vector2D position, Animation animation, int padding, ClickListener listener) {
+        this(maewilEngine, position, animation, 1.0F, padding, listener);
+    }
+
     public WidgetButton(MaewilEngine maewilEngine, Vector2D position, Animation animation, float imgScale, int padding, ClickListener listener) {
         this(maewilEngine, position, listener);
         this.useImage = true;
@@ -74,30 +78,49 @@ public class WidgetButton extends WidgetObject {
      * Button - Text
      */
     public WidgetButton(MaewilEngine maewilEngine, boolean centered, String text, ClickListener listener) {
-        this(maewilEngine, new Vector2D(), text, false, Assets.FONTS.get("40"), listener);
+        this(maewilEngine, new Vector2D(), text, false, Assets.FONTS.get("30"), listener);
         this.centeredX = centeredY = centered;
     }
 
     public WidgetButton(MaewilEngine maewilEngine, boolean centeredX, int y, String text, ClickListener listener) {
-        this(maewilEngine, new Vector2D(0, y), text, false, Assets.FONTS.get("40"), listener);
+        this(maewilEngine, new Vector2D(0, y), text, false, Assets.FONTS.get("30"), listener);
+        this.centeredX = centeredX;
+    }
+
+    public WidgetButton(MaewilEngine maewilEngine, boolean centeredX, int y, int padding, String text, ClickListener listener) {
+        this(maewilEngine, new Vector2D(0, y), text, false, padding, Assets.FONTS.get("30"), listener);
         this.centeredX = centeredX;
     }
 
     public WidgetButton(MaewilEngine maewilEngine, int x, boolean centeredY, String text, ClickListener listener) {
-        this(maewilEngine, new Vector2D(x, 0), text, false, Assets.FONTS.get("40"), listener);
+        this(maewilEngine, new Vector2D(x, 0), text, false, Assets.FONTS.get("30"), listener);
+        this.centeredY = centeredY;
+    }
+
+    public WidgetButton(MaewilEngine maewilEngine, int x, boolean centeredY, int padding, String text, ClickListener listener) {
+        this(maewilEngine, new Vector2D(x, 0), text, false, padding, Assets.FONTS.get("30"), listener);
         this.centeredY = centeredY;
     }
 
     public WidgetButton(MaewilEngine maewilEngine, Vector2D position, String text, ClickListener listener) {
-        this(maewilEngine, position, text, false, Assets.FONTS.get("40"), listener);
+        this(maewilEngine, position, text, false, Assets.FONTS.get("30"), listener);
+    }
+
+    public WidgetButton(MaewilEngine maewilEngine, Vector2D position, String text, int padding, ClickListener listener) {
+        this(maewilEngine, position, text, false, padding, Assets.FONTS.get("30"), listener);
     }
 
     public WidgetButton(MaewilEngine maewilEngine, Vector2D position, String text, boolean underlined, Font font, ClickListener listener) {
+        this(maewilEngine, position, text, underlined, 0, font, listener);
+    }
+
+    public WidgetButton(MaewilEngine maewilEngine, Vector2D position, String text, boolean underlined, int padding, Font font, ClickListener listener) {
         this(maewilEngine, position, listener);
         this.useImage = false;
         this.text = text;
         this.underlined = underlined;
         this.font = font;
+        this.padding = padding;
     }
 
     /*
@@ -160,10 +183,10 @@ public class WidgetButton extends WidgetObject {
             float textWidth = Text.getWidth(text, font);
             float textHeight = Text.getHeight(text, font);
 
-            float pHeight = textHeight + 16;
+            float pHeight = textHeight + 18;
 
             float textX = (float) (this.position.x + sectionWidth / 4f);
-            float textY = (float) (this.position.y + 8);
+            float textY = (float) (this.position.y + 6);
 
             this.currentTexture[0].draw((int) this.position.x, (int) this.position.y, sectionWidth, pHeight);
             this.currentTexture[1].draw(textX, (int) this.position.y, (hasCustomWidth ? width : textWidth), pHeight);
