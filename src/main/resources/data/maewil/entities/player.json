@@ -26,7 +26,7 @@
         "idle": {
             "length": 3,
             "speed": 135,
-            "startPos": [128, 0]
+            "startPos": [0, 0]
         },
         "dead": {
             "length": 8,

@@ -95,7 +95,7 @@ public class Tiles {
         /*
          * Other
          */
-        register(AIR = parser.loadData(new AirTile(tutEngine)));
+        register(AIR = parser.loadData(new AirTile(maewilEngine)));
 
         MaewilLauncher.LOGGER.info("Tiles registered!");
     }

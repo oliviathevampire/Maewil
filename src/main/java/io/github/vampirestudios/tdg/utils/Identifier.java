@@ -1,7 +1,6 @@
 package io.github.vampirestudios.tdg.utils;
 
 import com.google.gson.*;
-import com.sun.istack.internal.Nullable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.apache.commons.lang3.StringUtils;
@@ -35,7 +34,6 @@ public class Identifier {
         return new Identifier(split(id, delimiter));
     }
 
-    @Nullable
     public static Identifier tryParse(String id) {
         try {
             return new Identifier(id);

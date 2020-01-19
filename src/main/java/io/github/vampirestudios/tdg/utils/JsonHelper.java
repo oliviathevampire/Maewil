@@ -3,7 +3,6 @@ package io.github.vampirestudios.tdg.utils;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import com.sun.istack.internal.Nullable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import org.apache.commons.lang3.StringUtils;
@@ -198,12 +197,11 @@ public class JsonHelper {
       }
    }
 
-   @Nullable
-   public static JsonArray getArray(JsonObject object, String name, @Nullable JsonArray defaultArray) {
+   public static JsonArray getArray(JsonObject object, String name, JsonArray defaultArray) {
       return object.has(name) ? asArray(object.get(name), name) : defaultArray;
    }
 
-   public static <T> T deserialize(@Nullable JsonElement element, String name, JsonDeserializationContext context, Class<? extends T> type) {
+   public static <T> T deserialize(JsonElement element, String name, JsonDeserializationContext context, Class<? extends T> type) {
       if (element != null) {
          return context.deserialize(element, type);
       } else {
@@ -249,7 +247,6 @@ public class JsonHelper {
       }
    }
 
-   @Nullable
    public static <T> T deserialize(Gson gson, Reader reader, Class<T> type, boolean lenient) {
       try {
          JsonReader jsonReader = new JsonReader(reader);
@@ -260,7 +257,6 @@ public class JsonHelper {
       }
    }
 
-   @Nullable
    public static <T> T deserialize(Gson gson, Reader reader, Type type, boolean lenient) {
       try {
          JsonReader jsonReader = new JsonReader(reader);
@@ -271,34 +267,28 @@ public class JsonHelper {
       }
    }
 
-   @Nullable
    @Environment(EnvType.CLIENT)
    public static <T> T deserialize(Gson gson, String content, Type type, boolean lenient) {
       return deserialize(gson, new StringReader(content), type, lenient);
    }
 
-   @Nullable
    public static <T> T deserialize(Gson gson, String content, Class<T> var2, boolean lenient) {
       return deserialize(gson, new StringReader(content), (Type) var2, lenient);
    }
 
-   @Nullable
    public static <T> T deserialize(Gson gson, Reader reader, Type type) {
       return deserialize(gson, reader, type, false);
    }
 
-   @Nullable
    @Environment(EnvType.CLIENT)
    public static <T> T deserialize(Gson gson, String content, Type type) {
       return deserialize(gson, content, type, false);
    }
 
-   @Nullable
    public static <T> T deserialize(Gson gson, Reader reader, Class<T> var2) {
       return deserialize(gson, reader, var2, false);
    }
 
-   @Nullable
    public static <T> T deserialize(Gson gson, String content, Class<T> var2) {
       return deserialize(gson, content, var2, false);
    }
