@@ -53,11 +53,12 @@ public class WorldMapGenerator {
                     c = WorldColors.WATER;
                 } else {
                     if (value > -0.1 && value < 0.15) {
-                        if (random.nextInt(5) == 0) {
+                        /*if (random.nextInt(5) == 0) {
                             c = WorldColors.RED_SAND;
                         } else {
                             c = WorldColors.SAND;
-                        }
+                        }*/
+                        c = WorldColors.SAND;
                     } else {
                         if (value > 0.15 && value < 0.55) {
                             c = WorldColors.GRASS;
