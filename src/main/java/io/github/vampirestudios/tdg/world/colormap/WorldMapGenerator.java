@@ -60,8 +60,10 @@ public class WorldMapGenerator {
                         }*/
                         c = WorldColors.SAND;
                     } else {
-                        if (value > 0.15 && value < 0.55) {
+                        if (value > 0.15 && value < 0.25) {
                             c = WorldColors.GRASS;
+                        } else if (value > 0.25 && value < 0.55) {
+                            c = WorldColors.RED_SAND;
                         } else {
                             if (value > 0.55 && value < 0.7) {
                                 c = WorldColors.STONE;
