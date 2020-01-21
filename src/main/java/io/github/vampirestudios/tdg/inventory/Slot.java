@@ -46,8 +46,7 @@ public class Slot {
         }
 
         if (isSelected) {
-            int off = 12;
-            selector.draw(x - off / 2f, y - off / 2f, width + off, height + off);
+            selector.draw(x + 3, y + 3, width + 5, height + 5);
         }
     }
 

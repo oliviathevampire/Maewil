@@ -15,7 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class InventoryAbstractPlayer extends Inventory {
 
-    private static int maxHotbarSize = 3;
+    private static int maxHotbarSize = 9;
     private int inventorySelectedIndex = 0;
     private int hotbarSelectedIndex = 0;
 
@@ -43,7 +43,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
         }
 
         // Add hotbar slots
-        int hxd = (MaewilLauncher.WIDTH / 2 - width / 2) - width - 6, hx;
+        int hxd = (MaewilLauncher.WIDTH / 2 - width / 2) - width - 150, hx;
         for (int i = 0; i < maxHotbarSize; i++) {
             hx = hxd + 54 * i;
             Slot s = new Slot(i, hx, MaewilLauncher.HEIGHT - height - height / 2 + 13, width, height);
@@ -121,6 +121,18 @@ public abstract class InventoryAbstractPlayer extends Inventory {
             hotbarSelectedIndex = 1;
         if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.THREE).getKeyCode()))
             hotbarSelectedIndex = 2;
+        if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.FOUR).getKeyCode()))
+            hotbarSelectedIndex = 3;
+        if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.FIVE).getKeyCode()))
+            hotbarSelectedIndex = 4;
+        if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.SIX).getKeyCode()))
+            hotbarSelectedIndex = 5;
+        if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.SEVEN).getKeyCode()))
+            hotbarSelectedIndex = 6;
+        if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.EIGHT).getKeyCode()))
+            hotbarSelectedIndex = 7;
+        if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.NINE).getKeyCode()))
+            hotbarSelectedIndex = 8;
         if (hotbarSelectedIndex < maxSize + maxHotbarSize) {
             player.setEquippedItem(getSlot(maxSize + hotbarSelectedIndex).getStack());
 
@@ -142,7 +154,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
 
     public void renderHotbar(GameContainer container, StateBasedGame game, Graphics g) {
         // Render hotbar backgorund
-        int barWidth = 28;
+        int barWidth = 82;
         int barHeight = 10;
 
         int multiplier = 6;

@@ -1,25 +1,25 @@
 {
-  "type": "alts",
-  "texture": "tiles/red_sand.png",
-  "texture-overlap": "tiles/overlap/red_sand.png",
-  "textures": [
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6
-  ],
-  "size": 16,
-  "overlap": {
-    "connect": [
-      "grass",
-      "dirt"
+    "type": "alts",
+    "texture": "tiles/red_sand.png",
+    "texture-overlap": "tiles/overlap/red_sand.png",
+    "textures": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
     ],
-    "ignore": [
-      "sand",
-      "red_sand"
-    ]
-  }
+    "size": 16,
+    "overlap": {
+        "connect": [
+            "grass",
+            "dirt"
+        ],
+        "ignore": [
+            "sand",
+            "red_sand"
+        ]
+    }
 }

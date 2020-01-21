@@ -15,7 +15,7 @@ public abstract class AbstractListTheme extends WidgetObject {
     public static final float SIZE = 51;
 
     private boolean useGrayTheme = false;
-    protected Image[] THEME;
+    protected Image[] THEME = Assets.GUI_LIST_GRAY;
 
     public AbstractListTheme(float x, float y, float width, float height) {
         super(x, y, width, height);
@@ -27,10 +27,7 @@ public abstract class AbstractListTheme extends WidgetObject {
 
     public void update(GameContainer container, StateBasedGame game, int delta) {
         super.update(container, game, delta);
-        if (useGrayTheme)
-            THEME = Assets.GUI_LIST_GRAY;
-        else
-            THEME = Assets.GUI_LIST_BLUE;
+//        THEME = Assets.GUI_LIST_GRAY;
     }
 
     public void swapTheme() {

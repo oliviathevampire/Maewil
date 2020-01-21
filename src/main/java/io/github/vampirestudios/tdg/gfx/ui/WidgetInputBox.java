@@ -20,6 +20,11 @@ public class WidgetInputBox extends AbstractListTheme {
         this(new Vector2D(x, y), width);
     }
 
+    public WidgetInputBox(float x, float y, float width, String text) {
+        this(new Vector2D(x, y), width);
+        this.setText(text);
+    }
+
     public WidgetInputBox(Vector2D position, float width) {
         super(position, width, SIZE);
     }

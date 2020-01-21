@@ -4,7 +4,6 @@ import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.DevEnvUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.coffeecatutils.logger.CatLoggerUtils;
-import io.github.vampirestudios.tdg.gfx.assets.Sounds;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.screen.ScreenManager;
 import io.github.vampirestudios.tdg.screen.game.GameScreen;
@@ -63,8 +62,8 @@ public class MaewilLauncher extends StateBasedGame {
 
     @Override
     public boolean closeRequested() {
-        if (MaewilEngine.INSTANCE.isPlayBGMusic() && Sounds.BG_MUSIC.playing())
-            Sounds.BG_MUSIC.stop();
+        /*if (MaewilEngine.INSTANCE.isPlayBGMusic() && Sounds.BG_MUSIC.playing())
+            Sounds.BG_MUSIC.stop();*/
         LOGGER.warn("Shutting down [" + TITLE + "] engine!");
 
         if (ScreenManager.getCurrentScreen() instanceof GameScreen) {

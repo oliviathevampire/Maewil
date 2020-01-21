@@ -47,10 +47,7 @@ public class TitleScreen extends Screen {
         uiManager.addObject(new WidgetButton(maewilEngineIn, true, MaewilLauncher.HEIGHT / 2 - yOff, "Select Game", new ClickListener() {
             @Override
             public void onClick() {
-//                ScreenManager.setCurrentScreen(tutEngineIn.stateSelectGame);
                 ScreenManager.setCurrentScreen(new CreateWorldScreen(maewilEngine));
-//                String worldName = "New_World_" + NumberUtils.getRandomInt(1000);
-//                ScreenManager.setCurrentScreen(new GameScreen(tutEngineIn, "./data/saves/" + worldName, worldName));
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu", "Selecting A Game");
             }

@@ -6,7 +6,7 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.Text;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
-import io.github.vampirestudios.tdg.gfx.ui.WidgetTextBox;
+import io.github.vampirestudios.tdg.gfx.ui.WidgetInputBox;
 import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButton;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
@@ -58,7 +58,8 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         int minWorldSize = 400;
         worldSize = minWorldSize + sizeModExtra;
 
-        uiManager.addObject(new WidgetTextBox());
+//        uiManager.addObject(new WidgetInputBox(100, 100, 100));
+        uiManager.addObject(new WidgetInputBox(new Vector2D(200, 500), 300));
         uiManager.addObject(new WidgetButton(maewilEngine, true, "Create World", new ClickListener() {
             @Override
             public void onClick() {
@@ -69,6 +70,12 @@ public class CreateWorldScreen extends AbstractMenuScreen {
             public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         }));
+    }
+
+    @Override
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
+        uiManager.update(container, game, delta);
     }
 
     private String getWorldname() {
@@ -169,7 +176,8 @@ public class CreateWorldScreen extends AbstractMenuScreen {
             Text.drawStringCentered(g, "Generating world...", c, f);
         } else {
             super.render(container, game, g);
-            Text.drawStringCenteredX(g, worldName, MaewilLauncher.HEIGHT / 2f - Text.getHeight(worldName, f) / 2 - 90, c, f);
+            uiManager.render(container, game, g);
+//            Text.drawStringCenteredX(g, worldName, MaewilLauncher.HEIGHT / 2f - Text.getHeight(worldName, f) / 2 - 90, c, f);
 
             String seedS = "Seed: " + seed;
             Text.drawStringCenteredX(g, seedS, MaewilLauncher.HEIGHT / 2f - Text.getHeight(seedS, f) / 2 - 55, c, f);

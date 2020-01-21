@@ -1,18 +1,18 @@
 {
-  "items": [
-    {
-      "id": "wooden_sword",
-      "pos": [
-        3.25,
-        18.25
-      ]
-    },
-    {
-      "id": "wooden_pick",
-      "pos": [
-        2.25,
-        16.25
-      ]
-    }
-  ]
+    "items": [
+        {
+            "id": "wooden_sword",
+            "pos": [
+                3.25,
+                18.25
+            ]
+        },
+        {
+            "id": "wooden_pick",
+            "pos": [
+                2.25,
+                16.25
+            ]
+        }
+    ]
 }

@@ -180,8 +180,8 @@ public class Assets {
         GUI_CAMPFIRE_INVENTORY = getSpriteExact(campfireInvSheet, 0, 0, 57, 44);
 
         GUI_SLOT = getSpriteExact(invSheet, 2, 22, 8, 8);
-        GUI_SLOT_SELECTER = getSpriteExact(invSheet, 48, 48, width, height);
-        GUI_HOTBAR = getSpriteExact(invSheet, 24, 108, 56, 20);
+        GUI_SLOT_SELECTER = getSpriteExact(invSheet, 98, 107, 20, 21);
+        GUI_HOTBAR = getSpriteExact(invSheet, 24, 108, 163, 20);
         GUI_HOTBAR_SELECTER = getSpriteExact(invSheet, 0, 52, 12, 12);
 
         GUI_ICON_ON = getSpriteInd(guiSheet, 0, 3, width, height);

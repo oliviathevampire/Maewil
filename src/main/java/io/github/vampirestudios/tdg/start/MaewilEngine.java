@@ -5,7 +5,6 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.Animation;
 import io.github.vampirestudios.tdg.gfx.Camera;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
-import io.github.vampirestudios.tdg.gfx.assets.Sounds;
 import io.github.vampirestudios.tdg.manager.EntityManager;
 import io.github.vampirestudios.tdg.manager.InventoryManager;
 import io.github.vampirestudios.tdg.manager.KeyManager;
@@ -145,14 +144,14 @@ public class MaewilEngine extends BasicGameState {
             container.setVSync(vSync);
 
         // Background music
-        if (playBGMusic) {
+        /*if (playBGMusic) {
             if (Sounds.BG_MUSIC.playing())
                 Sounds.BG_MUSIC.setVolume(OptionsScreen.OPTIONS.getVolumeMusic());
             else {
                 Sounds.BG_MUSIC.loop();
                 Sounds.BG_MUSIC.play();
             }
-        }
+        }*/
 
         ScreenManager.getCurrentScreen().update(container, game, delta);
 
