@@ -176,13 +176,13 @@ public class Assets {
         GUI_BUTTON_HOVER = getFrames(guiSheet, 1, 0, 2, width, height);
         GUI_BUTTON_DISABLED = getFrames(guiSheet, 2, 0, 2, width, height);
 
-        GUI_INVENTORY = getSpriteExact(invSheet, 0, 0, 114, 82);
+        GUI_INVENTORY = getSpriteExact(invSheet, 0, 0, 109, 80);
         GUI_CAMPFIRE_INVENTORY = getSpriteExact(campfireInvSheet, 0, 0, 57, 44);
 
         GUI_SLOT = getSpriteExact(invSheet, 2, 22, 8, 8);
         GUI_SLOT_SELECTER = getSpriteExact(invSheet, 98, 107, 20, 21);
-        GUI_HOTBAR = getSpriteExact(invSheet, 24, 108, 163, 20);
-        GUI_HOTBAR_SELECTER = getSpriteExact(invSheet, 0, 52, 12, 12);
+        GUI_HOTBAR = getSpriteExact(invSheet, 13, 118, 82, 10);
+        GUI_HOTBAR_SELECTER = getSpriteExact(invSheet, 0, 116, 12, 12);
 
         GUI_ICON_ON = getSpriteInd(guiSheet, 0, 3, width, height);
         GUI_ICON_OFF = getSpriteInd(guiSheet, 1, 3, width, height);

@@ -142,17 +142,17 @@ public abstract class InventoryAbstractPlayer extends Inventory {
     }
 
     // Render inventory slots
-    public void renderInventorySlots(GameContainer container, StateBasedGame game, Graphics g) {
+    public void renderInventorySlots(Graphics g) {
         for (int i = 0; i < maxSize; i++) {
             getSlot(i).setSelected(i == inventorySelectedIndex);
 
-            getSlot(i).render(container, game, g);
+            getSlot(i).render(g);
         }
         for (int i = 0; i < maxSize; i++)
-            getSlot(i).postRender(container, game, g);
+            getSlot(i).postRender(g);
     }
 
-    public void renderHotbar(GameContainer container, StateBasedGame game, Graphics g) {
+    public void renderHotbar(Graphics g) {
         // Render hotbar backgorund
         int barWidth = 82;
         int barHeight = 10;
@@ -170,10 +170,10 @@ public abstract class InventoryAbstractPlayer extends Inventory {
             int selected = i - maxSize;
             getSlot(i).setSelected(selected == hotbarSelectedIndex);
 
-            getSlot(i).render(container, game, g);
+            getSlot(i).render(g);
         }
         for (int i = maxSize; i < maxSize + maxHotbarSize; i++)
-            getSlot(i).postRender(container, game, g);
+            getSlot(i).postRender(g);
     }
 
     public void dropItem(boolean active, int inventorySelectedIndex, int hotbarSelectedIndex) {

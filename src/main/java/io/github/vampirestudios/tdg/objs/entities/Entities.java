@@ -3,8 +3,6 @@ package io.github.vampirestudios.tdg.objs.entities;
 import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import io.github.vampirestudios.tdg.objs.EntityDataParser;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.entities.creatures.passive.CowEntity;
@@ -30,6 +28,7 @@ import io.github.vampirestudios.tdg.tags.CompoundTag;
 import io.github.vampirestudios.tdg.tags.JsonToTag;
 import io.github.vampirestudios.tdg.tags.TagException;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -190,10 +189,10 @@ public class Entities {
         pos.put("y", entity.getPosition().y);
         json.put("pos", pos);
         try {
-            json.put("tags", entity.getTags().toString());
-        } catch (JsonParseException e) {
+            json.put("tags", new JSONParser().parse(entity.getTags().toString()));
+        } catch (ParseException e) {
             MaewilLauncher.LOGGER.error(e);
-            json.put("tags", new JsonObject());
+            json.put("tags", new JSONObject());
         }
         json.put("health", entity.getCurrentHealth());
         json.put("maxHealth", entity.getMaxHealth());

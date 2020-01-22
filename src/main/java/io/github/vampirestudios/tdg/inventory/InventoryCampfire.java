@@ -71,7 +71,7 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(Graphics g) {
         if (active) {
             int multiplier = 6;
             int width = 57 * multiplier;
@@ -88,9 +88,9 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
             int amt = (int) NumberUtils.map(0, 0, 100, 0, dfHeight);
             flame.getSubImage(0, amt, dfWidth, dfHeight - amt).draw(x + 32 * multiplier, y + 5 * multiplier + amt * multiplier, fWidth, fHeight - amt * multiplier);
 
-            super.renderInventorySlots(container, game, g);
+            super.renderInventorySlots(g);
 
-            slots.get(slots.size() - 1).render(container, game, g);
+            slots.get(slots.size() - 1).render(g);
         }
     }
 

@@ -21,8 +21,7 @@ public class StoneTile extends OverlapTile {
         this.setMapColor(WorldColors.STONE);
 
         if (overlap) {
-            this.setConnect("broken_stone");
-            this.setIgnore("stone");
+            this.setIgnore("stone", id);
         }
 
         this.setDrop(Items.ROCK);

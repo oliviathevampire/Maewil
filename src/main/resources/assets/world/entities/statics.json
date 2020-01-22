@@ -3,255 +3,282 @@
         {
             "id": "tree_small",
             "pos": [
-                2,
-                8
+                "5f",
+                "16f"
             ]
         },
         {
             "id": "tree_small",
             "pos": [
-                3,
-                8
+                "6f",
+                "12f"
             ]
         },
         {
             "id": "tree_small",
             "pos": [
-                4,
-                10
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                5,
-                10
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                1,
-                11
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                2,
-                11
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                6,
-                12
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                7,
-                12
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                10,
-                8
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                12,
-                8
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                14,
-                8
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                15,
-                8
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                16,
-                8
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                10,
-                9
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                11,
-                9
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                13,
-                9
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                14,
-                9
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                11,
-                10
-            ]
-        },
-        {
-            "id": "tree_small",
-            "pos": [
-                12,
-                10
+                "13f",
+                "13f"
             ]
         },
         {
             "id": "tree_medium",
             "pos": [
-                1,
-                9
+                "2f",
+                "11f"
             ]
         },
         {
             "id": "tree_medium",
             "pos": [
-                4,
-                11
+                "13f",
+                "10f"
             ]
         },
         {
-            "id": "tree_medium",
+            "id": "bush_small",
             "pos": [
-                17,
-                9
+                "7f",
+                "4f"
             ]
         },
         {
-            "id": "tree_large",
+            "id": "bush_small",
             "pos": [
-                1,
-                13
+                "14f",
+                "3f"
             ]
         },
         {
-            "id": "tree_large",
+            "id": "bush_small",
             "pos": [
-                5,
-                15
+                "4f",
+                "10f"
+            ]
+        },
+        {
+            "id": "bush_small",
+            "pos": [
+                "7f",
+                "12f"
+            ]
+        },
+        {
+            "id": "bush_small",
+            "pos": [
+                "9f",
+                "14f"
+            ]
+        },
+        {
+            "id": "bush_large",
+            "pos": [
+                "1f",
+                "14f"
+            ]
+        },
+        {
+            "id": "bush_large",
+            "pos": [
+                "4f",
+                "13f"
+            ]
+        },
+        {
+            "id": "bush_large",
+            "pos": [
+                "10f",
+                "11f"
             ]
         },
         {
             "id": "rock_small",
             "pos": [
-                6,
-                9
+                "2f",
+                "4f"
+            ]
+        },
+        {
+            "id": "rock_small",
+            "pos": [
+                "3f",
+                "5f"
+            ]
+        },
+        {
+            "id": "rock_small",
+            "pos": [
+                "10f",
+                "7f"
+            ]
+        },
+        {
+            "id": "rock_small",
+            "pos": [
+                "16f",
+                "9f"
+            ]
+        },
+        {
+            "id": "rock_small",
+            "pos": [
+                "18f",
+                "14f"
+            ]
+        },
+        {
+            "id": "rock_small",
+            "pos": [
+                "1f",
+                "18f"
+            ]
+        },
+        {
+            "id": "rock_small",
+            "pos": [
+                "4f",
+                "19f"
             ]
         },
         {
             "id": "rock_medium",
             "pos": [
-                3,
-                12
+                "5f",
+                "6f"
             ]
         },
         {
             "id": "rock_medium",
             "pos": [
-                15,
-                10
+                "7f",
+                "7f"
             ]
         },
         {
-            "id": "extra_life",
+            "id": "rock_medium",
             "pos": [
-                15,
-                11
-            ],
-            "count": 3
+                "1f",
+                "15f"
+            ]
+        },
+        {
+            "id": "rock_medium",
+            "pos": [
+                "9f",
+                "16f"
+            ]
+        },
+        {
+            "id": "rock_medium",
+            "pos": [
+                "11f",
+                "15f"
+            ]
+        },
+        {
+            "id": "rock_medium",
+            "pos": [
+                "12f",
+                "15f"
+            ]
         },
         {
             "id": "crop_carrot",
             "pos": [
-                1,
-                7
-            ]
-        },
-        {
-            "id": "crop_wheat",
-            "pos": [
-                2,
-                7
+                "0f",
+                "7f"
             ]
         },
         {
             "id": "crop_potato",
             "pos": [
-                1,
-                8
-            ]
-        },
-        {
-            "id": "crop_tomato",
-            "pos": [
-                2,
-                8
+                "1f",
+                "7f"
             ]
         },
         {
             "id": "crop_corn",
             "pos": [
-                3,
-                8
-            ],
-            "count": 3
+                "0f",
+                "8f"
+            ]
         },
         {
-            "id": "shop",
+            "id": "crop_potato",
             "pos": [
-                16.7,
-                11
+                "1f",
+                "8f"
+            ]
+        },
+        {
+            "id": "crop_wheat",
+            "pos": [
+                "2f",
+                "8f"
+            ],
+            "count": "2"
+        },
+        {
+            "id": "crop_carrot",
+            "pos": [
+                "4f",
+                "8f"
+            ]
+        },
+        {
+            "id": "crop_potato",
+            "pos": [
+                "0f",
+                "9f"
+            ]
+        },
+        {
+            "id": "crop_corn",
+            "pos": [
+                "1f",
+                "9f"
+            ]
+        },
+        {
+            "id": "crop_potato",
+            "pos": [
+                "2f",
+                "9f"
+            ]
+        },
+        {
+            "id": "crop_tomato",
+            "pos": [
+                "3f",
+                "9f"
+            ]
+        },
+        {
+            "id": "crop_tomato",
+            "pos": [
+                "0f",
+                "10f"
+            ]
+        },
+        {
+            "id": "crop_corn",
+            "pos": [
+                "1f",
+                "10f"
             ]
         },
         {
             "id": "shop",
             "pos": [
-                14,
-                11.5
+                "0f",
+                "12f"
             ]
         },
         {
             "id": "campfire",
             "pos": [
-                18,
-                17
+                "15f",
+                "16f"
             ],
             "tags": {
                 "item": "raw_pork:1"

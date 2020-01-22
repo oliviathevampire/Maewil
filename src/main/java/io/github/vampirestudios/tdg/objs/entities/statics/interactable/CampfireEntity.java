@@ -42,7 +42,7 @@ public class CampfireEntity extends StaticEntity {
     @Override
     public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
         super.postRender(container, game, g);
-        inventoryCampfire.render(container, game, g);
+        inventoryCampfire.render(g);
     }
 
     @Override

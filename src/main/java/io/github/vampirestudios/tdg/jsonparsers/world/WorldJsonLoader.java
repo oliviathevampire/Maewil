@@ -6,16 +6,17 @@ import io.github.vampirestudios.tdg.objs.entities.Entities;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.items.Item;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
-import io.github.vampirestudios.tdg.objs.items.Items;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.Tiles;
+import io.github.vampirestudios.tdg.screen.game.SelectGameScreen;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
-import io.github.vampirestudios.tdg.screen.game.SelectGameScreen;
-import io.github.vampirestudios.tdg.tags.JsonToTag;
 import io.github.vampirestudios.tdg.tags.CompoundTag;
+import io.github.vampirestudios.tdg.tags.JsonToTag;
 import io.github.vampirestudios.tdg.tags.TagException;
+import io.github.vampirestudios.tdg.utils.Identifier;
 import io.github.vampirestudios.tdg.utils.iinterface.IJSONLoader;
+import io.github.vampirestudios.tdg.utils.registry.Registries;
 import io.github.vampirestudios.tdg.world.TileList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -160,7 +161,13 @@ public class WorldJsonLoader implements IJSONLoader {
             JSONArray statics = (JSONArray) jsonObjectStatic.get("statics");
             for (Object aStatic : statics) {
                 JSONObject entity = (JSONObject) aStatic;
-                loadEntityObj(entity);
+//                loadEntityObj(entity);
+                JSONArray pos = (JSONArray) entity.get("pos");
+                float x = NumberUtils.parseFloat(pos.get(0));
+                float y = NumberUtils.parseFloat(pos.get(1));
+
+                Entity entity1 = Entities.jsonToEntity(entity);
+                maewilEngine.getEntityManager().addEntity(entity1, x, y, true);
             }
             MaewilLauncher.LOGGER.info("Loaded world static entities");
         }
@@ -192,7 +199,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 int count = 1;
                 if (itemObj.containsKey("count"))
                     count = NumberUtils.parseInt(itemObj.get("count"));
-                Item item = Items.ITEMS.get(id);
+                Item item = Registries.ITEMS.get(Identifier.tryParse(id));
                 if (!item.isStackable())
                     count = 1;
 
@@ -235,7 +242,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 if (slot.containsKey("count")) {
                     count = NumberUtils.parseInt(slot.get("count"));
                 }
-                Item item = Items.ITEMS.get(id);
+                Item item = Registries.ITEMS.get(Identifier.tryParse(id));
                 if (!item.isStackable())
                     count = 1;
                 inventory[i] = new ItemStack(item, count);
@@ -243,9 +250,9 @@ public class WorldJsonLoader implements IJSONLoader {
         }
         MaewilLauncher.LOGGER.info("loaded player inventory!");
 
-        hotbar = new ItemStack[3];
+        hotbar = new ItemStack[9];
         JSONObject hotbarJ = (JSONObject) jsonObject.get("hotbar");
-        for (int i = 12; i < 15; i++) {
+        for (int i = 12; i < 21; i++) {
             JSONObject slot = (JSONObject) hotbarJ.get("slot_" + (i - 12));
             String id = (String) slot.get("id");
             if (id.equals("null"))
@@ -255,7 +262,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 if (slot.containsKey("count")) {
                     count = NumberUtils.parseInt(slot.get("count"));
                 }
-                Item item = Items.ITEMS.get(id);
+                Item item = Registries.ITEMS.get(Identifier.tryParse(id));
                 if (!item.isStackable())
                     count = 1;
                 hotbar[i - 12] = new ItemStack(item, count);
@@ -293,6 +300,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 tags = JsonToTag.getTagFromJson(tagsJson.toJSONString());
             } catch (TagException e) {
                 e.printStackTrace();
+                tags = new CompoundTag();
             }
         }
 

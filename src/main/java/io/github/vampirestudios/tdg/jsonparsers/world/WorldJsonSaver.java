@@ -221,11 +221,11 @@ public class WorldJsonSaver implements IJSONSaver {
         jsonObject.put("inventory", inventory);
 
         JSONObject hotbar = new JSONObject();
-        for (int i = 12; i < 15; i++) {
+        for (int i = 12; i < 21; i++) {
             JSONObject slot = new JSONObject();
             ItemStack stack = maewilEngine.getPlayer().getInventoryPlayer().getSlot(i).getStack();
             if (stack == null)
-                slot.put("id", "null");
+                slot.put("id", "maewil:stone_pick");
             else {
                 slot.put("id", stack.getId());
                 if (stack.getCount() > 1)

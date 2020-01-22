@@ -4,10 +4,8 @@ import io.github.vampirestudios.tdg.gfx.Text;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.state.StateBasedGame;
 
 public class Slot {
 
@@ -32,7 +30,7 @@ public class Slot {
         this.scale = scale;
     }
 
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(Graphics g) {
 //        Assets.GUI_SLOT.draw(x, y, width, height);
         itemWidth = (int) ((width / 2 + width / 4) * scale);
         itemHeight = (int) ((height / 2 + height / 4) * scale);
@@ -46,11 +44,11 @@ public class Slot {
         }
 
         if (isSelected) {
-            selector.draw(x + 3, y + 3, width + 5, height + 5);
+            selector.draw(x - 27, y - 10, width * 1.4F, height * 1.4F);
         }
     }
 
-    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
+    public void postRender(Graphics g) {
         if (isSelected && stack != null)
             Text.drawString(g, stack.getItem().getName(), xPos + itemWidth / 2f, yPos + itemHeight, true, Color.white, Assets.FONTS.get("20"));
     }

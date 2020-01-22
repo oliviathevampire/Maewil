@@ -30,10 +30,10 @@ public class Tiles {
      * Stone
      */
     public static Tile STONE, BROKEN_STONE;
-    public static Tile ANDESITE, DIORITE;
+    public static Tile ANDESITE, DIORITE, GRANITE;
     public static Tile OBSIDIAN;
 
-    public static Tile COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE;
+    public static Tile COAL_ORE, IRON_ORE, GOLD_ORE, DIAMOND_ORE, EMERALD_ORE, AMETHYST_ORE;
 
     /*
      * Fluid
@@ -68,9 +68,9 @@ public class Tiles {
          * Stone
          */
         register(STONE = parser.loadData(new StoneTile(maewilEngine)));
-        register(BROKEN_STONE = parser.loadData(new BrokenStoneTile(maewilEngine)));
         register(ANDESITE = parser.loadData(new AndesiteTile(maewilEngine)));
         register(DIORITE = parser.loadData(new DioriteTile(maewilEngine)));
+        register(GRANITE = parser.loadData(new StoneTile(maewilEngine, "granite", true)));
         register(OBSIDIAN = parser.loadData(new ObsidianTile(maewilEngine)));
 
         register(COAL_ORE = parser.loadData(new CoalOreTile(maewilEngine)));

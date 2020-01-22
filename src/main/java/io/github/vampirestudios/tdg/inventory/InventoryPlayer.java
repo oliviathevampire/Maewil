@@ -4,9 +4,7 @@ import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
 
 public class InventoryPlayer extends InventoryAbstractPlayer {
 
@@ -16,7 +14,7 @@ public class InventoryPlayer extends InventoryAbstractPlayer {
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(Graphics g) {
         if (active) {
             // Render inventory backgorund
             int multiplier = 6;
@@ -28,7 +26,7 @@ public class InventoryPlayer extends InventoryAbstractPlayer {
             Assets.GUI_INVENTORY.draw(x, y, width, height);
             player.getTexture("idle").draw(x + player.getWidth() / 0.75F, y + player.getHeight() / 1.4f, player.getWidth(), player.getHeight());
 
-            super.renderInventorySlots(container, game, g);
+            super.renderInventorySlots(g);
         }
     }
 }

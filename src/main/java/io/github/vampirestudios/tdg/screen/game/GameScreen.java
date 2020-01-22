@@ -13,6 +13,7 @@ import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.screen.options.controls.Keybind;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
+import io.github.vampirestudios.tdg.utils.DiscordHandler;
 import io.github.vampirestudios.tdg.world.World;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -62,7 +63,7 @@ public class GameScreen extends Screen {
             public void onClick() {
                 ScreenManager.setCurrentScreen(maewilEngine.stateOptions);
 
-//                DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options");
+                DiscordHandler.INSTANCE.updatePresence("Main Menu", "Options");
             }
 
             @Override
@@ -73,7 +74,7 @@ public class GameScreen extends Screen {
         WidgetButton btnMainMenu = new WidgetButton(maewilEngine, true, MaewilLauncher.HEIGHT / 2 + yOffset + 20, "Main Menu", new ClickListener() {
             @Override
             public void onClick() {
-//                DiscordHandler.INSTANCE.updatePresence("Main Menu");
+                DiscordHandler.INSTANCE.updatePresence("Main Menu");
                 saveWorld(true);
 
                 ScreenManager.setCurrentScreen(maewilEngine.stateMenu);
@@ -100,8 +101,6 @@ public class GameScreen extends Screen {
         uiManagerPaused.addObject(btnQuit);
         uiManagerDead.addObject(btnMainMenu);
         uiManagerDead.addObject(btnQuit);
-
-//        saveWorldInfo();
     }
 
     @Override

@@ -25,7 +25,7 @@ public abstract class Screen {
     private int bgHeight = MaewilLauncher.HEIGHT_TILE_SIZE + (MaewilLauncher.HEIGHT_TILE_SIZE * Tile.TILE_SIZE < MaewilLauncher.HEIGHT ? 1 : 0);
     private TileList bgTiles;
     private Tile[] centre, border;
-    protected static final Tile[] CENTRE_GRASS = new Tile[]{Tiles.GRASS}, BORDER_STONE_BROKEN = new Tile[]{Tiles.STONE, Tiles.BROKEN_STONE};
+    protected static final Tile[] CENTRE_GRASS = new Tile[]{Tiles.GRASS}, BORDER_STONE_BROKEN = new Tile[]{Tiles.STONE, Tiles.ANDESITE, Tiles.DIORITE, Tiles.GRANITE};
 
     public Screen(MaewilEngine maewilEngine) {
         this(maewilEngine, CENTRE_GRASS);

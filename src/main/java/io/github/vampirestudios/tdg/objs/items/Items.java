@@ -10,12 +10,10 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Items {
 
-    public static final HashMap<String, Item> ITEMS = new HashMap<>();
     public static final List<Item> UPDATABLE_TIEMS = new ArrayList<>();
 
     /*
@@ -36,7 +34,7 @@ public class Items {
     /*
      * Minerals
      */
-    public static Item COAL, IRON_INGOT, GOLD_INGOT, DIAMOND;
+    public static Item COAL, IRON_INGOT, GOLD_INGOT, DIAMOND, EMERALD, AMETHYST;
 
     /*
      * Foods

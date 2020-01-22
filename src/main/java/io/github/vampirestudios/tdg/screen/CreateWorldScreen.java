@@ -118,7 +118,7 @@ public class CreateWorldScreen extends AbstractMenuScreen {
          * Set world & username
          */
         World world = new World(maewilEngine, worldName, worldSize, worldSize, getPlayerSpawn(), bgTiles, fgTiles);
-        ScreenManager.setCurrentScreen(new GameScreen(maewilEngine, "./data/saves/Test_World", worldName, world));
+        ScreenManager.setCurrentScreen(new GameScreen(maewilEngine, "./data/saves/" + worldName, worldName, world));
 
         if (ArgUtils.hasArgument("-username"))
             maewilEngine.setUsername(ArgUtils.getArgument("-username"));

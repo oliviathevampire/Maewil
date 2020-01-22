@@ -82,9 +82,9 @@ public abstract class Inventory {
 
     public abstract void update(GameContainer container, StateBasedGame game, int delta);
 
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        slots.forEach(s -> s.render(container, game, g));
-        slots.forEach(s -> s.postRender(container, game, g));
+    public void render(Graphics g) {
+        slots.forEach(s -> s.render(g));
+        slots.forEach(s -> s.postRender(g));
     }
 
     public List<Slot> getSlots() {
