@@ -70,7 +70,7 @@ public class Tiles {
         register(STONE = parser.loadData(new StoneTile(maewilEngine)));
         register(ANDESITE = parser.loadData(new AndesiteTile(maewilEngine)));
         register(DIORITE = parser.loadData(new DioriteTile(maewilEngine)));
-        register(GRANITE = parser.loadData(new StoneTile(maewilEngine, "granite", true)));
+        register(GRANITE = parser.loadData(new GraniteTile(maewilEngine)));
         register(OBSIDIAN = parser.loadData(new ObsidianTile(maewilEngine)));
 
         register(COAL_ORE = parser.loadData(new CoalOreTile(maewilEngine)));

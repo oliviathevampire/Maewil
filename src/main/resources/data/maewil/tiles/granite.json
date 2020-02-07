@@ -1,0 +1,13 @@
+{
+  "type": "normal",
+  "texture": "tiles/granite.png",
+  "size": 16,
+  "overlap": {
+    "connect": [
+      "broken_stone"
+    ],
+    "ignore": [
+      "stone"
+    ]
+  }
+}

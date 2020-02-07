@@ -46,6 +46,13 @@ public class World {
         }
         maewilEngine.getPlayer().setX(spawnX * Tile.TILE_SIZE);
         maewilEngine.getPlayer().setY(spawnY * Tile.TILE_SIZE);
+
+        /*try {
+            TileSet tileSet = new TileSet(new TiledMap("testing"), new XMLElement(), true);
+            tileSet.
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }*/
     }
 
     public World(MaewilEngine maewilEngine, String worldName, int worldWidth, int worldHeight, Vector2D spawn, TileList bgTiles, TileList fgTiles) {

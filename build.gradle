@@ -52,6 +52,8 @@ repositories {
     maven { url "http://download.java.net/maven/2" }
     maven { url "http://maven.fabricmc.net"}
     maven { url "http://repo.fusesource.com/nexus/content/repositories/releases-3rd-party/" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
 }
 
 launch4j {
@@ -88,6 +90,8 @@ dependencies {
 //    compile "org.lwjgl:lwjgl-glfw:$lwjglVersion:natives-linux"
 //    compile "org.lwjgl:lwjgl:$lwjglVersion:natives-macos"
 //    compile "org.lwjgl:lwjgl-glfw:$lwjglVersion:natives-macos"
+    compile "com.badlogicgames.gdx:gdx:1.9.10"
+    compile "com.badlogicgames.gdx:gdx-tools:1.9.10"
 
     // Netty
     compile group: 'io.netty', name: 'netty-all', version: '4.1.29.Final'
