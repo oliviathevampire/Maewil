@@ -2,6 +2,8 @@ package io.github.vampirestudios.tdg.jsonparsers.world;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import io.github.vampirestudios.tdg.objs.entities.Entities;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.items.Item;
@@ -153,16 +155,16 @@ public class WorldJsonLoader implements IJSONLoader {
 
     public void loadEntities() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObjectStatic = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path + "/" + BASE_FILES.get("entity_s") + ".json"));
-        JSONObject jsonObjectCreature = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path + "/" + BASE_FILES.get("entity_c") + ".json"));
+        JsonObject jsonObjectStatic = (JsonObject) parser.parse(FileUtils.loadFileOutSideJar(path + "/" + BASE_FILES.get("entity_s") + ".json"));
+        JsonObject jsonObjectCreature = (JsonObject) parser.parse(FileUtils.loadFileOutSideJar(path + "/" + BASE_FILES.get("entity_c") + ".json"));
 
         // Static
-        if (jsonObjectStatic.containsKey("statics")) {
-            JSONArray statics = (JSONArray) jsonObjectStatic.get("statics");
+        if (jsonObjectStatic.has("statics")) {
+            JsonArray statics = (JsonArray) jsonObjectStatic.get("statics");
             for (Object aStatic : statics) {
-                JSONObject entity = (JSONObject) aStatic;
+                JsonObject entity = (JsonObject) aStatic;
 //                loadEntityObj(entity);
-                JSONArray pos = (JSONArray) entity.get("pos");
+                JsonArray pos = (JsonArray) entity.get("pos");
                 float x = NumberUtils.parseFloat(pos.get(0));
                 float y = NumberUtils.parseFloat(pos.get(1));
 
@@ -173,10 +175,10 @@ public class WorldJsonLoader implements IJSONLoader {
         }
 
         // Creatures
-        if (jsonObjectCreature.containsKey("creatures")) {
-            JSONArray creatures = (JSONArray) jsonObjectCreature.get("creatures");
+        if (jsonObjectCreature.has("creatures")) {
+            JsonArray creatures = (JsonArray) jsonObjectCreature.get("creatures");
             for (Object creature : creatures) {
-                JSONObject entity = (JSONObject) creature;
+                JsonObject entity = (JsonObject) creature;
                 loadEntityObj(entity);
             }
             MaewilLauncher.LOGGER.info("Loaded world creature entities");
@@ -290,26 +292,26 @@ public class WorldJsonLoader implements IJSONLoader {
     /*
      * Load an entity object
      */
-    private void loadEntityObj(JSONObject entityObj) {
-        String id = (String) entityObj.get("id");
+    private void loadEntityObj(JsonObject entityObj) {
+        String id = entityObj.get("id").getAsString();
 
         CompoundTag tags = new CompoundTag();
-        if (entityObj.containsKey("tags")) {
-            JSONObject tagsJson = (JSONObject) entityObj.get("tags");
+        if (entityObj.has("tags")) {
+            JsonObject tagsJson = entityObj.get("tags").getAsJsonObject();
             try {
-                tags = JsonToTag.getTagFromJson(tagsJson.toJSONString());
+                tags = JsonToTag.getTagFromJson(tagsJson.getAsString());
             } catch (TagException e) {
                 e.printStackTrace();
                 tags = new CompoundTag();
             }
         }
 
-        JSONArray pos = (JSONArray) entityObj.get("pos");
+        JsonArray pos = (JsonArray) entityObj.get("pos");
         float x = NumberUtils.parseFloat(pos.get(0));
         float y = NumberUtils.parseFloat(pos.get(1));
 
         int health = Entities.getEntityById(id).getMaxHealth();
-        if (entityObj.containsKey("health")) {
+        if (entityObj.has("health")) {
             int healthJ = NumberUtils.parseInt(entityObj.get("health"));
             if (healthJ < 0)
                 healthJ = 0;

@@ -67,11 +67,13 @@ public class WorldGenerator {
             for (int y = 0; y < worldSize; y++) {
                 for (int x = 0; x < worldSize; x++) {
                     Biomes.Biome biome = Biomes.getBiomeAt(biomeMap, x, y);
-                    if (biome.equals(Biomes.FOREST)) {
+                    if (biome.equals(Biomes.FOREST) || biome.equals(Biomes.PLAINS)) {
                         float threshold = 0.1f;
                         float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
                         float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
                         maewilEngine.getEntityManager().addEntity(Entities.BUSH_SMALL, x + xOff, y + yOff, false);
+                        maewilEngine.getEntityManager().addEntity(Entities.BUSH_MEDIUM, x + xOff, y + yOff, false);
+                        maewilEngine.getEntityManager().addEntity(Entities.TREE_EXTRA_LARGE, x + xOff, y + yOff, false);
                     }
                 }
             }

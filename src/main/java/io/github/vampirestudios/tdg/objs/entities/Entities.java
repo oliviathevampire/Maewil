@@ -3,6 +3,7 @@ package io.github.vampirestudios.tdg.objs.entities;
 import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
+import com.google.gson.JsonObject;
 import io.github.vampirestudios.tdg.objs.EntityDataParser;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.entities.creatures.passive.CowEntity;
@@ -27,8 +28,6 @@ import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.tags.CompoundTag;
 import io.github.vampirestudios.tdg.tags.JsonToTag;
 import io.github.vampirestudios.tdg.tags.TagException;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -146,10 +145,10 @@ public class Entities {
         return new ArrayList<>(ENTITIES.values());
     }
 
-    public static Entity jsonToEntity(JSONObject json) {
-        Entity entity = getEntityById((String) json.get("id"));
+    public static Entity jsonToEntity(JsonObject json) {
+        Entity entity = getEntityById((String) json.get("id").getAsString());
 
-        JSONObject posObj = (JSONObject) json.get("pos");
+        JsonObject posObj = (JsonObject) json.get("pos");
         Vector2D position = new Vector2D();
         position.x = NumberUtils.parseDouble(posObj.get("x"));
         position.y = NumberUtils.parseDouble(posObj.get("y"));
@@ -157,8 +156,8 @@ public class Entities {
 
         CompoundTag tags;
         try {
-            JSONObject tagsJson = (JSONObject) json.get("tags");
-            tags = JsonToTag.getTagFromJson(tagsJson.toString());
+            JsonObject tagsJson = (JsonObject) json.get("tags");
+            tags = JsonToTag.getTagFromJson(tagsJson.getAsString());
         } catch (TagException e) {
             MaewilLauncher.LOGGER.error(e);
             tags = new CompoundTag();
@@ -180,24 +179,25 @@ public class Entities {
         return entity.newCopy();
     }
 
-    public static JSONObject entityToJson(Entity entity) {
-        JSONObject json = new JSONObject();
+    public static JsonObject entityToJson(Entity entity) {
+        JsonObject json = new JsonObject();
 
-        json.put("id", entity.getId());
-        JSONObject pos = new JSONObject();
-        pos.put("x", entity.getPosition().x);
-        pos.put("y", entity.getPosition().y);
-        json.put("pos", pos);
-        try {
-            json.put("tags", new JSONParser().parse(entity.getTags().toString()));
+        json.addProperty("id", entity.getId());
+        JsonObject pos = new JsonObject();
+        pos.addProperty("x", entity.getPosition().x);
+        pos.addProperty("y", entity.getPosition().y);
+        json.add("pos", pos);
+        /*try {
+            json.add("tags", new JSONParser().parse(entity.getTags().toString()));
         } catch (ParseException e) {
             MaewilLauncher.LOGGER.error(e);
-            json.put("tags", new JSONObject());
-        }
-        json.put("health", entity.getCurrentHealth());
-        json.put("maxHealth", entity.getMaxHealth());
-        json.put("hitType", entity.getHitType().getIndex());
-        json.put("currentTextureId", entity.getCurrentTextureId());
+            json.add("tags", new JsonObject());
+        }*/
+        json.add("tags", new JsonObject());
+        json.addProperty("health", entity.getCurrentHealth());
+        json.addProperty("maxHealth", entity.getMaxHealth());
+        json.addProperty("hitType", entity.getHitType().getIndex());
+        json.addProperty("currentTextureId", entity.getCurrentTextureId());
 
         return json;
     }

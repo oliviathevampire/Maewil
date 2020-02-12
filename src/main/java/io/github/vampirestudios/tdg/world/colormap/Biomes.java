@@ -15,14 +15,14 @@ public class Biomes {
 
     private static List<Biome> biomes = new ArrayList<>();
 
-    public static final Biome FOREST = new Biome("forest", false, 0, 116, 0);
+    public static final Biome FOREST = new Biome("forest", true, 0, 116, 0);
     public static final Biome PLAINS = new Biome("plains", true, 0, 185, 0);
-    public static final Biome OCEAN = new Biome("ocean", false, 3, 0, 166);
+    public static final Biome OCEAN = new Biome("ocean", true, 3, 0, 166);
     public static final Biome SAVANNA = new Biome("savanna", true, 166, 86, 0);
     public static final Biome DESERT = new Biome("desert", true, 166, 124, 0);
     public static final Biome RED_DESERT = new Biome("red_desert", true, 166, 124, 0);
     public static final Biome CAVE = new Biome("cave", true, 50, 50, 50);
-    public static final Biome UNDERGROUND = new Biome("underground", false, 75, 75, 75);
+    public static final Biome UNDERGROUND = new Biome("underground", true, 75, 75, 75);
 
     public static final Biome NONE = new Biome("none", false, 255, 255, 255, 0);
 

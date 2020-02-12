@@ -18,12 +18,20 @@ public class ShopStallEntity extends StaticEntity {
     }
 
     private RoofType pickRoof() {
-        int i = NumberUtils.getRandomInt(3);
+        int i = NumberUtils.getRandomInt(7);
         if (i == 0)
             return RoofType.ORANGE;
         if (i == 1)
             return RoofType.BLUE;
         if (i == 2)
+            return RoofType.GREEN;
+        if (i == 3)
+            return RoofType.PURPLE;
+        if (i == 4)
+            return RoofType.CYAN;
+        if (i == 5)
+            return RoofType.YELLOW;
+        if (i == 6)
             return RoofType.RED;
         return RoofType.WHITE;
     }
@@ -61,6 +69,10 @@ public class ShopStallEntity extends StaticEntity {
 
         ORANGE("orange"),
         BLUE("blue"),
+        GREEN("green"),
+        PURPLE("purple"),
+        CYAN("cyan"),
+        YELLOW("yellow"),
         RED("red"),
         WHITE("white");
 

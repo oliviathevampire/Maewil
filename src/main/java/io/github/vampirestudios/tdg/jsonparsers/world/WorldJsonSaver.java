@@ -1,5 +1,7 @@
 package io.github.vampirestudios.tdg.jsonparsers.world;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import io.github.vampirestudios.tdg.objs.entities.Entities;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.ItemEntity;
@@ -14,8 +16,6 @@ import io.github.vampirestudios.tdg.utils.JsonUtils;
 import io.github.vampirestudios.tdg.utils.iinterface.IJSONSaver;
 import io.github.vampirestudios.tdg.world.TileList;
 import io.github.vampirestudios.tdg.world.World;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -59,65 +59,65 @@ public class WorldJsonSaver implements IJSONSaver {
     }
 
     public void saveWorldInfo(World world) throws IOException {
-        JSONObject jsonObject = new JSONObject();
+        JsonObject jsonObject = new JsonObject();
 
-        jsonObject.put("name", world.getWorldName());
+        jsonObject.addProperty("name", world.getWorldName());
 
-        JSONArray size = new JSONArray();
-        size.add(0, world.getWorldWidth());
-        size.add(1, world.getWorldHeight());
-        jsonObject.put("size", size);
+        JsonArray size = new JsonArray();
+        size.add(world.getWorldWidth());
+        size.add(world.getWorldHeight());
+        jsonObject.add("size", size);
 
-        JSONArray spawn = new JSONArray();
+        JsonArray spawn = new JsonArray();
         float spawnX, spawnY;
         spawnX = maewilEngine.getPlayer().getX() / Tile.TILE_SIZE;
         spawnY = maewilEngine.getPlayer().getY() / Tile.TILE_SIZE;
-        spawn.add(0, spawnX);
-        spawn.add(1, spawnY);
-        jsonObject.put("spawn", spawn);
+        spawn.add(spawnX);
+        spawn.add(spawnY);
+        jsonObject.add("spawn", spawn);
 
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("world"), jsonObject);
     }
 
     public void saveTiles(int width, int height, TileList bgTiles, TileList fgTiles, String savePath, String bgFileName, String fgFileName) throws IOException {
-        JSONObject jsonObjectBG = new JSONObject();
-        JSONObject jsonObjectFG = new JSONObject();
+        JsonObject jsonObjectBG = new JsonObject();
+        JsonObject jsonObjectFG = new JsonObject();
 
-        JSONObject bg_tile = new JSONObject();
+        JsonObject bg_tile = new JsonObject();
         for (int y = 0; y < height; y++) {
-            JSONArray chunk = new JSONArray();
+            JsonArray chunk = new JsonArray();
             for (int x = 0; x < width; x++)
                 saveTile(chunk, bgTiles.getTileAtPos(x, y), x, y);
-            bg_tile.put("chunk" + y, chunk);
+            bg_tile.add("chunk" + y, chunk);
         }
-        jsonObjectBG.put("bg_tile", bg_tile);
+        jsonObjectBG.add("bg_tile", bg_tile);
         MaewilLauncher.LOGGER.info("Saved bg tiles");
 
-        JSONObject fg_tile = new JSONObject();
+        JsonObject fg_tile = new JsonObject();
         for (int y = 0; y < height; y++) {
-            JSONArray chunk = new JSONArray();
+            JsonArray chunk = new JsonArray();
             for (int x = 0; x < width; x++)
                 saveTile(chunk, fgTiles.getTileAtPos(x, y), x, y);
-            fg_tile.put("chunk" + y, chunk);
+            fg_tile.add("chunk" + y, chunk);
         }
-        jsonObjectFG.put("fg_tile", fg_tile);
+        jsonObjectFG.add("fg_tile", fg_tile);
         MaewilLauncher.LOGGER.info("Saved fg tiles");
 
         saveJSONFileToPath(savePath, bgFileName, jsonObjectBG);
         saveJSONFileToPath(savePath, fgFileName, jsonObjectFG);
     }
 
-    private void saveTile(JSONArray chunk, Tile tile, int x, int y) {
-        JSONObject tileObj = new JSONObject();
-        tileObj.put("id", tile.getId());
-        tileObj.put("x", x);
-        tileObj.put("y", y);
+    private void saveTile(JsonArray chunk, Tile tile, int x, int y) {
+        JsonObject tileObj = new JsonObject();
+        tileObj.addProperty("id", tile.getId());
+        tileObj.addProperty("x", x);
+        tileObj.addProperty("y", y);
         chunk.add(tileObj);
     }
 
     public void saveEntities() throws IOException {
-        JSONObject jsonObjectStatic = new JSONObject();
-        JSONObject jsonObjectCreature = new JSONObject();
+        JsonObject jsonObjectStatic = new JsonObject();
+        JsonObject jsonObjectCreature = new JsonObject();
 
         int entAmt = 0;
         for (Entity entity : maewilEngine.getEntityManager().getEntities())
@@ -138,7 +138,7 @@ public class WorldJsonSaver implements IJSONSaver {
             }
 
             // Static
-            JSONArray statics = new JSONArray();
+            JsonArray statics = new JsonArray();
             if (staticAmt > 0) {
                 for (Entity entity : maewilEngine.getEntityManager().getEntities())
                     if (!(entity instanceof PlayerEntity))
@@ -146,10 +146,10 @@ public class WorldJsonSaver implements IJSONSaver {
                             statics.add(Entities.entityToJson(entity));
                 MaewilLauncher.LOGGER.info("World [" + path + "] static entities saved!");
             }
-            jsonObjectStatic.put("statics", statics);
+            jsonObjectStatic.add("statics", statics);
 
             // Creature
-            JSONArray creatures = new JSONArray();
+            JsonArray creatures = new JsonArray();
             if (creatureAmt > 0) {
 
                 for (Entity entity : maewilEngine.getEntityManager().getEntities())
@@ -158,7 +158,7 @@ public class WorldJsonSaver implements IJSONSaver {
                             creatures.add(Entities.entityToJson(entity));
                 MaewilLauncher.LOGGER.info("World [" + path + "] creature entities saved!");
             }
-            jsonObjectCreature.put("creatures", creatures);
+            jsonObjectCreature.add("creatures", creatures);
         }
         MaewilLauncher.LOGGER.info("World [" + path + "] entities saved!");
 
@@ -167,89 +167,89 @@ public class WorldJsonSaver implements IJSONSaver {
     }
 
     public void saveItems() throws IOException {
-        JSONObject jsonObject = new JSONObject();
+        JsonObject jsonObject = new JsonObject();
 
-        JSONArray items = new JSONArray();
+        JsonArray items = new JsonArray();
         for (Entity entity : maewilEngine.getEntityManager().getEntities()) {
             if (entity instanceof ItemEntity) {
                 ItemStack stack = ((ItemEntity) entity).getStack();
-                JSONObject itemObj = new JSONObject();
-                itemObj.put("id", stack.getId());
+                JsonObject itemObj = new JsonObject();
+                itemObj.addProperty("id", stack.getId());
 
-                JSONArray pos = new JSONArray();
-                pos.add(0, entity.getPosition().x / Tile.TILE_SIZE);
-                pos.add(1, entity.getPosition().y / Tile.TILE_SIZE);
-                itemObj.put("pos", pos);
+                JsonArray pos = new JsonArray();
+                pos.add(entity.getPosition().x / Tile.TILE_SIZE);
+                pos.add(entity.getPosition().y / Tile.TILE_SIZE);
+                itemObj.add("pos", pos);
 
                 if (stack.getCount() > 1) {
-                    itemObj.put("count", stack.getCount());
+                    itemObj.addProperty("count", stack.getCount());
                 }
                 items.add(itemObj);
             }
         }
-        jsonObject.put("items", items);
+        jsonObject.add("items", items);
         MaewilLauncher.LOGGER.info("World [" + path + "] items saved!");
 
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("items"), jsonObject);
     }
 
     public void savePlayerInfo(String username) throws IOException {
-        JSONObject jsonObject = new JSONObject();
+        JsonObject jsonObject = new JsonObject();
 
-        jsonObject.put("username", username);
+        jsonObject.addProperty("username", username);
         MaewilLauncher.LOGGER.info("Player username saved [" + maewilEngine.getUsername() + "]");
-        jsonObject.put("health", maewilEngine.getPlayer().getCurrentHealth());
+        jsonObject.addProperty("health", maewilEngine.getPlayer().getCurrentHealth());
 
-        JSONArray selected_slots = new JSONArray();
-        selected_slots.add(0, maewilEngine.getPlayer().getInventoryPlayer().getInventorySelectedIndex());
-        selected_slots.add(1, maewilEngine.getPlayer().getInventoryPlayer().getHotbarSelectedIndex());
-        jsonObject.put("selected_slots", selected_slots);
+        JsonArray selected_slots = new JsonArray();
+        selected_slots.add(maewilEngine.getPlayer().getInventoryPlayer().getInventorySelectedIndex());
+        selected_slots.add(maewilEngine.getPlayer().getInventoryPlayer().getHotbarSelectedIndex());
+        jsonObject.add("selected_slots", selected_slots);
 
-        JSONObject inventory = new JSONObject();
+        JsonObject inventory = new JsonObject();
         for (int i = 0; i < 12; i++) {
-            JSONObject slot = new JSONObject();
+            JsonObject slot = new JsonObject();
             ItemStack stack = maewilEngine.getPlayer().getInventoryPlayer().getSlot(i).getStack();
             if (stack == null)
-                slot.put("id", "null");
+                slot.addProperty("id", "null");
             else {
-                slot.put("id", stack.getId());
+                slot.addProperty("id", stack.getId());
                 if (stack.getCount() > 1)
-                    slot.put("count", stack.getCount());
+                    slot.addProperty("count", stack.getCount());
             }
-            inventory.put("slot_" + i, slot);
+            inventory.add("slot_" + i, slot);
         }
-        jsonObject.put("inventory", inventory);
+        jsonObject.add("inventory", inventory);
 
-        JSONObject hotbar = new JSONObject();
+        JsonObject hotbar = new JsonObject();
         for (int i = 12; i < 21; i++) {
-            JSONObject slot = new JSONObject();
+            JsonObject slot = new JsonObject();
             ItemStack stack = maewilEngine.getPlayer().getInventoryPlayer().getSlot(i).getStack();
             if (stack == null)
-                slot.put("id", "maewil:stone_pick");
+                slot.addProperty("id", "maewil:stone_pick");
             else {
-                slot.put("id", stack.getId());
+                slot.addProperty("id", stack.getId());
                 if (stack.getCount() > 1)
-                    slot.put("count", stack.getCount());
+                    slot.addProperty("count", stack.getCount());
             }
-            hotbar.put("slot_" + (i - 12), slot);
+            hotbar.add("slot_" + (i - 12), slot);
         }
-        jsonObject.put("hotbar", hotbar);
+        jsonObject.add("hotbar", hotbar);
 
         saveJSONFileToSave(path, WorldJsonLoader.BASE_FILES.get("player"), jsonObject);
     }
 
-    private void saveJSONFileToSave(String path, String fileName, JSONObject data) throws IOException {
+    private void saveJSONFileToSave(String path, String fileName, JsonObject data) throws IOException {
         saveJSONFileToPath(path, fileName, data);
     }
 
-    private void saveJSONFileToPath(String path, String fileName, JSONObject data) throws IOException {
+    private void saveJSONFileToPath(String path, String fileName, JsonObject data) throws IOException {
         Path parentPath = Paths.get(path, fileName).getParent();
         if(!Files.exists(parentPath)) {
             Files.createDirectories(parentPath);
         }
         String trueFilePath = path + "/" + fileName + ".json";
         FileWriter writer = new FileWriter(trueFilePath);
-        writer.write(JsonUtils.prettyPrintJSON(data.toJSONString()));
+        writer.write(JsonUtils.prettyPrintJSON(data.toString()));
         writer.flush();
         writer.close();
     }

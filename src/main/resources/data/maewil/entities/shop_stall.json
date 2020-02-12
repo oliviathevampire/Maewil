@@ -7,28 +7,36 @@
       "spriteSize": [32, 32]
     },
     "roof_orange": {
-      "length": 8,
-      "speed": 250,
       "spriteSize": [32, 16],
-      "startPos": [0, 0]
+      "spritePos": [32, 64]
     },
     "roof_blue": {
-      "length": 8,
-      "speed": 250,
       "spriteSize": [32, 16],
-      "startPos": [0, 1]
+      "spritePos": [64, 64]
+    },
+    "roof_green": {
+      "spriteSize": [32, 16],
+      "spritePos": [96, 64]
+    },
+    "roof_purple": {
+      "spriteSize": [32, 16],
+      "spritePos": [128, 64]
+    },
+    "roof_cyan": {
+      "spriteSize": [32, 16],
+      "spritePos": [160, 64]
+    },
+    "roof_yellow": {
+      "spriteSize": [32, 16],
+      "spritePos": [192, 64]
     },
     "roof_red": {
-      "length": 8,
-      "speed": 250,
       "spriteSize": [32, 16],
-      "startPos": [0, 2]
+      "spritePos": [224, 64]
     },
     "roof_white": {
-      "length": 8,
-      "speed": 250,
       "spriteSize": [32, 16],
-      "startPos": [0, 3]
+      "spritePos": [32, 80]
     }
   }
 }
