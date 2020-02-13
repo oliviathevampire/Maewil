@@ -77,19 +77,35 @@ public class ShopStallEntity extends StaticEntity {
 
     enum RoofType {
 
-        ORANGE("orange"),
+        DARK_ORANGE("dark_orange"),
         BLUE("blue"),
         GREEN("green"),
-        MAGENTA("purple"),
-        CYAN("cyan"),
-        YELLOW("yellow"),
-        RED("red"),
+        PINK("pink"),
+        ORANGE("orange"),
+        MAGENTA("magenta"),
+        LIGHT_GREEN("light_green"),
+        DARK_YELLOW("dark_yellow"),
+        PURPLE("purple"),
+        DARK_BROWN("dark_brown"),
+        MAROON("maroon"),
         WHITE("white"),
         LIGHT_BLUE("light_blue"),
-        PINK("pink"),
-        PURPLE("purple"),
         LIME("lime"),
-        BROWN("brown"),;
+        CYAN("cyan"),
+        BROWN("brown"),
+        KHAKI("khaki"),
+        BEIGE("beige"),
+        RED("red"),
+        RAINBOW("rainbow"),
+        BLACK_AND_WHITE("black_and_white"),
+        BABY_PINK("baby_pink"),
+        BABY_BLUE("baby_blue"),
+        LIGHT_GRAY("light_gray"),
+        DARK_GRAY("dark_gray"),
+        WINE_RED("wine_red"),
+        YELLOW("yellow"),
+        MILITARY_GREEN("military_green"),
+        FELDGRAU("feldgrau");
 
         private String id;
 
