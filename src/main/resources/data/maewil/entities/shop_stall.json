@@ -3,40 +3,60 @@
   "texture": "entities/static/shop_stall.png",
   "sprites": {
     "stall": {
-      "spritePos": [0, 64],
-      "spriteSize": [32, 32]
+      "spritePos": [0, 77],
+      "spriteSize": [30, 19]
     },
     "roof_orange": {
       "spriteSize": [32, 16],
-      "spritePos": [32, 64]
+      "spritePos": [0, 0]
     },
     "roof_blue": {
       "spriteSize": [32, 16],
-      "spritePos": [64, 64]
+      "spritePos": [32, 0]
     },
     "roof_green": {
       "spriteSize": [32, 16],
-      "spritePos": [96, 64]
+      "spritePos": [64, 0]
     },
-    "roof_purple": {
+    "roof_pink": {
       "spriteSize": [32, 16],
-      "spritePos": [128, 64]
+      "spritePos": [96, 16]
+    },
+    "roof_magenta": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 16]
     },
     "roof_cyan": {
       "spriteSize": [32, 16],
-      "spritePos": [160, 64]
+      "spritePos": [32, 16]
     },
     "roof_yellow": {
       "spriteSize": [32, 16],
-      "spritePos": [192, 64]
+      "spritePos": [64, 16]
+    },
+    "roof_purple": {
+      "spriteSize": [32, 16],
+      "spritePos": [96, 16]
     },
     "roof_red": {
       "spriteSize": [32, 16],
-      "spritePos": [224, 64]
+      "spritePos": [0, 32]
     },
     "roof_white": {
       "spriteSize": [32, 16],
-      "spritePos": [32, 80]
+      "spritePos": [32, 32]
+    },
+    "roof_light_blue": {
+      "spriteSize": [32, 16],
+      "spritePos": [64, 32]
+    },
+    "roof_lime": {
+      "spriteSize": [32, 16],
+      "spritePos": [96, 32]
+    },
+    "roof_brown": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 48]
     }
   }
 }
