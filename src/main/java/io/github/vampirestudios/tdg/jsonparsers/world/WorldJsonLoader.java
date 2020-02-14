@@ -110,26 +110,25 @@ public class WorldJsonLoader implements IJSONLoader {
 
     public void loadTiles(int width, int height, String bgLoadPath, String fgLoadPath, TileList bg_tiles, TileList fg_tiles) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObjectBG = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(bgLoadPath));
-        JSONObject jsonObjectFG = (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(fgLoadPath));
+        JsonObject jsonObjectBG = (JsonObject) parser.parse(FileUtils.loadFileOutSideJar(bgLoadPath));
+        JsonObject jsonObjectFG = (JsonObject) parser.parse(FileUtils.loadFileOutSideJar(fgLoadPath));
 
         this.bg_tiles = new TileList(width, height);
         this.fg_tiles = new TileList(width, height);
 
-        JSONObject bgTiles = (JSONObject) jsonObjectBG.get("bg_tile");
-//        System.out.println("Background Tile: " + bgTiles.toJSONString());
+        JsonObject bgTiles = (JsonObject) jsonObjectBG.get("bg_tile");
         for (int y = 0; y < height; y++) {
-            JSONArray chunk = (JSONArray) bgTiles.get("chunk" + y);
+            JsonArray chunk = (JsonArray) bgTiles.get("chunk" + y);
             for (int x = 0; x < width; x++) {
                 loadTile(chunk, true, x, bg_tiles, fg_tiles);
             }
         }
         MaewilLauncher.LOGGER.info("Loaded world background tiles");
 
-        JSONObject fgTiles = (JSONObject) jsonObjectFG.get("fg_tile");
+        JsonObject fgTiles = (JsonObject) jsonObjectFG.get("fg_tile");
 //        System.out.println("Foreground Tile: " + bgTiles.toJSONString());
         for (int y = 0; y < height; y++) {
-            JSONArray chunk = (JSONArray) fgTiles.get("chunk" + y);
+            JsonArray chunk = (JsonArray) fgTiles.get("chunk" + y);
             for (int x = 0; x < width; x++) {
                 loadTile(chunk, false, x, bg_tiles, fg_tiles);
             }
@@ -137,9 +136,9 @@ public class WorldJsonLoader implements IJSONLoader {
         MaewilLauncher.LOGGER.info("Loaded world foreground tiles");
     }
 
-    private void loadTile(JSONArray chunk, boolean bg, int x, TileList bg_tiles, TileList fg_tiles) {
-        JSONObject tileObj = (JSONObject) chunk.get(x);
-        Tile tile = Tiles.getTileById((String) tileObj.get("id"));
+    private void loadTile(JsonArray chunk, boolean bg, int x, TileList bg_tiles, TileList fg_tiles) {
+        JsonObject tileObj = (JsonObject) chunk.get(x);
+        Tile tile = Tiles.getTileById(tileObj.get("id").getAsString());
         int tx = NumberUtils.parseInt(tileObj.get("x"));
         int ty = NumberUtils.parseInt(tileObj.get("y"));
 
@@ -163,7 +162,7 @@ public class WorldJsonLoader implements IJSONLoader {
             JsonArray statics = (JsonArray) jsonObjectStatic.get("statics");
             for (Object aStatic : statics) {
                 JsonObject entity = (JsonObject) aStatic;
-//                loadEntityObj(entity);
+                loadEntityObj(entity);
                 JsonArray pos = (JsonArray) entity.get("pos");
                 float x = NumberUtils.parseFloat(pos.get(0));
                 float y = NumberUtils.parseFloat(pos.get(1));

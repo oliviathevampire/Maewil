@@ -14,7 +14,6 @@ import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.Identifier;
 import io.github.vampirestudios.tdg.utils.registry.Registries;
-import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 
@@ -53,7 +52,7 @@ public class Tiles {
     public static Tile AIR;
 
 
-    public static void init(MaewilEngine maewilEngine) throws IOException, ParseException {
+    public static void init(MaewilEngine maewilEngine) throws IOException {
         TileDataParser parser = new TileDataParser();
 
         /*

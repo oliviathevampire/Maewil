@@ -33,7 +33,7 @@ public class WidgetTitleRender extends WidgetObject {
         float w1 = title_fg.getWidth() * mult;
         float h1 = title_fg.getHeight() * mult;
         Vector2D pos = new Vector2D(MaewilLauncher.WIDTH / 2f - w1 / 2f + 1.5f * mult, 20 + 27 * mult);
-//        title_fg.draw((float) pos.x, (float) pos.y, w1, h1);
+        title_fg.draw((float) pos.x, (float) pos.y, w1, h1);
 
         this.position = pos;
         this.width = w1;

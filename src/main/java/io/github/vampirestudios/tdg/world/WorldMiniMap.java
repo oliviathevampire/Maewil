@@ -25,7 +25,7 @@ public class WorldMiniMap {
 
     public static void render(Graphics g, MaewilEngine maewilEngine, int width, int height, Color tint) {
         float padding = 10;
-        float x = padding, y = padding, mapSize = 180;
+        float mapSize = 180;
         g.setColor(Color.white);
 
         int viewSize = 100;
@@ -86,16 +86,16 @@ public class WorldMiniMap {
             /* BG */
             Image mapDrawbg = new Image(BufferedImageUtil.getTexture("mapbg", mapbg));
             mapDrawbg.setFilter(Image.FILTER_NEAREST);
-            mapDrawbg.draw(x + mapSizeOff / 2f, y + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2, trans);
+            mapDrawbg.draw(padding + mapSizeOff / 2f, padding + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2, trans);
 
             tint.a = trans.a;
             g.setColor(tint);
-            g.fillRect(x + mapSizeOff / 2f, y + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2);
+            g.fillRect(padding + mapSizeOff / 2f, padding + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2);
 
             /* FG */
             Image mapDrawfg = new Image(BufferedImageUtil.getTexture("mapfg", mapfg));
             mapDrawfg.setFilter(Image.FILTER_NEAREST);
-            mapDrawfg.draw(x + mapSizeOff / 2f, y + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2, trans);
+            mapDrawfg.draw(padding + mapSizeOff / 2f, padding + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2, trans);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -104,20 +104,20 @@ public class WorldMiniMap {
          * Convert player world coords to map coords
          */
         float cursorSize = 20f;
-        float pxd = x + mapSize / 2f - cursorSize / 2f;
-        float pyd = y + mapSize / 2f - cursorSize / 2f;
+        float pxd = padding + mapSize / 2f - cursorSize / 2f;
+        float pyd = padding + mapSize / 2f - cursorSize / 2f;
 
         float px = pxd;
         float py = pyd;
 
         if (mxStart <= 0)
-            px = NumberUtils.map((float) maewilEngine.getPlayer().getPosition().x, 0, (viewSize + cursorSize) * Tile.TILE_SIZE, x, x + mapSize);
+            px = NumberUtils.map((float) maewilEngine.getPlayer().getPosition().x, 0, (viewSize + cursorSize) * Tile.TILE_SIZE, padding, padding + mapSize);
         if (mxEnd >= width - 1)
-            px = NumberUtils.map((float) maewilEngine.getPlayer().getPosition().x, (width - (viewSize - cursorSize / 2)) * Tile.TILE_SIZE, width * Tile.TILE_SIZE, x, x + mapSize - cursorSize / 2);
+            px = NumberUtils.map((float) maewilEngine.getPlayer().getPosition().x, (width - (viewSize - cursorSize / 2)) * Tile.TILE_SIZE, width * Tile.TILE_SIZE, padding, padding + mapSize - cursorSize / 2);
         if (myStart <= 0)
-            py = NumberUtils.map((float) maewilEngine.getPlayer().getPosition().y, 0, (viewSize + cursorSize) * Tile.TILE_SIZE, y, y + mapSize);
+            py = NumberUtils.map((float) maewilEngine.getPlayer().getPosition().y, 0, (viewSize + cursorSize) * Tile.TILE_SIZE, padding, padding + mapSize);
         if (myEnd >= height - 1)
-            py = NumberUtils.map((float) maewilEngine.getPlayer().getPosition().y, (height - (viewSize - cursorSize / 2)) * Tile.TILE_SIZE, height * Tile.TILE_SIZE, y, y + mapSize - cursorSize / 2);
+            py = NumberUtils.map((float) maewilEngine.getPlayer().getPosition().y, (height - (viewSize - cursorSize / 2)) * Tile.TILE_SIZE, height * Tile.TILE_SIZE, padding, padding + mapSize - cursorSize / 2);
 
         /*
          * Draw cursor (arrow) and border
@@ -125,7 +125,7 @@ public class WorldMiniMap {
         updateMapCursor(maewilEngine);
         mapCursor.draw(px, py, cursorSize, cursorSize);
 
-        Assets.MAP_BORDER.draw(x - padding / 2, y - padding / 2, mapBorderSize, mapBorderSize, trans);
+        Assets.MAP_BORDER.draw(padding - padding / 2, padding - padding / 2, mapBorderSize, mapBorderSize, trans);
     }
 
     private static void updateMapCursor(MaewilEngine maewilEngine) {

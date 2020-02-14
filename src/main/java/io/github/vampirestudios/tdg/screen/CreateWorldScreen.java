@@ -85,7 +85,7 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         /*
          * Tiles, entities, etc..
          */
-        logger.info("Generating world...");
+        logger.info("Generating world with a name of " + worldName);
         maewilEngine.getPlayer().reset();
 
         double blendSize = 25.0d + sizeMod;

@@ -1,18 +1,13 @@
 package io.github.vampirestudios.tdg.objs;
 
+import com.google.gson.JsonObject;
 import io.github.vampirestudios.tdg.utils.Identifier;
-import org.json.simple.JSONObject;
-
-/**
- * @author CoffeeCatRailway
- * Created: 22/02/2019
- */
 public interface IHasData<E> {
 
     default String getName() {
-        JSONObject lang = DataParser.getDataCatchException(new Identifier("maewil", "lang"), true);
+        JsonObject lang = DataParser.getDataCatchException(new Identifier("maewil", "lang"), true);
 
-        if (lang.containsKey(getUnlocalizedName()))
+        if (lang.has(getUnlocalizedName()))
             return String.valueOf(lang.get(getUnlocalizedName()));
         else
             return getUnlocalizedName();

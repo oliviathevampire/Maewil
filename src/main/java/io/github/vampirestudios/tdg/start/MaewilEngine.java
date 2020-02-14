@@ -23,7 +23,6 @@ import io.github.vampirestudios.tdg.screen.options.controls.ControlOptions;
 import io.github.vampirestudios.tdg.utils.Colors;
 import io.github.vampirestudios.tdg.utils.DiscordHandler;
 import io.github.vampirestudios.tdg.world.World;
-import org.json.simple.parser.ParseException;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.GameContainer;
@@ -95,7 +94,7 @@ public class MaewilEngine extends BasicGameState {
             Items.init(this);
             Tiles.init(this);
             Entities.init(this);
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -121,7 +120,7 @@ public class MaewilEngine extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         if (close) container.exit();
         keyManager.update(container, game, delta);
 
@@ -159,26 +158,10 @@ public class MaewilEngine extends BasicGameState {
          * Take a screenshot
          */
         if (container.getInput().isKeyPressed(Input.KEY_F2))
-            takeScreenshot(container);
-
-        if (container.getInput().isKeyPressed(Input.KEY_F11))
-            System.out.println("Testing");
+            takeScreenshot();
     }
 
-    private void takeScreenshot(GameContainer container) throws SlickException {
-        /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH.mm.ss");
-        String dateAndTime = dateFormat.format(new Date());
-        String filename = "data/screenshots/" + dateAndTime + ".png";
-        File file = new File(filename);
-        file.getParentFile().mkdirs();
-
-        Image target = new Image(TutLauncher.WIDTH, TutLauncher.HEIGHT);
-        container.getGraphics().copyArea(target, 0, 0);
-        ImageOut.write(target, filename);
-        target.destroy();
-
-        TutLauncher.LOGGER.info("Screenshot saved to [" + filename + "]");*/
-
+    private void takeScreenshot() {
         try {
             GL11.glReadBuffer(GL11.GL_FRONT);
             int colors = 4;
@@ -215,7 +198,7 @@ public class MaewilEngine extends BasicGameState {
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) throws SlickException {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         g.clear();
         Assets.MISSING_TEXTURE.draw(0, 0, MaewilLauncher.WIDTH, MaewilLauncher.HEIGHT);
 

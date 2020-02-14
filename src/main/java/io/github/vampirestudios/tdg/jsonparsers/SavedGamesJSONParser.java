@@ -44,7 +44,7 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
         }
         Path savedGamesPath = Paths.get(path);
         if(!Files.exists(savedGamesPath)) {
-//            Files.createFile(savedGamesPath);
+            Files.createFile(savedGamesPath);
             save();
         } else {
             JSONParser jsonParser = new JSONParser();

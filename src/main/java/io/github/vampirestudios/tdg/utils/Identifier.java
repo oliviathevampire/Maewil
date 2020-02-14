@@ -1,8 +1,6 @@
 package io.github.vampirestudios.tdg.utils;
 
 import com.google.gson.*;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Type;
@@ -111,7 +109,6 @@ public class Identifier {
         return namespace.chars().allMatch((c) -> c == 95 || c == 45 || c >= 97 && c <= 122 || c >= 48 && c <= 57 || c == 46);
     }
 
-    @Environment(EnvType.CLIENT)
     public static boolean isValid(String id) {
         String[] strings = split(id, ':');
         return isNamespaceValid(StringUtils.isEmpty(strings[0]) ? "maewil" : strings[0]) && isPathValid(strings[1]);

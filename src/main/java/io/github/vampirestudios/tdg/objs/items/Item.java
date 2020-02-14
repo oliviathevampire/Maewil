@@ -28,7 +28,7 @@ public abstract class Item implements IHasData<Item> {
     public Item(MaewilEngine maewilEngine, String id) {
         this.maewilEngine = maewilEngine;
         this.id = id;
-        Items.UPDATABLE_TIEMS.add(this);
+        Items.UPDATABLE_ITEMS.add(this);
     }
 
     protected void chooseAltTexture() {

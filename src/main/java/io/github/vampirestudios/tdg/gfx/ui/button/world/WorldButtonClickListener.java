@@ -54,10 +54,11 @@ public class WorldButtonClickListener implements ClickListener {
         int sizeMin = Math.min((int) -(sizeMod * 2), (int) (sizeMod * 2));
         int sizeMax = Math.max((int) -(sizeMod * 2), (int) (sizeMod * 2));
         int sizeModExtra;
-        if (sizeMin < sizeMax)
+        /*if (sizeMin < sizeMax)
             sizeModExtra = NumberUtils.getRandomInt(sizeMin, sizeMax);
         else
-            sizeModExtra = NumberUtils.getRandomInt(sizeMax, sizeMin);
+            sizeModExtra = NumberUtils.getRandomInt(sizeMax, sizeMin);*/
+        sizeModExtra = NumberUtils.getRandomInt(sizeMin, sizeMax);
         int minWorldSize = 400;
         worldSize = minWorldSize + sizeModExtra;
 

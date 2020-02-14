@@ -24,6 +24,12 @@ public class InventoryPlayer extends InventoryAbstractPlayer {
             int y = MaewilLauncher.HEIGHT / 2 - height / 2;
 
             Assets.GUI_INVENTORY.draw(x, y, width, height);
+            player.getTextures().forEach((s, animation) -> System.out.println(s));
+            if (player.getTextures().containsKey("idle")) {
+                System.out.println("Testing");
+            } else {
+                System.out.println("Not Testing");
+            }
             player.getTexture("idle").draw(x + player.getWidth() / 0.75F, y + player.getHeight() / 1.4f, player.getWidth(), player.getHeight());
 
             super.renderInventorySlots(g);

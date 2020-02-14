@@ -40,7 +40,6 @@ public class MaewilLauncher extends StateBasedGame {
     public MaewilLauncher() {
         super(TITLE);
         LOGGER = new CatLogger("Maewil-Main");
-
         StringBuilder args = new StringBuilder();
         for (String arg : ARGS)
             args.append(arg).append((arg.equals(ARGS[ARGS.length - 1]) ? "" : ","));
@@ -118,4 +117,5 @@ public class MaewilLauncher extends StateBasedGame {
             e.printStackTrace();
         }
     }
+
 }

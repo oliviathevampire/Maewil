@@ -1,6 +1,5 @@
 package io.github.vampirestudios.tdg.gfx;
 
-
 /**
  * This class handles all of the keyboard and mouse input. To access these
  * methods

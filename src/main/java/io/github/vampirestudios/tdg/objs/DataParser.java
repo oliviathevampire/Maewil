@@ -3,18 +3,13 @@ package io.github.vampirestudios.tdg.objs;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
+import com.google.gson.JsonObject;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.Identifier;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import io.github.vampirestudios.tdg.utils.JsonUtils;
 
 import java.io.IOException;
 
-/**
- * @author CoffeeCatRailway
- * Created: 22/02/2019
- */
 public abstract class DataParser<E extends IHasData<E>> {
 
     protected String dataFolderName;
@@ -26,69 +21,57 @@ public abstract class DataParser<E extends IHasData<E>> {
         this.logger = new CatLogger("TUT-" + loggerName + "-Parser");
     }
 
-    public E loadData(E obj) throws IOException, ParseException {
-        JSONObject data = getData(new Identifier("maewil", dataFolderName + "/" + obj.getId()), true);
+    public E loadData(E obj) throws IOException {
+        JsonObject data = getData(new Identifier("maewil", dataFolderName + "/" + obj.getId()), true);
 
         E custom = customLoadData(data, obj);
         if (custom != null) {
             return custom;
         } else {
             DataTypes.TileItemTexture type = DataTypes.TileItemTexture.getByName(String.valueOf(data.get("type")));
-            Identifier texturePath = new Identifier("maewil", "textures/" + data.get("texture"));
+            Identifier texturePath = new Identifier("maewil", "textures/" + data.get("texture").getAsString().replace("\"'", ""));
             int spriteSize = NumberUtils.parseInt(data.get("size"));
-            logger.info("Loading object of type [" + type + "-" + type.typeName + "] with id [" + obj.getName() + "]");
+            logger.info("Loading an object with the type [" + type + "-" + type.typeName + "] with an id of [" + obj.getName().replace("\"", "") + "]");
 
-            switch (type) {
-                default:
-                case SINGLE:
-                    obj = singleData(data, obj, texturePath, spriteSize);
-                    break;
-
-                case MULTIPLE:
-                    obj = multipleData(data, obj, texturePath, spriteSize);
-                    break;
-
-                case ANIMATED:
-                    obj = animatedData(data, obj, texturePath, spriteSize);
-                    break;
-            }
-
-            return obj.newCopy();
+            return switch (type) {
+                case SINGLE -> singleData(data, obj, texturePath, spriteSize);
+                case MULTIPLE -> multipleData(data, obj, texturePath, spriteSize);
+                case ANIMATED -> animatedData(data, obj, texturePath, spriteSize);
+            };
         }
     }
 
-    E customLoadData(JSONObject data, E obj) {
+    E customLoadData(JsonObject data, E obj) {
         return null;
     }
 
-    E singleData(JSONObject data, E obj, Identifier texturePath, int spriteSize) {
+    E singleData(JsonObject data, E obj, Identifier texturePath, int spriteSize) {
         return null;
     }
 
-    E multipleData(JSONObject data, E obj, Identifier texturePath, int spriteSize) {
+    E multipleData(JsonObject data, E obj, Identifier texturePath, int spriteSize) {
         return null;
     }
 
-    E animatedData(JSONObject data, E obj, Identifier texturePath, int spriteSize) {
+    E animatedData(JsonObject data, E obj, Identifier texturePath, int spriteSize) {
         return null;
     }
 
-    private static JSONObject getData(Identifier fileName, boolean inJar) throws IOException, ParseException {
-        JSONParser parser = new JSONParser();
+    private static JsonObject getData(Identifier fileName, boolean inJar) throws IOException {
         Identifier path = new Identifier("maewil", fileName.getPath() + ".json");
         if (inJar) {
-            return (JSONObject) parser.parse(FileUtils.loadFileInSideJar(path.toDataString()));
+            return JsonUtils.GSON.fromJson(FileUtils.loadFileInSideJar(path.toDataString()), JsonObject.class);
         } else {
-            return (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path.toDataString()));
+            return JsonUtils.GSON.fromJson(FileUtils.loadFileOutSideJar(path.toDataString()), JsonObject.class);
         }
     }
 
-    static JSONObject getDataCatchException(Identifier fileName, boolean inJar) {
+    static JsonObject getDataCatchException(Identifier fileName, boolean inJar) {
         try {
             return getData(fileName, inJar);
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             MaewilLauncher.LOGGER.error(e.getMessage());
-            return new JSONObject();
+            return new JsonObject();
         }
     }
 }

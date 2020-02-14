@@ -16,8 +16,8 @@ import org.newdawn.slick.state.transition.FadeInTransition;
  */
 public class SplashScreen extends BasicGameState {
 
-    private float titleScale = 0, smoothness = 0.05f;
-    private float endTimer = 0, maxEndTimer = 2.5f;
+    private float titleScale = 0;
+    private float endTimer = 0;
 
     // Player movement steps
     private Animation player;
@@ -46,9 +46,11 @@ public class SplashScreen extends BasicGameState {
 
     @Override
     public void update(GameContainer container, StateBasedGame game, int delta) {
+        float smoothness = 0.05f;
         titleScale = NumberUtils.lerp(titleScale, 1.0f, smoothness);
         playerTimer = NumberUtils.lerp(playerTimer, maxPlayerTimer, smoothness);
 
+        float maxEndTimer = 2.5f;
         if (p2 > MaewilLauncher.WIDTH)
             endTimer = NumberUtils.lerp(endTimer, maxEndTimer, smoothness / 5f);
         if (endTimer >= maxEndTimer - 0.5f)

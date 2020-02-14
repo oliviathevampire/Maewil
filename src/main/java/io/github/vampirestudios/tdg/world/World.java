@@ -46,13 +46,6 @@ public class World {
         }
         maewilEngine.getPlayer().setX(spawnX * Tile.TILE_SIZE);
         maewilEngine.getPlayer().setY(spawnY * Tile.TILE_SIZE);
-
-        /*try {
-            TileSet tileSet = new TileSet(new TiledMap("testing"), new XMLElement(), true);
-            tileSet.
-        } catch (SlickException e) {
-            e.printStackTrace();
-        }*/
     }
 
     public World(MaewilEngine maewilEngine, String worldName, int worldWidth, int worldHeight, Vector2D spawn, TileList bgTiles, TileList fgTiles) {
@@ -92,7 +85,7 @@ public class World {
         this.delta = delta;
         updateThreadsInit();
 
-        Items.UPDATABLE_TIEMS.forEach(i -> i.update(container, game, delta));
+        Items.UPDATABLE_ITEMS.forEach(i -> i.update(container, game, delta));
 
         maewilEngine.getEntityManager().update(container, game, delta);
         overlayManager.update(container, game, delta);

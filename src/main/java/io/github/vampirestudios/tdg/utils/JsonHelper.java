@@ -3,8 +3,6 @@ package io.github.vampirestudios.tdg.utils;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -19,7 +17,6 @@ public class JsonHelper {
       return hasPrimitive(object, element) && object.getAsJsonPrimitive(element).isString();
    }
 
-   @Environment(EnvType.CLIENT)
    public static boolean isString(JsonElement element) {
       return element.isJsonPrimitive() && element.getAsJsonPrimitive().isString();
    }
@@ -28,7 +25,6 @@ public class JsonHelper {
       return element.isJsonPrimitive() && element.getAsJsonPrimitive().isNumber();
    }
 
-   @Environment(EnvType.CLIENT)
    public static boolean hasBoolean(JsonObject object, String element) {
       return hasPrimitive(object, element) && object.getAsJsonPrimitive(element).isBoolean();
    }
@@ -267,7 +263,6 @@ public class JsonHelper {
       }
    }
 
-   @Environment(EnvType.CLIENT)
    public static <T> T deserialize(Gson gson, String content, Type type, boolean lenient) {
       return deserialize(gson, new StringReader(content), type, lenient);
    }
@@ -280,7 +275,6 @@ public class JsonHelper {
       return deserialize(gson, reader, type, false);
    }
 
-   @Environment(EnvType.CLIENT)
    public static <T> T deserialize(Gson gson, String content, Type type) {
       return deserialize(gson, content, type, false);
    }

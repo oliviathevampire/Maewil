@@ -2,7 +2,6 @@ package io.github.vampirestudios.tdg.screen.game;
 
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
-import io.github.vampirestudios.tdg.gfx.ui.WidgetTitleRender;
 import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButton;
 import io.github.vampirestudios.tdg.jsonparsers.world.WorldJsonSaver;
 import io.github.vampirestudios.tdg.manager.UIManager;
@@ -46,7 +45,7 @@ public class GameScreen extends Screen {
         init();
 
         int yOffset = 30;
-        uiManagerPaused.addObject(new WidgetTitleRender());
+//        uiManagerPaused.addObject(new WidgetTitleRender());
         uiManagerPaused.addObject(new WidgetButton(maewilEngine, true, MaewilLauncher.HEIGHT / 2 - yOffset, "Resume", new ClickListener() {
             @Override
             public void onClick() {

@@ -24,7 +24,7 @@ public class DataTypes {
     }
 
     enum Entity {
-        STATIC("static"), LIVING("creature"), CUSTOM("custom");
+        STATIC("static"), CREATURE("creature"), CUSTOM("custom");
 
         String typeName;
 

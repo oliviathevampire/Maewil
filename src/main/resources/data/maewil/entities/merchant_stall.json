@@ -57,6 +57,90 @@
     "roof_brown": {
       "spriteSize": [32, 16],
       "spritePos": [0, 48]
+    },
+    "roof_dark_orange": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_feldgrau": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_light_green": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_dark_yellow": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_dark_brown": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_malachite": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_maroon": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_razzmatazz": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_khaki": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_beige": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_rainbow": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_falu_red": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_black_and_white": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_baby_pink": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_baby_blue": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_light_gray": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_arsenic": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_dark_gray": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_wine_red": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_military_green": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
+    },
+    "roof_turmeric_orange": {
+      "spriteSize": [32, 16],
+      "spritePos": [0, 0]
     }
   }
 }
