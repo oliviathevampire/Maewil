@@ -12,4 +12,9 @@ public class MatUtil {
         matrix.scale(scale);
         return matrix;
     }
+
+    public static boolean isValueBetweenThreshold(double baseValue, double minThreshold, double maxThreshold) {
+        return baseValue > minThreshold && baseValue < maxThreshold;
+    }
+
 }

@@ -6,7 +6,6 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.Text;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
-import io.github.vampirestudios.tdg.gfx.ui.WidgetInputBox;
 import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButton;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
@@ -23,7 +22,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-import javax.swing.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -59,11 +57,11 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         worldSize = minWorldSize + sizeModExtra;
 
 //        uiManager.addObject(new WidgetInputBox(100, 100, 100));
-        uiManager.addObject(new WidgetInputBox(new Vector2D(200, 500), 300));
-        uiManager.addObject(new WidgetButton(maewilEngine, true, "Create World", new ClickListener() {
+//        uiManager.addObject(new WidgetInputBox(new Vector2D(200, 500), 300));
+        uiManager.addObject(new WidgetButton(maewilEngine, true, "Generate World", new ClickListener() {
             @Override
             public void onClick() {
-                generateWorld(getWorldname());
+                generateWorld(getWorldName());
             }
 
             @Override
@@ -78,20 +76,9 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         uiManager.update(container, game, delta);
     }
 
-    private String getWorldname() {
-        String defaultName = "New World";
-        String username;
-        int nameLength = 16;
-        defaultName += "_" + NumberUtils.getRandomInt(1000);
-        try {
-            username = JOptionPane.showInputDialog("Please enter a world name\nMust be max " + nameLength + " characters", defaultName);
-            if (username.length() > nameLength || username.equalsIgnoreCase(""))
-                username = defaultName;
-        } catch (NullPointerException e) {
-            username = defaultName;
-        }
-        worldName = username.replaceAll(" ", "_").replaceAll("[^a-zA-Z0-9_]+", "");
-        return worldName;
+    private String getWorldName() {
+        String defaultName = "New World" + "_" + NumberUtils.getRandomInt(1000);
+        return defaultName.replaceAll(" ", "_").replaceAll("[^a-zA-Z0-9_]+", "");
     }
 
     private void generateWorld(String worldName) {
@@ -109,8 +96,8 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         generating = true;
         while (generator.isGenerating()) {
             if (generator.isGenerated()) {
-                bgTiles = generator.getBgTiles();
-                fgTiles = generator.getFgTiles();
+                bgTiles = generator.getBackgroundTiles();
+                fgTiles = generator.getForegroundTiles();
             }
         }
 

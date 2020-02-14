@@ -38,6 +38,9 @@ public class WorldMapGenerator {
         this.sizeBiome = sizeLand + NumberUtils.getRandomFloat(1.0f, 10.0f);
     }
 
+    /**
+     * Generates a BufferedImage for the land parts based on the x-offset, y-offset and if it should have hollow caves
+     **/
     public BufferedImage generateLand(float xOff, float yOff, boolean hollowCaves) {
         SuperSimplexNoise noise = new SuperSimplexNoise(seedLand);
         SuperSimplexNoise noise2 = new SuperSimplexNoise(seedLand2);
@@ -89,6 +92,9 @@ public class WorldMapGenerator {
         return image;
     }
 
+    /**
+     * Generates a BufferedImage for paths around the world based on the x-offset, y-offset and the land map
+     **/
     public BufferedImage generatePaths(float xOff, float yOff, BufferedImage landMap) {
         SuperSimplexNoise noise = new SuperSimplexNoise(seedPath);
         SuperSimplexNoise noise2 = new SuperSimplexNoise(seedPath2);
@@ -114,6 +120,9 @@ public class WorldMapGenerator {
         return image;
     }
 
+    /**
+     * Generates 
+     **/
     private void addSpots(float xOff, float yOff, BufferedImage pathMap, double minThreshold, Color replace, Color spot, long seed) {
         SuperSimplexNoise noise = new SuperSimplexNoise(seed);
         SuperSimplexNoise noise2 = new SuperSimplexNoise(seed);

@@ -13,7 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class HouseEntity extends StaticEntity {
 
     public HouseEntity(MaewilEngine tutEngine) {
-        super(tutEngine, "shop_stall", Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, HitType.WOOD);
+        super(tutEngine, "house", Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, HitType.WOOD);
         setCurrentTexture(pickRoof().getId());
     }
 

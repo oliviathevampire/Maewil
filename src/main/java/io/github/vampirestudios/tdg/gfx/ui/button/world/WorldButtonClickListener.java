@@ -114,8 +114,8 @@ public class WorldButtonClickListener implements ClickListener {
 
         while (generator.isGenerating()) {
             if (generator.isGenerated()) {
-                bgTiles = generator.getBgTiles();
-                fgTiles = generator.getFgTiles();
+                bgTiles = generator.getBackgroundTiles();
+                fgTiles = generator.getForegroundTiles();
             }
         }
 

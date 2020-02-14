@@ -17,7 +17,7 @@ import io.github.vampirestudios.tdg.objs.entities.creatures.undead.ZombieEntity;
 import io.github.vampirestudios.tdg.objs.entities.statics.ExtraLifeEntity;
 import io.github.vampirestudios.tdg.objs.entities.statics.UltimateTileEntity;
 import io.github.vampirestudios.tdg.objs.entities.statics.interactable.CampfireEntity;
-import io.github.vampirestudios.tdg.objs.entities.statics.interactable.ShopStallEntity;
+import io.github.vampirestudios.tdg.objs.entities.statics.interactable.MerchantStallEntity;
 import io.github.vampirestudios.tdg.objs.entities.statics.nature.BushEntity;
 import io.github.vampirestudios.tdg.objs.entities.statics.nature.CropEntity;
 import io.github.vampirestudios.tdg.objs.entities.statics.nature.RockEntity;
@@ -107,7 +107,7 @@ public class Entities {
 
         register(ULTIMATE = parser.loadData(new UltimateTileEntity(maewilEngine)));
         register(EXTRA_LIFE = parser.loadData(new ExtraLifeEntity(maewilEngine)));
-        register(SHOP = parser.loadData(new ShopStallEntity(maewilEngine)));
+        register(SHOP = parser.loadData(new MerchantStallEntity(maewilEngine)));
         register(CAMPFIRE = parser.loadData(new CampfireEntity(maewilEngine)));
 
         /*

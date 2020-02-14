@@ -1,49 +1,25 @@
 package io.github.vampirestudios.tdg.objs.entities.statics.interactable;
 
-import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.AABB;
+import com.google.common.collect.ImmutableList;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.statics.StaticEntity;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
+import io.github.vampirestudios.tdg.utils.math.Rands;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class ShopStallEntity extends StaticEntity {
+public class MerchantStallEntity extends StaticEntity {
 
-    public ShopStallEntity(MaewilEngine maewilEngine) {
-        super(maewilEngine, "shop_stall", Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, HitType.WOOD);
+    public MerchantStallEntity(MaewilEngine maewilEngine) {
+        super(maewilEngine, "merchant_stall", Entity.DEFAULT_WIDTH * 2, Entity.DEFAULT_HEIGHT * 2, HitType.WOOD);
         setCurrentTexture(pickRoof().getId());
     }
 
     private RoofType pickRoof() {
-        int i = NumberUtils.getRandomInt(12);
-        if (i == 0)
-            return RoofType.ORANGE;
-        if (i == 1)
-            return RoofType.BLUE;
-        if (i == 2)
-            return RoofType.GREEN;
-        if (i == 3)
-            return RoofType.MAGENTA;
-        if (i == 4)
-            return RoofType.CYAN;
-        if (i == 5)
-            return RoofType.YELLOW;
-        if (i == 6)
-            return RoofType.RED;
-        if (i == 7)
-            return RoofType.LIGHT_BLUE;
-        if (i == 8)
-            return RoofType.PINK;
-        if (i == 9)
-            return RoofType.PURPLE;
-        if (i == 10)
-            return RoofType.LIME;
-        if (i == 11)
-            return RoofType.BROWN;
-        return RoofType.WHITE;
+        return Rands.list(ImmutableList.of(RoofType.values()));
     }
 
     @Override
@@ -64,19 +40,17 @@ public class ShopStallEntity extends StaticEntity {
 
     @Override
     public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        getTexture("stall").draw(this.renderX, this.renderY, width, height);
-        getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height / 2f);
+        getTexture("merchant_stall").draw(this.renderX, this.renderY, width, height);
     }
 
     @Override
     public Entity newCopy() {
-        ShopStallEntity stall = super.newCopy(new ShopStallEntity(maewilEngine));
+        MerchantStallEntity stall = super.newCopy(new MerchantStallEntity(maewilEngine));
         stall.setCurrentTexture(pickRoof().getId());
         return stall;
     }
 
     enum RoofType {
-
         DARK_ORANGE("dark_orange"),
         BLUE("blue"),
         GREEN("green"),
@@ -122,4 +96,5 @@ public class ShopStallEntity extends StaticEntity {
             return id;
         }
     }
+
 }

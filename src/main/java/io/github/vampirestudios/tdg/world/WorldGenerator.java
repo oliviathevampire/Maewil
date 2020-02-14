@@ -8,6 +8,7 @@ import io.github.vampirestudios.tdg.objs.tiles.TilePos;
 import io.github.vampirestudios.tdg.objs.tiles.Tiles;
 import io.github.vampirestudios.tdg.objs.tiles.stone.StoneTile;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.utils.math.MatUtil;
 import io.github.vampirestudios.tdg.world.colormap.Biomes;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 import io.github.vampirestudios.tdg.world.colormap.WorldMapGenerator;
@@ -58,8 +59,8 @@ public class WorldGenerator {
             logger.info("World image maps generated");
 
             // Tiles
-            bgTiles = generateBGTiles();
-            fgTiles = generateFGTiles();
+            bgTiles = generateBackgroundTiles();
+            fgTiles = generateForegroundTiles();
             logger.info("Tiles generated");
 
             // Entities
@@ -81,7 +82,7 @@ public class WorldGenerator {
         generatorThread.start();
     }
 
-    private TileList generateBGTiles() {
+    private TileList generateBackgroundTiles() {
         TileList tiles = new TileList(worldSize);
         for (int y = 0; y < worldSize; y++) {
             for (int x = 0; x < worldSize; x++) {
@@ -106,13 +107,13 @@ public class WorldGenerator {
                 tiles.setTileAtPos(x, y, tile.pos(new TilePos(x, y)));
             }
         }
-        generateOres(tiles, seedOreOffInc, true);
+        generateTiles(tiles, seedOreOffInc, true);
         bgTilesGenerated = true;
         logger.info("Background tiles generated");
         return tiles;
     }
 
-    private TileList generateFGTiles() {
+    private TileList generateForegroundTiles() {
         TileList tiles = new TileList(worldSize);
         for (int y = 0; y < worldSize; y++) {
             for (int x = 0; x < worldSize; x++) {
@@ -143,28 +144,31 @@ public class WorldGenerator {
                 tiles.setTileAtPos(x, y, tile.pos(new TilePos(x, y)));
             }
         }
-        generateOres(tiles, 0, false);
+        generateTiles(tiles, 0, false);
         fgTilesGenerated = true;
         logger.info("Foreground tiles generated");
         return tiles;
     }
 
-    private void generateOres(TileList tiles, long seedOff, boolean bg) {
+    private void generateTiles(TileList tiles, long seedOff, boolean bg) {
         double oreSize = 1.0d;
         double stoneSize = 10.0d;
 
-        addOre(tiles, Tiles.COAL_ORE, -0.05d, 0.02d, oreSize, seedOff, bg);
-        addOre(tiles, Tiles.IRON_ORE, -0.05d, 0.03d, oreSize, seedOff, bg);
-        addOre(tiles, Tiles.GOLD_ORE, -0.05d, 0.04d, oreSize, seedOff, bg);
-        addOre(tiles, Tiles.DIAMOND_ORE, -0.05d, 0.05d, oreSize, seedOff, bg);
+        generateTile(tiles, Tiles.COAL_ORE, -0.05d, 0.02d, oreSize, seedOff, bg);
+        generateTile(tiles, Tiles.IRON_ORE, -0.05d, 0.03d, oreSize, seedOff, bg);
+        generateTile(tiles, Tiles.GOLD_ORE, -0.05d, 0.04d, oreSize, seedOff, bg);
+        generateTile(tiles, Tiles.DIAMOND_ORE, -0.05d, 0.05d, oreSize, seedOff, bg);
 
-        addOre(tiles, Tiles.ANDESITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
-        addOre(tiles, Tiles.DIORITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
+        generateTile(tiles, Tiles.ANDESITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
+        generateTile(tiles, Tiles.DIORITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
 
 //        addOre(tiles, Tiles.BROKEN_STONE, -0.15d, 0.15d, stoneSize, seedOff, bg);
     }
 
-    private void addOre(TileList tiles, Tile ore, double minThreshold, double maxThreshold, double blendSize, long seedOff, boolean bg) {
+    /**
+     * Generates a specific tile wit
+     **/
+    private void generateTile(TileList tiles, Tile ore, double minThreshold, double maxThreshold, double blendSize, long seedOff, boolean bg) {
         SuperSimplexNoise noise = new SuperSimplexNoise(seed + seedOreOff + seedOff);
         seedOreOff += seedOreOffInc;
 
@@ -174,7 +178,7 @@ public class WorldGenerator {
                 if (tiles.getTileAtPos(x, y) instanceof StoneTile) {
                     Tile tile = tiles.getTileAtPos(x, y);
 
-                    if (value > minThreshold && value < maxThreshold) {
+                    if (MatUtil.isValueBetweenThreshold(value, minThreshold, maxThreshold)) {
                         tile = ore.newCopy();
                     }
 
@@ -198,11 +202,17 @@ public class WorldGenerator {
         this.blendSize = blendSize;
     }
 
-    public TileList getBgTiles() {
+    /**
+     * The tiles in the background, can not be mined and can be walked over, does not have any collision
+     **/
+    public TileList getBackgroundTiles() {
         return bgTiles;
     }
 
-    public TileList getFgTiles() {
+    /**
+     * The tiles in the foreground, can be mined and some can be walked through
+     **/
+    public TileList getForegroundTiles() {
         return fgTiles;
     }
 

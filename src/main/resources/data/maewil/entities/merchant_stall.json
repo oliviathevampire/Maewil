@@ -1,6 +1,6 @@
 {
   "type": "static",
-  "texture": "entities/static/shop_stall.png",
+  "texture": "entities/static/merchant_stall.png",
   "sprites": {
     "stall": {
       "spritePos": [0, 77],
