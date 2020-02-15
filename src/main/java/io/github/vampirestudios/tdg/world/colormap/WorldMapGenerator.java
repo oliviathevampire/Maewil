@@ -121,7 +121,7 @@ public class WorldMapGenerator {
     }
 
     /**
-     * Generates 
+     * Generates
      **/
     private void addSpots(float xOff, float yOff, BufferedImage pathMap, double minThreshold, Color replace, Color spot, long seed) {
         SuperSimplexNoise noise = new SuperSimplexNoise(seed);
