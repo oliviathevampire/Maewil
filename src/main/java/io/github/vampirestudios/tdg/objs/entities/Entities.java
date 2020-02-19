@@ -145,7 +145,8 @@ public class Entities {
     }
 
     public static Entity jsonToEntity(JsonObject json) {
-        Entity entity = getEntityById((String) json.get("id").getAsString());
+        Entity entity = getEntityById(json.get("id").getAsString());
+        System.out.println(json.get("id").getAsString());
 
         JsonObject posObj = (JsonObject) json.get("pos");
         Vector2D position = new Vector2D();

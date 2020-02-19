@@ -77,7 +77,7 @@ configurations {
 dependencies {
     compile 'club.minnced:java-discord-rpc:2.0.1'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
-//    compile 'org.slick2d:slick2d-core:1.0.2'
+    compile 'org.slick2d:slick2d-core:1.0.2'
     implementation "org.apache.logging.log4j:log4j-core:2.8.1"
 
     compile 'com.github.CoffeeCatRailway:CoffeeCatUtils:master-SNAPSHOT'
@@ -88,33 +88,50 @@ dependencies {
 //    compile "org.liquidengine:legui:2.2.0-SNAPSHOT"
 //    compile "org.liquidengine:leutil:1.0.0"
 //    compile "org.liquidengine:cbchain:1.0.0"
-    compile "com.badlogicgames.gdx:gdx:${project.gdxVersion}"
-    compile "com.badlogicgames.gdx:gdx-box2d:${project.gdxVersion}"
-    compile "com.badlogicgames.gdx:gdx-controllers:${project.gdxVersion}"
-    compile "com.badlogicgames.gdx:gdx-freetype:${project.gdxVersion}"
-    compile "com.badlogicgames.gdx:gdx-bullet:${project.gdxVersion}"
-    compile "com.badlogicgames.box2dlights:box2dlights:${project.box2DLightsVersion}"
-    compile "com.badlogicgames.gdx:gdx-ai:${project.aiVersion}"
-    compile "com.badlogicgames.ashley:ashley:${project.ashleyVersion}"
-    compile "com.esotericsoftware.spine:spine-libgdx:3.6.53.1"
-    compile "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.0"
-    compile "net.dermetfan.libgdx-utils:libgdx-utils:0.13.4"
-    compile "net.dermetfan.libgdx-utils:libgdx-utils-box2d:0.13.4"
 
-    compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:${project.gdxVersion}"
-    compile "com.badlogicgames.gdx:gdx-platform:${project.gdxVersion}:natives-desktop"
-    compile "com.badlogicgames.gdx:gdx-box2d-platform:${project.gdxVersion}:natives-desktop"
-    compile "com.badlogicgames.gdx:gdx-controllers-desktop:${project.gdxVersion}"
-    compile "com.badlogicgames.gdx:gdx-controllers-platform:${project.gdxVersion}:natives-desktop"
-    compile "com.badlogicgames.gdx:gdx-tools:${project.gdxVersion}"
-    compile "com.badlogicgames.gdx:gdx-freetype-platform:${project.gdxVersion}:natives-desktop"
-    compile "com.badlogicgames.gdx:gdx-bullet-platform:${project.gdxVersion}:natives-desktop"
+//    compile "com.badlogicgames.gdx:gdx:${project.gdxVersion}"
+//    compile "com.badlogicgames.gdx:gdx-box2d:${project.gdxVersion}"
+//    compile "com.badlogicgames.gdx:gdx-controllers:${project.gdxVersion}"
+//    compile "com.badlogicgames.gdx:gdx-freetype:${project.gdxVersion}"
+//    compile "com.badlogicgames.gdx:gdx-bullet:${project.gdxVersion}"
+//    compile "com.badlogicgames.box2dlights:box2dlights:${project.box2DLightsVersion}"
+//    compile "com.badlogicgames.gdx:gdx-ai:${project.aiVersion}"
+//    compile "com.badlogicgames.ashley:ashley:${project.ashleyVersion}"
+//    compile "com.esotericsoftware.spine:spine-libgdx:3.6.53.1"
+//    compile "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.0"
+//    compile "net.dermetfan.libgdx-utils:libgdx-utils:0.13.4"
+//    compile "net.dermetfan.libgdx-utils:libgdx-utils-box2d:0.13.4"
+//
+//    compile "com.badlogicgames.gdx:gdx-backend-lwjgl3:${project.gdxVersion}"
+//    compile "com.badlogicgames.gdx:gdx-platform:${project.gdxVersion}:natives-desktop"
+//    compile "com.badlogicgames.gdx:gdx-box2d-platform:${project.gdxVersion}:natives-desktop"
+//    compile "com.badlogicgames.gdx:gdx-controllers-desktop:${project.gdxVersion}"
+//    compile "com.badlogicgames.gdx:gdx-controllers-platform:${project.gdxVersion}:natives-desktop"
+//    compile "com.badlogicgames.gdx:gdx-tools:${project.gdxVersion}"
+//    compile "com.badlogicgames.gdx:gdx-freetype-platform:${project.gdxVersion}:natives-desktop"
+//    compile "com.badlogicgames.gdx:gdx-bullet-platform:${project.gdxVersion}:natives-desktop"
+
+//    compile "org.mini2Dx:mini2Dx-core:${project.mini2DxVersion}"
+    compile "org.mini2Dx:mini2Dx-tiled:${project.mini2DxVersion}"
+//    compile "org.mini2Dx:mini2Dx-artemis-odb:${project.mini2DxVersion}"
+    compile "org.mini2Dx:mini2Dx-ui:${project.mini2DxVersion}"
+//    compile "org.mini2Dx:mini2Dx-core:${project.minibusVersion}"
+    compile "org.mini2Dx:miniscript-lua:${project.miniscriptVersion}"
+//    compile "com.badlogicgames.gdx:gdx-ai:${project.aiVersion}"
+//    compile "com.badlogicgames.gdx:gdx-bullet:${project.gdxVersion}"
+    compile "org.mini2Dx:miniscript-groovy:${project.miniscriptVersion}"
+    compile "org.mini2Dx:miniscript-python:${project.miniscriptVersion}"
+//    compile "com.badlogicgames.gdx:gdx-box2d:${project.gdxVersion}"
+    compile "org.mini2Dx:miniscript-ruby:${project.miniscriptVersion}"
+//    compile "com.badlogicgames.box2dlights:box2dlights:${project.box2DLightsVersion}"
+//    compile "net.dermetfan.libgdx-utils:libgdx-utils:0.13.3"
+//    compile "net.dermetfan.libgdx-utils:libgdx-utils-box2d:0.13.3"
 
     // Netty
     compile group: 'io.netty', name: 'netty-all', version: '4.1.29.Final'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    implementation "org.joml:joml:${jomlVersion}"
+    implementation "org.joml:joml:${project.jomlVersion}"
 }
 
 task copyOptions(type: Copy) {
