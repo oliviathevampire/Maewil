@@ -23,8 +23,8 @@ public class Biomes {
     public static final Biome RED_DESERT = new Biome("red_desert", true, 166, 124, 0);
     public static final Biome CAVE = new Biome("cave", true, 50, 50, 50);
     public static final Biome UNDERGROUND = new Biome("underground", true, 75, 75, 75);
-    public static final Biome DARK_PLAINS = new Biome("underground", true, 182, 30, 24);
-    public static final Biome DARK_FOREST = new Biome("underground", true, 182, 30, 32);
+    public static final Biome DARK_PLAINS = new Biome("dark_plains", true, 182, 30, 24);
+    public static final Biome DARK_FOREST = new Biome("dark_forest", true, 182, 30, 32);
 
     public static final Biome NONE = new Biome("none", false, 255, 255, 255, 0);
 
