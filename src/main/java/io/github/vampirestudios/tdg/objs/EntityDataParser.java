@@ -40,14 +40,15 @@ public class EntityDataParser extends DataParser<Entity> {
                 case STATIC:
                     if (data.has("sprites")) {
                         JsonObject sprites = (JsonObject) data.get("sprites");
-                        for (Object key : sprites.keySet()) {
-                            JsonObject sprite = (JsonObject) sprites.get((String) key);
+                        for (String key : sprites.keySet()) {
+                            JsonObject sprite = (JsonObject) sprites.get(key);
                             SpriteSheet spriteTexture;
                             if (sprite.has("texture")) spriteTexture = getTexture(sprite).copy();
                             else spriteTexture = texture.copy();
 
-                            if (sprite.has("length")) textures.put((String) key, getAnimation(spriteTexture.getSheet(), sprite));
-                            else textures.put((String) key, getAnimation(spriteTexture.getSheet(), sprite, false, "spritePos"));
+                            System.out.println(key);
+                            if (sprite.has("length")) textures.put(key, getAnimation(spriteTexture.getSheet(), sprite));
+                            else textures.put(key, getAnimation(spriteTexture.getSheet(), sprite, false, "spritePos"));
                         }
                     }
                     break;

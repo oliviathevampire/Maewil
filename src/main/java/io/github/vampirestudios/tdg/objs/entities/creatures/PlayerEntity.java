@@ -308,12 +308,12 @@ public class PlayerEntity extends LivingEntity {
             getCurrentTexture().getCurrentFrame().rotate((float) Math.toRadians(180d)); // BROKEN, FIX ON A LATER DATE
         getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height);
 
-        this.renderEffect(container, game, g);
+//        this.renderEffect(container, game, g);
     }
 
     @Override
     public void renderEffect(GameContainer container, StateBasedGame game, Graphics g) {
-        super.renderEffect(container, game, g);
+//        super.renderEffect(container, game, g);
 
         if (canSprint())
             sprintEffect.getCurrentFrame().draw(this.renderX, this.renderY, width, height);

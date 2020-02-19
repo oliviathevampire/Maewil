@@ -166,6 +166,7 @@ public class WorldJsonLoader implements IJSONLoader {
                 JsonArray pos = (JsonArray) entity.get("pos");
                 float x = NumberUtils.parseFloat(pos.get(0));
                 float y = NumberUtils.parseFloat(pos.get(1));
+                System.out.println(String.format("X: %d, Y: %d", x, y));
 
                 Entity entity1 = Entities.jsonToEntity(entity);
                 maewilEngine.getEntityManager().addEntity(entity1, x, y, true);
@@ -293,6 +294,7 @@ public class WorldJsonLoader implements IJSONLoader {
      */
     private void loadEntityObj(JsonObject entityObj) {
         String id = entityObj.get("id").getAsString();
+        System.out.println(id);
 
         CompoundTag tags = new CompoundTag();
         if (entityObj.has("tags")) {

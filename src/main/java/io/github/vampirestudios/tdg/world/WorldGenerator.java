@@ -72,7 +72,7 @@ public class WorldGenerator {
                         float threshold = 0.1f;
                         float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
                         float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
-                        maewilEngine.getEntityManager().addEntity(Entities.SHOP, x + xOff, y + yOff, false);
+                        maewilEngine.getEntityManager().addEntity(Entities.BUSH_MEDIUM, x + xOff, y + yOff, false);
 //                        maewilEngine.getEntityManager().addEntity(Entities.BUSH_MEDIUM, x + xOff, y + yOff, false);
 //                        maewilEngine.getEntityManager().addEntity(Entities.TREE_EXTRA_LARGE, x + xOff, y + yOff, false);
                     }

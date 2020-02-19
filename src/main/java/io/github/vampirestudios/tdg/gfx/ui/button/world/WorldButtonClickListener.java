@@ -124,7 +124,7 @@ public class WorldButtonClickListener implements ClickListener {
          * Set world & username
          */
         World world = new World(engine, worldName, worldSize, worldSize, getPlayerSpawn(), bgTiles, fgTiles);
-        ScreenManager.setCurrentScreen(new GameScreen(engine, "./data/saves/Test_World", worldName, world));
+        ScreenManager.setCurrentScreen(new GameScreen(engine, "./data/saves/" + worldName, worldName, world));
 
         if (ArgUtils.hasArgument("-username"))
             engine.setUsername(ArgUtils.getArgument("-username"));
@@ -177,13 +177,17 @@ public class WorldButtonClickListener implements ClickListener {
             }
         }
 
-        if (tile.isSolid() || tile.isUnbreakable())
-            return getPlayerSpawn();
-        else {
-            if (tile instanceof SandTile || tile instanceof GrassTile || tile instanceof DirtTile || tile instanceof AirTile)
-                return new Vector2D(x, y);
-            else
+        if (tile != Tiles.WATER) {
+            if (tile.isSolid() || tile.isUnbreakable())
                 return getPlayerSpawn();
+            else {
+                if (tile instanceof SandTile || tile instanceof GrassTile || tile instanceof DirtTile || tile instanceof AirTile)
+                    return new Vector2D(x, y);
+                else
+                    return getPlayerSpawn();
+            }
+        } else {
+            return getPlayerSpawn();
         }
     }
 
