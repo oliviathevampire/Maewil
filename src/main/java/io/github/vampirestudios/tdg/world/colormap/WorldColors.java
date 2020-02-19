@@ -15,9 +15,10 @@ public class WorldColors {
     public static final Color WATER = Color.blue;
     public static final Color SAND = Color.orange;
     public static final Color RED_SAND = Color.red;
-    public static final Color GRASS = Color.green;
-    public static final Color STONE = Color.gray;
-    public static final Color DIRT = new Color(145, 74, 36);
+    public static final Color GRASS = new Color(68, 139, 64);
+    public static final Color DARK_GRASS = new Color(82, 107, 147);
+    public static final Color STONE = new Color(147, 147, 147);
+    public static final Color DIRT = new Color(184, 126, 80);
 
     /**
      * Used for mini-map

@@ -22,7 +22,7 @@ public class Tiles {
     /*
      * Ground
      */
-    public static Tile GRASS, DIRT;
+    public static Tile GRASS, DARK_GRASS, DIRT;
     public static Tile SAND, RED_SAND;
 
     /*
@@ -59,6 +59,7 @@ public class Tiles {
          * Ground
          */
         register(GRASS = parser.loadData(new GrassTile(maewilEngine)));
+        register(DARK_GRASS = parser.loadData(new DarkGrassTile(maewilEngine)));
         register(DIRT = parser.loadData(new DirtTile(maewilEngine)));
         register(SAND = parser.loadData(new SandTile(maewilEngine)));
         register(RED_SAND = parser.loadData(new RedSandTile(maewilEngine)));

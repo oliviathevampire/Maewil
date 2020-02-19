@@ -5,7 +5,6 @@ import io.github.vampirestudios.tdg.world.noise.SuperSimplexNoise;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 public class WorldMapGenerator {
 
@@ -45,7 +44,6 @@ public class WorldMapGenerator {
         SuperSimplexNoise noise = new SuperSimplexNoise(seedLand);
         SuperSimplexNoise noise2 = new SuperSimplexNoise(seedLand2);
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Random random = new Random();
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -56,11 +54,6 @@ public class WorldMapGenerator {
                     c = WorldColors.WATER;
                 } else {
                     if (value > -0.1 && value < 0.15) {
-                        /*if (random.nextInt(5) == 0) {
-                            c = WorldColors.RED_SAND;
-                        } else {
-                            c = WorldColors.SAND;
-                        }*/
                         c = WorldColors.SAND;
                     } else {
                         if (value > 0.15 && value < 0.55) {
@@ -155,6 +148,10 @@ public class WorldMapGenerator {
                         c = Biomes.FOREST.getColor();
                     } else {
                         c = Biomes.PLAINS.getColor();
+                    }
+                }else if(landMap.getRGB(x, y) == WorldColors.DARK_GRASS.getRGB() && pathMap.getRGB(x, y) != WorldColors.DIRT.getRGB() && landMap.getRGB(x, y) != WorldColors.DIRT.getRGB()) {
+                    if (value > 0.15 && value < 0.55) {
+
                     }
                 } else {
                     if (landMap.getRGB(x, y) == WorldColors.DIRT.getRGB()) {
