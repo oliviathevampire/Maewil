@@ -78,15 +78,18 @@ public class MaewilLauncher extends StateBasedGame {
     }
 
     public static void main(String[] args) {
+        String[] icons;
         /* Set natives path */
         if (!DevEnvUtils.isRunningFromDevEnviroment()) {
             final String nativesPath = new File("data/natives").getAbsolutePath();
             System.setProperty("org.lwjgl.librarypath", nativesPath);
             System.setProperty("java.library.path", nativesPath);
+            icons = new String[]{"data/icons/32.png", "data/icons/64.png"};
         } else {
             final String nativesPath = new File("../libs/natives").getAbsolutePath();
             System.setProperty("org.lwjgl.librarypath", nativesPath);
             System.setProperty("java.library.path", nativesPath);
+            icons = new String[]{"../data/icons/32.png", "../data/icons/64.png"};
         }
 
         ARGS = args;
@@ -108,7 +111,7 @@ public class MaewilLauncher extends StateBasedGame {
             AppGameContainer app = new AppGameContainer(new MaewilLauncher());
             app.setShowFPS(false);
             app.setDisplayMode(WIDTH, HEIGHT, FULLSCREEN);
-            app.setIcons(new String[]{"data/icons/32_new.png", "data/icons/64_new.png"});
+            app.setIcons(icons);
             app.setTargetFrameRate(100);
             app.setUpdateOnlyWhenVisible(false);
             app.setAlwaysRender(true);

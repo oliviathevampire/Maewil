@@ -37,7 +37,7 @@ public class EntityDataParser extends DataParser<Entity> {
 
             HashMap<String, Animation> textures = new HashMap<>();
             switch (type) {
-                case STATIC -> {
+                case STATIC:
                     if (data.has("sprites")) {
                         JsonObject sprites = (JsonObject) data.get("sprites");
                         for (Object key : sprites.keySet()) {
@@ -50,8 +50,8 @@ public class EntityDataParser extends DataParser<Entity> {
                             else textures.put((String) key, getAnimation(spriteTexture.getSheet(), sprite, false, "spritePos"));
                         }
                     }
-                }
-                case CREATURE -> {
+                    break;
+                case CREATURE:
                     JsonObject animations = (JsonObject) data.get("animations");
                     JsonArray size = (JsonArray) data.get("spriteSize");
                     int width = NumberUtils.parseInt(size.get(0));
@@ -60,8 +60,10 @@ public class EntityDataParser extends DataParser<Entity> {
                         JsonObject anim = (JsonObject) animations.get((String) key);
                         textures.put(String.valueOf(key), getAnimation(texture.getSheet().copy(), anim, width, height));
                     }
-                }
-                case CUSTOM -> textures.put(entity.getId(), new Animation(Tiles.AIR.getTexture()));
+                    break;
+                case CUSTOM:
+                    textures.put(entity.getId(), new Animation(Tiles.AIR.getTexture()));
+                    break;
             }
 
             entity.setTextures(textures);
@@ -78,12 +80,13 @@ public class EntityDataParser extends DataParser<Entity> {
         SpriteSheet texture = new SpriteSheet(Assets.MISSING_TEXTURE);
         if (data.has("texture")) {
             String texturePath = "textures/";
+            System.out.println(data.get("texture").getAsString());
 
             if (data.get("texture") instanceof JsonArray) {
                 JsonArray texturePaths = (JsonArray) data.get("texture");
-                texturePath += String.valueOf(texturePaths.get(NumberUtils.getRandomInt(0, texturePaths.size() - 1))).replace("\"'", "");
+                texturePath += String.valueOf(texturePaths.get(NumberUtils.getRandomInt(0, texturePaths.size() - 1))).replace("\"", "");
             } else {
-                texturePath += data.get("texture").getAsString().replace("\"'", "");
+                texturePath += data.get("texture").getAsString();
             }
 
             texture = new SpriteSheet(new Identifier("maewil", texturePath));

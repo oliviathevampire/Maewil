@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class TileList {
 
+//    private final Tile[][][] TILES = new Tile[10][32][32];
     private final List<List<Tile>> TILES = new ArrayList<>();
 
     private int width, height;

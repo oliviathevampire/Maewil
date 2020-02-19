@@ -33,11 +33,20 @@ public abstract class DataParser<E extends IHasData<E>> {
             int spriteSize = NumberUtils.parseInt(data.get("size"));
             logger.info("Loading an object with the type [" + type + "-" + type.typeName + "] with an id of [" + obj.getName().replace("\"", "") + "]");
 
-            return switch (type) {
-                case SINGLE -> singleData(data, obj, texturePath, spriteSize);
-                case MULTIPLE -> multipleData(data, obj, texturePath, spriteSize);
-                case ANIMATED -> animatedData(data, obj, texturePath, spriteSize);
-            };
+            switch (type) {
+                default:
+                case SINGLE:
+                    obj = singleData(data, obj, texturePath, spriteSize);
+                    break;
+                case MULTIPLE:
+                    obj = multipleData(data, obj, texturePath, spriteSize);
+                    break;
+                case ANIMATED:
+                    obj = animatedData(data, obj, texturePath, spriteSize);
+                    break;
+            }
+
+            return obj.newCopy();
         }
     }
 
