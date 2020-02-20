@@ -65,12 +65,12 @@ public class WorldMiniMap {
         for (int my = myStart; my < myEnd; my++) {
             for (int mx = mxStart; mx < mxEnd; mx++) {
                 /* BG */
-//                int cbg = WorldMapGenerator.getRGBA(maewilEngine.getWorld().getBackgroundTile(mx, my).getMapColor().getRGB());
-//                int pixelXbg = (int) NumberUtils.map(mx, mxStart, mxEnd, 0, viewSize - 1);
-//                int pixelYbg = (int) NumberUtils.map(my, myStart, myEnd, 0, viewSize - 1);
-//                mapbg.setRGB(pixelXbg, pixelYbg, cbg);
+                int cbg = WorldMapGenerator.getRGBA(maewilEngine.getWorld().getBackgroundTile(mx, my).getMapColor().getRGB());
+                int pixelXbg = (int) NumberUtils.map(mx, mxStart, mxEnd, 0, viewSize - 1);
+                int pixelYbg = (int) NumberUtils.map(my, myStart, myEnd, 0, viewSize - 1);
+                mapbg.setRGB(pixelXbg, pixelYbg, cbg);
 
-                /* FG */
+//                /* FG */
                 int cfg = WorldMapGenerator.getRGBA(maewilEngine.getWorld().getForegroundTile(mx, my).getMapColor().getRGB());
                 int pixelXfg = (int) NumberUtils.map(mx, mxStart, mxEnd, 0, viewSize - 1);
                 int pixelYfg = (int) NumberUtils.map(my, myStart, myEnd, 0, viewSize - 1);

@@ -1,6 +1,7 @@
 package io.github.vampirestudios.tdg.jsonparsers;
 
 import coffeecatteam.coffeecatutils.io.FileUtils;
+import com.google.gson.JsonObject;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.JsonUtils;
@@ -48,12 +49,12 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
             save();
         } else {
             JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObject = (JSONObject) jsonParser.parse(FileUtils.loadFileOutSideJar(path));
+            JsonObject jsonObject = (JsonObject) jsonParser.parse(FileUtils.loadFileOutSideJar(path));
 
             for (int i = 0; i < 3; i++) {
                 String tag = "save_" + i;
-                if (jsonObject.containsKey(tag)) {
-                    JSONObject save = (JSONObject) jsonObject.get(tag);
+                if (jsonObject.has(tag)) {
+                    JsonObject save = (JsonObject) jsonObject.get(tag);
                     String data = save.get("saved") + ":" + save.get("name");
                     GAMES.set(i, data);
                 }
@@ -65,16 +66,16 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
 
     @Override
     public void save() throws IOException {
-        JSONObject jsonObject = new JSONObject();
+        JsonObject jsonObject = new JsonObject();
 
         try {
             for (int i = 0; i < 3; i++) {
                 String tag = "save_" + i;
-                JSONObject save = new JSONObject();
+                JsonObject save = new JsonObject();
                 String[] data = GAMES.get(i).split(":");
-                save.put("saved", Boolean.valueOf(data[0]));
-                save.put("name", data[1]);
-                jsonObject.put(tag, save);
+                save.addProperty("saved", Boolean.valueOf(data[0]));
+                save.addProperty("name", data[1]);
+                jsonObject.addProperty(tag, save);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             MaewilLauncher.LOGGER.error(e.getMessage());
