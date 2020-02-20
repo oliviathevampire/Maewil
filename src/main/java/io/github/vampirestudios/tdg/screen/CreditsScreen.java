@@ -24,7 +24,7 @@ public class CreditsScreen extends AbstractMenuScreen {
     private WidgetTextBox textBoxDev, textBoxHelper, textBoxOther;
 
     public CreditsScreen(MaewilEngine maewilEngine) {
-        super(maewilEngine, CENTRE_GRASS, CENTRE_GRASS);
+        super(maewilEngine, TileBackgrounds.GRASS.getTiles(), TileBackgrounds.GRASS.getTiles());
 
         try {
             Object[] devs = JsonUtils.getArray("devs", "/assets/credits.json", true).toArray();

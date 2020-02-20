@@ -4,7 +4,6 @@ import coffeecatteam.coffeecatutils.logger.CatLogger;
 import io.github.vampirestudios.tdg.manager.UIManager;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.TilePos;
-import io.github.vampirestudios.tdg.objs.tiles.Tiles;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.world.TileList;
@@ -25,14 +24,13 @@ public abstract class Screen {
     private int bgHeight = MaewilLauncher.HEIGHT_TILE_SIZE + (MaewilLauncher.HEIGHT_TILE_SIZE * Tile.TILE_SIZE < MaewilLauncher.HEIGHT ? 1 : 0);
     private TileList bgTiles;
     private Tile[] centre, border;
-    protected static final Tile[] CENTRE_GRASS = new Tile[]{Tiles.GRASS}, BORDER_STONE_BROKEN = new Tile[]{Tiles.STONE, Tiles.ANDESITE, Tiles.DIORITE, Tiles.GRANITE};
 
     public Screen(MaewilEngine maewilEngine) {
-        this(maewilEngine, CENTRE_GRASS);
+        this(maewilEngine, TileBackgrounds.GRASS.getTiles());
     }
 
     public Screen(MaewilEngine maewilEngine, Tile[] centre) {
-        this(maewilEngine, centre, BORDER_STONE_BROKEN);
+        this(maewilEngine, centre, TileBackgrounds.STONE_BORDER.getTiles());
     }
 
     public Screen(MaewilEngine maewilEngine, Tile[] centre, Tile[] border) {

@@ -4,16 +4,14 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import io.github.vampirestudios.tdg.gfx.ui.button.world.WidgetButtonWorld;
 import io.github.vampirestudios.tdg.jsonparsers.SavedGamesJSONParser;
 import io.github.vampirestudios.tdg.screen.AbstractMenuScreen;
+import io.github.vampirestudios.tdg.screen.TileBackgrounds;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
 
 public class SelectGameScreen extends AbstractMenuScreen {
 
     public SelectGameScreen(MaewilEngine maewilEngine) {
-        super(maewilEngine, CENTRE_GRASS);
+        super(maewilEngine, TileBackgrounds.GRASS.getTiles());
 
         int btnHeight = 64;
         int y = MaewilLauncher.HEIGHT / 2 - btnHeight / 2 + 25;
@@ -25,12 +23,4 @@ public class SelectGameScreen extends AbstractMenuScreen {
         }
     }
 
-    @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        super.render(container, game, g);
-
-        int w = 80 * 6;
-        int h = 48 * 6;
-//        Assets.GUI_TITLE_BIG.draw(TutLauncher.WIDTH / 2f - w / 2f, 20, w, h);
-    }
 }

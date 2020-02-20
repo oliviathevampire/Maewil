@@ -87,7 +87,7 @@ public class TitleScreen extends Screen {
         Font font = Assets.FONTS.get("30");
         String text = "Credits";
         int height = (int) Text.getHeight(text, font);
-        uiManager.addObject(new WidgetHyperlink(new Vector2D(MaewilLauncher.WIDTH - 5 - Text.getWidth(text, font), cy - 10), height, text, font, new ClickListener() {
+        uiManager.addObject(new WidgetHyperlink(new Vector2D(MaewilLauncher.WIDTH - 5 - Text.getWidth(text, font), cy), height, text, font, new ClickListener() {
             @Override
             public void onClick() {
                 ScreenManager.setCurrentScreen(maewilEngine.stateCredits);

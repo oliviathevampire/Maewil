@@ -2,6 +2,7 @@ package io.github.vampirestudios.tdg.screen.options;
 
 import io.github.vampirestudios.tdg.gfx.Text;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
+import io.github.vampirestudios.tdg.screen.TileBackgrounds;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.screen.AbstractMenuScreen;
 import org.newdawn.slick.*;
@@ -10,7 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 public class CharacterCustomizationScreen extends AbstractMenuScreen {
 
     public CharacterCustomizationScreen(MaewilEngine maewilEngine) {
-        super(maewilEngine, CENTRE_GRASS);
+        super(maewilEngine, TileBackgrounds.GRASS.getTiles());
     }
 
     @Override

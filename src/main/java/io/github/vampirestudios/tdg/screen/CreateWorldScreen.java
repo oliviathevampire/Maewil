@@ -39,9 +39,9 @@ public class CreateWorldScreen extends AbstractMenuScreen {
     private boolean generating = false;
 
     public CreateWorldScreen(MaewilEngine maewilEngine) {
-        super(maewilEngine, CENTRE_GRASS);
+        super(maewilEngine, TileBackgrounds.GRASS.getTiles());
 
-        worldName = "ADD TEXT BOX";
+        worldName = getWorldName();
         long range = 1000000000L;
         seed = generateSeed(-range, range);
         sizeMod = NumberUtils.getRandomFloat(0.0f, 50.0f);
@@ -56,12 +56,10 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         int minWorldSize = 400;
         worldSize = minWorldSize + sizeModExtra;
 
-//        uiManager.addObject(new WidgetInputBox(100, 100, 100));
-//        uiManager.addObject(new WidgetInputBox(new Vector2D(200, 500), 300));
         uiManager.addObject(new WidgetButton(maewilEngine, true, "Generate World", new ClickListener() {
             @Override
             public void onClick() {
-                generateWorld(getWorldName());
+                generateWorld();
             }
 
             @Override
@@ -81,7 +79,7 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         return defaultName.replaceAll(" ", "_").replaceAll("[^a-zA-Z0-9_]+", "");
     }
 
-    private void generateWorld(String worldName) {
+    private void generateWorld() {
         /*
          * Tiles, entities, etc..
          */
@@ -164,7 +162,7 @@ public class CreateWorldScreen extends AbstractMenuScreen {
         } else {
             super.render(container, game, g);
             uiManager.render(container, game, g);
-//            Text.drawStringCenteredX(g, worldName, MaewilLauncher.HEIGHT / 2f - Text.getHeight(worldName, f) / 2 - 90, c, f);
+            Text.drawStringCenteredX(g, worldName, MaewilLauncher.HEIGHT / 2f - Text.getHeight(worldName, f) / 2 - 90, c, f);
 
             String seedS = "Seed: " + seed;
             Text.drawStringCenteredX(g, seedS, MaewilLauncher.HEIGHT / 2f - Text.getHeight(seedS, f) / 2 - 55, c, f);

@@ -22,7 +22,7 @@ public class AbstractMenuScreen extends Screen {
     }
 
     public AbstractMenuScreen(MaewilEngine maewilEngine, Tile[] centre, boolean initUI) {
-        this(maewilEngine, centre, BORDER_STONE_BROKEN, initUI);
+        this(maewilEngine, centre, TileBackgrounds.STONE_BORDER.getTiles(), initUI);
     }
 
     public AbstractMenuScreen(MaewilEngine maewilEngine, Tile[] centre, Tile[] border, boolean initUI) {

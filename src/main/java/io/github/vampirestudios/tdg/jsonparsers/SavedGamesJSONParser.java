@@ -7,7 +7,6 @@ import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.JsonUtils;
 import io.github.vampirestudios.tdg.utils.iinterface.IJSONLoader;
 import io.github.vampirestudios.tdg.utils.iinterface.IJSONSaver;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -49,7 +48,7 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
             save();
         } else {
             JSONParser jsonParser = new JSONParser();
-            JsonObject jsonObject = (JsonObject) jsonParser.parse(FileUtils.loadFileOutSideJar(path));
+            JsonObject jsonObject = JsonUtils.GSON.fromJson(FileUtils.loadFileOutSideJar(path), JsonObject.class);
 
             for (int i = 0; i < 3; i++) {
                 String tag = "save_" + i;
@@ -75,14 +74,14 @@ public class SavedGamesJSONParser implements IJSONLoader, IJSONSaver {
                 String[] data = GAMES.get(i).split(":");
                 save.addProperty("saved", Boolean.valueOf(data[0]));
                 save.addProperty("name", data[1]);
-                jsonObject.addProperty(tag, save);
+                jsonObject.add(tag, save);
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             MaewilLauncher.LOGGER.error(e.getMessage());
         }
 
         FileWriter file = new FileWriter(path);
-        file.write(JsonUtils.prettyPrintJSON(jsonObject.toJSONString()));
+        file.write(JsonUtils.prettyPrintJSON(jsonObject.getAsString()));
         file.flush();
 
         MaewilLauncher.LOGGER.info("Games saved!");
