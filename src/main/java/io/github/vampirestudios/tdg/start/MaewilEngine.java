@@ -16,7 +16,7 @@ import io.github.vampirestudios.tdg.screen.CreditsScreen;
 import io.github.vampirestudios.tdg.screen.ScreenManager;
 import io.github.vampirestudios.tdg.screen.TitleScreen;
 import io.github.vampirestudios.tdg.screen.UITestingScreen;
-import io.github.vampirestudios.tdg.screen.game.SelectGameScreen;
+import io.github.vampirestudios.tdg.screen.game.WorldListScreen;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.screen.options.SoundOptions;
 import io.github.vampirestudios.tdg.screen.options.controls.ControlOptions;
@@ -60,7 +60,7 @@ public class MaewilEngine extends BasicGameState {
 
     // States
     public TitleScreen stateMenu;
-    public SelectGameScreen stateSelectGame;
+    public WorldListScreen worldListScreen;
     public CreditsScreen stateCredits;
 
     // Option states
@@ -105,7 +105,7 @@ public class MaewilEngine extends BasicGameState {
         camera = new Camera(this, 0, 0);
 
         stateMenu = new TitleScreen(this);
-        stateSelectGame = new SelectGameScreen(this);
+        worldListScreen = new WorldListScreen(this);
         stateCredits = new CreditsScreen(this);
 
         controlOptions = new ControlOptions(this);

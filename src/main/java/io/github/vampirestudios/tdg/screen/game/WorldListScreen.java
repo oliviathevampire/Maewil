@@ -8,9 +8,9 @@ import io.github.vampirestudios.tdg.screen.TileBackgrounds;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 
-public class SelectGameScreen extends AbstractMenuScreen {
+public class WorldListScreen extends AbstractMenuScreen {
 
-    public SelectGameScreen(MaewilEngine maewilEngine) {
+    public WorldListScreen(MaewilEngine maewilEngine) {
         super(maewilEngine, TileBackgrounds.GRASS.getTiles());
 
         int btnHeight = 64;

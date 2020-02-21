@@ -7,6 +7,7 @@ import io.github.vampirestudios.tdg.manager.OverlayManager;
 import io.github.vampirestudios.tdg.objs.items.Items;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.TilePos;
+import io.github.vampirestudios.tdg.objs.tiles.Tiles;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.json.simple.parser.ParseException;
@@ -156,7 +157,7 @@ public class World {
     private Tile getBackgroundTile(TilePos pos) {
         checkTilePos(pos, false);
 
-        return bgTiles.getTileAtPos(pos);
+        return bgTiles.getTileAtPos(pos) == null ? Tiles.DIRT : bgTiles.getTileAtPos(pos);
     }
 
     public Tile getForegroundTile(int x, int y) {
@@ -166,7 +167,7 @@ public class World {
     public Tile getForegroundTile(TilePos pos) {
         checkTilePos(pos, false);
 
-        return fgTiles.getTileAtPos(pos);
+        return fgTiles.getTileAtPos(pos) == null ? Tiles.GRASS : fgTiles.getTileAtPos(pos);
     }
 
     public void setFGTile(int x, int y, Tile tile) {

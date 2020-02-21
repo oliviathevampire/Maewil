@@ -10,7 +10,7 @@ import io.github.vampirestudios.tdg.objs.items.Item;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.Tiles;
-import io.github.vampirestudios.tdg.screen.game.SelectGameScreen;
+import io.github.vampirestudios.tdg.screen.game.WorldListScreen;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.tags.CompoundTag;
@@ -329,7 +329,7 @@ public class WorldJsonLoader implements IJSONLoader {
 
     public static void copyFiles(MaewilEngine maewilEngine, String from, String dest) {
         for (String file : BASE_FILES.values())
-            copy(maewilEngine, SelectGameScreen.class.getResourceAsStream(from + "/" + file + ".json"), dest + "/" + file + ".json");
+            copy(maewilEngine, WorldListScreen.class.getResourceAsStream(from + "/" + file + ".json"), dest + "/" + file + ".json");
     }
 
 

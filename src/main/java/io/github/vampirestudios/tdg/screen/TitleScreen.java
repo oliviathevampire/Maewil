@@ -42,15 +42,13 @@ public class TitleScreen extends Screen {
 //        btnPlayer.setRenderBtnBG(false);
 //        btnPlayer.setRenderBtnHover(false);
 
-        uiManager.addObject(new WidgetButton(maewilEngineIn, true, MaewilLauncher.HEIGHT / 2 - yOff, "Select Game", new ClickListener() {
+        uiManager.addObject(new WidgetButton(maewilEngineIn, true, MaewilLauncher.HEIGHT / 2 - yOff, "Select World", new ClickListener() {
             @Override
             public void onClick() {
-//                ScreenManager.setCurrentScreen(maewilEngineIn.stateSelectGame);
-                ScreenManager.setCurrentScreen(new CreateWorldScreen(maewilEngine));
-//                String worldName = "New_World_" + NumberUtils.getRandomInt(1000);
-//                ScreenManager.setCurrentScreen(new GameScreen(tutEngineIn, "./data/saves/" + worldName, worldName));
+                ScreenManager.setCurrentScreen(maewilEngineIn.worldListScreen);
+//                ScreenManager.setCurrentScreen(new GenerateRandomWorldScreen(maewilEngine));
 
-                DiscordHandler.INSTANCE.updatePresence("Main Menu", "Selecting A Game");
+                DiscordHandler.INSTANCE.updatePresence("Main Menu", "Selecting a world");
             }
 
             @Override

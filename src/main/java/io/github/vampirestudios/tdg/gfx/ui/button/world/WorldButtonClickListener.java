@@ -71,7 +71,7 @@ public class WorldButtonClickListener implements ClickListener {
 
     @Override
     public void onClick() {
-        String worldName = getWorldname();
+        String worldName = getWorldName();
         if (!isSaved) {
             generateWorld(worldName);
         } else {
@@ -114,8 +114,15 @@ public class WorldButtonClickListener implements ClickListener {
 
         while (generator.isGenerating()) {
             if (generator.isGenerated()) {
-                bgTiles = generator.getBackgroundTiles();
-                fgTiles = generator.getForegroundTiles();
+                if (generator.getBackgroundTiles() != null && generator.getForegroundTiles() != null) {
+                    bgTiles = generator.getBackgroundTiles();
+                    fgTiles = generator.getForegroundTiles();
+                } else {
+                    TileList backgroundTiles = generator.generateBackgroundTiles();
+                    TileList foregroundTiles = generator.generateForegroundTiles();
+                    bgTiles = backgroundTiles;
+                    fgTiles = foregroundTiles;
+                }
             }
         }
 
@@ -202,18 +209,18 @@ public class WorldButtonClickListener implements ClickListener {
         return isSaved;
     }
 
-    private String getWorldname() {
+    private String getWorldName() {
         String defaultName = "New World";
-        String username;
+        String worldName;
         int nameLength = 16;
         defaultName += "_" + NumberUtils.getRandomInt(1000);
         try {
-            username = JOptionPane.showInputDialog("Please enter a world name\nMust be max " + nameLength + " characters", defaultName);
-            if (username.length() > nameLength || username.equalsIgnoreCase(""))
-                username = defaultName;
+            worldName = JOptionPane.showInputDialog("Please enter a world name\nMust be max " + nameLength + " characters", defaultName);
+            if (worldName.length() > nameLength || worldName.equalsIgnoreCase(""))
+                worldName = defaultName;
         } catch (NullPointerException e) {
-            username = defaultName;
+            worldName = defaultName;
         }
-        return username.replaceAll(" ", "_").replaceAll("[^a-zA-Z0-9_]+", "");
+        return worldName.replaceAll(" ", "_").replaceAll("[^a-zA-Z0-9_]+", "");
     }
 }

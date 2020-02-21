@@ -28,7 +28,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author CoffeeCatRailway
  * Created: 19/01/2019
  */
-public class CreateWorldScreen extends AbstractMenuScreen {
+public class GenerateRandomWorldScreen extends AbstractMenuScreen {
 
     private String worldName;
     private long seed;
@@ -38,7 +38,7 @@ public class CreateWorldScreen extends AbstractMenuScreen {
     private TileList bgTiles, fgTiles;
     private boolean generating = false;
 
-    public CreateWorldScreen(MaewilEngine maewilEngine) {
+    public GenerateRandomWorldScreen(MaewilEngine maewilEngine) {
         super(maewilEngine, TileBackgrounds.GRASS.getTiles());
 
         worldName = getWorldName();

@@ -82,7 +82,7 @@ public class WorldGenerator {
         generatorThread.start();
     }
 
-    private TileList generateBackgroundTiles() {
+    public TileList generateBackgroundTiles() {
         TileList tiles = new TileList(worldSize);
         for (int y = 0; y < worldSize; y++) {
             for (int x = 0; x < worldSize; x++) {
@@ -113,7 +113,7 @@ public class WorldGenerator {
         return tiles;
     }
 
-    private TileList generateForegroundTiles() {
+    public TileList generateForegroundTiles() {
         TileList tiles = new TileList(worldSize);
         for (int y = 0; y < worldSize; y++) {
             for (int x = 0; x < worldSize; x++) {
