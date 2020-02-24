@@ -24,10 +24,6 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * @author CoffeeCatRailway
- * Created: 10/01/2019
- */
 public class WorldButtonClickListener implements ClickListener {
 
     private String path, savesPath;

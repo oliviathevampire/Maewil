@@ -4,11 +4,6 @@ import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButton;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
-
-/**
- * @author CoffeeCatRailway
- * Created: 10/01/2019
- */
 public class WidgetButtonWorld extends WidgetButton {
 
     public WidgetButtonWorld(MaewilEngine maewilEngine, float y, int index) {
