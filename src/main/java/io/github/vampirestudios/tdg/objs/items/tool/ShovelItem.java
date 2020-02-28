@@ -3,10 +3,6 @@ package io.github.vampirestudios.tdg.objs.items.tool;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 
-/**
- * @author CoffeeCatRailway
- * Created: 28/03/2019
- */
 public class ShovelItem extends ToolItem {
 
     public ShovelItem(MaewilEngine maewilEngine, String id, int damage) {

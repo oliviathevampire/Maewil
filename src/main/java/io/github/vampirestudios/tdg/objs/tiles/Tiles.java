@@ -2,10 +2,7 @@ package io.github.vampirestudios.tdg.objs.tiles;
 
 import io.github.vampirestudios.tdg.objs.TileDataParser;
 import io.github.vampirestudios.tdg.objs.tiles.stone.*;
-import io.github.vampirestudios.tdg.objs.tiles.stone.ore.CoalOreTile;
-import io.github.vampirestudios.tdg.objs.tiles.stone.ore.DiamondOreTile;
-import io.github.vampirestudios.tdg.objs.tiles.stone.ore.GoldOreTile;
-import io.github.vampirestudios.tdg.objs.tiles.stone.ore.IronOreTile;
+import io.github.vampirestudios.tdg.objs.tiles.stone.ore.*;
 import io.github.vampirestudios.tdg.objs.tiles.wood.BookshelfTile;
 import io.github.vampirestudios.tdg.objs.tiles.wood.ChestTile;
 import io.github.vampirestudios.tdg.objs.tiles.wood.LogTile;
@@ -77,6 +74,8 @@ public class Tiles {
         register(IRON_ORE = parser.loadData(new IronOreTile(maewilEngine)));
         register(GOLD_ORE = parser.loadData(new GoldOreTile(maewilEngine)));
         register(DIAMOND_ORE = parser.loadData(new DiamondOreTile(maewilEngine)));
+        register(EMERALD_ORE = parser.loadData(new EmeraldOreTile(maewilEngine)));
+        register(AMETHYST_ORE = parser.loadData(new AmethystOreTile(maewilEngine)));
 
         /*
          * Fluid

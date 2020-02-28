@@ -1,9 +1,5 @@
 package io.github.vampirestudios.tdg.objs;
 
-/**
- * @author CoffeeCatRailway
- * Created: 11/03/2019
- */
 public class DataTypes {
 
     enum TileItemTexture {

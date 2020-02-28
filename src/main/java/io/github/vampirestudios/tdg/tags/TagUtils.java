@@ -3,10 +3,6 @@ package io.github.vampirestudios.tdg.tags;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 
-/**
- * @author CoffeeCatRailway
- * Created: 15/12/2018
- */
 public class TagUtils {
 
     /**

@@ -188,22 +188,13 @@ public class PlayerEntity extends LivingEntity {
 
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
                 e.isInteracted(extraDmg);
-                Sound hitSound;
-                switch (e.getHitType()) {
-                    default:
-                    case CREATURE:
-                        hitSound = Sounds.PUNCH;
-                        break;
-                    case WOOD:
-                        hitSound = Sounds.STEP_WOOD;
-                        break;
-                    case STONE:
-                        hitSound = Sounds.STEP_STONE;
-                        break;
-                    case BUSH:
-                        hitSound = Sounds.BUSH;
-                        break;
-                }
+                Sound hitSound = switch (e.getHitType()) {
+                    case CREATURE -> Sounds.PUNCH;
+                    case WOOD -> Sounds.STEP_WOOD;
+                    case STONE -> Sounds.STEP_STONE;
+                    case BUSH -> Sounds.BUSH;
+                    case NONE -> null;
+                };
                 Sounds.play(hitSound, OptionsScreen.OPTIONS.getVolumePlayer(), (float) e.getPosition().x, (float) e.getPosition().y, 1f);
                 return;
             }

@@ -6,10 +6,6 @@ import io.github.vampirestudios.tdg.objs.tiles.OverlapTile;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 
-/**
- * @author CoffeeCatRailway
- * Created: 24/12/2018
- */
 public class StoneTile extends OverlapTile {
 
     public StoneTile(MaewilEngine maewilEngine) {

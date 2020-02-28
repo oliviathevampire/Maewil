@@ -5,10 +5,6 @@ import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 
-/**
- * @author CoffeeCatRailway
- * Created: 22/12/2018
- */
 public abstract class OreTile extends Tile {
 
     public OreTile(MaewilEngine maewilEngine, String id, Item drop) {

@@ -5,10 +5,6 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
-/**
- * @author CoffeeCatRailway
- * Created: 7/03/2019
- */
 public class WidgetList extends WidgetAbstractList {
 
     private int maxShownItems, shownItemChange = 0;

@@ -22,10 +22,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.awt.*;
 import java.net.URI;
 
-/**
- * @author CoffeeCatRailway
- * Created: 17/04/2019
- */
 public class UITestingScreen extends Screen {
 
     private WidgetCheckBox widgetCheckBox;

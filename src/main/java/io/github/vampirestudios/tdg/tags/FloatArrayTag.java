@@ -5,10 +5,6 @@ import io.github.vampirestudios.tdg.tags.supers.BaseTag;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author CoffeeCatRailway
- * Created: 16/12/2018
- */
 public class FloatArrayTag extends BaseTag {
 
     /**

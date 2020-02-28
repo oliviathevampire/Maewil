@@ -15,10 +15,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author CoffeeCatRailway
- * Created: 20/04/2019
- */
 public abstract class WidgetAbstractList extends AbstractListTheme {
 
     /*

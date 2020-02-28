@@ -9,10 +9,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
-/**
- * @author CoffeeCatRailway
- * Created: 7/03/2019
- */
 public class WidgetDropDown extends WidgetAbstractList {
 
     private String title;

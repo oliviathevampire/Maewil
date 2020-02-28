@@ -6,10 +6,6 @@ import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
-/**
- * @author CoffeeCatRailway
- * Created: 12/12/2018
- */
 public class ExtraLifeEntity extends StaticEntity {
 
     private int healAmt;

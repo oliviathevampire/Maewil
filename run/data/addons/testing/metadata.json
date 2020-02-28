@@ -1,0 +1,6 @@
+{
+    "name": "Test Addon",
+    "version": "0.1.0",
+    "description": "This is just for testing",
+    "namespace": "test"
+}

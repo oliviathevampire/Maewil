@@ -14,10 +14,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
 
-/**
- * @author CoffeeCatRailway
- * Created: 3/12/2018
- */
 public class CreditsScreen extends AbstractMenuScreen {
 
     private String[] devs, helpers, other;

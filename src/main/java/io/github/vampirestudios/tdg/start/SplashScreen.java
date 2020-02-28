@@ -10,10 +10,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.EmptyTransition;
 import org.newdawn.slick.state.transition.FadeInTransition;
 
-/**
- * @author CoffeeCatRailway
- * Created: 31/03/2019
- */
 public class SplashScreen extends BasicGameState {
 
     private float titleScale = 0;

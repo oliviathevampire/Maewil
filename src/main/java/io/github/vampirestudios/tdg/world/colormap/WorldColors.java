@@ -2,10 +2,6 @@ package io.github.vampirestudios.tdg.world.colormap;
 
 import java.awt.*;
 
-/**
- * @author CoffeeCatRailway
- * Created: 18/01/2019
- */
 public class WorldColors {
 
     /**
@@ -26,4 +22,5 @@ public class WorldColors {
     public static final Color WOOD = new Color(156, 83, 0);
     public static final Color AIR = new Color(0, 0, 0, 0);
     public static final Color LAVA = new Color(199, 119, 39);
+
 }

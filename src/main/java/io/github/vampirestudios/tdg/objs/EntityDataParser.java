@@ -14,10 +14,6 @@ import org.newdawn.slick.Image;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author CoffeeCatRailway
- * Created: 24/02/2019
- */
 public class EntityDataParser extends DataParser<Entity> {
 
     private Map<String, HashMap<String, Animation>> LOADED = new HashMap<>();

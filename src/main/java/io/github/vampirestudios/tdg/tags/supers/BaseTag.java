@@ -11,10 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author CoffeeCatRailway
- * Created: 15/12/2018
- */
 public abstract class BaseTag {
 
     public static final Map<String, Integer> TAG_IDS = new HashMap<>();

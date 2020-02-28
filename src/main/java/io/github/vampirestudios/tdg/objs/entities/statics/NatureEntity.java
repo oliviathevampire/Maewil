@@ -12,10 +12,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author CoffeeCatRailway
- * Created: 11/12/2018
- */
 public abstract class NatureEntity extends StaticEntity {
 
     protected List<Item> drops = new ArrayList<>();

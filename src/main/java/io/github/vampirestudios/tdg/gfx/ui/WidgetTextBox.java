@@ -12,10 +12,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author CoffeeCatRailway
- * Created: 10/12/2018
- */
 public class WidgetTextBox extends WidgetObject {
 
     private List<TextF> lines = new ArrayList<>();

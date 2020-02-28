@@ -17,10 +17,6 @@ import io.github.vampirestudios.tdg.world.noise.SuperSimplexNoise;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/**
- * @author CoffeeCatRailway
- * Created: 7/01/2019
- */
 public class WorldGenerator {
 
     private MaewilEngine maewilEngine;
@@ -73,8 +69,6 @@ public class WorldGenerator {
                         float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
                         float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
                         maewilEngine.getEntityManager().addEntity(Entities.BUSH_MEDIUM, x + xOff, y + yOff, false);
-//                        maewilEngine.getEntityManager().addEntity(Entities.BUSH_MEDIUM, x + xOff, y + yOff, false);
-//                        maewilEngine.getEntityManager().addEntity(Entities.TREE_EXTRA_LARGE, x + xOff, y + yOff, false);
                     }
                 }
             }
@@ -95,6 +89,9 @@ public class WorldGenerator {
                         || lc.getRGB() == WorldColors.GRASS.getRGB()
                         || lc.getRGB() == WorldColors.DEEP_OCEAN.getRGB())
                     tile = Tiles.DIRT;
+
+                if (lc.getRGB() == WorldColors.DARK_GRASS.getRGB())
+                    tile = Tiles.DARK_GRASS;
 
                 if (lc.getRGB() == WorldColors.SAND.getRGB() || lc.getRGB() == WorldColors.WATER.getRGB())
                     tile = Tiles.SAND;
@@ -158,6 +155,8 @@ public class WorldGenerator {
         generateTile(tiles, Tiles.IRON_ORE, -0.05d, 0.03d, oreSize, seedOff, bg);
         generateTile(tiles, Tiles.GOLD_ORE, -0.05d, 0.04d, oreSize, seedOff, bg);
         generateTile(tiles, Tiles.DIAMOND_ORE, -0.05d, 0.05d, oreSize, seedOff, bg);
+        generateTile(tiles, Tiles.EMERALD_ORE, -0.05d, 0.05d, oreSize, seedOff, bg);
+        generateTile(tiles, Tiles.AMETHYST_ORE, -0.05d, 0.05d, oreSize, seedOff, bg);
 
         generateTile(tiles, Tiles.ANDESITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
         generateTile(tiles, Tiles.DIORITE, 0.7d, 1.0d, stoneSize, seedOff, bg);

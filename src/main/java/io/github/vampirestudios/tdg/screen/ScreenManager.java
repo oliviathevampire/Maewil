@@ -2,10 +2,6 @@ package io.github.vampirestudios.tdg.screen;
 
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 
-/**
- * @author CoffeeCatRailway
- * Created: 4/02/2019
- */
 public class ScreenManager {
 
     private static Screen currentScreen = null;

@@ -14,10 +14,6 @@ import org.newdawn.slick.util.BufferedImageUtil;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-/**
- * @author CoffeeCatRailway
- * Created: 13/02/2019
- */
 public class WorldMiniMap {
 
     private static Image mapCursor = Assets.MAP_CURSOR[0];

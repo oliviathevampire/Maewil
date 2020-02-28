@@ -2,10 +2,6 @@ package io.github.vampirestudios.tdg.objs.items;
 
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 
-/**
- * @author CoffeeCatRailway
- * Created: 21/02/2019
- */
 public class BasicItem extends Item {
 
     public BasicItem(MaewilEngine maewilEngine, String id) {

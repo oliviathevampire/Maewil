@@ -2,10 +2,6 @@ package io.github.vampirestudios.tdg.objs.tiles;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 
-/**
- * @author CoffeeCatRailway
- * Created: 23/12/2018
- */
 public class TilePos {
 
     private Vector2D pos;

@@ -4,10 +4,6 @@ import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 
-/**
- * @author CoffeeCatRailway
- * Created: 24/12/2018
- */
 public class SandTile extends OverlapTile {
 
     public SandTile(MaewilEngine maewilEngine) {

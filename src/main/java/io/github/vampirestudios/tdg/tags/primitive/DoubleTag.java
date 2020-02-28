@@ -4,10 +4,6 @@ import io.github.vampirestudios.tdg.tags.supers.BaseTag;
 import io.github.vampirestudios.tdg.tags.supers.PrimitiveTag;
 import io.github.vampirestudios.tdg.utils.UtilsIdk;
 
-/**
- * @author CoffeeCatRailway
- * Created: 16/12/2018
- */
 public class DoubleTag extends PrimitiveTag {
 
     /**
