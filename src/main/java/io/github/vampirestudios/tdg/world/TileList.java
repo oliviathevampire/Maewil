@@ -7,10 +7,6 @@ import io.github.vampirestudios.tdg.objs.tiles.Tiles;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author CoffeeCatRailway
- * Created: 3/03/2019
- */
 public class TileList {
 
 //    private final Tile[][][] TILES = new Tile[10][32][32];

@@ -4,10 +4,6 @@ import io.github.vampirestudios.tdg.gfx.image.SpriteSheet;
 import io.github.vampirestudios.tdg.utils.Identifier;
 import org.newdawn.slick.Image;
 
-/**
- * @author CoffeeCatRailway
- * Created: 26/12/2018
- */
 public class TileTextureAlts {
 
     public static Image[] getTextureAlts(int tileAlts, int tileOverlaps, String id, int tileWidth, int tileHeight) {

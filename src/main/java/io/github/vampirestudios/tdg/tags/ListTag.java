@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * @author CoffeeCatRailway
- * Created: 16/12/2018
- */
 public class ListTag extends BaseTag implements java.lang.Iterable<BaseTag> {
 
     /**

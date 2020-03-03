@@ -34,10 +34,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * @author CoffeeCatRailway
- * Created: 24/02/2019
- */
 public class Entities {
 
     public static final HashMap<String, Entity> ENTITIES = new HashMap<>();

@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author CoffeeCatRailway
- * Created: 12/12/2018
- */
 public class EatCropsGoal extends Goal {
 
     private float maxDistance, speed;

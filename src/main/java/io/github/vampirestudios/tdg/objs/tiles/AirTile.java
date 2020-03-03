@@ -3,10 +3,6 @@ package io.github.vampirestudios.tdg.objs.tiles;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 
-/**
- * @author CoffeeCatRailway
- * Created: 23/12/2018
- */
 public class AirTile extends Tile {
 
     public AirTile(MaewilEngine maewilEngine) {

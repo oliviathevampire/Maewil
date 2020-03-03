@@ -12,6 +12,7 @@ import io.github.vampirestudios.tdg.screen.ScreenManager;
 import io.github.vampirestudios.tdg.screen.game.GameScreen;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
+import io.github.vampirestudios.tdg.utils.DiscordHandler;
 import io.github.vampirestudios.tdg.utils.UtilsIdk;
 import io.github.vampirestudios.tdg.world.TileList;
 import io.github.vampirestudios.tdg.world.World;
@@ -90,7 +91,7 @@ public class WorldButtonClickListener implements ClickListener {
 
         MaewilLauncher.LOGGER.info("Loading game [" + path + "]!");
 
-//        DiscordHandler.INSTANCE.updatePresence("In Game - " + engine.getUsername(), "World: " + worldName, true);
+        DiscordHandler.INSTANCE.updatePresence("In Game - " + engine.getUsername(), "World: " + worldName, true);
         GameScreen game = new GameScreen(engine, path, worldName);
         game.saveWorld(username);
         ScreenManager.setCurrentScreen(game);
@@ -132,7 +133,6 @@ public class WorldButtonClickListener implements ClickListener {
             engine.setUsername(ArgUtils.getArgument("-username"));
         else
             engine.setUsername("TEST"); // TODO: Add text box to enter username on startup
-
     }
 
     @Override
@@ -192,7 +192,6 @@ public class WorldButtonClickListener implements ClickListener {
             return getPlayerSpawn();
         }
     }
-
 
     public String getText() {
         boolean isSaved = Boolean.parseBoolean(SavedGamesJSONParser.GAMES.get(index).split(":")[0]);

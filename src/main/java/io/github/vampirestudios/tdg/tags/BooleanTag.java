@@ -2,10 +2,6 @@ package io.github.vampirestudios.tdg.tags;
 
 import io.github.vampirestudios.tdg.tags.supers.BaseTag;
 
-/**
- * @author CoffeeCatRailway
- * Created: 16/12/2018
- */
 public class BooleanTag extends BaseTag {
     /**
      * The byte value for the tag.

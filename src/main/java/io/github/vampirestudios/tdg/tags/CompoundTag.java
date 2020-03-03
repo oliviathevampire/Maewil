@@ -10,10 +10,6 @@ import io.github.vampirestudios.tdg.tags.supers.PrimitiveTag;
 import java.util.*;
 import java.util.regex.Pattern;
 
-/**
- * @author CoffeeCatRailway
- * Created: 15/12/2018
- */
 public class CompoundTag extends BaseTag {
 
     private static final Pattern SIMPLE_VALUE = Pattern.compile("[A-Za-z0-9._+-]+");

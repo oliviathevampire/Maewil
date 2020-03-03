@@ -3,10 +3,6 @@ package io.github.vampirestudios.tdg.tags.primitive;
 import io.github.vampirestudios.tdg.tags.supers.BaseTag;
 import io.github.vampirestudios.tdg.tags.supers.PrimitiveTag;
 
-/**
- * @author CoffeeCatRailway
- * Created: 15/12/2018
- */
 public class IntTag extends PrimitiveTag {
 
     /**

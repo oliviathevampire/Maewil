@@ -9,10 +9,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 
-/**
- * @author CoffeeCatRailway
- * Created: 6/12/2018
- */
 public class JsonUtils {
 
     public static Object getValue(String key, String path, boolean inJar) throws IOException, ParseException {

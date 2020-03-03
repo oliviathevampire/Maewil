@@ -7,10 +7,6 @@ import io.github.vampirestudios.tdg.start.MaewilEngine;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
-/**
- * @author CoffeeCatRailway
- * Created: 27/04/2019
- */
 public class WidgetInputBox extends AbstractListTheme {
 
     private String text = "";

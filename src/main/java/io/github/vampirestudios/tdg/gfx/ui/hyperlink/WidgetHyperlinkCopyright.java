@@ -12,10 +12,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import java.awt.*;
 import java.net.URI;
 
-/**
- * @author CoffeeCatRailway
- * Created: 3/12/2018
- */
 public class WidgetHyperlinkCopyright extends WidgetHyperlink {
 
     private static String text = "Copyright (C) Vampire Studios 2020";

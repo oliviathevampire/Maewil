@@ -151,7 +151,9 @@ public class WorldMapGenerator {
                     }
                 }else if(landMap.getRGB(x, y) == WorldColors.DARK_GRASS.getRGB() && pathMap.getRGB(x, y) != WorldColors.DIRT.getRGB() && landMap.getRGB(x, y) != WorldColors.DIRT.getRGB()) {
                     if (value > 0.15 && value < 0.55) {
-
+                        c = Biomes.DARK_FOREST.getColor();
+                    } else {
+                        c = Biomes.DARK_PLAINS.getColor();
                     }
                 } else {
                     if (landMap.getRGB(x, y) == WorldColors.DIRT.getRGB()) {

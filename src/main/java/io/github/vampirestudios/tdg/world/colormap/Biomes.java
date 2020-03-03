@@ -1,96 +1,130 @@
 package io.github.vampirestudios.tdg.world.colormap;
 
-import io.github.vampirestudios.tdg.start.MaewilLauncher;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author CoffeeCatRailway
- * Created: 18/01/2019
- */
 public class Biomes {
 
     private static List<Biome> biomes = new ArrayList<>();
 
-    public static final Biome FOREST = new Biome("forest", true, 0, 116, 0);
-    public static final Biome PLAINS = new Biome("plains", true, 0, 185, 0);
-    public static final Biome OCEAN = new Biome("ocean", true, 3, 0, 166);
-    public static final Biome SAVANNA = new Biome("savanna", true, 166, 86, 0);
-    public static final Biome DESERT = new Biome("desert", true, 166, 124, 0);
-    public static final Biome RED_DESERT = new Biome("red_desert", true, 166, 124, 0);
-    public static final Biome CAVE = new Biome("cave", true, 50, 50, 50);
-    public static final Biome UNDERGROUND = new Biome("underground", true, 75, 75, 75);
-    public static final Biome DARK_PLAINS = new Biome("dark_plains", true, 182, 30, 24);
-    public static final Biome DARK_FOREST = new Biome("dark_forest", true, 182, 30, 32);
+    public static final Biome FOREST = new Biome(Biome.Properties.create("forest").color(new Color(0, 116, 0)));
+    public static final Biome PLAINS = new Biome(Biome.Properties.create("plains").color(new Color(0, 185, 0)));
+    public static final Biome OCEAN = new Biome(Biome.Properties.create("ocean").color(new Color(3, 0, 166)));
+    public static final Biome SAVANNA = new Biome(Biome.Properties.create("savanna").color(new Color(166, 86, 0)));
+    public static final Biome DESERT = new Biome(Biome.Properties.create("desert").color(new Color(166, 124, 0)));
+    public static final Biome RED_DESERT = new Biome(Biome.Properties.create("red_desert").color(new Color(166, 124, 0)));
+    public static final Biome CAVE = new Biome(Biome.Properties.create("cave").color(new Color(50, 50, 50)));
+    public static final Biome UNDERGROUND = new Biome(Biome.Properties.create("underground").color(new Color(75, 75, 75)));
+    public static final Biome DARK_PLAINS = new Biome(Biome.Properties.create("dark_plains").color(new Color(182, 30, 24)));
+    public static final Biome DARK_FOREST = new Biome(Biome.Properties.create("dark_forest").color(new Color(182, 30, 32)));
 
-    public static final Biome NONE = new Biome("none", false, 255, 255, 255, 0);
+    public static final Biome NONE = new Biome(Biome.Properties.create("none").color(new Color(255, 255, 255, 0)));
 
     public static class Biome {
 
-        private String id;
+        private String name;
         private Color color;
-        private boolean canSpawnEntities;
+        private int temperature;
+        private int humidity;
+        private String versions;
 
-        Biome(String id, boolean canSpawnEntities, int... color) {
-            int[] finalColor = new int[4];
-            checkColor(id, color);
-            if (color.length == 3) {
-                finalColor[3] = 255;
-            } else if (color.length < 3 || color.length > 4) {
-                throwInvalidColor(id, color);
-            }
-            this.id = id;
-            this.color = new Color(finalColor[0], finalColor[1], finalColor[2], finalColor[3]);
-            this.canSpawnEntities = canSpawnEntities;
+        Biome(Biome.Properties properties) {
+            this.name = properties.getName();
+            this.color = properties.getColor();
+            this.temperature = properties.getTemperature();
+            this.humidity = properties.getHumidity();
+            this.versions = properties.getVersions();
             biomes.add(this);
         }
 
-        public String getId() {
-            return id;
+        public int getTemperature() {
+            return temperature;
+        }
+
+        public int getHumidity() {
+            return humidity;
+        }
+
+        public String getVersions() {
+            return versions;
+        }
+
+        public String getName() {
+            return name;
         }
 
         public Color getColor() {
             return color;
         }
 
-        private void throwInvalidColor(String id, int... color) {
-            try {
-                StringBuilder msg = new StringBuilder("Invalid biome color [");
-                for (int c : color) {
-                    msg.append(c).append(",");
-                }
-                msg.append("] with id [").append(id).append("]");
-                throw new Exception(msg.toString());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void checkColor(String id, int... color) {
-            for (int i = 0; i < color.length; i++) {
-                Exception incorrectValue = new Exception("Biome with id [" + id + "] has incorrect value: " + color[i]);
-
-                if (color[i] < 0) {
-                    MaewilLauncher.LOGGER.error(incorrectValue);
-                    color[i] = 0;
-                } else if (color[i] > 255) {
-                    MaewilLauncher.LOGGER.error(incorrectValue);
-                    color[i] = 255;
-                } else
-                    color[i] = color[i];
-            }
-        }
-
         @Override
         public boolean equals(Object obj) {
             if (obj instanceof Biome) {
-                return ((Biome) obj).getId().equals(this.id);
+                return ((Biome) obj).getName().equals(this.name);
             } else
                 return false;
         }
+
+        public static class Properties {
+
+            private String name;
+            private Color color;
+            private int temperature;
+            private int humidity;
+            private String versions;
+
+            public static Properties create(String nameIn) {
+                return new Properties().name(nameIn);
+            }
+
+            private Properties name(String name) {
+                this.name = name;
+                return this;
+            }
+
+            public Properties color(Color color) {
+                this.color = color;
+                return this;
+            }
+
+            public Properties temperature(int temperature) {
+                this.temperature = temperature;
+                return this;
+            }
+
+            public Properties humidity(int humidity) {
+                this.humidity = humidity;
+                return this;
+            }
+
+            public Properties versions(String versions) {
+                this.versions = versions;
+                return this;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public Color getColor() {
+                return color;
+            }
+
+            public int getTemperature() {
+                return temperature;
+            }
+
+            public int getHumidity() {
+                return humidity;
+            }
+
+            public String getVersions() {
+                return versions;
+            }
+        }
+
     }
 
     public static Biome getBiomeAt(BufferedImage biomeMap, int x, int y) {
@@ -98,6 +132,8 @@ public class Biomes {
             int rgba = biomeMap.getRGB(x, y);
             if (biome.getColor().getRGB() == rgba)
                 return biome;
+            else
+                return Biomes.PLAINS;
         }
         return Biomes.NONE;
     }

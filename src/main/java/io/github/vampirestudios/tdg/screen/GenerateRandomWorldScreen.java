@@ -24,10 +24,6 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * @author CoffeeCatRailway
- * Created: 19/01/2019
- */
 public class GenerateRandomWorldScreen extends AbstractMenuScreen {
 
     private String worldName;

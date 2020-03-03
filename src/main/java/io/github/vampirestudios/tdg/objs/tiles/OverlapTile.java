@@ -8,10 +8,6 @@ import org.newdawn.slick.Image;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
- * @author CoffeeCatRailway
- * Created: 26/12/2018
- */
 public abstract class OverlapTile extends Tile {
 
     protected Image[] overlap;

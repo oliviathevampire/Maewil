@@ -86,6 +86,8 @@ public class Items {
         register(IRON_INGOT = parser.loadData(new BasicItem(maewilEngine, "iron_ingot")));
         register(GOLD_INGOT = parser.loadData(new BasicItem(maewilEngine, "gold_ingot")));
         register(DIAMOND = parser.loadData(new BasicItem(maewilEngine, "diamond")));
+        register(EMERALD = parser.loadData(new BasicItem(maewilEngine, "emerald")));
+        register(AMETHYST = parser.loadData(new BasicItem(maewilEngine, "amethyst")));
 
         /*
          * Foods

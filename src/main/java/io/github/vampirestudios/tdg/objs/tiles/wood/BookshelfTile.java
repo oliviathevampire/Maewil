@@ -4,10 +4,6 @@ import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.items.Items;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 
-/**
- * @author CoffeeCatRailway
- * Created: 21/02/2019
- */
 public class BookshelfTile extends WoodTile {
 
     public BookshelfTile(MaewilEngine maewilEngine) {

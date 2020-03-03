@@ -9,10 +9,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
-/**
- * @author CoffeeCatRailway
- * Created: 17/03/2019
- */
 public class WidgetTitleRender extends WidgetObject {
 
     private Image title_fg;
