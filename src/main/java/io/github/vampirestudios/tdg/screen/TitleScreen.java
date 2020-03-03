@@ -45,8 +45,8 @@ public class TitleScreen extends Screen {
         uiManager.addObject(new WidgetButton(maewilEngineIn, true, MaewilLauncher.HEIGHT / 2 - yOff, "Select World", new ClickListener() {
             @Override
             public void onClick() {
-                ScreenManager.setCurrentScreen(maewilEngineIn.worldListScreen);
-//                ScreenManager.setCurrentScreen(new GenerateRandomWorldScreen(maewilEngine));
+//                ScreenManager.setCurrentScreen(maewilEngineIn.worldListScreen);
+                ScreenManager.setCurrentScreen(new GenerateRandomWorldScreen(maewilEngine));
 
                 DiscordHandler.INSTANCE.updatePresence("Main Menu", "Selecting a world");
             }

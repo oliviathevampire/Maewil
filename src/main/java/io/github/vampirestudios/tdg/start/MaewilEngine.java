@@ -8,6 +8,7 @@ import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.manager.EntityManager;
 import io.github.vampirestudios.tdg.manager.InventoryManager;
 import io.github.vampirestudios.tdg.manager.KeyManager;
+import io.github.vampirestudios.tdg.objs.PlayerData;
 import io.github.vampirestudios.tdg.objs.entities.Entities;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.items.Items;
@@ -25,6 +26,11 @@ import io.github.vampirestudios.tdg.utils.DiscordHandler;
 import io.github.vampirestudios.tdg.world.World;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import org.mini2Dx.core.Mdx;
+import org.mini2Dx.core.playerdata.PlayerDataException;
+import org.mini2Dx.miniscript.core.ScriptBindings;
+import org.mini2Dx.miniscript.core.exception.InsufficientCompilersException;
+import org.mini2Dx.miniscript.lua.LuaGameScriptingEngine;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -74,6 +80,9 @@ public class MaewilEngine extends BasicGameState {
     private Camera camera;
     private World world;
 
+    private LuaGameScriptingEngine luaGameScriptingEngine;
+    private ScriptBindings scriptBindings;
+
     public MaewilEngine() {
         INSTANCE = this;
     }
@@ -98,6 +107,15 @@ public class MaewilEngine extends BasicGameState {
             e.printStackTrace();
         }
 
+        try {
+            PlayerData data = new PlayerData();
+            data.setLevelsComplete(20);
+            Mdx.playerData.writeJson(data, "playerdata.json");
+        } catch (PlayerDataException e) {
+            //Could not save the data, do something...
+            e.printStackTrace();
+        }
+
         keyManager = new KeyManager();
         stateOptions = new OptionsScreen(this, true);
 
@@ -117,6 +135,11 @@ public class MaewilEngine extends BasicGameState {
             ScreenManager.setCurrentScreen(stateMenu);
 
         inventoryManager = new InventoryManager(this);
+
+        luaGameScriptingEngine = new LuaGameScriptingEngine();
+        scriptBindings = new ScriptBindings();
+
+        scriptBindings.put("player", getPlayer());
     }
 
     @Override
@@ -159,6 +182,15 @@ public class MaewilEngine extends BasicGameState {
          */
         if (container.getInput().isKeyPressed(Input.KEY_F2))
             takeScreenshot();
+        luaGameScriptingEngine.update(delta);
+
+        if(container.getInput().isKeyPressed(Input.KEY_T)) {
+            try {
+                luaGameScriptingEngine.invokeScript("player.moveTo(50, 50).waitForCompletion();", scriptBindings);
+            } catch (InsufficientCompilersException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void takeScreenshot() {
@@ -287,6 +319,14 @@ public class MaewilEngine extends BasicGameState {
 
     public InventoryManager getInventoryManager() {
         return inventoryManager;
+    }
+
+    public LuaGameScriptingEngine getLuaGameScriptingEngine() {
+        return luaGameScriptingEngine;
+    }
+
+    public ScriptBindings getScriptBindings() {
+        return scriptBindings;
     }
 
     public World getWorld() {

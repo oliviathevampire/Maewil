@@ -1,35 +1,35 @@
 {
     "type": "creature",
     "texture": "entities/living/player_new.png",
-    "spriteSize": [17, 32],
+    "spriteSize": [16, 32],
     "animations": {
         "walkDown": {
-            "length": 3,
+            "length": 4,
             "speed": 250,
-            "startPos": [0, 0]
+            "startPos": [0, 32]
         },
         "walkLeft": {
-            "length": 3,
+            "length": 4,
             "speed": 250,
             "startPos": [0, 32]
         },
         "walkRight": {
-            "length": 3,
+            "length": 4,
             "speed": 250,
-            "startPos": [0, 64]
+            "startPos": [0, 128]
         },
         "walkUp": {
-            "length": 3,
+            "length": 4,
             "speed": 250,
             "startPos": [0, 96]
         },
         "idle": {
-            "length": 3,
+            "length": 4,
             "speed": 250,
-            "startPos": [0, 128]
+            "startPos": [0, 0]
         },
         "dead": {
-            "length": 8,
+            "length": 4,
             "speed": 250,
             "startPos": [128, 0]
         }

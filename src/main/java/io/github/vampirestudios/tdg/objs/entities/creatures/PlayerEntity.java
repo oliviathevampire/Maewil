@@ -8,16 +8,18 @@ import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.assets.Sounds;
 import io.github.vampirestudios.tdg.inventory.InventoryPlayer;
 import io.github.vampirestudios.tdg.inventory.Slot;
+import io.github.vampirestudios.tdg.objs.MoveFuture;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.items.IInteractable;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.items.tool.ToolItem;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.TilePos;
-import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.screen.options.controls.Keybind;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.utils.UtilsIdk;
+import org.mini2Dx.miniscript.core.GameFuture;
 import org.newdawn.slick.*;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -39,7 +41,7 @@ public class PlayerEntity extends LivingEntity {
     private float prevX, prevY;
 
     public PlayerEntity(MaewilEngine maewilEngine, String username) {
-        super(maewilEngine, "player", 34, 62);
+        super(maewilEngine, "player", 32, 64);
         this.username = username;
         isDead = false;
 
@@ -87,6 +89,10 @@ public class PlayerEntity extends LivingEntity {
         }
 
         inventoryPlayer.update(container, game, delta);
+    }
+
+    public GameFuture moveTo(float x, float y) {
+        return new MoveFuture(this, x, y);
     }
 
     @Override
