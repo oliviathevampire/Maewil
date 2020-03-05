@@ -45,7 +45,7 @@ public abstract class Tile implements IHasData<Tile> {
     protected TileType tileType;
 
     protected Item drop;
-    private int health, maxHealth = 300;
+    private int health, maxHealth = 1;
     private boolean beingDamaged = false;
 
     public Tile(MaewilEngine maewilEngine, String id, boolean isSolid, TileType tileType) {

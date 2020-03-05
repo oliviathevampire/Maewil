@@ -1,4 +1,6 @@
-package io.github.vampirestudios.tdg.world.noise; /**
+package io.github.vampirestudios.tdg.world.noise;
+
+/**
  * K.jpg's SuperSimplex noise. Uses large kernels for smooth results.
  * - 2D is standard simplex, but with four points instead of three.
  *   Implemented using a lookup table.

@@ -8,7 +8,6 @@ import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.manager.EntityManager;
 import io.github.vampirestudios.tdg.manager.InventoryManager;
 import io.github.vampirestudios.tdg.manager.KeyManager;
-import io.github.vampirestudios.tdg.objs.PlayerData;
 import io.github.vampirestudios.tdg.objs.entities.Entities;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.items.Items;
@@ -26,8 +25,6 @@ import io.github.vampirestudios.tdg.utils.DiscordHandler;
 import io.github.vampirestudios.tdg.world.World;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
-import org.mini2Dx.core.Mdx;
-import org.mini2Dx.core.playerdata.PlayerDataException;
 import org.mini2Dx.miniscript.core.ScriptBindings;
 import org.mini2Dx.miniscript.core.exception.InsufficientCompilersException;
 import org.mini2Dx.miniscript.lua.LuaGameScriptingEngine;
@@ -104,15 +101,6 @@ public class MaewilEngine extends BasicGameState {
             Tiles.init(this);
             Entities.init(this);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            PlayerData data = new PlayerData();
-            data.setLevelsComplete(20);
-            Mdx.playerData.writeJson(data, "playerdata.json");
-        } catch (PlayerDataException e) {
-            //Could not save the data, do something...
             e.printStackTrace();
         }
 

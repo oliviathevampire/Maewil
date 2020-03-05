@@ -7,9 +7,9 @@ import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 public class SandTile extends OverlapTile {
 
     public SandTile(MaewilEngine maewilEngine) {
-        super(maewilEngine, Assets.SAND, "sand", false, TileType.GROUND, Assets.SAND_ALTS);
+        super(maewilEngine, Assets.GRASS, "sand", false, TileType.GROUND, Assets.GRASS_ALTS);
         this.setMapColor(WorldColors.SAND);
-        this.setConnect("grass", "dirt");
+        this.setConnect("grass");
         this.setIgnore("sand", "red_sand");
     }
 

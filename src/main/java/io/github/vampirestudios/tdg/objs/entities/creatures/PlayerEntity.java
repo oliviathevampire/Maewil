@@ -194,13 +194,22 @@ public class PlayerEntity extends LivingEntity {
 
             if (e.getCollisionBounds(0, 0).intersects(ar)) {
                 e.isInteracted(extraDmg);
-                Sound hitSound = switch (e.getHitType()) {
-                    case CREATURE -> Sounds.PUNCH;
-                    case WOOD -> Sounds.STEP_WOOD;
-                    case STONE -> Sounds.STEP_STONE;
-                    case BUSH -> Sounds.BUSH;
-                    case NONE -> null;
-                };
+                Sound hitSound;
+                switch (e.getHitType()) {
+                    default:
+                    case CREATURE:
+                        hitSound = Sounds.PUNCH;
+                        break;
+                    case WOOD:
+                        hitSound = Sounds.STEP_WOOD;
+                        break;
+                    case STONE:
+                        hitSound = Sounds.STEP_STONE;
+                        break;
+                    case BUSH:
+                        hitSound = Sounds.BUSH;
+                        break;
+                }
                 Sounds.play(hitSound, OptionsScreen.OPTIONS.getVolumePlayer(), (float) e.getPosition().x, (float) e.getPosition().y, 1f);
                 return;
             }
@@ -255,9 +264,9 @@ public class PlayerEntity extends LivingEntity {
 
         if (!this.inWater() || !this.inLava()) {
             if (canSprint()) {
-                speed = LivingEntity.DEFAULT_SPEED * 6f;
+                speed = LivingEntity.DEFAULT_SPEED * 8f;
             } else {
-                speed = LivingEntity.DEFAULT_SPEED;
+                speed = LivingEntity.DEFAULT_SPEED * 4F;
             }
         }
 
@@ -284,17 +293,7 @@ public class PlayerEntity extends LivingEntity {
 
         Tile tile = maewilEngine.getWorld().getForegroundTile(tilePos.getX(), tilePos.getY());
         if (isAttacking) {
-            int dmg = 2;
-            if (equippedItem != null) {
-                if (equippedItem.getItem() instanceof ToolItem) {
-                    ToolItem tool = (ToolItem) equippedItem.getItem();
-                    if (((tool.getToolType() == ToolItem.ToolType.SHOVEL && tile.getTileType() == Tile.TileType.GROUND) ||
-                            (tool.getToolType() == ToolItem.ToolType.PICKAXE && tile.getTileType() == Tile.TileType.STONE) ||
-                            (tool.getToolType() == ToolItem.ToolType.AXE && tile.getTileType() == Tile.TileType.WOOD)) ||
-                            tool.getToolType() == ToolItem.ToolType.MULTI)
-                        dmg += extraDmg;
-                }
-            }
+            int dmg = extraDmg;
             tile.damage(dmg);
         }
     }

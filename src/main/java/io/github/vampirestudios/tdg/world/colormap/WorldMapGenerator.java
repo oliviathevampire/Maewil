@@ -1,6 +1,9 @@
 package io.github.vampirestudios.tdg.world.colormap;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
+import io.github.vampirestudios.tdg.world.noise.CubicNoise;
+import io.github.vampirestudios.tdg.world.noise.SimplexCellularNoise;
+import io.github.vampirestudios.tdg.world.noise.SimplexGaborNoise;
 import io.github.vampirestudios.tdg.world.noise.SuperSimplexNoise;
 
 import java.awt.*;
@@ -20,8 +23,8 @@ public class WorldMapGenerator {
     public WorldMapGenerator(long seedLand, int width, int height, double sizeLand) {
         this.seedLand = seedLand;
         this.seedLand2 = seedLand + NumberUtils.getRandomInt(1, 5);
-        this.seedPath = seedLand + NumberUtils.getRandomInt(1, 5);
-        this.seedPath2 = seedLand2 + NumberUtils.getRandomInt(1, 5);
+        this.seedPath = seedLand + NumberUtils.getRandomInt(4, 8);
+        this.seedPath2 = seedLand2 + NumberUtils.getRandomInt(4, 8);
         this.seedBiome = seedLand + NumberUtils.getRandomInt(1, 5);
         this.seedBiome2 = seedLand2 + NumberUtils.getRandomInt(1, 5);
 
@@ -41,13 +44,13 @@ public class WorldMapGenerator {
      * Generates a BufferedImage for the land parts based on the x-offset, y-offset and if it should have hollow caves
      **/
     public BufferedImage generateLand(float xOff, float yOff, boolean hollowCaves) {
-        SuperSimplexNoise noise = new SuperSimplexNoise(seedLand);
+        CubicNoise noise = new CubicNoise((int) seedLand, 2);
         SuperSimplexNoise noise2 = new SuperSimplexNoise(seedLand2);
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                double value = noise.noise2(((x + xOff) / sizeLand), ((y + yOff) / sizeLand)) +
+                double value = noise.sample((float) ((x + xOff) / sizeLand), (float) ((y + yOff) / sizeLand)) +
                         noise2.noise2(((x + xOff * 2) / sizeLand), ((y + yOff * 2) / sizeLand)) / 2;
                 Color c = WorldColors.DEEP_OCEAN;
                 if (value > -0.3 && value < -0.1) {
@@ -57,6 +60,11 @@ public class WorldMapGenerator {
                         c = WorldColors.SAND;
                     } else {
                         if (value > 0.15 && value < 0.55) {
+                            /*if (value > 0.20) {
+                                c = WorldColors.DARK_GRASS;
+                            } else {
+                                c = WorldColors.GRASS;
+                            }*/
                             c = WorldColors.GRASS;
                         } else {
                             if (value > 0.55 && value < 0.7) {
@@ -117,13 +125,13 @@ public class WorldMapGenerator {
      * Generates
      **/
     private void addSpots(float xOff, float yOff, BufferedImage pathMap, double minThreshold, Color replace, Color spot, long seed) {
-        SuperSimplexNoise noise = new SuperSimplexNoise(seed);
-        SuperSimplexNoise noise2 = new SuperSimplexNoise(seed);
+        SimplexCellularNoise noise = new SimplexCellularNoise(seed);
+        SimplexCellularNoise noise2 = new SimplexCellularNoise(seed);
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                double value = noise.noise2(((x + xOff) / sizeBiome), ((y + yOff) / sizeBiome)) +
-                        noise2.noise2(((x + xOff * 2) / sizeBiome), ((y + yOff * 2) / sizeBiome)) / 2;
+                double value = noise.eval(((x + xOff) / sizeBiome), ((y + yOff) / sizeBiome)) +
+                        noise2.eval(((x + xOff * 2) / sizeBiome), ((y + yOff * 2) / sizeBiome)) / 2;
                 if (pathMap.getRGB(x, y) == replace.getRGB()) {
                     if (value > minThreshold && value < 1.0) {
                         pathMap.setRGB(x, y, getRGBA(spot.getRGB()));
@@ -135,13 +143,13 @@ public class WorldMapGenerator {
 
     public BufferedImage generateBiomes(float xOff, float yOff, BufferedImage landMap, BufferedImage pathMap) {
         SuperSimplexNoise noise = new SuperSimplexNoise(seedBiome);
-        SuperSimplexNoise noise2 = new SuperSimplexNoise(seedBiome2);
+        SimplexGaborNoise noise2 = new SimplexGaborNoise(seedBiome2);
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 double value = noise.noise2(((x + xOff) / sizeBiome), ((y + yOff) / sizeBiome)) +
-                        noise2.noise2(((x + xOff * 2) / sizeBiome), ((y + yOff * 2) / sizeBiome)) / 2;
+                        noise2.noise2(((x + xOff * 2) / sizeBiome), ((y + yOff * 2) / sizeBiome), ((x + xOff * 2) / sizeBiome), ((y + yOff * 2) / sizeBiome)) / 2;
                 Color c = Biomes.NONE.getColor();
                 if (landMap.getRGB(x, y) == WorldColors.GRASS.getRGB() && pathMap.getRGB(x, y) != WorldColors.DIRT.getRGB() && landMap.getRGB(x, y) != WorldColors.DIRT.getRGB()) {
                     if (value > 0.15 && value < 0.55) {
@@ -149,7 +157,7 @@ public class WorldMapGenerator {
                     } else {
                         c = Biomes.PLAINS.getColor();
                     }
-                }else if(landMap.getRGB(x, y) == WorldColors.DARK_GRASS.getRGB() && pathMap.getRGB(x, y) != WorldColors.DIRT.getRGB() && landMap.getRGB(x, y) != WorldColors.DIRT.getRGB()) {
+                } else if(landMap.getRGB(x, y) == WorldColors.DARK_GRASS.getRGB() && pathMap.getRGB(x, y) != WorldColors.DIRT.getRGB() && landMap.getRGB(x, y) != WorldColors.DIRT.getRGB()) {
                     if (value > 0.15 && value < 0.55) {
                         c = Biomes.DARK_FOREST.getColor();
                     } else {

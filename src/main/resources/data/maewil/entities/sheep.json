@@ -1,32 +1,32 @@
 {
   "type": "creature",
   "texture": "entities/living/sheep.png",
-  "spriteSize": [16, 16],
+  "spriteSize": [29, 18],
   "animations": {
     "idle": {
-      "length": 8,
+      "length": 3,
       "speed": 135,
       "startPos": [0, 0]
     },
     "walkUp": {
-      "length": 4,
+      "length": 3,
       "speed": 250,
-      "startPos": [0, 1]
+      "startPos": [0, 96]
     },
     "walkDown": {
-      "length": 4,
+      "length": 3,
       "speed": 250,
-      "startPos": [4, 1]
+      "startPos": [0, 0]
     },
     "walkLeft": {
-      "length": 4,
+      "length": 3,
       "speed": 135,
-      "startPos": [4, 2]
+      "startPos": [0, 64]
     },
     "walkRight": {
-      "length": 4,
+      "length": 3,
       "speed": 135,
-      "startPos": [0, 2]
+      "startPos": [0, 32]
     }
   }
 }

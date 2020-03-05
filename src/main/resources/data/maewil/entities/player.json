@@ -6,22 +6,22 @@
         "walkDown": {
             "length": 4,
             "speed": 250,
-            "startPos": [0, 32]
+            "startPos": [0, 1]
         },
         "walkLeft": {
             "length": 4,
             "speed": 250,
-            "startPos": [0, 32]
+            "startPos": [0, 3]
         },
         "walkRight": {
             "length": 4,
             "speed": 250,
-            "startPos": [0, 128]
+            "startPos": [0, 2]
         },
         "walkUp": {
             "length": 4,
             "speed": 250,
-            "startPos": [0, 96]
+            "startPos": [0, 3]
         },
         "idle": {
             "length": 4,

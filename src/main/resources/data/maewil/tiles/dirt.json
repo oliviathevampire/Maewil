@@ -13,12 +13,10 @@
     ],
     "size": 16,
     "overlap": {
-        "connect": [
-            "grass",
-            "sand"
-        ],
+        "connect": [],
         "ignore": [
-            "dirt"
+            "dirt",
+            "grass"
         ]
     }
 }

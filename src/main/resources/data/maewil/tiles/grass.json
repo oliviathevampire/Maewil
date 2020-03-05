@@ -15,15 +15,5 @@
         9,
         10
     ],
-    "size": 16,
-    "overlap": {
-        "connect": [
-            "dirt",
-            "sand",
-            "red_sand"
-        ],
-        "ignore": [
-            "grass"
-        ]
-    }
+    "size": 16
 }

@@ -1,16 +1,13 @@
 package io.github.vampirestudios.tdg.objs.tiles;
 
-import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 
-public class WaterTile extends OverlapTile {
+public class WaterTile extends Tile {
 
     public WaterTile(MaewilEngine maewilEngine) {
-        super(maewilEngine, Assets.SAND, "water", false, TileType.FLUID, Assets.SAND_ALTS);
+        super(maewilEngine, "water", false, TileType.FLUID);
         this.setMapColor(WorldColors.WATER);
-        this.setConnect("sand", "grass");
-        this.setIgnore("water");
     }
 
     @Override

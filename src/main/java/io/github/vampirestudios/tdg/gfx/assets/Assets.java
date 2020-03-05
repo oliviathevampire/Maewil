@@ -39,8 +39,8 @@ public class Assets {
 
     /* Tiles */
     //TODO: Change these to json
-    public static int GRASS_ALTS, SAND_ALTS, RED_SAND_ALTS, BROKEN_STONE_ALTS;
-    public static Image[] GRASS, SAND, RED_SAND, BROKEN_STONE;
+    public static int GRASS_ALTS, SAND_ALTS, RED_SAND_ALTS, BROKEN_STONE_ALTS, WATER_ALTS, LAVA_ALTS, DIRT_ALTS;
+    public static Image[] GRASS, SAND, RED_SAND, BROKEN_STONE, WATER, LAVA, DIRT;
 
     /* Special Tiles */
     public static Image[] SPLASH_EFFECT, SPRINT_EFFECT;
@@ -129,12 +129,18 @@ public class Assets {
     // TODO: REMOVE METHOD
     private static void initTiles() {
         // ALTS
-        GRASS_ALTS = 7;
+        GRASS_ALTS = 11;
         GRASS = TileTextureAlts.getTextureAlts(GRASS_ALTS, 47, "grass", width, height);
-        SAND_ALTS = 4;
+        SAND_ALTS = 20;
         SAND = TileTextureAlts.getTextureAlts(SAND_ALTS, 47, "sand", width, height);
         BROKEN_STONE_ALTS = 2;
         BROKEN_STONE = TileTextureAlts.getTextureAlts(BROKEN_STONE_ALTS, 47, "broken_stone", width, height);
+        WATER_ALTS = 9;
+        WATER = TileTextureAlts.getTextureAlts(WATER_ALTS, 47, "water", width, height);
+        LAVA_ALTS = 16;
+        LAVA = TileTextureAlts.getTextureAlts(LAVA_ALTS, 47, "lava", width, height);
+        DIRT_ALTS = 16;
+        DIRT = TileTextureAlts.getTextureAlts(DIRT_ALTS, 47, "dirt", width, height);
 
         // Special
         TILE_CRACKING = getTileFrames("tile_cracking", 9);
