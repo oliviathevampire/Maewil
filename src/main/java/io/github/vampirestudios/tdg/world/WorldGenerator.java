@@ -86,14 +86,14 @@ public class WorldGenerator {
 
                 if (lc.getRGB() == WorldColors.DIRT.getRGB()
                         || pc.getRGB() == WorldColors.DIRT.getRGB()
-                        || lc.getRGB() == WorldColors.GRASS.getRGB()
-                        || lc.getRGB() == WorldColors.DEEP_OCEAN.getRGB())
+                        || lc.getRGB() == WorldColors.GRASS.getRGB())
                     tile = Tiles.DIRT;
 
                 if (lc.getRGB() == WorldColors.DARK_GRASS.getRGB())
                     tile = Tiles.DARK_GRASS;
 
-                if (lc.getRGB() == WorldColors.SAND.getRGB() || lc.getRGB() == WorldColors.WATER.getRGB())
+                if (lc.getRGB() == WorldColors.SAND.getRGB() || lc.getRGB() == WorldColors.WATER.getRGB()
+                        || lc.getRGB() == WorldColors.DEEP_OCEAN.getRGB())
                     tile = Tiles.SAND;
 
                 if (lc.getRGB() == WorldColors.STONE.getRGB())
@@ -151,15 +151,15 @@ public class WorldGenerator {
         double oreSize = 1.0d;
         double stoneSize = 10.0d;
 
-        generateTile(tiles, Tiles.COAL_ORE, -0.05d, 0.02d, oreSize, seedOff, bg);
-        generateTile(tiles, Tiles.IRON_ORE, -0.05d, 0.03d, oreSize, seedOff, bg);
-        generateTile(tiles, Tiles.GOLD_ORE, -0.05d, 0.04d, oreSize, seedOff, bg);
-        generateTile(tiles, Tiles.DIAMOND_ORE, -0.05d, 0.05d, oreSize, seedOff, bg);
-        generateTile(tiles, Tiles.EMERALD_ORE, -0.05d, 0.05d, oreSize, seedOff, bg);
-        generateTile(tiles, Tiles.AMETHYST_ORE, -0.05d, 0.05d, oreSize, seedOff, bg);
+//        generateTile(tiles, Tiles.COAL_ORE, -0.05d, 0.02d, oreSize, seedOff, bg);
+//        generateTile(tiles, Tiles.IRON_ORE, -0.05d, 0.03d, oreSize, seedOff, bg);
+//        generateTile(tiles, Tiles.GOLD_ORE, -0.05d, 0.04d, oreSize, seedOff, bg);
+//        generateTile(tiles, Tiles.DIAMOND_ORE, -0.05d, 0.05d, oreSize, seedOff, bg);
+//        generateTile(tiles, Tiles.EMERALD_ORE, -0.05d, 0.05d, oreSize, seedOff, bg);
+//        generateTile(tiles, Tiles.AMETHYST_ORE, -0.05d, 0.05d, oreSize, seedOff, bg);
 
-        generateTile(tiles, Tiles.ANDESITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
-        generateTile(tiles, Tiles.DIORITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
+//        generateTile(tiles, Tiles.ANDESITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
+//        generateTile(tiles, Tiles.DIORITE, 0.7d, 1.0d, stoneSize, seedOff, bg);
 
 //        addOre(tiles, Tiles.BROKEN_STONE, -0.15d, 0.15d, stoneSize, seedOff, bg);
     }

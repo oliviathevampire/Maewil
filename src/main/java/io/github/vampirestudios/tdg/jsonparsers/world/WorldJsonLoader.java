@@ -61,8 +61,8 @@ public class WorldJsonLoader implements IJSONLoader {
 
     // Player Info
     private String username;
-    private int health, glubel, lvl;
-    private int[] selected_slots;
+    private int health;
+    private int[] selectedSlots;
     private ItemStack[] inventory, hotbar;
 
     public WorldJsonLoader(String path, MaewilEngine maewilEngine) {
@@ -225,12 +225,12 @@ public class WorldJsonLoader implements IJSONLoader {
         maewilEngine.getPlayer().setCurrentHealth(health);
         MaewilLauncher.LOGGER.info("loaded player health!");
 
-        selected_slots = new int[2];
+        selectedSlots = new int[2];
         JSONArray selected_slotsJ = (JSONArray) jsonObject.get("selected_slots");
-        selected_slots[0] = NumberUtils.parseInt(selected_slotsJ.get(0));
-        selected_slots[1] = NumberUtils.parseInt(selected_slotsJ.get(1));
-        maewilEngine.getPlayer().getInventoryPlayer().setInventorySelectedIndex(selected_slots[0]);
-        maewilEngine.getPlayer().getInventoryPlayer().setHotbarSelectedIndex(selected_slots[1]);
+        selectedSlots[0] = NumberUtils.parseInt(selected_slotsJ.get(0));
+        selectedSlots[1] = NumberUtils.parseInt(selected_slotsJ.get(1));
+        maewilEngine.getPlayer().getInventoryPlayer().setInventorySelectedIndex(selectedSlots[0]);
+        maewilEngine.getPlayer().getInventoryPlayer().setHotbarSelectedIndex(selectedSlots[1]);
 
         inventory = new ItemStack[12];
         JSONObject inventoryJ = (JSONObject) jsonObject.get("inventory");
@@ -389,16 +389,8 @@ public class WorldJsonLoader implements IJSONLoader {
         return health;
     }
 
-    public int getGlubel() {
-        return glubel;
-    }
-
-    public int getLvl() {
-        return lvl;
-    }
-
-    public int[] getSelected_slots() {
-        return selected_slots;
+    public int[] getSelectedSlots() {
+        return selectedSlots;
     }
 
     public ItemStack[] getInventory() {
