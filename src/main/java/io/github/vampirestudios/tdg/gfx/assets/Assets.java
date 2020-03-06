@@ -39,8 +39,8 @@ public class Assets {
 
     /* Tiles */
     //TODO: Change these to json
-    public static int GRASS_ALTS, SAND_ALTS, RED_SAND_ALTS, BROKEN_STONE_ALTS, WATER_ALTS, LAVA_ALTS, DIRT_ALTS;
-    public static Image[] GRASS, SAND, RED_SAND, BROKEN_STONE, WATER, LAVA, DIRT;
+    public static int GRASS_ALTS, DARK_GRASS_ALTS, SAND_ALTS, RED_SAND_ALTS, BROKEN_STONE_ALTS, WATER_ALTS, LAVA_ALTS, DIRT_ALTS;
+    public static Image[] GRASS, DARK_GRASS, SAND, RED_SAND, BROKEN_STONE, WATER, LAVA, DIRT;
 
     /* Special Tiles */
     public static Image[] SPLASH_EFFECT, SPRINT_EFFECT;
@@ -131,6 +131,8 @@ public class Assets {
         // ALTS
         GRASS_ALTS = 11;
         GRASS = TileTextureAlts.getTextureAlts(GRASS_ALTS, 47, "grass", width, height);
+        DARK_GRASS_ALTS = 7;
+        DARK_GRASS = TileTextureAlts.getTextureAlts(DARK_GRASS_ALTS, 47, "dark_grass", width, height);
         SAND_ALTS = 20;
         SAND = TileTextureAlts.getTextureAlts(SAND_ALTS, 47, "sand", width, height);
         BROKEN_STONE_ALTS = 2;
