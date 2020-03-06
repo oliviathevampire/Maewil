@@ -22,6 +22,7 @@ public class WorldGenerator {
     private MaewilEngine maewilEngine;
     private int worldSize;
     private BufferedImage landMap, pathMap, biomeMap;
+    private BufferedImage landMap2, pathMap2, biomeMap2;
 
     private long seed, seedOreOffInc, seedOreOff;
 
@@ -30,7 +31,7 @@ public class WorldGenerator {
     private TileList bgTiles, fgTiles;
     private CatLogger logger;
 
-    private boolean imageMapsGenerated = false, bgTilesGenerated = false, fgTilesGenerated = false;
+    private boolean imageMapsGenerated = false, imageMapsGenerated2 = false, bgTilesGenerated = false, fgTilesGenerated = false;
     private Thread generatorThread;
 
     public WorldGenerator(MaewilEngine maewilEngine, long seed, int worldSize) {
@@ -53,6 +54,13 @@ public class WorldGenerator {
             biomeMap = mapGenerator.generateBiomes(0, 0, landMap, pathMap);
             imageMapsGenerated = true;
             logger.info("World image maps generated");
+
+            // Land maps
+            landMap2 = mapGenerator.generateLand(0, 10, false);
+            pathMap2 = mapGenerator.generatePaths(0, 10, landMap2);
+            biomeMap2 = mapGenerator.generateBiomes(0, 10, landMap2, pathMap2);
+            imageMapsGenerated2 = true;
+            logger.info("World image maps generated 2");
 
             // Tiles
             bgTiles = generateBackgroundTiles();
@@ -82,12 +90,20 @@ public class WorldGenerator {
             for (int x = 0; x < worldSize; x++) {
                 Color lc = new Color(WorldMapGenerator.getRGBA(landMap.getRGB(x, y)));
                 Color pc = new Color(WorldMapGenerator.getRGBA(pathMap.getRGB(x, y)));
+                Color lc2 = new Color(WorldMapGenerator.getRGBA(landMap2.getRGB(x, y)));
+                Color pc2 = new Color(WorldMapGenerator.getRGBA(pathMap2.getRGB(x, y)));
                 Tile tile = Tiles.AIR;
 
                 if (lc.getRGB() == WorldColors.DIRT.getRGB()
                         || pc.getRGB() == WorldColors.DIRT.getRGB()
                         || lc.getRGB() == WorldColors.GRASS.getRGB()
                         || lc.getRGB() == WorldColors.DEEP_OCEAN.getRGB())
+                    tile = Tiles.DIRT;
+
+                if (lc2.getRGB() == WorldColors.DIRT.getRGB()
+                        || pc2.getRGB() == WorldColors.DIRT.getRGB()
+                        || lc2.getRGB() == WorldColors.GRASS.getRGB()
+                        || lc2.getRGB() == WorldColors.DEEP_OCEAN.getRGB())
                     tile = Tiles.DIRT;
 
                 if (lc.getRGB() == WorldColors.DARK_GRASS.getRGB())
@@ -98,6 +114,12 @@ public class WorldGenerator {
 
                 if (lc.getRGB() == WorldColors.STONE.getRGB())
                     tile = Tiles.STONE;
+
+                if (lc2.getRGB() == WorldColors.SAND.getRGB() || lc2.getRGB() == WorldColors.WATER.getRGB())
+                    tile = Tiles.DARK_GRASS;
+
+                if (lc2.getRGB() == WorldColors.STONE.getRGB())
+                    tile = Tiles.DARK_GRASS;
 
                 tile = tile.newCopy();
                 checkBorderTilePos(tile, x, y, true);
@@ -116,10 +138,15 @@ public class WorldGenerator {
             for (int x = 0; x < worldSize; x++) {
                 Color lc = new Color(WorldMapGenerator.getRGBA(landMap.getRGB(x, y)));
                 Color pc = new Color(WorldMapGenerator.getRGBA(pathMap.getRGB(x, y)));
+                Color lc2 = new Color(WorldMapGenerator.getRGBA(landMap2.getRGB(x, y)));
+                Color pc2 = new Color(WorldMapGenerator.getRGBA(pathMap2.getRGB(x, y)));
                 Tile tile = Tiles.AIR;
 
                 if (lc.getRGB() == WorldColors.GRASS.getRGB())
                     tile = Tiles.GRASS;
+
+                if (lc2.getRGB() == WorldColors.GRASS.getRGB())
+                    tile = Tiles.DARK_GRASS;
 
                 if (lc.getRGB() == WorldColors.DEEP_OCEAN.getRGB() || lc.getRGB() == WorldColors.WATER.getRGB())
                     tile = Tiles.WATER;
@@ -216,7 +243,7 @@ public class WorldGenerator {
     }
 
     public boolean isGenerated() {
-        return imageMapsGenerated && bgTilesGenerated && fgTilesGenerated;
+        return imageMapsGenerated && imageMapsGenerated2 && bgTilesGenerated && fgTilesGenerated;
     }
 
     public boolean isGenerating() {

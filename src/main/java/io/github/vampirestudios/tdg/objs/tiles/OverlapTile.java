@@ -20,6 +20,12 @@ public abstract class OverlapTile extends Tile {
         this.alts = alts;
     }
 
+    public OverlapTile(MaewilEngine maewilEngine, TileSettings settings, Image[] overlap, int alts) {
+        super(maewilEngine, settings);
+        this.overlap = overlap;
+        this.alts = alts;
+    }
+
     protected void setConnect(String... ids) {
         this.connect.addAll(Arrays.asList(ids));
     }

@@ -7,8 +7,9 @@ public class GrassTile extends Tile {
 
     public GrassTile(MaewilEngine maewilEngine) {
         super(maewilEngine, "grass", false, Tile.TileType.GROUND);
-//        super(maewilEngine, Assets.GRASS, "grass", false, Tile.TileType.GROUND, Assets.GRASS_ALTS);
+//        super(maewilEngine, Assets.GRASS, "grass", false, Tile.TileType.GROUND, Assets.DARK_GRASS_ALTS);
         this.setMapColor(WorldColors.GRASS);
+//        this.setConnect("dark_grass");
 //        this.setConnect("dirt", "sand");
 //        this.setIgnore("grass");
     }
