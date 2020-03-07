@@ -9,7 +9,6 @@ import io.github.vampirestudios.tdg.objs.tiles.Tiles;
 import io.github.vampirestudios.tdg.objs.tiles.stone.StoneTile;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.utils.math.MatUtil;
-import io.github.vampirestudios.tdg.world.colormap.Biomes;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 import io.github.vampirestudios.tdg.world.colormap.WorldMapGenerator;
 import io.github.vampirestudios.tdg.world.noise.SuperSimplexNoise;
@@ -55,12 +54,12 @@ public class WorldGenerator {
             imageMapsGenerated = true;
             logger.info("World image maps generated");
 
-            // Land maps
-            landMap2 = mapGenerator.generateLand(0, 10, false);
-            pathMap2 = mapGenerator.generatePaths(0, 10, landMap2);
-            biomeMap2 = mapGenerator.generateBiomes(0, 10, landMap2, pathMap2);
-            imageMapsGenerated2 = true;
-            logger.info("World image maps generated 2");
+//            // Land maps
+//            landMap2 = mapGenerator.generateLand(0, 10, false);
+//            pathMap2 = mapGenerator.generatePaths(0, 10, landMap2);
+//            biomeMap2 = mapGenerator.generateBiomes(0, 10, landMap2, pathMap2);
+//            imageMapsGenerated2 = true;
+//            logger.info("World image maps generated 2");
 
             // Tiles
             bgTiles = generateBackgroundTiles();
@@ -71,13 +70,10 @@ public class WorldGenerator {
             maewilEngine.getEntityManager().reset();
             for (int y = 0; y < worldSize; y++) {
                 for (int x = 0; x < worldSize; x++) {
-                    Biomes.Biome biome = Biomes.getBiomeAt(biomeMap, x, y);
-                    if (biome.equals(Biomes.FOREST) || biome.equals(Biomes.PLAINS)) {
-                        float threshold = 0.004f;
-                        float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
-                        float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
-                        maewilEngine.getEntityManager().addEntity(Entities.BUSH_MEDIUM, x + xOff, y + yOff, false);
-                    }
+                    float threshold = 0.004f;
+                    float xOff = NumberUtils.getRandomFloat(-threshold, threshold);
+                    float yOff = NumberUtils.getRandomFloat(-threshold, threshold);
+                    maewilEngine.getEntityManager().addEntity(Entities.SHOP, x + xOff, y + yOff, false);
                 }
             }
         }, "WorldGenerator-Thread");
@@ -90,8 +86,8 @@ public class WorldGenerator {
             for (int x = 0; x < worldSize; x++) {
                 Color lc = new Color(WorldMapGenerator.getRGBA(landMap.getRGB(x, y)));
                 Color pc = new Color(WorldMapGenerator.getRGBA(pathMap.getRGB(x, y)));
-                Color lc2 = new Color(WorldMapGenerator.getRGBA(landMap2.getRGB(x, y)));
-                Color pc2 = new Color(WorldMapGenerator.getRGBA(pathMap2.getRGB(x, y)));
+//                Color lc2 = new Color(WorldMapGenerator.getRGBA(landMap2.getRGB(x, y)));
+//                Color pc2 = new Color(WorldMapGenerator.getRGBA(pathMap2.getRGB(x, y)));
                 Tile tile = Tiles.AIR;
 
                 if (lc.getRGB() == WorldColors.DIRT.getRGB()
@@ -99,11 +95,11 @@ public class WorldGenerator {
                         || lc.getRGB() == WorldColors.GRASS.getRGB())
                     tile = Tiles.DIRT;
 
-                if (lc2.getRGB() == WorldColors.DIRT.getRGB()
+                /*if (lc2.getRGB() == WorldColors.DIRT.getRGB()
                         || pc2.getRGB() == WorldColors.DIRT.getRGB()
                         || lc2.getRGB() == WorldColors.GRASS.getRGB()
                         || lc2.getRGB() == WorldColors.DEEP_OCEAN.getRGB())
-                    tile = Tiles.DIRT;
+                    tile = Tiles.DIRT;*/
 
                 if (lc.getRGB() == WorldColors.DARK_GRASS.getRGB())
                     tile = Tiles.DARK_GRASS;
@@ -115,11 +111,11 @@ public class WorldGenerator {
                 if (lc.getRGB() == WorldColors.STONE.getRGB())
                     tile = Tiles.STONE;
 
-                if (lc2.getRGB() == WorldColors.SAND.getRGB() || lc2.getRGB() == WorldColors.WATER.getRGB())
+                /*if (lc2.getRGB() == WorldColors.SAND.getRGB() || lc2.getRGB() == WorldColors.WATER.getRGB())
                     tile = Tiles.DARK_GRASS;
 
                 if (lc2.getRGB() == WorldColors.STONE.getRGB())
-                    tile = Tiles.DARK_GRASS;
+                    tile = Tiles.DARK_GRASS;*/
 
                 tile = tile.newCopy();
                 checkBorderTilePos(tile, x, y, true);
@@ -138,15 +134,15 @@ public class WorldGenerator {
             for (int x = 0; x < worldSize; x++) {
                 Color lc = new Color(WorldMapGenerator.getRGBA(landMap.getRGB(x, y)));
                 Color pc = new Color(WorldMapGenerator.getRGBA(pathMap.getRGB(x, y)));
-                Color lc2 = new Color(WorldMapGenerator.getRGBA(landMap2.getRGB(x, y)));
-                Color pc2 = new Color(WorldMapGenerator.getRGBA(pathMap2.getRGB(x, y)));
+//                Color lc2 = new Color(WorldMapGenerator.getRGBA(landMap2.getRGB(x, y)));
+//                Color pc2 = new Color(WorldMapGenerator.getRGBA(pathMap2.getRGB(x, y)));
                 Tile tile = Tiles.AIR;
 
                 if (lc.getRGB() == WorldColors.GRASS.getRGB())
                     tile = Tiles.GRASS;
 
-                if (lc2.getRGB() == WorldColors.GRASS.getRGB())
-                    tile = Tiles.DARK_GRASS;
+                /*if (lc2.getRGB() == WorldColors.GRASS.getRGB())
+                    tile = Tiles.DARK_GRASS;*/
 
                 if (lc.getRGB() == WorldColors.DEEP_OCEAN.getRGB() || lc.getRGB() == WorldColors.WATER.getRGB())
                     tile = Tiles.WATER;
@@ -243,7 +239,7 @@ public class WorldGenerator {
     }
 
     public boolean isGenerated() {
-        return imageMapsGenerated && imageMapsGenerated2 && bgTilesGenerated && fgTilesGenerated;
+        return imageMapsGenerated/* && imageMapsGenerated2*/ && bgTilesGenerated && fgTilesGenerated;
     }
 
     public boolean isGenerating() {

@@ -51,10 +51,11 @@ public class WorldButtonClickListener implements ClickListener {
         int sizeMin = Math.min((int) -(sizeMod * 2), (int) (sizeMod * 2));
         int sizeMax = Math.max((int) -(sizeMod * 2), (int) (sizeMod * 2));
         int sizeModExtra;
-        if (sizeMin < sizeMax)
+        /*if (sizeMin < sizeMax)
             sizeModExtra = NumberUtils.getRandomInt(sizeMin, sizeMax);
         else
-            sizeModExtra = NumberUtils.getRandomInt(sizeMax, sizeMin);
+            sizeModExtra = NumberUtils.getRandomInt(sizeMax, sizeMin);*/
+        sizeModExtra = NumberUtils.getRandomInt(sizeMin, sizeMax);
         int minWorldSize = 400;
         worldSize = minWorldSize + sizeModExtra;
 
@@ -179,17 +180,13 @@ public class WorldButtonClickListener implements ClickListener {
             }
         }
 
-        if (tile != Tiles.WATER) {
-            if (tile.isSolid() || tile.isUnbreakable())
-                return getPlayerSpawn();
-            else {
-                if (tile instanceof SandTile || tile instanceof GrassTile || tile instanceof DirtTile || tile instanceof AirTile)
-                    return new Vector2D(x, y);
-                else
-                    return getPlayerSpawn();
-            }
-        } else {
+        if (tile.isSolid() || tile.isUnbreakable())
             return getPlayerSpawn();
+        else {
+            if (tile instanceof SandTile || tile instanceof GrassTile || tile instanceof DirtTile || tile instanceof AirTile)
+                return new Vector2D(x, y);
+            else
+                return getPlayerSpawn();
         }
     }
 

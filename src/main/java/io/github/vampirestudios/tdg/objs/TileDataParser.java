@@ -1,13 +1,13 @@
 package io.github.vampirestudios.tdg.objs;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import io.github.vampirestudios.tdg.gfx.Animation;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.image.SpriteSheet;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.utils.Identifier;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.newdawn.slick.Image;
 public class TileDataParser extends DataParser<Tile> {
 
@@ -16,15 +16,15 @@ public class TileDataParser extends DataParser<Tile> {
     }
 
     @Override
-    Tile singleData(JsonObject data, Tile obj, Identifier texturePath, int spriteSize) {
+    Tile singleData(JSONObject data, Tile obj, Identifier texturePath, int spriteSize) {
         Image texture = Assets.getSpriteExact(texturePath, 0, 0, spriteSize, spriteSize);
         obj.setTexture(texture);
         return obj;
     }
 
     @Override
-    Tile multipleData(JsonObject data, Tile obj, Identifier texturePath, int spriteSize) {
-        JsonArray textures = (JsonArray) data.get("textures");
+    Tile multipleData(JSONObject data, Tile obj, Identifier texturePath, int spriteSize) {
+        JSONArray textures = (JSONArray) data.get("textures");
         Image[] alts = new Image[textures.size()];
         SpriteSheet altSheet = new SpriteSheet(texturePath);
 
@@ -35,7 +35,7 @@ public class TileDataParser extends DataParser<Tile> {
 
         obj.setHasAlts(true);
         obj.setTextureAlts(alts);
-        if (data.has("altChance"))
+        if (data.containsKey("altChance"))
             obj.setAltChance(NumberUtils.parseInt(data.get("altChance")));
         else
             obj.setAltChance(Tile.DEFAULT_ALT_CHANCE);
@@ -43,9 +43,9 @@ public class TileDataParser extends DataParser<Tile> {
     }
 
     @Override
-    Tile animatedData(JsonObject data, Tile obj, Identifier texturePath, int spriteSize) {
+    Tile animatedData(JSONObject data, Tile obj, Identifier texturePath, int spriteSize) {
         int animSpeed = NumberUtils.parseInt(data.get("speed"));
-        JsonArray frameIndexes = (JsonArray) data.get("frames");
+        JSONArray frameIndexes = (JSONArray) data.get("frames");
         SpriteSheet animSheet = new SpriteSheet(texturePath);
         Image[] frames = new Image[frameIndexes.size()];
 

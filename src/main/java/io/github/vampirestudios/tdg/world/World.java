@@ -166,7 +166,6 @@ public class World {
 
     public Tile getForegroundTile(TilePos pos) {
         checkTilePos(pos, false);
-
         return fgTiles.getTileAtPos(pos) == null ? Tiles.GRASS : fgTiles.getTileAtPos(pos);
     }
 

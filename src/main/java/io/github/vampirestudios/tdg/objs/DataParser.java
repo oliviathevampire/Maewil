@@ -3,10 +3,11 @@ package io.github.vampirestudios.tdg.objs;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.io.FileUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
-import com.google.gson.JsonObject;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.Identifier;
-import io.github.vampirestudios.tdg.utils.JsonUtils;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 
@@ -21,15 +22,15 @@ public abstract class DataParser<E extends IHasData<E>> {
         this.logger = new CatLogger("TUT-" + loggerName + "-Parser");
     }
 
-    public E loadData(E obj) throws IOException {
-        JsonObject data = getData(new Identifier("maewil", dataFolderName + "/" + obj.getId()), true);
+    public E loadData(E obj) throws IOException, ParseException {
+        JSONObject data = getData(new Identifier("maewil", dataFolderName + "/" + obj.getId()), true);
 
         E custom = customLoadData(data, obj);
         if (custom != null) {
             return custom;
         } else {
             DataTypes.TileItemTexture type = DataTypes.TileItemTexture.getByName(String.valueOf(data.get("type")));
-            Identifier texturePath = new Identifier("maewil", "textures/" + data.get("texture").getAsString().replace("\"'", ""));
+            Identifier texturePath = new Identifier("maewil", "textures/" + data.get("texture").toString().replace("\"'", ""));
             int spriteSize = NumberUtils.parseInt(data.get("size"));
             logger.info("Loading an object with the type [" + type + "-" + type.typeName + "] with an id of [" + obj.getName().replace("\"", "") + "]");
 
@@ -50,37 +51,38 @@ public abstract class DataParser<E extends IHasData<E>> {
         }
     }
 
-    E customLoadData(JsonObject data, E obj) {
+    E customLoadData(JSONObject data, E obj) {
         return null;
     }
 
-    E singleData(JsonObject data, E obj, Identifier texturePath, int spriteSize) {
+    E singleData(JSONObject data, E obj, Identifier texturePath, int spriteSize) {
         return null;
     }
 
-    E multipleData(JsonObject data, E obj, Identifier texturePath, int spriteSize) {
+    E multipleData(JSONObject data, E obj, Identifier texturePath, int spriteSize) {
         return null;
     }
 
-    E animatedData(JsonObject data, E obj, Identifier texturePath, int spriteSize) {
+    E animatedData(JSONObject data, E obj, Identifier texturePath, int spriteSize) {
         return null;
     }
 
-    private static JsonObject getData(Identifier fileName, boolean inJar) throws IOException {
+    private static JSONObject getData(Identifier fileName, boolean inJar) throws IOException, ParseException {
         Identifier path = new Identifier("maewil", fileName.getPath() + ".json");
+        JSONParser parser = new JSONParser();
         if (inJar) {
-            return JsonUtils.GSON.fromJson(FileUtils.loadFileInSideJar(path.toDataString()), JsonObject.class);
+            return (JSONObject) parser.parse(FileUtils.loadFileInSideJar(path.toDataString()));
         } else {
-            return JsonUtils.GSON.fromJson(FileUtils.loadFileOutSideJar(path.toDataString()), JsonObject.class);
+            return (JSONObject) parser.parse(FileUtils.loadFileOutSideJar(path.toDataString()));
         }
     }
 
-    static JsonObject getDataCatchException(Identifier fileName, boolean inJar) {
+    static JSONObject getDataCatchException(Identifier fileName, boolean inJar) {
         try {
             return getData(fileName, inJar);
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             MaewilLauncher.LOGGER.error(e.getMessage());
-            return new JsonObject();
+            return new JSONObject();
         }
     }
 }

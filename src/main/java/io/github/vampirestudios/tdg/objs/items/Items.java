@@ -6,6 +6,7 @@ import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.Identifier;
 import io.github.vampirestudios.tdg.utils.registry.Registries;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class Items {
     public static Item BREAD, APPLE;
     public static Item RAW_PORK, COOKED_PORK, RAW_STEAK, COOKED_STEAK;
 
-    public static void init(MaewilEngine maewilEngine) throws IOException {
+    public static void init(MaewilEngine maewilEngine) throws IOException, ParseException {
         ItemDataParser parser = new ItemDataParser();
 
         /*

@@ -28,6 +28,7 @@ import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.tags.CompoundTag;
 import io.github.vampirestudios.tdg.tags.JsonToTag;
 import io.github.vampirestudios.tdg.tags.TagException;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public class Entities {
      */
     public static Entity ITEM;
 
-    public static void init(MaewilEngine maewilEngine) throws IOException {
+    public static void init(MaewilEngine maewilEngine) throws IOException, ParseException {
         EntityDataParser parser = new EntityDataParser();
 
         /*

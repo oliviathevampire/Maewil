@@ -1,14 +1,14 @@
 package io.github.vampirestudios.tdg.objs;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import io.github.vampirestudios.tdg.gfx.Animation;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.image.SpriteSheet;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.tiles.Tiles;
 import io.github.vampirestudios.tdg.utils.Identifier;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.newdawn.slick.Image;
 
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class EntityDataParser extends DataParser<Entity> {
     }
 
     @Override
-    public Entity customLoadData(JsonObject data, Entity obj) {
+    public Entity customLoadData(JSONObject data, Entity obj) {
         Entity entity = obj.newCopy();
 
         if (!LOADED.containsKey(entity.getId())) {
@@ -34,27 +34,27 @@ public class EntityDataParser extends DataParser<Entity> {
             HashMap<String, Animation> textures = new HashMap<>();
             switch (type) {
                 case STATIC:
-                    if (data.has("sprites")) {
-                        JsonObject sprites = (JsonObject) data.get("sprites");
-                        for (String key : sprites.keySet()) {
-                            JsonObject sprite = (JsonObject) sprites.get(key);
+                    if (data.containsKey("sprites")) {
+                        JSONObject sprites = (JSONObject) data.get("sprites");
+                        for (Object key : sprites.keySet()) {
+                            JSONObject sprite = (JSONObject) sprites.get(key);
                             SpriteSheet spriteTexture;
-                            if (sprite.has("texture")) spriteTexture = getTexture(sprite).copy();
+                            if (sprite.containsKey("texture")) spriteTexture = getTexture(sprite).copy();
                             else spriteTexture = texture.copy();
 
                             System.out.println(key);
-                            if (sprite.has("length")) textures.put(key, getAnimation(spriteTexture.getSheet(), sprite));
-                            else textures.put(key, getAnimation(spriteTexture.getSheet(), sprite, false, "spritePos"));
+                            if (sprite.containsKey("length")) textures.put((String) key, getAnimation(spriteTexture.getSheet(), sprite));
+                            else textures.put((String) key, getAnimation(spriteTexture.getSheet(), sprite, false, "spritePos"));
                         }
                     }
                     break;
                 case CREATURE:
-                    JsonObject animations = (JsonObject) data.get("animations");
-                    JsonArray size = (JsonArray) data.get("spriteSize");
+                    JSONObject animations = (JSONObject) data.get("animations");
+                    JSONArray size = (JSONArray) data.get("spriteSize");
                     int width = NumberUtils.parseInt(size.get(0));
                     int height = NumberUtils.parseInt(size.get(1));
                     for (Object key : animations.keySet()) {
-                        JsonObject anim = (JsonObject) animations.get((String) key);
+                        JSONObject anim = (JSONObject) animations.get(key);
                         textures.put(String.valueOf(key), getAnimation(texture.getSheet().copy(), anim, width, height));
                     }
                     break;
@@ -73,17 +73,16 @@ public class EntityDataParser extends DataParser<Entity> {
         return entity.newCopy();
     }
 
-    private SpriteSheet getTexture(JsonObject data) {
+    private SpriteSheet getTexture(JSONObject data) {
         SpriteSheet texture = new SpriteSheet(Assets.MISSING_TEXTURE);
-        if (data.has("texture")) {
+        if (data.containsKey("texture")) {
             String texturePath = "textures/";
-            System.out.println(data.get("texture").getAsString());
 
-            if (data.get("texture") instanceof JsonArray) {
-                JsonArray texturePaths = (JsonArray) data.get("texture");
+            if (data.get("texture") instanceof JSONArray) {
+                JSONArray texturePaths = (JSONArray) data.get("texture");
                 texturePath += String.valueOf(texturePaths.get(NumberUtils.getRandomInt(0, texturePaths.size() - 1))).replace("\"", "");
             } else {
-                texturePath += data.get("texture").getAsString();
+                texturePath += data.get("texture").toString();
             }
 
             texture = new SpriteSheet(new Identifier("maewil", texturePath));
@@ -91,34 +90,34 @@ public class EntityDataParser extends DataParser<Entity> {
         return texture;
     }
 
-    private Animation getAnimation(Image texture, JsonObject data) {
-        JsonArray size = (JsonArray) data.get("spriteSize");
+    private Animation getAnimation(Image texture, JSONObject data) {
+        JSONArray size = (JSONArray) data.get("spriteSize");
         int width = NumberUtils.parseInt(size.get(0));
         int height = NumberUtils.parseInt(size.get(1));
         return getAnimation(texture, data, width, height);
     }
 
-    private Animation getAnimation(Image texture, JsonObject data, int width, int height) {
+    private Animation getAnimation(Image texture, JSONObject data, int width, int height) {
         return getAnimation(texture, data, width, height, true, "startPos");
     }
 
-    private Animation getAnimation(Image texture, JsonObject data, boolean xyExact, String posKey) {
-        JsonArray size = (JsonArray) data.get("spriteSize");
+    private Animation getAnimation(Image texture, JSONObject data, boolean xyExact, String posKey) {
+        JSONArray size = (JSONArray) data.get("spriteSize");
         int width = NumberUtils.parseInt(size.get(0));
         int height = NumberUtils.parseInt(size.get(1));
         return getAnimation(texture, data, width, height, xyExact, posKey);
     }
 
-    private Animation getAnimation(Image texture, JsonObject data, int width, int height, boolean xyExact, String posKey) {
+    private Animation getAnimation(Image texture, JSONObject data, int width, int height, boolean xyExact, String posKey) {
         int length = 1;
-        if (data.has("length"))
+        if (data.containsKey("length"))
             length = NumberUtils.parseInt(data.get("length"));
 
         int speed = Animation.DEFAULT_SPEED;
-        if (data.has("speed"))
+        if (data.containsKey("speed"))
             speed = NumberUtils.parseInt(data.get("speed"));
 
-        JsonArray pos = (JsonArray) data.get(posKey);
+        JSONArray pos = (JSONArray) data.get(posKey);
         int startPosX = NumberUtils.parseInt(pos.get(0));
         int startPosY = NumberUtils.parseInt(pos.get(1));
 

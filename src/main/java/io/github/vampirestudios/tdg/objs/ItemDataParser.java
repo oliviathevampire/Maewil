@@ -1,13 +1,13 @@
 package io.github.vampirestudios.tdg.objs;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import io.github.vampirestudios.tdg.gfx.Animation;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.image.SpriteSheet;
 import io.github.vampirestudios.tdg.objs.items.Item;
 import io.github.vampirestudios.tdg.utils.Identifier;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.newdawn.slick.Image;
 public class ItemDataParser extends DataParser<Item> {
 
@@ -16,15 +16,15 @@ public class ItemDataParser extends DataParser<Item> {
     }
 
     @Override
-    Item singleData(JsonObject data, Item obj, Identifier texturePath, int spriteSize) {
+    Item singleData(JSONObject data, Item obj, Identifier texturePath, int spriteSize) {
         Image texture = Assets.getSpriteExact(texturePath, 0, 0, spriteSize, spriteSize);
         obj.setTexture(texture);
         return obj;
     }
 
     @Override
-    Item multipleData(JsonObject data, Item obj, Identifier texturePath, int spriteSize) {
-        JsonArray textures = (JsonArray) data.get("textures");
+    Item multipleData(JSONObject data, Item obj, Identifier texturePath, int spriteSize) {
+        JSONArray textures = (JSONArray) data.get("textures");
         Image[] alts = new Image[textures.size()];
         SpriteSheet altSheet = new SpriteSheet(texturePath);
 
@@ -39,9 +39,9 @@ public class ItemDataParser extends DataParser<Item> {
     }
 
     @Override
-    Item animatedData(JsonObject data, Item obj, Identifier texturePath, int spriteSize) {
+    Item animatedData(JSONObject data, Item obj, Identifier texturePath, int spriteSize) {
         int animSpeed = NumberUtils.parseInt(data.get("speed"));
-        JsonArray frameIndexes = (JsonArray) data.get("frames");
+        JSONArray frameIndexes = (JSONArray) data.get("frames");
         SpriteSheet animSheet = new SpriteSheet(texturePath);
         Image[] frames = new Image[frameIndexes.size()];
 

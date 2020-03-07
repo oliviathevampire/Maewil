@@ -23,6 +23,7 @@ import io.github.vampirestudios.tdg.screen.options.controls.ControlOptions;
 import io.github.vampirestudios.tdg.utils.Colors;
 import io.github.vampirestudios.tdg.utils.DiscordHandler;
 import io.github.vampirestudios.tdg.world.World;
+import org.json.simple.parser.ParseException;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.mini2Dx.miniscript.core.ScriptBindings;
@@ -100,7 +101,7 @@ public class MaewilEngine extends BasicGameState {
             Items.init(this);
             Tiles.init(this);
             Entities.init(this);
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
 
