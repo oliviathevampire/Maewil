@@ -7,9 +7,7 @@ import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlinkCopyright;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
+import org.mini2Dx.core.graphics.Graphics;
 
 public class AbstractMenuScreen extends Screen {
 
@@ -39,7 +37,7 @@ public class AbstractMenuScreen extends Screen {
                 }
 
                 @Override
-                public void update(GameContainer container, StateBasedGame game, int delta) {
+                public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
                 }
             }));
 
@@ -51,13 +49,13 @@ public class AbstractMenuScreen extends Screen {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
-        uiManager.update(container, game, delta);
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+        uiManager.update(container, delta);
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        this.renderBG(container, game, g);
-        uiManager.render(container, game, g);
+    public void render(org.mini2Dx.core.game.GameContainer container, Graphics g) {
+        this.renderBG(container, g);
+        uiManager.render(container, g);
     }
 }

@@ -18,8 +18,6 @@ import io.github.vampirestudios.tdg.world.TileList;
 import io.github.vampirestudios.tdg.world.World;
 import io.github.vampirestudios.tdg.world.WorldGenerator;
 import org.json.simple.parser.ParseException;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.state.StateBasedGame;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -137,7 +135,7 @@ public class WorldButtonClickListener implements ClickListener {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
         String[] vals = SavedGamesJSONParser.GAMES.get(index).split(":");
         isSaved = Boolean.parseBoolean(vals[0]);
     }

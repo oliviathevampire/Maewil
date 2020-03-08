@@ -7,9 +7,8 @@ import io.github.vampirestudios.tdg.objs.tiles.TilePos;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.world.TileList;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
 
 import java.util.Random;
 
@@ -60,19 +59,19 @@ public abstract class Screen {
                 this.bgTiles.getTileAtPos(x, y).setWorldLayer(bgTiles);
     }
 
-    public abstract void update(GameContainer container, StateBasedGame game, int delta);
+    public abstract void update(org.mini2Dx.core.game.GameContainer container, float delta);
 
-    public abstract void render(GameContainer container, StateBasedGame game, Graphics g);
+    public abstract void render(org.mini2Dx.core.game.GameContainer container, org.mini2Dx.core.graphics.Graphics g);
 
-    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
-        uiManager.postRender(container, game, g);
+    public void postRender(org.mini2Dx.core.game.GameContainer container, org.mini2Dx.core.graphics.Graphics g) {
+        uiManager.postRender(container, g);
     }
 
-    protected void renderBG(GameContainer container, StateBasedGame game, Graphics g) {
+    protected void renderBG(GameContainer container, Graphics g) {
         for (int y = 0; y < this.bgHeight; y++) {
             for (int x = 0; x < this.bgWidth; x++) {
                 this.bgTiles.getTileAtPos(x, y).forcedUpdate(null, 0);
-                this.bgTiles.getTileAtPos(x, y).render(container, game, g);
+                this.bgTiles.getTileAtPos(x, y).render(container, g);
             }
         }
     }

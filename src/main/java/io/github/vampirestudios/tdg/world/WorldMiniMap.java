@@ -6,8 +6,8 @@ import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.colormap.WorldMapGenerator;
+import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.util.BufferedImageUtil;
 
@@ -22,7 +22,7 @@ public class WorldMiniMap {
     public static void render(Graphics g, MaewilEngine maewilEngine, int width, int height, Color tint) {
         float padding = 10;
         float mapSize = 180;
-        g.setColor(Color.white);
+        g.setColor(com.badlogic.gdx.graphics.Color.WHITE);
 
         int viewSize = 100;
         BufferedImage mapbg = new BufferedImage(viewSize, viewSize, BufferedImage.TYPE_INT_ARGB); /* BG */
@@ -85,7 +85,7 @@ public class WorldMiniMap {
             mapDrawbg.draw(padding + mapSizeOff / 2f, padding + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2, trans);
 
             tint.a = trans.a;
-            g.setColor(tint);
+//            g.setColor(tint);
             g.fillRect(padding + mapSizeOff / 2f, padding + mapSizeOff / 2f, mapSize - mapSizeOff + 2, mapSize - mapSizeOff + 2);
 
             /* FG */

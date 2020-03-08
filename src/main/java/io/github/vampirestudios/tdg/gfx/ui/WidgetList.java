@@ -1,9 +1,8 @@
 package io.github.vampirestudios.tdg.gfx.ui;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
 
 public class WidgetList extends WidgetAbstractList {
 
@@ -23,7 +22,7 @@ public class WidgetList extends WidgetAbstractList {
             }
 
             @Override
-            public void update(GameContainer container, StateBasedGame game, int delta) {
+            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
             }
         });
         arrowDown = new ArrowButton(new Vector2D(), false, new ClickListener() {
@@ -34,36 +33,36 @@ public class WidgetList extends WidgetAbstractList {
             }
 
             @Override
-            public void update(GameContainer container, StateBasedGame game, int delta) {
+            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
             }
         });
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
-        super.update(container, game, delta);
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+        super.update(container, delta);
 
-        arrowUp.update(container, game, delta);
-        arrowDown.update(container, game, delta);
+        arrowUp.update(container, delta);
+        arrowDown.update(container, delta);
         arrowDown.setPos(new Vector2D(position.x + itemWidth, position.y + SIZE * (maxShownItems - 1)));
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(GameContainer container, Graphics g) {
         for (int i = 0; i < maxShownItems; i++) {
             UIListOBJ obj = getItem(i);
             obj.setRendering(true);
             Vector2D pos = new Vector2D(position.x, position.y + SIZE * i);
             if (obj.equals(get(size() - 1)) && i + shownItemChange >= size())
-                new UIListOBJ("").render(container, game, g, pos);
+                new UIListOBJ("").render(container, g, pos);
             else
-                obj.render(container, game, g, pos);
+                obj.render(container, g, pos);
         }
 
         if (maxShownItems > 2)
             THEME[4].draw((float) (position.x + itemWidth), (float) position.y, SIZE, SIZE * maxShownItems);
-        arrowUp.render(container, game, g);
-        arrowDown.render(container, game, g);
+        arrowUp.render(container, g);
+        arrowDown.render(container, g);
     }
 
     private UIListOBJ getItem(int i) {

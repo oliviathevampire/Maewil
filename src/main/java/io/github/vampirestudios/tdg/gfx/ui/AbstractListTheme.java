@@ -2,9 +2,8 @@ package io.github.vampirestudios.tdg.gfx.ui;
 
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
-import org.newdawn.slick.GameContainer;
+import org.mini2Dx.core.game.GameContainer;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class AbstractListTheme extends WidgetObject {
 
@@ -21,8 +20,8 @@ public abstract class AbstractListTheme extends WidgetObject {
         super(position, width, height);
     }
 
-    public void update(GameContainer container, StateBasedGame game, int delta) {
-        super.update(container, game, delta);
+    public void update(GameContainer container, float delta) {
+        super.update(container, delta);
 //        THEME = Assets.GUI_LIST_GRAY;
     }
 

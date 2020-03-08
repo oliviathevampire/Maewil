@@ -3,8 +3,7 @@ package io.github.vampirestudios.tdg.objs.entities.ai;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.creatures.LivingEntity;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.state.StateBasedGame;
+import org.mini2Dx.core.game.GameContainer;
 
 public abstract class Goal {
 
@@ -16,7 +15,7 @@ public abstract class Goal {
         this.entity = entity;
     }
 
-    public abstract boolean update(GameContainer container, StateBasedGame game, int delta);
+    public abstract boolean update(GameContainer container, float delta);
 
     public LivingEntity getEntity() {
         return entity;

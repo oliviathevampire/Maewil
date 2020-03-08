@@ -3,8 +3,8 @@ package io.github.vampirestudios.tdg.inventory;
 import io.github.vampirestudios.tdg.gfx.Text;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
+import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 public class Slot {
@@ -48,7 +48,7 @@ public class Slot {
         }
     }
 
-    public void postRender(Graphics g) {
+    public void postRender(org.mini2Dx.core.graphics.Graphics g) {
         if (isSelected && stack != null)
             Text.drawString(g, stack.getItem().getName(), xPos + itemWidth / 2f, yPos + itemHeight, true, Color.white, Assets.FONTS.get("20"));
     }

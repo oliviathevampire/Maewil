@@ -4,10 +4,8 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
+import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.state.StateBasedGame;
 
 public class WidgetTitleRender extends WidgetObject {
 
@@ -19,7 +17,7 @@ public class WidgetTitleRender extends WidgetObject {
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(org.mini2Dx.core.game.GameContainer container, Graphics g) {
         Image title = Assets.GUI_TITLE_SMALL;
         float mult = 9.5f;
         float w = title.getWidth() / mult * 2;

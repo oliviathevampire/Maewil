@@ -19,9 +19,11 @@ import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.screen.options.controls.Keybind;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.utils.UtilsIdk;
+import org.mini2Dx.core.graphics.Graphics;
 import org.mini2Dx.miniscript.core.GameFuture;
-import org.newdawn.slick.*;
-import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.Sound;
 
 public class PlayerEntity extends LivingEntity {
 
@@ -59,7 +61,7 @@ public class PlayerEntity extends LivingEntity {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
         this.prevX = (float) position.x;
         this.prevY = (float) position.y;
 
@@ -88,7 +90,7 @@ public class PlayerEntity extends LivingEntity {
                 maewilEngine.getInventoryManager().closeAllInventories();
         }
 
-        inventoryPlayer.update(container, game, delta);
+//        inventoryPlayer.update(container, delta);
     }
 
     public GameFuture moveTo(float x, float y) {
@@ -299,32 +301,32 @@ public class PlayerEntity extends LivingEntity {
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(org.mini2Dx.core.game.GameContainer container, Graphics g) {
         if (UtilsIdk.isDate(3, 31) || UtilsIdk.isDate(4, (1 | 2)))
             getCurrentTexture().getCurrentFrame().rotate((float) Math.toRadians(180d)); // BROKEN, FIX ON A LATER DATE
         getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height);
 
-        this.renderEffect(container, game, g);
+        this.renderEffect(container, g);
     }
 
     @Override
-    public void renderEffect(GameContainer container, StateBasedGame game, Graphics g) {
-        super.renderEffect(container, game, g);
+    public void renderEffect(org.mini2Dx.core.game.GameContainer container, org.mini2Dx.core.graphics.Graphics g) {
+        super.renderEffect(container, g);
 
         if (canSprint())
             sprintEffect.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
-        super.postRender(container, game, g);
+        super.postRender(container, g);
     }
 
     @Override
-    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
+    public void postRender(org.mini2Dx.core.game.GameContainer container, org.mini2Dx.core.graphics.Graphics g) {
         Font font = Assets.FONTS.get("20");
         if (username != null) {
             float nameWidth = Text.getWidth(username, font);
             float nameHeight = Text.getHeight(username, font);
             int add = 8;
             Color tint = new Color(96, 96, 96, 127);
-            g.setColor(tint);
+//            g.setColor(tint);
 
             float xOff = nameWidth / 2 - width / 2f;
             int yOff = height / 2;
@@ -333,8 +335,8 @@ public class PlayerEntity extends LivingEntity {
             Text.drawString(g, username, this.renderX - xOff + nameWidth / 2, this.renderY - yOff - nameHeight / 2 - add / 2f, true, Color.white, font);
         }
 
-        inventoryPlayer.render(g);
-        inventoryPlayer.renderHotbar(g);
+//        inventoryPlayer.render(g);
+//        inventoryPlayer.renderHotbar(g);
     }
 
     public InventoryPlayer getInventoryPlayer() {

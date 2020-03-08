@@ -5,10 +5,9 @@ import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.state.StateBasedGame;
 
 public class WidgetSlider extends WidgetObject {
 
@@ -43,9 +42,9 @@ public class WidgetSlider extends WidgetObject {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
-        super.update(container, game, delta);
-        slider.update(container, game, delta);
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+        super.update(container, delta);
+        slider.update(container, delta);
         bounds.y = slider.bounds.y;
 
         if (slider.isMouseHovering()) {
@@ -61,7 +60,7 @@ public class WidgetSlider extends WidgetObject {
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(GameContainer container, Graphics g) {
         Image bgSegStart = Assets.GUI_SLIDER_BAR.getSubImage(0, 0, 2, 6);
         Image bgSegMiddle = Assets.GUI_SLIDER_BAR.getSubImage(2, 0, 44, 6);
         Image bgSegEnd = Assets.GUI_SLIDER_BAR.getSubImage(46, 0, 2, 6);
@@ -70,7 +69,7 @@ public class WidgetSlider extends WidgetObject {
         bgSegMiddle.draw(startX, (int) this.position.y, width, height);
         bgSegEnd.draw(endX, (int) this.position.y, segWidth, height);
 
-        slider.render(container, game, g);
+        slider.render(container, g);
     }
 
     @Override
@@ -124,11 +123,11 @@ public class WidgetSlider extends WidgetObject {
             bounds = new AABB(this.position, width, height);
         }
 
-        public void update(GameContainer container, StateBasedGame game, int delta) {
+        public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
             bounds = new AABB(this.position, width, height);
         }
 
-        public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        public void render(org.mini2Dx.core.game.GameContainer container, org.mini2Dx.core.graphics.Graphics g) {
             Image sbtn = (isMouseHovering() ? Assets.GUI_SLIDER_BUTTON[1] : Assets.GUI_SLIDER_BUTTON[0]);
             sbtn.draw((int) this.position.x, (int) this.position.y, width, height);
         }

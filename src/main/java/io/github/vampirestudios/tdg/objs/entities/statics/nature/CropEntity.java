@@ -5,9 +5,8 @@ import io.github.vampirestudios.tdg.objs.entities.statics.NatureEntity;
 import io.github.vampirestudios.tdg.objs.items.Item;
 import io.github.vampirestudios.tdg.objs.items.Items;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
 
 public class CropEntity extends NatureEntity {
 
@@ -28,9 +27,9 @@ public class CropEntity extends NatureEntity {
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(GameContainer container, Graphics g) {
         getTexture("ground").draw(this.renderX, this.renderY, width, height);
-        super.render(container, game, g);
+        super.render(container, g);
     }
 
     public enum CropType {

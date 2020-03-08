@@ -7,10 +7,9 @@ import io.github.vampirestudios.tdg.jsonparsers.JsonUtils;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.json.simple.parser.ParseException;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
 
@@ -58,13 +57,13 @@ public class CreditsScreen extends AbstractMenuScreen {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
-        super.update(container, game, delta);
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+        super.update(container, delta);
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        super.render(container, game, g);
+    public void render(GameContainer container, Graphics g) {
+        super.render(container, g);
 
         textBoxDev.setPosition(new Vector2D(MaewilLauncher.WIDTH / 2d - textBoxDev.getWidth() / 2d, 80));
         float tbDiff = textBoxDev.getWidth() - textBoxHelper.getWidth();
@@ -72,8 +71,8 @@ public class CreditsScreen extends AbstractMenuScreen {
         float tbDiff2 = textBoxHelper.getWidth() - textBoxOther.getWidth();
         textBoxOther.setPosition(new Vector2D(textBoxHelper.getPosition().x + tbDiff2 / 2d, textBoxHelper.getPosition().y + textBoxHelper.getHeight() + 10));
 
-        textBoxDev.render(container, game, g);
-        textBoxHelper.render(container, game, g);
-        textBoxOther.render(container, game, g);
+        textBoxDev.render(container, g);
+        textBoxHelper.render(container, g);
+        textBoxOther.render(container, g);
     }
 }

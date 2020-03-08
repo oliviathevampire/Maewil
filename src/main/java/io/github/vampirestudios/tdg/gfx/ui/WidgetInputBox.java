@@ -4,8 +4,11 @@ import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.Text;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlink;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.newdawn.slick.*;
-import org.newdawn.slick.state.StateBasedGame;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.Image;
 
 public class WidgetInputBox extends AbstractListTheme {
 
@@ -26,8 +29,8 @@ public class WidgetInputBox extends AbstractListTheme {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
-        super.update(container, game, delta);
+    public void update(GameContainer container, float delta) {
+        super.update(container, delta);
         if (selected) {
             text += MaewilEngine.INSTANCE.getKeyJustPressed();
             swapTheme();
@@ -35,7 +38,7 @@ public class WidgetInputBox extends AbstractListTheme {
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(org.mini2Dx.core.game.GameContainer container, Graphics g) {
         Image secLeft = THEME[0];
         Image secMid = THEME[1];
         Image secRight = THEME[2];

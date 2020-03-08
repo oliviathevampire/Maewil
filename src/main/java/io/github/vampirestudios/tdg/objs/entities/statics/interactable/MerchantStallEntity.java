@@ -7,9 +7,8 @@ import io.github.vampirestudios.tdg.objs.entities.statics.StaticEntity;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.math.Rands;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
 
 public class MerchantStallEntity extends StaticEntity {
 
@@ -28,7 +27,7 @@ public class MerchantStallEntity extends StaticEntity {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
         // TODO: ADD FUNCTIONALITY
     }
 
@@ -39,7 +38,7 @@ public class MerchantStallEntity extends StaticEntity {
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(GameContainer container, Graphics g) {
         getTexture("merchant_stall").draw(this.renderX, this.renderY, width, height);
     }
 

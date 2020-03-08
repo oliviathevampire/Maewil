@@ -11,9 +11,9 @@ import io.github.vampirestudios.tdg.objs.tiles.Tiles;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.json.simple.parser.ParseException;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
@@ -66,7 +66,7 @@ public class World {
         overlayManager = new OverlayManager(maewilEngine, maewilEngine.getPlayer());
     }
 
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
         int xStart = (int) Math.max(0, maewilEngine.getCamera().getXOffset() / Tile.TILE_SIZE);
         int xEnd = (int) Math.min(worldWidth, (maewilEngine.getCamera().getXOffset() + MaewilLauncher.WIDTH) / Tile.TILE_SIZE + 1);
         int yStart = (int) Math.max(0, maewilEngine.getCamera().getYOffset() / Tile.TILE_SIZE);
@@ -77,19 +77,19 @@ public class World {
                 getBackgroundTile(x, y).updateBounds();
                 getBackgroundTile(x, y).setWorldLayer(bgTiles);
 
-                getForegroundTile(x, y).update(container, game, delta);
+                getForegroundTile(x, y).update(container, delta);
                 getForegroundTile(x, y).setWorldLayer(fgTiles);
             }
         }
 
         this.container = container;
-        this.delta = delta;
+        this.delta = (int) delta;
         updateThreadsInit();
 
-        Items.UPDATABLE_ITEMS.forEach(i -> i.update(container, game, delta));
+        Items.UPDATABLE_ITEMS.forEach(i -> i.update(container, delta));
 
-        maewilEngine.getEntityManager().update(container, game, delta);
-        overlayManager.update(container, game, delta);
+        maewilEngine.getEntityManager().update(container, delta);
+        overlayManager.update(container, delta);
 
         maewilEngine.getCamera().centerOnEntity(maewilEngine.getEntityManager().getPlayer());
     }
@@ -123,7 +123,7 @@ public class World {
         }
     }
 
-    public void render(GameContainer container, StateBasedGame game, Graphics graphics) {
+    public void render(org.mini2Dx.core.game.GameContainer container, Graphics graphics) {
         int xStart = (int) Math.max(0, maewilEngine.getCamera().getXOffset() / Tile.TILE_SIZE);
         int xEnd = (int) Math.min(worldWidth, (maewilEngine.getCamera().getXOffset() + MaewilLauncher.WIDTH) / Tile.TILE_SIZE + 1);
         int yStart = (int) Math.max(0, maewilEngine.getCamera().getYOffset() / Tile.TILE_SIZE);
@@ -131,18 +131,18 @@ public class World {
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)
-                getBackgroundTile(x, y).render(container, game, graphics);
+                getBackgroundTile(x, y).render(container, graphics);
 
         Color tint = new Color(63, 63, 63, 128);
-        graphics.setColor(tint);
+//        graphics.setColor(tint);
         graphics.fillRect(0, 0, MaewilLauncher.WIDTH, MaewilLauncher.HEIGHT);
 
         for (int y = yStart; y < yEnd; y++)
             for (int x = xStart; x < xEnd; x++)
-                getForegroundTile(x, y).render(container, game, graphics);
+                getForegroundTile(x, y).render(container, graphics);
 
-        maewilEngine.getEntityManager().render(container, game, graphics);
-        overlayManager.render(container, game, graphics);
+        maewilEngine.getEntityManager().render(container, graphics);
+        overlayManager.render(container, graphics);
 
         /*
          * Mini Map

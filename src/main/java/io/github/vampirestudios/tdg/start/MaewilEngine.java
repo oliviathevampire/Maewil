@@ -2,6 +2,7 @@ package io.github.vampirestudios.tdg.start;
 
 import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.position.Vector2D;
+import com.badlogic.gdx.Gdx;
 import io.github.vampirestudios.tdg.gfx.Animation;
 import io.github.vampirestudios.tdg.gfx.Camera;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
@@ -26,15 +27,14 @@ import io.github.vampirestudios.tdg.world.World;
 import org.json.simple.parser.ParseException;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
+import org.mini2Dx.core.screen.GameScreen;
+import org.mini2Dx.core.screen.Transition;
 import org.mini2Dx.miniscript.core.ScriptBindings;
 import org.mini2Dx.miniscript.core.exception.InsufficientCompilersException;
 import org.mini2Dx.miniscript.lua.LuaGameScriptingEngine;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -44,7 +44,7 @@ import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MaewilEngine extends BasicGameState {
+public class MaewilEngine implements GameScreen {
 
     public static MaewilEngine INSTANCE;
     private int fps;
@@ -82,18 +82,19 @@ public class MaewilEngine extends BasicGameState {
     private ScriptBindings scriptBindings;
 
     public MaewilEngine() {
+        super();
         INSTANCE = this;
     }
 
     @Override
-    public int getID() {
+    public int getId() {
         return MaewilLauncher.ID_GAME;
     }
 
     @Override
-    public void init(GameContainer container, StateBasedGame game) throws SlickException {
-        container.setDefaultFont(Assets.FONTS.get("10"));
-        container.setMouseCursor(Assets.GUI_CURSOR, 0, 0);
+    public void initialise(org.mini2Dx.core.game.GameContainer container) {
+//        container.setDefaultFont(Assets.FONTS.get("10"));
+//        container.setMouseCursor(Assets.GUI_CURSOR, 0, 0);
 
         try {
             entityManager = new EntityManager(this);
@@ -132,9 +133,9 @@ public class MaewilEngine extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
-        if (close) container.exit();
-        keyManager.update(container, game, delta);
+    public void update(GameContainer container, org.mini2Dx.core.screen.ScreenManager<? extends GameScreen> screenManage, float delta) {
+        if (close) container.dispose();
+        keyManager.update(container, delta);
 
         for (Animation anim : Animation.ANIMATIONS) {
             anim.update();
@@ -143,16 +144,16 @@ public class MaewilEngine extends BasicGameState {
         /*
          * Mouse values
          */
-        this.mousePos = new Vector2D(container.getInput().getMouseX(), container.getInput().getMouseY());
-        this.leftPressed = container.getInput().isMousePressed(Input.MOUSE_LEFT_BUTTON);
-        this.rightPressed = container.getInput().isMousePressed(Input.MOUSE_RIGHT_BUTTON);
-        this.leftDown = container.getInput().isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
-        this.rightDown = container.getInput().isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON);
+        this.mousePos = new Vector2D(Gdx.input.getX(), Gdx.input.getY());
+        this.leftPressed = Gdx.input.isButtonPressed(com.badlogic.gdx.Input.Buttons.LEFT);
+        this.rightPressed = Gdx.input.isButtonPressed(com.badlogic.gdx.Input.Buttons.RIGHT);
+        this.leftDown = Gdx.input.isButtonPressed(Input.MOUSE_LEFT_BUTTON);
+        this.rightDown = Gdx.input.isButtonPressed(Input.MOUSE_RIGHT_BUTTON);
 
-        this.fps = container.getFPS();
+        /*this.fps = container.getFPS();
         boolean vSync = OptionsScreen.OPTIONS.vSync();
         if (container.isVSyncRequested() != vSync)
-            container.setVSync(vSync);
+            container.setVSync(vSync);*/
 
         // Background music
         /*if (playBGMusic) {
@@ -164,22 +165,33 @@ public class MaewilEngine extends BasicGameState {
             }
         }*/
 
-        ScreenManager.getCurrentScreen().update(container, game, delta);
+        ScreenManager.getCurrentScreen().update(container, delta);
 
         /*
          * Take a screenshot
          */
-        if (container.getInput().isKeyPressed(Input.KEY_F2))
+        if (Gdx.input.isKeyPressed(Input.KEY_F2))
             takeScreenshot();
         luaGameScriptingEngine.update(delta);
 
-        if(container.getInput().isKeyPressed(Input.KEY_T)) {
+        if(Gdx.input.isKeyPressed(Input.KEY_T)) {
             try {
                 luaGameScriptingEngine.invokeScript("player.moveTo(50, 50).waitForCompletion();", scriptBindings);
             } catch (InsufficientCompilersException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Interpolate between the previous and current state
+     *
+     * @param gc
+     * @param alpha The interpolation alpha value
+     */
+    @Override
+    public void interpolate(GameContainer gc, float alpha) {
+
     }
 
     private void takeScreenshot() {
@@ -219,30 +231,99 @@ public class MaewilEngine extends BasicGameState {
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
-        g.clear();
+    public void render(GameContainer container, Graphics g) {
+        g.clearShaderProgram();
         Assets.MISSING_TEXTURE.draw(0, 0, MaewilLauncher.WIDTH, MaewilLauncher.HEIGHT);
 
         if (ScreenManager.getCurrentScreen() != null) {
-            ScreenManager.getCurrentScreen().render(container, game, g);
-            ScreenManager.getCurrentScreen().postRender(container, game, g);
+            ScreenManager.getCurrentScreen().render(container, g);
+            ScreenManager.getCurrentScreen().postRender(container, g);
         }
     }
 
+    /**
+     * Called when the game window's dimensions changes.
+     * On mobile devices this is called when the screen is rotated.
+     *
+     * @param width  The new game window width
+     * @param height The new game window height
+     */
     @Override
+    public void onResize(int width, int height) {
+
+    }
+
+    /**
+     * Called when the game window is no longer active or visible.
+     * On
+     */
+    @Override
+    public void onPause() {
+
+    }
+
+    /**
+     * Called when the game window becomes active or visible again
+     */
+    @Override
+    public void onResume() {
+
+    }
+
+    /**
+     * Called before the transition in
+     *
+     * @param transitionIn The {@link Transition} in to this screen
+     */
+    @Override
+    public void preTransitionIn(Transition transitionIn) {
+
+    }
+
+    /**
+     * Called after the transition in
+     *
+     * @param transitionIn The {@link Transition} in to this screen
+     */
+    @Override
+    public void postTransitionIn(Transition transitionIn) {
+
+    }
+
+    /**
+     * Called before the transition out
+     *
+     * @param transitionOut The {@link Transition} out from this screen
+     */
+    @Override
+    public void preTransitionOut(Transition transitionOut) {
+
+    }
+
+    /**
+     * Called after the transition out
+     *
+     * @param transitionOut The {@link Transition} out from this screen
+     */
+    @Override
+    public void postTransitionOut(Transition transitionOut) {
+
+    }
+
+    /*@Override
     public void keyPressed(int key, char c) {
         this.keyJustPressed = c;
         keyManager.keyPressed(key, c);
-    }
+    }*/
 
     public boolean keyJustPressed(int key) {
         return keyManager.keyJustPressed(key);
     }
 
-    @Override
+    /*@Override
     public void keyReleased(int key, char c) {
         keyManager.keyReleased(key, c);
-    }
+    }*/
 
     public String getKeyJustPressed() {
         if (keyJustPressed == Character.UNASSIGNED)

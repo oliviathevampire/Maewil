@@ -1,9 +1,9 @@
 package io.github.vampirestudios.tdg.manager;
 
+import com.badlogic.gdx.Gdx;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.screen.options.controls.Keybind;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.state.StateBasedGame;
+import org.mini2Dx.core.game.GameContainer;
 
 import java.awt.event.KeyEvent;
 
@@ -21,7 +21,7 @@ public class KeyManager {
         cantPress = new boolean[keys.length];
     }
 
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(GameContainer container, float delta) {
         for (int i = 0; i < keys.length; i++) {
             if (cantPress[i] && !keys[i])
                 cantPress[i] = false;
@@ -33,14 +33,14 @@ public class KeyManager {
                 justPressed[i] = true;
         }
 
-        moveUp = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.W).getKeyCode());
-        moveDown = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.S).getKeyCode());
-        moveLeft = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.A).getKeyCode());
-        moveRight = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.D).getKeyCode());
-        useSprint = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.CONTROL).getKeyCode());
-        useAttack = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.SPACE).getKeyCode());
-        screenshot = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.F2).getKeyCode());
-        fullscreen = container.getInput().isKeyDown(OptionsScreen.OPTIONS.controls().get(Keybind.F11).getKeyCode());
+        moveUp = Gdx.input.isKeyPressed(OptionsScreen.OPTIONS.controls().get(Keybind.W).getKeyCode());
+        moveDown = Gdx.input.isKeyPressed(OptionsScreen.OPTIONS.controls().get(Keybind.S).getKeyCode());
+        moveLeft = Gdx.input.isKeyPressed(OptionsScreen.OPTIONS.controls().get(Keybind.A).getKeyCode());
+        moveRight = Gdx.input.isKeyPressed(OptionsScreen.OPTIONS.controls().get(Keybind.D).getKeyCode());
+        useSprint = Gdx.input.isKeyPressed(OptionsScreen.OPTIONS.controls().get(Keybind.CONTROL).getKeyCode());
+        useAttack = Gdx.input.isKeyPressed(OptionsScreen.OPTIONS.controls().get(Keybind.SPACE).getKeyCode());
+        screenshot = Gdx.input.isKeyPressed(OptionsScreen.OPTIONS.controls().get(Keybind.F2).getKeyCode());
+        fullscreen = Gdx.input.isKeyPressed(OptionsScreen.OPTIONS.controls().get(Keybind.F11).getKeyCode());
     }
 
     public boolean keyJustPressed(int key) {

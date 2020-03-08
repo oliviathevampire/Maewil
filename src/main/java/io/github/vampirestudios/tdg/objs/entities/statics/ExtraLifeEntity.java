@@ -3,8 +3,6 @@ package io.github.vampirestudios.tdg.objs.entities.statics;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.state.StateBasedGame;
 
 public class ExtraLifeEntity extends StaticEntity {
 
@@ -19,7 +17,7 @@ public class ExtraLifeEntity extends StaticEntity {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
         if (this.isTouching(maewilEngine.getPlayer())) {
             maewilEngine.getPlayer().heal(healAmt);
             this.hurt(getCurrentHealth());

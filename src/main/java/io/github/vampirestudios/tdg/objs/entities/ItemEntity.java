@@ -6,10 +6,9 @@ import io.github.vampirestudios.tdg.inventory.Slot;
 import io.github.vampirestudios.tdg.objs.items.Item;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
 
 public class ItemEntity extends Entity {
 
@@ -37,7 +36,7 @@ public class ItemEntity extends Entity {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
         if (this.maewilEngine.getPlayer().isActive()) {
             if (this.isTouching(this.maewilEngine.getPlayer())) {
                 if (!this.maewilEngine.getPlayer().getInventoryPlayer().isFull()) {
@@ -84,14 +83,14 @@ public class ItemEntity extends Entity {
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(GameContainer container, Graphics g) {
         stack.getTexture().draw(renderX, renderY, width, height);
         if (stack.getCount() > 1) {
             int xPos = (int) (this.position.x - this.maewilEngine.getCamera().getXOffset());
             int yPos = (int) (this.position.y + 15 - this.maewilEngine.getCamera().getYOffset());
             Text.drawString(g, String.valueOf(stack.getCount()), xPos, yPos, false, false, Color.white, Assets.FONTS.get("20"));
         }
-        this.renderEffect(container, game, g);
+        this.renderEffect(container, g);
     }
 
     public ItemStack getStack() {

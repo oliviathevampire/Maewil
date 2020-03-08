@@ -4,9 +4,8 @@ import coffeecatteam.coffeecatutils.NumberUtils;
 import io.github.vampirestudios.tdg.gfx.Animation;
 import io.github.vampirestudios.tdg.objs.IHasData;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.newdawn.slick.GameContainer;
+import org.mini2Dx.core.game.GameContainer;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +35,7 @@ public abstract class Item implements IHasData<Item> {
             this.texture = new Animation(textureAlts.get(NumberUtils.getRandomInt(0, textureAlts.size() - 1)));
     }
 
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(GameContainer container, float delta) {
     }
 
     public Image getTexture() {

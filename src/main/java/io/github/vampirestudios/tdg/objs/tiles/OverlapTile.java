@@ -2,7 +2,7 @@ package io.github.vampirestudios.tdg.objs.tiles;
 
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.newdawn.slick.Graphics;
+import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Image;
 
 import java.util.ArrayList;

@@ -1,16 +1,21 @@
 package io.github.vampirestudios.tdg.start;
 
 import coffeecatteam.coffeecatutils.NumberUtils;
+import com.badlogic.gdx.graphics.Color;
 import io.github.vampirestudios.tdg.gfx.Animation;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.assets.Sounds;
-import org.newdawn.slick.*;
-import org.newdawn.slick.state.BasicGameState;
-import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.state.transition.EmptyTransition;
-import org.newdawn.slick.state.transition.FadeInTransition;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
+import org.mini2Dx.core.screen.GameScreen;
+import org.mini2Dx.core.screen.ScreenManager;
+import org.mini2Dx.core.screen.Transition;
+import org.mini2Dx.core.screen.transition.FadeInTransition;
+import org.mini2Dx.core.screen.transition.NullTransition;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
-public class SplashScreen extends BasicGameState {
+public class SplashScreen implements GameScreen {
 
     private float titleScale = 0;
     private float endTimer = 0;
@@ -22,16 +27,15 @@ public class SplashScreen extends BasicGameState {
     private boolean playerExit = false;
 
     @Override
-    public int getID() {
-        return MaewilLauncher.ID_SPLASHSCREEN;
-    }
-
-    @Override
-    public void init(GameContainer container, StateBasedGame game) throws SlickException {
+    public void initialise(org.mini2Dx.core.game.GameContainer container) {
         Assets.init();
-        Sounds.init();
-        container.setDefaultFont(Assets.FONTS.get("10"));
-        container.setMouseCursor(Assets.GUI_CURSOR, 0, 0);
+        try {
+            Sounds.init();
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
+//        container.setDefaultFont(Assets.FONTS.get("10"));
+//        container.setMouseCursor(Assets.GUI_CURSOR, 0, 0);
 
         player = new Animation(135, Assets.GUI_SPLASH_PLAYER);
         p1 = MaewilLauncher.HEIGHT;
@@ -41,7 +45,7 @@ public class SplashScreen extends BasicGameState {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(org.mini2Dx.core.game.GameContainer gc, ScreenManager<? extends GameScreen> screenManager, float delta) {
         float smoothness = 0.05f;
         titleScale = NumberUtils.lerp(titleScale, 1.0f, smoothness);
         playerTimer = NumberUtils.lerp(playerTimer, maxPlayerTimer, smoothness);
@@ -50,7 +54,7 @@ public class SplashScreen extends BasicGameState {
         if (p2 > MaewilLauncher.WIDTH)
             endTimer = NumberUtils.lerp(endTimer, maxEndTimer, smoothness / 5f);
         if (endTimer >= maxEndTimer - 0.5f)
-            game.enterState(MaewilLauncher.ID_GAME, new EmptyTransition(), new FadeInTransition(Color.black));
+            screenManager.enterGameScreen(MaewilLauncher.ID_GAME, new NullTransition(), new FadeInTransition(Color.BLACK));
         player.update();
 
 
@@ -66,8 +70,19 @@ public class SplashScreen extends BasicGameState {
         }
     }
 
+    /**
+     * Interpolate between the previous and current state
+     *
+     * @param gc
+     * @param alpha The interpolation alpha value
+     */
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void interpolate(GameContainer gc, float alpha) {
+
+    }
+
+    @Override
+    public void render(GameContainer gc, Graphics g) {
         Image title = Assets.GUI_TITLE_SMALL;
         float size = 10f;
         float width = (title.getWidth() / size) * titleScale;
@@ -79,4 +94,84 @@ public class SplashScreen extends BasicGameState {
             frame.draw(p2, p1, psize, psize);
         }
     }
+
+    /**
+     * Called when the game window's dimensions changes.
+     * On mobile devices this is called when the screen is rotated.
+     *
+     * @param width  The new game window width
+     * @param height The new game window height
+     */
+    @Override
+    public void onResize(int width, int height) {
+
+    }
+
+    /**
+     * Called when the game window is no longer active or visible.
+     * On
+     */
+    @Override
+    public void onPause() {
+
+    }
+
+    /**
+     * Called when the game window becomes active or visible again
+     */
+    @Override
+    public void onResume() {
+
+    }
+
+    /**
+     * Called before the transition in
+     *
+     * @param transitionIn The {@link Transition} in to this screen
+     */
+    @Override
+    public void preTransitionIn(Transition transitionIn) {
+
+    }
+
+    /**
+     * Called after the transition in
+     *
+     * @param transitionIn The {@link Transition} in to this screen
+     */
+    @Override
+    public void postTransitionIn(Transition transitionIn) {
+
+    }
+
+    /**
+     * Called before the transition out
+     *
+     * @param transitionOut The {@link Transition} out from this screen
+     */
+    @Override
+    public void preTransitionOut(Transition transitionOut) {
+
+    }
+
+    /**
+     * Called after the transition out
+     *
+     * @param transitionOut The {@link Transition} out from this screen
+     */
+    @Override
+    public void postTransitionOut(Transition transitionOut) {
+
+    }
+
+    /**
+     * Returns the identifier of the screen
+     *
+     * @return A unique identifier
+     */
+    @Override
+    public int getId() {
+        return MaewilLauncher.ID_SPLASHSCREEN;
+    }
+
 }

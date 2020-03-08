@@ -6,9 +6,7 @@ import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.statics.StaticEntity;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
+import org.mini2Dx.core.graphics.Graphics;
 
 public class HouseEntity extends StaticEntity {
 
@@ -34,7 +32,7 @@ public class HouseEntity extends StaticEntity {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
         // TODO: ADD FUNCTIONALITY
     }
 
@@ -45,7 +43,7 @@ public class HouseEntity extends StaticEntity {
     }
 
     @Override
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(org.mini2Dx.core.game.GameContainer container, Graphics g) {
         getTexture("stall").draw(this.renderX, this.renderY, width, height);
         getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height / 2f);
     }

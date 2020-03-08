@@ -8,15 +8,18 @@ import io.github.vampirestudios.tdg.gfx.Text;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.objs.IHasData;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
-import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.LavaTile;
+import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.TilePos;
 import io.github.vampirestudios.tdg.objs.tiles.WaterTile;
-import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.tags.CompoundTag;
-import org.newdawn.slick.*;
-import org.newdawn.slick.state.StateBasedGame;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
+import org.newdawn.slick.Image;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,11 +71,11 @@ public abstract class Entity implements IHasData<Entity> {
         return TAGS;
     }
 
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
     }
 
-    public void updateA(GameContainer container, StateBasedGame game, int delta) {
-        update(container, game, delta);
+    public void updateA(org.mini2Dx.core.game.GameContainer container, float delta) {
+        update(container, delta);
 
         this.renderX = (int) (this.position.x - this.maewilEngine.getCamera().getXOffset());
         this.renderY = (int) (this.position.y - this.maewilEngine.getCamera().getYOffset());
@@ -81,21 +84,21 @@ public abstract class Entity implements IHasData<Entity> {
             this.interact();
     }
 
-    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+    public void render(org.mini2Dx.core.game.GameContainer container, org.mini2Dx.core.graphics.Graphics g) {
         getCurrentTexture().getCurrentFrame().draw(this.renderX, this.renderY, width, height);
     }
 
-    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
+    public void postRender(org.mini2Dx.core.game.GameContainer container, org.mini2Dx.core.graphics.Graphics g) {
         if (OptionsScreen.OPTIONS.debugMode()) {
-            g.setColor(Color.red);
+            g.setColor(com.badlogic.gdx.graphics.Color.RED);
             g.drawRect(getEntityBounds().x - maewilEngine.getCamera().getXOffset(), getEntityBounds().y - maewilEngine.getCamera().getYOffset(), getEntityBounds().width, getEntityBounds().height);
 
-            g.setColor(Color.blue);
+            g.setColor(com.badlogic.gdx.graphics.Color.BLUE);
             g.drawRect((int) (position.x + getTileBounds().x - maewilEngine.getCamera().getXOffset()), (int) (position.y + getTileBounds().y - maewilEngine.getCamera().getYOffset()), getTileBounds().width, getTileBounds().height);
         }
     }
 
-    protected void renderHealth(Graphics g) {
+    protected void renderHealth(org.mini2Dx.core.graphics.Graphics g) {
         Assets.HEALTH_BAR[1].draw(this.renderX, this.renderY - 8, width, 4);
         int ht = (int) NumberUtils.map(currentHealth, 0, maxHealth, 0, width); // (currentHealth * 100.0f) / 15
         Assets.HEALTH_BAR[0].draw(this.renderX, this.renderY - 8, ht, 4);
@@ -106,7 +109,7 @@ public abstract class Entity implements IHasData<Entity> {
         Text.drawString(g, textHealth, this.renderX - xOff, this.renderY - Text.getHeight(textHealth, font) / 2, false, false, new Color(0, 255, 0), font);
     }
 
-    public void renderEffect(GameContainer container, StateBasedGame game, Graphics g) {
+    public void renderEffect(GameContainer container, Graphics g) {
         if (inWater())
             splashEffect.getCurrentFrame().draw(this.renderX, this.renderY, width, height);
     }

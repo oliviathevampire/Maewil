@@ -6,16 +6,15 @@ import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.items.Item;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.items.Items;
-import io.github.vampirestudios.tdg.start.MaewilEngine;
-import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.screen.options.controls.Keybind;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.tags.CompoundTag;
 import io.github.vampirestudios.tdg.utils.Identifier;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.state.StateBasedGame;
 
 public class InventoryCampfire extends InventoryAbstractPlayer {
 
@@ -58,8 +57,8 @@ public class InventoryCampfire extends InventoryAbstractPlayer {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
-        super.update(container, game, delta);
+    public void update(GameContainer container, float delta) {
+        super.update(container, delta);
 
         if (active) {
             if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.X).getKeyCode())) {

@@ -5,9 +5,8 @@ import io.github.vampirestudios.tdg.inventory.InventoryCampfire;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.statics.StaticEntity;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
+import org.mini2Dx.core.game.GameContainer;
+import org.mini2Dx.core.graphics.Graphics;
 
 public class CampfireEntity extends StaticEntity {
 
@@ -26,9 +25,9 @@ public class CampfireEntity extends StaticEntity {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
         inventoryCampfire.setTAGS(TAGS);
-        inventoryCampfire.update(container, game, delta);
+//        inventoryCampfire.update(container, delta);
     }
 
     @Override
@@ -40,9 +39,9 @@ public class CampfireEntity extends StaticEntity {
     }
 
     @Override
-    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
-        super.postRender(container, game, g);
-        inventoryCampfire.render(g);
+    public void postRender(GameContainer container, Graphics g) {
+        super.postRender(container, g);
+//        inventoryCampfire.render(g);
     }
 
     @Override

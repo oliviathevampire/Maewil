@@ -4,7 +4,7 @@ import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
-import org.newdawn.slick.Graphics;
+import org.mini2Dx.core.graphics.Graphics;
 
 public class InventoryPlayer extends InventoryAbstractPlayer {
 

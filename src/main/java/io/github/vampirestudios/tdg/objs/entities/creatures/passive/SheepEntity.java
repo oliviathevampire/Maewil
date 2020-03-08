@@ -5,8 +5,7 @@ import io.github.vampirestudios.tdg.objs.entities.ai.FollowFleeGoal;
 import io.github.vampirestudios.tdg.objs.entities.creatures.EntityPassive;
 import io.github.vampirestudios.tdg.objs.items.Items;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.state.StateBasedGame;
+import org.mini2Dx.core.game.GameContainer;
 
 public class SheepEntity extends EntityPassive {
 
@@ -19,17 +18,17 @@ public class SheepEntity extends EntityPassive {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(GameContainer container, float delta) {
         xMove = 0;
         yMove = 0;
 
         // Movement
         if (maewilEngine.getPlayer().isActive()) {
             if (TAGS.hasKey("fleePlayer") && TAGS.getBoolean("fleePlayer")) {
-                if (!aiFollowFlee.update(container, game, delta))
-                    aiWander.update(container, game, delta);
+                if (!aiFollowFlee.update(container, delta))
+                    aiWander.update(container, delta);
             } else
-                aiWander.update(container, game, delta);
+                aiWander.update(container, delta);
         }
         move();
     }

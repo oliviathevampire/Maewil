@@ -5,13 +5,11 @@ import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.items.IInteractable;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.start.MaewilEngine;
-import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.screen.options.controls.Keybind;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.state.StateBasedGame;
+import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.start.MaewilLauncher;
+import org.mini2Dx.core.graphics.Graphics;
 
 public abstract class InventoryAbstractPlayer extends Inventory {
 
@@ -67,7 +65,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
     }
 
     @Override
-    public void update(GameContainer container, StateBasedGame game, int delta) {
+    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
         if (active) {
             // Change select item
             boolean up = maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.W).getKeyCode());
@@ -152,7 +150,7 @@ public abstract class InventoryAbstractPlayer extends Inventory {
             getSlot(i).postRender(g);
     }
 
-    public void renderHotbar(Graphics g) {
+    public void renderHotbar(org.mini2Dx.core.graphics.Graphics g) {
         // Render hotbar backgorund
         int barWidth = 82;
         int barHeight = 10;
