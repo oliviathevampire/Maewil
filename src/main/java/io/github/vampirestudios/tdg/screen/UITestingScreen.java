@@ -13,10 +13,11 @@ import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.objs.tiles.Tiles;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.*;
 import java.net.URI;
@@ -50,7 +51,7 @@ public class UITestingScreen extends Screen {
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         }));
         widgetButton.setImage(new Animation(Assets.GUI_TITLE_SMALL));
@@ -74,7 +75,7 @@ public class UITestingScreen extends Screen {
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         }));
 
@@ -97,7 +98,7 @@ public class UITestingScreen extends Screen {
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
         uiList.add("Meow2", new ClickListener() {
@@ -107,7 +108,7 @@ public class UITestingScreen extends Screen {
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
         uiList.add("Meow3", new ClickListener() {
@@ -117,7 +118,7 @@ public class UITestingScreen extends Screen {
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
 
@@ -132,13 +133,13 @@ public class UITestingScreen extends Screen {
                     }
 
                     @Override
-                    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+                    public void update(GameContainer container, StateBasedGame game, int delta) {
                     }
                 });
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         };
         uiList.add("Meow4", NEW_LIST_CLICK);
@@ -153,7 +154,7 @@ public class UITestingScreen extends Screen {
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
 
@@ -161,14 +162,14 @@ public class UITestingScreen extends Screen {
     }
 
     @Override
-    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
-        uiManager.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        uiManager.update(container, game, delta);
         widgetButton.setPosition(new Vector2D(MaewilLauncher.WIDTH - widgetButton.getWidth() - 10, 10));
     }
 
     @Override
-    public void render(GameContainer container, Graphics g) {
-        uiManager.render(container, g);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        uiManager.render(container, game, g);
 
         if (widgetCheckBox.isChecked())
             Assets.GUI_TITLE_SMALL.draw(widgetCheckBox.getWidth() + 20, 10, 0.075f);

@@ -1,8 +1,9 @@
 package io.github.vampirestudios.tdg.manager;
 
 import io.github.vampirestudios.tdg.gfx.ui.WidgetObject;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 
@@ -14,20 +15,20 @@ public class UIManager {
         objects = new ArrayList<>();
     }
 
-    public void update(GameContainer container, float delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         for (WidgetObject obj : objects)
-            obj.update(container, delta);
+            obj.update(container, game, delta);
     }
 
-    public void render(org.mini2Dx.core.game.GameContainer container, Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         for (WidgetObject obj : objects) {
-            obj.render(container, g);
+            obj.render(container, game, g);
         }
     }
 
-    public void postRender(org.mini2Dx.core.game.GameContainer container, org.mini2Dx.core.graphics.Graphics g) {
+    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
         for (WidgetObject obj : objects) {
-            obj.postRender(container, g);
+            obj.postRender(container, game, g);
         }
     }
 

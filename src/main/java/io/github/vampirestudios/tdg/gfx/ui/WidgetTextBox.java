@@ -3,10 +3,11 @@ package io.github.vampirestudios.tdg.gfx.ui;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.Text;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,7 +75,7 @@ public class WidgetTextBox extends WidgetObject {
     }
 
     @Override
-    public void render(GameContainer container, Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         int segWidth = 32, segHeight = 32;
         Assets.GUI_TEXTBOX[0].draw((int) position.x, (int) position.y, segWidth, segHeight);
         Assets.GUI_TEXTBOX[1].draw((int) position.x + segWidth, (int) position.y, getLongestString(), segHeight);

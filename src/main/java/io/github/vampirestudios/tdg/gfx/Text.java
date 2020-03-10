@@ -2,9 +2,9 @@ package io.github.vampirestudios.tdg.gfx;
 
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
-import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
+import org.newdawn.slick.Graphics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,25 +16,25 @@ public class Text {
         drawString(g, text, MaewilLauncher.WIDTH / 2f - width / 2, yPos, false, c, font);
     }
 
-    public static void drawStringCenteredY(org.mini2Dx.core.graphics.Graphics g, String text, float xPos, Color c, Font font) {
+    public static void drawStringCenteredY(Graphics g, String text, float xPos, Color c, Font font) {
         float height = getHeight(text, font);
         drawString(g, text, xPos, (MaewilLauncher.HEIGHT / 2f - height / 2) + getAscent(font), false, c, font);
     }
 
-    public static void drawStringCentered(org.mini2Dx.core.graphics.Graphics g, String text, Color c, Font font) {
+    public static void drawStringCentered(Graphics g, String text, Color c, Font font) {
         float width = getWidth(text, font), height = getHeight(text, font);
         float x = MaewilLauncher.WIDTH / 2f - width / 2, y = (MaewilLauncher.HEIGHT / 2f - height / 2) + getAscent(font);
         drawString(g, text, x, y, false, c, font);
     }
 
-    public static void drawString(org.mini2Dx.core.graphics.Graphics g, String text, float xPos, float yPos, boolean centered, Color c, Font font) {
+    public static void drawString(Graphics g, String text, float xPos, float yPos, boolean centered, Color c, Font font) {
         drawString(g, text, xPos, yPos, centered, centered, c, font);
     }
 
-    public static void drawString(org.mini2Dx.core.graphics.Graphics g, String text, float xPos, float yPos, boolean centeredX, boolean centeredY, Color c, Font font) {
-//        g.setAntiAlias(false);
-//        g.setColor(c);
-//        g.setFont(font);
+    public static void drawString(Graphics g, String text, float xPos, float yPos, boolean centeredX, boolean centeredY, Color c, Font font) {
+        g.setAntiAlias(false);
+        g.setColor(c);
+        g.setFont(font);
         float x = xPos;
         float y = yPos - getHeight(text, font);
         if (centeredX)

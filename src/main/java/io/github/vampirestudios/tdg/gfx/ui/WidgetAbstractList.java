@@ -9,11 +9,8 @@ import io.github.vampirestudios.tdg.gfx.assets.Sounds;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlink;
 import io.github.vampirestudios.tdg.objs.tiles.Tiles;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Font;
-import org.newdawn.slick.Image;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,10 +70,10 @@ public abstract class WidgetAbstractList extends AbstractListTheme {
         itemWidth = itemWidthIn;
     }
 
-    public void update(GameContainer container, float delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
 
-        for (UIListOBJ ITEM : ITEMS) ITEM.update(container, delta);
+        for (UIListOBJ ITEM : ITEMS) ITEM.update(container, game, delta);
     }
 
     @Override
@@ -104,13 +101,13 @@ public abstract class WidgetAbstractList extends AbstractListTheme {
             }
         }
 
-        public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
-            listener.update(container, delta);
+        public void update(GameContainer container, StateBasedGame game, int delta) {
+            listener.update(container, game, delta);
             bounds = new AABB(pos, (int) SIZE, (int) SIZE);
             hovering = bounds.contains(MaewilEngine.INSTANCE.getMousePos());
         }
 
-        public void render(org.mini2Dx.core.game.GameContainer container, Graphics g) {
+        public void render(GameContainer container, StateBasedGame game, Graphics g) {
             THEME[3].draw((float) pos.x, (float) pos.y, SIZE, SIZE);
 
             Image arrow = Assets.GUI_ARROW_ICONS[(iconUpArrow ? 0 : 2) + (hovering ? 1 : 0)];
@@ -145,8 +142,7 @@ public abstract class WidgetAbstractList extends AbstractListTheme {
                 }
 
                 @Override
-                public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
-
+                public void update(GameContainer container, StateBasedGame game, int delta) {
                 }
             });
         }
@@ -168,13 +164,13 @@ public abstract class WidgetAbstractList extends AbstractListTheme {
             }
         }
 
-        public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
-            listener.update(container, delta);
+        public void update(GameContainer container, StateBasedGame game, int delta) {
+            listener.update(container, game, delta);
             this.hasIcon = icon != Tiles.AIR.getAnimation();
             rendering = false;
         }
 
-        public void render(org.mini2Dx.core.game.GameContainer container, org.mini2Dx.core.graphics.Graphics g, Vector2D pos) {
+        public void render(GameContainer container, StateBasedGame game, Graphics g, Vector2D pos) {
             bounds = new AABB(pos, (int) itemWidth, (int) SIZE);
 
             Image secLeft = THEME[0];

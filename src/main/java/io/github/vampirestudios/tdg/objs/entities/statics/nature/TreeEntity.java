@@ -7,6 +7,8 @@ import io.github.vampirestudios.tdg.objs.entities.statics.NatureEntity;
 import io.github.vampirestudios.tdg.objs.items.Items;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class TreeEntity extends NatureEntity {
 
@@ -29,8 +31,8 @@ public class TreeEntity extends NatureEntity {
     }
 
     @Override
-    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
     }
 
     @Override

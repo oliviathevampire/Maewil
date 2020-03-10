@@ -4,20 +4,22 @@ import coffeecatteam.coffeecatutils.ArgUtils;
 import coffeecatteam.coffeecatutils.DevEnvUtils;
 import coffeecatteam.coffeecatutils.logger.CatLogger;
 import coffeecatteam.coffeecatutils.logger.CatLoggerUtils;
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.backends.lwjgl.DesktopMini2DxGame;
-import com.badlogic.gdx.graphics.Color;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
+import io.github.vampirestudios.tdg.screen.ScreenManager;
 import io.github.vampirestudios.tdg.screen.game.GameScreen;
-import org.mini2Dx.core.game.ScreenBasedGame;
-import org.mini2Dx.core.screen.transition.FadeInTransition;
-import org.mini2Dx.core.screen.transition.NullTransition;
-import org.mini2Dx.desktop.DesktopMini2DxConfig;
+import io.github.vampirestudios.tdg.utils.DiscordHandler;
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.EmptyTransition;
+import org.newdawn.slick.state.transition.FadeInTransition;
 
 import java.awt.*;
 import java.io.File;
 
-public class MaewilLauncher extends ScreenBasedGame {
+public class MaewilLauncher extends StateBasedGame {
 
     /*
      * Screen Ids
@@ -32,12 +34,11 @@ public class MaewilLauncher extends ScreenBasedGame {
     public static boolean FULLSCREEN;
     public static int WIDTH = 854, HEIGHT = 480, WIDTH_TILE_SIZE, HEIGHT_TILE_SIZE;
     public static final String TITLE = "Maewil";
-    public static final String GAME_IDENTIFIER = "io.github.vampirestudios.maewil";
 
     public static CatLogger LOGGER;
 
     public MaewilLauncher() {
-        super();
+        super(TITLE);
         LOGGER = new CatLogger("Maewil-Main");
         StringBuilder args = new StringBuilder();
         for (String arg : ARGS)
@@ -47,67 +48,22 @@ public class MaewilLauncher extends ScreenBasedGame {
         LOGGER.info("Fullscreen set to [" + FULLSCREEN + "]");
     }
 
-    /**
-     * Returns the identifier of the {@link GameScreen} that should be shown
-     * when the game starts
-     *
-     * @return The {@link GameScreen} identifier via {@link GameScreen}.getId()
-     */
     @Override
-    public int getInitialScreenId() {
-        return ID_GAME;
-    }
-
-    /**
-     * Initialse the game
-     */
-    @Override
-    public void initialise() {
-        this.addScreen(new SplashScreen());
-        this.addScreen(new MaewilEngine());
+    public void initStatesList(GameContainer gameContainer) {
+        this.addState(new SplashScreen());
+        this.addState(new MaewilEngine());
 
         if (ArgUtils.hasArgument("-uiTest"))
-            this.enterGameScreen(ID_GAME, new NullTransition(), new NullTransition());
+            this.enterState(ID_GAME, new EmptyTransition(), new EmptyTransition());
         else
-            this.enterGameScreen(ID_SPLASHSCREEN, new FadeInTransition(Color.BLACK), new NullTransition());
-    }
-
-    /**
-     * Update the game
-     *
-     * @param delta The time in seconds since the last update
-     */
-    @Override
-    public void update(float delta) {
-        this.getScreenManager().update(this, delta);
-    }
-
-    /**
-     * Interpolate the game state
-     *
-     * @param alpha The alpha value to use during interpolation
-     */
-    @Override
-    public void interpolate(float alpha) {
-        this.getScreenManager().interpolate(this, alpha);
-    }
-
-    /**
-     * Render the game
-     *
-     * @param g The {@link Graphics} context available for rendering
-     */
-    @Override
-    public void render(org.mini2Dx.core.graphics.Graphics g) {
-        this.getScreenManager().render(this, g);
+            this.enterState(ID_SPLASHSCREEN, new FadeInTransition(Color.black), new EmptyTransition());
     }
 
     @Override
-    protected void postinit() {
-        super.postinit();
+    public boolean closeRequested() {
         /*if (MaewilEngine.INSTANCE.isPlayBGMusic() && Sounds.BG_MUSIC.playing())
             Sounds.BG_MUSIC.stop();*/
-        /*LOGGER.warn("Shutting down [" + TITLE + "] engine!");
+        LOGGER.warn("Shutting down [" + TITLE + "] engine!");
 
         if (ScreenManager.getCurrentScreen() instanceof GameScreen) {
             LOGGER.info("Saving world!");
@@ -117,22 +73,23 @@ public class MaewilLauncher extends ScreenBasedGame {
 
         DiscordHandler.INSTANCE.shutdown();
 
-        LOGGER.warn("Exiting [" + TITLE + "]..");*/
+        LOGGER.warn("Exiting [" + TITLE + "]..");
+        return true;
     }
 
     public static void main(String[] args) {
-        String icons;
+        String[] icons;
         /* Set natives path */
         if (!DevEnvUtils.isRunningFromDevEnviroment()) {
             final String nativesPath = new File("data/natives").getAbsolutePath();
             System.setProperty("org.lwjgl.librarypath", nativesPath);
             System.setProperty("java.library.path", nativesPath);
-            icons = "data/icons/64.png";
+            icons = new String[]{"data/icons/32.png", "data/icons/64.png"};
         } else {
             final String nativesPath = new File("../libs/natives").getAbsolutePath();
             System.setProperty("org.lwjgl.librarypath", nativesPath);
             System.setProperty("java.library.path", nativesPath);
-            icons = "../data/icons/64.png";
+            icons = new String[]{"../data/icons/32.png", "../data/icons/64.png"};
         }
 
         ARGS = args;
@@ -150,13 +107,18 @@ public class MaewilLauncher extends ScreenBasedGame {
         CatLoggerUtils.init();
 
         /* Start game */
-        DesktopMini2DxConfig cfg = new DesktopMini2DxConfig(GAME_IDENTIFIER);
-        cfg.title = TITLE;
-        cfg.width = WIDTH;
-        cfg.height = HEIGHT;
-        cfg.vSyncEnabled = true;
-        cfg.addIcon(icons, Files.FileType.Local);
-        new DesktopMini2DxGame(new MaewilLauncher(), cfg);
+        try {
+            AppGameContainer app = new AppGameContainer(new MaewilLauncher());
+            app.setShowFPS(false);
+            app.setDisplayMode(WIDTH, HEIGHT, FULLSCREEN);
+            app.setIcons(icons);
+            app.setTargetFrameRate(100);
+            app.setUpdateOnlyWhenVisible(false);
+            app.setAlwaysRender(true);
+            app.start();
+        } catch (SlickException e) {
+            e.printStackTrace();
+        }
     }
 
 }

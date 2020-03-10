@@ -15,10 +15,11 @@ import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.DiscordHandler;
 import org.json.simple.parser.ParseException;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
 
@@ -59,7 +60,7 @@ public class OptionsScreen extends AbstractMenuScreen {
                 }
 
                 @Override
-                public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+                public void update(GameContainer container, StateBasedGame game, int delta) {
                 }
             }));
 
@@ -76,7 +77,7 @@ public class OptionsScreen extends AbstractMenuScreen {
                 }
 
                 @Override
-                public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+                public void update(GameContainer container, StateBasedGame game, int delta) {
                 }
             }));
         }
@@ -96,16 +97,16 @@ public class OptionsScreen extends AbstractMenuScreen {
     }
 
     @Override
-    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
         OPTIONS.setDebugMode(debug.isChecked());
         OPTIONS.setFpsCounter(fps.isChecked());
         OPTIONS.setVSync(vsync.isChecked());
     }
 
     @Override
-    public void render(GameContainer container, Graphics g) {
-        super.render(container, g);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        super.render(container, game, g);
         Font font = Assets.FONTS.get("40");
         String debugText = "Debug Mode: ";
         Text.drawString(g, debugText, (int) (debug.getPosition().x - Text.getWidth(debugText, font)), (int) (debug.getPosition().y + Text.getHeight(debugText, font)) + 25, false, Color.white, font);

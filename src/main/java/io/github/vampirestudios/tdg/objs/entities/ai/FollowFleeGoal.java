@@ -2,7 +2,8 @@ package io.github.vampirestudios.tdg.objs.entities.ai;
 
 import io.github.vampirestudios.tdg.objs.entities.creatures.LivingEntity;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.mini2Dx.core.game.GameContainer;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class FollowFleeGoal extends Goal {
 
@@ -22,7 +23,7 @@ public class FollowFleeGoal extends Goal {
     }
 
     @Override
-    public boolean update(GameContainer container, float delta) {
+    public boolean update(GameContainer container, StateBasedGame game, int delta) {
         float x = target.getX() - entity.getX();
         float y = target.getY() - entity.getY();
 

@@ -2,11 +2,12 @@ package io.github.vampirestudios.tdg.gfx.ui;
 
 import coffeecatteam.coffeecatutils.position.AABB;
 import coffeecatteam.coffeecatutils.position.Vector2D;
-import com.badlogic.gdx.graphics.Color;
-import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
+import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class WidgetObject {
 
@@ -26,7 +27,7 @@ public abstract class WidgetObject {
         bounds = new AABB(this.position, (int) width, (int) height);
     }
 
-    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         bounds = new AABB(this.position, (int) getWidth(), (int) getHeight());
         if (MaewilEngine.INSTANCE.isLeftPressed()) {
             if (this.bounds.contains(MaewilEngine.INSTANCE.getMousePos()))
@@ -36,11 +37,11 @@ public abstract class WidgetObject {
         }
     }
 
-    public abstract void render(org.mini2Dx.core.game.GameContainer container, org.mini2Dx.core.graphics.Graphics g);
+    public abstract void render(GameContainer container, StateBasedGame game, Graphics g);
 
-    public void postRender(GameContainer container, Graphics g) {
+    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
         if (OptionsScreen.OPTIONS.debugMode() || showBounds) {
-            g.setColor(Color.RED);
+            g.setColor(Color.red);
             g.drawRect(bounds.x, bounds.y, bounds.width, bounds.height);
         }
     }

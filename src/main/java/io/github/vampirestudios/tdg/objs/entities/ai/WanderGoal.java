@@ -3,10 +3,11 @@ package io.github.vampirestudios.tdg.objs.entities.ai;
 import coffeecatteam.coffeecatutils.NumberUtils;
 import io.github.vampirestudios.tdg.objs.entities.creatures.LivingEntity;
 import io.github.vampirestudios.tdg.objs.tiles.TilePos;
-import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
-import org.mini2Dx.core.game.GameContainer;
+import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class WanderGoal extends Goal {
 
@@ -21,7 +22,7 @@ public class WanderGoal extends Goal {
     }
 
     @Override
-    public boolean update(GameContainer container, float delta) {
+    public boolean update(GameContainer container, StateBasedGame game, int delta) {
         wanderTimer += System.currentTimeMillis() - lastWanderTimer;
         lastWanderTimer = System.currentTimeMillis();
 

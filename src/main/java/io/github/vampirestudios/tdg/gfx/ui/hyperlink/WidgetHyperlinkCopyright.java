@@ -6,6 +6,8 @@ import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.*;
 import java.net.URI;
@@ -29,7 +31,7 @@ public class WidgetHyperlinkCopyright extends WidgetHyperlink {
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
     }

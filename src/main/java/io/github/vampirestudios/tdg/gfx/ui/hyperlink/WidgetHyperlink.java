@@ -7,10 +7,11 @@ import io.github.vampirestudios.tdg.gfx.assets.Sounds;
 import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
 import io.github.vampirestudios.tdg.gfx.ui.WidgetObject;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class WidgetHyperlink extends WidgetObject {
 
@@ -39,8 +40,8 @@ public class WidgetHyperlink extends WidgetObject {
     }
 
     @Override
-    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
         this.hovering = this.bounds.contains(MaewilEngine.INSTANCE.getMousePos());
 
         if (this.hovering)
@@ -50,7 +51,7 @@ public class WidgetHyperlink extends WidgetObject {
     }
 
     @Override
-    public void render(GameContainer container, Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         width = Text.getWidth(text, font);
         bounds.width = (int) width;
         Text.drawString(g, text, (int) this.position.x, (int) this.position.y + Text.getHeight(text, font), false, this.c, font);

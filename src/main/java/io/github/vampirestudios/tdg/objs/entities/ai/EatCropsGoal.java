@@ -6,7 +6,8 @@ import io.github.vampirestudios.tdg.objs.entities.creatures.LivingEntity;
 import io.github.vampirestudios.tdg.objs.entities.statics.nature.CropEntity;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.tags.ListTag;
-import org.mini2Dx.core.game.GameContainer;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +47,7 @@ public class EatCropsGoal extends Goal {
     }
 
     @Override
-    public boolean update(GameContainer container, float delta) {
+    public boolean update(GameContainer container, StateBasedGame game, int delta) {
         CropEntity closestCrop = getClosestCrop();
         if (closestCrop != null) {
             float x = closestCrop.getX() - entity.getX();

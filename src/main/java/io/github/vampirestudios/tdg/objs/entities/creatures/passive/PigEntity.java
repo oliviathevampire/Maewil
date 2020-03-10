@@ -5,7 +5,8 @@ import io.github.vampirestudios.tdg.objs.entities.ai.EatCropsGoal;
 import io.github.vampirestudios.tdg.objs.entities.creatures.EntityPassive;
 import io.github.vampirestudios.tdg.objs.items.Items;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.mini2Dx.core.game.GameContainer;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class PigEntity extends EntityPassive {
 
@@ -18,7 +19,7 @@ public class PigEntity extends EntityPassive {
     }
 
     @Override
-    public void update(GameContainer container, float delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         xMove = 0;
         yMove = 0;
 
@@ -27,8 +28,8 @@ public class PigEntity extends EntityPassive {
 
         // Movement
         if (maewilEngine.getPlayer().isActive())
-            if (!aiEatCrops.update(container, delta))
-                aiWander.update(container, delta);
+            if (!aiEatCrops.update(container, game, delta))
+                aiWander.update(container, game, delta);
         move();
     }
 

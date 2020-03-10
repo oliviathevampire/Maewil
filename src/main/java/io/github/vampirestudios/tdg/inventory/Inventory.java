@@ -5,7 +5,9 @@ import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.mini2Dx.core.graphics.Graphics;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,7 +80,7 @@ public abstract class Inventory {
         return slots.get(slots.size() - 1);
     }
 
-    public abstract void update(org.mini2Dx.core.game.GameContainer container, float delta);
+    public abstract void update(GameContainer container, StateBasedGame game, int delta);
 
     public void render(Graphics g) {
         slots.forEach(s -> s.render(g));

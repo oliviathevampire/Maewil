@@ -7,11 +7,12 @@ import io.github.vampirestudios.tdg.objs.entities.ai.Goal;
 import io.github.vampirestudios.tdg.objs.items.Item;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
-import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
+import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,10 +45,10 @@ public abstract class LivingEntity extends Entity {
     }
 
     @Override
-    public void updateA(org.mini2Dx.core.game.GameContainer container, float delta) {
-        super.updateA(container, delta);
+    public void updateA(GameContainer container, StateBasedGame game, int delta) {
+        super.updateA(container, game, delta);
 
-        goals.forEach(goal -> goal.update(container, delta));
+        goals.forEach(goal -> goal.update(container, game, delta));
 
         // Animation
         updateAnim();
@@ -77,9 +78,9 @@ public abstract class LivingEntity extends Entity {
     }
 
     @Override
-    public void render(GameContainer container, Graphics g) {
-        super.render(container, g);
-        this.renderEffect(container, g);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        super.render(container, game, g);
+        this.renderEffect(container, game, g);
         this.renderHealth(g);
     }
 

@@ -8,8 +8,9 @@ import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -45,11 +46,11 @@ public class EntityManager {
         }
     }
 
-    public void update(GameContainer container, float delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         for (int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
             if (isEntityInView(entity, (int) (RENDER_VIEW * 1.5f))) {
-                entity.updateA(container, delta);
+                entity.updateA(container, game, delta);
 
                 if (!entity.isActive()) {
                     entity.die();
@@ -64,14 +65,14 @@ public class EntityManager {
         entities.sort(renderSorter);
     }
 
-    public void render(org.mini2Dx.core.game.GameContainer container, Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         for (Entity entity : entities)
             if (isEntityInView(entity, RENDER_VIEW))
-                entity.render(container, g);
+                entity.render(container, game, g);
 
         for (Entity entity : entities)
             if (isEntityInView(entity, RENDER_VIEW))
-                entity.postRender(container, g);
+                entity.postRender(container, game, g);
     }
 
     public boolean isEntityInView(Entity entity, int view) {

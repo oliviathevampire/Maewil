@@ -10,9 +10,10 @@ import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.TileList;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public abstract class Tile implements IHasData<Tile> {
         return worldLayer.getTileAtPos(pos.getX(), pos.getY());
     }
 
-    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         updateBounds();
         if (!beingDamaged) {
             this.health += NumberUtils.getRandomInt(1, 3);
@@ -108,7 +109,7 @@ public abstract class Tile implements IHasData<Tile> {
     public void forcedUpdate(GameContainer container, int delta) {
     }
 
-    public void render(org.mini2Dx.core.game.GameContainer container, org.mini2Dx.core.graphics.Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         render(g, (int) (position.getX() * Tile.TILE_SIZE - maewilEngine.getCamera().getXOffset()), (int) (position.getY() * Tile.TILE_SIZE - maewilEngine.getCamera().getYOffset()), TILE_SIZE, TILE_SIZE);
     }
 

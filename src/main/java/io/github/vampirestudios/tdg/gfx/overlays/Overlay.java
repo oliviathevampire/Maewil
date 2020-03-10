@@ -2,8 +2,9 @@ package io.github.vampirestudios.tdg.gfx.overlays;
 
 import io.github.vampirestudios.tdg.objs.entities.creatures.PlayerEntity;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class Overlay {
 
@@ -15,7 +16,7 @@ public abstract class Overlay {
         this.player = player;
     }
 
-    public abstract void update(GameContainer container, float delta);
+    public abstract void update(GameContainer container, StateBasedGame game, int delta);
 
-    public abstract void render(org.mini2Dx.core.game.GameContainer container, Graphics g);
+    public abstract void render(GameContainer container, StateBasedGame game, Graphics g);
 }

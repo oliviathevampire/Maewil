@@ -5,8 +5,9 @@ import io.github.vampirestudios.tdg.objs.items.Item;
 import io.github.vampirestudios.tdg.objs.items.ItemStack;
 import io.github.vampirestudios.tdg.objs.tiles.Tile;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,8 @@ public abstract class NatureEntity extends StaticEntity {
     }
 
     @Override
-    public void render(GameContainer container, Graphics g) {
-        super.render(container, g);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        super.render(container, game, g);
         if (this.currentHealth != this.maxHealth)
             this.renderHealth(g);
     }

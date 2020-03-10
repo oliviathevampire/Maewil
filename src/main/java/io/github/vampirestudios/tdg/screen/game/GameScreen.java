@@ -14,8 +14,10 @@ import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.DiscordHandler;
 import io.github.vampirestudios.tdg.world.World;
-import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.io.IOException;
 
@@ -51,7 +53,7 @@ public class GameScreen extends Screen {
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         }));
 
@@ -64,7 +66,7 @@ public class GameScreen extends Screen {
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
 
@@ -78,7 +80,7 @@ public class GameScreen extends Screen {
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
         WidgetButton btnQuit = new WidgetButton(maewilEngine, true, MaewilLauncher.HEIGHT / 2 + yOffset * 3 + 30, "Quit", new ClickListener() {
@@ -89,7 +91,7 @@ public class GameScreen extends Screen {
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         });
 
@@ -108,7 +110,7 @@ public class GameScreen extends Screen {
     }
 
     @Override
-    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         if (maewilEngine.getKeyManager().keyJustPressed(OptionsScreen.OPTIONS.controls().get(Keybind.ESCAPE).getKeyCode()) && !maewilEngine.getPlayer().isDead) {
             if (!maewilEngine.getPlayer().isGuiOpen())
                 paused = !paused && !maewilEngine.getPlayer().getInventoryPlayer().isActive();
@@ -116,32 +118,32 @@ public class GameScreen extends Screen {
         }
 
         if (!paused)
-            world.update(container, delta);
+            world.update(container, game, delta);
         else
-            uiManagerPaused.update(container, delta);
+            uiManagerPaused.update(container, game, delta);
 
         if(paused)
             saveWorld(maewilEngine.getUsername());
     }
 
     @Override
-    public void render(org.mini2Dx.core.game.GameContainer container, Graphics g) {
-        world.render(container, g);
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
+        world.render(container, game, g);
 
         if (maewilEngine.getPlayer().isDead) {
             Color tint = new Color(96, 96, 96, 127);
-//            g.setColor(tint);
+            g.setColor(tint);
             g.fillRect(0, 0, MaewilLauncher.WIDTH, MaewilLauncher.HEIGHT);
             Assets.GUI_DEAD_OVERLAY.draw(0, 0, MaewilLauncher.WIDTH, MaewilLauncher.HEIGHT);
 
-            uiManagerDead.render(container, g);
+            uiManagerDead.render(container, game, g);
         } else {
             if (paused) {
                 Color tint = new Color(96, 96, 96, 127);
-//                g.setColor(tint);
+                g.setColor(tint);
                 g.fillRect(0, 0, MaewilLauncher.WIDTH, MaewilLauncher.HEIGHT);
 
-                uiManagerPaused.render(container, g);
+                uiManagerPaused.render(container, game, g);
             }
         }
     }

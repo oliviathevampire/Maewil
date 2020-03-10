@@ -4,9 +4,10 @@ import io.github.vampirestudios.tdg.gfx.assets.Sounds;
 import io.github.vampirestudios.tdg.objs.entities.Entity;
 import io.github.vampirestudios.tdg.objs.entities.creatures.EntityUndead;
 import io.github.vampirestudios.tdg.objs.items.Items;
-import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
-import org.mini2Dx.core.game.GameContainer;
+import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class BouncerEntity extends EntityUndead {
 
@@ -23,8 +24,8 @@ public class BouncerEntity extends EntityUndead {
     }
 
     @Override
-    public void update(GameContainer container, float delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
         moveSound();
     }
 

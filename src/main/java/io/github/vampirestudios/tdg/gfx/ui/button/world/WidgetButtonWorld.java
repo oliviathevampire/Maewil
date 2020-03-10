@@ -2,6 +2,8 @@ package io.github.vampirestudios.tdg.gfx.ui.button.world;
 
 import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButton;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 public class WidgetButtonWorld extends WidgetButton {
 
     public WidgetButtonWorld(MaewilEngine maewilEngine, float y, int index) {
@@ -16,8 +18,8 @@ public class WidgetButtonWorld extends WidgetButton {
     }
 
     @Override
-    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
         WorldButtonClickListener listener = (WorldButtonClickListener) this.listener;
         if (listener.isSaved())
             this.setText(listener.getText());

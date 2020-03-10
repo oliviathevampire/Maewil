@@ -3,9 +3,10 @@ package io.github.vampirestudios.tdg.gfx.ui;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.gfx.assets.Sounds;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class WidgetCheckBox extends WidgetObject {
 
@@ -30,7 +31,7 @@ public class WidgetCheckBox extends WidgetObject {
     }
 
     @Override
-    public void render(GameContainer container, Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         Assets.GUI_CHECK_BOX_BG.draw((int) position.x, (int) position.y, width, height);
         if (checked) {
             Image check = useTick ? Assets.GUI_CHECK_BOX_TICK : Assets.GUI_CHECK_BOX_CROSS;

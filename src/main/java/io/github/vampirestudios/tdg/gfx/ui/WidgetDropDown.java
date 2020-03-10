@@ -3,9 +3,11 @@ package io.github.vampirestudios.tdg.gfx.ui;
 import coffeecatteam.coffeecatutils.position.Vector2D;
 import io.github.vampirestudios.tdg.gfx.Text;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlink;
-import org.mini2Dx.core.game.GameContainer;
 import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class WidgetDropDown extends WidgetAbstractList {
 
@@ -23,21 +25,21 @@ public class WidgetDropDown extends WidgetAbstractList {
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+            public void update(GameContainer container, StateBasedGame game, int delta) {
                 dropdownArrow.setIconUpArrow(isDown);
             }
         });
     }
 
     @Override
-    public void update(GameContainer container, float delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
         bounds.setSize(bounds.width, (int) getHeight());
-        dropdownArrow.update(container, delta);
+        dropdownArrow.update(container, game, delta);
     }
 
     @Override
-    public void render(org.mini2Dx.core.game.GameContainer container, org.mini2Dx.core.graphics.Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         Image secLeft = THEME[0];
         Image secMid = THEME[1];
         Image secRight = THEME[2];
@@ -57,14 +59,14 @@ public class WidgetDropDown extends WidgetAbstractList {
                 UIListOBJ obj = get(i);
                 obj.setRendering(true);
                 Vector2D pos = new Vector2D(position.x, position.y + SIZE * (i + 1));
-                obj.render(container, g, pos);
+                obj.render(container, game, g, pos);
             }
 
             THEME[4].draw((float) (position.x + itemWidth), (float) position.y, SIZE, SIZE * size());
             THEME[3].draw((float) (position.x + itemWidth), (float) (position.y + SIZE * size()), SIZE, SIZE);
         }
 
-        dropdownArrow.render(container, g);
+        dropdownArrow.render(container, game, g);
     }
 
     @Override

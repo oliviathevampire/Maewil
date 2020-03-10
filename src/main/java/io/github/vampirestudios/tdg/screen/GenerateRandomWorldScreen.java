@@ -16,10 +16,11 @@ import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.world.TileList;
 import io.github.vampirestudios.tdg.world.World;
 import io.github.vampirestudios.tdg.world.WorldGenerator;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.state.StateBasedGame;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -59,16 +60,15 @@ public class GenerateRandomWorldScreen extends AbstractMenuScreen {
             }
 
             @Override
-            public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
-
+            public void update(GameContainer container, StateBasedGame game, int delta) {
             }
         }));
     }
 
     @Override
-    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
-        super.update(container, delta);
-        uiManager.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
+        uiManager.update(container, game, delta);
     }
 
     private String getWorldName() {
@@ -149,16 +149,16 @@ public class GenerateRandomWorldScreen extends AbstractMenuScreen {
     }
 
     @Override
-    public void render(GameContainer container, Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         Color c = Color.white;
         Font f = Assets.FONTS.get("40");
 
         if (generating) {
-            this.renderBG(container, g);
+            this.renderBG(container, game, g);
             Text.drawStringCentered(g, "Generating world...", c, f);
         } else {
-            super.render(container, g);
-            uiManager.render(container, g);
+            super.render(container, game, g);
+            uiManager.render(container, game, g);
             Text.drawStringCenteredX(g, worldName, MaewilLauncher.HEIGHT / 2f - Text.getHeight(worldName, f) / 2 - 90, c, f);
 
             String seedS = "Seed: " + seed;

@@ -9,14 +9,11 @@ import io.github.vampirestudios.tdg.gfx.assets.Sounds;
 import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
 import io.github.vampirestudios.tdg.gfx.ui.WidgetObject;
 import io.github.vampirestudios.tdg.gfx.ui.WidgetTextBox;
-import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
-import org.mini2Dx.core.game.GameContainer;
-import org.mini2Dx.core.graphics.Graphics;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Font;
-import org.newdawn.slick.Image;
+import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
+import org.newdawn.slick.*;
+import org.newdawn.slick.state.StateBasedGame;
 
 public class WidgetButton extends WidgetObject {
 
@@ -140,8 +137,8 @@ public class WidgetButton extends WidgetObject {
     }
 
     @Override
-    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
-        super.update(container, delta);
+    public void update(GameContainer container, StateBasedGame game, int delta) {
+        super.update(container, game, delta);
         this.hovering = this.bounds.contains(maewilEngine.getMousePos()) && !this.disabled;
 
         if (this.hovering) {
@@ -152,12 +149,12 @@ public class WidgetButton extends WidgetObject {
         if (this.disabled)
             this.currentTexture = Assets.GUI_BUTTON_DISABLED;
 
-        listener.update(container, delta);
+        listener.update(container, game, delta);
         bounds = new AABB(position, (int) getWidth(), (int) getHeight());
     }
 
     @Override
-    public void render(org.mini2Dx.core.game.GameContainer container, org.mini2Dx.core.graphics.Graphics g) {
+    public void render(GameContainer container, StateBasedGame game, Graphics g) {
         int sectionWidth = 64;
         if (useImage) {
             Image current = image.getCurrentFrame();
@@ -179,7 +176,7 @@ public class WidgetButton extends WidgetObject {
 
             current.draw((int) this.position.x + this.padding, (int) this.position.y + this.padding, imgWidth, imgHeight);
             if (hovering && renderBtnHover) {
-//                g.setColor(new Color(101, 189, 171, 108));
+                g.setColor(new Color(101, 189, 171, 108));
                 g.fillRect((float) this.position.x + this.padding, (float) (this.position.y + this.padding), imgWidth, imgHeight);
             }
         } else {
@@ -200,7 +197,7 @@ public class WidgetButton extends WidgetObject {
             this.height = pHeight;
 
             if (OptionsScreen.OPTIONS.debugMode()) {
-                g.setColor(com.badlogic.gdx.graphics.Color.RED);
+                g.setColor(Color.red);
                 g.drawRect((int) position.x, (int) position.y, width, height);
             }
 
@@ -216,8 +213,8 @@ public class WidgetButton extends WidgetObject {
     }
 
     @Override
-    public void postRender(GameContainer container, Graphics g) {
-        super.postRender(container, g);
+    public void postRender(GameContainer container, StateBasedGame game, Graphics g) {
+        super.postRender(container, game, g);
         if (isHovering() && hasTooltip) {
             float x = (float) maewilEngine.getMousePos().x, x1 = x + this.tooltip.getWidth(), xDiff = 0;
             float y = (float) maewilEngine.getMousePos().y, y1 = y + this.tooltip.getHeight(), yDiff = 0;
@@ -226,7 +223,7 @@ public class WidgetButton extends WidgetObject {
             if (y1 > MaewilLauncher.HEIGHT) yDiff = y1 - MaewilLauncher.HEIGHT;
 
             tooltip.setPosition(new Vector2D(x - xDiff, y - yDiff));
-            tooltip.render(container, g);
+            tooltip.render(container, game, g);
         }
     }
 

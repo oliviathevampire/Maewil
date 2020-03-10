@@ -2,9 +2,11 @@ package io.github.vampirestudios.tdg.screen.options.controls;
 
 import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
 import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButtonControl;
-import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
+import io.github.vampirestudios.tdg.screen.options.OptionsScreen;
 import io.github.vampirestudios.tdg.utils.UtilsIdk;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.state.StateBasedGame;
 
 import javax.swing.*;
 
@@ -28,7 +30,7 @@ public class ControlClickListener implements ClickListener {
     }
 
     @Override
-    public void update(org.mini2Dx.core.game.GameContainer container, float delta) {
+    public void update(GameContainer container, StateBasedGame game, int delta) {
         int newKeyCode = maewilEngine.getKeyManager().getCurrentKeyPressedCode();
         String newId = UtilsIdk.getKeyPressed(maewilEngine);
         Keybind keybind = OptionsScreen.OPTIONS.controls().get(jsonId);
