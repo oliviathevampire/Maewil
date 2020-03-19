@@ -4,13 +4,13 @@ import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 
-public class SandTile extends OverlapTile {
+public class SandTile extends ConnectingTile {
 
     public SandTile(MaewilEngine maewilEngine) {
         super(maewilEngine, Assets.GRASS, "sand", false, TileType.GROUND, Assets.GRASS_ALTS);
         this.setMapColor(WorldColors.SAND);
-        this.setConnect("grass");
-        this.setIgnore("sand", "red_sand");
+        this.connectsTo("grass");
+        this.ignores("sand", "red_sand");
     }
 
     @Override

@@ -2,11 +2,11 @@ package io.github.vampirestudios.tdg.objs.tiles.stone;
 
 import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.objs.items.Items;
-import io.github.vampirestudios.tdg.objs.tiles.OverlapTile;
+import io.github.vampirestudios.tdg.objs.tiles.ConnectingTile;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 
-public class StoneTile extends OverlapTile {
+public class StoneTile extends ConnectingTile {
 
     public StoneTile(MaewilEngine maewilEngine) {
         this(maewilEngine, "stone", true);
@@ -17,7 +17,7 @@ public class StoneTile extends OverlapTile {
         this.setMapColor(WorldColors.STONE);
 
         if (overlap) {
-            this.setIgnore("stone", id);
+            this.ignores("stone", id);
         }
 
         this.setDrop(Items.ROCK);

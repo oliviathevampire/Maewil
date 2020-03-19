@@ -4,7 +4,7 @@ import io.github.vampirestudios.tdg.gfx.assets.Assets;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.world.colormap.WorldColors;
 
-public class LavaTile extends OverlapTile {
+public class LavaTile extends ConnectingTile {
 
     public LavaTile(MaewilEngine maewilEngine) {
         super(maewilEngine, Assets.LAVA, "lava", false, Tile.TileType.FLUID, Assets.LAVA_ALTS);
