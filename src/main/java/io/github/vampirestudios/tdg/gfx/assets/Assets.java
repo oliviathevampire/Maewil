@@ -238,7 +238,7 @@ public class Assets {
     public static void init() {
         logger = new CatLogger("Maewil-Assets");
 
-        MISSING_TEXTURE = getImage("/assets/maewil/textures/missing.png");
+        MISSING_TEXTURE = getImage(new Identifier("maewil:textures/template.png"));
 
         /* Sprite Sheets */
         effectSheet = new SpriteSheet(new Identifier("maewil:textures/effect.png"));

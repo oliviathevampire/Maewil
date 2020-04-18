@@ -68,7 +68,7 @@ public abstract class DataParser<E extends IHasData<E>> {
     }
 
     private static JSONObject getData(Identifier fileName, boolean inJar) throws IOException, ParseException {
-        Identifier path = new Identifier("maewil", fileName.getPath() + ".json");
+        Identifier path = new Identifier(fileName.getNamespace(), fileName.getPath() + ".json");
         JSONParser parser = new JSONParser();
         if (inJar) {
             return (JSONObject) parser.parse(FileUtils.loadFileInSideJar(path.toDataString()));
