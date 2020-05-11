@@ -24,6 +24,10 @@ public class WidgetTextBox extends WidgetObject {
         super(position, 0, 0);
     }
 
+    public WidgetTextBox(Vector2D position, float width, float height) {
+        super(position, width, height);
+    }
+
     public void addText(String text) {
         addText(text, Assets.FONTS.get("20"));
     }

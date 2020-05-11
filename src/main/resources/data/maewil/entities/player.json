@@ -1,7 +1,7 @@
 {
     "type": "creature",
     "texture": "entities/living/player_new.png",
-    "spriteSize": [17, 31],
+    "spriteSize": [17, 30],
     "animations": {
         "walkDown": {
             "length": 3,
@@ -11,7 +11,7 @@
         "walkLeft": {
             "length": 3,
             "speed": 250,
-            "startPos": [0, 3]
+            "startPos": [0, 4]
         },
         "walkRight": {
             "length": 3,

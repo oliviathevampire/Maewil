@@ -7,6 +7,7 @@ import io.github.vampirestudios.tdg.gfx.ui.ClickListener;
 import io.github.vampirestudios.tdg.gfx.ui.button.WidgetButton;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlink;
 import io.github.vampirestudios.tdg.gfx.ui.hyperlink.WidgetHyperlinkCopyright;
+import io.github.vampirestudios.tdg.screen.options.CharacterCustomizationScreen;
 import io.github.vampirestudios.tdg.start.MaewilEngine;
 import io.github.vampirestudios.tdg.start.MaewilLauncher;
 import io.github.vampirestudios.tdg.utils.DiscordHandler;
@@ -28,7 +29,7 @@ public class TitleScreen extends Screen {
         float sizeP = 64;
         float xp = MaewilLauncher.WIDTH / 4f - sizeP / 2f;
         float yp = MaewilLauncher.HEIGHT / 2f - sizeP / 2f;
-        /*uiManager.addObject(btnPlayer = new WidgetButton(maewilEngineIn, new Vector2D(xp, yp), maewilEngine.getPlayer().getTextures().get("idle"), 4.0f, 0, new ClickListener() {
+        uiManager.addObject(btnPlayer = new WidgetButton(maewilEngineIn, new Vector2D(xp, yp), maewilEngine.getPlayer().getTextures().get("idle"), 4.0f, 0, new ClickListener() {
             @Override
             public void onClick() {
                 // TODO: Add entity texture data alt support
@@ -38,9 +39,9 @@ public class TitleScreen extends Screen {
             @Override
             public void update(GameContainer container, StateBasedGame game, int delta) {
             }
-        }));*/
-//        btnPlayer.setRenderBtnBG(false);
-//        btnPlayer.setRenderBtnHover(false);
+        }));
+        btnPlayer.setRenderBtnBG(false);
+        btnPlayer.setRenderBtnHover(false);
 
         uiManager.addObject(new WidgetButton(maewilEngineIn, true, MaewilLauncher.HEIGHT / 2 - yOff, "Select World", new ClickListener() {
             @Override

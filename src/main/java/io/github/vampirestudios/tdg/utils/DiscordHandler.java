@@ -84,7 +84,7 @@ public class DiscordHandler {
             rpc.Discord_ClearPresence();
             logger.info("Cleared rich presence!");
             rpc.Discord_Shutdown();
-            logger.info(userId + " hss disconnected!");
+            logger.info(userId + " has disconnected!");
         }
     }
 }

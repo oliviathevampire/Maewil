@@ -25,6 +25,7 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
 
     private DecimalFormat volumeFormat = new DecimalFormat("#.#");
     private float volumeMusic, volumePassive, volumeHostile, volumePlayer, volumeOther;
+    private int skinVariant;
 
     public OptionsJsonParser(String path) {
         this.path = path;
@@ -59,6 +60,10 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
         volumeOther = NumberUtils.parseFloat(sounds.get("volumeOther"));
         MaewilLauncher.LOGGER.info("Sound options loaded!");
 
+        JSONObject character = (JSONObject) jsonObject.get("character");
+        skinVariant = NumberUtils.parseInt(character.get("skinVariant"));
+        MaewilLauncher.LOGGER.info("Character options loaded!");
+
         MaewilLauncher.LOGGER.info("All options loaded!");
     }
 
@@ -76,12 +81,12 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
             controls.put(jsonId, key);
         }
         jsonObject.put("controls", controls);
-        MaewilLauncher.LOGGER.info("Control options loaded!");
+        MaewilLauncher.LOGGER.info("Control options saved!");
 
         jsonObject.put("debugMode", DEBUG_MODE);
         jsonObject.put("fpsCounter", FPS_COUNTER);
         jsonObject.put("vSync", VSYNC);
-        MaewilLauncher.LOGGER.info("True/False options loaded!");
+        MaewilLauncher.LOGGER.info("True/False options saved!");
 
         JSONObject sounds = new JSONObject();
         sounds.put("volumeMusic", String.valueOf(volumeMusic));
@@ -90,7 +95,12 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
         sounds.put("volumePlayer", String.valueOf(volumePlayer));
         sounds.put("volumeOther", String.valueOf(volumeOther));
         jsonObject.put("sounds", sounds);
-        MaewilLauncher.LOGGER.info("Sound options loaded!");
+        MaewilLauncher.LOGGER.info("Sound options saved!");
+
+        JSONObject character = new JSONObject();
+        character.put("skinVariant", String.valueOf(skinVariant));
+        jsonObject.put("character", character);
+        MaewilLauncher.LOGGER.info("Character options saved!");
 
         FileWriter file = new FileWriter(path);
         file.write(jsonObject.toJSONString());
@@ -166,4 +176,13 @@ public class OptionsJsonParser implements IJSONLoader, IJSONSaver {
     public void setVolumePlayer(float volumePlayer) {
         this.volumePlayer = NumberUtils.parseFloat(volumeFormat.format(volumePlayer));
     }
+
+    public void setSkinVariant(int skinVariant) {
+        this.skinVariant = skinVariant;
+    }
+
+    public int getSkinVariant() {
+        return skinVariant;
+    }
+
 }
